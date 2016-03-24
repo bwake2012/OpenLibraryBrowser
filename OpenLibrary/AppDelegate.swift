@@ -7,15 +7,51 @@
 //
 
 import UIKit
+import CoreData
+
+import BNRCoreDataStack
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    // MARK: Properties
     var window: UIWindow?
 
+    private var appCoreDataStack: CoreDataStack?
+    private let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+    private lazy var loadingVC: UIViewController = {
+        return self.mainStoryboard.instantiateViewControllerWithIdentifier("launchVC")
+    }()
+    private lazy var navController: UINavigationController = {
+        return self.mainStoryboard.instantiateViewControllerWithIdentifier("rootNavigationController")
+            as! UINavigationController
+    }()
+    
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+
         // Override point for customization after application launch.
+//        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+//        window?.rootViewController = loadingVC
+        
+        CoreDataStack.constructSQLiteStack(withModelName: "OpenLibraryBrowser") { result in
+            switch result {
+            case .Success(let stack):
+                self.appCoreDataStack = stack
+                
+                dispatch_async( dispatch_get_main_queue() ) {
+                    if let rootVC = self.navController.viewControllers.first as? OLAuthorSearchViewController {
+                        rootVC.appCoreDataStack = stack
+                    }
+                    self.window?.rootViewController = self.navController
+                }
+            case .Failure(let error):
+                assertionFailure("\(error)")
+            }
+        }
+        
+        window?.makeKeyAndVisible()
+        
         return true
     }
 
