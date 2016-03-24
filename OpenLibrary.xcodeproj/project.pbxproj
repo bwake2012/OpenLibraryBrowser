@@ -30,6 +30,7 @@
 		C4817C1D1CA37DC300BDCD4D /* WorkDetailDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4817C1A1CA37DC300BDCD4D /* WorkDetailDownloadOperation.swift */; };
 		C4817C1E1CA37DC300BDCD4D /* WorkDetailGetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4817C1B1CA37DC300BDCD4D /* WorkDetailGetOperation.swift */; };
 		C4817C211CA3817300BDCD4D /* WorkDetailParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4817C201CA3817300BDCD4D /* WorkDetailParseOperation.swift */; };
+		C4B2648E1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C4B2648C1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodeld */; };
 		C4DA1F7B1C8A329B00DFA4BF /* AuthorWorksGetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DA1F771C8A329B00DFA4BF /* AuthorWorksGetOperation.swift */; };
 		C4DA1F7D1C8A329B00DFA4BF /* AuthorWorksDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DA1F791C8A329B00DFA4BF /* AuthorWorksDownloadOperation.swift */; };
 		C4DA1F7E1C8A329B00DFA4BF /* AuthorWorksParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DA1F7A1C8A329B00DFA4BF /* AuthorWorksParseOperation.swift */; };
@@ -71,7 +72,6 @@
 		C4E35E921C7E0AB40015D187 /* NSLock+Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E35E911C7E0AB40015D187 /* NSLock+Operations.swift */; };
 		C4E35E9B1C7E0BB90015D187 /* LocationOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E35E9A1C7E0BB90015D187 /* LocationOperation.swift */; };
 		C4E35E9D1C7E0BF10015D187 /* URLSessionTaskOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E35E9C1C7E0BF10015D187 /* URLSessionTaskOperation.swift */; };
-		C4E35EA11C7E19840015D187 /* OpenLibraryBrowser.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C4E35E9F1C7E19840015D187 /* OpenLibraryBrowser.xcdatamodeld */; };
 		C4E35EA61C7E41B60015D187 /* OLAuthorSearchResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E35EA51C7E41B60015D187 /* OLAuthorSearchResultsTableViewController.swift */; };
 		C4E35EAA1C7E4CD90015D187 /* AuthorSearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E35EA91C7E4CD90015D187 /* AuthorSearchResultTableViewCell.swift */; };
 		C4E35EC01C7EA3350015D187 /* NetworkObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E35EBF1C7EA3350015D187 /* NetworkObserver.swift */; };
@@ -144,6 +144,7 @@
 		C4817C1A1CA37DC300BDCD4D /* WorkDetailDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkDetailDownloadOperation.swift; path = "App Operations/WorkDetailDownloadOperation.swift"; sourceTree = "<group>"; };
 		C4817C1B1CA37DC300BDCD4D /* WorkDetailGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkDetailGetOperation.swift; path = "App Operations/WorkDetailGetOperation.swift"; sourceTree = "<group>"; };
 		C4817C201CA3817300BDCD4D /* WorkDetailParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkDetailParseOperation.swift; path = "App Operations/WorkDetailParseOperation.swift"; sourceTree = "<group>"; };
+		C4B2648D1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OpenLibraryBrowser.xcdatamodel; sourceTree = "<group>"; };
 		C4DA1F771C8A329B00DFA4BF /* AuthorWorksGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorWorksGetOperation.swift; path = "App Operations/AuthorWorksGetOperation.swift"; sourceTree = "<group>"; };
 		C4DA1F791C8A329B00DFA4BF /* AuthorWorksDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorWorksDownloadOperation.swift; path = "App Operations/AuthorWorksDownloadOperation.swift"; sourceTree = "<group>"; };
 		C4DA1F7A1C8A329B00DFA4BF /* AuthorWorksParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorWorksParseOperation.swift; path = "App Operations/AuthorWorksParseOperation.swift"; sourceTree = "<group>"; };
@@ -191,7 +192,6 @@
 		C4E35E911C7E0AB40015D187 /* NSLock+Operations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLock+Operations.swift"; sourceTree = "<group>"; };
 		C4E35E9A1C7E0BB90015D187 /* LocationOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationOperation.swift; path = "../../../../Samples/WWDC 2015/AdvancedNSOperations/Earthquakes/Operations/LocationOperation.swift"; sourceTree = "<group>"; };
 		C4E35E9C1C7E0BF10015D187 /* URLSessionTaskOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLSessionTaskOperation.swift; path = "../../../../Samples/WWDC 2015/AdvancedNSOperations/Earthquakes/Operations/URLSessionTaskOperation.swift"; sourceTree = "<group>"; };
-		C4E35EA01C7E19840015D187 /* OpenLibraryBrowser.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OpenLibraryBrowser.xcdatamodel; sourceTree = "<group>"; };
 		C4E35EA51C7E41B60015D187 /* OLAuthorSearchResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLAuthorSearchResultsTableViewController.swift; path = "View Controllers/OLAuthorSearchResultsTableViewController.swift"; sourceTree = "<group>"; };
 		C4E35EA91C7E4CD90015D187 /* AuthorSearchResultTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorSearchResultTableViewCell.swift; path = Views/AuthorSearchResultTableViewCell.swift; sourceTree = "<group>"; };
 		C4E35EBF1C7EA3350015D187 /* NetworkObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkObserver.swift; sourceTree = "<group>"; };
@@ -427,7 +427,7 @@
 		C4E35E9E1C7E0C730015D187 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C4E35E9F1C7E19840015D187 /* OpenLibraryBrowser.xcdatamodeld */,
+				C4B2648C1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodeld */,
 				C46E7E5A1C861EF500D2ED51 /* OLAuthorSearchResult.swift */,
 				C46E7E561C861E8500D2ED51 /* OLAuthorDetail.swift */,
 				C4E8638B1C974303002C0E6B /* OLWorkDetail.swift */,
@@ -777,10 +777,10 @@
 				C4E35EAA1C7E4CD90015D187 /* AuthorSearchResultTableViewCell.swift in Sources */,
 				C4E35EC91C80DE760015D187 /* String+PercentEncoding.swift in Sources */,
 				C4E35E231C7E07950015D187 /* AppDelegate.swift in Sources */,
-				C4E35EA11C7E19840015D187 /* OpenLibraryBrowser.xcdatamodeld in Sources */,
 				C4E35E861C7E07D40015D187 /* ReachabilityCondition.swift in Sources */,
 				C4E863901C99D9F0002C0E6B /* OLEditionDetail.swift in Sources */,
 				C46E7E511C861A7000D2ED51 /* AuthorNameSearchOperation.swift in Sources */,
+				C4B2648E1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodeld in Sources */,
 				C4E35ECB1C80E2780015D187 /* SearchResults.swift in Sources */,
 				C4E35E811C7E07D40015D187 /* OperationErrors.swift in Sources */,
 				C4E35E711C7E07D40015D187 /* CalendarCondition.swift in Sources */,
@@ -1111,14 +1111,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		C4E35E9F1C7E19840015D187 /* OpenLibraryBrowser.xcdatamodeld */ = {
+		C4B2648C1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				C4E35EA01C7E19840015D187 /* OpenLibraryBrowser.xcdatamodel */,
+				C4B2648D1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodel */,
 			);
-			currentVersion = C4E35EA01C7E19840015D187 /* OpenLibraryBrowser.xcdatamodel */;
+			currentVersion = C4B2648D1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodel */;
 			name = OpenLibraryBrowser.xcdatamodeld;
-			path = ../../OpenLibraryBrowser/OpenLibraryBrowser/OpenLibraryBrowser.xcdatamodeld;
+			path = Model/OpenLibraryBrowser.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

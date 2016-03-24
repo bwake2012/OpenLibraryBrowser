@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Automatic">
+    <entity name="AuthorDetail" representedClassName=".OLAuthorDetail" syncable="YES">
+        <attribute name="alternate_names" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="bio" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="birth_date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="death_date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="key" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="last_modified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="latest_revision" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="links" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="personal_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photos" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="revision" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="wikipedia" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="AuthorSearchResult" representedClassName=".OLAuthorSearchResult" syncable="YES">
+        <attribute name="birth_date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="death_date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="index" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="key" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="sequence" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="top_work" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="work_count" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="EditionDetail" representedClassName=".OLEditionDetail" syncable="YES">
+        <attribute name="accompanying_material" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="author_key" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="authors" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="by_statement" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="collections" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="contributions" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="copyright_date" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="covers" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="coversFound" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
+        <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dewey_decimal_class" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="distributors" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="edition_description" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="edition_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="first_sentence" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="genres" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="index" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="isbn_10" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="isbn_13" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="key" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="languages" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="last_modified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="latest_revision" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="lc_classifications" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="lccn" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="number_of_pages" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="ocaid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="oclc_numbers" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="other_titles" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="pagination" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="physical_dimensions" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="physical_format" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="publish_country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="publish_date" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="publish_places" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="publishers" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="revision" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="scan_on_demand" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="series" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="source_records" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="subjects" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="table_of_contents" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
+        <attribute name="title_prefix" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="translated_from" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="translation_of" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uri_descriptions" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="uris" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="weight" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="work_key" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="work_titles" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="works" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <compoundIndexes>
+            <compoundIndex>
+                <index value="author_key"/>
+                <index value="index"/>
+            </compoundIndex>
+            <compoundIndex>
+                <index value="work_key"/>
+                <index value="index"/>
+            </compoundIndex>
+        </compoundIndexes>
+    </entity>
+    <entity name="WorkDetail" representedClassName=".OLWorkDetail" syncable="YES">
+        <attribute name="author_key" attributeType="String" syncable="YES"/>
+        <attribute name="authors" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="covers" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="coversFound" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
+        <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dewey_number" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="first_publish_date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="first_sentence" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="index" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="key" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="last_modified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="latest_revision" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="lc_classifications" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="links" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="original_languages" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="other_titles" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="revision" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="subject_people" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="subject_places" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="subject_times" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="subjects" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="translated_titles" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="work_description" optional="YES" attributeType="String" syncable="YES"/>
+        <compoundIndexes>
+            <compoundIndex>
+                <index value="author_key"/>
+                <index value="index"/>
+            </compoundIndex>
+        </compoundIndexes>
+    </entity>
+    <elements>
+        <element name="AuthorDetail" positionX="-63" positionY="-18" width="128" height="270"/>
+        <element name="AuthorSearchResult" positionX="-54" positionY="81" width="128" height="180"/>
+        <element name="WorkDetail" positionX="-54" positionY="99" width="128" height="450"/>
+        <element name="EditionDetail" positionX="-45" positionY="144" width="128" height="885"/>
+    </elements>
+</model>

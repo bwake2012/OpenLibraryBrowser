@@ -30,6 +30,8 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
     
     var highWaterMark = 0
     
+    var hasPhotos: [Bool]?
+    
     init?( tableView: UITableView, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         
         self.tableView = tableView
@@ -69,7 +71,14 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
 
     func numberOfRowsInSection( section: Int ) -> Int {
 
-        return max( searchResults.numFound, fetchedResultsController.sections?[section].objects.count ?? 0 )
+        let rows = max( searchResults.numFound, fetchedResultsController.sections?[section].objects.count ?? 0 )
+        
+        if nil == hasPhotos {
+            
+            hasPhotos = [Bool]( count: rows, repeatedValue: true )
+        }
+        
+        return rows
     }
     
     func objectAtIndexPath( indexPath: NSIndexPath ) -> OLAuthorSearchResult? {
@@ -99,20 +108,24 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
 
         cell.configure( result )
         
-        print( "author: \(result.name) has photo: \(result.has_photos)" )
+        print( "author: \(result.name) has photo: \(hasPhotos?[Int(result.index)])" )
 
-        let localURL = result.localURL( "S" )
-        if cell.displayImage( localURL ) {
-            
-            if !result.has_photos {
-                result.has_photos = true
-            }
+        if var hasPhotos = self.hasPhotos {
 
-        } else {
-        
-            if result.has_photos {
+            let localURL = result.localURL( "S" )
+            if cell.displayImage( localURL ) {
+                
+                if !hasPhotos[Int(result.index)] {
+
+                    hasPhotos[Int(result.index)] = true
+                }
+
+            } else {
             
-                queueGetAuthorThumbByOLID( cell, result: result )
+                if hasPhotos[Int(result.index)] {
+                
+                    queueGetAuthorThumbByOLID( cell, result: result )
+                }
             }
         }
         
@@ -250,20 +263,23 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
     // MARK: Utility
     func queueGetAuthorThumbByDetail( cell: AuthorSearchResultTableViewCell, result: OLAuthorSearchResult ) {
         
-        let authorDetailGetOperation =
-            AuthorDetailWithThumbGetOperation(
-                queryText: result.key, size: "S",
-                coreDataStack: self.coreDataStack ) {
-                    
-                    dispatch_async( dispatch_get_main_queue() ) {
+        if var hasPhotos = self.hasPhotos {
+
+            let authorDetailGetOperation =
+                AuthorDetailWithThumbGetOperation(
+                    queryText: result.key, size: "S",
+                    coreDataStack: self.coreDataStack ) {
                         
-                        let url = result.localURL( "S" )
-                        result.has_photos = cell.displayImage( url )
-                    }
+                        dispatch_async( dispatch_get_main_queue() ) {
+                            
+                            let url = result.localURL( "S" )
+                            hasPhotos[Int(result.index)] = cell.displayImage( url )
+                        }
+            }
+        
+            authorDetailGetOperation.userInitiated = true
+            self.operationQueue.addOperation( authorDetailGetOperation )
         }
-    
-        authorDetailGetOperation.userInitiated = true
-        self.operationQueue.addOperation( authorDetailGetOperation )
     }
     
     func queueGetAuthorThumbByOLID( cell: AuthorSearchResultTableViewCell, result: OLAuthorSearchResult ) {

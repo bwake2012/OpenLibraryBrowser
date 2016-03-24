@@ -32,7 +32,7 @@ class OLAuthorSearchResult: OLManagedObject, CoreDataModelable {
     @NSManaged var top_work: String?
     @NSManaged var work_count: Int64
 
-    var has_photos = true
+//    var has_photos = true
 
     var searchInfo: SearchInfo {
         
