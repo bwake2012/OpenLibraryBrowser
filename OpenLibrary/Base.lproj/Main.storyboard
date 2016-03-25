@@ -176,8 +176,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="authorName" destination="YDN-2I-Ydz" id="2cs-Tf-hUB"/>
-                        <outlet property="authorPhoto" destination="Yde-7a-B86" id="DLD-Lg-Pip"/>
+                        <outlet property="authorName" destination="YDN-2I-Ydz" id="yd9-Cj-06Y"/>
+                        <outlet property="authorPhoto" destination="Yde-7a-B86" id="AqC-kI-AEt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cDB-bJ-tLH" userLabel="First Responder" sceneMemberID="firstResponder"/>

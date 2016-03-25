@@ -17,7 +17,15 @@ class OLWorkDetailViewController: UIViewController {
     @IBOutlet weak var workTitle: UILabel!
     @IBOutlet weak var workCover: UIImageView!
 
-    var queryCoordinator: WorkDetailCoordinator?
+    lazy var queryCoordinator: WorkDetailCoordinator = {
+        return
+            WorkDetailCoordinator(
+                operationQueue: self.operationQueue!,
+                coreDataStack: self.coreDataStack!,
+                searchInfo: self.searchInfo!,
+                workDetailVC: self
+            )
+    }()
     
     var authorWorksVC: OLWorkDetailEditionsTableViewController?
     var authorEditionsVC: OLWorkDetailEditionsTableViewController?
@@ -30,10 +38,6 @@ class OLWorkDetailViewController: UIViewController {
     var searchInfo: OLWorkDetail.SearchInfo?
 
     // MARK: UIViewController
-    override func viewDidLoad() {
-      
-        configureView()
-    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
@@ -101,18 +105,5 @@ class OLWorkDetailViewController: UIViewController {
     }
     
     // MARK: Utility
-    func configureView() {
-        
-        if let operationQueue = self.operationQueue, coreDataStack = self.coreDataStack {
-            
-            self.queryCoordinator =
-                WorkDetailCoordinator(
-                        operationQueue: operationQueue,
-                        coreDataStack: coreDataStack,
-                        searchInfo: searchInfo!,
-                        workDetailVC: self
-                    )
-        }
-    }
 
 }

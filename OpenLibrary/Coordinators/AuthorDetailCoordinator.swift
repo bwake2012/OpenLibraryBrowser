@@ -155,7 +155,7 @@ class AuthorDetailCoordinator: NSObject, FetchedResultsControllerDelegate {
         
         do {
             NSFetchedResultsController.deleteCacheWithName( kAuthorDetailCache )
-            try fetchedResultsController.performFetch()
+            try self.fetchedResultsController.performFetch()
         }
         catch {
             print("Error in the fetched results controller: \(error).")
@@ -163,4 +163,8 @@ class AuthorDetailCoordinator: NSObject, FetchedResultsControllerDelegate {
         
     }
     
+    func updateUI() -> Void {
+        
+        
+    }
 }

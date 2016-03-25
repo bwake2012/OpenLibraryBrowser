@@ -18,8 +18,17 @@ class OLAuthorDetailWorksTableViewController: UITableViewController {
     var coreDataStack: CoreDataStack?
     
     var searchInfo: OLAuthorSearchResult.SearchInfo?
-    var queryCoordinator: AuthorWorksCoordinator?
-    
+
+    lazy var queryCoordinator: AuthorWorksCoordinator = {
+        return
+            AuthorWorksCoordinator(
+                    searchInfo: self.searchInfo!,
+                    tableView: self.tableView,
+                    coreDataStack: self.coreDataStack!,
+                    operationQueue: self.operationQueue!
+                )
+    }()!
+
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,8 +36,6 @@ class OLAuthorDetailWorksTableViewController: UITableViewController {
         // Do any additional setup after loading the view, typically from a nib.
         self.tableView.estimatedRowHeight = 68.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        
-        configureView()
     }
     
     override func didReceiveMemoryWarning() {
@@ -45,38 +52,21 @@ class OLAuthorDetailWorksTableViewController: UITableViewController {
     // MARK: UITableviewDataSource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
-        return queryCoordinator?.numberOfSections() ?? 0
+        return queryCoordinator.numberOfSections() ?? 0
     }
     
     override func tableView( tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
         
-        return queryCoordinator?.numberOfRowsInSection( section ) ?? 0
+        return queryCoordinator.numberOfRowsInSection( section ) ?? 0
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("authorWorksEntry", forIndexPath: indexPath) as! AuthorWorksTableViewCell
         
-        queryCoordinator?.displayToCell( cell, indexPath: indexPath )
+        queryCoordinator.displayToCell( cell, indexPath: indexPath )
         
         return cell
     }
     
     // MARK: Utility
-    func configureView() {
-        
-        if let searchInfo = self.searchInfo,
-               tableView = self.tableView,
-               coreDataStack = self.coreDataStack,
-               operationQueue = self.operationQueue {
-        
-            self.queryCoordinator =
-                AuthorWorksCoordinator(
-                    searchInfo: searchInfo,
-                    tableView: tableView,
-                    coreDataStack: coreDataStack,
-                    operationQueue: operationQueue
-            )
-        }
-        
-    }
 }

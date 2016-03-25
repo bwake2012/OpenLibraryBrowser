@@ -18,20 +18,23 @@ class OLAuthorSearchResultsTableViewController: UITableViewController {
     
     var operationQueue: OperationQueue?
     
-    var queryCoordinator: AuthorSearchResultsCoordinator?
+    lazy var queryCoordinator: AuthorSearchResultsCoordinator = {
+        
+        let coordinator =
+            AuthorSearchResultsCoordinator(
+                    tableView: self.tableView,
+                    coreDataStack: self.coreDataStack!,
+                    operationQueue: self.operationQueue!
+                )
+        
+        return coordinator!
+    }()
 
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view, typically from a nib.
-        queryCoordinator =
-            AuthorSearchResultsCoordinator(
-                    tableView: self.tableView,
-                    coreDataStack: self.coreDataStack!,
-                    operationQueue: self.operationQueue!
-                )
-                
         self.tableView.estimatedRowHeight = 68.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
     }
@@ -48,7 +51,7 @@ class OLAuthorSearchResultsTableViewController: UITableViewController {
             if let indexPath = self.tableView.indexPathForSelectedRow {
                 if let destVC = segue.destinationViewController as? OLAuthorDetailViewController {
                     
-                    if let searchResult = queryCoordinator?.objectAtIndexPath( indexPath ) {
+                    if let searchResult = queryCoordinator.objectAtIndexPath( indexPath ) {
                         destVC.operationQueue = self.operationQueue
                         destVC.coreDataStack = self.coreDataStack
                         destVC.searchInfo = searchResult.searchInfo
@@ -65,18 +68,18 @@ class OLAuthorSearchResultsTableViewController: UITableViewController {
     // MARK: UITableviewDataSource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
-        return queryCoordinator?.numberOfSections() ?? 0
+        return queryCoordinator.numberOfSections() ?? 0
     }
     
     override func tableView( tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
         
-        return queryCoordinator?.numberOfRowsInSection( section ) ?? 0
+        return queryCoordinator.numberOfRowsInSection( section ) ?? 0
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("authorSearchResult", forIndexPath: indexPath) as! AuthorSearchResultTableViewCell
         
-        queryCoordinator?.displayToCell( cell, indexPath: indexPath )
+        queryCoordinator.displayToCell( cell, indexPath: indexPath )
         
         return cell
     }
@@ -85,24 +88,11 @@ class OLAuthorSearchResultsTableViewController: UITableViewController {
     
     func getFirstAuthorSearchResults( authorName: String, userInitiated: Bool = true ) {
 
-        if let qc = queryCoordinator {
-
-            qc.newQuery( authorName, userInitiated: userInitiated, refreshControl: self.refreshControl )
-        }
-        else {
-            /*
-            We don't have a queryCoordinator to operate on, so wait a bit 
-            and just make the refresh control end.
-            */
-            let when = dispatch_time(DISPATCH_TIME_NOW, Int64(0.3 * Double(NSEC_PER_SEC)))
-            dispatch_after(when, dispatch_get_main_queue()) {
-                self.refreshControl?.endRefreshing()
-            }
-        }
+        queryCoordinator.newQuery( authorName, userInitiated: userInitiated, refreshControl: self.refreshControl )
     }
     
     private func updateUI() {
         
-        queryCoordinator?.updateUI()
+        queryCoordinator.updateUI()
     }
 }

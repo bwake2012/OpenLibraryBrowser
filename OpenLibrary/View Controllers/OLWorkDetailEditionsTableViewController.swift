@@ -17,15 +17,18 @@ class OLWorkDetailEditionsTableViewController: UITableViewController {
     var operationQueue: OperationQueue?
     var coreDataStack: CoreDataStack?
     
-    var searchInfo: OLWorkDetail.SearchInfo? {
-        
-        didSet {
-            
-            self.configureView ()
-        }
-    }
-    
-    var queryCoordinator: WorkEditionsCoordinator?
+    var searchInfo: OLWorkDetail.SearchInfo?
+
+    lazy var queryCoordinator: WorkEditionsCoordinator = {
+        return
+            WorkEditionsCoordinator(
+                searchInfo: self.searchInfo!,
+                withCoversOnly: true,
+                tableView: self.tableView,
+                coreDataStack: self.coreDataStack!,
+                operationQueue: self.operationQueue!
+            )
+    }()!
     
     // MARK: UIViewController
     override func viewDidLoad() {
@@ -50,33 +53,20 @@ class OLWorkDetailEditionsTableViewController: UITableViewController {
     // MARK: UITableviewDataSource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
-        return queryCoordinator?.numberOfSections() ?? 0
+        return queryCoordinator.numberOfSections() ?? 0
     }
     
     override func tableView( tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
         
-        return queryCoordinator?.numberOfRowsInSection( section ) ?? 0
+        return queryCoordinator.numberOfRowsInSection( section ) ?? 0
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("authorEditionsEntry", forIndexPath: indexPath) as! EditionTableViewCell
         
-        cell.configure( queryCoordinator?.objectAtIndexPath( indexPath ) )
+        cell.configure( queryCoordinator.objectAtIndexPath( indexPath ) )
         
         return cell
     }
     
-    // MARK: Utility
-    func configureView() {
-        
-        self.queryCoordinator =
-            WorkEditionsCoordinator(
-                searchInfo: self.searchInfo!,
-                withCoversOnly: true,
-                tableView: self.tableView,
-                coreDataStack: self.coreDataStack!,
-                operationQueue: self.operationQueue!
-        )
-        
-    }
 }

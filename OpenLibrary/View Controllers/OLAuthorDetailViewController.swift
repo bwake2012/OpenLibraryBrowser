@@ -17,7 +17,15 @@ class OLAuthorDetailViewController: UIViewController {
     @IBOutlet weak var authorName: UILabel!
     @IBOutlet weak var authorPhoto: UIImageView!
 
-    var queryCoordinator: AuthorDetailCoordinator?
+    lazy var queryCoordinator: AuthorDetailCoordinator = {
+        return
+            AuthorDetailCoordinator(
+                    operationQueue: self.operationQueue!,
+                    coreDataStack: self.coreDataStack!,
+                    searchInfo: self.searchInfo!,
+                    authorDetailVC: self
+                )
+    }()
     
     var authorWorksVC: OLAuthorDetailWorksTableViewController?
     var authorEditionsVC: OLAuthorDetailEditionsTableViewController?
@@ -31,8 +39,8 @@ class OLAuthorDetailViewController: UIViewController {
 
     // MARK: UIViewController
     override func viewDidLoad() {
-      
-        configureView()
+
+        self.queryCoordinator.updateUI()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -101,18 +109,5 @@ class OLAuthorDetailViewController: UIViewController {
     }
     
     // MARK: Utility
-    func configureView() {
-        
-        if let operationQueue = self.operationQueue, coreDataStack = self.coreDataStack {
-            
-            self.queryCoordinator =
-                AuthorDetailCoordinator(
-                        operationQueue: operationQueue,
-                        coreDataStack: coreDataStack,
-                        searchInfo: searchInfo!,
-                        authorDetailVC: self
-                    )
-        }
-    }
 
 }

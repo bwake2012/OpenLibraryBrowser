@@ -132,8 +132,6 @@ class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
         catch {
             print("Error in the fetched results controller: \(error).")
         }
-        
-        tableView!.reloadData()
     }
 
     func newQuery( authorKey: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
@@ -154,7 +152,7 @@ class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
                     dispatch_async( dispatch_get_main_queue() ) {
                         
                             refreshControl?.endRefreshing()
-                            self.updateUI()
+                            self.tableView?.reloadData()
                         }
                 }
         
@@ -210,11 +208,10 @@ class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
     // MARK: FetchedResultsControllerDelegate
     func fetchedResultsControllerDidPerformFetch( controller: FetchedOLWorkDetailController ) {
         
-        tableView?.reloadData()
-        
         if 0 == controller.count {
             
             newQuery( authorKey, userInitiated: true, refreshControl: nil )
+
         } else {
             
             highWaterMark = controller.count

@@ -23,20 +23,7 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
     var operationQueue: OperationQueue
     
     let coreDataStack: CoreDataStack
-    var fetchedResultsController: FetchedResultsController< OLAuthorSearchResult >
-    
-    var authorName = ""
-    var searchResults = SearchResults()
-    
-    var highWaterMark = 0
-    
-    var hasPhotos: [Bool]?
-    
-    init?( tableView: UITableView, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
-        
-        self.tableView = tableView
-        self.operationQueue = operationQueue
-        self.coreDataStack = coreDataStack
+    private lazy var fetchedResultsController: FetchedOLAuthorSearchResultController = {
         
         let request = NSFetchRequest(entityName: OLAuthorSearchResult.entityName)
         
@@ -47,19 +34,35 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
         
         // request.fetchLimit = 100
         
-        let moc = coreDataStack.mainQueueContext
         let controller =
-            FetchedResultsController< OLAuthorSearchResult >(
-                    fetchRequest: request,
-                    managedObjectContext: moc,
-                    sectionNameKeyPath: nil,
-                    cacheName: kAuthorSearchCache
-                )
+            FetchedOLAuthorSearchResultController(
+                fetchRequest: request,
+                managedObjectContext: self.coreDataStack.mainQueueContext,
+                sectionNameKeyPath: nil,
+                cacheName: kAuthorSearchCache
+        )
         
-        self.fetchedResultsController = controller
+        controller.setDelegate( self )
+        return controller
+    }()
+    
+    var authorName = ""
+    var searchResults = SearchResults()
+    
+    var highWaterMark = 0
+    
+    lazy var hasPhotos: [Bool] = {
+
+        return [Bool]( count: self.fetchedResultsController.count, repeatedValue: true )
+    }()
+    
+    init?( tableView: UITableView, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
+        
+        self.tableView = tableView
+        self.operationQueue = operationQueue
+        self.coreDataStack = coreDataStack
+        
         super.init()
-        
-        self.fetchedResultsController.setDelegate( self )
         
         updateUI()
     }
@@ -72,12 +75,7 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
     func numberOfRowsInSection( section: Int ) -> Int {
 
         let rows = max( searchResults.numFound, fetchedResultsController.sections?[section].objects.count ?? 0 )
-        
-        if nil == hasPhotos {
-            
-            hasPhotos = [Bool]( count: rows, repeatedValue: true )
-        }
-        
+
         return rows
     }
     
@@ -108,24 +106,21 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
 
         cell.configure( result )
         
-        print( "author: \(result.name) has photo: \(hasPhotos?[Int(result.index)])" )
+        print( "author: \(result.name) has photo: \(hasPhotos[Int(result.index)])" )
 
-        if var hasPhotos = self.hasPhotos {
-
-            let localURL = result.localURL( "S" )
-            if cell.displayImage( localURL ) {
-                
-                if !hasPhotos[Int(result.index)] {
-
-                    hasPhotos[Int(result.index)] = true
-                }
-
-            } else {
+        let localURL = result.localURL( "S" )
+        if cell.displayImage( localURL ) {
             
-                if hasPhotos[Int(result.index)] {
-                
-                    queueGetAuthorThumbByOLID( cell, result: result )
-                }
+            if !hasPhotos[Int(result.index)] {
+
+                hasPhotos[Int(result.index)] = true
+            }
+
+        } else {
+        
+            if hasPhotos[Int(result.index)] {
+            
+                queueGetAuthorThumbByOLID( cell, result: result )
             }
         }
         
@@ -219,6 +214,7 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
     
     // MARK: FetchedResultsControllerDelegate
     func fetchedResultsControllerDidPerformFetch(controller: FetchedResultsController< OLAuthorSearchResult >) {
+
         tableView?.reloadData()
     }
     
@@ -263,23 +259,20 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
     // MARK: Utility
     func queueGetAuthorThumbByDetail( cell: AuthorSearchResultTableViewCell, result: OLAuthorSearchResult ) {
         
-        if var hasPhotos = self.hasPhotos {
-
-            let authorDetailGetOperation =
-                AuthorDetailWithThumbGetOperation(
-                    queryText: result.key, size: "S",
-                    coreDataStack: self.coreDataStack ) {
+        let authorDetailGetOperation =
+            AuthorDetailWithThumbGetOperation(
+                queryText: result.key, size: "S",
+                coreDataStack: self.coreDataStack ) {
+                    
+                    dispatch_async( dispatch_get_main_queue() ) {
                         
-                        dispatch_async( dispatch_get_main_queue() ) {
-                            
-                            let url = result.localURL( "S" )
-                            hasPhotos[Int(result.index)] = cell.displayImage( url )
-                        }
-            }
-        
-            authorDetailGetOperation.userInitiated = true
-            self.operationQueue.addOperation( authorDetailGetOperation )
+                        let url = result.localURL( "S" )
+                        self.hasPhotos[Int(result.index)] = cell.displayImage( url )
+                    }
         }
+    
+        authorDetailGetOperation.userInitiated = true
+        self.operationQueue.addOperation( authorDetailGetOperation )
     }
     
     func queueGetAuthorThumbByOLID( cell: AuthorSearchResultTableViewCell, result: OLAuthorSearchResult ) {
