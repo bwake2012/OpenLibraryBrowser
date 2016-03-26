@@ -166,11 +166,11 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
         authorSearchOperation.userInitiated = userInitiated
         operationQueue.addOperation( authorSearchOperation )
         
-        print( "operationQueue:\(operationQueue.operationCount) \(operationQueue.suspended ? "Suspended" : "Active")" )
-        for op in operationQueue.operations {
-            
-            print( "\(op.name) \(op.executing ? "executing" : (op.finished ? "finished" : (op.cancelled ? "cancelled" : (op.ready ? "ready" : "not ready"))))" )
-        }
+//        print( "operationQueue:\(operationQueue.operationCount) \(operationQueue.suspended ? "Suspended" : "Active")" )
+//        for op in operationQueue.operations {
+//            
+//            print( "\(op.name) \(op.executing ? "executing" : (op.finished ? "finished" : (op.cancelled ? "cancelled" : (op.ready ? "ready" : "not ready"))))" )
+//        }
     }
     
     func nextQueryPage( offset: Int ) -> Void {

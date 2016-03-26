@@ -31,8 +31,6 @@ class OLManagedObject: NSManagedObject {
         let fileName = "\(goodParts[1])-\(size).jpg"
         let url = imagesSubFolder.URLByAppendingPathComponent( fileName )
         
-//        print( "\(url)" )
-        
         return url
     }
     

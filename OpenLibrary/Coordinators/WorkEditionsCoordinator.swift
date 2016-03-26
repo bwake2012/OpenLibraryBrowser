@@ -130,13 +130,7 @@ class WorkEditionsCoordinator: NSObject, FetchedResultsControllerDelegate {
                 }
         
         authorEditionsGetOperation.userInitiated = userInitiated
-        operationQueue.addOperation( authorEditionsGetOperation )
-        
-        print( "operationQueue:\(operationQueue.operationCount) \(operationQueue.suspended ? "Suspended" : "Active")" )
-        for op in operationQueue.operations {
-            
-            print( "\(op.name) \(op.executing ? "executing" : (op.finished ? "finished" : (op.cancelled ? "cancelled" : (op.ready ? "ready" : "not ready"))))" )
-        }
+        operationQueue.addOperation( authorEditionsGetOperation )        
     }
     
     func nextQueryPage( offset: Int ) -> Void {

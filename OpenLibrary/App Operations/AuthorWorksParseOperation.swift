@@ -16,6 +16,7 @@ class AuthorWorksParseOperation: Operation {
     
     let authorKey: String
     let offset: Int
+    let limit: Int
     let cacheFile: NSURL
     let context: NSManagedObjectContext
     let updateResults: SearchResultsUpdater
@@ -30,7 +31,7 @@ class AuthorWorksParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( authorKey: String, offset: Int, cacheFile: NSURL, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater ) {
+    init( authorKey: String, offset: Int, limit: Int, cacheFile: NSURL, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -42,6 +43,7 @@ class AuthorWorksParseOperation: Operation {
         self.context.mergePolicy = NSOverwriteMergePolicy
         self.updateResults = updateResults
         self.offset = offset
+        self.limit = limit
         self.authorKey = authorKey
         
         super.init()
@@ -82,16 +84,24 @@ class AuthorWorksParseOperation: Operation {
     
     private func parse( resultSet: [String: AnyObject] ) {
 
-        guard let numFound = resultSet["size"] as? Int where numFound > 0 else {
+        guard var numFound = resultSet["size"] as? Int where numFound > 0 else {
+            
+            updateResults( SearchResults( start: offset, numFound: offset, pageSize: 0 ) )
             finishWithError( nil )
             return
         }
         
         guard let entries = resultSet["entries"] as? [[String: AnyObject]] else {
+            
+            updateResults( SearchResults( start: offset, numFound: offset, pageSize: 0 ) )
             finishWithError( nil )
             return
         }
         
+        if entries.count < limit {
+            numFound = min( numFound, offset + entries.count )
+        }
+
         context.performBlock {
             
             var index = self.offset

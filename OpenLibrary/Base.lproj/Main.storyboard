@@ -155,7 +155,7 @@
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GtZ-lM-FnV">
-                                <rect key="frame" x="20" y="144" width="560" height="356"/>
+                                <rect key="frame" x="0.0" y="144" width="600" height="356"/>
                                 <connections>
                                     <segue destination="kpc-TI-Gay" kind="embed" identifier="embedAuthorWorks" id="ij5-6s-2eh"/>
                                 </connections>
@@ -166,9 +166,9 @@
                             <constraint firstAttribute="leadingMargin" secondItem="Yde-7a-B86" secondAttribute="leading" id="2mV-tO-mjG"/>
                             <constraint firstItem="GtZ-lM-FnV" firstAttribute="bottomMargin" secondItem="sKH-cd-bo6" secondAttribute="top" id="4Fl-4H-H1X"/>
                             <constraint firstItem="Yde-7a-B86" firstAttribute="top" secondItem="WMK-h2-Oo1" secondAttribute="bottom" constant="8" id="8ZY-KA-HaL"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="GtZ-lM-FnV" secondAttribute="leading" id="BgR-hb-D8M"/>
+                            <constraint firstAttribute="leading" secondItem="GtZ-lM-FnV" secondAttribute="leading" id="BgR-hb-D8M"/>
                             <constraint firstItem="qKG-MX-xGl" firstAttribute="height" secondItem="Yde-7a-B86" secondAttribute="height" id="GZ4-QJ-5Wm"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="GtZ-lM-FnV" secondAttribute="trailing" id="KXr-Vd-jvE"/>
+                            <constraint firstAttribute="trailing" secondItem="GtZ-lM-FnV" secondAttribute="trailing" id="KXr-Vd-jvE"/>
                             <constraint firstItem="qKG-MX-xGl" firstAttribute="top" secondItem="WMK-h2-Oo1" secondAttribute="bottom" constant="8" id="ORf-Id-7rV"/>
                             <constraint firstItem="GtZ-lM-FnV" firstAttribute="top" secondItem="Yde-7a-B86" secondAttribute="bottom" constant="8" id="UvS-Ip-85g"/>
                             <constraint firstAttribute="trailingMargin" secondItem="qKG-MX-xGl" secondAttribute="trailing" id="Ylc-Eh-KNK"/>
@@ -189,15 +189,15 @@
             <objects>
                 <tableViewController storyboardIdentifier="AuthorDetailWorks" useStoryboardIdentifierAsRestorationIdentifier="YES" id="kpc-TI-Gay" customClass="OLAuthorDetailWorksTableViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="74" sectionHeaderHeight="28" sectionFooterHeight="28" id="5hF-Cp-OWV">
-                        <rect key="frame" x="0.0" y="0.0" width="560" height="356"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="356"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="authorWorksEntry" rowHeight="74" id="5Yk-5e-F9J" customClass="AuthorWorksTableViewCell" customModule="OpenLibrary" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="560" height="74"/>
+                                <rect key="frame" x="0.0" y="28" width="600" height="74"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" verticalCompressionResistancePriority="740" tableViewCell="5Yk-5e-F9J" id="Ksg-5Z-cXK">
-                                    <rect key="frame" x="0.0" y="0.0" width="560" height="73.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="73.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" translatesAutoresizingMaskIntoConstraints="NO" id="IeC-sS-uae">
@@ -207,7 +207,7 @@
                                                 <constraint firstAttribute="width" constant="56" id="fpT-mY-clO"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Work Title" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VBj-sR-cIF">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Work Title" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VBj-sR-cIF">
                                             <rect key="frame" x="72" y="8" width="480" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

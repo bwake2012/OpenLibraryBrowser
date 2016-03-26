@@ -312,18 +312,18 @@
 		C4E35E211C7E07950015D187 /* OpenLibrary */ = {
 			isa = PBXGroup;
 			children = (
-				C4E35EC71C80DE3E0015D187 /* Utility */,
-				C4E35EA81C7E4C840015D187 /* Views */,
-				C4E35EA71C7E44450015D187 /* View Controllers */,
 				C4E35EA41C7E1F1C0015D187 /* App Operations */,
 				C4677E9D1C9CD7020070CDFD /* Coordinators */,
-				C4E35E501C7E07D40015D187 /* Operations */,
 				C4E35E9E1C7E0C730015D187 /* Model */,
+				C4E35E501C7E07D40015D187 /* Operations */,
+				C4E35EC71C80DE3E0015D187 /* Utility */,
+				C4E35EA71C7E44450015D187 /* View Controllers */,
+				C4E35EA81C7E4C840015D187 /* Views */,
 				C4E35E221C7E07950015D187 /* AppDelegate.swift */,
-				C4E35E261C7E07950015D187 /* Main.storyboard */,
 				C4E35E291C7E07950015D187 /* Assets.xcassets */,
-				C4E35E2B1C7E07950015D187 /* LaunchScreen.storyboard */,
 				C4E35E2E1C7E07950015D187 /* Info.plist */,
+				C4E35E2B1C7E07950015D187 /* LaunchScreen.storyboard */,
+				C4E35E261C7E07950015D187 /* Main.storyboard */,
 			);
 			path = OpenLibrary;
 			sourceTree = "<group>";

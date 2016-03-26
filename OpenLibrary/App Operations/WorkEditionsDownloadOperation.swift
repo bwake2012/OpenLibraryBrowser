@@ -51,8 +51,6 @@ class WorkEditionsDownloadOperation: GroupOperation {
         taskOperation.addObserver(networkObserver)
         
         addOperation(taskOperation)
-        
-        print( urlString )
     }
     
     deinit {

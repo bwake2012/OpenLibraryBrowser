@@ -13,6 +13,8 @@ import CoreData
 import BNRCoreDataStack
 
 private let kWorksByAuthorCache = "worksByAuthor"
+
+private let kPageSize = 100
     
 class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
     
@@ -97,7 +99,7 @@ class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
         
         cell.configure( result )
         
-        print( "work: \(result.title) has covers: \(!result.covers.isEmpty)" )
+//        print( "work: \(result.title) has covers: \(!result.covers.isEmpty)" )
         
         let localURL = result.localURL( "S" )
         if !cell.displayImage( localURL ) {
@@ -144,7 +146,7 @@ class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
         let authorWorksGetOperation =
             AuthorWorksGetOperation(
                     queryText: authorKey,
-                    offset: 0,
+                    offset: 0, limit: kPageSize,
                     coreDataStack: coreDataStack,
                     updateResults: self.updateResults
                 ) {
@@ -159,11 +161,6 @@ class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
         authorWorksGetOperation.userInitiated = userInitiated
         operationQueue.addOperation( authorWorksGetOperation )
         
-        print( "operationQueue:\(operationQueue.operationCount) \(operationQueue.suspended ? "Suspended" : "Active")" )
-        for op in operationQueue.operations {
-            
-            print( "\(op.name) \(op.executing ? "executing" : (op.finished ? "finished" : (op.cancelled ? "cancelled" : (op.ready ? "ready" : "not ready"))))" )
-        }
     }
     
     func nextQueryPage( offset: Int ) -> Void {
@@ -173,7 +170,7 @@ class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
             let authorWorksGetOperation =
                 AuthorWorksGetOperation(
                         queryText: self.authorKey,
-                        offset: offset,
+                        offset: offset, limit: kPageSize,
                         coreDataStack: coreDataStack,
                         updateResults: self.updateResults
                     ) {
@@ -203,6 +200,10 @@ class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
         
         self.searchResults = searchResults
         self.highWaterMark = searchResults.start + searchResults.pageSize
+        if self.worksCount != searchResults.numFound {
+            self.worksCount = searchResults.numFound
+            self.tableView?.reloadData()
+        }
     }
     
     // MARK: FetchedResultsControllerDelegate

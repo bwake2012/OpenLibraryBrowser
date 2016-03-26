@@ -29,7 +29,7 @@ class AuthorWorksGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, offset: Int, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater, completionHandler: Void -> Void ) {
+    init( queryText: String, offset: Int, limit: Int, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater, completionHandler: Void -> Void ) {
 
         let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
 
@@ -43,8 +43,8 @@ class AuthorWorksGetOperation: GroupOperation {
         
             There is an optional operation 0 to delete the existing contents of the Core Data store
         */
-        downloadOperation = AuthorWorksDownloadOperation( queryText: queryText, offset: offset, cacheFile: cacheFile )
-        parseOperation = AuthorWorksParseOperation( authorKey: queryText, offset: offset, cacheFile: cacheFile, coreDataStack: coreDataStack, updateResults: updateResults )
+        downloadOperation = AuthorWorksDownloadOperation( queryText: queryText, offset: offset, limit: limit, cacheFile: cacheFile )
+        parseOperation = AuthorWorksParseOperation( authorKey: queryText, offset: offset, limit: limit, cacheFile: cacheFile, coreDataStack: coreDataStack, updateResults: updateResults )
         
         let finishOperation = NSBlockOperation( block: completionHandler )
         

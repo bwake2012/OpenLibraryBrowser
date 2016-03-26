@@ -16,7 +16,7 @@ class AuthorWorksDownloadOperation: GroupOperation {
     // MARK: Initialization
     
     /// - parameter cacheFile: The file `NSURL` to which the list of author works will be downloaded.
-    init( queryText: String, offset: Int, cacheFile: NSURL) {
+    init( queryText: String, offset: Int, limit: Int, cacheFile: NSURL) {
 
         self.cacheFile = cacheFile
         super.init(operations: [])
@@ -31,7 +31,7 @@ class AuthorWorksDownloadOperation: GroupOperation {
             should always prefer to use https.
         */
         let query = queryText.stringByAddingPercentEncodingForRFC3986()!
-        let urlString = "https://openlibrary.org/authors/\(query)/works.json?offset=\(offset)"
+        let urlString = "https://openlibrary.org/authors/\(query)/works.json?offset=\(offset)&limit=\(limit)"
         let url = NSURL( string: urlString )!
         let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
             
