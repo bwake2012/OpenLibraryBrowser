@@ -13,6 +13,8 @@ import CoreData
 import BNRCoreDataStack
 
 private let kAuthorSearchCache = "authorNameSearch"
+
+private let kPageSize = 100
     
 class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate {
     
@@ -21,6 +23,7 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
     let tableView: UITableView?
 
     var operationQueue: OperationQueue
+    var authorSearchOperation: Operation?
     
     let coreDataStack: CoreDataStack
     private lazy var fetchedResultsController: FetchedOLAuthorSearchResultController = {
@@ -50,11 +53,9 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
     var searchResults = SearchResults()
     
     var highWaterMark = 0
+    var nextOffset = 0
     
-    lazy var hasPhotos: [Bool] = {
-
-        return [Bool]( count: self.fetchedResultsController.count, repeatedValue: true )
-    }()
+    lazy var hasPhotos = [Bool]()
     
     init?( tableView: UITableView, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         
@@ -69,17 +70,19 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
     
     func numberOfSections() -> Int {
         
-        return fetchedResultsController.sections?.count ?? 0
+        return fetchedResultsController.sections?.count ?? 1
     }
 
     func numberOfRowsInSection( section: Int ) -> Int {
 
-        let rows = max( searchResults.numFound, fetchedResultsController.sections?[section].objects.count ?? 0 )
+        let rows = fetchedResultsController.sections?[section].objects.count ?? 0
 
         return rows
     }
     
     func objectAtIndexPath( indexPath: NSIndexPath ) -> OLAuthorSearchResult? {
+        
+        if 0 == searchResults.numFound { return nil }
         
         guard let sections = fetchedResultsController.sections else {
             assertionFailure("Sections missing")
@@ -88,7 +91,9 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
         
         let section = sections[indexPath.section]
         if indexPath.row >= section.objects.count {
+
             return nil
+
         } else {
             
             return section.objects[indexPath.row]
@@ -106,24 +111,30 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
 
         cell.configure( result )
         
-        print( "author: \(result.name) has photo: \(hasPhotos[Int(result.index)])" )
-
         let localURL = result.localURL( "S" )
+        let index = Int( result.index )
+
+        self.coreDataStack.mainQueueContext.saveContext()
+        
         if cell.displayImage( localURL ) {
             
-            if !hasPhotos[Int(result.index)] {
-
-                hasPhotos[Int(result.index)] = true
-            }
+            hasPhotos[index] = true
 
         } else {
         
-            if hasPhotos[Int(result.index)] {
+            if let detail = getAuthorDetail( result ) {
+                
+                hasPhotos[index] = detail.hasPhotos
+            }
+            if hasPhotos[index] {
             
-                queueGetAuthorThumbByOLID( cell, result: result )
+                queueGetAuthorThumbByOLID( cell, key: result.key, parentID: result.objectID, index: index, url: localURL )
             }
         }
         
+        // not all the authors have photos under their OLID. Some only have them under a photo ID
+        print( "\(result.index) author: \(result.name) has photo: \(hasPhotos[index])" )
+
         return result
     }
     
@@ -143,66 +154,89 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
 
     func newQuery( authorName: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
         
-        self.searchResults = SearchResults()
-        self.authorName = authorName
-        self.highWaterMark = 0
-//        self.tableView.scrollToRowAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ), atScrollPosition: .Top, animated: false )
+        if self.searchResults.numFound > 0 {
+            
+            self.tableView!.scrollToRowAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ), atScrollPosition: .Top, animated: false )
+        }
         
-        let authorSearchOperation =
-            AuthorNameSearchOperation(
-                    queryText: authorName,
-                    offset: 0,
-                    coreDataStack: coreDataStack,
-                    updateResults: self.updateResults
-                ) {
+        if authorName != self.authorName && nil == authorSearchOperation {
+            
+            self.searchResults = SearchResults()
+            self.authorName = authorName
+            self.highWaterMark = 0
+            self.nextOffset = kPageSize
+            self.hasPhotos = [Bool]()
+            
+            authorSearchOperation =
+                AuthorNameSearchOperation(
+                        queryText: authorName,
+                        offset: highWaterMark, limit: kPageSize,
+                        coreDataStack: coreDataStack,
+                        updateResults: self.updateResults
+                    ) {
+                        [weak self] in
 
-                    dispatch_async( dispatch_get_main_queue() ) {
-                        
-                            refreshControl?.endRefreshing()
-                            self.updateUI()
+                        if let strongSelf = self {
+                            
+                            dispatch_async( dispatch_get_main_queue() ) {
+                                
+                                    refreshControl?.endRefreshing()
+                                    strongSelf.updateUI()
+                                }
+                            strongSelf.authorSearchOperation = nil
                         }
-                }
-        
-        authorSearchOperation.userInitiated = userInitiated
-        operationQueue.addOperation( authorSearchOperation )
-        
-//        print( "operationQueue:\(operationQueue.operationCount) \(operationQueue.suspended ? "Suspended" : "Active")" )
-//        for op in operationQueue.operations {
-//            
-//            print( "\(op.name) \(op.executing ? "executing" : (op.finished ? "finished" : (op.cancelled ? "cancelled" : (op.ready ? "ready" : "not ready"))))" )
-//        }
+                    }
+            
+            authorSearchOperation!.userInitiated = userInitiated
+            operationQueue.addOperation( authorSearchOperation! )
+        }
     }
     
     func nextQueryPage( offset: Int ) -> Void {
         
-        if 0 == operationQueue.operationCount && !authorName.isEmpty {
+        if !authorName.isEmpty && nil == self.authorSearchOperation {
             
-            let authorSearchOperation =
+            nextOffset = offset + kPageSize
+            authorSearchOperation =
                 AuthorNameSearchOperation(
                         queryText: self.authorName,
-                        offset: offset,
+                        offset: offset, limit: kPageSize,
                         coreDataStack: coreDataStack,
                         updateResults: self.updateResults
                     ) {
                 
-                dispatch_async( dispatch_get_main_queue() ) {
-    //                refreshControl?.endRefreshing()
-//                    self.updateUI()
-                }
+                    [weak self] in
+                    dispatch_async( dispatch_get_main_queue() ) {
+        //                refreshControl?.endRefreshing()
+    //                    self.updateUI()
+                    }
+                    if let strongSelf = self {
+                        
+                        strongSelf.authorSearchOperation = nil
+                    }
             }
             
-            authorSearchOperation.userInitiated = false
-            operationQueue.addOperation( authorSearchOperation )
+            authorSearchOperation!.userInitiated = false
+            operationQueue.addOperation( authorSearchOperation! )
         }
+    }
+    
+    func clearQuery() {
+        
+        let queryClearOperation = AuthorSearchResultsDeleteOperation( coreDataStack: coreDataStack )
+        
+        queryClearOperation.userInitiated = false
+        operationQueue.addOperation( queryClearOperation )
+            
     }
     
     private func needAnotherPage( index: Int ) -> Bool {
         
         return
-            operationQueue.operationCount == 0 &&
+            nil == self.authorSearchOperation &&
             !authorName.isEmpty &&
             highWaterMark < searchResults.numFound &&
-            index >= ( highWaterMark - ( searchResults.pageSize / 4 ) )
+            index >= ( self.fetchedResultsController.count - 1 )
     }
     
     // MARK: SearchResultsUpdater
@@ -210,31 +244,39 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
         
         self.searchResults = searchResults
         self.highWaterMark = searchResults.start + searchResults.pageSize
+        if searchResults.numFound > hasPhotos.count {
+            self.hasPhotos.appendContentsOf( [Bool]( count: searchResults.numFound - hasPhotos.count, repeatedValue: true ) )
+        }
     }
     
     // MARK: FetchedResultsControllerDelegate
     func fetchedResultsControllerDidPerformFetch(controller: FetchedResultsController< OLAuthorSearchResult >) {
 
-        tableView?.reloadData()
+        if authorName.isEmpty {
+            self.highWaterMark = fetchedResultsController.count
+            self.searchResults = SearchResults( start: 0, numFound: highWaterMark, pageSize: 100 )
+            tableView?.reloadData()
+            self.hasPhotos = [Bool]( count: highWaterMark, repeatedValue: true )
+        }
     }
     
     func fetchedResultsControllerWillChangeContent( controller: FetchedResultsController< OLAuthorSearchResult > ) {
-//        tableView?.beginUpdates()
+        tableView?.beginUpdates()
     }
     
     func fetchedResultsControllerDidChangeContent( controller: FetchedResultsController< OLAuthorSearchResult > ) {
-//        tableView?.endUpdates()
+        tableView?.endUpdates()
     }
     
     func fetchedResultsController( controller: FetchedResultsController< OLAuthorSearchResult >,
         didChangeObject change: FetchedResultsObjectChange< OLAuthorSearchResult > ) {
             switch change {
             case let .Insert(_, indexPath):
-                // tableView?.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableView?.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
             case let .Delete(_, indexPath):
-                // tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
             case let .Move(_, fromIndexPath, toIndexPath):
@@ -257,17 +299,21 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
     }
     
     // MARK: Utility
-    func queueGetAuthorThumbByDetail( cell: AuthorSearchResultTableViewCell, result: OLAuthorSearchResult ) {
+    func queueGetAuthorThumbByDetail( cell: AuthorSearchResultTableViewCell, key: String, parentID: NSManagedObjectID, index: Int, url: NSURL ) {
         
         let authorDetailGetOperation =
             AuthorDetailWithThumbGetOperation(
-                queryText: result.key, size: "S",
+            queryText: key, parentObjectID: parentID, size: "S",
                 coreDataStack: self.coreDataStack ) {
+                    [weak self] in
                     
-                    dispatch_async( dispatch_get_main_queue() ) {
-                        
-                        let url = result.localURL( "S" )
-                        self.hasPhotos[Int(result.index)] = cell.displayImage( url )
+                    guard let strongSelf = self else { return }
+                    
+                    if index < strongSelf.hasPhotos.count {
+                        dispatch_async( dispatch_get_main_queue() ) {
+                            
+                            strongSelf.hasPhotos[Int(index)] = cell.displayImage( url )
+                        }
                     }
         }
     
@@ -275,23 +321,34 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
         self.operationQueue.addOperation( authorDetailGetOperation )
     }
     
-    func queueGetAuthorThumbByOLID( cell: AuthorSearchResultTableViewCell, result: OLAuthorSearchResult ) {
+    func queueGetAuthorThumbByOLID( cell: AuthorSearchResultTableViewCell, key: String, parentID: NSManagedObjectID, index: Int, url: NSURL ) {
         
-        let url = result.localURL( "S" )
+        var olid = key
+        if key.hasPrefix( kAuthorsPrefix ) {
+            
+            olid = key.substringFromIndex( key.startIndex.advancedBy( 9 ) )
+        }
         
         let authorThumbnailGetOperation =
-            ImageGetOperation( stringID: result.key, imageKeyName: "olid", localURL: url, size: "S", type: "a" ) {
+            ImageGetOperation( stringID: olid, imageKeyName: "olid", localURL: url, size: "S", type: "a" ) {
                 
                 dispatch_async( dispatch_get_main_queue() ) {
                     
                     if !cell.displayImage( url ) {
                         
-                        self.queueGetAuthorThumbByDetail( cell, result: result )
+                        self.queueGetAuthorThumbByDetail( cell, key: key, parentID: parentID, index: index, url: url )
                     }
                 }
         }
         
         authorThumbnailGetOperation.userInitiated = true
         operationQueue.addOperation( authorThumbnailGetOperation )
+    }
+    
+    func getAuthorDetail( result: OLAuthorSearchResult ) -> OLAuthorDetail? {
+        
+//        print( "\(result.name) toDetail: \(result.toDetail?.key)" )
+        
+        return result.toDetail
     }
 }

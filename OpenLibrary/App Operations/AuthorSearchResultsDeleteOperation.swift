@@ -20,11 +20,6 @@ class AuthorSearchResultsDeleteOperation: Operation {
         self.deleteContext = coreDataStack.newBackgroundWorkerMOC()
     }
     
-    deinit {
-        
-        print( "\(self.dynamicType.description()) deinit" )
-    }
-    
     override func execute() {
         
         let fetchRequest = NSFetchRequest( entityName: OLAuthorSearchResult.entityName )

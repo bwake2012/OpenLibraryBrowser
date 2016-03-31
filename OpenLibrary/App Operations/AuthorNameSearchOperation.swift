@@ -30,7 +30,7 @@ class AuthorNameSearchOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, offset: Int, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater, completionHandler: Void -> Void ) {
+    init( queryText: String, offset: Int, limit: Int, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater, completionHandler: Void -> Void ) {
 
         self.coreDataStack = coreDataStack
         
@@ -46,7 +46,7 @@ class AuthorNameSearchOperation: GroupOperation {
         
             There is an optional operation 0 to delete the existing contents of the Core Data store
         */
-        downloadOperation = AuthorNameSearchResultsDownloadOperation( queryText: queryText, offset: offset, cacheFile: cacheFile )
+        downloadOperation = AuthorNameSearchResultsDownloadOperation( queryText: queryText, offset: offset, limit: limit, cacheFile: cacheFile )
         parseOperation = AuthorNameSearchResultsParseOperation( cacheFile: cacheFile, coreDataStack: coreDataStack, updateResults: updateResults )
         
         let finishOperation = NSBlockOperation( block: completionHandler )
@@ -70,11 +70,6 @@ class AuthorNameSearchOperation: GroupOperation {
         addCondition( MutuallyExclusive<AuthorNameSearchOperation>() )
         
         name = "Author Name Search " + queryText
-    }
-    
-    deinit {
-        
-        print( "\(self.dynamicType.description()) deinit" )
     }
     
     override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {

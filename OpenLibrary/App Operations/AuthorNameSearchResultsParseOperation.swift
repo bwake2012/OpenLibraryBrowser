@@ -11,6 +11,8 @@ import CoreData
 
 import BNRCoreDataStack
 
+let kAuthorsPrefix = "/authors/"
+
 /// A struct to represent a parsed author search result.
 private class ParsedSearchResult: OpenLibraryObject {
     
@@ -105,11 +107,6 @@ class AuthorNameSearchResultsParseOperation: Operation {
         name = "Parse Author Search Results"
     }
     
-    deinit {
-        
-        print( "\(self.dynamicType.description()) deinit" )
-    }
-    
     override func execute() {
         guard let stream = NSInputStream(URL: cacheFile) else {
             finish()
@@ -173,7 +170,7 @@ class AuthorNameSearchResultsParseOperation: Operation {
 
             if nil == error {
                 self.updateResults(
-                        SearchResults( start: start, numFound: numFound, pageSize: results.count )
+                        SearchResults( start: Int( start ), numFound: Int( numFound ), pageSize: results.count )
                     )
             }
         
@@ -187,7 +184,11 @@ class AuthorNameSearchResultsParseOperation: Operation {
         
         result.sequence = parsed.sequence
         result.index = parsed.index
-        result.key = parsed.key
+        if parsed.key.hasPrefix( kAuthorsPrefix ) {
+            result.key = parsed.key
+        } else {
+            result.key = kAuthorsPrefix + parsed.key
+        }
         result.name = parsed.name
         result.type = parsed.type
         result.birth_date = parsed.birth_date

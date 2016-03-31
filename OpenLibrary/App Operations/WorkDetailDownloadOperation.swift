@@ -51,11 +51,6 @@ class WorkDetailDownloadOperation: GroupOperation {
         addOperation(taskOperation)
     }
         
-    deinit {
-        
-        print( "\(self.dynamicType.description()) deinit" )
-    }
-
     func downloadFinished(url: NSURL?, response: NSHTTPURLResponse?, error: NSError?) {
         if let localURL = url {
             do {

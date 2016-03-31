@@ -37,17 +37,14 @@ class ImageGetOperation: GroupOperation {
         
         super.init( operations: [downloadOperation, finishOperation] )
         
+//        addCondition( MutuallyExclusive<ImageGetOperation>() )
+
         name = "Get Image"
     }
 
     convenience init( numberID: Int, imageKeyName: String, localURL: NSURL, size: String, type: String, completionHandler: Void -> Void ) {
 
         self.init( stringID: String( numberID ), imageKeyName: imageKeyName, localURL: localURL, size: size, type: type, completionHandler: completionHandler )
-    }
-    
-    deinit {
-        
-        print( "\(self.dynamicType.description()) deinit" )
     }
     
     override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
@@ -83,7 +80,7 @@ class ImageGetOperation: GroupOperation {
             case failedJSON:
                 // We failed because the JSON was malformed.
                 alert.title = "Unable to Download"
-                alert.message = "Cannot parse Author Search results. Try again later."
+                alert.message = "Cannot parse Image Get results. Try again later."
 
             default:
                 print( "\(errorReason)" )

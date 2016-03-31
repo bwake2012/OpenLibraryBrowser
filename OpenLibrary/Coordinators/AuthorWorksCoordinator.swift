@@ -23,15 +23,17 @@ class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
     let tableView: UITableView?
 
     var operationQueue: OperationQueue
+    var authorWorksGetOperation: Operation?
     
     let coreDataStack: CoreDataStack
     private lazy var fetchedResultsController: FetchedOLWorkDetailController = {
         
         let fetchRequest = NSFetchRequest( entityName: OLWorkDetail.entityName )
-        fetchRequest.predicate = NSPredicate( format: "author_key==%@", "/authors/\(self.authorKey)" )
+        let key = self.searchInfo.key
+        fetchRequest.predicate = NSPredicate( format: "author_key==%@", "\(key)" )
         
         fetchRequest.sortDescriptors =
-            [NSSortDescriptor(key: "coversFound", ascending: false),
+            [// NSSortDescriptor(key: "coversFound", ascending: false),
              NSSortDescriptor(key: "index", ascending: true)]
         
         let frc = FetchedOLWorkDetailController( fetchRequest: fetchRequest,
@@ -42,16 +44,15 @@ class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
         return frc
     }()
     
-    var authorKey = ""
-    var worksCount = Int( 0 )
+    var searchInfo: OLAuthorSearchResult
     var searchResults = SearchResults()
     
     var highWaterMark = 0
     
-    init?( searchInfo: OLAuthorSearchResult.SearchInfo, tableView: UITableView, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
+    init?( searchInfo: OLAuthorSearchResult, tableView: UITableView, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         
-        self.authorKey = searchInfo.key
-        self.worksCount = searchInfo.work_count
+        self.searchInfo = searchInfo
+
         self.tableView = tableView
         self.operationQueue = operationQueue
         self.coreDataStack = coreDataStack
@@ -68,7 +69,7 @@ class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
 
     func numberOfRowsInSection( section: Int ) -> Int {
 
-        return max( self.worksCount, fetchedResultsController.sections?[section].objects.count ?? 0 )
+        return fetchedResultsController.sections?[section].objects.count ?? 0
     }
     
     
@@ -101,6 +102,7 @@ class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
         
 //        print( "work: \(result.title) has covers: \(!result.covers.isEmpty)" )
         
+        // not all the authors have photos under their OLID. Some only have them under a photo ID
         let localURL = result.localURL( "S" )
         if !cell.displayImage( localURL ) {
             
@@ -138,61 +140,69 @@ class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
 
     func newQuery( authorKey: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
 
-        self.searchResults = SearchResults()
-        self.authorKey = authorKey
-        self.highWaterMark = 0
-//        self.tableView.scrollToRowAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ), atScrollPosition: .Top, animated: false )
-        
-        let authorWorksGetOperation =
-            AuthorWorksGetOperation(
-                    queryText: authorKey,
-                    offset: 0, limit: kPageSize,
-                    coreDataStack: coreDataStack,
-                    updateResults: self.updateResults
-                ) {
-
-                    dispatch_async( dispatch_get_main_queue() ) {
+        if nil == authorWorksGetOperation {
+            self.searchResults = SearchResults()
+            self.highWaterMark = 0
+            
+            authorWorksGetOperation =
+                AuthorWorksGetOperation(
+                        queryText: authorKey,
+                        offset: 0, limit: kPageSize,
+                        coreDataStack: coreDataStack,
+                        updateResults: self.updateResults
+                    ) {
+                        [weak self] in
                         
-                            refreshControl?.endRefreshing()
-                            self.tableView?.reloadData()
+                        if let strongSelf = self {
+
+                            dispatch_async( dispatch_get_main_queue() ) {
+
+                                refreshControl?.endRefreshing()
+                                strongSelf.updateUI()
+                            }
+                            strongSelf.authorWorksGetOperation = nil
                         }
-                }
-        
-        authorWorksGetOperation.userInitiated = userInitiated
-        operationQueue.addOperation( authorWorksGetOperation )
-        
+                    }
+            
+            authorWorksGetOperation!.userInitiated = userInitiated
+            operationQueue.addOperation( authorWorksGetOperation! )
+        }
     }
     
     func nextQueryPage( offset: Int ) -> Void {
         
-        if 0 == operationQueue.operationCount && !authorKey.isEmpty {
+        if nil == authorWorksGetOperation && !searchInfo.key.isEmpty {
             
-            let authorWorksGetOperation =
+            authorWorksGetOperation =
                 AuthorWorksGetOperation(
-                        queryText: self.authorKey,
+                        queryText: self.searchInfo.key,
                         offset: offset, limit: kPageSize,
                         coreDataStack: coreDataStack,
                         updateResults: self.updateResults
                     ) {
-                
-                dispatch_async( dispatch_get_main_queue() ) {
-    //                refreshControl?.endRefreshing()
-//                    self.updateUI()
+                [weak self] in
+                        
+                if let strongSelf = self {
+                    dispatch_async( dispatch_get_main_queue() ) {
+        //                refreshControl?.endRefreshing()
+    //                    self.updateUI()
+                    }
+                    strongSelf.authorWorksGetOperation = nil
                 }
             }
             
-            authorWorksGetOperation.userInitiated = false
-            operationQueue.addOperation( authorWorksGetOperation )
+            authorWorksGetOperation!.userInitiated = false
+            operationQueue.addOperation( authorWorksGetOperation! )
         }
     }
     
     private func needAnotherPage( index: Int ) -> Bool {
         
         return
-            operationQueue.operationCount == 0 &&
-            !authorKey.isEmpty &&
-            highWaterMark < self.worksCount &&
-            index >= ( highWaterMark - ( searchResults.pageSize / 4 ) )
+            nil == authorWorksGetOperation &&
+            !self.searchInfo.key.isEmpty &&
+            highWaterMark < Int( self.searchInfo.work_count ) &&
+            index >= ( highWaterMark - 1 )
     }
     
     // MARK: SearchResultsUpdater
@@ -200,9 +210,9 @@ class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
         
         self.searchResults = searchResults
         self.highWaterMark = searchResults.start + searchResults.pageSize
-        if self.worksCount != searchResults.numFound {
-            self.worksCount = searchResults.numFound
-            self.tableView?.reloadData()
+        if self.searchInfo.work_count != Int64( searchResults.numFound ) {
+            self.searchInfo.work_count = Int64( searchResults.numFound )
+//            self.tableView?.reloadData()
         }
     }
     
@@ -211,7 +221,7 @@ class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
         
         if 0 == controller.count {
             
-            newQuery( authorKey, userInitiated: true, refreshControl: nil )
+            newQuery( searchInfo.key, userInitiated: true, refreshControl: nil )
 
         } else {
             
@@ -220,22 +230,22 @@ class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
     }
     
     func fetchedResultsControllerWillChangeContent( controller: FetchedOLWorkDetailController ) {
-//        tableView?.beginUpdates()
+        tableView?.beginUpdates()
     }
     
     func fetchedResultsControllerDidChangeContent( controller: FetchedOLWorkDetailController ) {
-//        tableView?.endUpdates()
+        tableView?.endUpdates()
     }
     
     func fetchedResultsController( controller: FetchedOLWorkDetailController,
         didChangeObject change: FetchedResultsObjectChange< OLWorkDetail > ) {
             switch change {
             case let .Insert(_, indexPath):
-                // tableView?.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableView?.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
             case let .Delete(_, indexPath):
-                // tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
             case let .Move(_, fromIndexPath, toIndexPath):

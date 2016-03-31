@@ -14,6 +14,7 @@ class OLAuthorSearchResult: OLManagedObject, CoreDataModelable {
     
     // MARK: Search Info
     struct SearchInfo {
+        let objectID: NSManagedObjectID
         let key: String
         let work_count: Int
     }
@@ -32,16 +33,18 @@ class OLAuthorSearchResult: OLManagedObject, CoreDataModelable {
     @NSManaged var top_work: String?
     @NSManaged var work_count: Int64
 
+    @NSManaged var toDetail: OLAuthorDetail?
+
 //    var has_photos = true
 
     var searchInfo: SearchInfo {
         
-        return SearchInfo( key: self.key, work_count: Int( self.work_count ) )
+        return SearchInfo( objectID: self.objectID, key: self.key, work_count: Int( self.work_count ) )
     }
     
     func localURL( size: String ) -> NSURL {
         
-        let key = "/authors/" + self.key
+        let key = self.key
         return super.localURL( key, size: size )
     }
 

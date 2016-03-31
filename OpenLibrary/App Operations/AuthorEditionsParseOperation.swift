@@ -396,11 +396,6 @@ class AuthorEditionsParseOperation: Operation {
         name = "Parse Author Editions"
     }
     
-    deinit {
-        
-        print( "\(self.dynamicType.description()) deinit" )
-    }
-
     override func execute() {
         guard let stream = NSInputStream(URL: cacheFile) else {
             finish()
@@ -470,7 +465,7 @@ class AuthorEditionsParseOperation: Operation {
 
         let result = NSEntityDescription.insertNewObjectForEntityForName( OLEditionDetail.entityName, inManagedObjectContext: context) as! OLEditionDetail
 
-        result.author_key = "/authors/\(authorKey)"
+        result.author_key = "\(authorKey)"
         result.index = Int64( index )
         
         result.key = parsed.key

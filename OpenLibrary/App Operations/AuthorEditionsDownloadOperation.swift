@@ -33,7 +33,7 @@ class AuthorEditionsDownloadOperation: GroupOperation {
         // ?type=/type/edition&*=&authors=/authors/OL26320A
         let query = queryText.stringByAddingPercentEncodingForRFC3986()!
         let urlString =
-            "https://openlibrary.org/query.json?type=/type/edition&authors=/authors/\(query)&*="
+            "https://openlibrary.org/query.json?type=/type/edition&authors=\(query)&*="
         let url = NSURL( string: urlString )!
         let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
             
@@ -55,11 +55,6 @@ class AuthorEditionsDownloadOperation: GroupOperation {
         print( urlString )
     }
     
-    deinit {
-        
-        print( "\(self.dynamicType.description()) deinit" )
-    }
-
     func downloadFinished(url: NSURL?, response: NSHTTPURLResponse?, error: NSError?) {
         if let localURL = url {
             do {

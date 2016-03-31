@@ -165,11 +165,6 @@ class WorkDetailParseOperation: Operation {
         name = "Parse Work Detail Results"
     }
     
-    deinit {
-        
-        print( "\(self.dynamicType.description()) deinit" )
-    }
-    
     override func execute() {
         guard let stream = NSInputStream(URL: cacheFile) else {
             finish()
@@ -200,7 +195,7 @@ class WorkDetailParseOperation: Operation {
 
         context.performBlock {
             
-            if let newObject = OLWorkDetail.parseJSON( "", parentKey: "", index: 0, json: resultSet, moc: self.context ) {
+            if let newObject = OLWorkDetail.parseJSON( "", index: 0, json: resultSet, moc: self.context ) {
                 
                 self.covers = newObject.covers
                 

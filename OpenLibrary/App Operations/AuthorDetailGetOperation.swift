@@ -27,7 +27,7 @@ class AuthorDetailGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, coreDataStack: CoreDataStack, completionHandler: Void -> Void ) {
+    init( queryText: String, parentObjectID: NSManagedObjectID, coreDataStack: CoreDataStack, completionHandler: Void -> Void ) {
 
         let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
 
@@ -38,11 +38,9 @@ class AuthorDetailGetOperation: GroupOperation {
             1. The operation to download the JSON feed
             2. The operation to parse the JSON feed and insert the elements into the Core Data store
             3. The operation to invoke the completion handler
-        
-            There is an optional operation 0 to delete the existing contents of the Core Data store
         */
         downloadOperation = AuthorDetailDownloadOperation( queryText: queryText, cacheFile: cacheFile )
-        parseOperation = AuthorDetailParseOperation( cacheFile: cacheFile, coreDataStack: coreDataStack )
+        parseOperation = AuthorDetailParseOperation( parentObjectID: parentObjectID, cacheFile: cacheFile, coreDataStack: coreDataStack )
         
         let finishOperation = NSBlockOperation( block: completionHandler )
         
@@ -52,14 +50,9 @@ class AuthorDetailGetOperation: GroupOperation {
         
         super.init( operations: [downloadOperation, parseOperation, finishOperation] )
 
-        name = "Get Author Detail"
+        name = "Get Author Detail " + queryText
     }
-    
-    deinit {
         
-        print( "\(self.dynamicType.description()) deinit" )
-    }
-    
     override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
         if let firstError = errors.first where (operation === downloadOperation || operation === parseOperation) {
             produceAlert(firstError)

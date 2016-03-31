@@ -167,12 +167,14 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable, OLObjectWithImages {
 
     // MARK: Search Info
     struct SearchInfo {
+        
+        let objectID: NSManagedObjectID
         let key: String
     }
     
     static let entityName = "WorkDetail"
     
-    class func parseJSON( parentType: String, parentKey: String, index: Int, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLWorkDetail? {
+    class func parseJSON( parentKey: String, index: Int, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLWorkDetail? {
         
         guard let parsed = ParsedSearchResult.fromJSON( json ) else { return nil }
             
@@ -181,10 +183,10 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable, OLObjectWithImages {
                     OLWorkDetail.entityName, inManagedObjectContext: moc
                 ) as? OLWorkDetail else { return nil }
             
-        if "authors" == parentType {
-            newObject.author_key = "/\(parentType)/\(parentKey)"
-        } else if "works" == parentType {
-            newObject.work_key = "/\(parentType)/\(parentKey)"
+        if parentKey.hasPrefix( "/authors/" ) {
+            newObject.author_key = parentKey
+        } else if parentKey.hasPrefix( "/works/" ) {
+            newObject.work_key = parentKey
         }
         newObject.index = Int64( index )
         
@@ -253,12 +255,12 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable, OLObjectWithImages {
     
     var workSearchInfo: SearchInfo {
         
-        return SearchInfo( key: self.key )
+        return SearchInfo( objectID: self.objectID, key: self.key )
     }
     
     var authorSearchInfo: SearchInfo {
         
-        return SearchInfo( key: self.author_key )
+        return SearchInfo( objectID: self.objectID, key: self.author_key )
     }
     
     func localURL( size: String ) -> NSURL {

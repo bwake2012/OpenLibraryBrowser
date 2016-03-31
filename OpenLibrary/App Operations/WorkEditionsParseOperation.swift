@@ -396,11 +396,6 @@ class WorkEditionsParseOperation: Operation {
         name = "Parse Work Editions"
     }
     
-    deinit {
-        
-        print( "\(self.dynamicType.description()) deinit" )
-    }
-
     override func execute() {
         guard let stream = NSInputStream(URL: cacheFile) else {
             finish()

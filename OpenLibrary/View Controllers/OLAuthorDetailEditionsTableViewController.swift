@@ -17,7 +17,7 @@ class OLAuthorDetailEditionsTableViewController: UITableViewController {
     var operationQueue: OperationQueue?
     var coreDataStack: CoreDataStack?
     
-    var searchInfo: OLAuthorSearchResult.SearchInfo?
+    var searchInfo: OLAuthorSearchResult?
     lazy var queryCoordinator: AuthorEditionsCoordinator = {
         return
             AuthorEditionsCoordinator(

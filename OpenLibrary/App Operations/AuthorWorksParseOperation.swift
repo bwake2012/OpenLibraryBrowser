@@ -51,11 +51,6 @@ class AuthorWorksParseOperation: Operation {
         name = "Parse Author Works"
     }
     
-    deinit {
-        
-        print( "\(self.dynamicType.description()) deinit" )
-    }
-
     override func execute() {
         guard let stream = NSInputStream(URL: cacheFile) else {
             finish()
@@ -84,7 +79,7 @@ class AuthorWorksParseOperation: Operation {
     
     private func parse( resultSet: [String: AnyObject] ) {
 
-        guard var numFound = resultSet["size"] as? Int where numFound > 0 else {
+        guard var numFound = resultSet["size"] as? Int else {
             
             updateResults( SearchResults( start: offset, numFound: offset, pageSize: 0 ) )
             finishWithError( nil )
@@ -93,6 +88,18 @@ class AuthorWorksParseOperation: Operation {
         
         guard let entries = resultSet["entries"] as? [[String: AnyObject]] else {
             
+            updateResults( SearchResults( start: offset, numFound: offset, pageSize: 0 ) )
+            finishWithError( nil )
+            return
+        }
+
+        if 0 == numFound {
+            
+            numFound = offset + entries.count
+        }
+            
+        if 0 == numFound {
+
             updateResults( SearchResults( start: offset, numFound: offset, pageSize: 0 ) )
             finishWithError( nil )
             return
@@ -107,7 +114,7 @@ class AuthorWorksParseOperation: Operation {
             var index = self.offset
             for entry in entries {
                 
-                if let newObject = OLWorkDetail.parseJSON( "authors", parentKey: self.authorKey, index: index, json: entry, moc: self.context ) {
+                if let newObject = OLWorkDetail.parseJSON( self.authorKey, index: index, json: entry, moc: self.context ) {
                 
                     index += 1
                     
@@ -124,43 +131,7 @@ class AuthorWorksParseOperation: Operation {
             self.finishWithError( error )
         }
     }
-    
-//    private func insert( authorKey: String, index: Int, parsed: ParsedSearchResult ) {
-//
-//        let result = NSEntityDescription.insertNewObjectForEntityForName( OLWorkDetail.entityName, inManagedObjectContext: context ) as! OLWorkDetail
-//        
-//        result.author_key = "/authors/\(authorKey)"
-//        result.index = Int64( index )
-//
-//        result.key = parsed.key
-//        result.created = parsed.created
-//        result.last_modified = parsed.last_modified
-//        result.revision = parsed.revision
-//        result.latest_revision = parsed.latest_revision
-//        result.type = parsed.type
-//        
-//        result.title = parsed.title
-//        result.subtitle = parsed.subtitle
-//        result.authors = parsed.authors
-//        result.translated_titles = parsed.translated_titles
-//        result.subjects = parsed.subjects
-//        result.subject_places = parsed.subject_places
-//        result.subject_times = parsed.subject_times
-//        result.subject_people = parsed.subject_people
-//        result.work_description = parsed.work_description
-//        result.dewey_number = parsed.dewey_number
-//        result.lc_classifications = parsed.lc_classifications
-//        result.first_sentence = parsed.first_sentence
-//        result.original_languages = parsed.original_languages
-//        result.other_titles = parsed.other_titles
-//        result.first_publish_date = parsed.first_publish_date
-//        result.links = parsed.links
-//        result.notes = parsed.notes
-//        // cover_edition of type /type/edition
-//        result.covers = parsed.covers
-//        result.coversFound = parsed.covers.count > 0
-//    }
-    
+        
     /**
         Save the context, if there are any changes.
     

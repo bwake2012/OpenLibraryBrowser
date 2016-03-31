@@ -60,11 +60,6 @@ class WorkEditionsGetOperation: GroupOperation {
         name = "Get Work Editions"
     }
     
-    deinit {
-        
-        print( "\(self.dynamicType.description()) deinit" )
-    }
-    
     override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
         if let firstError = errors.first where (operation === downloadOperation || operation === parseOperation) {
             produceAlert(firstError)

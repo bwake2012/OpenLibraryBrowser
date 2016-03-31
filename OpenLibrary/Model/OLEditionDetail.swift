@@ -14,6 +14,8 @@ class OLEditionDetail: NSManagedObject, CoreDataModelable {
 
     // MARK: Search Info
     struct SearchInfo {
+        
+        let objectID: NSManagedObjectID
         let key: String
     }
     
@@ -82,12 +84,12 @@ class OLEditionDetail: NSManagedObject, CoreDataModelable {
     
     var editionSearchInfo: SearchInfo {
         
-        return SearchInfo( key: self.key )
+        return SearchInfo( objectID: self.objectID, key: self.key )
     }
     
     var authorSearchInfo: SearchInfo {
         
-        return SearchInfo( key: self.author_key )
+        return SearchInfo( objectID: self.objectID, key: self.author_key )
     }
 
 }

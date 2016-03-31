@@ -22,6 +22,16 @@ class OpenLibraryObject {
         return ( f )
     }()
     
+    private static let altDatestampFormatter: NSDateFormatter = {
+        
+        let f = NSDateFormatter()
+        f.locale = NSLocale( localeIdentifier: "en_US_POSIX" )
+        f.dateFormat = "yyyy"
+        f.timeZone = NSTimeZone( abbreviation: "UTC" )
+        
+        return ( f )
+    }()
+    
     // time stamps must be converted to NSDate
     // 2011-12-02T18:33:15.439307
     private static let timestampFormatter: NSDateFormatter = {
@@ -34,11 +44,27 @@ class OpenLibraryObject {
         return ( f )
     }()
     
+    private static let altTimestampFormatter: NSDateFormatter = {
+        
+        let f = NSDateFormatter()
+        f.locale = NSLocale( localeIdentifier: "en_US_POSIX" )
+        f.dateFormat = "yyyy-MM-dd' 'HH:mm:ss.SSSSSS"
+        f.timeZone = NSTimeZone( abbreviation: "UTC" )
+        
+        return ( f )
+    }()
+    
     static func OLDateStamp( dateStamp: AnyObject? ) -> NSDate? {
         
         guard let dateStamp = dateStamp as? String else { return nil }
         
-        return OpenLibraryObject.datestampFormatter.dateFromString( dateStamp )
+        var dateStampVal = OpenLibraryObject.datestampFormatter.dateFromString( dateStamp )
+        if nil == dateStampVal {
+            
+            dateStampVal = OpenLibraryObject.altDatestampFormatter.dateFromString( dateStamp )
+        }
+        
+        return dateStampVal
     }
     
     static func OLTimeStamp( timeStamp: AnyObject? ) -> NSDate? {
@@ -50,7 +76,13 @@ class OpenLibraryObject {
         
         guard let timeStampString = timeStamp["value"] else { return nil }
         
-        return OpenLibraryObject.timestampFormatter.dateFromString( timeStampString )
+        var timeStampVal = OpenLibraryObject.timestampFormatter.dateFromString( timeStampString )
+        if nil == timeStampVal {
+            
+            timeStampVal = OpenLibraryObject.altTimestampFormatter.dateFromString( timeStampString )
+        }
+        
+        return timeStampVal
     }
     
     static func OLLinks( match: [String: AnyObject] ) -> [[String: String]] {

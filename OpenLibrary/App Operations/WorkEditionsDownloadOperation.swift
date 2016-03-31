@@ -30,7 +30,6 @@ class WorkEditionsDownloadOperation: GroupOperation {
             or when the services you use offer secure communication options, you
             should always prefer to use https.
         */
-        // ?type=/type/edition&*=&authors=/authors/OL26320A
         let query = queryText.stringByAddingPercentEncodingForRFC3986()!
         let urlString =
             "https://openlibrary.org/works/\(query)/editions.json?*="
@@ -53,11 +52,6 @@ class WorkEditionsDownloadOperation: GroupOperation {
         addOperation(taskOperation)
     }
     
-    deinit {
-        
-        print( "\(self.dynamicType.description()) deinit" )
-    }
-
     func downloadFinished(url: NSURL?, response: NSHTTPURLResponse?, error: NSError?) {
         if let localURL = url {
             do {

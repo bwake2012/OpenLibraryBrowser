@@ -16,7 +16,7 @@ class AuthorNameSearchResultsDownloadOperation: GroupOperation {
     // MARK: Initialization
     
     /// - parameter cacheFile: The file `NSURL` to which the earthquake feed will be downloaded.
-    init( queryText: String, offset: Int, cacheFile: NSURL) {
+    init( queryText: String, offset: Int, limit: Int, cacheFile: NSURL) {
 
         self.cacheFile = cacheFile
         super.init(operations: [])
@@ -31,7 +31,7 @@ class AuthorNameSearchResultsDownloadOperation: GroupOperation {
             should always prefer to use https.
         */
         let query = queryText.stringByAddingPercentEncodingForRFC3986()!
-        let urlString = "https://openlibrary.org/search/authors.json?offset=\(offset)&q=\(query)"
+        let urlString = "https://openlibrary.org/search/authors.json?offset=\(offset)&limit=\(limit)&q=\(query)"
         let url = NSURL( string: urlString )!
         let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
             
@@ -49,11 +49,6 @@ class AuthorNameSearchResultsDownloadOperation: GroupOperation {
         taskOperation.addObserver(networkObserver)
         
         addOperation(taskOperation)
-    }
-    
-    deinit {
-        
-        print( "\(self.dynamicType.description()) deinit" )
     }
     
     func downloadFinished(url: NSURL?, response: NSHTTPURLResponse?, error: NSError?) {

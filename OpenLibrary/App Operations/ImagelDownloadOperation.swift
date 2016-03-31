@@ -30,7 +30,7 @@ class ImageDownloadOperation: GroupOperation {
             or when the services you use offer secure communication options, you
             should always prefer to use https.
         */
-        let urlString = "https://covers.openlibrary.org/\(type)/\(imageKeyName)/\(stringID)-\(size).jpg"
+        let urlString = "https://covers.openlibrary.org/\(type)/\(imageKeyName)/\(stringID)-\(size).jpg?default=false"
         let url = NSURL( string: urlString )!
         let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
             
@@ -48,11 +48,6 @@ class ImageDownloadOperation: GroupOperation {
         taskOperation.addObserver(networkObserver)
         
         addOperation(taskOperation)
-    }
-    
-    deinit {
-        
-        print( "\(self.dynamicType.description()) deinit" )
     }
     
     func downloadFinished( url: NSURL?, response: NSHTTPURLResponse?, error: NSError? ) {

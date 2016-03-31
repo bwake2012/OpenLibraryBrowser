@@ -23,7 +23,6 @@
 		C46E7E511C861A7000D2ED51 /* AuthorNameSearchOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E7E4E1C861A7000D2ED51 /* AuthorNameSearchOperation.swift */; };
 		C46E7E521C861A7000D2ED51 /* AuthorSearchResultsDeleteOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E7E4F1C861A7000D2ED51 /* AuthorSearchResultsDeleteOperation.swift */; };
 		C46E7E531C861A7000D2ED51 /* AuthorNameSearchResultsDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E7E501C861A7000D2ED51 /* AuthorNameSearchResultsDownloadOperation.swift */; };
-		C46E7E551C861A8C00D2ED51 /* OLAuthorSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E7E541C861A8C00D2ED51 /* OLAuthorSearchViewController.swift */; };
 		C46E7E571C861E8500D2ED51 /* OLAuthorDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E7E561C861E8500D2ED51 /* OLAuthorDetail.swift */; };
 		C46E7E591C861EE900D2ED51 /* AuthorNameSearchResultsParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E7E581C861EE900D2ED51 /* AuthorNameSearchResultsParseOperation.swift */; };
 		C46E7E5B1C861EF500D2ED51 /* OLAuthorSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E7E5A1C861EF500D2ED51 /* OLAuthorSearchResult.swift */; };
@@ -31,6 +30,7 @@
 		C4817C1E1CA37DC300BDCD4D /* WorkDetailGetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4817C1B1CA37DC300BDCD4D /* WorkDetailGetOperation.swift */; };
 		C4817C211CA3817300BDCD4D /* WorkDetailParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4817C201CA3817300BDCD4D /* WorkDetailParseOperation.swift */; };
 		C4B2648E1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C4B2648C1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodeld */; };
+		C4C895F11CA99F3300271D52 /* OLAuthorSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C895F01CA99F3300271D52 /* OLAuthorSearchViewController.swift */; };
 		C4DA1F7B1C8A329B00DFA4BF /* AuthorWorksGetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DA1F771C8A329B00DFA4BF /* AuthorWorksGetOperation.swift */; };
 		C4DA1F7D1C8A329B00DFA4BF /* AuthorWorksDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DA1F791C8A329B00DFA4BF /* AuthorWorksDownloadOperation.swift */; };
 		C4DA1F7E1C8A329B00DFA4BF /* AuthorWorksParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DA1F7A1C8A329B00DFA4BF /* AuthorWorksParseOperation.swift */; };
@@ -137,7 +137,6 @@
 		C46E7E4E1C861A7000D2ED51 /* AuthorNameSearchOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorNameSearchOperation.swift; path = "App Operations/AuthorNameSearchOperation.swift"; sourceTree = "<group>"; };
 		C46E7E4F1C861A7000D2ED51 /* AuthorSearchResultsDeleteOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorSearchResultsDeleteOperation.swift; path = "App Operations/AuthorSearchResultsDeleteOperation.swift"; sourceTree = "<group>"; };
 		C46E7E501C861A7000D2ED51 /* AuthorNameSearchResultsDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorNameSearchResultsDownloadOperation.swift; path = "App Operations/AuthorNameSearchResultsDownloadOperation.swift"; sourceTree = "<group>"; };
-		C46E7E541C861A8C00D2ED51 /* OLAuthorSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLAuthorSearchViewController.swift; path = "View Controllers/OLAuthorSearchViewController.swift"; sourceTree = "<group>"; };
 		C46E7E561C861E8500D2ED51 /* OLAuthorDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLAuthorDetail.swift; path = Model/OLAuthorDetail.swift; sourceTree = "<group>"; };
 		C46E7E581C861EE900D2ED51 /* AuthorNameSearchResultsParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorNameSearchResultsParseOperation.swift; path = "App Operations/AuthorNameSearchResultsParseOperation.swift"; sourceTree = "<group>"; };
 		C46E7E5A1C861EF500D2ED51 /* OLAuthorSearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLAuthorSearchResult.swift; path = Model/OLAuthorSearchResult.swift; sourceTree = "<group>"; };
@@ -145,6 +144,7 @@
 		C4817C1B1CA37DC300BDCD4D /* WorkDetailGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkDetailGetOperation.swift; path = "App Operations/WorkDetailGetOperation.swift"; sourceTree = "<group>"; };
 		C4817C201CA3817300BDCD4D /* WorkDetailParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkDetailParseOperation.swift; path = "App Operations/WorkDetailParseOperation.swift"; sourceTree = "<group>"; };
 		C4B2648D1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OpenLibraryBrowser.xcdatamodel; sourceTree = "<group>"; };
+		C4C895F01CA99F3300271D52 /* OLAuthorSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLAuthorSearchViewController.swift; path = "View Controllers/OLAuthorSearchViewController.swift"; sourceTree = "<group>"; };
 		C4DA1F771C8A329B00DFA4BF /* AuthorWorksGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorWorksGetOperation.swift; path = "App Operations/AuthorWorksGetOperation.swift"; sourceTree = "<group>"; };
 		C4DA1F791C8A329B00DFA4BF /* AuthorWorksDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorWorksDownloadOperation.swift; path = "App Operations/AuthorWorksDownloadOperation.swift"; sourceTree = "<group>"; };
 		C4DA1F7A1C8A329B00DFA4BF /* AuthorWorksParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorWorksParseOperation.swift; path = "App Operations/AuthorWorksParseOperation.swift"; sourceTree = "<group>"; };
@@ -473,13 +473,13 @@
 		C4E35EA71C7E44450015D187 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C4E863971C9A32FB002C0E6B /* OLAuthorDetailEditionsTableViewController.swift */,
+				C46E7E4C1C8619C300D2ED51 /* OLAuthorDetailViewController.swift */,
+				C4DA1F7F1C8A5AA700DFA4BF /* OLAuthorDetailWorksTableViewController.swift */,
+				C4E35EA51C7E41B60015D187 /* OLAuthorSearchResultsTableViewController.swift */,
+				C4C895F01CA99F3300271D52 /* OLAuthorSearchViewController.swift */,
 				C4EF99D31CA3707900BEF2D3 /* OLWorkDetailEditionsTableViewController.swift */,
 				C4EF99D41CA3707900BEF2D3 /* OLWorkDetailViewController.swift */,
-				C46E7E541C861A8C00D2ED51 /* OLAuthorSearchViewController.swift */,
-				C4E35EA51C7E41B60015D187 /* OLAuthorSearchResultsTableViewController.swift */,
-				C46E7E4C1C8619C300D2ED51 /* OLAuthorDetailViewController.swift */,
-				C4E863971C9A32FB002C0E6B /* OLAuthorDetailEditionsTableViewController.swift */,
-				C4DA1F7F1C8A5AA700DFA4BF /* OLAuthorDetailWorksTableViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -787,7 +787,6 @@
 				C4E35E8C1C7E07D40015D187 /* UserNotificationCondition.swift in Sources */,
 				C4E35E6F1C7E07D40015D187 /* BlockObserver.swift in Sources */,
 				C4E35E921C7E0AB40015D187 /* NSLock+Operations.swift in Sources */,
-				C46E7E551C861A8C00D2ED51 /* OLAuthorSearchViewController.swift in Sources */,
 				C4EF99DC1CA3708900BEF2D3 /* WorkEditionsParseOperation.swift in Sources */,
 				C4E35E701C7E07D40015D187 /* BlockOperation.swift in Sources */,
 				C4E8638E1C9763E3002C0E6B /* AuthorWorksTableViewCell.swift in Sources */,
@@ -806,6 +805,7 @@
 				C42D61DA1C87D63800909D43 /* ImagelDownloadOperation.swift in Sources */,
 				C4E35E7D1C7E07D40015D187 /* NoCancelledDependencies.swift in Sources */,
 				C4EF99D61CA3707900BEF2D3 /* OLWorkDetailViewController.swift in Sources */,
+				C4C895F11CA99F3300271D52 /* OLAuthorSearchViewController.swift in Sources */,
 				C4677EA11C9DDB7D0070CDFD /* OLManagedObject.swift in Sources */,
 				C4E35E791C7E07D40015D187 /* LocationCondition.swift in Sources */,
 				C42D61D41C8738CC00909D43 /* AuthorDetailGetOperation.swift in Sources */,

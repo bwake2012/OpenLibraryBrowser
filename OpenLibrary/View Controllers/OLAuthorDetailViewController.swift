@@ -35,7 +35,7 @@ class OLAuthorDetailViewController: UIViewController {
     var operationQueue: OperationQueue?
     var coreDataStack: CoreDataStack?
 
-    var searchInfo: OLAuthorSearchResult.SearchInfo?
+    var searchInfo: OLAuthorSearchResult?
 
     // MARK: UIViewController
     override func viewDidLoad() {

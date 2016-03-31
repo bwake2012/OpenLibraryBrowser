@@ -38,6 +38,7 @@ class OLAuthorSearchViewController: UIViewController, UISearchBarDelegate {
                 vc.operationQueue = self.operationQueue
                 vc.coreDataStack = self.appCoreDataStack
                 self.searchResultsVC = vc
+//                vc.clearSearchResults()
             }
         }
     }

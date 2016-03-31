@@ -16,6 +16,7 @@
         <attribute name="revision" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="wikipedia" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="toSearchResults" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AuthorSearchResult" inverseName="toDetail" inverseEntity="AuthorSearchResult" syncable="YES"/>
     </entity>
     <entity name="AuthorSearchResult" representedClassName=".OLAuthorSearchResult" syncable="YES">
         <attribute name="birth_date" optional="YES" attributeType="Date" syncable="YES"/>
@@ -27,6 +28,7 @@
         <attribute name="top_work" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="work_count" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="toDetail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AuthorDetail" inverseName="toSearchResults" inverseEntity="AuthorDetail" syncable="YES"/>
     </entity>
     <entity name="EditionDetail" representedClassName=".OLEditionDetail" syncable="YES">
         <attribute name="accompanying_material" optional="YES" attributeType="String" syncable="YES"/>
@@ -132,9 +134,9 @@
         </compoundIndexes>
     </entity>
     <elements>
-        <element name="AuthorDetail" positionX="-63" positionY="-18" width="128" height="270"/>
-        <element name="AuthorSearchResult" positionX="-54" positionY="81" width="128" height="180"/>
-        <element name="WorkDetail" positionX="-54" positionY="99" width="128" height="450"/>
+        <element name="AuthorDetail" positionX="-63" positionY="-18" width="128" height="285"/>
+        <element name="AuthorSearchResult" positionX="-54" positionY="81" width="128" height="195"/>
         <element name="EditionDetail" positionX="-45" positionY="144" width="128" height="885"/>
+        <element name="WorkDetail" positionX="-54" positionY="99" width="128" height="450"/>
     </elements>
 </model>

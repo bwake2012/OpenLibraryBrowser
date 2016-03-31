@@ -60,11 +60,6 @@ class AuthorWorksGetOperation: GroupOperation {
         name = "Get Author Works " + queryText
     }
     
-    deinit {
-        
-        print( "\(self.dynamicType.description()) deinit" )
-    }
-    
     override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
         if let firstError = errors.first where (operation === downloadOperation || operation === parseOperation) {
             produceAlert(firstError)

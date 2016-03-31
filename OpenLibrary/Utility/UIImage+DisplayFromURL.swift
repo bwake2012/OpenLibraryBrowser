@@ -21,6 +21,7 @@ extension UIImageView {
             }
         }
 
+        self.image = nil
         return false
     }
 }

@@ -60,25 +60,42 @@ private class ParsedSearchResult: OpenLibraryObject {
         
         let wikipedia = OpenLibraryObject.OLString( match["wikipedia"] )
         
-        var revision = Int64( 0 )
-        if let r = match["revision"] as? Int64 {
+        var revision = match["revision"] as? Int64
+        var latest_revision = match["latest_revision"] as? Int64
+        if nil == revision && nil != latest_revision {
             
-            revision = r
-        }
+            revision = latest_revision
+            
+        } else if nil == latest_revision && nil != revision {
+            
+            latest_revision = revision
+            
+        } else if nil == revision && nil == latest_revision {
+            
+            revision = Int64( 0 )
+            latest_revision = Int64( 0 )
 
-        var latest_revision = Int64( 0 )
-        if let lr = match["latest_revision"] as? Int64 {
-            
-            latest_revision = lr
         }
         
-        let created = OpenLibraryObject.OLTimeStamp( match["created"] )
+        var created = OpenLibraryObject.OLTimeStamp( match["created"] )
+        var last_modified = OpenLibraryObject.OLTimeStamp( match["last_modified"] )
+        if nil == created && nil != last_modified {
+            
+            created = last_modified
         
-        let last_modified = OpenLibraryObject.OLTimeStamp( match["last_modified"] )
+        } else if nil == last_modified && nil != created {
+            
+            last_modified = created
+        }
         
         let type = match["type"] as? String ?? ""
         
-        return ParsedSearchResult( key: key, name: name, personal_name: personal_name, birth_date: birth_date, death_date: death_date, photos: photos, links: links, bio: bioText, alternate_names: alternate_names, wikipedia: wikipedia, revision: revision, latest_revision: latest_revision, created: created, last_modified: last_modified, type: type )
+        assert( nil != created )
+        assert( nil != last_modified )
+        assert( nil != revision )
+        assert( nil != latest_revision )
+        
+        return ParsedSearchResult( key: key, name: name, personal_name: personal_name, birth_date: birth_date, death_date: death_date, photos: photos, links: links, bio: bioText, alternate_names: alternate_names, wikipedia: wikipedia, revision: revision!, latest_revision: latest_revision!, created: created, last_modified: last_modified, type: type )
     }
     
     // MARK: Initialization
@@ -131,6 +148,7 @@ private class ParsedSearchResult: OpenLibraryObject {
 /// An `Operation` to parse earthquakes out of a downloaded feed from the USGS.
 class AuthorDetailParseOperation: Operation {
     
+    let parentObjectID: NSManagedObjectID
     let cacheFile: NSURL
     let context: NSManagedObjectContext
 
@@ -149,13 +167,15 @@ class AuthorDetailParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( cacheFile: NSURL, coreDataStack: CoreDataStack ) {
+    init( parentObjectID: NSManagedObjectID, cacheFile: NSURL, coreDataStack: CoreDataStack ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
             to replace the ones in the store.
         */
         
+        self.parentObjectID = parentObjectID
+
         self.cacheFile = cacheFile
         self.context = coreDataStack.newBackgroundWorkerMOC()
         self.context.mergePolicy = NSOverwriteMergePolicy
@@ -163,11 +183,6 @@ class AuthorDetailParseOperation: Operation {
         super.init()
 
         name = "Parse Author Detail Results"
-    }
-    
-    deinit {
-        
-        print( "\(self.dynamicType.description()) deinit" )
     }
     
     override func execute() {
@@ -206,11 +221,14 @@ class AuthorDetailParseOperation: Operation {
                 
                 self.photos = newResult.photos
                 
-                print( "\(newResult.name)" )
+                print( "detail: \(newResult.name)" )
             }
 
             let error = self.saveContext()
-
+            if nil != error {
+                
+                print( "\(error)" )
+            }
             self.finishWithError( error )
         }
     }
@@ -243,6 +261,11 @@ class AuthorDetailParseOperation: Operation {
             self.localThumbURL  = result.localURL( "S" )
             self.localMediumURL = result.localURL( "M" )
             self.localLargeURL  = result.localURL( "L" )
+        }
+        
+        if let parent = context.objectWithID( self.parentObjectID ) as? OLAuthorSearchResult {
+        
+            parent.toDetail = result
         }
     }
     

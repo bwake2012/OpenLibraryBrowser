@@ -26,7 +26,7 @@ class AuthorDetailCoordinator: NSObject, FetchedResultsControllerDelegate {
     private lazy var fetchedResultsController: FetchedOLAuthorDetailController = {
         
         let fetchRequest = NSFetchRequest(entityName: OLAuthorDetail.entityName)
-        fetchRequest.predicate = NSPredicate( format: "key==%@", "/authors/\(self.searchInfo.key)" )
+        fetchRequest.predicate = NSPredicate( format: "key==%@", "\(self.searchInfo.key)" )
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         
@@ -38,12 +38,12 @@ class AuthorDetailCoordinator: NSObject, FetchedResultsControllerDelegate {
         return frc
     }()
     
-    var searchInfo: OLAuthorSearchResult.SearchInfo
+    var searchInfo: OLAuthorSearchResult
     
     init(
             operationQueue: OperationQueue,
             coreDataStack: CoreDataStack,
-            searchInfo: OLAuthorSearchResult.SearchInfo,
+            searchInfo: OLAuthorSearchResult,
             authorDetailVC: OLAuthorDetailViewController
         ) {
         
@@ -54,11 +54,11 @@ class AuthorDetailCoordinator: NSObject, FetchedResultsControllerDelegate {
 
         super.init()
 
-        performFetch()
-    }
-    
-    deinit {
-        print( "\(self.dynamicType.description()) deinit" )
+        if nil == searchInfo.toDetail {
+            performFetch()
+        } else {
+            updateUI( searchInfo.toDetail! )
+        }
     }
     
     // MARK: FetchedResultsControllerDelegate
@@ -72,7 +72,7 @@ class AuthorDetailCoordinator: NSObject, FetchedResultsControllerDelegate {
             
             let getAuthorOperation =
             AuthorDetailGetOperation(
-                queryText: searchInfo.key,
+                queryText: searchInfo.key, parentObjectID: searchInfo.objectID,
                 coreDataStack: coreDataStack!
                 ) {
                     
@@ -96,6 +96,7 @@ class AuthorDetailCoordinator: NSObject, FetchedResultsControllerDelegate {
         didChangeObject change: FetchedResultsObjectChange< OLAuthorDetail > ) {
             switch change {
             case .Insert(_, _):
+                print( "\(searchInfo.toDetail?.name)" )
                 if let authorDetail = fetchedResultsController.first {
                     
                     updateUI( authorDetail )
@@ -131,7 +132,7 @@ class AuthorDetailCoordinator: NSObject, FetchedResultsControllerDelegate {
             
             if authorDetail.photos.count > 0 {
                 
-                let localURL = authorDetail.localURL( "B" )
+                let localURL = authorDetail.localURL( "M" )
                 if !(authorDetailVC.displayImage( localURL )) {
                     
                     let url = localURL

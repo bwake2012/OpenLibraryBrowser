@@ -26,7 +26,7 @@ class AuthorEditionsCoordinator: NSObject, FetchedResultsControllerDelegate {
     private lazy var fetchedResultsController: FetchedAuthorEditionsController = {
         
         let fetchRequest = NSFetchRequest( entityName: OLEditionDetail.entityName )
-        fetchRequest.predicate = NSPredicate( format: "author_key==%@", "/authors/\(self.authorKey)" )
+        fetchRequest.predicate = NSPredicate( format: "author_key==%@", "\(self.authorKey)" )
         
         fetchRequest.sortDescriptors =
             [NSSortDescriptor(key: "coversFound", ascending: false),
@@ -48,11 +48,11 @@ class AuthorEditionsCoordinator: NSObject, FetchedResultsControllerDelegate {
     
     var highWaterMark = 0
     
-    init?( searchInfo: OLAuthorSearchResult.SearchInfo, withCoversOnly: Bool, tableView: UITableView, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
+    init?( searchInfo: OLAuthorSearchResult, withCoversOnly: Bool, tableView: UITableView, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         
         self.authorKey = searchInfo.key
         self.withCoversOnly = withCoversOnly
-        self.worksCount = searchInfo.work_count
+        self.worksCount = Int( searchInfo.work_count )
         self.tableView = tableView
         self.operationQueue = operationQueue
         self.coreDataStack = coreDataStack

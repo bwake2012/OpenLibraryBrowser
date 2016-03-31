@@ -21,12 +21,13 @@ class WorkEditionsCoordinator: NSObject, FetchedResultsControllerDelegate {
     let tableView: UITableView?
 
     var operationQueue: OperationQueue
+    var authorEditionsGetOperation: Operation?
     
     let coreDataStack: CoreDataStack
     private lazy var fetchedResultsController: FetchedWorkEditionsController = {
         
         let fetchRequest = NSFetchRequest( entityName: OLEditionDetail.entityName )
-        fetchRequest.predicate = NSPredicate( format: "author_key==%@", "/authors/\(self.authorKey)" )
+        fetchRequest.predicate = NSPredicate( format: "author_key==%@", "\(self.authorKey)" )
         
         fetchRequest.sortDescriptors =
             [NSSortDescriptor(key: "coversFound", ascending: false),
@@ -64,12 +65,12 @@ class WorkEditionsCoordinator: NSObject, FetchedResultsControllerDelegate {
     
     func numberOfSections() -> Int {
         
-        return fetchedResultsController.sections?.count ?? 0
+        return fetchedResultsController.sections?.count ?? 1
     }
 
     func numberOfRowsInSection( section: Int ) -> Int {
 
-        return max( editionsCount, fetchedResultsController.sections?[section].objects.count ?? 0 )
+        return fetchedResultsController.sections?[section].objects.count ?? 0
     }
     
     func objectAtIndexPath( indexPath: NSIndexPath ) -> OLEditionDetail? {
@@ -77,8 +78,6 @@ class WorkEditionsCoordinator: NSObject, FetchedResultsControllerDelegate {
         if needAnotherPage( indexPath.row, highWaterMark: highWaterMark ) {
             
             nextQueryPage( highWaterMark )
-            
-            highWaterMark += searchResults.pageSize
         }
         
         guard let sections = fetchedResultsController.sections else {
@@ -113,7 +112,7 @@ class WorkEditionsCoordinator: NSObject, FetchedResultsControllerDelegate {
         self.authorKey = authorKey
         self.highWaterMark = 0
         
-        let authorEditionsGetOperation =
+        authorEditionsGetOperation =
             WorkEditionsGetOperation(
                     queryText: authorKey,
                     offset: 0,
@@ -122,22 +121,27 @@ class WorkEditionsCoordinator: NSObject, FetchedResultsControllerDelegate {
                     updateResults: self.updateResults
                 ) {
 
-                    dispatch_async( dispatch_get_main_queue() ) {
+                    [weak self] in
+                    if let strongSelf = self {
+                        dispatch_async( dispatch_get_main_queue() ) {
+                            
+                                refreshControl?.endRefreshing()
+                                strongSelf.updateUI()
+                            }
                         
-                            refreshControl?.endRefreshing()
-                            self.updateUI()
-                        }
+                        strongSelf.authorEditionsGetOperation = nil
+                    }
                 }
         
-        authorEditionsGetOperation.userInitiated = userInitiated
-        operationQueue.addOperation( authorEditionsGetOperation )        
+        authorEditionsGetOperation!.userInitiated = userInitiated
+        operationQueue.addOperation( authorEditionsGetOperation! )
     }
     
     func nextQueryPage( offset: Int ) -> Void {
         
         if 0 == operationQueue.operationCount && !authorKey.isEmpty {
             
-            let authorEditionsGetOperation =
+            authorEditionsGetOperation =
                 WorkEditionsGetOperation(
                         queryText: self.authorKey,
                         offset: offset,
@@ -146,20 +150,27 @@ class WorkEditionsCoordinator: NSObject, FetchedResultsControllerDelegate {
                         updateResults: self.updateResults
                     ) {
                 
-                dispatch_async( dispatch_get_main_queue() ) {
-    //                refreshControl?.endRefreshing()
-//                    self.updateUI()
-                }
+                        [weak self] in
+                        if let strongSelf = self {
+                            dispatch_async( dispatch_get_main_queue() ) {
+                                
+//                                refreshControl?.endRefreshing()
+//                                strongSelf.updateUI()
+                            }
+                            
+                            strongSelf.authorEditionsGetOperation = nil
+                        }
             }
             
-            authorEditionsGetOperation.userInitiated = false
-            operationQueue.addOperation( authorEditionsGetOperation )
+            authorEditionsGetOperation!.userInitiated = false
+            operationQueue.addOperation( authorEditionsGetOperation! )
         }
     }
     
     private func needAnotherPage( index: Int, highWaterMark: Int ) -> Bool {
         
         return
+            nil == authorEditionsGetOperation &&
             !authorKey.isEmpty &&
             highWaterMark < editionsCount &&
             index >= ( highWaterMark - ( searchResults.pageSize / 4 ) )
@@ -170,6 +181,9 @@ class WorkEditionsCoordinator: NSObject, FetchedResultsControllerDelegate {
         
         self.searchResults = searchResults
         self.highWaterMark = searchResults.start + searchResults.pageSize
+        if self.editionsCount != searchResults.numFound {
+            self.editionsCount = searchResults.numFound
+        }
     }
     
     // MARK: FetchedResultsControllerDelegate
@@ -184,22 +198,22 @@ class WorkEditionsCoordinator: NSObject, FetchedResultsControllerDelegate {
     }
     
     func fetchedResultsControllerWillChangeContent( controller: FetchedWorkEditionsController ) {
-//        tableView?.beginUpdates()
+        tableView?.beginUpdates()
     }
     
     func fetchedResultsControllerDidChangeContent( controller: FetchedWorkEditionsController ) {
-//        tableView?.endUpdates()
+        tableView?.endUpdates()
     }
     
     func fetchedResultsController( controller: FetchedWorkEditionsController,
         didChangeObject change: FetchedResultsObjectChange< OLEditionDetail > ) {
             switch change {
             case let .Insert(_, indexPath):
-                // tableView?.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableView?.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
             case let .Delete(_, indexPath):
-                // tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
             case let .Move(_, fromIndexPath, toIndexPath):

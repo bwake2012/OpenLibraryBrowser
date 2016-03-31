@@ -54,7 +54,7 @@ class OLAuthorSearchResultsTableViewController: UITableViewController {
                     if let searchResult = queryCoordinator.objectAtIndexPath( indexPath ) {
                         destVC.operationQueue = self.operationQueue
                         destVC.coreDataStack = self.coreDataStack
-                        destVC.searchInfo = searchResult.searchInfo
+                        destVC.searchInfo = searchResult
                         
                         print( "\(indexPath.row) \(searchResult.key) \(searchResult.name)" )
                     }
@@ -68,7 +68,7 @@ class OLAuthorSearchResultsTableViewController: UITableViewController {
     // MARK: UITableviewDataSource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
-        return queryCoordinator.numberOfSections() ?? 0
+        return queryCoordinator.numberOfSections() ?? 1
     }
     
     override func tableView( tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
@@ -89,6 +89,11 @@ class OLAuthorSearchResultsTableViewController: UITableViewController {
     func getFirstAuthorSearchResults( authorName: String, userInitiated: Bool = true ) {
 
         queryCoordinator.newQuery( authorName, userInitiated: userInitiated, refreshControl: self.refreshControl )
+    }
+    
+    func clearSearchResults() {
+        
+        queryCoordinator.clearQuery()
     }
     
     private func updateUI() {

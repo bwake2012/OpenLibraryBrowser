@@ -14,6 +14,8 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
 
     // MARK: Search Info
     struct SearchInfo {
+        
+        let objectID: NSManagedObjectID
         let key: String
     }
     
@@ -42,7 +44,12 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
     
     var searchInfo: SearchInfo {
         
-        return SearchInfo( key: self.key )
+        return SearchInfo( objectID: self.objectID, key: self.key )
+    }
+    
+    var hasPhotos: Bool {
+        
+        return 0 < self.photos.count
     }
 
     func localURL( size: String ) -> NSURL {

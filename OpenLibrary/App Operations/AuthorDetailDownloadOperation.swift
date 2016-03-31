@@ -31,7 +31,7 @@ class AuthorDetailDownloadOperation: GroupOperation {
             should always prefer to use https.
         */
         let query = queryText.stringByAddingPercentEncodingForRFC3986()!
-        let urlString = "https://openlibrary.org/authors/\(query).json"
+        let urlString = "https://openlibrary.org\(query).json"
         let url = NSURL( string: urlString )!
         let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
             
@@ -51,11 +51,6 @@ class AuthorDetailDownloadOperation: GroupOperation {
         addOperation(taskOperation)
     }
         
-    deinit {
-        
-        print( "\(self.dynamicType.description()) deinit" )
-    }
-
     func downloadFinished(url: NSURL?, response: NSHTTPURLResponse?, error: NSError?) {
         if let localURL = url {
             do {

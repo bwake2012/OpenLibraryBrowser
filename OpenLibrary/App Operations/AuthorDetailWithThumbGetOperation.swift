@@ -24,6 +24,7 @@ class AuthorDetailWithThumbGetOperation: GroupOperation {
     private var hasProducedAlert = false
     
     private let queryText: String
+    private let parentObjectID: NSManagedObjectID
     private let size: String
     
     /**
@@ -34,9 +35,10 @@ class AuthorDetailWithThumbGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, size: String, coreDataStack: CoreDataStack, completionHandler: Void -> Void ) {
+    init( queryText: String, parentObjectID: NSManagedObjectID, size: String, coreDataStack: CoreDataStack, completionHandler: Void -> Void ) {
         
         self.queryText = queryText
+        self.parentObjectID = parentObjectID
         self.size = size
 
         let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
@@ -48,11 +50,9 @@ class AuthorDetailWithThumbGetOperation: GroupOperation {
             1. The operation to download the JSON feed
             2. The operation to parse the JSON feed and insert the elements into the Core Data store
             3. The operation to invoke the completion handler
-        
-            There is an optional operation 0 to delete the existing contents of the Core Data store
         */
         downloadOperation = AuthorDetailDownloadOperation( queryText: queryText, cacheFile: cacheFile )
-        parseOperation = AuthorDetailParseOperation( cacheFile: cacheFile, coreDataStack: coreDataStack )
+        parseOperation = AuthorDetailParseOperation( parentObjectID: parentObjectID, cacheFile: cacheFile, coreDataStack: coreDataStack )
         
         let finishOperation = NSBlockOperation( block: completionHandler )
         
@@ -62,12 +62,9 @@ class AuthorDetailWithThumbGetOperation: GroupOperation {
         
         super.init( operations: [downloadOperation, parseOperation, finishOperation] )
 
-        name = "Get Author Detail with Thumbnail"
-    }
-    
-    deinit {
+        addCondition( MutuallyExclusive<AuthorDetailWithThumbGetOperation>() )
         
-        print( "\(self.dynamicType.description()) deinit" )
+        name = "Get Author Detail with Thumbnail " + queryText
     }
     
     override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
@@ -158,7 +155,7 @@ class AuthorDetailWithThumbGetOperation: GroupOperation {
             case failedJSON:
                 // We failed because the JSON was malformed.
                 alert.title = "Unable to Download"
-                alert.message = "Cannot parse Author Detail with Thumbnail results. Try again later."
+                alert.message = "Cannot parse Author Detail with Thumbnail " + queryText + " results. Try again later."
 
             default:
                 return

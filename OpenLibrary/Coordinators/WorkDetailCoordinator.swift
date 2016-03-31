@@ -57,10 +57,6 @@ class WorkDetailCoordinator: NSObject, FetchedResultsControllerDelegate {
         performFetch()
     }
     
-    deinit {
-        print( "\(self.dynamicType.description()) deinit" )
-    }
-    
     // MARK: FetchedResultsControllerDelegate
     func fetchedResultsControllerDidPerformFetch(controller: FetchedResultsController< OLWorkDetail >) {
         
