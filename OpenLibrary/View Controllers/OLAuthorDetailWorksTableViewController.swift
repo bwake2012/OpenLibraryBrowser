@@ -45,6 +45,17 @@ class OLAuthorDetailWorksTableViewController: UITableViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
+        if "displayWorkDetail" == segue.identifier {
+            
+            if let destVC = segue.destinationViewController as? OLWorkDetailViewController {
+                
+                if let indexPath = self.tableView.indexPathForSelectedRow {
+                    destVC.coreDataStack = coreDataStack
+                    destVC.operationQueue = operationQueue
+                    destVC.searchInfo = queryCoordinator.objectAtIndexPath( indexPath )
+                }
+            }
+        }
     }
     
     // MARK: UITableViewDelegate

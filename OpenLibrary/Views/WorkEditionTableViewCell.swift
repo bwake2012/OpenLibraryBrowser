@@ -1,5 +1,5 @@
 //
-//  AuthorEditionsTableViewCell.swift
+//  WorkEditionTableViewCell.swift
 //  OpenLibrary
 //
 //  Created by Bob Wakefield on 3/14/16.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-class EditionTableViewCell: OLTableViewCell {
+class WorkEditionTableViewCell: OLTableViewCell {
 
-    @IBOutlet weak var workTitle: UILabel!
-    @IBOutlet weak var workSubTitle: UILabel!
+    @IBOutlet weak var editionTitle: UILabel!
+    @IBOutlet weak var editionSubTitle: UILabel!
 
     func configure( entry: OLEditionDetail? ) {
         
@@ -27,16 +27,16 @@ class EditionTableViewCell: OLTableViewCell {
                         NSCharacterSet.whitespaceAndNewlineCharacterSet()
                     )
             
-            workTitle.text =
+            editionTitle.text =
                 ( trimmedPrefix + " " + trimmedTitle ).stringByTrimmingCharactersInSet(
                         NSCharacterSet.whitespaceAndNewlineCharacterSet()
                     )
 
-            workSubTitle.text = entry.subtitle
+            editionSubTitle.text = entry.subtitle
             
         } else {
-            workTitle.text = ""
-            workSubTitle.text = ""
+            editionTitle.text = ""
+            editionSubTitle.text = ""
         }
     }
 }

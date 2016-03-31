@@ -35,23 +35,17 @@ class OLWorkDetailViewController: UIViewController {
     var operationQueue: OperationQueue?
     var coreDataStack: CoreDataStack?
 
-    var searchInfo: OLWorkDetail.SearchInfo?
+    var searchInfo: OLWorkDetail?
 
     // MARK: UIViewController
+    override func viewDidLoad() {
+        
+        self.queryCoordinator.updateUI()
+    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if segue.identifier == "embedWorkWorks" {
-            
-            if let destVC = segue.destinationViewController as? OLWorkDetailEditionsTableViewController {
-                
-                self.authorWorksVC = destVC
-
-                destVC.operationQueue = self.operationQueue
-                destVC.coreDataStack = self.coreDataStack
-                destVC.searchInfo = self.searchInfo
-            }
-        } else if segue.identifier == "embedWorkEditions" {
+        if segue.identifier == "embedWorkEditions" {
             
             if let destVC = segue.destinationViewController as? OLWorkDetailEditionsTableViewController {
                 

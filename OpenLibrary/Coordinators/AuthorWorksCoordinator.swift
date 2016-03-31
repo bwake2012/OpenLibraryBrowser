@@ -20,7 +20,7 @@ class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
     
     typealias FetchedOLWorkDetailController = FetchedResultsController< OLWorkDetail >
     
-    let tableView: UITableView?
+    let tableView: UITableView
 
     var operationQueue: OperationQueue
     var authorWorksGetOperation: Operation?
@@ -230,29 +230,29 @@ class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
     }
     
     func fetchedResultsControllerWillChangeContent( controller: FetchedOLWorkDetailController ) {
-        tableView?.beginUpdates()
+        tableView.beginUpdates()
     }
     
     func fetchedResultsControllerDidChangeContent( controller: FetchedOLWorkDetailController ) {
-        tableView?.endUpdates()
+        tableView.endUpdates()
     }
     
     func fetchedResultsController( controller: FetchedOLWorkDetailController,
         didChangeObject change: FetchedResultsObjectChange< OLWorkDetail > ) {
             switch change {
             case let .Insert(_, indexPath):
-                tableView?.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
             case let .Delete(_, indexPath):
-                tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
             case let .Move(_, fromIndexPath, toIndexPath):
-                tableView?.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
+                tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
                 
             case let .Update(_, indexPath):
-                tableView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             }
     }
     
@@ -260,10 +260,10 @@ class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
         didChangeSection change: FetchedResultsSectionChange< OLWorkDetail >) {
             switch change {
             case let .Insert(_, index):
-                tableView?.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+                tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
                 
             case let .Delete(_, index):
-                tableView?.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+                tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
             }
     }
 }

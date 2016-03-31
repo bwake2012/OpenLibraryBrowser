@@ -86,7 +86,7 @@
 		C4E863951C99E951002C0E6B /* AuthorEditionsGetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E863921C99E951002C0E6B /* AuthorEditionsGetOperation.swift */; };
 		C4E863961C99E951002C0E6B /* AuthorEditionsParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E863931C99E951002C0E6B /* AuthorEditionsParseOperation.swift */; };
 		C4E863981C9A32FB002C0E6B /* OLAuthorDetailEditionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E863971C9A32FB002C0E6B /* OLAuthorDetailEditionsTableViewController.swift */; };
-		C4E8639A1C9A3897002C0E6B /* EditionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E863991C9A3897002C0E6B /* EditionTableViewCell.swift */; };
+		C4E8639A1C9A3897002C0E6B /* WorkEditionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E863991C9A3897002C0E6B /* WorkEditionTableViewCell.swift */; };
 		C4EF99D21CA1B04C00BEF2D3 /* AuthorDetailWithThumbGetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EF99D11CA1B04C00BEF2D3 /* AuthorDetailWithThumbGetOperation.swift */; };
 		C4EF99D51CA3707900BEF2D3 /* OLWorkDetailEditionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EF99D31CA3707900BEF2D3 /* OLWorkDetailEditionsTableViewController.swift */; };
 		C4EF99D61CA3707900BEF2D3 /* OLWorkDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EF99D41CA3707900BEF2D3 /* OLWorkDetailViewController.swift */; };
@@ -206,7 +206,7 @@
 		C4E863921C99E951002C0E6B /* AuthorEditionsGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorEditionsGetOperation.swift; path = "App Operations/AuthorEditionsGetOperation.swift"; sourceTree = "<group>"; };
 		C4E863931C99E951002C0E6B /* AuthorEditionsParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorEditionsParseOperation.swift; path = "App Operations/AuthorEditionsParseOperation.swift"; sourceTree = "<group>"; };
 		C4E863971C9A32FB002C0E6B /* OLAuthorDetailEditionsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLAuthorDetailEditionsTableViewController.swift; path = "View Controllers/OLAuthorDetailEditionsTableViewController.swift"; sourceTree = "<group>"; };
-		C4E863991C9A3897002C0E6B /* EditionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditionTableViewCell.swift; path = Views/EditionTableViewCell.swift; sourceTree = "<group>"; };
+		C4E863991C9A3897002C0E6B /* WorkEditionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkEditionTableViewCell.swift; path = Views/WorkEditionTableViewCell.swift; sourceTree = "<group>"; };
 		C4EF99D11CA1B04C00BEF2D3 /* AuthorDetailWithThumbGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorDetailWithThumbGetOperation.swift; path = "App Operations/AuthorDetailWithThumbGetOperation.swift"; sourceTree = "<group>"; };
 		C4EF99D31CA3707900BEF2D3 /* OLWorkDetailEditionsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLWorkDetailEditionsTableViewController.swift; path = "View Controllers/OLWorkDetailEditionsTableViewController.swift"; sourceTree = "<group>"; };
 		C4EF99D41CA3707900BEF2D3 /* OLWorkDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLWorkDetailViewController.swift; path = "View Controllers/OLWorkDetailViewController.swift"; sourceTree = "<group>"; };
@@ -489,7 +489,7 @@
 			children = (
 				C4E35EA91C7E4CD90015D187 /* AuthorSearchResultTableViewCell.swift */,
 				C4E8638D1C9763E3002C0E6B /* AuthorWorksTableViewCell.swift */,
-				C4E863991C9A3897002C0E6B /* EditionTableViewCell.swift */,
+				C4E863991C9A3897002C0E6B /* WorkEditionTableViewCell.swift */,
 				C4677EA21C9DF4030070CDFD /* OLTableViewCell.swift */,
 			);
 			name = Views;
@@ -790,7 +790,7 @@
 				C4EF99DC1CA3708900BEF2D3 /* WorkEditionsParseOperation.swift in Sources */,
 				C4E35E701C7E07D40015D187 /* BlockOperation.swift in Sources */,
 				C4E8638E1C9763E3002C0E6B /* AuthorWorksTableViewCell.swift in Sources */,
-				C4E8639A1C9A3897002C0E6B /* EditionTableViewCell.swift in Sources */,
+				C4E8639A1C9A3897002C0E6B /* WorkEditionTableViewCell.swift in Sources */,
 				C4E35E7F1C7E07D40015D187 /* Operation.swift in Sources */,
 				C4817C211CA3817300BDCD4D /* WorkDetailParseOperation.swift in Sources */,
 				C46E7E521C861A7000D2ED51 /* AuthorSearchResultsDeleteOperation.swift in Sources */,

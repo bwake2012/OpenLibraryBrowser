@@ -10,7 +10,7 @@ import CoreData
 
 import BNRCoreDataStack
 
-class OLEditionDetail: NSManagedObject, CoreDataModelable {
+class OLEditionDetail: OLManagedObject, CoreDataModelable {
 
     // MARK: Search Info
     struct SearchInfo {

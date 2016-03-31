@@ -6,13 +6,13 @@
 //
 //  Modified from code in the Apple sample app Earthquakes in the Advanced NSOperations project
 
-//  https://openlibrary.org/query.json?type=/type/edition&authors=/authors/OL26320A&*=
+//  https://openlibrary.org/works/OL262759W/editions.json?*=
 
 import CoreData
 
 import BNRCoreDataStack
 
-/// A composite `Operation` to both download and parse author search result data.
+/// A composite `Operation` to both download and parse work editions data.
 class WorkEditionsGetOperation: GroupOperation {
     // MARK: Properties
     
@@ -29,11 +29,11 @@ class WorkEditionsGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, offset: Int, withCoversOnly: Bool, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater, completionHandler: Void -> Void ) {
+    init( queryText: String, offset: Int, limit: Int, withCoversOnly: Bool, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater, completionHandler: Void -> Void ) {
 
         let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
 
-        let cacheFile = cachesFolder.URLByAppendingPathComponent("authorEditions.json")
+        let cacheFile = cachesFolder.URLByAppendingPathComponent("workEditions.json")
         
         /*
             This operation is made of three child operations:
@@ -44,7 +44,7 @@ class WorkEditionsGetOperation: GroupOperation {
             There is an optional operation 0 to delete the existing contents of the Core Data store
         */
         downloadOperation = WorkEditionsDownloadOperation( queryText: queryText, offset: offset, cacheFile: cacheFile )
-        parseOperation = WorkEditionsParseOperation( authorKey: queryText, offset: offset, withCoversOnly: withCoversOnly, cacheFile: cacheFile, coreDataStack: coreDataStack, updateResults: updateResults )
+        parseOperation = WorkEditionsParseOperation( parentKey: queryText, offset: offset, limit: limit, withCoversOnly: withCoversOnly, cacheFile: cacheFile, coreDataStack: coreDataStack, updateResults: updateResults )
         
         let finishOperation = NSBlockOperation( block: completionHandler )
         

@@ -12,38 +12,21 @@ import CoreData
 
 import BNRCoreDataStack
 
-typealias FetchedOLWorkDetailController = FetchedResultsController< OLWorkDetail >
-
 let kWorkDetailCache = "workDetailSearch"
 
-class WorkDetailCoordinator: NSObject, FetchedResultsControllerDelegate {
+class WorkDetailCoordinator: NSObject {
     
     weak var workDetailVC: OLWorkDetailViewController?
 
-    var operationQueue: OperationQueue?
-    var coreDataStack: CoreDataStack?
+    var operationQueue: OperationQueue
+    var coreDataStack: CoreDataStack
     
-    private lazy var fetchedResultsController: FetchedOLWorkDetailController = {
-        
-        let fetchRequest = NSFetchRequest(entityName: OLWorkDetail.entityName)
-        fetchRequest.predicate = NSPredicate( format: "key==%@", "/works/\(self.searchInfo.key)" )
-        
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        
-        let frc = FetchedOLWorkDetailController(fetchRequest: fetchRequest,
-            managedObjectContext: self.coreDataStack!.mainQueueContext,
-            sectionNameKeyPath: nil)
-        
-        frc.setDelegate( self )
-        return frc
-    }()
-    
-    var searchInfo: OLWorkDetail.SearchInfo
+    var searchInfo: OLWorkDetail
     
     init(
             operationQueue: OperationQueue,
             coreDataStack: CoreDataStack,
-            searchInfo: OLWorkDetail.SearchInfo,
+            searchInfo: OLWorkDetail,
             workDetailVC: OLWorkDetailViewController
         ) {
         
@@ -54,69 +37,7 @@ class WorkDetailCoordinator: NSObject, FetchedResultsControllerDelegate {
 
         super.init()
 
-        performFetch()
-    }
-    
-    // MARK: FetchedResultsControllerDelegate
-    func fetchedResultsControllerDidPerformFetch(controller: FetchedResultsController< OLWorkDetail >) {
-        
-        if let workDetail = controller.first {
-            
-            updateUI( workDetail )
-            
-        } else {
-            
-            let getWorkOperation =
-            WorkDetailGetOperation(
-                queryText: searchInfo.key,
-                coreDataStack: coreDataStack!
-                ) {
-                    
-                    dispatch_async( dispatch_get_main_queue() ) {}
-            }
-            
-            getWorkOperation.userInitiated = true
-            operationQueue!.addOperation( getWorkOperation )
-        }
-    }
-    
-    func fetchedResultsControllerWillChangeContent( controller: FetchedResultsController< OLWorkDetail > ) {
-        
-    }
-    
-    func fetchedResultsControllerDidChangeContent( controller: FetchedResultsController< OLWorkDetail > ) {
-        
-    }
-    
-    func fetchedResultsController( controller: FetchedResultsController< OLWorkDetail >,
-        didChangeObject change: FetchedResultsObjectChange< OLWorkDetail > ) {
-            switch change {
-            case .Insert(_, _):
-                if let workDetail = fetchedResultsController.first {
-                    
-                    updateUI( workDetail )
-                }
-                
-            case let .Delete(_, indexPath):
-                break
-                
-            case let .Move(_, fromIndexPath, toIndexPath):
-                break
-                
-            case let .Update(_, indexPath):
-                break
-            }
-    }
-    
-    func fetchedResultsController(controller: FetchedResultsController< OLWorkDetail >,
-        didChangeSection change: FetchedResultsSectionChange< OLWorkDetail >) {
-            switch change {
-            case let .Insert(_, index):
-                break
-                
-            case let .Delete(_, index):
-                break
-            }
+        updateUI( searchInfo )
     }
     
     func updateUI( workDetail: OLWorkDetail ) {
@@ -141,22 +62,14 @@ class WorkDetailCoordinator: NSObject, FetchedResultsControllerDelegate {
                     }
                     
                     imageGetOperation.userInitiated = true
-                    operationQueue!.addOperation( imageGetOperation )
+                    operationQueue.addOperation( imageGetOperation )
                 }
             }
         }
     }
-
-    func performFetch() {
+    
+    func updateUI() -> Void {
         
-        do {
-            NSFetchedResultsController.deleteCacheWithName( kWorkDetailCache )
-            try fetchedResultsController.performFetch()
-        }
-        catch {
-            print("Error in the fetched results controller: \(error).")
-        }
         
     }
-    
 }

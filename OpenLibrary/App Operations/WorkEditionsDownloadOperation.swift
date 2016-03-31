@@ -32,7 +32,7 @@ class WorkEditionsDownloadOperation: GroupOperation {
         */
         let query = queryText.stringByAddingPercentEncodingForRFC3986()!
         let urlString =
-            "https://openlibrary.org/works/\(query)/editions.json?*="
+            "https://openlibrary.org\(query)/editions.json?*="
         let url = NSURL( string: urlString )!
         let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
             

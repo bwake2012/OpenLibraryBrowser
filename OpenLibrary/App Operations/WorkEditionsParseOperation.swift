@@ -359,8 +359,9 @@ private class ParsedSearchResult: OpenLibraryObject {
 /// An `Operation` to parse Editions out of a query from OpenLibrary.
 class WorkEditionsParseOperation: Operation {
     
-    let authorKey: String
+    let parentKey: String
     let offset: Int
+    let limit: Int
     let withCoversOnly: Bool
     let cacheFile: NSURL
     let context: NSManagedObjectContext
@@ -376,7 +377,7 @@ class WorkEditionsParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( authorKey: String, offset: Int, withCoversOnly: Bool, cacheFile: NSURL, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater ) {
+    init( parentKey: String, offset: Int, limit: Int, withCoversOnly: Bool, cacheFile: NSURL, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -388,8 +389,9 @@ class WorkEditionsParseOperation: Operation {
         self.context.mergePolicy = NSOverwriteMergePolicy
         self.updateResults = updateResults
         self.withCoversOnly = withCoversOnly
+        self.limit = limit
         self.offset = offset
-        self.authorKey = authorKey
+        self.parentKey = parentKey
         
         super.init()
 
@@ -409,7 +411,7 @@ class WorkEditionsParseOperation: Operation {
         }
         
         do {
-            if let json = try NSJSONSerialization.JSONObjectWithStream(stream, options: []) as? [[String: AnyObject]] {
+            if let json = try NSJSONSerialization.JSONObjectWithStream(stream, options: []) as? [String: AnyObject] {
             
                 parse( json )
             }
@@ -422,29 +424,50 @@ class WorkEditionsParseOperation: Operation {
         }
     }
     
-    private func parse( resultSet: [[String: AnyObject]] ) {
+    private func parse( resultSet: [String: AnyObject] ) {
 
-        
-        // guard let numFound = resultSet["size"] as? Int where numFound > 0 else { return }
-        
-        let numFound = resultSet.count
-        if numFound <= 0 {
+        guard var numFound = resultSet["size"] as? Int else {
+            
+            updateResults( SearchResults( start: offset, numFound: offset, pageSize: 0 ) )
             finishWithError( nil )
             return
+        }
+        
+        guard let entries = resultSet["entries"] as? [[String: AnyObject]] else {
+            
+            updateResults( SearchResults( start: offset, numFound: offset, pageSize: 0 ) )
+            finishWithError( nil )
+            return
+        }
+        
+        if 0 == numFound {
+            
+            numFound = offset + entries.count
+        }
+        
+        if 0 == numFound {
+            
+            updateResults( SearchResults( start: offset, numFound: offset, pageSize: 0 ) )
+            finishWithError( nil )
+            return
+        }
+        
+        if entries.count < limit {
+            numFound = min( numFound, offset + entries.count )
         }
         
         context.performBlock {
             
             var index = self.offset
-            for entry in resultSet {
+            for entry in entries {
                 
                 if let newEntry = ParsedSearchResult.fromJSON( entry ) {
                     
-                    self.insert( self.authorKey, index: index, parsed: newEntry )
+                    self.insert( self.parentKey, index: index, parsed: newEntry )
                 
                     index += 1
  
-                    print( "\(self.authorKey) \(newEntry.key) \(newEntry.title)" )
+                    print( "\(self.parentKey) \(newEntry.key) \(newEntry.title)" )
                 }
             }
 
@@ -465,7 +488,7 @@ class WorkEditionsParseOperation: Operation {
 
         let result = NSEntityDescription.insertNewObjectForEntityForName( OLEditionDetail.entityName, inManagedObjectContext: context) as! OLEditionDetail
 
-        result.work_key = "/works/\(authorKey)"
+        result.work_key = workKey
         result.author_key = parsed.authors.isEmpty ? "" : parsed.authors[0]
         result.index = Int64( index )
         

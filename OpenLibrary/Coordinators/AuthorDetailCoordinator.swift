@@ -12,31 +12,14 @@ import CoreData
 
 import BNRCoreDataStack
 
-typealias FetchedOLAuthorDetailController = FetchedResultsController< OLAuthorDetail >
-
 let kAuthorDetailCache = "authorDetailSearch"
 
-class AuthorDetailCoordinator: NSObject, FetchedResultsControllerDelegate {
+class AuthorDetailCoordinator: NSObject {
     
     weak var authorDetailVC: OLAuthorDetailViewController?
 
     var operationQueue: OperationQueue?
     var coreDataStack: CoreDataStack?
-    
-    private lazy var fetchedResultsController: FetchedOLAuthorDetailController = {
-        
-        let fetchRequest = NSFetchRequest(entityName: OLAuthorDetail.entityName)
-        fetchRequest.predicate = NSPredicate( format: "key==%@", "\(self.searchInfo.key)" )
-        
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        
-        let frc = FetchedOLAuthorDetailController(fetchRequest: fetchRequest,
-            managedObjectContext: self.coreDataStack!.mainQueueContext,
-            sectionNameKeyPath: nil)
-        
-        frc.setDelegate( self )
-        return frc
-    }()
     
     var searchInfo: OLAuthorSearchResult
     
@@ -54,75 +37,33 @@ class AuthorDetailCoordinator: NSObject, FetchedResultsControllerDelegate {
 
         super.init()
 
-        if nil == searchInfo.toDetail {
-            performFetch()
-        } else {
-            updateUI( searchInfo.toDetail! )
-        }
-    }
-    
-    // MARK: FetchedResultsControllerDelegate
-    func fetchedResultsControllerDidPerformFetch(controller: FetchedResultsController< OLAuthorDetail >) {
-        
-        if let authorDetail = controller.first {
-            
-            updateUI( authorDetail )
-            
+        if let detail = searchInfo.toDetail {
+            updateUI( detail )
         } else {
             
             let getAuthorOperation =
-            AuthorDetailGetOperation(
-                queryText: searchInfo.key, parentObjectID: searchInfo.objectID,
-                coreDataStack: coreDataStack!
-                ) {
-                    
-                    dispatch_async( dispatch_get_main_queue() ) {}
-            }
-            
+                    AuthorDetailGetOperation(
+                            queryText: searchInfo.key, parentObjectID: searchInfo.objectID,
+                            coreDataStack: coreDataStack
+                        ) {
+                            [weak self] in
+
+                            if let strongSelf = self {
+                                dispatch_async( dispatch_get_main_queue() ) {
+                                    
+                                    if let detail = searchInfo.toDetail {
+                                        
+                                        strongSelf.updateUI( detail )
+                                    }
+                                }
+                            }
+                        }
+
             getAuthorOperation.userInitiated = true
-            operationQueue!.addOperation( getAuthorOperation )
+            operationQueue.addOperation( getAuthorOperation )
         }
     }
     
-    func fetchedResultsControllerWillChangeContent( controller: FetchedResultsController< OLAuthorDetail > ) {
-        
-    }
-    
-    func fetchedResultsControllerDidChangeContent( controller: FetchedResultsController< OLAuthorDetail > ) {
-        
-    }
-    
-    func fetchedResultsController( controller: FetchedResultsController< OLAuthorDetail >,
-        didChangeObject change: FetchedResultsObjectChange< OLAuthorDetail > ) {
-            switch change {
-            case .Insert(_, _):
-                print( "\(searchInfo.toDetail?.name)" )
-                if let authorDetail = fetchedResultsController.first {
-                    
-                    updateUI( authorDetail )
-                }
-                
-            case let .Delete(_, indexPath):
-                break
-                
-            case let .Move(_, fromIndexPath, toIndexPath):
-                break
-                
-            case let .Update(_, indexPath):
-                break
-            }
-    }
-    
-    func fetchedResultsController(controller: FetchedResultsController< OLAuthorDetail >,
-        didChangeSection change: FetchedResultsSectionChange< OLAuthorDetail >) {
-            switch change {
-            case let .Insert(_, index):
-                break
-                
-            case let .Delete(_, index):
-                break
-            }
-    }
     
     func updateUI( authorDetail: OLAuthorDetail ) {
         
@@ -152,17 +93,6 @@ class AuthorDetailCoordinator: NSObject, FetchedResultsControllerDelegate {
         }
     }
 
-    func performFetch() {
-        
-        do {
-            NSFetchedResultsController.deleteCacheWithName( kAuthorDetailCache )
-            try self.fetchedResultsController.performFetch()
-        }
-        catch {
-            print("Error in the fetched results controller: \(error).")
-        }
-        
-    }
     
     func updateUI() -> Void {
         

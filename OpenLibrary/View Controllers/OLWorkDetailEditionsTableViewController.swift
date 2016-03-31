@@ -17,7 +17,7 @@ class OLWorkDetailEditionsTableViewController: UITableViewController {
     var operationQueue: OperationQueue?
     var coreDataStack: CoreDataStack?
     
-    var searchInfo: OLWorkDetail.SearchInfo?
+    var searchInfo: OLWorkDetail?
 
     lazy var queryCoordinator: WorkEditionsCoordinator = {
         return
@@ -62,9 +62,13 @@ class OLWorkDetailEditionsTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("authorEditionsEntry", forIndexPath: indexPath) as! EditionTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("workEditionEntry", forIndexPath: indexPath)
+        if let cell = cell as? WorkEditionTableViewCell {
+            
+            queryCoordinator.displayToCell( cell, indexPath: indexPath )
+            
+        }
         
-        cell.configure( queryCoordinator.objectAtIndexPath( indexPath ) )
         
         return cell
     }
