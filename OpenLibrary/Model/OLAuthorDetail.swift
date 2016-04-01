@@ -52,6 +52,11 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
         return 0 < self.photos.count
     }
 
+    var firstPhotoID: Int {
+        
+        return 0 >= self.photos.count ? 0 : self.photos[0]
+    }
+    
     func localURL( size: String ) -> NSURL {
         
         return super.localURL( self.key, size: size )

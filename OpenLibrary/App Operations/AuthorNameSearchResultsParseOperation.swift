@@ -195,6 +195,9 @@ class AuthorNameSearchResultsParseOperation: Operation {
         result.death_date = parsed.death_date
         result.top_work = parsed.top_work
         result.work_count = Int64( parsed.work_count )
+        
+        result.havePhoto = HasPhoto.unknown
+        result.has_photos = false
     }
     
     /**

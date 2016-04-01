@@ -15,7 +15,7 @@ import BNRCoreDataStack
 private let kAuthorSearchCache = "authorNameSearch"
 
 private let kPageSize = 100
-    
+
 class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate {
     
     typealias FetchedOLAuthorSearchResultController = FetchedResultsController< OLAuthorSearchResult >
@@ -54,8 +54,6 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
     
     var highWaterMark = 0
     var nextOffset = 0
-    
-    lazy var hasPhotos = [Bool]()
     
     init?( tableView: UITableView, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         
@@ -112,28 +110,32 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
         cell.configure( result )
         
         let localURL = result.localURL( "S" )
-        let index = Int( result.index )
-
         self.coreDataStack.mainQueueContext.saveContext()
         
-        if cell.displayImage( localURL ) {
-            
-            hasPhotos[index] = true
-
-        } else {
+        let havePhoto = result.displayThumbnail( cell.cellImage )
         
-            if let detail = getAuthorDetail( result ) {
-                
-                hasPhotos[index] = detail.hasPhotos
-            }
-            if hasPhotos[index] {
+        switch havePhoto {
             
-                queueGetAuthorThumbByOLID( cell, key: result.key, parentID: result.objectID, index: index, url: localURL )
-            }
+            case .unknown:
+                assert( .unknown != havePhoto )
+                
+            case .olid:
+                queueGetAuthorThumbByOLID( indexPath, key: result.key, url: localURL )
+                
+            case .id:
+                if let detail = result.toDetail {
+                    queueGetAuthorThumbByID( indexPath, id: detail.firstPhotoID, url: localURL )
+                }
+            
+            case .authorDetail:
+                queueGetAuthorThumbByDetail( indexPath, key: result.key, parentID: result.objectID, url: localURL )
+
+            case .local, .none:
+                break
         }
         
         // not all the authors have photos under their OLID. Some only have them under a photo ID
-        print( "\(result.index) author: \(result.name) has photo: \(hasPhotos[index])" )
+        print( "\(result.index) author: \(result.name) has photo: \(havePhoto)" )
 
         return result
     }
@@ -165,7 +167,6 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
             self.authorName = authorName
             self.highWaterMark = 0
             self.nextOffset = kPageSize
-            self.hasPhotos = [Bool]()
             
             authorSearchOperation =
                 AuthorNameSearchOperation(
@@ -207,8 +208,8 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
                 
                     [weak self] in
                     dispatch_async( dispatch_get_main_queue() ) {
-        //                refreshControl?.endRefreshing()
-    //                    self.updateUI()
+//                        refreshControl?.endRefreshing()
+//                        self.updateUI()
                     }
                     if let strongSelf = self {
                         
@@ -244,9 +245,6 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
         
         self.searchResults = searchResults
         self.highWaterMark = searchResults.start + searchResults.pageSize
-        if searchResults.numFound > hasPhotos.count {
-            self.hasPhotos.appendContentsOf( [Bool]( count: searchResults.numFound - hasPhotos.count, repeatedValue: true ) )
-        }
     }
     
     // MARK: FetchedResultsControllerDelegate
@@ -256,7 +254,6 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
             self.highWaterMark = fetchedResultsController.count
             self.searchResults = SearchResults( start: 0, numFound: highWaterMark, pageSize: 100 )
             tableView?.reloadData()
-            self.hasPhotos = [Bool]( count: highWaterMark, repeatedValue: true )
         }
     }
     
@@ -299,7 +296,7 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
     }
     
     // MARK: Utility
-    func queueGetAuthorThumbByDetail( cell: AuthorSearchResultTableViewCell, key: String, parentID: NSManagedObjectID, index: Int, url: NSURL ) {
+    func queueGetAuthorThumbByDetail( indexPath: NSIndexPath, key: String, parentID: NSManagedObjectID, url: NSURL ) {
         
         let authorDetailGetOperation =
             AuthorDetailWithThumbGetOperation(
@@ -309,11 +306,9 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
                     
                     guard let strongSelf = self else { return }
                     
-                    if index < strongSelf.hasPhotos.count {
-                        dispatch_async( dispatch_get_main_queue() ) {
-                            
-                            strongSelf.hasPhotos[Int(index)] = cell.displayImage( url )
-                        }
+                    dispatch_async( dispatch_get_main_queue() ) {
+                        
+                        strongSelf.tableView?.reloadRowsAtIndexPaths( [indexPath], withRowAnimation: .Automatic )
                     }
         }
     
@@ -321,7 +316,7 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
         self.operationQueue.addOperation( authorDetailGetOperation )
     }
     
-    func queueGetAuthorThumbByOLID( cell: AuthorSearchResultTableViewCell, key: String, parentID: NSManagedObjectID, index: Int, url: NSURL ) {
+    func queueGetAuthorThumbByOLID( indexPath: NSIndexPath, key: String, url: NSURL ) {
         
         var olid = key
         if key.hasPrefix( kAuthorsPrefix ) {
@@ -331,12 +326,30 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
         
         let authorThumbnailGetOperation =
             ImageGetOperation( stringID: olid, imageKeyName: "olid", localURL: url, size: "S", type: "a" ) {
+                [weak self] in
                 
-                dispatch_async( dispatch_get_main_queue() ) {
-                    
-                    if !cell.displayImage( url ) {
+                if let strongSelf = self {
+                    dispatch_async( dispatch_get_main_queue() ) {
                         
-                        self.queueGetAuthorThumbByDetail( cell, key: key, parentID: parentID, index: index, url: url )
+                        strongSelf.tableView?.reloadRowsAtIndexPaths( [indexPath], withRowAnimation: .Automatic )
+                    }
+                }
+        }
+        
+        authorThumbnailGetOperation.userInitiated = true
+        operationQueue.addOperation( authorThumbnailGetOperation )
+    }
+    
+    func queueGetAuthorThumbByID( indexPath: NSIndexPath, id: Int, url: NSURL ) {
+        
+        let authorThumbnailGetOperation =
+            ImageGetOperation( numberID: id, imageKeyName: "id", localURL: url, size: "S", type: "a" ) {
+                [weak self] in
+                
+                if let strongSelf = self {
+                    dispatch_async( dispatch_get_main_queue() ) {
+                        
+                        strongSelf.tableView?.reloadRowsAtIndexPaths( [indexPath], withRowAnimation: .Automatic )
                     }
                 }
         }

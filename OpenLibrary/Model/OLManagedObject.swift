@@ -12,6 +12,33 @@ import BNRCoreDataStack
 
 typealias imageDisplayClosure = ( localURL: NSURL ) -> Bool
 
+enum HasPhoto: Int {
+    case unknown = -1
+    case none = 0
+    case local = 1
+    case olid = 2
+    case id = 3
+    case authorDetail = 4
+    
+    func label() -> String {
+        
+        switch( self ) {
+        case .unknown:
+            return( "unknown" )
+        case .none:
+            return( "none" )
+        case .local:
+            return( "local" )
+        case .olid:
+            return( "olid" )
+        case .id:
+            return( "id" )
+        case .authorDetail:
+            return( "author detail" )
+        }
+    }
+}
+
 class OLManagedObject: NSManagedObject {
 
     func localURL( key:String, size: String ) -> NSURL {

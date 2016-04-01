@@ -29,7 +29,7 @@ class WorkEditionsCoordinator: NSObject, FetchedResultsControllerDelegate {
     private lazy var fetchedResultsController: FetchedWorkEditionsController = {
         
         let fetchRequest = NSFetchRequest( entityName: OLEditionDetail.entityName )
-//        fetchRequest.predicate = NSPredicate( format: "work_key==%@", "\(self.workKey)" )
+        fetchRequest.predicate = NSPredicate( format: "work_key==%@", "\(self.workKey)" )
         
         fetchRequest.sortDescriptors =
             [NSSortDescriptor(key: "coversFound", ascending: false),

@@ -1,5 +1,5 @@
 //
-//  UIImage+DisplayFromURLswift
+//  UIImageView+DisplayFromURLswift
 //  OpenLibrary
 //
 //  Created by Bob Wakefield on 3/18/16.

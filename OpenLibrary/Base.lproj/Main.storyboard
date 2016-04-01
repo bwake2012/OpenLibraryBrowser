@@ -7,10 +7,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Author Search View Controller-->
+        <!--Search-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="AuthorSearchViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="OLAuthorSearchViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AuthorSearchViewController" title="Search" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="OLAuthorSearchViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -117,10 +117,10 @@
             </objects>
             <point key="canvasLocation" x="1791" y="425"/>
         </scene>
-        <!--Author Detail View Controller-->
+        <!--Author-->
         <scene sceneID="5sx-mU-O2o">
             <objects>
-                <viewController storyboardIdentifier="AuthorDetail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cMf-c7-rTV" customClass="OLAuthorDetailViewController" customModule="OpenLibrary" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AuthorDetail" title="Author" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cMf-c7-rTV" customClass="OLAuthorDetailViewController" customModule="OpenLibrary" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="WMK-h2-Oo1"/>
                         <viewControllerLayoutGuide type="bottom" id="sKH-cd-bo6"/>
@@ -337,10 +337,10 @@
             </objects>
             <point key="canvasLocation" x="127" y="378"/>
         </scene>
-        <!--Work Detail View Controller-->
+        <!--Work-->
         <scene sceneID="KY0-jO-V5V">
             <objects>
-                <viewController storyboardIdentifier="WorkDetail" id="CsL-qH-Mpk" customClass="OLWorkDetailViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WorkDetail" title="Work" useStoryboardIdentifierAsRestorationIdentifier="YES" id="CsL-qH-Mpk" customClass="OLWorkDetailViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="iIS-Mq-bMH"/>
                         <viewControllerLayoutGuide type="bottom" id="oyS-Hd-MJ5"/>
@@ -408,33 +408,33 @@
         <scene sceneID="E9G-4p-byG">
             <objects>
                 <tableViewController storyboardIdentifier="WorkDetailEditons" useStoryboardIdentifierAsRestorationIdentifier="YES" id="R39-Is-PIX" customClass="OLWorkDetailEditionsTableViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="120" sectionHeaderHeight="28" sectionFooterHeight="28" id="v9d-IS-Xtx">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="74" sectionHeaderHeight="28" sectionFooterHeight="28" id="v9d-IS-Xtx">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="224"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="workEditionEntry" selectionStyle="default" indentationWidth="10" reuseIdentifier="workEditionEntry" rowHeight="120" id="y3q-GV-8ni" customClass="WorkEditionTableViewCell" customModule="OpenLibrary">
-                                <rect key="frame" x="0.0" y="28" width="600" height="120"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="workEditionEntry" selectionStyle="default" indentationWidth="10" reuseIdentifier="workEditionEntry" rowHeight="74" id="y3q-GV-8ni" customClass="WorkEditionTableViewCell" customModule="OpenLibrary">
+                                <rect key="frame" x="0.0" y="28" width="600" height="74"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="y3q-GV-8ni" id="RGb-Cq-BFK">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="119.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="73.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" translatesAutoresizingMaskIntoConstraints="NO" id="Sb6-I5-7rl" userLabel="WorkEditionCover">
-                                            <rect key="frame" x="8" y="8" width="72" height="72"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" translatesAutoresizingMaskIntoConstraints="NO" id="Sb6-I5-7rl" userLabel="WorkEditionCover">
+                                            <rect key="frame" x="8" y="8" width="56" height="56"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="72" id="HRM-SZ-VZB"/>
-                                                <constraint firstAttribute="height" constant="72" id="yqU-Rg-Vbn"/>
+                                                <constraint firstAttribute="width" constant="56" id="HRM-SZ-VZB"/>
+                                                <constraint firstAttribute="height" constant="56" id="yqU-Rg-Vbn"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AAL-xz-lag">
-                                            <rect key="frame" x="88" y="8" width="504" height="21"/>
+                                            <rect key="frame" x="72" y="8" width="520" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LvO-Ua-saE">
-                                            <rect key="frame" x="88" y="90" width="504" height="21"/>
+                                            <rect key="frame" x="72" y="44" width="520" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>

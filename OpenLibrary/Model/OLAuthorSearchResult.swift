@@ -12,6 +12,8 @@ import BNRCoreDataStack
 
 class OLAuthorSearchResult: OLManagedObject, CoreDataModelable {
     
+    private let kHasPhoto = "has_photos"
+
     // MARK: Search Info
     struct SearchInfo {
         let objectID: NSManagedObjectID
@@ -32,20 +34,84 @@ class OLAuthorSearchResult: OLManagedObject, CoreDataModelable {
     @NSManaged var type: String
     @NSManaged var top_work: String?
     @NSManaged var work_count: Int64
+    @NSManaged var has_photos: Bool
 
     @NSManaged var toDetail: OLAuthorDetail?
 
-//    var has_photos = true
-
+    var havePhoto = HasPhoto.unknown
+    
     var searchInfo: SearchInfo {
         
         return SearchInfo( objectID: self.objectID, key: self.key, work_count: Int( self.work_count ) )
+    }
+    
+    override func awakeFromFetch() {
+        
+        super.awakeFromFetch()
+        
+        havePhoto = has_photos ? HasPhoto.unknown : HasPhoto.none
     }
     
     func localURL( size: String ) -> NSURL {
         
         let key = self.key
         return super.localURL( key, size: size )
+    }
+
+    
+    func displayThumbnail( imageView: UIImageView ) -> HasPhoto {
+        
+        var bDisplayed = false
+        if .none != havePhoto {
+            
+            let localURL = self.localURL( "S" )
+            bDisplayed = imageView.displayFromURL( localURL )
+            
+            if .local != havePhoto {
+
+                switch havePhoto {
+                    
+                case .unknown:
+                    if bDisplayed {
+                        
+                        havePhoto = .local
+                        
+                    } else {
+
+                        if let detail = self.toDetail {
+                            
+                            havePhoto = detail.hasPhotos ? .id : .none
+                            
+                        } else {
+                            
+                            havePhoto = .olid
+
+                        }
+                    }
+                    
+                case .olid:
+                    havePhoto = bDisplayed ? .local : .authorDetail
+                    
+                case .id, .authorDetail:
+                    havePhoto = bDisplayed ? .local : .none
+                    
+                case .local:
+                    break
+                    
+                case .none:
+                    assert( .none != havePhoto )
+                }
+
+                if bDisplayed || .none == havePhoto {
+                    
+                    willChangeValueForKey( kHasPhoto )
+                    setValue( havePhoto.rawValue, forKey: kHasPhoto )
+                    didChangeValueForKey( kHasPhoto )
+                }
+            }
+        }
+            
+        return bDisplayed ? .local : havePhoto
     }
 
 }

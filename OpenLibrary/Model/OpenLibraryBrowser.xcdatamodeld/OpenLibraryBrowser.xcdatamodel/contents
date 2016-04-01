@@ -21,6 +21,7 @@
     <entity name="AuthorSearchResult" representedClassName=".OLAuthorSearchResult" syncable="YES">
         <attribute name="birth_date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="death_date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="has_photos" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
         <attribute name="index" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="key" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
@@ -135,7 +136,7 @@
     </entity>
     <elements>
         <element name="AuthorDetail" positionX="-63" positionY="-18" width="128" height="285"/>
-        <element name="AuthorSearchResult" positionX="-54" positionY="81" width="128" height="195"/>
+        <element name="AuthorSearchResult" positionX="-54" positionY="81" width="128" height="210"/>
         <element name="EditionDetail" positionX="-45" positionY="144" width="128" height="885"/>
         <element name="WorkDetail" positionX="-54" positionY="99" width="128" height="450"/>
     </elements>

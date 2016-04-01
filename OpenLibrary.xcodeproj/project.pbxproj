@@ -13,7 +13,7 @@
 		C42D61D51C8738CC00909D43 /* AuthorDetailParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42D61D21C8738CC00909D43 /* AuthorDetailParseOperation.swift */; };
 		C42D61D91C87D63800909D43 /* ImageGetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42D61D61C87D63800909D43 /* ImageGetOperation.swift */; };
 		C42D61DA1C87D63800909D43 /* ImagelDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42D61D71C87D63800909D43 /* ImagelDownloadOperation.swift */; };
-		C4677E9F1C9CE35A0070CDFD /* UIImage+DisplayFromURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4677E9E1C9CE35A0070CDFD /* UIImage+DisplayFromURL.swift */; };
+		C4677E9F1C9CE35A0070CDFD /* UIImageView+DisplayFromURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4677E9E1C9CE35A0070CDFD /* UIImageView+DisplayFromURL.swift */; };
 		C4677EA11C9DDB7D0070CDFD /* OLManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4677EA01C9DDB7D0070CDFD /* OLManagedObject.swift */; };
 		C4677EA31C9DF4030070CDFD /* OLTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4677EA21C9DF4030070CDFD /* OLTableViewCell.swift */; };
 		C4677EA51CA0351B0070CDFD /* AuthorEditionsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4677EA41CA0351B0070CDFD /* AuthorEditionsCoordinator.swift */; };
@@ -127,7 +127,7 @@
 		C42D61D21C8738CC00909D43 /* AuthorDetailParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorDetailParseOperation.swift; path = "App Operations/AuthorDetailParseOperation.swift"; sourceTree = "<group>"; };
 		C42D61D61C87D63800909D43 /* ImageGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageGetOperation.swift; path = "App Operations/ImageGetOperation.swift"; sourceTree = "<group>"; };
 		C42D61D71C87D63800909D43 /* ImagelDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImagelDownloadOperation.swift; path = "App Operations/ImagelDownloadOperation.swift"; sourceTree = "<group>"; };
-		C4677E9E1C9CE35A0070CDFD /* UIImage+DisplayFromURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIImage+DisplayFromURL.swift"; path = "Utility/UIImage+DisplayFromURL.swift"; sourceTree = "<group>"; };
+		C4677E9E1C9CE35A0070CDFD /* UIImageView+DisplayFromURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIImageView+DisplayFromURL.swift"; path = "Utility/UIImageView+DisplayFromURL.swift"; sourceTree = "<group>"; };
 		C4677EA01C9DDB7D0070CDFD /* OLManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLManagedObject.swift; path = Model/OLManagedObject.swift; sourceTree = "<group>"; };
 		C4677EA21C9DF4030070CDFD /* OLTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLTableViewCell.swift; path = Views/OLTableViewCell.swift; sourceTree = "<group>"; };
 		C4677EA41CA0351B0070CDFD /* AuthorEditionsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorEditionsCoordinator.swift; path = Coordinators/AuthorEditionsCoordinator.swift; sourceTree = "<group>"; };
@@ -499,7 +499,7 @@
 			isa = PBXGroup;
 			children = (
 				C4E35EC81C80DE760015D187 /* String+PercentEncoding.swift */,
-				C4677E9E1C9CE35A0070CDFD /* UIImage+DisplayFromURL.swift */,
+				C4677E9E1C9CE35A0070CDFD /* UIImageView+DisplayFromURL.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -830,7 +830,7 @@
 				C4DA1F7D1C8A329B00DFA4BF /* AuthorWorksDownloadOperation.swift in Sources */,
 				C4E35EA61C7E41B60015D187 /* OLAuthorSearchResultsTableViewController.swift in Sources */,
 				C4E35E781C7E07D40015D187 /* HealthCondition.swift in Sources */,
-				C4677E9F1C9CE35A0070CDFD /* UIImage+DisplayFromURL.swift in Sources */,
+				C4677E9F1C9CE35A0070CDFD /* UIImageView+DisplayFromURL.swift in Sources */,
 				C4E35E741C7E07D40015D187 /* DelayOperation.swift in Sources */,
 				C4E35E841C7E07D40015D187 /* PassbookCondition.swift in Sources */,
 				C4E35E761C7E07D40015D187 /* ExclusivityController.swift in Sources */,
