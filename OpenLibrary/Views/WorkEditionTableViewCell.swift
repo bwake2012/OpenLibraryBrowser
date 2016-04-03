@@ -32,7 +32,7 @@ class WorkEditionTableViewCell: OLTableViewCell {
                         NSCharacterSet.whitespaceAndNewlineCharacterSet()
                     )
 
-            editionSubTitle.text = entry.subtitle
+            editionSubTitle.text = entry.key + " " + entry.subtitle
             
         } else {
             editionTitle.text = ""
