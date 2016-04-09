@@ -61,12 +61,14 @@ class OLManagedObject: NSManagedObject {
         return url
     }
     
+    var hasImage: Bool { return true }
+    var firstImageID: Int { return 0 }
+    
+    func localURL( size: String ) -> NSURL {
+        
+        return NSURL()
+    }
+    
 }
 
-protocol OLObjectWithImages {
-    
-    func setThumbnailImage( displayImage: imageDisplayClosure )
-    func setMediumImage( displayImage: imageDisplayClosure )
-    func setLargeImage( displayImage: imageDisplayClosure )
-}
 

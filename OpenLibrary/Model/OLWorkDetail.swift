@@ -163,7 +163,7 @@ private class ParsedSearchResult: OpenLibraryObject {
     }
 }
 
-class OLWorkDetail: OLManagedObject, CoreDataModelable, OLObjectWithImages {
+class OLWorkDetail: OLManagedObject, CoreDataModelable {
 
     // MARK: Search Info
     struct SearchInfo {
@@ -253,33 +253,29 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable, OLObjectWithImages {
     @NSManaged var covers: [Int]
     @NSManaged var coversFound: Bool
     
-    var workSearchInfo: SearchInfo {
+//    var workSearchInfo: SearchInfo {
+//        
+//        return SearchInfo( objectID: self.objectID, key: self.key )
+//    }
+//    
+//    var authorSearchInfo: SearchInfo {
+//        
+//        return SearchInfo( objectID: self.objectID, key: self.author_key )
+//    }
+//    
+    override var hasImage: Bool {
         
-        return SearchInfo( objectID: self.objectID, key: self.key )
+        return 0 < self.covers.count
     }
     
-    var authorSearchInfo: SearchInfo {
+    override var firstImageID: Int {
         
-        return SearchInfo( objectID: self.objectID, key: self.author_key )
+        return 0 >= self.covers.count ? 0 : self.covers[0]
     }
     
-    func localURL( size: String ) -> NSURL {
+    override func localURL( size: String ) -> NSURL {
         
         return super.localURL( self.key, size: size )
     }
     
-    func setThumbnailImage( displayImage: imageDisplayClosure ) {
-        
-        displayImage( localURL: localURL( "S" ) )
-    }
-
-    func setMediumImage( displayImage: imageDisplayClosure ) {
-        
-        displayImage( localURL: localURL( "S" ) )
-    }
-
-    func setLargeImage( displayImage: imageDisplayClosure ) {
-        
-        displayImage( localURL: localURL( "S" ) )
-    }
 }

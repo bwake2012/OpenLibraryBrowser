@@ -16,16 +16,14 @@ private let kWorksByAuthorCache = "worksByAuthor"
 
 private let kPageSize = 100
     
-class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
+class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate {
     
     typealias FetchedOLWorkDetailController = FetchedResultsController< OLWorkDetail >
     
-    let tableView: UITableView
+    let authorWorksTableVC: OLAuthorDetailWorksTableViewController
 
-    var operationQueue: OperationQueue
     var authorWorksGetOperation: Operation?
     
-    let coreDataStack: CoreDataStack
     private lazy var fetchedResultsController: FetchedOLWorkDetailController = {
         
         let fetchRequest = NSFetchRequest( entityName: OLWorkDetail.entityName )
@@ -33,7 +31,7 @@ class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
         fetchRequest.predicate = NSPredicate( format: "author_key==%@", "\(key)" )
         
         fetchRequest.sortDescriptors =
-            [// NSSortDescriptor(key: "coversFound", ascending: false),
+            [NSSortDescriptor(key: "coversFound", ascending: false),
              NSSortDescriptor(key: "index", ascending: true)]
         
         let frc = FetchedOLWorkDetailController( fetchRequest: fetchRequest,
@@ -49,15 +47,13 @@ class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
     
     var highWaterMark = 0
     
-    init?( searchInfo: OLAuthorSearchResult, tableView: UITableView, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
+    init( searchInfo: OLAuthorSearchResult, authorWorksTableVC: OLAuthorDetailWorksTableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         
         self.searchInfo = searchInfo
 
-        self.tableView = tableView
-        self.operationQueue = operationQueue
-        self.coreDataStack = coreDataStack
+        self.authorWorksTableVC = authorWorksTableVC
         
-        super.init()
+        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
         
         updateUI()
     }
@@ -230,29 +226,29 @@ class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
     }
     
     func fetchedResultsControllerWillChangeContent( controller: FetchedOLWorkDetailController ) {
-        tableView.beginUpdates()
+        authorWorksTableVC.tableView.beginUpdates()
     }
     
     func fetchedResultsControllerDidChangeContent( controller: FetchedOLWorkDetailController ) {
-        tableView.endUpdates()
+        authorWorksTableVC.tableView.endUpdates()
     }
     
     func fetchedResultsController( controller: FetchedOLWorkDetailController,
         didChangeObject change: FetchedResultsObjectChange< OLWorkDetail > ) {
             switch change {
             case let .Insert(_, indexPath):
-                tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                authorWorksTableVC.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
             case let .Delete(_, indexPath):
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                authorWorksTableVC.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
             case let .Move(_, fromIndexPath, toIndexPath):
-                tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
+                authorWorksTableVC.tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
                 
             case let .Update(_, indexPath):
-                tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                authorWorksTableVC.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             }
     }
     
@@ -260,10 +256,26 @@ class AuthorWorksCoordinator: NSObject, FetchedResultsControllerDelegate {
         didChangeSection change: FetchedResultsSectionChange< OLWorkDetail >) {
             switch change {
             case let .Insert(_, index):
-                tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+                authorWorksTableVC.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
                 
             case let .Delete(_, index):
-                tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+                authorWorksTableVC.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
             }
+    }
+    
+    // MARK: Query Coordinators
+    
+    func setWorkDetailCoordinator( destVC: OLWorkDetailViewController, indexPath: NSIndexPath ){
+    
+        if let workDetail = objectAtIndexPath( indexPath ) {
+
+            destVC.queryCoordinator =
+                WorkDetailCoordinator(
+                        operationQueue: self.operationQueue,
+                        coreDataStack: self.coreDataStack,
+                        searchInfo: workDetail,
+                        workDetailVC: destVC
+                    )
+        }
     }
 }

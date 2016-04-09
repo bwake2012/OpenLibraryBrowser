@@ -47,17 +47,17 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
         return SearchInfo( objectID: self.objectID, key: self.key )
     }
     
-    var hasPhotos: Bool {
+    override var hasImage: Bool {
         
         return 0 < self.photos.count
     }
 
-    var firstPhotoID: Int {
+    override var firstImageID: Int {
         
         return 0 >= self.photos.count ? 0 : self.photos[0]
     }
     
-    func localURL( size: String ) -> NSURL {
+    override func localURL( size: String ) -> NSURL {
         
         return super.localURL( self.key, size: size )
     }

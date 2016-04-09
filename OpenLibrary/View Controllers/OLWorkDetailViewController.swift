@@ -15,32 +15,27 @@ import BNRCoreDataStack
 class OLWorkDetailViewController: UIViewController {
 
     @IBOutlet weak var workTitle: UILabel!
+    @IBOutlet weak var workSubtitle: UILabel!
     @IBOutlet weak var workCover: UIImageView!
+    @IBOutlet weak var displayLargeCover: UIButton!
 
-    lazy var queryCoordinator: WorkDetailCoordinator = {
-        return
-            WorkDetailCoordinator(
-                operationQueue: self.operationQueue!,
-                coreDataStack: self.coreDataStack!,
-                searchInfo: self.searchInfo!,
-                workDetailVC: self
-            )
-    }()
-    
+    var queryCoordinator: WorkDetailCoordinator?
+
     var authorWorksVC: OLWorkDetailEditionsTableViewController?
     var authorEditionsVC: OLWorkDetailEditionsTableViewController?
     
     var currentImageURL: NSURL?
     
-    var operationQueue: OperationQueue?
-    var coreDataStack: CoreDataStack?
-
     var searchInfo: OLWorkDetail?
 
     // MARK: UIViewController
     override func viewDidLoad() {
         
-        self.queryCoordinator.updateUI()
+        super.viewDidLoad()
+        
+        assert( nil != queryCoordinator )
+        
+        queryCoordinator!.updateUI()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -51,9 +46,14 @@ class OLWorkDetailViewController: UIViewController {
                 
                 self.authorEditionsVC = destVC
                 
-                destVC.operationQueue = self.operationQueue
-                destVC.coreDataStack = self.coreDataStack
-                destVC.searchInfo = self.searchInfo
+                queryCoordinator!.setWorkDetailEditionsQueryCoordinator( destVC )
+            }
+        } else if segue.identifier == "largeCoverImage" {
+            
+            if let destVC = segue.destinationViewController as? OLPictureViewController {
+                
+                queryCoordinator!.setCoverPictureViewCoordinator( destVC )
+                
             }
         }
     }
@@ -95,7 +95,8 @@ class OLWorkDetailViewController: UIViewController {
     func UpdateUI( workDetail: OLWorkDetail ) {
         
         self.workTitle.text = workDetail.title
-        
+        self.workSubtitle.text = workDetail.subtitle
+        self.displayLargeCover.enabled = workDetail.coversFound
     }
     
     // MARK: Utility

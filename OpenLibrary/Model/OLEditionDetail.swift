@@ -82,14 +82,28 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
     //    scan_records[]: [String]
     //    volumes[]: [String]
     
-    var editionSearchInfo: SearchInfo {
+//    var editionSearchInfo: SearchInfo {
+//        
+//        return SearchInfo( objectID: self.objectID, key: self.key )
+//    }
+//    
+//    var authorSearchInfo: SearchInfo {
+//        
+//        return SearchInfo( objectID: self.objectID, key: self.author_key )
+//    }
+//
+    override var hasImage: Bool {
         
-        return SearchInfo( objectID: self.objectID, key: self.key )
+        return 0 < self.covers.count
     }
     
-    var authorSearchInfo: SearchInfo {
+    override var firstImageID: Int {
         
-        return SearchInfo( objectID: self.objectID, key: self.author_key )
+        return 0 >= self.covers.count ? 0 : self.covers[0]
     }
-
+    
+    override func localURL( size: String ) -> NSURL {
+        
+        return super.localURL( self.key, size: size )
+    }
 }

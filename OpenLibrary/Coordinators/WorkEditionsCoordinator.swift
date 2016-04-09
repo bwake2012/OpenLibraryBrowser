@@ -16,16 +16,14 @@ private let kWorkEditonsCache = "workEditionsCache"
 
 private let kPageSize = 100
 
-class WorkEditionsCoordinator: NSObject, FetchedResultsControllerDelegate {
+class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate {
     
     typealias FetchedWorkEditionsController = FetchedResultsController< OLEditionDetail >
     
-    let tableView: UITableView
+    let tableVC: UITableViewController
 
-    var operationQueue: OperationQueue
     var workEditionsGetOperation: Operation?
     
-    let coreDataStack: CoreDataStack
     private lazy var fetchedResultsController: FetchedWorkEditionsController = {
         
         let fetchRequest = NSFetchRequest( entityName: OLEditionDetail.entityName )
@@ -51,16 +49,14 @@ class WorkEditionsCoordinator: NSObject, FetchedResultsControllerDelegate {
     
     var highWaterMark = 0
     
-    init?( searchInfo: OLWorkDetail, withCoversOnly: Bool, tableView: UITableView, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
+    init( searchInfo: OLWorkDetail, withCoversOnly: Bool, tableVC: UITableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         
         self.workKey = searchInfo.key
         self.withCoversOnly = withCoversOnly
 //        self.worksCount = searchInfo.work_count
-        self.tableView = tableView
-        self.operationQueue = operationQueue
-        self.coreDataStack = coreDataStack
+        self.tableVC = tableVC
         
-        super.init()
+        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
         
         updateUI()
     }
@@ -136,6 +132,19 @@ class WorkEditionsCoordinator: NSObject, FetchedResultsControllerDelegate {
         catch {
             print("Error in the fetched results controller: \(error).")
         }
+    }
+    
+    func setEditionCoordinator( editionDetailVC: OLEditionDetailViewController, indexPath: NSIndexPath ) {
+        
+        let editionDetail = objectAtIndexPath( indexPath )!
+        editionDetailVC.queryCoordinator =
+            EditionDetailCoordinator(
+                    operationQueue: operationQueue,
+                    coreDataStack: coreDataStack,
+                    searchInfo: editionDetail,
+                    editionDetailVC: editionDetailVC
+                )
+        editionDetailVC.editionDetail = editionDetail
     }
 
     func newQuery( workKey: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
@@ -234,29 +243,29 @@ class WorkEditionsCoordinator: NSObject, FetchedResultsControllerDelegate {
     }
     
     func fetchedResultsControllerWillChangeContent( controller: FetchedWorkEditionsController ) {
-        tableView.beginUpdates()
+        tableVC.tableView.beginUpdates()
     }
     
     func fetchedResultsControllerDidChangeContent( controller: FetchedWorkEditionsController ) {
-        tableView.endUpdates()
+        tableVC.tableView.endUpdates()
     }
     
     func fetchedResultsController( controller: FetchedWorkEditionsController,
         didChangeObject change: FetchedResultsObjectChange< OLEditionDetail > ) {
             switch change {
             case let .Insert(_, indexPath):
-                tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableVC.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
             case let .Delete(_, indexPath):
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableVC.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
             case let .Move(_, fromIndexPath, toIndexPath):
-                tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
+                tableVC.tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
                 
             case let .Update(_, indexPath):
-                tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableVC.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             }
     }
     
@@ -264,10 +273,10 @@ class WorkEditionsCoordinator: NSObject, FetchedResultsControllerDelegate {
         didChangeSection change: FetchedResultsSectionChange< OLEditionDetail >) {
             switch change {
             case let .Insert(_, index):
-                tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+                tableVC.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
                 
             case let .Delete(_, index):
-                tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+                tableVC.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
             }
     }
 }

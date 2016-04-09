@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: Properties
     var window: UIWindow?
 
-    private var appCoreDataStack: CoreDataStack?
+    private var coreDataStack: CoreDataStack?
     private let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
     private lazy var loadingVC: UIViewController = {
         return self.mainStoryboard.instantiateViewControllerWithIdentifier("launchVC")
@@ -37,12 +37,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         CoreDataStack.constructSQLiteStack(withModelName: "OpenLibraryBrowser") { result in
             switch result {
             case .Success(let stack):
-                self.appCoreDataStack = stack
+                self.coreDataStack = stack
                 
                 dispatch_async( dispatch_get_main_queue() ) {
-                    if let rootVC = self.navController.viewControllers.first as? OLAuthorSearchViewController {
-                        rootVC.appCoreDataStack = stack
-                    }
+
                     self.window?.rootViewController = self.navController
                 }
             case .Failure(let error):
@@ -77,6 +75,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    func getAuthorSearchCoordinator( destVC: OLAuthorSearchResultsTableViewController ) -> AuthorSearchResultsCoordinator {
 
+        return
+            AuthorSearchResultsCoordinator(
+                    tableVC: destVC,
+                    coreDataStack: coreDataStack!,
+                    operationQueue: OperationQueue()
+                )
+    }
 }
 

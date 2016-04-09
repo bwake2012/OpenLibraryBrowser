@@ -52,7 +52,7 @@ class OLAuthorSearchResult: OLManagedObject, CoreDataModelable {
         havePhoto = has_photos ? HasPhoto.unknown : HasPhoto.none
     }
     
-    func localURL( size: String ) -> NSURL {
+    override func localURL( size: String ) -> NSURL {
         
         let key = self.key
         return super.localURL( key, size: size )
@@ -80,7 +80,7 @@ class OLAuthorSearchResult: OLManagedObject, CoreDataModelable {
 
                         if let detail = self.toDetail {
                             
-                            havePhoto = detail.hasPhotos ? .id : .none
+                            havePhoto = detail.hasImage ? .id : .none
                             
                         } else {
                             

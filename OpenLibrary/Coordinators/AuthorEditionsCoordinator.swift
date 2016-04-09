@@ -14,15 +14,12 @@ import BNRCoreDataStack
 
 private let kAuthorEditonsCache = "authorEditionsCache"
     
-class AuthorEditionsCoordinator: NSObject, FetchedResultsControllerDelegate {
+class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate {
     
     typealias FetchedAuthorEditionsController = FetchedResultsController< OLEditionDetail >
     
-    let tableView: UITableView?
+    let tableVC: UITableViewController
 
-    var operationQueue: OperationQueue
-    
-    let coreDataStack: CoreDataStack
     private lazy var fetchedResultsController: FetchedAuthorEditionsController = {
         
         let fetchRequest = NSFetchRequest( entityName: OLEditionDetail.entityName )
@@ -48,16 +45,14 @@ class AuthorEditionsCoordinator: NSObject, FetchedResultsControllerDelegate {
     
     var highWaterMark = 0
     
-    init?( searchInfo: OLAuthorSearchResult, withCoversOnly: Bool, tableView: UITableView, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
+    init( searchInfo: OLAuthorSearchResult, withCoversOnly: Bool, tableVC: UITableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         
         self.authorKey = searchInfo.key
         self.withCoversOnly = withCoversOnly
         self.worksCount = Int( searchInfo.work_count )
-        self.tableView = tableView
-        self.operationQueue = operationQueue
-        self.coreDataStack = coreDataStack
+        self.tableVC = tableVC
         
-        super.init()
+        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
         
         updateUI()
     }
@@ -104,7 +99,7 @@ class AuthorEditionsCoordinator: NSObject, FetchedResultsControllerDelegate {
             print("Error in the fetched results controller: \(error).")
         }
         
-        tableView!.reloadData()
+        tableVC.tableView.reloadData()
     }
 
     func newQuery( authorKey: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
@@ -181,7 +176,7 @@ class AuthorEditionsCoordinator: NSObject, FetchedResultsControllerDelegate {
     // MARK: FetchedResultsControllerDelegate
     func fetchedResultsControllerDidPerformFetch(controller: FetchedAuthorEditionsController) {
         
-        tableView?.reloadData()
+        tableVC.tableView.reloadData()
         
         if 0 == controller.count {
             
@@ -209,10 +204,10 @@ class AuthorEditionsCoordinator: NSObject, FetchedResultsControllerDelegate {
                 break
                 
             case let .Move(_, fromIndexPath, toIndexPath):
-                tableView?.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
+                tableVC.tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
                 
             case let .Update(_, indexPath):
-                tableView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableVC.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             }
     }
     
@@ -220,10 +215,10 @@ class AuthorEditionsCoordinator: NSObject, FetchedResultsControllerDelegate {
         didChangeSection change: FetchedResultsSectionChange< OLEditionDetail >) {
             switch change {
             case let .Insert(_, index):
-                tableView?.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+                tableVC.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
                 
             case let .Delete(_, index):
-                tableView?.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+                tableVC.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
             }
     }
 }

@@ -11,32 +11,36 @@ import CoreData
 
 import BNRCoreDataStack
 
-class OLAuthorSearchResultsTableViewController: UITableViewController {
+class OLAuthorSearchResultsTableViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate {
 
     // MARK: Properties
-    var coreDataStack: CoreDataStack?
-    
-    var operationQueue: OperationQueue?
-    
     lazy var queryCoordinator: AuthorSearchResultsCoordinator = {
         
-        let coordinator =
-            AuthorSearchResultsCoordinator(
-                    tableView: self.tableView,
-                    coreDataStack: self.coreDataStack!,
-                    operationQueue: self.operationQueue!
-                )
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
-        return coordinator!
+        return appDelegate.getAuthorSearchCoordinator( self )
     }()
+
+    var searchController = UISearchController( searchResultsController: nil )
 
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view, typically from a nib.
+        
         self.tableView.estimatedRowHeight = 68.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
+
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.definesPresentationContext = true
+        searchController.searchBar.scopeButtonTitles = ["Author", "Title" ]
+        searchController.searchBar.delegate = self
+        
+        tableView.tableHeaderView = searchController.searchBar
+        
+        searchController.searchBar.sizeToFit()
     }
         
     override func didReceiveMemoryWarning() {
@@ -52,8 +56,8 @@ class OLAuthorSearchResultsTableViewController: UITableViewController {
                 if let destVC = segue.destinationViewController as? OLAuthorDetailViewController {
                     
                     if let searchResult = queryCoordinator.objectAtIndexPath( indexPath ) {
-                        destVC.operationQueue = self.operationQueue
-                        destVC.coreDataStack = self.coreDataStack
+                        
+                        queryCoordinator.setAuthorDetailCoordinator( destVC, indexPath: indexPath )
                         destVC.searchInfo = searchResult
                         
                         print( "\(indexPath.row) \(searchResult.key) \(searchResult.name)" )
@@ -86,7 +90,7 @@ class OLAuthorSearchResultsTableViewController: UITableViewController {
     
     // MARK: Search
     
-    func getFirstAuthorSearchResults( authorName: String, userInitiated: Bool = true ) {
+    func getFirstSearchResults( authorName: String, scopeIndex: Int, userInitiated: Bool = true ) {
 
         queryCoordinator.newQuery( authorName, userInitiated: userInitiated, refreshControl: self.refreshControl )
     }
@@ -99,5 +103,30 @@ class OLAuthorSearchResultsTableViewController: UITableViewController {
     private func updateUI() {
         
         queryCoordinator.updateUI()
+    }
+
+    // MARK: UISearchBarDelegate
+    func searchBarSearchButtonClicked( searchBar: UISearchBar ) {
+        
+        if let text = searchBar.text {
+            
+            getFirstSearchResults( text, scopeIndex: searchBar.selectedScopeButtonIndex )
+            
+        }
+    }
+    
+    func searchBar( searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int ) {
+        
+        if let text = searchBar.text {
+            
+            getFirstSearchResults( text, scopeIndex: selectedScope )
+            
+        }
+    }
+    
+    // MARK: UISearchResultsUpdating
+    func updateSearchResultsForSearchController( searchController: UISearchController ) {
+        
+        
     }
 }

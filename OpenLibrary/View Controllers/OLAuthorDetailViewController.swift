@@ -16,31 +16,24 @@ class OLAuthorDetailViewController: UIViewController {
 
     @IBOutlet weak var authorName: UILabel!
     @IBOutlet weak var authorPhoto: UIImageView!
+    @IBOutlet weak var displayLargePhoto: UIButton!
 
-    lazy var queryCoordinator: AuthorDetailCoordinator = {
-        return
-            AuthorDetailCoordinator(
-                    operationQueue: self.operationQueue!,
-                    coreDataStack: self.coreDataStack!,
-                    searchInfo: self.searchInfo!,
-                    authorDetailVC: self
-                )
-    }()
-    
+    var queryCoordinator: AuthorDetailCoordinator?
+    var searchInfo: OLAuthorSearchResult?
+
     var authorWorksVC: OLAuthorDetailWorksTableViewController?
     var authorEditionsVC: OLAuthorDetailEditionsTableViewController?
     
     var currentImageURL: NSURL?
     
-    var operationQueue: OperationQueue?
-    var coreDataStack: CoreDataStack?
-
-    var searchInfo: OLAuthorSearchResult?
-
     // MARK: UIViewController
     override func viewDidLoad() {
 
-        self.queryCoordinator.updateUI()
+        super.viewDidLoad()
+        
+        assert( nil != queryCoordinator )
+        
+        self.queryCoordinator!.updateUI()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -50,20 +43,21 @@ class OLAuthorDetailViewController: UIViewController {
             if let destVC = segue.destinationViewController as? OLAuthorDetailWorksTableViewController {
                 
                 self.authorWorksVC = destVC
-
-                destVC.operationQueue = self.operationQueue
-                destVC.coreDataStack = self.coreDataStack
-                destVC.searchInfo = self.searchInfo
+                queryCoordinator?.setAuthorWorksCoordinator( destVC, searchInfo: searchInfo! )
             }
         } else if segue.identifier == "embedAuthorEditions" {
             
             if let destVC = segue.destinationViewController as? OLAuthorDetailEditionsTableViewController {
                 
                 self.authorEditionsVC = destVC
-                
-                destVC.operationQueue = self.operationQueue
-                destVC.coreDataStack = self.coreDataStack
-                destVC.searchInfo = self.searchInfo
+                queryCoordinator?.setAuthorEditionsCoordinator( destVC, searchInfo: searchInfo! )
+
+            }
+        } else if segue.identifier == "largeAuthorPhoto" {
+            
+            if let destVC = segue.destinationViewController as? OLPictureViewController {
+
+                queryCoordinator?.setAuthorPictureCoordinator( destVC, searchInfo: searchInfo! )
             }
         }
     }
@@ -104,8 +98,9 @@ class OLAuthorDetailViewController: UIViewController {
     
     func UpdateUI( authorDetail: OLAuthorDetail ) {
         
+        self.displayLargePhoto.enabled = authorDetail.hasImage
+            
         self.authorName.text = authorDetail.name
-        
     }
     
     // MARK: Utility

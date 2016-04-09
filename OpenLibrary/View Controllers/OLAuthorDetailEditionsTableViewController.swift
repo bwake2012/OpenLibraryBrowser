@@ -14,26 +14,16 @@ import BNRCoreDataStack
 class OLAuthorDetailEditionsTableViewController: UITableViewController {
 
     // MARK: Properties
-    var operationQueue: OperationQueue?
-    var coreDataStack: CoreDataStack?
-    
     var searchInfo: OLAuthorSearchResult?
-    lazy var queryCoordinator: AuthorEditionsCoordinator = {
-        return
-            AuthorEditionsCoordinator(
-                    searchInfo: self.searchInfo!,
-                    withCoversOnly: true,
-                    tableView: self.tableView,
-                    coreDataStack: self.coreDataStack!,
-                    operationQueue: self.operationQueue!
-                )
-    }()!
-    
+    var queryCoordinator: AuthorEditionsCoordinator?
+
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view, typically from a nib.
+        assert( nil != queryCoordinator )
+        
         self.tableView.estimatedRowHeight = 68.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
     }
@@ -52,18 +42,18 @@ class OLAuthorDetailEditionsTableViewController: UITableViewController {
     // MARK: UITableviewDataSource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
-        return queryCoordinator.numberOfSections() ?? 0
+        return queryCoordinator!.numberOfSections() ?? 0
     }
     
     override func tableView( tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
         
-        return queryCoordinator.numberOfRowsInSection( section ) ?? 0
+        return queryCoordinator!.numberOfRowsInSection( section ) ?? 0
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("editionsEntry", forIndexPath: indexPath) as! WorkEditionTableViewCell
         
-        cell.configure( queryCoordinator.objectAtIndexPath( indexPath ) )
+        cell.configure( queryCoordinator!.objectAtIndexPath( indexPath ) )
         
         return cell
     }

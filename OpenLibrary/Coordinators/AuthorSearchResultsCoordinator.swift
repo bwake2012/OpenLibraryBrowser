@@ -16,16 +16,14 @@ private let kAuthorSearchCache = "authorNameSearch"
 
 private let kPageSize = 100
 
-class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate {
+class AuthorSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate {
     
     typealias FetchedOLAuthorSearchResultController = FetchedResultsController< OLAuthorSearchResult >
     
-    let tableView: UITableView?
+    let tableVC: UITableViewController
 
-    var operationQueue: OperationQueue
     var authorSearchOperation: Operation?
     
-    let coreDataStack: CoreDataStack
     private lazy var fetchedResultsController: FetchedOLAuthorSearchResultController = {
         
         let request = NSFetchRequest(entityName: OLAuthorSearchResult.entityName)
@@ -55,13 +53,11 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
     var highWaterMark = 0
     var nextOffset = 0
     
-    init?( tableView: UITableView, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
+    init( tableVC: UITableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         
-        self.tableView = tableView
-        self.operationQueue = operationQueue
-        self.coreDataStack = coreDataStack
+        self.tableVC = tableVC
         
-        super.init()
+        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
         
         updateUI()
     }
@@ -124,7 +120,7 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
                 
             case .id:
                 if let detail = result.toDetail {
-                    queueGetAuthorThumbByID( indexPath, id: detail.firstPhotoID, url: localURL )
+                    queueGetAuthorThumbByID( indexPath, id: detail.firstImageID, url: localURL )
                 }
             
             case .authorDetail:
@@ -151,14 +147,14 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
             print("Error in the fetched results controller: \(error).")
         }
         
-        tableView!.reloadData()
+        tableVC.tableView.reloadData()
     }
 
     func newQuery( authorName: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
         
         if self.searchResults.numFound > 0 {
             
-            self.tableView!.scrollToRowAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ), atScrollPosition: .Top, animated: false )
+            tableVC.tableView.scrollToRowAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ), atScrollPosition: .Top, animated: false )
         }
         
         if authorName != self.authorName && nil == authorSearchOperation {
@@ -253,34 +249,34 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
         if authorName.isEmpty {
             self.highWaterMark = fetchedResultsController.count
             self.searchResults = SearchResults( start: 0, numFound: highWaterMark, pageSize: 100 )
-            tableView?.reloadData()
+            tableVC.tableView.reloadData()
         }
     }
     
     func fetchedResultsControllerWillChangeContent( controller: FetchedResultsController< OLAuthorSearchResult > ) {
-        tableView?.beginUpdates()
+        tableVC.tableView.beginUpdates()
     }
     
     func fetchedResultsControllerDidChangeContent( controller: FetchedResultsController< OLAuthorSearchResult > ) {
-        tableView?.endUpdates()
+        tableVC.tableView.endUpdates()
     }
     
     func fetchedResultsController( controller: FetchedResultsController< OLAuthorSearchResult >,
         didChangeObject change: FetchedResultsObjectChange< OLAuthorSearchResult > ) {
             switch change {
             case let .Insert(_, indexPath):
-                tableView?.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableVC.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
             case let .Delete(_, indexPath):
-                tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableVC.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
             case let .Move(_, fromIndexPath, toIndexPath):
-                tableView?.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
+                tableVC.tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
                 
             case let .Update(_, indexPath):
-                tableView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableVC.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             }
     }
     
@@ -288,10 +284,10 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
         didChangeSection change: FetchedResultsSectionChange< OLAuthorSearchResult >) {
             switch change {
             case let .Insert(_, index):
-                tableView?.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+                tableVC.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
                 
             case let .Delete(_, index):
-                tableView?.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+                tableVC.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
             }
     }
     
@@ -308,7 +304,7 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
                     
                     dispatch_async( dispatch_get_main_queue() ) {
                         
-                        strongSelf.tableView?.reloadRowsAtIndexPaths( [indexPath], withRowAnimation: .Automatic )
+                        strongSelf.tableVC.tableView.reloadRowsAtIndexPaths( [indexPath], withRowAnimation: .Automatic )
                     }
         }
     
@@ -331,7 +327,7 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
                 if let strongSelf = self {
                     dispatch_async( dispatch_get_main_queue() ) {
                         
-                        strongSelf.tableView?.reloadRowsAtIndexPaths( [indexPath], withRowAnimation: .Automatic )
+                        strongSelf.tableVC.tableView.reloadRowsAtIndexPaths( [indexPath], withRowAnimation: .Automatic )
                     }
                 }
         }
@@ -349,7 +345,7 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
                 if let strongSelf = self {
                     dispatch_async( dispatch_get_main_queue() ) {
                         
-                        strongSelf.tableView?.reloadRowsAtIndexPaths( [indexPath], withRowAnimation: .Automatic )
+                        strongSelf.tableVC.tableView.reloadRowsAtIndexPaths( [indexPath], withRowAnimation: .Automatic )
                     }
                 }
         }
@@ -364,4 +360,19 @@ class AuthorSearchResultsCoordinator: NSObject, FetchedResultsControllerDelegate
         
         return result.toDetail
     }
+    
+    // MARK: set coordinator for new view controller
+    
+    func setAuthorDetailCoordinator( destVC: OLAuthorDetailViewController, indexPath: NSIndexPath ) {
+        
+        destVC.queryCoordinator =
+            AuthorDetailCoordinator(
+                    operationQueue: operationQueue,
+                    coreDataStack: coreDataStack,
+                    searchInfo: objectAtIndexPath( indexPath )!,
+                    authorDetailVC: destVC
+                )
+    }
+    
+
 }

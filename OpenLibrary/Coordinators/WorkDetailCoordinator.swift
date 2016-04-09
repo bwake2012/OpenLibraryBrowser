@@ -14,13 +14,10 @@ import BNRCoreDataStack
 
 let kWorkDetailCache = "workDetailSearch"
 
-class WorkDetailCoordinator: NSObject {
+class WorkDetailCoordinator: OLQueryCoordinator {
     
     weak var workDetailVC: OLWorkDetailViewController?
 
-    var operationQueue: OperationQueue
-    var coreDataStack: CoreDataStack
-    
     var searchInfo: OLWorkDetail
     
     init(
@@ -30,14 +27,10 @@ class WorkDetailCoordinator: NSObject {
             workDetailVC: OLWorkDetailViewController
         ) {
         
-        self.operationQueue = operationQueue
-        self.coreDataStack = coreDataStack
         self.searchInfo = searchInfo
         self.workDetailVC = workDetailVC
 
-        super.init()
-
-        updateUI( searchInfo )
+        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
     }
     
     func updateUI( workDetail: OLWorkDetail ) {
@@ -70,6 +63,30 @@ class WorkDetailCoordinator: NSObject {
     
     func updateUI() -> Void {
         
+        updateUI( searchInfo )
+    }
+    
+    func setWorkDetailEditionsQueryCoordinator( destVC: OLWorkDetailEditionsTableViewController ) {
         
+        destVC.queryCoordinator =
+            WorkEditionsCoordinator(
+                    searchInfo: self.searchInfo,
+                    withCoversOnly: true,
+                    tableVC: destVC,
+                    coreDataStack: self.coreDataStack,
+                    operationQueue: self.operationQueue
+                )
+    }
+    
+    func setCoverPictureViewCoordinator( destVC: OLPictureViewController ) {
+        
+        destVC.queryCoordinator =
+            CoverPictureViewCoordinator(
+                    operationQueue: self.operationQueue,
+                    coreDataStack: self.coreDataStack,
+                    managedObject: self.searchInfo,
+                    pictureVC: destVC
+                )
+
     }
 }

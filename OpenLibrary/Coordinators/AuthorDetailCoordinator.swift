@@ -14,15 +14,12 @@ import BNRCoreDataStack
 
 let kAuthorDetailCache = "authorDetailSearch"
 
-class AuthorDetailCoordinator: NSObject {
+class AuthorDetailCoordinator: OLQueryCoordinator {
     
     weak var authorDetailVC: OLAuthorDetailViewController?
 
-    var operationQueue: OperationQueue?
-    var coreDataStack: CoreDataStack?
-    
     var searchInfo: OLAuthorSearchResult
-    
+        
     init(
             operationQueue: OperationQueue,
             coreDataStack: CoreDataStack,
@@ -30,38 +27,11 @@ class AuthorDetailCoordinator: NSObject {
             authorDetailVC: OLAuthorDetailViewController
         ) {
         
-        self.operationQueue = operationQueue
-        self.coreDataStack = coreDataStack
         self.searchInfo = searchInfo
         self.authorDetailVC = authorDetailVC
 
-        super.init()
+        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
 
-        if let detail = searchInfo.toDetail {
-            updateUI( detail )
-        } else {
-            
-            let getAuthorOperation =
-                    AuthorDetailGetOperation(
-                            queryText: searchInfo.key, parentObjectID: searchInfo.objectID,
-                            coreDataStack: coreDataStack
-                        ) {
-                            [weak self] in
-
-                            if let strongSelf = self {
-                                dispatch_async( dispatch_get_main_queue() ) {
-                                    
-                                    if let detail = searchInfo.toDetail {
-                                        
-                                        strongSelf.updateUI( detail )
-                                    }
-                                }
-                            }
-                        }
-
-            getAuthorOperation.userInitiated = true
-            operationQueue.addOperation( getAuthorOperation )
-        }
     }
     
     
@@ -87,15 +57,62 @@ class AuthorDetailCoordinator: NSObject {
                     }
                     
                     imageGetOperation.userInitiated = true
-                    operationQueue!.addOperation( imageGetOperation )
+                    operationQueue.addOperation( imageGetOperation )
                 }
             }
         }
     }
 
-    
     func updateUI() -> Void {
         
+        if let detail = searchInfo.toDetail {
+            updateUI( detail )
+        } else {
+            
+            let getAuthorOperation =
+                AuthorDetailGetOperation(
+                    queryText: searchInfo.key, parentObjectID: searchInfo.objectID,
+                    coreDataStack: coreDataStack
+                ) {
+                    [weak self] in
+                    
+                    if let strongSelf = self {
+                        dispatch_async( dispatch_get_main_queue() ) {
+                            
+                            if let detail = strongSelf.searchInfo.toDetail {
+                                
+                                strongSelf.updateUI( detail )
+                            }
+                        }
+                    }
+            }
+            
+            getAuthorOperation.userInitiated = true
+            operationQueue.addOperation( getAuthorOperation )
+        }
+    }
+    
+    func setAuthorWorksCoordinator( destVC: OLAuthorDetailWorksTableViewController, searchInfo: OLAuthorSearchResult ) {
+
+        destVC.queryCoordinator =
+            AuthorWorksCoordinator( searchInfo: searchInfo, authorWorksTableVC: destVC, coreDataStack: coreDataStack, operationQueue: operationQueue )
+    }
+    
+    func setAuthorEditionsCoordinator( destVC: OLAuthorDetailEditionsTableViewController, searchInfo: OLAuthorSearchResult ) {
         
+        destVC.queryCoordinator =
+            AuthorEditionsCoordinator( searchInfo: searchInfo, withCoversOnly: false, tableVC: destVC, coreDataStack: coreDataStack, operationQueue: operationQueue )
+    }
+    
+    func setAuthorPictureCoordinator( destVC: OLPictureViewController, searchInfo: OLAuthorSearchResult ) {
+        
+        destVC.queryCoordinator =
+            AuthorPictureViewCoordinator(
+                    operationQueue: self.operationQueue,
+                    coreDataStack: self.coreDataStack,
+                    searchInfo: searchInfo,
+                    pictureVC: destVC
+                )
+
     }
 }
