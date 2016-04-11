@@ -18,7 +18,8 @@ class WorkDetailCoordinator: OLQueryCoordinator {
     
     weak var workDetailVC: OLWorkDetailViewController?
 
-    var searchInfo: OLWorkDetail
+    var searchInfo: OLWorkDetail?
+    var workKey = ""
     
     init(
             operationQueue: OperationQueue,
@@ -33,24 +34,60 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
     }
     
+    init(
+        operationQueue: OperationQueue,
+        coreDataStack: CoreDataStack,
+        workKey: String,
+        workDetailVC: OLWorkDetailViewController
+        ) {
+        
+        assert( !workKey.isEmpty )
+        
+        self.searchInfo = nil
+        self.workKey = workKey
+        self.workDetailVC = workDetailVC
+        
+        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
+        
+        let workDetailGetOperation =
+            WorkDetailGetOperation( queryText: workKey, coreDataStack: coreDataStack, resultHandler: getSearchInfo ) {
+                
+                [weak self] in
+                
+                if let strongSelf = self {
+                    dispatch_async( dispatch_get_main_queue() ) {
+                        
+                        strongSelf.updateUI()
+                    }
+                }
+        }
+        workDetailGetOperation.userInitiated = true
+        operationQueue.addOperation( workDetailGetOperation )
+    }
+    
     func updateUI( workDetail: OLWorkDetail ) {
         
         if let workDetailVC = workDetailVC {
             
             workDetailVC.UpdateUI( workDetail )
             
-            if workDetail.covers.count > 0 {
+            if workDetail.hasImage {
                 
                 let localURL = workDetail.localURL( "B" )
-                if !(workDetailVC.displayImage( localURL )) {
+                if !( workDetailVC.displayImage( localURL ) ) {
                     
                     let url = localURL
                     let imageGetOperation =
                         ImageGetOperation( numberID: workDetail.covers[0], imageKeyName: "id", localURL: url, size: "M", type: "a" ) {
                             
-                            dispatch_async( dispatch_get_main_queue() ) {
-                                
-                                workDetailVC.displayImage( url )
+                            [weak self] in
+                            
+                            if nil != self {
+
+                                dispatch_async( dispatch_get_main_queue() ) {
+                                    
+                                    workDetailVC.displayImage( url )
+                                }
                             }
                     }
                     
@@ -63,28 +100,54 @@ class WorkDetailCoordinator: OLQueryCoordinator {
     
     func updateUI() -> Void {
         
-        updateUI( searchInfo )
+        if let workDetail = searchInfo {
+            updateUI( workDetail )
+        }
+    }
+    
+    func getSearchInfo( objectID: NSManagedObjectID ) {
+        
+        dispatch_async( dispatch_get_main_queue() ) {
+            if let workDetail = self.coreDataStack.mainQueueContext.objectWithID( objectID ) as? OLWorkDetail {
+                
+                self.searchInfo = workDetail
+            }
+        }
     }
     
     func setWorkDetailEditionsQueryCoordinator( destVC: OLWorkDetailEditionsTableViewController ) {
         
+        var workKey = self.workKey
+        if let workDetail = searchInfo {
+            
+            workKey = workDetail.key
+
+        }
+        
+        assert( !workKey.isEmpty )
+        
         destVC.queryCoordinator =
             WorkEditionsCoordinator(
-                    searchInfo: self.searchInfo,
-                    withCoversOnly: true,
-                    tableVC: destVC,
-                    coreDataStack: self.coreDataStack,
-                    operationQueue: self.operationQueue
-                )
-    }
+                workKey: workKey,
+                withCoversOnly: true,
+                tableVC: destVC,
+                coreDataStack: self.coreDataStack,
+                operationQueue: self.operationQueue
+        )
+     }
     
     func setCoverPictureViewCoordinator( destVC: OLPictureViewController ) {
+        
+        guard let workDetail = searchInfo  else {
+            assert( false )
+            return
+        }
         
         destVC.queryCoordinator =
             CoverPictureViewCoordinator(
                     operationQueue: self.operationQueue,
                     coreDataStack: self.coreDataStack,
-                    managedObject: self.searchInfo,
+                    managedObject: workDetail,
                     pictureVC: destVC
                 )
 

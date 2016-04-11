@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-    func getAuthorSearchCoordinator( destVC: OLAuthorSearchResultsTableViewController ) -> AuthorSearchResultsCoordinator {
+    func getAuthorSearchCoordinator( destVC: OLSearchResultsTableViewController ) -> AuthorSearchResultsCoordinator {
 
         return
             AuthorSearchResultsCoordinator(
@@ -84,5 +84,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     operationQueue: OperationQueue()
                 )
     }
+    
+    func getTitleSearchCoordinator( destVC: OLSearchResultsTableViewController ) -> TitleSearchResultsCoordinator {
+        
+        return
+            TitleSearchResultsCoordinator(
+                    tableVC: destVC,
+                    coreDataStack: coreDataStack!,
+                    operationQueue: OperationQueue()
+                )
+    }
+
 }
 

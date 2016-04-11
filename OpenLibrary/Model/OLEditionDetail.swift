@@ -82,16 +82,6 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
     //    scan_records[]: [String]
     //    volumes[]: [String]
     
-//    var editionSearchInfo: SearchInfo {
-//        
-//        return SearchInfo( objectID: self.objectID, key: self.key )
-//    }
-//    
-//    var authorSearchInfo: SearchInfo {
-//        
-//        return SearchInfo( objectID: self.objectID, key: self.author_key )
-//    }
-//
     override var hasImage: Bool {
         
         return 0 < self.covers.count

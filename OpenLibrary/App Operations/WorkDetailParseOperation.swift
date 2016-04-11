@@ -133,13 +133,11 @@ class WorkDetailParseOperation: Operation {
     
     let cacheFile: NSURL
     let context: NSManagedObjectContext
+    let resultHandler: ObjectResultClosure?
 
     var searchResults = SearchResults()
     
-    var covers = [Int]()
-    var localThumbURL = NSURL()
-    var localMediumURL = NSURL()
-    var localLargeURL = NSURL()
+    var objectID: NSManagedObjectID?
     
     /**
         - parameter cacheFile: The file `NSURL` from which to load Work query data.
@@ -149,7 +147,7 @@ class WorkDetailParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( cacheFile: NSURL, coreDataStack: CoreDataStack ) {
+    init( cacheFile: NSURL, coreDataStack: CoreDataStack, resultHandler: ObjectResultClosure? ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -159,6 +157,7 @@ class WorkDetailParseOperation: Operation {
         self.cacheFile = cacheFile
         self.context = coreDataStack.newBackgroundWorkerMOC()
         self.context.mergePolicy = NSOverwriteMergePolicy
+        self.resultHandler = resultHandler
         
         super.init()
 
@@ -195,49 +194,21 @@ class WorkDetailParseOperation: Operation {
 
         context.performBlock {
             
-            if let newObject = OLWorkDetail.parseJSON( "", index: 0, json: resultSet, moc: self.context ) {
-                
-                self.covers = newObject.covers
-                
-                print( "\(newObject.title)" )
-            }
-
+            let newObject = OLWorkDetail.parseJSON( "", index: 0, json: resultSet, moc: self.context )
+            
             let error = self.saveContext()
+            
+            if nil == error && nil != self.resultHandler && nil != newObject {
+                
+                if let objectID = newObject?.objectID {
+ 
+                    self.resultHandler!( objectID: objectID )
+                }
+            }
 
             self.finishWithError( error )
         }
     }
-    
-//    private func insert( parsed: ParsedSearchResult ) {
-//
-//        let result = NSEntityDescription.insertNewObjectForEntityForName( OLWorkDetail.entityName, inManagedObjectContext: context ) as! OLWorkDetail
-//        
-//        result.key = parsed.key
-//        result.name = parsed.name
-//        result.personal_name = parsed.personal_name
-//        result.birth_date = OpenLibraryObject.OLDateStamp( parsed.birth_date )
-//        result.death_date = OpenLibraryObject.OLDateStamp( parsed.death_date )
-//        
-//        result.photos = parsed.photos
-//        result.links = parsed.links
-//        result.bio = parsed.bio
-//        result.alternate_names = parsed.alternate_names
-//        
-//        result.revision = parsed.revision
-//        result.latest_revision = parsed.latest_revision
-//        
-//        result.created = OpenLibraryObject.OLTimeStamp( parsed.created )
-//        result.last_modified = OpenLibraryObject.OLTimeStamp( parsed.last_modified )
-//        
-//        result.type = parsed.type
-//        
-//        if !parsed.photos.isEmpty {
-//            self.photos = parsed.photos
-//            self.localThumbURL  = result.localURL( "S" )
-//            self.localMediumURL = result.localURL( "M" )
-//            self.localLargeURL  = result.localURL( "L" )
-//        }
-//    }
     
     /**
         Save the context, if there are any changes.

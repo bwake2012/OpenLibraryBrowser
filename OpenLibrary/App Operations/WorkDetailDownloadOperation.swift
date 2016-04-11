@@ -15,7 +15,7 @@ class WorkDetailDownloadOperation: GroupOperation {
     
     // MARK: Initialization
     
-    /// - parameter cacheFile: The file `NSURL` to which the earthquake feed will be downloaded.
+    /// - parameter cacheFile: The file `NSURL` to which the work detail json will be downloaded.
     init( queryText: String, cacheFile: NSURL) {
 
         self.cacheFile = cacheFile
@@ -30,8 +30,13 @@ class WorkDetailDownloadOperation: GroupOperation {
             or when the services you use offer secure communication options, you
             should always prefer to use https.
         */
-        let query = queryText.stringByAddingPercentEncodingForRFC3986()!
-        let urlString = "https://openlibrary.org/Works/\(query).json"
+        var query = queryText
+        if queryText.hasPrefix( "/works/" ) {
+            
+            query = queryText.substringFromIndex( queryText.startIndex.advancedBy( 7 ) )
+        }
+        query = query.stringByAddingPercentEncodingForRFC3986()!
+        let urlString = "https://openlibrary.org/works/\(query).json"
         let url = NSURL( string: urlString )!
         let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
             

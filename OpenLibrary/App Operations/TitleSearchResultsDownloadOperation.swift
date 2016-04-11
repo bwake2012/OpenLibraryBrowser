@@ -1,26 +1,26 @@
-//  AuthorNameSearchResultsDownloadOperation.swift
+//  TitleSearchResultsDownloadOperation.swift
 //  OpenLibrary
 //
-//  Created by Bob Wakefield on 2/24/16.
+//  Created by Bob Wakefield on 4/10/16.
 //  Copyright © 2016 Bob Wakefield. All rights reserved.
 //
 //  Modified from code in the Apple sample app Earthquakes in the Advanced NSOperations project
 
 import Foundation
 
-class AuthorNameSearchResultsDownloadOperation: GroupOperation {
+class TitleSearchResultsDownloadOperation: GroupOperation {
     // MARK: Properties
 
     let cacheFile: NSURL
     
     // MARK: Initialization
     
-    /// - parameter cacheFile: The file `NSURL` to which the author name search results will be downloaded.
+    /// - parameter cacheFile: The file `NSURL` to which the title search results feed will be downloaded.
     init( queryText: String, offset: Int, limit: Int, cacheFile: NSURL) {
 
         self.cacheFile = cacheFile
         super.init(operations: [])
-        name = "Query Author"
+        name = "Query Title"
         
         /*
             If this server is out of our control and does not offer a secure
@@ -31,7 +31,7 @@ class AuthorNameSearchResultsDownloadOperation: GroupOperation {
             should always prefer to use https.
         */
         let query = queryText.stringByAddingPercentEncodingForRFC3986()!
-        let urlString = "https://openlibrary.org/search/authors.json?offset=\(offset)&limit=\(limit)&q=\(query)"
+        let urlString = "https://openlibrary.org/search.json?offset=\(offset)&limit=\(limit)&title=\(query)"
         let url = NSURL( string: urlString )!
         let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
             

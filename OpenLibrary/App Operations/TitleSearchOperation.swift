@@ -1,7 +1,7 @@
-//  WorkDetailGetOperation.swift
+//  TitleSearchOperation.swift
 //  OpenLibrary
 //
-//  Created by Bob Wakefield on 3/2/16.
+//  Created by Bob Wakefield on 2/24/16.
 //  Copyright © 2016 Bob Wakefield. All rights reserved.
 //
 //  Modified from code in the Apple sample app Earthquakes in the Advanced NSOperations project
@@ -10,29 +10,33 @@ import CoreData
 
 import BNRCoreDataStack
 
-/// A composite `Operation` to both download and parse Work search result data.
-class WorkDetailGetOperation: GroupOperation {
+/// A composite `Operation` to both download and parse Title search result data.
+class TitleSearchOperation: GroupOperation {
     // MARK: Properties
-    var objectID: NSManagedObjectID?
     
-    let downloadOperation: WorkDetailDownloadOperation
-    let parseOperation: WorkDetailParseOperation
+    var deleteOperation: TitleSearchResultsDeleteOperation?
+    let downloadOperation: TitleSearchResultsDownloadOperation
+    let parseOperation: TitleSearchResultsParseOperation
    
     private var hasProducedAlert = false
     
+    private let coreDataStack: CoreDataStack
+    
     /**
         - parameter context: The `NSManagedObjectContext` into which the parsed
-                             Work query results will be imported.
+                             Title query results will be imported.
 
         - parameter completionHandler: The handler to call after downloading and
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, coreDataStack: CoreDataStack, resultHandler: ObjectResultClosure, completionHandler: Void -> Void ) {
+    init( queryText: String, offset: Int, limit: Int, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater, completionHandler: Void -> Void ) {
 
+        self.coreDataStack = coreDataStack
+        
         let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
 
-        let cacheFile = cachesFolder.URLByAppendingPathComponent("WorkDetailResults.json")
+        let cacheFile = cachesFolder.URLByAppendingPathComponent("TitleSearchResults.json")
         
         /*
             This operation is made of three child operations:
@@ -42,8 +46,8 @@ class WorkDetailGetOperation: GroupOperation {
         
             There is an optional operation 0 to delete the existing contents of the Core Data store
         */
-        downloadOperation = WorkDetailDownloadOperation( queryText: queryText, cacheFile: cacheFile )
-        parseOperation = WorkDetailParseOperation( cacheFile: cacheFile, coreDataStack: coreDataStack, resultHandler: resultHandler )
+        downloadOperation = TitleSearchResultsDownloadOperation( queryText: queryText, offset: offset, limit: limit, cacheFile: cacheFile )
+        parseOperation = TitleSearchResultsParseOperation( cacheFile: cacheFile, coreDataStack: coreDataStack, updateResults: updateResults )
         
         let finishOperation = NSBlockOperation( block: completionHandler )
         
@@ -51,17 +55,29 @@ class WorkDetailGetOperation: GroupOperation {
         parseOperation.addDependency(downloadOperation)
         finishOperation.addDependency(parseOperation)
         
-        super.init( operations: [downloadOperation, parseOperation, finishOperation] )
+        var operations = [NSOperation]()
+        if 0 == offset {
+            deleteOperation = TitleSearchResultsDeleteOperation( coreDataStack: coreDataStack )
+            if let dO = deleteOperation {
+                downloadOperation.addDependency( dO )
+                operations.append( dO )
+            }
+        }
+        
+        operations += [downloadOperation, parseOperation, finishOperation]
+        super.init( operations: operations )
 
-        name = "Get Work Detail"
+        addCondition( MutuallyExclusive<TitleSearchOperation>() )
+        
+        name = "Title Search " + queryText
     }
     
     override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
-        if let firstError = errors.first where (operation === downloadOperation || operation === parseOperation) {
-            produceAlert(firstError)
-        } else if operation === parseOperation {
-            
-            objectID = parseOperation.objectID
+        if let firstError = errors.first {
+
+            if operation === downloadOperation || operation === parseOperation {
+                produceAlert(firstError)
+            }
         }
     }
     
@@ -92,7 +108,7 @@ class WorkDetailGetOperation: GroupOperation {
             case failedJSON:
                 // We failed because the JSON was malformed.
                 alert.title = "Unable to Download"
-                alert.message = "Cannot parse Work Detail results. Try again later."
+                alert.message = "Cannot parse Title Search results. Try again later."
 
             default:
                 return

@@ -99,6 +99,26 @@
             </compoundIndex>
         </compoundIndexes>
     </entity>
+    <entity name="TitleSearchResult" representedClassName=".OLTitleSearchResult" syncable="YES">
+        <attribute name="author_key" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="author_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="contributor" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="cover_i" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="first_publish_year" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="has_fulltext" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="index" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="key" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="sequence" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title_suggest" optional="YES" attributeType="String" syncable="YES"/>
+        <compoundIndexes>
+            <compoundIndex>
+                <index value="sequence"/>
+                <index value="index"/>
+            </compoundIndex>
+        </compoundIndexes>
+    </entity>
     <entity name="WorkDetail" representedClassName=".OLWorkDetail" syncable="YES">
         <attribute name="author_key" attributeType="String" syncable="YES"/>
         <attribute name="authors" optional="YES" attributeType="Transformable" syncable="YES"/>
@@ -139,5 +159,6 @@
         <element name="AuthorSearchResult" positionX="-54" positionY="81" width="128" height="210"/>
         <element name="EditionDetail" positionX="-45" positionY="144" width="128" height="885"/>
         <element name="WorkDetail" positionX="-54" positionY="99" width="128" height="450"/>
+        <element name="TitleSearchResult" positionX="-63" positionY="135" width="128" height="225"/>
     </elements>
 </model>
