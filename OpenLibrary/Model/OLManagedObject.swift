@@ -10,7 +10,9 @@ import CoreData
 
 import BNRCoreDataStack
 
-typealias imageDisplayClosure = ( localURL: NSURL ) -> Bool
+typealias ObjectResultClosure = ( objectID: NSManagedObjectID ) -> Void
+
+typealias ImageDisplayClosure = ( localURL: NSURL ) -> Bool
 
 enum HasPhoto: Int {
     case unknown = -1

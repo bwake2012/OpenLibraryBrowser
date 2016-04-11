@@ -115,18 +115,33 @@ class OpenLibraryObject {
     static func OLAuthorRole( match: AnyObject? ) -> [String] {
         
         var authors = [String]()
+        // there is an array of dictionaries under ["authors"]
         if let match = match as? [[String: AnyObject]] {
             
             for author in match {
                 
-                if let authorRole = author["type"] as? [String: String] {
-                    if let type = authorRole["key"] where type == "/type/author_role" {
-                        if let authorKey = author["author"] as? [String: String] {
+                // each dictionary has an entry under ["type"]
+                var authorRole: String?
+
+                // sometimes it's a string
+                if let authorType = author["type"] as? String {
+                    authorRole = authorType
+
+                // sometimes it's a dictionary, with the value an entry under ["key"]
+                } else if let authorType = author["type"] as? [String: String] {
+                    authorRole = authorType["key"]
+                }
+
+                // The type value must be:
+                if let authorRole = authorRole where authorRole == "/type/author_role" {
+                    
+                    // the author OLID will be in a dictionary under ["author"]
+                    if let authorKey = author["author"] as? [String: String] {
+                        
+                        // with a value under ["key"]
+                        if let key = authorKey["key"] {
                             
-                            if let key = authorKey["key"] {
-                                
-                                authors.append( key )
-                            }
+                            authors.append( key )
                         }
                     }
                 }

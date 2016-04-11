@@ -49,9 +49,9 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     
     var highWaterMark = 0
     
-    init( searchInfo: OLWorkDetail, withCoversOnly: Bool, tableVC: UITableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
+    init( workKey: String, withCoversOnly: Bool, tableVC: UITableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         
-        self.workKey = searchInfo.key
+        self.workKey = workKey
         self.withCoversOnly = withCoversOnly
 //        self.worksCount = searchInfo.work_count
         self.tableVC = tableVC

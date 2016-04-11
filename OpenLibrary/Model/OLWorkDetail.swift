@@ -188,6 +188,10 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         } else if parentKey.hasPrefix( "/works/" ) {
             newObject.work_key = parentKey
         }
+        if newObject.author_key.isEmpty && !parsed.authors.isEmpty {
+            newObject.author_key = parsed.authors[0]
+        }
+        
         newObject.index = Int64( index )
         
         newObject.key = parsed.key
