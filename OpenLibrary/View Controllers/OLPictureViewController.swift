@@ -14,6 +14,7 @@ import BNRCoreDataStack
 class OLPictureViewController: UIViewController {
 
     @IBOutlet weak var pictureView: UIImageView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     // MARK: Properties
     var queryCoordinator: PictureViewCoordinatorProtocol?
@@ -24,6 +25,8 @@ class OLPictureViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         assert( nil != queryCoordinator )
+        
+        activityIndicator.startAnimating()
         
         if let queryCoordinator = queryCoordinator {
             
@@ -54,6 +57,7 @@ class OLPictureViewController: UIViewController {
             if let image = UIImage( data: data ) {
                 
                 pictureView.image = image
+                activityIndicator.stopAnimating()
                 return true
             }
         }

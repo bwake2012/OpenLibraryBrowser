@@ -92,21 +92,21 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
             nextQueryPage( highWaterMark )
         }
         
-        guard let result = objectAtIndexPath( indexPath ) else { return nil }
+        guard let workDetail = objectAtIndexPath( indexPath ) else { return nil }
         
-        cell.configure( result )
+        cell.configure( workDetail )
         
 //        print( "work: \(result.title) has covers: \(!result.covers.isEmpty)" )
         
         // not all the authors have photos under their OLID. Some only have them under a photo ID
-        let localURL = result.localURL( "S" )
+        let localURL = workDetail.localURL( "S" )
         if !cell.displayImage( localURL ) {
             
-            if !result.covers.isEmpty {
+            if workDetail.hasImage {
                 
                 let url = localURL
                 let workCoverGetOperation =
-                    ImageGetOperation( numberID: result.covers[0], imageKeyName: "id", localURL: url, size: "S", type: "b" )
+                    ImageGetOperation( numberID: workDetail.firstImageID, imageKeyName: "id", localURL: url, size: "S", type: "b" )
                         {
                         
                         dispatch_async( dispatch_get_main_queue() ) {
@@ -120,7 +120,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
             }
         }
         
-        return result
+        return workDetail
     }
     
     func updateUI() {
@@ -271,6 +271,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
 
             destVC.queryCoordinator =
                 WorkDetailCoordinator(
+                        authorNames: [searchInfo.name],
                         operationQueue: self.operationQueue,
                         coreDataStack: self.coreDataStack,
                         searchInfo: workDetail,

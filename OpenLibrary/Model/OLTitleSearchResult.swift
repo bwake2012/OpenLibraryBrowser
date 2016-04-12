@@ -16,8 +16,8 @@ private class ParsedSearchResult: OpenLibraryObject {
     
     let key: String
 
-    let author_key: String
-    let author_name: String
+    let author_key: [String]
+    let author_name: [String]
     let contributor: [String]
     let cover_i: Int64
     let first_publish_year: String
@@ -31,8 +31,8 @@ private class ParsedSearchResult: OpenLibraryObject {
     
     init(
         key: String,
-        author_key: String,
-        author_name: String,
+        author_key: [String],
+        author_name: [String],
         contributor: [String],
         cover_i: Int64,
         first_publish_year: String,
@@ -62,8 +62,8 @@ private class ParsedSearchResult: OpenLibraryObject {
         
         guard let title_suggest = match["title_suggest"] as? String else { return nil }
         
-        let author_key = match["author_key"] as? String ?? ""
-        let author_name = match["author_name"] as? String ?? ""
+        let author_key = match["author_key"] as? [String] ?? [String]()
+        let author_name = match["author_name"] as? [String] ?? [String]()
         let contributor = match["contributor"] as? [String] ?? [String]()
         let cover_i = match["cover_i"] as? Int ?? 0
         let first_publish_year_val = match["first_publish_year"] as? Int ?? 0
@@ -107,8 +107,8 @@ class OLTitleSearchResult: OLManagedObject, CoreDataModelable {
     @NSManaged var index: Int64
     @NSManaged var key: String
     
-    @NSManaged var author_key: String
-    @NSManaged var author_name: String
+    @NSManaged var author_key: [String]
+    @NSManaged var author_name: [String]
     @NSManaged var contributor: [String]
     @NSManaged var cover_i: Int64
     @NSManaged var first_publish_year: String

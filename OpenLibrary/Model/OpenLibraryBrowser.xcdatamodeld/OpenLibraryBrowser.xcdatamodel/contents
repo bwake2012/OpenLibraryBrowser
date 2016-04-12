@@ -100,8 +100,8 @@
         </compoundIndexes>
     </entity>
     <entity name="TitleSearchResult" representedClassName=".OLTitleSearchResult" syncable="YES">
-        <attribute name="author_key" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="author_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="author_key" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="author_name" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="contributor" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="cover_i" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="first_publish_year" optional="YES" attributeType="String" syncable="YES"/>
@@ -158,7 +158,7 @@
         <element name="AuthorDetail" positionX="-63" positionY="-18" width="128" height="285"/>
         <element name="AuthorSearchResult" positionX="-54" positionY="81" width="128" height="210"/>
         <element name="EditionDetail" positionX="-45" positionY="144" width="128" height="885"/>
-        <element name="WorkDetail" positionX="-54" positionY="99" width="128" height="450"/>
         <element name="TitleSearchResult" positionX="-63" positionY="135" width="128" height="225"/>
+        <element name="WorkDetail" positionX="-54" positionY="99" width="128" height="450"/>
     </elements>
 </model>

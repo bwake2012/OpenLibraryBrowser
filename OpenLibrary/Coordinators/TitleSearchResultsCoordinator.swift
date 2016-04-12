@@ -64,7 +64,7 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControlle
     
     func numberOfSections() -> Int {
         
-        return fetchedResultsController.sections?.count ?? 1
+        return fetchedResultsController.sections?.count ?? 0
     }
 
     func numberOfRowsInSection( section: Int ) -> Int {
@@ -152,9 +152,10 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControlle
 
     func newQuery( titleText: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
         
-        if self.searchResults.numFound > 0 {
+        if numberOfSections() > 0 {
             
-            tableVC.tableView.scrollToRowAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ), atScrollPosition: .Top, animated: false )
+            let top = NSIndexPath( forRow: Foundation.NSNotFound, inSection: 0 );
+            tableVC.tableView.scrollToRowAtIndexPath( top, atScrollPosition: UITableViewScrollPosition.Top, animated: true );
         }
         
         if titleText != self.titleText && nil == titleSearchOperation {
@@ -318,6 +319,7 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControlle
         
             destVC.queryCoordinator =
                 WorkDetailCoordinator(
+                        authorNames: searchResult.author_name,
                         operationQueue: operationQueue,
                         coreDataStack: coreDataStack,
                         workKey: searchResult.key,

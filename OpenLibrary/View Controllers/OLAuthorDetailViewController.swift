@@ -101,6 +101,7 @@ class OLAuthorDetailViewController: UIViewController {
         self.displayLargePhoto.enabled = authorDetail.hasImage
             
         self.authorName.text = authorDetail.name
+        self.authorPhoto.image = nil
     }
     
     // MARK: Utility

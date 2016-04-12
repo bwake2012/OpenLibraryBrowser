@@ -26,6 +26,7 @@
 		C4677EA31C9DF4030070CDFD /* OLTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4677EA21C9DF4030070CDFD /* OLTableViewCell.swift */; };
 		C4677EA51CA0351B0070CDFD /* AuthorEditionsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4677EA41CA0351B0070CDFD /* AuthorEditionsCoordinator.swift */; };
 		C4677EA91CA035280070CDFD /* AuthorWorksCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4677EA71CA035280070CDFD /* AuthorWorksCoordinator.swift */; };
+		C468B9471CBD3E2800F3EAC3 /* AspectRatioImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C468B9461CBD3E2800F3EAC3 /* AspectRatioImageView.swift */; };
 		C46E7E4D1C8619C300D2ED51 /* OLAuthorDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E7E4C1C8619C300D2ED51 /* OLAuthorDetailViewController.swift */; };
 		C46E7E511C861A7000D2ED51 /* AuthorNameSearchOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E7E4E1C861A7000D2ED51 /* AuthorNameSearchOperation.swift */; };
 		C46E7E521C861A7000D2ED51 /* AuthorSearchResultsDeleteOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E7E4F1C861A7000D2ED51 /* AuthorSearchResultsDeleteOperation.swift */; };
@@ -153,6 +154,7 @@
 		C4677EA21C9DF4030070CDFD /* OLTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLTableViewCell.swift; path = Views/OLTableViewCell.swift; sourceTree = "<group>"; };
 		C4677EA41CA0351B0070CDFD /* AuthorEditionsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorEditionsCoordinator.swift; path = Coordinators/AuthorEditionsCoordinator.swift; sourceTree = "<group>"; };
 		C4677EA71CA035280070CDFD /* AuthorWorksCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorWorksCoordinator.swift; path = Coordinators/AuthorWorksCoordinator.swift; sourceTree = "<group>"; };
+		C468B9461CBD3E2800F3EAC3 /* AspectRatioImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AspectRatioImageView.swift; sourceTree = "<group>"; };
 		C46E7E4C1C8619C300D2ED51 /* OLAuthorDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLAuthorDetailViewController.swift; path = "View Controllers/OLAuthorDetailViewController.swift"; sourceTree = "<group>"; };
 		C46E7E4E1C861A7000D2ED51 /* AuthorNameSearchOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorNameSearchOperation.swift; path = "App Operations/AuthorNameSearchOperation.swift"; sourceTree = "<group>"; };
 		C46E7E4F1C861A7000D2ED51 /* AuthorSearchResultsDeleteOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorSearchResultsDeleteOperation.swift; path = "App Operations/AuthorSearchResultsDeleteOperation.swift"; sourceTree = "<group>"; };
@@ -548,6 +550,7 @@
 			children = (
 				C4E35EC81C80DE760015D187 /* String+PercentEncoding.swift */,
 				C4677E9E1C9CE35A0070CDFD /* UIImageView+DisplayFromURL.swift */,
+				C468B9461CBD3E2800F3EAC3 /* AspectRatioImageView.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -829,6 +832,7 @@
 				C49BDD1C1CB6EC0900A2EEEF /* EditionDetailCoordinator.swift in Sources */,
 				C4E35E861C7E07D40015D187 /* ReachabilityCondition.swift in Sources */,
 				C4E863901C99D9F0002C0E6B /* OLEditionDetail.swift in Sources */,
+				C468B9471CBD3E2800F3EAC3 /* AspectRatioImageView.swift in Sources */,
 				C46E7E511C861A7000D2ED51 /* AuthorNameSearchOperation.swift in Sources */,
 				C4B2648E1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodeld in Sources */,
 				C4E35ECB1C80E2780015D187 /* SearchResults.swift in Sources */,

@@ -18,16 +18,19 @@ class WorkDetailCoordinator: OLQueryCoordinator {
     
     weak var workDetailVC: OLWorkDetailViewController?
 
+    var authorNames = [String]()
     var searchInfo: OLWorkDetail?
     var workKey = ""
     
     init(
+            authorNames: [String],
             operationQueue: OperationQueue,
             coreDataStack: CoreDataStack,
             searchInfo: OLWorkDetail,
             workDetailVC: OLWorkDetailViewController
         ) {
         
+        self.authorNames = authorNames
         self.searchInfo = searchInfo
         self.workDetailVC = workDetailVC
 
@@ -35,6 +38,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
     }
     
     init(
+        authorNames: [String],
         operationQueue: OperationQueue,
         coreDataStack: CoreDataStack,
         workKey: String,
@@ -43,6 +47,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         
         assert( !workKey.isEmpty )
         
+        self.authorNames = authorNames
         self.searchInfo = nil
         self.workKey = workKey
         self.workDetailVC = workDetailVC
@@ -69,7 +74,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         
         if let workDetailVC = workDetailVC {
             
-            workDetailVC.UpdateUI( workDetail )
+            workDetailVC.UpdateUI( workDetail, authorName: authorNames.isEmpty ? "" : authorNames[0] )
             
             if workDetail.hasImage {
                 

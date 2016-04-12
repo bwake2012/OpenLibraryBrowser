@@ -47,9 +47,11 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
 
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
-        searchController.definesPresentationContext = true
+        searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.scopeButtonTitles = ["Author", "Title"]
         searchController.searchBar.delegate = self
+
+        searchController.definesPresentationContext = true
         
         tableView.tableHeaderView = searchController.searchBar
         
@@ -70,6 +72,7 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
                     
                     if let searchResult = authorSearchCoordinator.objectAtIndexPath( indexPath ) {
                         
+                        searchController.active = false
                         authorSearchCoordinator.setAuthorDetailCoordinator( destVC, indexPath: indexPath )
                         destVC.searchInfo = searchResult
                         
@@ -80,6 +83,7 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
                 
                 if let destVC = segue.destinationViewController as? OLWorkDetailViewController {
                     
+                    searchController.active = false
                     titleSearchCoordinator.setTitleDetailCoordinator( destVC, indexPath: indexPath )
                 }
             }
@@ -179,6 +183,7 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
         
         if let text = searchBar.text {
             
+            searchController.active = false
             getFirstSearchResults( text, scopeIndex: searchBar.selectedScopeButtonIndex )
             
         }
@@ -186,11 +191,11 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
     
     func searchBar( searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int ) {
         
-        if let text = searchBar.text {
-            
-            getFirstSearchResults( text, scopeIndex: selectedScope )
-            
-        }
+//        if let text = searchBar.text {
+//            
+//            getFirstSearchResults( text, scopeIndex: selectedScope )
+//            
+//        }
     }
     
     // MARK: UISearchResultsUpdating

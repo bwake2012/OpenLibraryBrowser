@@ -16,6 +16,7 @@ class OLWorkDetailViewController: UIViewController {
 
     @IBOutlet weak var workTitle: UILabel!
     @IBOutlet weak var workSubtitle: UILabel!
+    @IBOutlet weak var workAuthor: UILabel!
     @IBOutlet weak var workCover: UIImageView!
     @IBOutlet weak var displayLargeCover: UIButton!
 
@@ -92,11 +93,13 @@ class OLWorkDetailViewController: UIViewController {
     }
     
     
-    func UpdateUI( workDetail: OLWorkDetail ) {
+    func UpdateUI( workDetail: OLWorkDetail, authorName: String ) {
         
         self.workTitle.text = workDetail.title
         self.workSubtitle.text = workDetail.subtitle
+        self.workAuthor.text = authorName
         self.displayLargeCover.enabled = workDetail.coversFound
+        self.workCover.image = nil
     }
     
     // MARK: Utility

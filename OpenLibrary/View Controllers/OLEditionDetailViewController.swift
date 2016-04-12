@@ -13,6 +13,7 @@ class OLEditionDetailViewController: UIViewController {
     @IBOutlet weak var editionCoverView: UIImageView!
     @IBOutlet weak var editionTitleView: UILabel!
     @IBOutlet weak var editionSubtitleView: UILabel!
+    @IBOutlet weak var editionAuthorView: UILabel!
     @IBOutlet weak var displayLargeCover: UIButton!
 
     var editionDetail: OLEditionDetail?
@@ -44,7 +45,9 @@ class OLEditionDetailViewController: UIViewController {
         
         self.editionTitleView.text = editionDetail.title
         self.editionSubtitleView.text = editionDetail.subtitle
+        self.editionAuthorView.text = editionDetail.by_statement
         self.displayLargeCover.enabled = editionDetail.coversFound
+        editionCoverView.image = nil
     }
     
     func displayImage( localURL: NSURL ) -> Bool {

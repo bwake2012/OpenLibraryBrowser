@@ -38,5 +38,7 @@ class WorkEditionTableViewCell: OLTableViewCell {
             editionTitle.text = ""
             editionSubTitle.text = ""
         }
+        
+        clearCurrentImage()
     }
 }
