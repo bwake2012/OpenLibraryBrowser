@@ -36,10 +36,12 @@ class EditionDetailCoordinator: OLQueryCoordinator {
             
             if editionDetail.hasImage {
                 
-                let localURL = editionDetail.localURL( "B" )
-                if !(editionDetailVC.displayImage( localURL )) {
+                let mediumURL = editionDetail.localURL( "M" )
+                if !(editionDetailVC.displayImage( mediumURL )) {
                     
-                    let url = localURL
+                    editionDetailVC.displayImage( editionDetail.localURL( "S" ) )
+                    
+                    let url = mediumURL
                     let imageGetOperation =
                         ImageGetOperation( numberID: editionDetail.firstImageID, imageKeyName: "id", localURL: url, size: "M", type: "a" ) {
                             

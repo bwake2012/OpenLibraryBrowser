@@ -71,3 +71,4 @@ class OLAuthorDetailWorksTableViewController: UITableViewController {
     
     // MARK: Utility
 }
+

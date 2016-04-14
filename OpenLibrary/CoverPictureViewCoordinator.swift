@@ -35,13 +35,18 @@ class CoverPictureViewCoordinator: OLQueryCoordinator, PictureViewCoordinatorPro
         
         if managedObject.hasImage {
             
-            let url = managedObject.localURL( "L" )
+            let largeURL = managedObject.localURL( "L" )
             
             if let pictureVC = pictureVC {
 
-                if !(pictureVC.displayImage( url )) {
+                if !(pictureVC.displayImage( largeURL )) {
                     
-                    updateUI( managedObject, localURL: url )
+                    let mediumURL = managedObject.localURL( "M" )
+                    pictureVC.displayImage( mediumURL )
+                    
+                    pictureVC.activityIndicator.startAnimating()
+                    
+                    updateUI( managedObject, localURL: largeURL )
                         
                 }
             }

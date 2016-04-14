@@ -21,7 +21,7 @@ extension UIImageView {
             }
         }
 
-        self.image = nil
+        self.image = UIImage( named: "96-book.png" )
         return false
     }
 }

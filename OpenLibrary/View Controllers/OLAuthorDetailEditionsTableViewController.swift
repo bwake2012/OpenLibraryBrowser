@@ -60,3 +60,4 @@ class OLAuthorDetailEditionsTableViewController: UITableViewController {
     
     // MARK: Utility
 }
+

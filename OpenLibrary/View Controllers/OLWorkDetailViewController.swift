@@ -99,9 +99,17 @@ class OLWorkDetailViewController: UIViewController {
         self.workSubtitle.text = workDetail.subtitle
         self.workAuthor.text = authorName
         self.displayLargeCover.enabled = workDetail.coversFound
-        self.workCover.image = nil
+        self.workCover.image = UIImage( named: "96-book.png" )
     }
     
     // MARK: Utility
 
+}
+
+extension OLWorkDetailViewController: ImageViewTransitionSource {
+    
+    func transitionSourceRectangle() -> UIImageView {
+        
+        return workCover
+    }
 }

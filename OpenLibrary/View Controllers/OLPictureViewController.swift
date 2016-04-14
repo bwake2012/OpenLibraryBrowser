@@ -26,8 +26,6 @@ class OLPictureViewController: UIViewController {
         // Do any additional setup after loading the view.
         assert( nil != queryCoordinator )
         
-        activityIndicator.startAnimating()
-        
         if let queryCoordinator = queryCoordinator {
             
             queryCoordinator.updateUI()

@@ -101,9 +101,21 @@ class OLAuthorDetailViewController: UIViewController {
         self.displayLargePhoto.enabled = authorDetail.hasImage
             
         self.authorName.text = authorDetail.name
-        self.authorPhoto.image = nil
+        
+        if !authorDetail.hasImage {
+            self.authorPhoto.image = UIImage( named: "253-person.png" )
+        }
     }
     
     // MARK: Utility
 
 }
+
+extension OLAuthorDetailViewController: ImageViewTransitionSource {
+    
+    func transitionSourceRectangle() -> UIImageView {
+        
+        return authorPhoto
+    }
+}
+

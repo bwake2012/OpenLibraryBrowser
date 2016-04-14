@@ -29,6 +29,6 @@ class OLTableViewCell: UITableViewCell {
     func clearCurrentImage() -> Void {
     
         currentImageURL = nil
-        cellImage.image = nil
+        cellImage.image = UIImage( named: "96-book.png" )
     }
 }

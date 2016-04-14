@@ -25,4 +25,10 @@ class AuthorSearchResultTableViewCell: OLTableViewCell {
         
         clearCurrentImage()
     }
+
+    override func clearCurrentImage() -> Void {
+        
+        currentImageURL = nil
+        cellImage.image = UIImage( named: "253-person.png" )
+    }
 }

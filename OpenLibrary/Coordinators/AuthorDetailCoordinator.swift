@@ -43,10 +43,12 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
             
             if authorDetail.photos.count > 0 {
                 
-                let localURL = authorDetail.localURL( "M" )
-                if !(authorDetailVC.displayImage( localURL )) {
+                let mediumURL = authorDetail.localURL( "M" )
+                if !(authorDetailVC.displayImage( mediumURL )) {
                     
-                    let url = localURL
+                    authorDetailVC.displayImage( authorDetail.localURL( "S" ) )
+
+                    let url = mediumURL
                     let imageGetOperation =
                         ImageGetOperation( numberID: authorDetail.photos[0], imageKeyName: "ID", localURL: url, size: "M", type: "a" ) {
                             

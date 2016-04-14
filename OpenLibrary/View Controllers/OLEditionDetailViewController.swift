@@ -45,9 +45,15 @@ class OLEditionDetailViewController: UIViewController {
         
         self.editionTitleView.text = editionDetail.title
         self.editionSubtitleView.text = editionDetail.subtitle
-        self.editionAuthorView.text = editionDetail.by_statement
+        self.editionAuthorView.text =
+            !editionDetail.by_statement.isEmpty ?
+                editionDetail.by_statement :
+                ( editionDetail.authors.isEmpty ? "" : editionDetail.authors[0] )
+        
         self.displayLargeCover.enabled = editionDetail.coversFound
-        editionCoverView.image = nil
+        if !editionDetail.coversFound {
+            editionCoverView.image = UIImage( named: "96-book.png" )
+        }
     }
     
     func displayImage( localURL: NSURL ) -> Bool {
@@ -63,3 +69,13 @@ class OLEditionDetailViewController: UIViewController {
         return false
     }
 }
+
+extension OLEditionDetailViewController: ImageViewTransitionSource {
+    
+    func transitionSourceRectangle() -> UIImageView {
+        
+        return editionCoverView
+    }
+}
+
+

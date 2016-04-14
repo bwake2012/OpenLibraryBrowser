@@ -8,6 +8,36 @@
 
 import UIKit
 
+extension UIImage {
+    
+    func aspectFitSize( fitSize: CGSize ) -> CGSize {
+
+        let resizeWidth  = ( self.size.width  * fitSize.height ) / self.size.height
+        let resizeHeight = ( self.size.height * fitSize.width  ) / self.size.width
+        
+        let reSize =
+            fitSize.width < resizeWidth ?
+                CGSize( width: fitSize.width, height: resizeHeight ) :
+                CGSize( width: resizeWidth, height: fitSize.height )
+        
+        return reSize
+    }
+    
+    func aspectFitRect( fitRect: CGRect ) -> CGRect {
+        
+        let reSize = self.aspectFitSize( fitRect.size )
+        
+        let reRect =
+            CGRect(
+                    x: fitRect.origin.x + ( fitRect.size.width - reSize.width ) / 2,
+                    y: fitRect.origin.y + ( fitRect.size.height - reSize.height ) / 2,
+                    width: reSize.width, height: reSize.height
+                )
+        
+        return reRect
+    }
+}
+
 class AspectRatioImageView: UIImageView {
     
     var originalSize: CGSize?
@@ -23,14 +53,9 @@ class AspectRatioImageView: UIImageView {
                 
                 var resize = CGSize( width: 0, height: 0 )
                 if let testImage = newImage {
-                    let resizeWidth  = ( testImage.size.width  * originalSize.height ) / testImage.size.height
-                    let resizeHeight = ( testImage.size.height * originalSize.width  ) / testImage.size.width
-                    
-                    resize =
-                        originalSize.width < resizeWidth ?
-                            CGSize( width: originalSize.width, height: resizeHeight ) :
-                            CGSize( width: resizeWidth, height: originalSize.height )
+                    resize = testImage.aspectFitSize( originalSize )
                 }
+
                 for constraint in constraints {
                     if constraint.firstAttribute == .Width && constraint.secondAttribute == .NotAnAttribute {
                         constraint.constant = resize.width
@@ -43,4 +68,5 @@ class AspectRatioImageView: UIImageView {
             }
         }
     }
+    
 }
