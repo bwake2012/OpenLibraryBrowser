@@ -160,7 +160,7 @@ class AuthorNameSearchResultsParseOperation: Operation {
                     self.insert( newResult )
                     index += 1
                     
-                    print( "\(newResult.index) \(newResult.name)" )
+//                    print( "\(newResult.index) \(newResult.name)" )
                     
                     self.authorsFound.append( newResult.key )
                 }

@@ -76,7 +76,7 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
                         authorSearchCoordinator.setAuthorDetailCoordinator( destVC, indexPath: indexPath )
                         destVC.searchInfo = searchResult
                         
-                        print( "\(indexPath.row) \(searchResult.key) \(searchResult.name)" )
+//                        print( "\(indexPath.row) \(searchResult.key) \(searchResult.name)" )
                     }
                 }
             } else if segue.identifier == "displaySearchWorkDetail" {

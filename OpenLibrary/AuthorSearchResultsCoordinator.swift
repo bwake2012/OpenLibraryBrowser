@@ -131,7 +131,7 @@ class AuthorSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControll
         }
         
         // not all the authors have photos under their OLID. Some only have them under a photo ID
-        print( "\(result.index) author: \(result.name) has photo: \(havePhoto)" )
+//        print( "\(result.index) author: \(result.name) has photo: \(havePhoto)" )
         
         return result
     }
@@ -357,7 +357,7 @@ class AuthorSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControll
     
     func getAuthorDetail( result: OLAuthorSearchResult ) -> OLAuthorDetail? {
         
-        //        print( "\(result.name) toDetail: \(result.toDetail?.key)" )
+//        print( "\(result.name) toDetail: \(result.toDetail?.key)" )
         
         return result.toDetail
     }

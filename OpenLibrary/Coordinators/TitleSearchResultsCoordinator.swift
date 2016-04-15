@@ -108,7 +108,7 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControlle
         updateUI( result, cell: cell )
         
         // not all the Titles have photos under their OLID. Some only have them under a photo ID
-        print( "\(result.index) Title: \(result.title) has cover: \(result.hasImage)" )
+//        print( "\(result.index) Title: \(result.title) has cover: \(result.hasImage)" )
 
         return result
     }

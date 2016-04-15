@@ -444,7 +444,7 @@ class AuthorEditionsParseOperation: Operation {
                 
                     index += 1
  
-                    print( "\(self.authorKey) \(newEntry.key) \(newEntry.title)" )
+//                    print( "\(self.authorKey) \(newEntry.key) \(newEntry.title)" )
                 }
             }
 

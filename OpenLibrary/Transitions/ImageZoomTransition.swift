@@ -54,7 +54,6 @@ class ImageZoomTransition: ZoomTransition {
                 let zoomFromView = .Push == self.operation ? sourceView : dvc.pictureView
                 let zoomToView   = .Push == self.operation ? dvc.pictureView : sourceView
 
-                let containerViewRect = containerView.bounds
                 var zoomFromViewRect = containerView.convertRect( zoomFromView.frame, fromView: zoomFromView.superview )
                 var zoomToViewRect   = containerView.convertRect( zoomToView.frame, fromView: zoomToView.superview )
                 var fullscreenPictureRect = containerView.convertRect( dvc.pictureView.frame, fromView: dvc.view )
@@ -99,8 +98,8 @@ class ImageZoomTransition: ZoomTransition {
                     zoomFromViewRect = zoomRect
                 }
                 
-                print( "from:\(zoomFromViewRect) to:\(zoomToViewRect)" )
-                print( "fromVC:\(fromVC.description) toVC:\(toVC.description)" )
+//                print( "from:\(zoomFromViewRect) to:\(zoomToViewRect)" )
+//                print( "fromVC:\(fromVC.description) toVC:\(toVC.description)" )
                 
                 fromView.alpha = 1.0
                 toView.alpha   = 0.0

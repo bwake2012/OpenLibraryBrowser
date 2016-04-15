@@ -101,7 +101,7 @@ class TitleSearchResultsParseOperation: Operation {
                     
                     index += 1
                     
-                    print( "\(newObject.index) \(newObject.title)" )
+//                    print( "\(newObject.index) \(newObject.title)" )
                 }
             }
 

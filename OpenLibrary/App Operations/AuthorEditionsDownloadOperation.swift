@@ -52,7 +52,7 @@ class AuthorEditionsDownloadOperation: GroupOperation {
         
         addOperation(taskOperation)
         
-        print( urlString )
+//        print( urlString )
     }
     
     func downloadFinished(url: NSURL?, response: NSHTTPURLResponse?, error: NSError?) {

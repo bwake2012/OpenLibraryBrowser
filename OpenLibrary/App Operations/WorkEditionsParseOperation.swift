@@ -467,7 +467,7 @@ class WorkEditionsParseOperation: Operation {
                 
                     index += 1
  
-                    print( "\(self.parentKey) \(newEntry.key) \(newEntry.title)" )
+//                    print( "\(self.parentKey) \(newEntry.key) \(newEntry.title)" )
                 }
             }
 

@@ -118,7 +118,7 @@ class AuthorWorksParseOperation: Operation {
                 
                     index += 1
                     
-                    print( "\(newObject.author_key) \(newObject.key) \(newObject.title)" )
+//                    print( "\(newObject.author_key) \(newObject.key) \(newObject.title)" )
                 }
             }
 
