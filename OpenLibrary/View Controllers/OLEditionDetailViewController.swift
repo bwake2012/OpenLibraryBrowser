@@ -16,7 +16,16 @@ class OLEditionDetailViewController: UIViewController {
     @IBOutlet weak var editionAuthorView: UILabel!
     @IBOutlet weak var displayLargeCover: UIButton!
 
-    var editionDetail: OLEditionDetail?
+    var editionDetail: OLEditionDetail? {
+        
+        didSet( newDetail ) {
+            
+            if let newDetail = newDetail where newDetail.hasImage {
+                
+                editionCoverView.displayFromURL( newDetail.localURL( "S" ) )
+            }
+        }
+    }
     var queryCoordinator: EditionDetailCoordinator?
     
     override func viewDidLoad() {

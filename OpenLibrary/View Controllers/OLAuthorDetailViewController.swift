@@ -20,7 +20,6 @@ class OLAuthorDetailViewController: UIViewController {
 
     var queryCoordinator: AuthorDetailCoordinator?
     var searchInfo: OLAuthorSearchResult?
-
     var authorWorksVC: OLAuthorDetailWorksTableViewController?
     var authorEditionsVC: OLAuthorDetailEditionsTableViewController?
     
