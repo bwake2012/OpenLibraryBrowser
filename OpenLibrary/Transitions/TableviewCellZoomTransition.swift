@@ -36,7 +36,63 @@
 import UIKit
 
 class TableviewCellZoomTransition: ZoomTransition {
+    
+    private struct animaSegment {
+        
+        let view: UIView
+        let fadeView: UIView
+        let endFrame: CGRect
+    }
 
+    // MARK: Utility
+    
+    // create either the top or bottom image and fade views plus the ending frame
+    // set the initial alpha value on the fade view
+    // if the view is zero height or less return nil
+    private func animaViews( isTop: Bool, masterSnapshot: UIImage, splitPoint: CGFloat, initialAlpha: CGFloat ) -> animaSegment? {
+    
+        let height = isTop ? splitPoint : masterSnapshot.size.height - splitPoint
+        guard 0 < height else { return nil }
+            
+        var endFrame = CGRectMake( 0, 0, 0, 0 )
+ 
+        let masterImageRef = masterSnapshot.CGImage
+        let scale = UIScreen.mainScreen().scale
+        let y = isTop ? 0.0 : splitPoint * scale
+        let deltaY = isTop ? -height : height
+    
+        let imageRef = CGImageCreateWithImageInRect( masterImageRef, CGRectMake(0, y, masterSnapshot.size.width * scale, height ) )
+        let image = UIImage.init( CGImage: imageRef!, scale: scale, orientation: .Up )
+        //          CGImageRelease( bottomImageRef )
+        
+        // create views for the top and bottom parts of the master view
+        let view = UIImageView.init( image: image )
+        var frame = view.frame
+        frame.origin.y = y
+        view.frame = frame
+        
+        // setup the inital and final frames for the master view top and bottom
+        // views depending on whether we're doing a push or a pop transition
+        endFrame = view.frame
+        if self.operation == .Push {
+        
+            endFrame.origin.y += deltaY
+        
+        } else {
+        
+            var startFrame = view.frame
+            startFrame.origin.y += deltaY
+            view.frame = startFrame
+        }
+        
+        let fadeView = UIView.init( frame: frame )
+        fadeView.backgroundColor = view.backgroundColor
+        fadeView.alpha = initialAlpha
+    
+        return animaSegment( view: view, fadeView: fadeView, endFrame: endFrame )
+    }
+    
+    // MARK: Overrides
     override func animateTransition( transitionContext: UIViewControllerContextTransitioning ) -> Void {
 
         guard let fromVC = transitionContext.viewControllerForKey( UITransitionContextFromViewControllerKey ) else {
@@ -103,75 +159,14 @@ class TableviewCellZoomTransition: ZoomTransition {
         // get the rect of the source cell in the coords of the from view
         let sourceViewRect = masterView.convertRect( self.sourceView!.bounds, fromView: self.sourceView )
         let splitPoint = sourceViewRect.origin.y - masterContentOffset.y
-        let scale = UIScreen.mainScreen().scale
         
         // split the master view snapshot into two parts, splitting
         // above the master view (usually a UITableViewCell) that originated the transition
-        let masterImageRef = masterSnapshot.CGImage
-        let topImageRef = CGImageCreateWithImageInRect( masterImageRef, CGRectMake( 0, 0, masterSnapshot.size.width * scale, splitPoint * scale) )
-        let topImage = UIImage.init( CGImage: topImageRef!, scale: scale, orientation: .Up )
-//        CGImageRelease( topImageRef )
+        let topAnima =
+            animaViews( true, masterSnapshot: masterSnapshot, splitPoint: splitPoint, initialAlpha: initialAlpha )
         
-        // create views for the top and bottom parts of the master view
-        let masterTopView = UIImageView.init( image: topImage )
-
-        // setup the inital and final frames for the master view top and bottom
-        // views depending on whether we're doing a push or a pop transition
-        var masterTopEndFrame = masterTopView.frame
-        if self.operation == .Push {
-            
-            masterTopEndFrame.origin.y -= masterTopEndFrame.size.height
-            
-        } else {
-            
-            var masterTopStartFrame = masterTopView.frame
-            masterTopStartFrame.origin.y -= masterTopStartFrame.height
-            masterTopView.frame = masterTopStartFrame
-        }
-        
-        let bottomHeight = (masterSnapshot.size.height - splitPoint) * scale
-        var masterBottomView: UIImageView?
-        var masterBottomFadeView: UIView?
-        var masterBottomEndFrame = CGRectMake( 0, 0, 0, 0 )
-        if bottomHeight > 0 {
-
-            let bottomImageRef = CGImageCreateWithImageInRect( masterImageRef, CGRectMake(0, splitPoint * scale,  masterSnapshot.size.width * scale, bottomHeight ) )
-            let bottomImage = UIImage.init( CGImage: bottomImageRef!, scale: scale, orientation: .Up )
-//          CGImageRelease( bottomImageRef )
-        
-            // create views for the top and bottom parts of the master view
-            masterBottomView = UIImageView.init( image: bottomImage )
-            var bottomFrame = masterBottomView!.frame
-            bottomFrame.origin.y = splitPoint
-            masterBottomView!.frame = bottomFrame
-
-            // setup the inital and final frames for the master view top and bottom
-            // views depending on whether we're doing a push or a pop transition
-            masterBottomEndFrame = masterBottomView!.frame
-            if self.operation == .Push {
-                
-                masterBottomEndFrame.origin.y += masterBottomEndFrame.size.height
-                
-            } else {
-                
-                var masterBottomStartFrame = masterBottomView!.frame
-                masterBottomStartFrame.origin.y += masterBottomStartFrame.size.height
-                masterBottomView!.frame = masterBottomStartFrame
-            }
- 
-            if let mbv = masterBottomView {
-                
-                masterBottomFadeView = UIView.init( frame: bottomFrame )
-                masterBottomFadeView!.backgroundColor = mbv.backgroundColor
-                masterBottomFadeView!.alpha = initialAlpha
-            }
-        }
-
-        // create views to cover the master top and bottom views so that
-        // we can fade them in / out
-        let masterTopFadeView = UIView.init( frame: masterTopView.frame )
-        masterTopFadeView.backgroundColor = masterTopView.backgroundColor
-        masterTopFadeView.alpha = initialAlpha
+        let bottomAnima =
+            animaViews( false, masterSnapshot: masterSnapshot, splitPoint: splitPoint, initialAlpha: initialAlpha )
         
         // create snapshot view of the to view
         let detailSmokeScreenView = UIImageView( image: detailSnapshot )
@@ -192,14 +187,16 @@ class TableviewCellZoomTransition: ZoomTransition {
         // add all the views to the transition view
         inView.addSubview( backgroundView )
         inView.addSubview( detailSmokeScreenView )
-        inView.addSubview( masterTopView )
-        inView.addSubview( masterTopFadeView )
-
-        if let mbv = masterBottomView {
-            inView.addSubview( mbv )
+        
+        if let t = topAnima {
+            inView.addSubview( t.view )
+            inView.addSubview( t.fadeView )
         }
-        if let mbfv = masterBottomFadeView {
-            inView.addSubview( mbfv )
+
+        if let b = bottomAnima {
+
+            inView.addSubview( b.view )
+            inView.addSubview( b.fadeView )
         }
         
         let totalDuration = self.transitionDuration( transitionContext )
@@ -212,11 +209,15 @@ class TableviewCellZoomTransition: ZoomTransition {
                 
                 // move the master view top and bottom views (and their
                 // respective fade views) to where we want them to end up
-                masterTopView.frame = masterTopEndFrame
-                masterTopFadeView.frame = masterTopEndFrame
+                if let t = topAnima {
+                    t.view.frame = t.endFrame
+                    t.fadeView.frame = t.endFrame
+                }
                 
-                masterBottomView?.frame = masterBottomEndFrame
-                masterBottomFadeView?.frame = masterBottomEndFrame
+                if let b = bottomAnima {
+                    b.view.frame = b.endFrame
+                    b.fadeView.frame = b.endFrame
+                }
                 
                 // zoom the detail view in or out, depending on whether we're doing a push
                 // or pop transition
@@ -234,8 +235,8 @@ class TableviewCellZoomTransition: ZoomTransition {
                 let fadeStartTime = self.operation == .Push ? 0.5 : 0.0
                 UIView.addKeyframeWithRelativeStartTime( fadeStartTime, relativeDuration: 0.5 ) { () -> Void in
                     
-                    masterTopFadeView.alpha = finalAlpha
-                    masterBottomFadeView?.alpha = finalAlpha
+                    topAnima?.fadeView.alpha = finalAlpha
+                    bottomAnima?.fadeView.alpha = finalAlpha
                 }
             }) {
                 
@@ -244,11 +245,11 @@ class TableviewCellZoomTransition: ZoomTransition {
                 // remove all the intermediate views from the hierarchy
                 backgroundView.removeFromSuperview()
                 detailSmokeScreenView.removeFromSuperview()
-                masterTopView.removeFromSuperview()
-                masterTopFadeView.removeFromSuperview()
+                topAnima?.view.removeFromSuperview()
+                topAnima?.fadeView.removeFromSuperview()
 
-                masterBottomView?.removeFromSuperview()
-                masterBottomFadeView?.removeFromSuperview()
+                bottomAnima?.view.removeFromSuperview()
+                bottomAnima?.fadeView.removeFromSuperview()
                 
                 if transitionContext.transitionWasCancelled() {
                     
@@ -256,6 +257,7 @@ class TableviewCellZoomTransition: ZoomTransition {
                     // if the transition is canccelled
                     toVC.view.removeFromSuperview()
                     transitionContext.completeTransition( false )
+
                 } else {
 
                     fromVC.view.removeFromSuperview()
