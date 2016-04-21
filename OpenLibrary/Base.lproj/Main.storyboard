@@ -283,7 +283,7 @@
                                             <segue destination="RJ5-x8-uas" kind="show" identifier="largeEditionCoverImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" customModuleProvider="target" id="r7n-rO-97o"/>
                                         </connections>
                                     </button>
-                                    <view contentMode="scaleToFill" verticalHuggingPriority="256" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wsl-iM-KOa" userLabel="summaryView">
+                                    <view contentMode="scaleToFill" verticalHuggingPriority="256" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wsl-iM-KOa" userLabel="summaryView">
                                         <rect key="frame" x="136" y="0.0" width="424" height="128"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Abw-un-9xC">
