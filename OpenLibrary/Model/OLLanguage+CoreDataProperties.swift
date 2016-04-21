@@ -14,8 +14,10 @@ import CoreData
 
 extension OLLanguage {
 
-    @NSManaged var key: String?
-    @NSManaged var code: String?
-    @NSManaged var name: String?
+    @NSManaged var sequence: Int64
+    @NSManaged var index: Int64
+    @NSManaged var key: String
+    @NSManaged var code: String
+    @NSManaged var name: String
 
 }

@@ -14,37 +14,39 @@ import CoreData
 
 extension OLGeneralSearchResult {
 
-    @NSManaged var title_suggest: String?
-    @NSManaged var edition_key: NSObject?
-    @NSManaged var cover_i: NSNumber?
-    @NSManaged var isbn: NSObject?
-    @NSManaged var has_fulltext: NSNumber?
-    @NSManaged var text: NSObject?
-    @NSManaged var author_name: NSObject?
-    @NSManaged var seed: NSObject?
-    @NSManaged var ia: NSObject?
-    @NSManaged var author_key: NSObject?
-    @NSManaged var subject: NSObject?
-    @NSManaged var title: String?
-    @NSManaged var ia_collection_s: String?
-    @NSManaged var first_publish_year: NSNumber?
-    @NSManaged var type: String?
-    @NSManaged var ebook_count_i: NSNumber?
-    @NSManaged var publish_place: NSObject?
-    @NSManaged var printdisabled_s: String?
-    @NSManaged var edition_count: NSNumber?
-    @NSManaged var key: String?
-    @NSManaged var id_goodreads: NSObject?
-    @NSManaged var public_scan_b: NSNumber?
-    @NSManaged var publisher: NSObject?
-    @NSManaged var language: NSObject?
-    @NSManaged var lccn: NSObject?
-    @NSManaged var last_modified_i: NSNumber?
-    @NSManaged var id_librarything: NSObject?
-    @NSManaged var cover_edition_key: String?
-    @NSManaged var first_sentence: NSObject?
-    @NSManaged var person: NSObject?
-    @NSManaged var publish_year: NSObject?
-    @NSManaged var publish_date: NSObject?
-
+    @NSManaged var      sequence: Int64
+    @NSManaged var      index: Int64
+    
+    @NSManaged var 	    author_key: [String]
+    @NSManaged var 	    author_name: [String]
+    @NSManaged var 	    cover_edition_key: String
+    @NSManaged var 	    cover_i: Int64
+    @NSManaged var 	    ebook_count_i: Int64
+    @NSManaged var 	    edition_count: Int64
+    @NSManaged var 	    edition_key: [String]
+    @NSManaged var 	    first_publish_year: Int16
+    @NSManaged var 	    first_sentence: [String]
+    @NSManaged var 	    has_fulltext: Bool
+    @NSManaged var 	    ia_collection_s: String
+    @NSManaged var 	    ia: [String]
+    @NSManaged var 	    id_goodreads: [String]
+    @NSManaged var 	    id_librarything: [String]
+    @NSManaged var 	    isbn: [String]
+    @NSManaged var 	    key: String
+    @NSManaged var 	    language: [String]
+    @NSManaged var 	    last_modified_i: Int64
+    @NSManaged var 	    lccn: [String]
+    @NSManaged var 	    person: [String]
+    @NSManaged var 	    printdisabled_s: String
+    @NSManaged var 	    public_scan_b: Bool
+    @NSManaged var 	    publish_date: [String]
+    @NSManaged var 	    publish_place: [String]
+    @NSManaged var 	    publish_year: [Int]
+    @NSManaged var 	    publisher: [String]
+    @NSManaged var 	    seed: [String]
+    @NSManaged var 	    subject: [String]
+    @NSManaged var 	    text: [String]
+    @NSManaged var 	    title_suggest: String
+    @NSManaged var 	    title: String
+    @NSManaged var 	    type: String
 }
