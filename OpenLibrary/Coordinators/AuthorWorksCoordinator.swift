@@ -31,8 +31,10 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         fetchRequest.predicate = NSPredicate( format: "author_key==%@", "\(key)" )
         
         fetchRequest.sortDescriptors =
-            [NSSortDescriptor(key: "coversFound", ascending: false),
-             NSSortDescriptor(key: "index", ascending: true)]
+            [
+                NSSortDescriptor(key: "coversFound", ascending: false),
+                NSSortDescriptor(key: "index", ascending: true)
+            ]
         
         let frc = FetchedOLWorkDetailController( fetchRequest: fetchRequest,
             managedObjectContext: self.coreDataStack.mainQueueContext,
@@ -44,7 +46,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
     
     var searchInfo: OLAuthorSearchResult
     var searchResults = SearchResults()
-    
+
     var highWaterMark = 0
     
     init( searchInfo: OLAuthorSearchResult, authorWorksTableVC: OLAuthorDetailWorksTableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
@@ -98,12 +100,11 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         
 //        print( "work: \(result.title) has covers: \(!result.covers.isEmpty)" )
         
-        // not all the authors have photos under their OLID. Some only have them under a photo ID
-        let localURL = workDetail.localURL( "S" )
-        if !cell.displayImage( localURL ) {
-            
-            if workDetail.hasImage {
+        if workDetail.hasImage {
                 
+            let localURL = workDetail.localURL( "S" )
+            if !cell.displayImage( localURL ) {
+            
                 let url = localURL
                 let workCoverGetOperation =
                     ImageGetOperation( numberID: workDetail.firstImageID, imageKeyName: "id", localURL: url, size: "S", type: "b" )
@@ -204,11 +205,16 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
     // MARK: SearchResultsUpdater
     func updateResults(searchResults: SearchResults) -> Void {
         
-        self.searchResults = searchResults
-        self.highWaterMark = searchResults.start + searchResults.pageSize
-        if self.searchInfo.work_count != Int64( searchResults.numFound ) {
-            self.searchInfo.work_count = Int64( searchResults.numFound )
-//            self.tableView?.reloadData()
+        dispatch_async( dispatch_get_main_queue() ) {
+            [weak self] in
+            
+            if let strongSelf = self {
+                strongSelf.searchResults = searchResults
+                strongSelf.highWaterMark = searchResults.start + searchResults.pageSize
+                if strongSelf.searchInfo.work_count != Int64( searchResults.numFound ) {
+                    strongSelf.searchInfo.work_count = Int64( searchResults.numFound )
+                }
+            }
         }
     }
     

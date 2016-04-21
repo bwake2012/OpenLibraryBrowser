@@ -78,9 +78,9 @@ class WorkDetailCoordinator: OLQueryCoordinator {
             
             if workDetail.hasImage {
                 
-                let localURL = workDetail.localURL( "B" )
+                let localURL = workDetail.localURL( "M" )
                 if !( workDetailVC.displayImage( localURL ) ) {
-                    
+
                     let url = localURL
                     let imageGetOperation =
                         ImageGetOperation( numberID: workDetail.covers[0], imageKeyName: "id", localURL: url, size: "M", type: "a" ) {
@@ -98,6 +98,8 @@ class WorkDetailCoordinator: OLQueryCoordinator {
                     
                     imageGetOperation.userInitiated = true
                     operationQueue.addOperation( imageGetOperation )
+                    
+                    workDetailVC.displayImage( workDetail.localURL( "S" ) )
                 }
             }
         }

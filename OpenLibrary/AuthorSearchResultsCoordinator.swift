@@ -14,10 +14,10 @@ import BNRCoreDataStack
 
 private let kAuthorSearchCache = "authorNameSearch"
 
-private let kPageSize = 100
-
 class AuthorSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate {
     
+    private let kPageSize = 100
+
     typealias FetchedOLAuthorSearchResultController = FetchedResultsController< OLAuthorSearchResult >
     
     let tableVC: UITableViewController
@@ -41,7 +41,7 @@ class AuthorSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControll
                 managedObjectContext: self.coreDataStack.mainQueueContext,
                 sectionNameKeyPath: nil,
                 cacheName: kAuthorSearchCache
-        )
+            )
         
         controller.setDelegate( self )
         return controller

@@ -31,7 +31,6 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
         self.authorDetailVC = authorDetailVC
 
         super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
-
     }
     
     
@@ -45,8 +44,6 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
                 
                 let mediumURL = authorDetail.localURL( "M" )
                 if !(authorDetailVC.displayImage( mediumURL )) {
-                    
-                    authorDetailVC.displayImage( authorDetail.localURL( "S" ) )
 
                     let url = mediumURL
                     let imageGetOperation =
@@ -60,6 +57,8 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
                     
                     imageGetOperation.userInitiated = true
                     operationQueue.addOperation( imageGetOperation )
+                    
+                    authorDetailVC.displayImage( authorDetail.localURL( "S" ) )
                 }
             }
         }

@@ -63,7 +63,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     
     func numberOfSections() -> Int {
         
-        return fetchedResultsController.sections?.count ?? 1
+        return fetchedResultsController.sections?.count ?? 0
     }
 
     func numberOfRowsInSection( section: Int ) -> Int {
@@ -98,17 +98,15 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         
         cell.configure( result )
         
-        // not all the editions have photos under their OLID. Some only have them under a photo ID
-        let localURL = result.localURL( result.key, size: "S" )
-        if !cell.displayImage( localURL ) {
-            
-            if !result.covers.isEmpty {
+        if result.hasImage {
                 
+            let localURL = result.localURL( result.key, size: "S" )
+            if !cell.displayImage( localURL ) {
+            
                 let url = localURL
                 let editionCoverGetOperation =
                     ImageGetOperation( numberID: result.covers[0], imageKeyName: "id", localURL: url, size: "S", type: "b" )
                     {
-                        
                         dispatch_async( dispatch_get_main_queue() ) {
                             
                             cell.displayImage( url )
@@ -134,19 +132,6 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         }
     }
     
-    func setEditionCoordinator( editionDetailVC: OLEditionDetailViewController, indexPath: NSIndexPath ) {
-        
-        let editionDetail = objectAtIndexPath( indexPath )!
-        editionDetailVC.queryCoordinator =
-            EditionDetailCoordinator(
-                    operationQueue: operationQueue,
-                    coreDataStack: coreDataStack,
-                    searchInfo: editionDetail,
-                    editionDetailVC: editionDetailVC
-                )
-        editionDetailVC.editionDetail = editionDetail
-    }
-
     func newQuery( workKey: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
 
         if nil == workEditionsGetOperation {
@@ -278,5 +263,20 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             case let .Delete(_, index):
                 tableVC.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
             }
+    }
+
+
+    func setEditionCoordinator( editionDetailVC: OLEditionDetailViewController, indexPath: NSIndexPath ) {
+        
+        let editionDetail = objectAtIndexPath( indexPath )!
+        editionDetailVC.queryCoordinator =
+            EditionDetailCoordinator(
+                    operationQueue: operationQueue,
+                    coreDataStack: coreDataStack,
+                    searchInfo: editionDetail,
+                    editionDetailVC: editionDetailVC
+                )
+        
+        editionDetailVC.editionDetail = editionDetail
     }
 }

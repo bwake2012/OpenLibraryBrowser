@@ -325,6 +325,7 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControlle
                         workKey: searchResult.key,
                         workDetailVC: destVC
                     )
+            
         }
     }
     

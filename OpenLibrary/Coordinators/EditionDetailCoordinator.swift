@@ -39,8 +39,6 @@ class EditionDetailCoordinator: OLQueryCoordinator {
                 let mediumURL = editionDetail.localURL( "M" )
                 if !(editionDetailVC.displayImage( mediumURL )) {
                     
-                    editionDetailVC.displayImage( editionDetail.localURL( "S" ) )
-                    
                     let url = mediumURL
                     let imageGetOperation =
                         ImageGetOperation( numberID: editionDetail.firstImageID, imageKeyName: "id", localURL: url, size: "M", type: "a" ) {
@@ -53,6 +51,8 @@ class EditionDetailCoordinator: OLQueryCoordinator {
                     
                     imageGetOperation.userInitiated = true
                     operationQueue.addOperation( imageGetOperation )
+                    
+                    editionDetailVC.displayImage( editionDetail.localURL( "S" ) )
                 }
             }
         }
