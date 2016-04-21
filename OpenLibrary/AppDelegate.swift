@@ -16,18 +16,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: Properties
     var window: UIWindow?
+    
+    private let operationQueue = OperationQueue()
 
-    private var coreDataStack: CoreDataStack?
+    private var coreDataStack: CoreDataStack? {
+        
+        didSet {
+            
+            if nil != coreDataStack {
+                languagesCoordinator =
+                    LanguagesCoordinator( operationQueue: operationQueue, coreDataStack: coreDataStack! )
+            }
+        
+        }
+    }
+    private let launchStoryboard = UIStoryboard( name: "LaunchScreen", bundle: nil)
     private let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-    private lazy var loadingVC: UIViewController = {
-        return self.mainStoryboard.instantiateViewControllerWithIdentifier("launchVC")
-    }()
+
+//    private lazy var loadingVC: UIViewController = {
+//        return self.launchStoryboard.instantiateViewControllerWithIdentifier("launchVC")
+//    }()
     private lazy var navController: UINavigationController = {
         return self.mainStoryboard.instantiateViewControllerWithIdentifier("rootNavigationController")
             as! UINavigationController
     }()
     
-
+    private var languagesCoordinator: LanguagesCoordinator?
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
         // Override point for customization after application launch.
@@ -81,7 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             AuthorSearchResultsCoordinator(
                     tableVC: destVC,
                     coreDataStack: coreDataStack!,
-                    operationQueue: OperationQueue()
+                    operationQueue: operationQueue
                 )
     }
     
@@ -91,7 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             TitleSearchResultsCoordinator(
                     tableVC: destVC,
                     coreDataStack: coreDataStack!,
-                    operationQueue: OperationQueue()
+                    operationQueue: operationQueue
                 )
     }
 
