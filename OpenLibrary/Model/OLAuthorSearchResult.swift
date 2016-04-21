@@ -25,19 +25,6 @@ class OLAuthorSearchResult: OLManagedObject, CoreDataModelable {
     
     static let entityName = "AuthorSearchResult"
     
-    @NSManaged var sequence: Int64
-    @NSManaged var index: Int64
-    @NSManaged var key: String
-    @NSManaged var name: String
-    @NSManaged var birth_date: NSDate?
-    @NSManaged var death_date: NSDate?
-    @NSManaged var type: String
-    @NSManaged var top_work: String?
-    @NSManaged var work_count: Int64
-    @NSManaged var has_photos: Bool
-
-    @NSManaged var toDetail: OLAuthorDetail?
-
     var havePhoto = HasPhoto.unknown
     
     var searchInfo: SearchInfo {

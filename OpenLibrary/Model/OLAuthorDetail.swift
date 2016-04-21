@@ -21,27 +21,6 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
     
     static let entityName = "AuthorDetail"
     
-    @NSManaged var key: String
-    @NSManaged var name: String
-    @NSManaged var personal_name: String
-    @NSManaged var birth_date: NSDate?
-    @NSManaged var death_date: NSDate?
-    
-    @NSManaged var photos: [Int]                // transformable
-    @NSManaged var links: [[String: String]]    // transformable
-    @NSManaged var bio: String
-    @NSManaged var alternate_names: [String]    // transformable
-    
-    @NSManaged var wikipedia: String
-    
-    @NSManaged var revision: Int64
-    @NSManaged var latest_revision: Int64
-    
-    @NSManaged var created: NSDate?
-    @NSManaged var last_modified: NSDate?
-    
-    @NSManaged var type: String
-    
     var searchInfo: SearchInfo {
         
         return SearchInfo( objectID: self.objectID, key: self.key )

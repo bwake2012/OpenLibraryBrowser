@@ -99,6 +99,62 @@
             </compoundIndex>
         </compoundIndexes>
     </entity>
+    <entity name="GeneralSearchResult" representedClassName=".OLGeneralSearchResult" syncable="YES">
+        <attribute name="author_key" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="author_name" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="cover_edition_key" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cover_i" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="ebook_count_i" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="edition_count" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="edition_key" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="first_publish_year" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="first_sentence" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="has_fulltext" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="ia" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="ia_collection_s" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id_goodreads" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="id_librarything" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="index" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="isbn" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="language" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="last_modified_i" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="lccn" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="person" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="printdisabled_s" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="public_scan_b" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="publish_date" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="publish_place" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="publish_year" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="publisher" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="seed" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="sequence" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="subject" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title_suggest" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <compoundIndexes>
+            <compoundIndex>
+                <index value="key"/>
+            </compoundIndex>
+        </compoundIndexes>
+    </entity>
+    <entity name="Language" representedClassName=".OLLanguage" syncable="YES">
+        <attribute name="code" attributeType="String" syncable="YES"/>
+        <attribute name="index" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="key" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="sequence" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <compoundIndexes>
+            <compoundIndex>
+                <index value="code"/>
+            </compoundIndex>
+            <compoundIndex>
+                <index value="key"/>
+            </compoundIndex>
+        </compoundIndexes>
+    </entity>
     <entity name="TitleSearchResult" representedClassName=".OLTitleSearchResult" syncable="YES">
         <attribute name="author_key" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="author_name" optional="YES" attributeType="Transformable" syncable="YES"/>
@@ -158,7 +214,9 @@
         <element name="AuthorDetail" positionX="-63" positionY="-18" width="128" height="285"/>
         <element name="AuthorSearchResult" positionX="-54" positionY="81" width="128" height="210"/>
         <element name="EditionDetail" positionX="-45" positionY="144" width="128" height="885"/>
+        <element name="Language" positionX="-63" positionY="135" width="128" height="120"/>
         <element name="TitleSearchResult" positionX="-63" positionY="135" width="128" height="225"/>
         <element name="WorkDetail" positionX="-54" positionY="99" width="128" height="450"/>
+        <element name="GeneralSearchResult" positionX="-63" positionY="135" width="128" height="555"/>
     </elements>
 </model>

@@ -103,22 +103,6 @@ class OLTitleSearchResult: OLManagedObject, CoreDataModelable {
     
     static let entityName = "TitleSearchResult"
     
-    @NSManaged var sequence: Int64
-    @NSManaged var index: Int64
-    @NSManaged var key: String
-    
-    @NSManaged var author_key: [String]
-    @NSManaged var author_name: [String]
-    @NSManaged var contributor: [String]
-    @NSManaged var cover_i: Int64
-    @NSManaged var first_publish_year: String
-    @NSManaged var has_fulltext: Bool
-    @NSManaged var subtitle: String
-    @NSManaged var title: String
-    @NSManaged var title_suggest: String
-
-//    @NSManaged var toDetail: OLWorkDetail?
-    
     class func parseJSON(sequence: Int64, index: Int64, match: [String: AnyObject], moc: NSManagedObjectContext ) -> OLTitleSearchResult? {
         
         guard let parsed = ParsedSearchResult( match: match ) else { return nil }
