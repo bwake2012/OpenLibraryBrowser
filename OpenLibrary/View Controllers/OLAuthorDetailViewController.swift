@@ -19,7 +19,6 @@ class OLAuthorDetailViewController: UIViewController {
     @IBOutlet weak var displayLargePhoto: UIButton!
 
     var queryCoordinator: AuthorDetailCoordinator?
-    var searchInfo: OLAuthorSearchResult?
     var authorWorksVC: OLAuthorDetailWorksTableViewController?
     var authorEditionsVC: OLAuthorDetailEditionsTableViewController?
     
@@ -42,21 +41,21 @@ class OLAuthorDetailViewController: UIViewController {
             if let destVC = segue.destinationViewController as? OLAuthorDetailWorksTableViewController {
                 
                 self.authorWorksVC = destVC
-                queryCoordinator?.setAuthorWorksCoordinator( destVC, searchInfo: searchInfo! )
+                queryCoordinator?.installAuthorWorksCoordinator( destVC )
             }
         } else if segue.identifier == "embedAuthorEditions" {
             
             if let destVC = segue.destinationViewController as? OLAuthorDetailEditionsTableViewController {
                 
                 self.authorEditionsVC = destVC
-                queryCoordinator?.setAuthorEditionsCoordinator( destVC, searchInfo: searchInfo! )
+                queryCoordinator?.installAuthorEditionsCoordinator( destVC )
 
             }
         } else if segue.identifier == "largeAuthorPhoto" {
             
             if let destVC = segue.destinationViewController as? OLPictureViewController {
 
-                queryCoordinator?.setAuthorPictureCoordinator( destVC, searchInfo: searchInfo! )
+                queryCoordinator?.installAuthorPictureCoordinator( destVC )
             }
         }
     }
@@ -95,7 +94,7 @@ class OLAuthorDetailViewController: UIViewController {
     }
     
     
-    func UpdateUI( authorDetail: OLAuthorDetail ) {
+    func updateUI( authorDetail: OLAuthorDetail ) {
         
         self.displayLargePhoto.enabled = authorDetail.hasImage
             

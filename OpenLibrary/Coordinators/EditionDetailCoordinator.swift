@@ -32,7 +32,7 @@ class EditionDetailCoordinator: OLQueryCoordinator {
         
         if let editionDetailVC = editionDetailVC {
             
-            editionDetailVC.UpdateUI( editionDetail )
+            editionDetailVC.updateUI( editionDetail )
             
             if editionDetail.hasImage {
                 
@@ -63,7 +63,7 @@ class EditionDetailCoordinator: OLQueryCoordinator {
         updateUI( editionDetail )
     }
     
-    func setCoverPictureViewCoordinator( destVC: OLPictureViewController ) {
+    func installCoverPictureViewCoordinator( destVC: OLPictureViewController ) {
 
         destVC.queryCoordinator =
             CoverPictureViewCoordinator(

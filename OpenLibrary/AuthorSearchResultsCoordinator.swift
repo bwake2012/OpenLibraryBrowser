@@ -362,9 +362,9 @@ class AuthorSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControll
         return result.toDetail
     }
     
-    // MARK: set coordinator for new view controller
+    // MARK: install coordinator for new view controller
     
-    func setAuthorDetailCoordinator( destVC: OLAuthorDetailViewController, indexPath: NSIndexPath ) {
+    func installAuthorDetailCoordinator( destVC: OLAuthorDetailViewController, indexPath: NSIndexPath ) {
         
         destVC.queryCoordinator =
             AuthorDetailCoordinator(

@@ -36,7 +36,11 @@ class OLAuthorSearchResult: OLManagedObject, CoreDataModelable {
         
         super.awakeFromFetch()
         
-        havePhoto = has_photos ? HasPhoto.unknown : HasPhoto.none
+        if let detail = toDetail {
+            havePhoto = detail.hasImage ? .id : .none
+        } else {
+            havePhoto = has_photos ? HasPhoto.unknown : HasPhoto.none
+        }
     }
     
     override func localURL( size: String ) -> NSURL {
@@ -92,7 +96,7 @@ class OLAuthorSearchResult: OLManagedObject, CoreDataModelable {
                 if bDisplayed || .none == havePhoto {
                     
                     willChangeValueForKey( kHasPhoto )
-                    setValue( havePhoto.rawValue, forKey: kHasPhoto )
+                    setValue( bDisplayed, forKey: kHasPhoto )
                     didChangeValueForKey( kHasPhoto )
                 }
             }

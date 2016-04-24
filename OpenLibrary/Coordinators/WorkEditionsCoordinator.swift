@@ -265,8 +265,9 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             }
     }
 
+    // MARK: install query coordinators
 
-    func setEditionCoordinator( editionDetailVC: OLEditionDetailViewController, indexPath: NSIndexPath ) {
+    func installEditionCoordinator( editionDetailVC: OLEditionDetailViewController, indexPath: NSIndexPath ) {
         
         let editionDetail = objectAtIndexPath( indexPath )!
         editionDetailVC.queryCoordinator =

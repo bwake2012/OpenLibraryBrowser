@@ -43,14 +43,14 @@ class OLEditionDetailViewController: UIViewController {
             
             if let destVC = segue.destinationViewController as? OLPictureViewController {
                 
-                queryCoordinator!.setCoverPictureViewCoordinator( destVC )
+                queryCoordinator!.installCoverPictureViewCoordinator( destVC )
                 
             }
         }
     }
     
     // MARK: Utility
-    func UpdateUI( editionDetail: OLEditionDetail ) {
+    func updateUI( editionDetail: OLEditionDetail ) {
         
         self.editionTitleView.text = editionDetail.title
         self.editionSubtitleView.text = editionDetail.subtitle

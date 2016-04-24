@@ -42,7 +42,7 @@ class OLAuthorDetailWorksTableViewController: UITableViewController {
                 
                 if let indexPath = self.tableView.indexPathForSelectedRow {
 
-                    queryCoordinator!.setWorkDetailCoordinator( destVC, indexPath: indexPath )
+                    queryCoordinator!.installWorkDetailCoordinator( destVC, indexPath: indexPath )
                 }
             }
         }

@@ -70,21 +70,16 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
             
                 if let destVC = segue.destinationViewController as? OLAuthorDetailViewController {
                     
-                    if let searchResult = authorSearchCoordinator.objectAtIndexPath( indexPath ) {
-                        
-                        searchController.active = false
-                        authorSearchCoordinator.setAuthorDetailCoordinator( destVC, indexPath: indexPath )
-                        destVC.searchInfo = searchResult
-                        
-//                        print( "\(indexPath.row) \(searchResult.key) \(searchResult.name)" )
-                    }
+                    searchController.active = false
+                    authorSearchCoordinator.installAuthorDetailCoordinator( destVC, indexPath: indexPath )
                 }
+
             } else if segue.identifier == "displaySearchWorkDetail" {
                 
                 if let destVC = segue.destinationViewController as? OLWorkDetailViewController {
                     
                     searchController.active = false
-                    titleSearchCoordinator.setTitleDetailCoordinator( destVC, indexPath: indexPath )
+                    titleSearchCoordinator.installTitleDetailCoordinator( destVC, indexPath: indexPath )
                 }
             }
         }
@@ -146,10 +141,12 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
 
         if SearchType( rawValue: scopeIndex ) == .searchAuthor {
 
+            self.title = "Author Search"
             authorSearchCoordinator.newQuery( authorName, userInitiated: userInitiated, refreshControl: self.refreshControl )
         
         } else if SearchType( rawValue: scopeIndex ) == .searchTitle {
         
+            self.title = "Title Search"
             titleSearchCoordinator.newQuery( authorName, userInitiated: userInitiated, refreshControl: self.refreshControl )
         }
         

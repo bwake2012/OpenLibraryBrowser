@@ -74,7 +74,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         
         if let workDetailVC = workDetailVC {
             
-            workDetailVC.UpdateUI( workDetail, authorName: authorNames.isEmpty ? "" : authorNames[0] )
+            workDetailVC.updateUI( workDetail, authorName: authorNames.isEmpty ? "" : authorNames[0] )
             
             if workDetail.hasImage {
                 
@@ -122,7 +122,9 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         }
     }
     
-    func setWorkDetailEditionsQueryCoordinator( destVC: OLWorkDetailEditionsTableViewController ) {
+    // MARK: install query coordinators
+    
+    func installWorkDetailEditionsQueryCoordinator( destVC: OLWorkDetailEditionsTableViewController ) {
         
         var workKey = self.workKey
         if let workDetail = searchInfo {
@@ -143,7 +145,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         )
      }
     
-    func setCoverPictureViewCoordinator( destVC: OLPictureViewController ) {
+    func installCoverPictureViewCoordinator( destVC: OLPictureViewController ) {
         
         guard let workDetail = searchInfo  else {
             assert( false )

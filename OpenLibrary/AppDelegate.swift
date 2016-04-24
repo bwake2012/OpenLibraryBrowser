@@ -23,10 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         didSet {
             
-            if nil != coreDataStack {
-                languagesCoordinator =
-                    LanguagesCoordinator( operationQueue: operationQueue, coreDataStack: coreDataStack! )
-            }
+//            if nil != coreDataStack {
+//                languagesCoordinator =
+//                    LanguagesCoordinator( operationQueue: operationQueue, coreDataStack: coreDataStack! )
+//            }
         
         }
     }

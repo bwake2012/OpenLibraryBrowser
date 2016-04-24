@@ -269,9 +269,9 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
             }
     }
     
-    // MARK: Query Coordinators
+    // MARK: install Query Coordinators
     
-    func setWorkDetailCoordinator( destVC: OLWorkDetailViewController, indexPath: NSIndexPath ){
+    func installWorkDetailCoordinator( destVC: OLWorkDetailViewController, indexPath: NSIndexPath ){
     
         if let workDetail = objectAtIndexPath( indexPath ) {
 

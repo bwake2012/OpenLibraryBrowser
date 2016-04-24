@@ -41,7 +41,7 @@ class OLWorkDetailEditionsTableViewController: UITableViewController {
             if let destVC = segue.destinationViewController as? OLEditionDetailViewController {
                 
                 if let indexPath = self.tableView.indexPathForSelectedRow {
-                    queryCoordinator!.setEditionCoordinator( destVC, indexPath: indexPath )
+                    queryCoordinator!.installEditionCoordinator( destVC, indexPath: indexPath )
                     
                 }
             }

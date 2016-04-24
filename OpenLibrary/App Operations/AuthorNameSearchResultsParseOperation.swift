@@ -71,7 +71,7 @@ private class ParsedSearchResult: OpenLibraryObject {
     }
 }
 
-/// An `Operation` to parse earthquakes out of a downloaded feed from the USGS.
+/// An `Operation` to parse author name search results out of a downloaded feed from OpenLibrary.org.
 class AuthorNameSearchResultsParseOperation: Operation {
     
     let cacheFile: NSURL
@@ -197,7 +197,7 @@ class AuthorNameSearchResultsParseOperation: Operation {
         result.work_count = Int64( parsed.work_count )
         
         result.havePhoto = HasPhoto.unknown
-        result.has_photos = false
+        result.has_photos = true
     }
     
     /**

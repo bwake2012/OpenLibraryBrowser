@@ -1,6 +1,6 @@
 # BNR Core Data Stack
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Cocoapods Compatible](https://img.shields.io/cocoapods/v/BNRCoreDataStack.svg)](http://cocoapods.org)
+[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/BNRCoreDataStack.svg)](https://cocoapods.org/pods/BNRCoreDataStack)
 [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](./LICENSE)
 [![Build Status](https://travis-ci.org/bignerdranch/CoreDataStack.svg)](https://travis-ci.org/bignerdranch/CoreDataStack)
 
@@ -13,9 +13,11 @@ For complete source documentation see: [Documentation](http://bignerdranch.githu
 
 ## Minimum Requirements
 
+- OS X 10.10
+- tvOS 9.0
 - iOS 8.0
-- Xcode 7.0
-- Swift 2.0
+- Xcode 7.3
+- Swift 2.2
 
 ## Installation
 
@@ -192,6 +194,10 @@ See [BooksTableViewController.swift](./Example/BooksTableViewController.swift) f
 ##### Example
 
 See [EntityMonitorTests.swift](./CoreDataStackTests/EntityMonitorTests.swift) for an example.
+
+## Contributing
+
+Please see our [guide to contributing to the CoreDataStack](https://github.com/bignerdranch/CoreDataStack/tree/master/.github/CONTRIBUTING.md)
 
 ## Debugging Tips
 

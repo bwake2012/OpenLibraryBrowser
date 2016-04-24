@@ -265,7 +265,10 @@ class AuthorDetailParseOperation: Operation {
         
         if let parent = context.objectWithID( self.parentObjectID ) as? OLAuthorSearchResult {
         
+            assert( parent.key == result.key )
+            
             parent.toDetail = result
+            parent.has_photos = result.hasImage
         }
     }
     

@@ -311,9 +311,9 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControlle
         operationQueue.addOperation( TitleThumbnailGetOperation )
     }
     
-    // MARK: set coordinator for view controller
+    // MARK: install coordinator for view controller
     
-    func setTitleDetailCoordinator( destVC: OLWorkDetailViewController, indexPath: NSIndexPath ) {
+    func installTitleDetailCoordinator( destVC: OLWorkDetailViewController, indexPath: NSIndexPath ) {
         
         if let searchResult = objectAtIndexPath( indexPath ) {
         

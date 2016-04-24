@@ -38,22 +38,22 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
         
         if let authorDetailVC = authorDetailVC {
             
-            authorDetailVC.UpdateUI( authorDetail )
+            authorDetailVC.updateUI( authorDetail )
             
-            if authorDetail.photos.count > 0 {
+            if authorDetail.hasImage {
                 
                 let mediumURL = authorDetail.localURL( "M" )
                 if !(authorDetailVC.displayImage( mediumURL )) {
 
                     let url = mediumURL
                     let imageGetOperation =
-                        ImageGetOperation( numberID: authorDetail.photos[0], imageKeyName: "ID", localURL: url, size: "M", type: "a" ) {
+                        ImageGetOperation( numberID: authorDetail.firstImageID, imageKeyName: "ID", localURL: url, size: "M", type: "a" ) {
                             
-                            dispatch_async( dispatch_get_main_queue() ) {
-                                
-                                authorDetailVC.displayImage( url )
+                                dispatch_async( dispatch_get_main_queue() ) {
+                                    
+                                    authorDetailVC.displayImage( url )
+                                }
                             }
-                    }
                     
                     imageGetOperation.userInitiated = true
                     operationQueue.addOperation( imageGetOperation )
@@ -72,7 +72,8 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
             
             let getAuthorOperation =
                 AuthorDetailGetOperation(
-                    queryText: searchInfo.key, parentObjectID: searchInfo.objectID,
+                    queryText: searchInfo.key,
+                    parentObjectID: searchInfo.objectID,
                     coreDataStack: coreDataStack
                 ) {
                     [weak self] in
@@ -93,27 +94,39 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
         }
     }
     
-    func setAuthorWorksCoordinator( destVC: OLAuthorDetailWorksTableViewController, searchInfo: OLAuthorSearchResult ) {
+    // MARK: install query coordinators
+    
+    func installAuthorWorksCoordinator( destVC: OLAuthorDetailWorksTableViewController ) {
 
         destVC.queryCoordinator =
-            AuthorWorksCoordinator( searchInfo: searchInfo, authorWorksTableVC: destVC, coreDataStack: coreDataStack, operationQueue: operationQueue )
+            AuthorWorksCoordinator(
+                    searchInfo: searchInfo,
+                    authorWorksTableVC: destVC,
+                    coreDataStack: coreDataStack,
+                    operationQueue: operationQueue
+                )
     }
-    
-    func setAuthorEditionsCoordinator( destVC: OLAuthorDetailEditionsTableViewController, searchInfo: OLAuthorSearchResult ) {
+
+    func installAuthorEditionsCoordinator( destVC: OLAuthorDetailEditionsTableViewController ) {
         
         destVC.queryCoordinator =
-            AuthorEditionsCoordinator( searchInfo: searchInfo, withCoversOnly: false, tableVC: destVC, coreDataStack: coreDataStack, operationQueue: operationQueue )
+            AuthorEditionsCoordinator(
+                    searchInfo: searchInfo,
+                    withCoversOnly: false,
+                    tableVC: destVC,
+                    coreDataStack: coreDataStack,
+                    operationQueue: operationQueue
+                )
     }
     
-    func setAuthorPictureCoordinator( destVC: OLPictureViewController, searchInfo: OLAuthorSearchResult ) {
+    func installAuthorPictureCoordinator( destVC: OLPictureViewController ) {
         
         destVC.queryCoordinator =
             AuthorPictureViewCoordinator(
-                    operationQueue: self.operationQueue,
-                    coreDataStack: self.coreDataStack,
+                    operationQueue: operationQueue,
+                    coreDataStack: coreDataStack,
                     searchInfo: searchInfo,
                     pictureVC: destVC
                 )
-
     }
 }

@@ -47,13 +47,13 @@ class OLWorkDetailViewController: UIViewController {
                 
                 self.authorEditionsVC = destVC
                 
-                queryCoordinator!.setWorkDetailEditionsQueryCoordinator( destVC )
+                queryCoordinator!.installWorkDetailEditionsQueryCoordinator( destVC )
             }
         } else if segue.identifier == "largeCoverImage" {
             
             if let destVC = segue.destinationViewController as? OLPictureViewController {
                 
-                queryCoordinator!.setCoverPictureViewCoordinator( destVC )
+                queryCoordinator!.installCoverPictureViewCoordinator( destVC )
                 
             }
         }
@@ -93,7 +93,7 @@ class OLWorkDetailViewController: UIViewController {
     }
     
     
-    func UpdateUI( workDetail: OLWorkDetail, authorName: String ) {
+    func updateUI( workDetail: OLWorkDetail, authorName: String ) {
         
         self.workTitle.text = workDetail.title
         self.workSubtitle.text = workDetail.subtitle
