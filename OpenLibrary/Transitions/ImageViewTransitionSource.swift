@@ -15,3 +15,7 @@ protocol ImageViewTransitionSource {
 //    func transitionSourceImageRectangle() -> CGRect
 }
 
+protocol UncoverBottomTransitionSource {
+    
+    func uncoverSourceRectangle() -> UIView
+}

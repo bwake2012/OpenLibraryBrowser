@@ -10,11 +10,69 @@ import UIKit
 
 class OLAuthorDeluxeDetailViewController: UIViewController {
 
-    func updateUI( authorDetail: OLAuthorDetail ) {
+    @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet var contentView: UIView!
+    
+    @IBOutlet weak var authorName: UILabel!
+    @IBOutlet weak var authorPhoto: UIImageView!
+    @IBOutlet weak var displayLargePhoto: UIButton!
+    
+    var queryCoordinator: AuthorDeluxeDetailCoordinator?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+
+    override func viewDidLayoutSubviews()
+    {
+        let scrollViewBounds = scrollView.bounds
+        let contentViewBounds = contentView.bounds
         
+        var scrollViewInsets = UIEdgeInsetsZero
+        scrollViewInsets.top = scrollViewBounds.size.height/2.0;
+        scrollViewInsets.top -= contentViewBounds.size.height/2.0;
+        
+        scrollViewInsets.bottom = scrollViewBounds.size.height/2.0
+        scrollViewInsets.bottom -= contentViewBounds.size.height/2.0;
+        scrollViewInsets.bottom += 1
+        
+        scrollView.contentInset = scrollViewInsets
     }
     
-    func displayImage( url: NSURL ) -> Bool {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if segue.identifier == "deluxeLargeAuthorPhoto" {
+            
+            if let destVC = segue.destinationViewController as? OLPictureViewController {
+                
+                queryCoordinator?.installAuthorPictureCoordinator( destVC )
+            }
+        }
+    }
+    
+    // MARK: UI updates
+
+    func updateUI( authorDetail: OLAuthorDetail ) {
+        
+        self.displayLargePhoto.enabled = authorDetail.hasImage
+        
+        self.authorName.text = authorDetail.name
+        
+        if !authorDetail.hasImage {
+            self.authorPhoto.image = UIImage( named: "253-person.png" )
+        }
+    }
+    
+    func displayImage( localURL: NSURL ) -> Bool {
+        
+        if let data = NSData( contentsOfURL: localURL ) {
+            if let image = UIImage( data: data ) {
+                
+                authorPhoto.image = image
+                return true
+            }
+        }
         
         return false
     }

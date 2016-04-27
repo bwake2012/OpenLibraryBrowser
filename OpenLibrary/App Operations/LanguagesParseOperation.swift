@@ -92,7 +92,7 @@ class LanguagesParseOperation: Operation {
             var index = Int64( self.offset )
             for entry in resultSet {
                 
-                if let newObject = OLLanguage.parseJSON( sequence, index: index, match: entry, moc: self.context ) {
+                if nil != OLLanguage.parseJSON( sequence, index: index, match: entry, moc: self.context ) {
                 
                     index += 1
                     

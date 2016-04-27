@@ -17,6 +17,8 @@ class OLAuthorDetailViewController: UIViewController {
     @IBOutlet weak var authorName: UILabel!
     @IBOutlet weak var authorPhoto: UIImageView!
     @IBOutlet weak var displayLargePhoto: UIButton!
+    
+    @IBOutlet weak var containerView: UIView!
 
     var queryCoordinator: AuthorDetailCoordinator?
     var authorWorksVC: OLAuthorDetailWorksTableViewController?
@@ -51,6 +53,13 @@ class OLAuthorDetailViewController: UIViewController {
                 queryCoordinator?.installAuthorEditionsCoordinator( destVC )
 
             }
+        } else if segue.identifier == "displayAuthorDeluxeDetail" {
+            
+            if let destVC = segue.destinationViewController as? OLAuthorDeluxeDetailViewController {
+                
+                queryCoordinator?.installAuthorDeluxeDetailCoordinator( destVC )
+            }
+            
         } else if segue.identifier == "largeAuthorPhoto" {
             
             if let destVC = segue.destinationViewController as? OLPictureViewController {
@@ -62,8 +71,6 @@ class OLAuthorDetailViewController: UIViewController {
 
     // MARK: Utility
     func displayImage( localURL: NSURL ) -> Bool {
-        
-        guard nil == currentImageURL || localURL == currentImageURL else { return true }
         
         currentImageURL = localURL
         if let data = NSData( contentsOfURL: localURL ) {
@@ -77,22 +84,6 @@ class OLAuthorDetailViewController: UIViewController {
         return false
     }
 
-    func displayImageFromLocalURL( localURL: NSURL, imageView: UIImageView ) -> Bool {
-        
-        guard nil == currentImageURL || localURL == currentImageURL else { return true }
-        
-        currentImageURL = localURL
-        if let data = NSData( contentsOfURL: localURL ) {
-            if let image = UIImage( data: data ) {
-                
-                imageView.image = image
-                return true
-            }
-        }
-        
-        return false
-    }
-    
     
     func updateUI( authorDetail: OLAuthorDetail ) {
         
@@ -114,6 +105,14 @@ extension OLAuthorDetailViewController: ImageViewTransitionSource {
     func transitionSourceRectangle() -> UIImageView {
         
         return authorPhoto
+    }
+}
+
+extension OLAuthorDetailViewController: UncoverBottomTransitionSource {
+    
+    func uncoverSourceRectangle() -> UIView {
+        
+        return containerView
     }
 }
 

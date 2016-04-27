@@ -12,6 +12,7 @@ class ImageZoomTransition: ZoomTransition {
 
     var transitionAnimationOptions = UIViewKeyframeAnimationOptions.CalculationModeCubic
     
+    // MARK: Overrides
     override func animateTransition( transitionContext: UIViewControllerContextTransitioning ) -> Void {
         
         guard let fromVC = transitionContext.viewControllerForKey( UITransitionContextFromViewControllerKey ) else {

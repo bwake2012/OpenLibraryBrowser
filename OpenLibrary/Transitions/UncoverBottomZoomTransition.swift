@@ -1,5 +1,5 @@
 //
-//  TableviewCellZoomTransition.swift
+//  UncoverBottomZoomTransition.swift
 //  MusicBrowse
 //
 //  Created by Bob Wakefield on 11/20/15.
@@ -35,7 +35,7 @@
 
 import UIKit
 
-class TableviewCellZoomTransition: ZoomTransition {
+class UncoverBottomZoomTransition: ZoomTransition {
     
     private struct animaSegment {
         
@@ -161,9 +161,9 @@ class TableviewCellZoomTransition: ZoomTransition {
         let splitPoint = sourceViewRect.origin.y - masterContentOffset.y
         
         // split the master view snapshot into two parts, splitting
-        // above the master view (usually a UITableViewCell) that originated the transition
-        let topAnima =
-            animaViews( true, masterSnapshot: masterSnapshot, splitPoint: splitPoint, initialAlpha: initialAlpha )
+        // above the master view subview (usually a UITableViewCell) that originated the transition
+//        let topAnima =
+//            animaViews( true, masterSnapshot: masterSnapshot, splitPoint: splitPoint, initialAlpha: initialAlpha )
         
         let bottomAnima =
             animaViews( false, masterSnapshot: masterSnapshot, splitPoint: splitPoint, initialAlpha: initialAlpha )
@@ -188,10 +188,10 @@ class TableviewCellZoomTransition: ZoomTransition {
         inView.addSubview( backgroundView )
         inView.addSubview( detailSmokeScreenView )
         
-        if let t = topAnima {
-            inView.addSubview( t.view )
-            inView.addSubview( t.fadeView )
-        }
+//        if let t = topAnima {
+//            inView.addSubview( t.view )
+//            inView.addSubview( t.fadeView )
+//        }
 
         if let b = bottomAnima {
 
@@ -209,10 +209,10 @@ class TableviewCellZoomTransition: ZoomTransition {
                 
                 // move the master view top and bottom views (and their
                 // respective fade views) to where we want them to end up
-                if let t = topAnima {
-                    t.view.frame = t.endFrame
-                    t.fadeView.frame = t.endFrame
-                }
+//                if let t = topAnima {
+//                    t.view.frame = t.endFrame
+//                    t.fadeView.frame = t.endFrame
+//                }
                 
                 if let b = bottomAnima {
                     b.view.frame = b.endFrame
@@ -235,7 +235,7 @@ class TableviewCellZoomTransition: ZoomTransition {
                 let fadeStartTime = self.operation == .Push ? 0.5 : 0.0
                 UIView.addKeyframeWithRelativeStartTime( fadeStartTime, relativeDuration: 0.5 ) { () -> Void in
                     
-                    topAnima?.fadeView.alpha = finalAlpha
+//                    topAnima?.fadeView.alpha = finalAlpha
                     bottomAnima?.fadeView.alpha = finalAlpha
                 }
             }) {
@@ -245,8 +245,8 @@ class TableviewCellZoomTransition: ZoomTransition {
                 // remove all the intermediate views from the hierarchy
                 backgroundView.removeFromSuperview()
                 detailSmokeScreenView.removeFromSuperview()
-                topAnima?.view.removeFromSuperview()
-                topAnima?.fadeView.removeFromSuperview()
+//                topAnima?.view.removeFromSuperview()
+//                topAnima?.fadeView.removeFromSuperview()
 
                 bottomAnima?.view.removeFromSuperview()
                 bottomAnima?.fadeView.removeFromSuperview()

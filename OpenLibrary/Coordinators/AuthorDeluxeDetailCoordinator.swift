@@ -1,8 +1,8 @@
 //
-//  AuthorDetailCoordinator.swift
+//  AuthorDeluxeDetailCoordinator.swift
 //  OpenLibrary
 //
-//  Created by Bob Wakefield on 3/21/16.
+//  Created by Bob Wakefield on 4/22/2016.
 //  Copyright © 2016 Bob Wakefield. All rights reserved.
 //
 
@@ -12,11 +12,11 @@ import CoreData
 
 import BNRCoreDataStack
 
-let kAuthorDetailCache = "authorDetailSearch"
+let kAuthorDeluxeDetailCache = "authorDeluxeDetail"
 
-class AuthorDetailCoordinator: OLQueryCoordinator {
+class AuthorDeluxeDetailCoordinator: OLQueryCoordinator {
     
-    weak var authorDetailVC: OLAuthorDetailViewController?
+    weak var authorDetailVC: OLAuthorDeluxeDetailViewController?
 
     var searchInfo: OLAuthorSearchResult
         
@@ -24,7 +24,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
             operationQueue: OperationQueue,
             coreDataStack: CoreDataStack,
             searchInfo: OLAuthorSearchResult,
-            authorDetailVC: OLAuthorDetailViewController
+            authorDetailVC: OLAuthorDeluxeDetailViewController
         ) {
         
         self.searchInfo = searchInfo
@@ -47,13 +47,13 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
 
                     let url = mediumURL
                     let imageGetOperation =
-                        ImageGetOperation( numberID: authorDetail.firstImageID, imageKeyName: "ID", localURL: url, size: "M", type: "a" ) {
+                        ImageGetOperation( numberID: authorDetail.photos[0], imageKeyName: "ID", localURL: url, size: "M", type: "a" ) {
                             
-                                dispatch_async( dispatch_get_main_queue() ) {
-                                    
-                                    authorDetailVC.displayImage( url )
-                                }
+                            dispatch_async( dispatch_get_main_queue() ) {
+                                
+                                authorDetailVC.displayImage( url )
                             }
+                    }
                     
                     imageGetOperation.userInitiated = true
                     operationQueue.addOperation( imageGetOperation )
@@ -94,41 +94,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
         }
     }
     
-    // MARK: install query coordinators
-    
-    func installAuthorWorksCoordinator( destVC: OLAuthorDetailWorksTableViewController ) {
-
-        destVC.queryCoordinator =
-            AuthorWorksCoordinator(
-                    searchInfo: searchInfo,
-                    authorWorksTableVC: destVC,
-                    coreDataStack: coreDataStack,
-                    operationQueue: operationQueue
-                )
-    }
-
-    func installAuthorEditionsCoordinator( destVC: OLAuthorDetailEditionsTableViewController ) {
-        
-        destVC.queryCoordinator =
-            AuthorEditionsCoordinator(
-                    searchInfo: searchInfo,
-                    withCoversOnly: false,
-                    tableVC: destVC,
-                    coreDataStack: coreDataStack,
-                    operationQueue: operationQueue
-                )
-    }
-    
-    func installAuthorDeluxeDetailCoordinator( destVC: OLAuthorDeluxeDetailViewController ) {
-        
-        destVC.queryCoordinator =
-            AuthorDeluxeDetailCoordinator(
-                    operationQueue: operationQueue,
-                    coreDataStack: coreDataStack,
-                    searchInfo: searchInfo,
-                    authorDetailVC: destVC
-                )
-    }
+    // MARK: query coordinator installation
     
     func installAuthorPictureCoordinator( destVC: OLPictureViewController ) {
         

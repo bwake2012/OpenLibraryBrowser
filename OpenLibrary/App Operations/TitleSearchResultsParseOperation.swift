@@ -97,7 +97,7 @@ class TitleSearchResultsParseOperation: Operation {
             var index = Int64( start )
             for result in results {
                 
-                if let newObject = OLTitleSearchResult.parseJSON( 0, index: index, match: result, moc: self.context ) {
+                if nil != OLTitleSearchResult.parseJSON( 0, index: index, match: result, moc: self.context ) {
                     
                     index += 1
                     

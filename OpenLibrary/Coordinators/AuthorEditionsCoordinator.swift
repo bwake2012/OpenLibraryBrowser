@@ -17,6 +17,8 @@ private let kAuthorEditonsCache = "authorEditionsCache"
 class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate {
     
     typealias FetchedAuthorEditionsController = FetchedResultsController< OLEditionDetail >
+    typealias FetchedAuthorEditionChange = FetchedResultsObjectChange< OLEditionDetail >
+    typealias FetchedAuthorEditionSectionChange = FetchedResultsSectionChange< OLEditionDetail >
     
     let tableVC: UITableViewController
 
@@ -193,7 +195,7 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
     }
     
     func fetchedResultsController( controller: FetchedAuthorEditionsController,
-        didChangeObject change: FetchedResultsObjectChange< OLEditionDetail > ) {
+        didChangeObject change: FetchedAuthorEditionChange ) {
             switch change {
             case let .Insert(_, indexPath):
                 // tableView?.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
@@ -211,8 +213,8 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
             }
     }
     
-    func fetchedResultsController(controller: FetchedAuthorEditionsController,
-        didChangeSection change: FetchedResultsSectionChange< OLEditionDetail >) {
+    func fetchedResultsController( controller: FetchedAuthorEditionsController,
+        didChangeSection change: FetchedAuthorEditionSectionChange ) {
             switch change {
             case let .Insert(_, index):
                 tableVC.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)

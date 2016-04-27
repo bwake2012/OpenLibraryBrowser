@@ -35,6 +35,9 @@
 		C412FE631CC3DFA200EDB935 /* LanguagesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412FE621CC3DFA200EDB935 /* LanguagesCoordinator.swift */; };
 		C422A49B1CCACD1A00A6B4A7 /* OLAuthorDeluxeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C422A49A1CCACD1A00A6B4A7 /* OLAuthorDeluxeDetailViewController.swift */; };
 		C422A49D1CCAD08800A6B4A7 /* AuthorDeluxeDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C422A49C1CCAD08800A6B4A7 /* AuthorDeluxeDetailCoordinator.swift */; };
+		C422A49F1CCD22AC00A6B4A7 /* SegueWithUnfold.swift in Sources */ = {isa = PBXBuildFile; fileRef = C422A49E1CCD22AC00A6B4A7 /* SegueWithUnfold.swift */; };
+		C422A4A11CCD233700A6B4A7 /* UnfoldTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C422A4A01CCD233700A6B4A7 /* UnfoldTransition.swift */; };
+		C422A4A31CD1328100A6B4A7 /* UncoverBottomZoomTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C422A4A21CD1328100A6B4A7 /* UncoverBottomZoomTransition.swift */; };
 		C42D61D31C8738CC00909D43 /* AuthorDetailDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42D61D01C8738CC00909D43 /* AuthorDetailDownloadOperation.swift */; };
 		C42D61D41C8738CC00909D43 /* AuthorDetailGetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42D61D11C8738CC00909D43 /* AuthorDetailGetOperation.swift */; };
 		C42D61D51C8738CC00909D43 /* AuthorDetailParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42D61D21C8738CC00909D43 /* AuthorDetailParseOperation.swift */; };
@@ -45,7 +48,6 @@
 		C42DBE681CBD68740048788E /* ImageZoomTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42DBE5F1CBD68740048788E /* ImageZoomTransition.swift */; };
 		C42DBE6B1CBD68740048788E /* SegueWithImageZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42DBE621CBD68740048788E /* SegueWithImageZoom.swift */; };
 		C42DBE6C1CBD68740048788E /* SegueWithTableViewCellZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42DBE631CBD68740048788E /* SegueWithTableViewCellZoom.swift */; };
-		C42DBE6D1CBD68740048788E /* SegueWithZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42DBE641CBD68740048788E /* SegueWithZoom.swift */; };
 		C42DBE6E1CBD68740048788E /* TableviewCellZoomTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42DBE651CBD68740048788E /* TableviewCellZoomTransition.swift */; };
 		C42DBE6F1CBD68740048788E /* ZoomTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42DBE661CBD68740048788E /* ZoomTransition.swift */; };
 		C42DBE711CBD68B20048788E /* ImageViewTransitionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42DBE701CBD68B20048788E /* ImageViewTransitionSource.swift */; };
@@ -196,6 +198,9 @@
 		C412FE621CC3DFA200EDB935 /* LanguagesCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguagesCoordinator.swift; path = Coordinators/LanguagesCoordinator.swift; sourceTree = "<group>"; };
 		C422A49A1CCACD1A00A6B4A7 /* OLAuthorDeluxeDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLAuthorDeluxeDetailViewController.swift; path = "View Controllers/OLAuthorDeluxeDetailViewController.swift"; sourceTree = "<group>"; };
 		C422A49C1CCAD08800A6B4A7 /* AuthorDeluxeDetailCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorDeluxeDetailCoordinator.swift; path = Coordinators/AuthorDeluxeDetailCoordinator.swift; sourceTree = "<group>"; };
+		C422A49E1CCD22AC00A6B4A7 /* SegueWithUnfold.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegueWithUnfold.swift; path = Transitions/SegueWithUnfold.swift; sourceTree = "<group>"; };
+		C422A4A01CCD233700A6B4A7 /* UnfoldTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UnfoldTransition.swift; path = Transitions/UnfoldTransition.swift; sourceTree = "<group>"; };
+		C422A4A21CD1328100A6B4A7 /* UncoverBottomZoomTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UncoverBottomZoomTransition.swift; path = Transitions/UncoverBottomZoomTransition.swift; sourceTree = "<group>"; };
 		C42D61D01C8738CC00909D43 /* AuthorDetailDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorDetailDownloadOperation.swift; path = "App Operations/AuthorDetailDownloadOperation.swift"; sourceTree = "<group>"; };
 		C42D61D11C8738CC00909D43 /* AuthorDetailGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorDetailGetOperation.swift; path = "App Operations/AuthorDetailGetOperation.swift"; sourceTree = "<group>"; };
 		C42D61D21C8738CC00909D43 /* AuthorDetailParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorDetailParseOperation.swift; path = "App Operations/AuthorDetailParseOperation.swift"; sourceTree = "<group>"; };
@@ -206,7 +211,6 @@
 		C42DBE5F1CBD68740048788E /* ImageZoomTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageZoomTransition.swift; path = Transitions/ImageZoomTransition.swift; sourceTree = "<group>"; };
 		C42DBE621CBD68740048788E /* SegueWithImageZoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegueWithImageZoom.swift; path = Transitions/SegueWithImageZoom.swift; sourceTree = "<group>"; };
 		C42DBE631CBD68740048788E /* SegueWithTableViewCellZoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegueWithTableViewCellZoom.swift; path = Transitions/SegueWithTableViewCellZoom.swift; sourceTree = "<group>"; };
-		C42DBE641CBD68740048788E /* SegueWithZoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegueWithZoom.swift; path = Transitions/SegueWithZoom.swift; sourceTree = "<group>"; };
 		C42DBE651CBD68740048788E /* TableviewCellZoomTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableviewCellZoomTransition.swift; path = Transitions/TableviewCellZoomTransition.swift; sourceTree = "<group>"; };
 		C42DBE661CBD68740048788E /* ZoomTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZoomTransition.swift; path = Transitions/ZoomTransition.swift; sourceTree = "<group>"; };
 		C42DBE701CBD68B20048788E /* ImageViewTransitionSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageViewTransitionSource.swift; path = Transitions/ImageViewTransitionSource.swift; sourceTree = "<group>"; };
@@ -377,9 +381,11 @@
 				C42DBE741CBD76170048788E /* NavigationControllerDelegate.swift */,
 				C42DBE621CBD68740048788E /* SegueWithImageZoom.swift */,
 				C42DBE631CBD68740048788E /* SegueWithTableViewCellZoom.swift */,
-				C42DBE641CBD68740048788E /* SegueWithZoom.swift */,
 				C42DBE651CBD68740048788E /* TableviewCellZoomTransition.swift */,
+				C422A4A21CD1328100A6B4A7 /* UncoverBottomZoomTransition.swift */,
 				C42DBE661CBD68740048788E /* ZoomTransition.swift */,
+				C422A49E1CCD22AC00A6B4A7 /* SegueWithUnfold.swift */,
+				C422A4A01CCD233700A6B4A7 /* UnfoldTransition.swift */,
 			);
 			name = Transitions;
 			sourceTree = "<group>";
@@ -941,6 +947,7 @@
 				C4DA1F7E1C8A329B00DFA4BF /* AuthorWorksParseOperation.swift in Sources */,
 				C4E35E7E1C7E07D40015D187 /* NSOperation+Operations.swift in Sources */,
 				C4817C1E1CA37DC300BDCD4D /* WorkDetailGetOperation.swift in Sources */,
+				C422A4A11CCD233700A6B4A7 /* UnfoldTransition.swift in Sources */,
 				C42DBE751CBD76170048788E /* NavigationControllerDelegate.swift in Sources */,
 				C46E7E4D1C8619C300D2ED51 /* OLAuthorDetailViewController.swift in Sources */,
 				C46E7E571C861E8500D2ED51 /* OLAuthorDetail.swift in Sources */,
@@ -986,7 +993,6 @@
 				C4DA1F7B1C8A329B00DFA4BF /* AuthorWorksGetOperation.swift in Sources */,
 				C4677EA31C9DF4030070CDFD /* OLTableViewCell.swift in Sources */,
 				C412FE521CC29D2400EDB935 /* LanguagesGetOperation.swift in Sources */,
-				C42DBE6D1CBD68740048788E /* SegueWithZoom.swift in Sources */,
 				C42DBE711CBD68B20048788E /* ImageViewTransitionSource.swift in Sources */,
 				C4E863981C9A32FB002C0E6B /* OLAuthorDetailEditionsTableViewController.swift in Sources */,
 				C42DBE6E1CBD68740048788E /* TableviewCellZoomTransition.swift in Sources */,
@@ -996,6 +1002,7 @@
 				C42D61DA1C87D63800909D43 /* ImagelDownloadOperation.swift in Sources */,
 				C41082201CBAB27700319B83 /* TitleSearchResultsCoordinator.swift in Sources */,
 				C4E35E7D1C7E07D40015D187 /* NoCancelledDependencies.swift in Sources */,
+				C422A49F1CCD22AC00A6B4A7 /* SegueWithUnfold.swift in Sources */,
 				C4EF99D61CA3707900BEF2D3 /* OLWorkDetailViewController.swift in Sources */,
 				C4677EA11C9DDB7D0070CDFD /* OLManagedObject.swift in Sources */,
 				C412FE571CC2C99800EDB935 /* OLLanguage.swift in Sources */,
@@ -1041,6 +1048,7 @@
 				C49BDD121CB5967300A2EEEF /* PictureViewCoordinatorProtocol.swift in Sources */,
 				C412FE601CC3D47100EDB935 /* OLWorkDetail+CoreDataProperties.swift in Sources */,
 				C4E35E761C7E07D40015D187 /* ExclusivityController.swift in Sources */,
+				C422A4A31CD1328100A6B4A7 /* UncoverBottomZoomTransition.swift in Sources */,
 				C40E97F81CC7D1540013A3F5 /* GeneralSearchResultsDownloadOperation.swift in Sources */,
 				C49BDD181CB6E6A900A2EEEF /* OLEditionDetailViewController.swift in Sources */,
 				C42DBE681CBD68740048788E /* ImageZoomTransition.swift in Sources */,

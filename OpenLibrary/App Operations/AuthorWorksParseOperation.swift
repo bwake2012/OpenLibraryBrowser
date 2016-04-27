@@ -114,7 +114,7 @@ class AuthorWorksParseOperation: Operation {
             var index = self.offset
             for entry in entries {
                 
-                if let newObject = OLWorkDetail.parseJSON( self.authorKey, index: index, json: entry, moc: self.context ) {
+                if nil != OLWorkDetail.parseJSON( self.authorKey, index: index, json: entry, moc: self.context ) {
                 
                     index += 1
                     

@@ -20,6 +20,8 @@ class OLWorkDetailViewController: UIViewController {
     @IBOutlet weak var workCover: UIImageView!
     @IBOutlet weak var displayLargeCover: UIButton!
 
+    @IBOutlet weak var containerView: UIView!
+    
     var queryCoordinator: WorkDetailCoordinator?
 
     var authorWorksVC: OLWorkDetailEditionsTableViewController?

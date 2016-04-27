@@ -51,10 +51,10 @@ protocol ZoomTransitionGestureTarget {
 class ZoomTransition: UIPercentDrivenInteractiveTransition, UIViewControllerAnimatedTransitioning {
 
     var sourceView: UIView?
-    var operation: UINavigationControllerOperation?
+    var operation: UINavigationControllerOperation
     var transitionDuration = NSTimeInterval( 0.3 )
     
-    var parent: UINavigationController?
+    var parent: UINavigationController
     var interactive = false
     
     var transitionBackgroundColor = UIColor.whiteColor()
@@ -62,11 +62,14 @@ class ZoomTransition: UIPercentDrivenInteractiveTransition, UIViewControllerAnim
     var startScale = CGFloat( 1.0 )
     var shouldCompleteTransition = true
     
-    func configure( navigationController: UINavigationController, operation: UINavigationControllerOperation, zoomSourceView: UIView ) {
+    init(
+        navigationController: UINavigationController,
+        operation: UINavigationControllerOperation,
+        sourceRectView: UIView? ) {
         
         self.parent = navigationController
         self.operation = operation
-        self.sourceView = zoomSourceView
+        self.sourceView = sourceRectView
         
         assert( navigationController.delegate is NavigationControllerDelegate )
     }
@@ -81,14 +84,12 @@ class ZoomTransition: UIPercentDrivenInteractiveTransition, UIViewControllerAnim
 
     func animationEnded( transitionCompleted: Bool ) {
         
-        if let _ = self.parent?.delegate as? NavigationControllerDelegate {
+        if let ncd = self.parent.delegate as? NavigationControllerDelegate {
         
             if transitionCompleted && .Pop == self.operation {
                 
-                if let ncd = self.parent?.delegate as? NavigationControllerDelegate? {
+                    ncd.popZoomTransition()
 
-                    ncd?.popZoomTransition()
-                }
             }
         }
     }
@@ -114,15 +115,13 @@ extension ZoomTransition: ZoomTransitionGestureTarget {
 
     func handlePinch( gr: UIPinchGestureRecognizer ) -> Void {
         
-        assert( nil != self.parent )
-
         let scale = gr.scale
         switch gr.state {
             
         case .Began:
             self.interactive = true
             self.startScale = scale
-            self.parent?.popViewControllerAnimated( true )
+            self.parent.popViewControllerAnimated( true )
             
         case .Changed:
             let percent = 1.0 - scale / self.startScale
@@ -144,14 +143,13 @@ extension ZoomTransition: ZoomTransitionGestureTarget {
     
     func handleEdgePan( gr: UIScreenEdgePanGestureRecognizer ) -> Void {
         
-        assert( nil != self.parent )
         let point = gr.translationInView( gr.view )
         
         switch gr.state {
             
         case .Began:
             self.interactive = true
-            self.parent?.popViewControllerAnimated( true )
+            self.parent.popViewControllerAnimated( true )
             
         case .Changed:
             let percent = point.x / gr.view!.frame.size.width
