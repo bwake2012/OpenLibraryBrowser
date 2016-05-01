@@ -19,8 +19,8 @@ private class ParsedSearchResult: OpenLibraryObject {
     let key: String
     let name: String
     let personal_name: String
-    let birth_date: NSDate?
-    let death_date: NSDate?
+    let birth_date: String
+    let death_date: String
     
     let photos: [Int]                // transformable
     let links: [[String: String]]    // transformable
@@ -86,8 +86,8 @@ private class ParsedSearchResult: OpenLibraryObject {
         key: String,
         name: String,
         personal_name: String,
-        birth_date: NSDate?,
-        death_date: NSDate?,
+        birth_date: String,
+        death_date: String,
         
         photos: [Int],                // transformable
         links: [[String: String]],    // transformable
@@ -155,7 +155,7 @@ class WorkDetailParseOperation: Operation {
         */
         
         self.cacheFile = cacheFile
-        self.context = coreDataStack.newBackgroundWorkerMOC()
+        self.context = coreDataStack.newChildContext()
         self.context.mergePolicy = NSOverwriteMergePolicy
         self.resultHandler = resultHandler
         

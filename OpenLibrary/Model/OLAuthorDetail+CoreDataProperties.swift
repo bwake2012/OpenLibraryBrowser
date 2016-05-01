@@ -13,8 +13,8 @@ extension OLAuthorDetail {
     @NSManaged var key: String
     @NSManaged var name: String
     @NSManaged var personal_name: String
-    @NSManaged var birth_date: NSDate?
-    @NSManaged var death_date: NSDate?
+    @NSManaged var birth_date: String
+    @NSManaged var death_date: String
     
     @NSManaged var photos: [Int]                // transformable
     @NSManaged var links: [[String: String]]    // transformable

@@ -19,7 +19,9 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
     weak var authorDetailVC: OLAuthorDetailViewController?
 
     var searchInfo: OLAuthorSearchResult
-        
+    
+    var deluxeData = [[DeluxeData]]()
+    
     init(
             operationQueue: OperationQueue,
             coreDataStack: CoreDataStack,
@@ -93,7 +95,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
             operationQueue.addOperation( getAuthorOperation )
         }
     }
-    
+        
     // MARK: install query coordinators
     
     func installAuthorWorksCoordinator( destVC: OLAuthorDetailWorksTableViewController ) {
@@ -119,14 +121,14 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
                 )
     }
     
-    func installAuthorDeluxeDetailCoordinator( destVC: OLAuthorDeluxeDetailViewController ) {
+    func installAuthorDeluxeDetailCoordinator( destVC: OLAuthorDeluxeDetailTableViewController ) {
         
         destVC.queryCoordinator =
             AuthorDeluxeDetailCoordinator(
                     operationQueue: operationQueue,
                     coreDataStack: coreDataStack,
-                    searchInfo: searchInfo,
-                    authorDetailVC: destVC
+                    authorDetail: searchInfo.toDetail!,
+                    authorDeluxeDetailVC: destVC
                 )
     }
     
@@ -136,7 +138,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
             AuthorPictureViewCoordinator(
                     operationQueue: operationQueue,
                     coreDataStack: coreDataStack,
-                    searchInfo: searchInfo,
+                    authorDetail: searchInfo.toDetail!,
                     pictureVC: destVC
                 )
     }

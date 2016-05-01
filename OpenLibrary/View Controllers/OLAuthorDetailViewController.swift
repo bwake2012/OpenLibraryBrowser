@@ -17,6 +17,7 @@ class OLAuthorDetailViewController: UIViewController {
     @IBOutlet weak var authorName: UILabel!
     @IBOutlet weak var authorPhoto: UIImageView!
     @IBOutlet weak var displayLargePhoto: UIButton!
+    @IBOutlet weak var displayDeluxeDetail: UIButton!
     
     @IBOutlet weak var containerView: UIView!
 
@@ -55,7 +56,7 @@ class OLAuthorDetailViewController: UIViewController {
             }
         } else if segue.identifier == "displayAuthorDeluxeDetail" {
             
-            if let destVC = segue.destinationViewController as? OLAuthorDeluxeDetailViewController {
+            if let destVC = segue.destinationViewController as? OLAuthorDeluxeDetailTableViewController {
                 
                 queryCoordinator?.installAuthorDeluxeDetailCoordinator( destVC )
             }
@@ -88,6 +89,7 @@ class OLAuthorDetailViewController: UIViewController {
     func updateUI( authorDetail: OLAuthorDetail ) {
         
         self.displayLargePhoto.enabled = authorDetail.hasImage
+        self.displayDeluxeDetail.enabled = authorDetail.hasDeluxeData
             
         self.authorName.text = authorDetail.name
         

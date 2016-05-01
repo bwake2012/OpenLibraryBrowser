@@ -87,4 +87,3 @@ extension OLEditionDetailViewController: ImageViewTransitionSource {
     }
 }
 
-

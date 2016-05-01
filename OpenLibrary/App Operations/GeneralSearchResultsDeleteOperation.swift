@@ -17,7 +17,7 @@ class GeneralSearchResultsDeleteOperation: Operation {
     
     init( coreDataStack: CoreDataStack ) {
         
-        self.deleteContext = coreDataStack.newBackgroundWorkerMOC()
+        self.deleteContext = coreDataStack.newChildContext()
     }
     
     override func execute() {

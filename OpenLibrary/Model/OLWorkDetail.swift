@@ -35,7 +35,7 @@ private class ParsedSearchResult: OpenLibraryObject {
     let first_sentence: String          // of type /type/text
     let original_languages: [String]    // of type /type/language
     let other_titles: [String]          // of type /type/string
-    let first_publish_date: NSDate?     // of type /type/string
+    let first_publish_date: String      // of type /type/string
     let links: [[String: String]]       // transformable
     let notes: String                   // of type /type/text
     // cover_edition of type /type/edition
@@ -127,7 +127,7 @@ private class ParsedSearchResult: OpenLibraryObject {
         first_sentence: String,
         original_languages: [String],
         other_titles: [String],
-        first_publish_date: NSDate?,
+        first_publish_date: String,
         links: [[String: String]],
         notes: String,
         // cover_edition of type /type/edition

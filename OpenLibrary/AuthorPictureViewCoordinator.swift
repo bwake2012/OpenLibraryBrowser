@@ -15,16 +15,16 @@ class AuthorPictureViewCoordinator: OLQueryCoordinator, PictureViewCoordinatorPr
     
     weak var pictureVC: OLPictureViewController?
     
-    var searchInfo: OLAuthorSearchResult
+    var authorDetail: OLAuthorDetail
 
     init(
         operationQueue: OperationQueue,
         coreDataStack: CoreDataStack,
-        searchInfo: OLAuthorSearchResult,
+        authorDetail: OLAuthorDetail,
         pictureVC: OLPictureViewController
     ) {
     
-        self.searchInfo = searchInfo
+        self.authorDetail = authorDetail
     
         self.pictureVC = pictureVC
 
@@ -33,39 +33,29 @@ class AuthorPictureViewCoordinator: OLQueryCoordinator, PictureViewCoordinatorPr
     
     func updateUI() {
         
-        let localURL = searchInfo.localURL( "L" )
+        let localURL = authorDetail.localURL( "L" )
         
         if let pictureVC = pictureVC {
             if !(pictureVC.displayImage( localURL )) {
+ 
                 
-                if let authorDetail = searchInfo.toDetail {
-                    
-                    updateUI( authorDetail )
-                    
-                } else {
-                
-                    let getAuthorOperation =
-                        AuthorDetailWithThumbGetOperation(
-                            queryText: searchInfo.key, parentObjectID: searchInfo.objectID, size: "L",
-                            coreDataStack: coreDataStack
-                        ) {
-                            [weak self] in
-                            
-                            if let strongSelf = self {
+                let getImageOperation =
+                    ImageGetOperation(
+                    numberID: authorDetail.firstImageID, imageKeyName: "id", localURL: localURL, size: "L", type: "a"
+                    ) {
+                        [weak self] in
+                        
+                        if let strongSelf = self {
 
-                                dispatch_async( dispatch_get_main_queue() ) {
-                                    
-                                    if let authorDetail = strongSelf.searchInfo.toDetail {
-                                        
-                                        strongSelf.updateUI( authorDetail )
-                                    }
-                                }
+                            dispatch_async( dispatch_get_main_queue() ) {
+                                
+                                strongSelf.updateUI( strongSelf.authorDetail )
                             }
-                    }
-                    
-                    getAuthorOperation.userInitiated = true
-                    operationQueue.addOperation( getAuthorOperation )
+                        }
                 }
+                
+                getImageOperation.userInitiated = true
+                operationQueue.addOperation( getImageOperation )
             }
         }
     }

@@ -124,8 +124,6 @@ private class ParsedSearchResult: OpenLibraryObject {
         
         guard let type = match["type"] as? String else { return nil }
         
-        guard let name = match["name"] as? String else { return nil }
-        
         let author_key         = match["author_key"] as? [String] ?? [String]()
         let author_name        = match["author_name"] as? [String] ?? [String]()
         let cover_edition_key  = match["cover_edition_key"] as? String ?? ""

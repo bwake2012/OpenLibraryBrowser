@@ -5,13 +5,16 @@ use_frameworks!
 
 target 'OpenLibrary' do
     pod 'BNRCoreDataStack'
+    pod 'Reachability'
 end
 
 target 'OpenLibraryTests' do
     pod 'BNRCoreDataStack'
+    pod 'Reachability'
 end
 
 target 'OpenLibraryUITests' do
     pod 'BNRCoreDataStack'
+    pod 'Reachability'
 end
 

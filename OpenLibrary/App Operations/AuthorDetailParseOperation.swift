@@ -11,7 +11,7 @@ import CoreData
 
 import BNRCoreDataStack
 
-/// A struct to represent a parsed author search result.
+/// An object to represent a parsed author search result.
 private class ParsedSearchResult: OpenLibraryObject {
     
     // MARK: Properties.
@@ -19,8 +19,8 @@ private class ParsedSearchResult: OpenLibraryObject {
     let key: String
     let name: String
     let personal_name: String
-    let birth_date: NSDate?
-    let death_date: NSDate?
+    let birth_date: String
+    let death_date: String
     
     let photos: [Int]                // transformable
     let links: [[String: String]]    // transformable
@@ -97,14 +97,14 @@ private class ParsedSearchResult: OpenLibraryObject {
         
         return ParsedSearchResult( key: key, name: name, personal_name: personal_name, birth_date: birth_date, death_date: death_date, photos: photos, links: links, bio: bioText, alternate_names: alternate_names, wikipedia: wikipedia, revision: revision!, latest_revision: latest_revision!, created: created, last_modified: last_modified, type: type )
     }
-    
+
     // MARK: Initialization
     init(
         key: String,
         name: String,
         personal_name: String,
-        birth_date: NSDate?,
-        death_date: NSDate?,
+        birth_date: String,
+        death_date: String,
         
         photos: [Int],                // transformable
         links: [[String: String]],    // transformable
@@ -177,7 +177,7 @@ class AuthorDetailParseOperation: Operation {
         self.parentObjectID = parentObjectID
 
         self.cacheFile = cacheFile
-        self.context = coreDataStack.newBackgroundWorkerMOC()
+        self.context = coreDataStack.newChildContext()
         self.context.mergePolicy = NSOverwriteMergePolicy
         
         super.init()
@@ -215,13 +215,17 @@ class AuthorDetailParseOperation: Operation {
 
         context.performBlock {
             
-            if let newResult = ParsedSearchResult.fromJSON( resultSet ) {
+            if let newObject = OLAuthorDetail.parseJSON( self.parentObjectID, json: resultSet, moc: self.context ) {
 
-                self.insert( newResult )
+                self.photos = newObject.photos
+                if !newObject.photos.isEmpty {
+                    self.photos = newObject.photos
+                    self.localThumbURL  = newObject.localURL( "S" )
+                    self.localMediumURL = newObject.localURL( "M" )
+                    self.localLargeURL  = newObject.localURL( "L" )
+                }
                 
-                self.photos = newResult.photos
-                
-                print( "detail: \(newResult.name)" )
+                print( "detail: \(newObject.name)" )
             }
 
             let error = self.saveContext()
@@ -232,46 +236,7 @@ class AuthorDetailParseOperation: Operation {
             self.finishWithError( error )
         }
     }
-    
-    private func insert( parsed: ParsedSearchResult ) {
 
-        let result = NSEntityDescription.insertNewObjectForEntityForName( OLAuthorDetail.entityName, inManagedObjectContext: context ) as! OLAuthorDetail
-        
-        result.key = parsed.key
-        result.name = parsed.name
-        result.personal_name = parsed.personal_name
-        result.birth_date = OpenLibraryObject.OLDateStamp( parsed.birth_date )
-        result.death_date = OpenLibraryObject.OLDateStamp( parsed.death_date )
-        
-        result.photos = parsed.photos
-        result.links = parsed.links
-        result.bio = parsed.bio
-        result.alternate_names = parsed.alternate_names
-        
-        result.revision = parsed.revision
-        result.latest_revision = parsed.latest_revision
-        
-        result.created = OpenLibraryObject.OLTimeStamp( parsed.created )
-        result.last_modified = OpenLibraryObject.OLTimeStamp( parsed.last_modified )
-        
-        result.type = parsed.type
-        
-        if !parsed.photos.isEmpty {
-            self.photos = parsed.photos
-            self.localThumbURL  = result.localURL( "S" )
-            self.localMediumURL = result.localURL( "M" )
-            self.localLargeURL  = result.localURL( "L" )
-        }
-        
-        if let parent = context.objectWithID( self.parentObjectID ) as? OLAuthorSearchResult {
-        
-            assert( parent.key == result.key )
-            
-            parent.toDetail = result
-            parent.has_photos = result.hasImage
-        }
-    }
-    
     /**
         Save the context, if there are any changes.
     

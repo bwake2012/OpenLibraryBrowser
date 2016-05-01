@@ -22,8 +22,8 @@ private class ParsedSearchResult: OpenLibraryObject {
     let index: Int64
     let key: String
     let name: String
-    let birth_date: NSDate?
-    let death_date: NSDate?
+    let birth_date: String
+    let death_date: String
     let type: String
     let top_work: String
     let work_count: Int
@@ -35,8 +35,8 @@ private class ParsedSearchResult: OpenLibraryObject {
         index: Int64,
         key: String,
         name: String,
-        birth_date: NSDate?,
-        death_date: NSDate?,
+        birth_date: String,
+        death_date: String,
         type: String,
         top_work: String,
         work_count: Int
@@ -98,7 +98,7 @@ class AuthorNameSearchResultsParseOperation: Operation {
         */
         
         self.cacheFile = cacheFile
-        self.context = coreDataStack.newBackgroundWorkerMOC()
+        self.context = coreDataStack.newChildContext()
         self.context.mergePolicy = NSOverwriteMergePolicy
         self.updateResults = updateResults
         

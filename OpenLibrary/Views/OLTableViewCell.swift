@@ -32,3 +32,10 @@ class OLTableViewCell: UITableViewCell {
         cellImage.image = UIImage( named: "96-book.png" )
     }
 }
+
+protocol OLConfigureCell {
+    
+    associatedtype ObjectType
+    
+    func configureCell( object: ObjectType )
+}

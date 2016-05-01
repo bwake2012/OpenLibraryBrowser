@@ -35,7 +35,7 @@ extension OLWorkDetail {
     @NSManaged var first_sentence: String
     @NSManaged var original_languages: [String]
     @NSManaged var other_titles: [String]
-    @NSManaged var first_publish_date: NSDate?
+    @NSManaged var first_publish_date: String
     @NSManaged var links: [[String: String]]
     @NSManaged var notes: String
     // cover_edition of type /type/edition

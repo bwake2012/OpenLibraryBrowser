@@ -7,92 +7,136 @@
 //
 
 import Foundation
-
 import CoreData
+import SafariServices
 
 import BNRCoreDataStack
 
-let kAuthorDeluxeDetailCache = "authorDeluxeDetail"
+// let kAuthorDeluxeDetailCache = "authorDeluxeDetail"
 
-class AuthorDeluxeDetailCoordinator: OLQueryCoordinator {
+class AuthorDeluxeDetailCoordinator: OLQueryCoordinator, OLDataSource, SFSafariViewControllerDelegate {
     
-    weak var authorDetailVC: OLAuthorDeluxeDetailViewController?
+    weak var authorDeluxeDetailVC: OLAuthorDeluxeDetailTableViewController?
 
-    var searchInfo: OLAuthorSearchResult
-        
+    var authorDetail: OLAuthorDetail
+    
     init(
             operationQueue: OperationQueue,
             coreDataStack: CoreDataStack,
-            searchInfo: OLAuthorSearchResult,
-            authorDetailVC: OLAuthorDeluxeDetailViewController
+            authorDetail: OLAuthorDetail,
+            authorDeluxeDetailVC: OLAuthorDeluxeDetailTableViewController
         ) {
         
-        self.searchInfo = searchInfo
-        self.authorDetailVC = authorDetailVC
+        self.authorDetail = authorDetail
+        self.authorDeluxeDetailVC = authorDeluxeDetailVC
 
         super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
+        
     }
     
-    
-    func updateUI( authorDetail: OLAuthorDetail ) {
+    // MARK: OLDataSource
+    func numberOfSections() -> Int {
         
-        if let authorDetailVC = authorDetailVC {
-            
-            authorDetailVC.updateUI( authorDetail )
-            
-            if authorDetail.hasImage {
-                
-                let mediumURL = authorDetail.localURL( "M" )
-                if !(authorDetailVC.displayImage( mediumURL )) {
+        print( "sections: \(authorDetail.deluxeData.count)" )
+        return authorDetail.deluxeData.count
+    }
+    
+    func numberOfRowsInSection( section: Int ) -> Int {
+        
+        print( "section:\(section) rows:\(authorDetail.deluxeData[section].count)" )
+        return section < 0 || section >= authorDetail.deluxeData.count ? 0 : authorDetail.deluxeData[section].count
+    }
+    
+    func objectAtIndexPath( indexPath: NSIndexPath ) -> DeluxeData? {
+        
+        return indexPath.section < 0 || indexPath.section >= authorDetail.deluxeData.count || indexPath.row < 0 || indexPath.row >= authorDetail.deluxeData[indexPath.section].count ? nil : authorDetail.deluxeData[indexPath.section][indexPath.row]
+    }
+    
+    func didSelectRowAtIndexPath( indexPath: NSIndexPath ) {
+    
+        if let vc = authorDeluxeDetailVC {
+            if let obj = objectAtIndexPath( indexPath ) where .link == obj.type {
 
-                    let url = mediumURL
-                    let imageGetOperation =
-                        ImageGetOperation( numberID: authorDetail.photos[0], imageKeyName: "ID", localURL: url, size: "M", type: "a" ) {
-                            
-                            dispatch_async( dispatch_get_main_queue() ) {
-                                
-                                authorDetailVC.displayImage( url )
-                            }
-                    }
+                showLinkedWebSite( vc, url: NSURL( string: obj.value ) )
+            }
+        }
+    }
+    
+    func displayToTableViewCell( tableView: UITableView, indexPath: NSIndexPath ) -> UITableViewCell {
+        
+        print( "display section:\(indexPath.section) rows:\(indexPath.row)" )
+
+        var cell: UITableViewCell?
+        if let object = objectAtIndexPath( indexPath ) {
+            
+            switch object.type {
+            case .unknown:
+                assert( false )
+                break
+            case .header:
+                if let headerCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? AuthorDeluxeDetailHeaderTableViewCell {
                     
-                    imageGetOperation.userInitiated = true
-                    operationQueue.addOperation( imageGetOperation )
+                    headerCell.configure( authorDetail )
+                    cell = headerCell
+                }
+                break
+            case .inline:
+                if let inlineCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? AuthorDeluxeDetailInlineTableViewCell {
                     
-                    authorDetailVC.displayImage( authorDetail.localURL( "S" ) )
+                    inlineCell.configure( object )
+                    cell = inlineCell
+                }
+                break
+            case .block:
+                if let blockCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? AuthorDeluxeDetailBlockTableViewCell {
+                    
+                    blockCell.configure( object )
+                    cell = blockCell
+                }
+                break
+            case .link:
+                if let linkCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? AuthorDeluxeDetailLinkTableViewCell {
+                    
+                    linkCell.configure( object )
+                    cell = linkCell
                 }
             }
         }
-    }
-
-    func updateUI() -> Void {
         
-        if let detail = searchInfo.toDetail {
-            updateUI( detail )
-        } else {
+        return cell!
+    }
+    
+    func updateUI( authorDetail: OLAuthorDetail ) {
+        
+        if let authorDeluxeDetailVC = authorDeluxeDetailVC {
             
-            let getAuthorOperation =
-                AuthorDetailGetOperation(
-                    queryText: searchInfo.key,
-                    parentObjectID: searchInfo.objectID,
-                    coreDataStack: coreDataStack
-                ) {
-                    [weak self] in
-                    
-                    if let strongSelf = self {
-                        dispatch_async( dispatch_get_main_queue() ) {
-                            
-                            if let detail = strongSelf.searchInfo.toDetail {
-                                
-                                strongSelf.updateUI( detail )
-                            }
-                        }
-                    }
-            }
-            
-            getAuthorOperation.userInitiated = true
-            operationQueue.addOperation( getAuthorOperation )
+//            authorDeluxeDetailVC.updateUI( authorDetail )
+//            
+//            if authorDetail.hasImage {
+//                
+//                let mediumURL = authorDetail.localURL( "M" )
+//                if !(authorDeluxeDetailVC.displayImage( mediumURL )) {
+//
+//                    let url = mediumURL
+//                    let imageGetOperation =
+//                        ImageGetOperation( numberID: authorDetail.photos[0], imageKeyName: "ID", localURL: url, size: "M", type: "a" ) {
+//                            
+//                            dispatch_async( dispatch_get_main_queue() ) {
+//                                
+//                                authorDeluxeDetailVC.displayImage( url )
+//                            }
+//                    }
+//                    
+//                    imageGetOperation.userInitiated = true
+//                    operationQueue.addOperation( imageGetOperation )
+//                    
+//                    authorDeluxeDetailVC.displayImage( authorDetail.localURL( "S" ) )
+//                }
+//            }
         }
     }
+
+    // MARK: utility
     
     // MARK: query coordinator installation
     
@@ -102,8 +146,25 @@ class AuthorDeluxeDetailCoordinator: OLQueryCoordinator {
             AuthorPictureViewCoordinator(
                     operationQueue: operationQueue,
                     coreDataStack: coreDataStack,
-                    searchInfo: searchInfo,
+                    authorDetail: authorDetail,
                     pictureVC: destVC
                 )
     }
+    
+    // MARK: SFSafariViewControllerDelegate
+    
+    func showLinkedWebSite( vc: UIViewController, url: NSURL? ) {
+        
+        if let url = url {
+            let webVC = SFSafariViewController( URL: url )
+            webVC.delegate = self
+            vc.presentViewController( webVC, animated: true, completion: nil )
+        }
+    }
+    
+    func safariViewControllerDidFinish(controller: SFSafariViewController) {
+        
+        controller.dismissViewControllerAnimated( true, completion: nil )
+    }
+
 }

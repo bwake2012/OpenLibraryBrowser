@@ -11,27 +11,8 @@ import Foundation
 class OpenLibraryObject {
     
     // MARK: Static Properties
-    // birth and death dates must be converted to NSDate
-    private static let datestampFormatter: NSDateFormatter = {
-        
-        let f = NSDateFormatter()
-        f.locale = NSLocale( localeIdentifier: "en_US_POSIX" )
-        f.dateFormat = "dd' 'MMMM' 'yyyy"
-        f.timeZone = NSTimeZone( abbreviation: "UTC" )
-        
-        return ( f )
-    }()
-    
-    private static let altDatestampFormatter: NSDateFormatter = {
-        
-        let f = NSDateFormatter()
-        f.locale = NSLocale( localeIdentifier: "en_US_POSIX" )
-        f.dateFormat = "yyyy"
-        f.timeZone = NSTimeZone( abbreviation: "UTC" )
-        
-        return ( f )
-    }()
-    
+    // birth and death dates must be stored as strings
+
     // time stamps must be converted to NSDate
     // 2011-12-02T18:33:15.439307
     private static let timestampFormatter: NSDateFormatter = {
@@ -54,17 +35,11 @@ class OpenLibraryObject {
         return ( f )
     }()
     
-    static func OLDateStamp( dateStamp: AnyObject? ) -> NSDate? {
+    static func OLDateStamp( dateStamp: AnyObject? ) -> String {
         
-        guard let dateStamp = dateStamp as? String else { return nil }
+        guard let dateStamp = dateStamp as? String else { return "" }
         
-        var dateStampVal = OpenLibraryObject.datestampFormatter.dateFromString( dateStamp )
-        if nil == dateStampVal {
-            
-            dateStampVal = OpenLibraryObject.altDatestampFormatter.dateFromString( dateStamp )
-        }
-        
-        return dateStampVal
+        return dateStamp
     }
     
     static func OLTimeStamp( timeStamp: AnyObject? ) -> NSDate? {

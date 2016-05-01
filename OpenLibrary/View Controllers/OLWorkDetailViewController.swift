@@ -115,3 +115,13 @@ extension OLWorkDetailViewController: ImageViewTransitionSource {
         return workCover
     }
 }
+
+extension OLWorkDetailViewController: UncoverBottomTransitionSource {
+    
+    func uncoverSourceRectangle() -> UIView {
+        
+        return containerView
+    }
+}
+
+
