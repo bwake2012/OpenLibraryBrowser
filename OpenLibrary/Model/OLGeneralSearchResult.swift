@@ -251,9 +251,9 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
     override var hasImage: Bool { return 0 != cover_i }
     override var firstImageID: Int { return Int( cover_i ) }
     
-    override func localURL( size: String ) -> NSURL {
+    override func localURL( size: String, index: Int = 0 ) -> NSURL {
 
-        return super.localURL( self.key, size: size )
+        return super.localURL( self.key, size: size, index: index )
     }
 
 }

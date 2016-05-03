@@ -1,5 +1,5 @@
 //
-//  AuthorDeluxeDetailBlockTableViewCell.swift
+//  DeluxeDetailInlineTableViewCell.swift
 //  OpenLibrary
 //
 //  Created by Bob Wakefield on 4/28/16.
@@ -8,14 +8,14 @@
 
 import UIKit
 
-class AuthorDeluxeDetailBlockTableViewCell: UITableViewCell {
+class DeluxeDetailInlineTableViewCell: UITableViewCell {
 
     @IBOutlet weak var captionView: UILabel!
-    @IBOutlet weak var blockTextView: UILabel!
-    
+    @IBOutlet weak var inlineTextView: UILabel!
+
     func configure( data: DeluxeData ) {
         
         captionView.text = data.caption
-        blockTextView.text = data.value
+        inlineTextView.text = data.value
     }
 }

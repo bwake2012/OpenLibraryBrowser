@@ -43,10 +43,10 @@ class OLAuthorSearchResult: OLManagedObject, CoreDataModelable {
         }
     }
     
-    override func localURL( size: String ) -> NSURL {
+    override func localURL( size: String, index: Int = 0 ) -> NSURL {
         
         let key = self.key
-        return super.localURL( key, size: size )
+        return super.localURL( key, size: size, index: index )
     }
 
     

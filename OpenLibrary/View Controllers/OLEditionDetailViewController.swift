@@ -61,7 +61,7 @@ class OLEditionDetailViewController: UIViewController {
         
         self.displayLargeCover.enabled = editionDetail.coversFound
         if !editionDetail.coversFound {
-            editionCoverView.image = UIImage( named: "96-book.png" )
+            editionCoverView.image = UIImage( named: editionDetail.defaultImageName )
         }
     }
     

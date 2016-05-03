@@ -139,6 +139,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
                     operationQueue: operationQueue,
                     coreDataStack: coreDataStack,
                     authorDetail: searchInfo.toDetail!,
+                    pictureIndex: 0,
                     pictureVC: destVC
                 )
     }

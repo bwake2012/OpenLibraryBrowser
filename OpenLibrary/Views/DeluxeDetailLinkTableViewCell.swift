@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AuthorDeluxeDetailLinkTableViewCell: UITableViewCell {
+class DeluxeDetailLinkTableViewCell: UITableViewCell {
 
     @IBOutlet weak var linkView: UILabel!
 

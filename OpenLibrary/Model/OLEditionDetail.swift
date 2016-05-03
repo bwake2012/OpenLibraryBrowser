@@ -21,6 +21,21 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
     
     static let entityName = "EditionDetail"
     
+    override var heading: String {
+        
+        return self.title
+    }
+    
+    override var subheading: String {
+        
+        return self.subtitle
+    }
+    
+    override var defaultImageName: String {
+        
+        return "96-book.png"
+    }
+    
     override var hasImage: Bool {
         
         return 0 < self.covers.count
@@ -31,8 +46,8 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         return 0 >= self.covers.count ? 0 : self.covers[0]
     }
     
-    override func localURL( size: String ) -> NSURL {
+    override func localURL( size: String, index: Int = 0 ) -> NSURL {
         
-        return super.localURL( self.key, size: size )
+        return super.localURL( self.key, size: size, index: index )
     }
 }

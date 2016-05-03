@@ -20,6 +20,18 @@ class OLAuthorDeluxeDetailTableViewController: UITableViewController {
         self.tableView.estimatedRowHeight = 68.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if "zoomDeluxeDetailPrimaryImage" == segue.identifier ||
+           "zoomDeluxeDetailImage" == segue.identifier {
+            
+            if let destVC = segue.destinationViewController as? OLPictureViewController {
+                
+                queryCoordinator?.installAuthorPictureCoordinator( destVC )
+            }
+        }
+    }
 
     // MARK: UITableViewDataSource
     
@@ -65,3 +77,29 @@ class OLAuthorDeluxeDetailTableViewController: UITableViewController {
         }
     }
 }
+
+extension OLAuthorDeluxeDetailTableViewController: ImageViewTransitionSource {
+    
+    func transitionSourceRectangle() -> UIImageView {
+        
+        if let indexPath = tableView.indexPathForSelectedRow {
+            
+            if let headerCell = tableView.cellForRowAtIndexPath( indexPath ) as? DeluxeDetailHeaderTableViewCell {
+                
+                return headerCell.deluxeImage
+                
+            } else if let imageCell = tableView.cellForRowAtIndexPath( indexPath ) as? DeluxedDetailImageTableViewCell {
+
+                return imageCell.deluxeImage
+            }
+        }
+
+        let cell = tableView.cellForRowAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) as? DeluxeDetailHeaderTableViewCell
+        
+        return cell!.deluxeImage
+
+
+    }
+}
+
+

@@ -101,7 +101,7 @@ class OLWorkDetailViewController: UIViewController {
         self.workSubtitle.text = workDetail.subtitle
         self.workAuthor.text = authorName
         self.displayLargeCover.enabled = workDetail.coversFound
-        self.workCover.image = UIImage( named: "96-book.png" )
+        self.workCover.image = UIImage( named: workDetail.defaultImageName )
     }
     
     // MARK: Utility

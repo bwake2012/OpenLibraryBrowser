@@ -54,11 +54,12 @@ class AuthorDeluxeDetailCoordinator: OLQueryCoordinator, OLDataSource, SFSafariV
     
     func didSelectRowAtIndexPath( indexPath: NSIndexPath ) {
     
-        if let vc = authorDeluxeDetailVC {
-            if let obj = objectAtIndexPath( indexPath ) where .link == obj.type {
+        guard let vc = authorDeluxeDetailVC else { return }
+        guard let obj = objectAtIndexPath( indexPath ) else { return }
+        
+        if .link == obj.type {
 
-                showLinkedWebSite( vc, url: NSURL( string: obj.value ) )
-            }
+            showLinkedWebSite( vc, url: NSURL( string: obj.value ) )
         }
     }
     
@@ -74,67 +75,69 @@ class AuthorDeluxeDetailCoordinator: OLQueryCoordinator, OLDataSource, SFSafariV
                 assert( false )
                 break
             case .header:
-                if let headerCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? AuthorDeluxeDetailHeaderTableViewCell {
+                if let headerCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? DeluxeDetailHeaderTableViewCell {
                     
                     headerCell.configure( authorDetail )
                     cell = headerCell
                 }
                 break
             case .inline:
-                if let inlineCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? AuthorDeluxeDetailInlineTableViewCell {
+                if let inlineCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? DeluxeDetailInlineTableViewCell {
                     
                     inlineCell.configure( object )
                     cell = inlineCell
                 }
                 break
             case .block:
-                if let blockCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? AuthorDeluxeDetailBlockTableViewCell {
+                if let blockCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? DeluxeDetailBlockTableViewCell {
                     
                     blockCell.configure( object )
                     cell = blockCell
                 }
                 break
             case .link:
-                if let linkCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? AuthorDeluxeDetailLinkTableViewCell {
+                if let linkCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? DeluxeDetailLinkTableViewCell {
                     
                     linkCell.configure( object )
                     cell = linkCell
                 }
+            case .authorImage:
+                if let imageCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? DeluxedDetailImageTableViewCell {
+                    
+                    if let url = NSURL( string: object.value ) {
+                        if !imageCell.displayFromURL( url ) {
+                            
+                            let imageGetOperation =
+                                ImageGetOperation( stringID: object.caption, imageKeyName: "ID", localURL: url, size: "M", type: "a" ) {
+                                    
+                                    [weak self] in
+                                    
+                                    guard let strongSelf = self else { return }
+                                    guard let vc = strongSelf.authorDeluxeDetailVC else { return }
+                                        
+                                    dispatch_async( dispatch_get_main_queue() ) {
+                                        
+                                        vc.tableView.reloadRowsAtIndexPaths(
+                                            [indexPath], withRowAnimation: .Automatic
+                                        )
+                                    }
+                            }
+                            
+                            imageGetOperation.userInitiated = true
+                            operationQueue.addOperation( imageGetOperation )
+                        }
+                    }
+                    cell = imageCell
+                }
+
+            default:
+                assert( false )
             }
         }
         
         return cell!
     }
     
-    func updateUI( authorDetail: OLAuthorDetail ) {
-        
-        if let authorDeluxeDetailVC = authorDeluxeDetailVC {
-            
-//            authorDeluxeDetailVC.updateUI( authorDetail )
-//            
-//            if authorDetail.hasImage {
-//                
-//                let mediumURL = authorDetail.localURL( "M" )
-//                if !(authorDeluxeDetailVC.displayImage( mediumURL )) {
-//
-//                    let url = mediumURL
-//                    let imageGetOperation =
-//                        ImageGetOperation( numberID: authorDetail.photos[0], imageKeyName: "ID", localURL: url, size: "M", type: "a" ) {
-//                            
-//                            dispatch_async( dispatch_get_main_queue() ) {
-//                                
-//                                authorDeluxeDetailVC.displayImage( url )
-//                            }
-//                    }
-//                    
-//                    imageGetOperation.userInitiated = true
-//                    operationQueue.addOperation( imageGetOperation )
-//                    
-//                    authorDeluxeDetailVC.displayImage( authorDetail.localURL( "S" ) )
-//                }
-//            }
-        }
-    }
 
     // MARK: utility
     
@@ -142,11 +145,16 @@ class AuthorDeluxeDetailCoordinator: OLQueryCoordinator, OLDataSource, SFSafariV
     
     func installAuthorPictureCoordinator( destVC: OLPictureViewController ) {
         
+        guard let deluxeVC = authorDeluxeDetailVC else { return }
+        
+        guard let indexPath = deluxeVC.tableView.indexPathForSelectedRow else { return }
+        
         destVC.queryCoordinator =
             AuthorPictureViewCoordinator(
                     operationQueue: operationQueue,
                     coreDataStack: coreDataStack,
                     authorDetail: authorDetail,
+                    pictureIndex: indexPath.section == 0 ? 0 : indexPath.row + 1,
                     pictureVC: destVC
                 )
     }

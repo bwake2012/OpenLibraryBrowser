@@ -16,15 +16,18 @@ class AuthorPictureViewCoordinator: OLQueryCoordinator, PictureViewCoordinatorPr
     weak var pictureVC: OLPictureViewController?
     
     var authorDetail: OLAuthorDetail
+    var pictureIndex: Int = 0
 
     init(
         operationQueue: OperationQueue,
         coreDataStack: CoreDataStack,
         authorDetail: OLAuthorDetail,
+        pictureIndex: Int,
         pictureVC: OLPictureViewController
     ) {
     
         self.authorDetail = authorDetail
+        self.pictureIndex = pictureIndex
     
         self.pictureVC = pictureVC
 
@@ -33,7 +36,7 @@ class AuthorPictureViewCoordinator: OLQueryCoordinator, PictureViewCoordinatorPr
     
     func updateUI() {
         
-        let localURL = authorDetail.localURL( "L" )
+        let localURL = authorDetail.localURL( "L", index: pictureIndex )
         
         if let pictureVC = pictureVC {
             if !(pictureVC.displayImage( localURL )) {
@@ -41,7 +44,7 @@ class AuthorPictureViewCoordinator: OLQueryCoordinator, PictureViewCoordinatorPr
                 
                 let getImageOperation =
                     ImageGetOperation(
-                    numberID: authorDetail.firstImageID, imageKeyName: "id", localURL: localURL, size: "L", type: "a"
+                    numberID: authorDetail.photos[pictureIndex], imageKeyName: "id", localURL: localURL, size: "L", type: "a"
                     ) {
                         [weak self] in
                         
