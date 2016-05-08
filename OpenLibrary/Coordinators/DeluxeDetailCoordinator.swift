@@ -1,5 +1,5 @@
 //
-//  AuthorDeluxeDetailCoordinator.swift
+//  DeluxeDetailCoordinator.swift
 //  OpenLibrary
 //
 //  Created by Bob Wakefield on 4/22/2016.
@@ -14,21 +14,24 @@ import BNRCoreDataStack
 
 // let kAuthorDeluxeDetailCache = "authorDeluxeDetail"
 
-class AuthorDeluxeDetailCoordinator: OLQueryCoordinator, OLDataSource, SFSafariViewControllerDelegate {
+class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SFSafariViewControllerDelegate {
     
-    weak var authorDeluxeDetailVC: OLAuthorDeluxeDetailTableViewController?
+    weak var deluxeDetailVC: OLDeluxeDetailTableViewController?
 
-    var authorDetail: OLAuthorDetail
+    var deluxeData: [[DeluxeData]]
+    var imageType: String
     
     init(
             operationQueue: OperationQueue,
             coreDataStack: CoreDataStack,
-            authorDetail: OLAuthorDetail,
-            authorDeluxeDetailVC: OLAuthorDeluxeDetailTableViewController
+            deluxeData: [[DeluxeData]],
+            imageType: String,
+            deluxeDetailVC: OLDeluxeDetailTableViewController
         ) {
         
-        self.authorDetail = authorDetail
-        self.authorDeluxeDetailVC = authorDeluxeDetailVC
+        self.deluxeData = deluxeData
+        self.imageType = imageType
+        self.deluxeDetailVC = deluxeDetailVC
 
         super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
         
@@ -37,72 +40,68 @@ class AuthorDeluxeDetailCoordinator: OLQueryCoordinator, OLDataSource, SFSafariV
     // MARK: OLDataSource
     func numberOfSections() -> Int {
         
-        print( "sections: \(authorDetail.deluxeData.count)" )
-        return authorDetail.deluxeData.count
+        print( "sections: \(deluxeData.count)" )
+        return deluxeData.count
     }
     
     func numberOfRowsInSection( section: Int ) -> Int {
         
-        print( "section:\(section) rows:\(authorDetail.deluxeData[section].count)" )
-        return section < 0 || section >= authorDetail.deluxeData.count ? 0 : authorDetail.deluxeData[section].count
+        print( "section:\(section) rows:\(deluxeData[section].count)" )
+        return section < 0 || section >= deluxeData.count ? 0 : deluxeData[section].count
     }
     
     func objectAtIndexPath( indexPath: NSIndexPath ) -> DeluxeData? {
         
-        return indexPath.section < 0 || indexPath.section >= authorDetail.deluxeData.count || indexPath.row < 0 || indexPath.row >= authorDetail.deluxeData[indexPath.section].count ? nil : authorDetail.deluxeData[indexPath.section][indexPath.row]
+        guard indexPath.section >= 0 else { return nil }
+        guard indexPath.section < deluxeData.count else { return nil }
+        guard indexPath.row >= 0 else { return nil }
+        guard indexPath.row < deluxeData[indexPath.section].count else { return nil }
+        
+        return deluxeData[indexPath.section][indexPath.row]
     }
     
     func didSelectRowAtIndexPath( indexPath: NSIndexPath ) {
     
-        guard let vc = authorDeluxeDetailVC else { return }
+        guard let vc = deluxeDetailVC else { return }
         guard let obj = objectAtIndexPath( indexPath ) else { return }
         
         if .link == obj.type {
 
             showLinkedWebSite( vc, url: NSURL( string: obj.value ) )
+        
+        } else if .image == obj.type {
+            
+            vc.performSegueWithIdentifier( "zoomDeluxeDetailImage", sender: self )
         }
     }
     
     func displayToTableViewCell( tableView: UITableView, indexPath: NSIndexPath ) -> UITableViewCell {
         
-        print( "display section:\(indexPath.section) rows:\(indexPath.row)" )
-
         var cell: UITableViewCell?
         if let object = objectAtIndexPath( indexPath ) {
+            
+            print( "display section:\(indexPath.section) row:\(indexPath.row) \(object.type.rawValue)" )
             
             switch object.type {
             case .unknown:
                 assert( false )
                 break
-            case .header:
-                if let headerCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? DeluxeDetailHeaderTableViewCell {
+                
+            case .heading,
+                 .subheading,
+                 .body,
+                 .inline,
+                 .block,
+                 .link:
+                if let headerCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? DeluxeDetailTableViewCell {
                     
-                    headerCell.configure( authorDetail )
+                    headerCell.configure( object )
                     cell = headerCell
                 }
                 break
-            case .inline:
-                if let inlineCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? DeluxeDetailInlineTableViewCell {
-                    
-                    inlineCell.configure( object )
-                    cell = inlineCell
-                }
-                break
-            case .block:
-                if let blockCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? DeluxeDetailBlockTableViewCell {
-                    
-                    blockCell.configure( object )
-                    cell = blockCell
-                }
-                break
-            case .link:
-                if let linkCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? DeluxeDetailLinkTableViewCell {
-                    
-                    linkCell.configure( object )
-                    cell = linkCell
-                }
-            case .authorImage:
-                if let imageCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? DeluxedDetailImageTableViewCell {
+                
+            case .image:
+                if let imageCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? DeluxeDetailImageTableViewCell {
                     
                     if let url = NSURL( string: object.value ) {
                         if !imageCell.displayFromURL( url ) {
@@ -113,8 +112,8 @@ class AuthorDeluxeDetailCoordinator: OLQueryCoordinator, OLDataSource, SFSafariV
                                     [weak self] in
                                     
                                     guard let strongSelf = self else { return }
-                                    guard let vc = strongSelf.authorDeluxeDetailVC else { return }
-                                        
+                                    guard let vc = strongSelf.deluxeDetailVC else { return }
+                                    
                                     dispatch_async( dispatch_get_main_queue() ) {
                                         
                                         vc.tableView.reloadRowsAtIndexPaths(
@@ -129,7 +128,7 @@ class AuthorDeluxeDetailCoordinator: OLQueryCoordinator, OLDataSource, SFSafariV
                     }
                     cell = imageCell
                 }
-
+                
             default:
                 assert( false )
             }
@@ -143,18 +142,21 @@ class AuthorDeluxeDetailCoordinator: OLQueryCoordinator, OLDataSource, SFSafariV
     
     // MARK: query coordinator installation
     
-    func installAuthorPictureCoordinator( destVC: OLPictureViewController ) {
+    func installPictureCoordinator( destVC: OLPictureViewController ) {
         
-        guard let deluxeVC = authorDeluxeDetailVC else { return }
+        guard let deluxeVC = deluxeDetailVC else { return }
         
         guard let indexPath = deluxeVC.tableView.indexPathForSelectedRow else { return }
         
+        guard let object = objectAtIndexPath( indexPath ) else { return }
+        
         destVC.queryCoordinator =
-            AuthorPictureViewCoordinator(
+            PictureViewCoordinator(
                     operationQueue: operationQueue,
                     coreDataStack: coreDataStack,
-                    authorDetail: authorDetail,
-                    pictureIndex: indexPath.section == 0 ? 0 : indexPath.row + 1,
+                    localURL: NSURL( fileURLWithPath: object.value ),
+                    imageID: Int( object.caption )!,
+                    pictureType: imageType,
                     pictureVC: destVC
                 )
     }

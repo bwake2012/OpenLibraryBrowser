@@ -66,10 +66,12 @@ class EditionDetailCoordinator: OLQueryCoordinator {
     func installCoverPictureViewCoordinator( destVC: OLPictureViewController ) {
 
         destVC.queryCoordinator =
-            CoverPictureViewCoordinator(
+            PictureViewCoordinator(
                     operationQueue: self.operationQueue,
                     coreDataStack: self.coreDataStack,
-                    managedObject: self.editionDetail,
+                    localURL: self.editionDetail.localURL( "L", index: 0 ),
+                    imageID: self.editionDetail.firstImageID,
+                    pictureType: "b",
                     pictureVC: destVC
                 )
     }

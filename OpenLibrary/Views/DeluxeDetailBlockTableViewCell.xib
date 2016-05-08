@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="77" id="pMb-3M-eVq" customClass="DeluxeDetailBlockTableViewCell" customModule="OpenLibrary" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="77"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pMb-3M-eVq" id="DSt-wd-2kz">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="76.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jug-Ja-ejn" userLabel="body">
+                        <rect key="frame" x="8" y="35" width="304" height="33.5"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="260" horizontalCompressionResistancePriority="760" verticalCompressionResistancePriority="760" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xjn-xR-mj7" userLabel="caption">
+                        <rect key="frame" x="8" y="8" width="304" height="23"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="xjn-xR-mj7" firstAttribute="leading" secondItem="DSt-wd-2kz" secondAttribute="leadingMargin" id="5lV-7g-oDn"/>
+                    <constraint firstItem="Jug-Ja-ejn" firstAttribute="leading" secondItem="DSt-wd-2kz" secondAttribute="leadingMargin" id="IUx-xh-hif"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Jug-Ja-ejn" secondAttribute="trailing" id="R2K-c5-hHG"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="xjn-xR-mj7" secondAttribute="trailing" id="Y4Q-un-OeP"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Jug-Ja-ejn" secondAttribute="bottom" id="mRN-cV-86C"/>
+                    <constraint firstItem="xjn-xR-mj7" firstAttribute="top" secondItem="DSt-wd-2kz" secondAttribute="topMargin" id="nwh-wv-LrD"/>
+                    <constraint firstItem="Jug-Ja-ejn" firstAttribute="top" secondItem="xjn-xR-mj7" secondAttribute="bottom" constant="4" id="qiW-8I-6pk"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="blockTextView" destination="Jug-Ja-ejn" id="pTW-4R-gHQ"/>
+                <outlet property="captionView" destination="xjn-xR-mj7" id="MmD-QD-k2H"/>
+            </connections>
+            <point key="canvasLocation" x="186" y="256.5"/>
+        </tableViewCell>
+    </objects>
+</document>

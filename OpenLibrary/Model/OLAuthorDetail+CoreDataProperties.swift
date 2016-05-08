@@ -31,4 +31,5 @@ extension OLAuthorDetail {
     
     @NSManaged var type: String
     
+    @NSManaged var toSearchResults: OLAuthorSearchResult?
 }

@@ -56,7 +56,7 @@ class OLAuthorDetailViewController: UIViewController {
             }
         } else if segue.identifier == "displayAuthorDeluxeDetail" {
             
-            if let destVC = segue.destinationViewController as? OLAuthorDeluxeDetailTableViewController {
+            if let destVC = segue.destinationViewController as? OLDeluxeDetailTableViewController {
                 
                 queryCoordinator?.installAuthorDeluxeDetailCoordinator( destVC )
             }
@@ -104,7 +104,7 @@ class OLAuthorDetailViewController: UIViewController {
 
 extension OLAuthorDetailViewController: ImageViewTransitionSource {
     
-    func transitionSourceRectangle() -> UIImageView {
+    func transitionSourceRectangle() -> UIImageView? {
         
         return authorPhoto
     }
@@ -112,7 +112,7 @@ extension OLAuthorDetailViewController: ImageViewTransitionSource {
 
 extension OLAuthorDetailViewController: UncoverBottomTransitionSource {
     
-    func uncoverSourceRectangle() -> UIView {
+    func uncoverSourceRectangle() -> UIView? {
         
         return containerView
     }

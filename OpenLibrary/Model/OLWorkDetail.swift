@@ -220,7 +220,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         newObject.notes = parsed.notes
         // cover_edition of type /type/edition
         newObject.covers = parsed.covers
-        newObject.coversFound = parsed.covers.count > 0
+        newObject.coversFound = parsed.covers.count > 0 && -1 != parsed.covers[0]
         
         return newObject
     }
@@ -232,7 +232,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
     
     override var hasImage: Bool {
         
-        return 0 < self.covers.count
+        return self.coversFound
     }
     
     override var firstImageID: Int {
@@ -240,9 +240,88 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         return 0 >= self.covers.count ? 0 : self.covers[0]
     }
     
+    override func imageID( index: Int ) -> Int {
+        
+        return index >= self.covers.count ? 0 : self.covers[index]
+    }
+    
     override func localURL( size: String, index: Int = 0 ) -> NSURL {
         
         return super.localURL( self.key, size: size, index: index )
     }
     
+    override func buildDeluxeData() -> [[DeluxeData]] {
+        
+        var deluxeData = [[DeluxeData]]()
+        
+        deluxeData.append( [DeluxeData( type: .heading, caption: "Title", value: self.title )] )
+        if !subtitle.isEmpty {
+            deluxeData[0].append( DeluxeData( type: .subheading, caption: "Subtitle:", value: self.subtitle ) )
+        }
+        
+        if hasImage {
+            
+            let value = localURL( "M" ).absoluteString
+            deluxeData.append(
+                [DeluxeData( type: .image, caption: String( firstImageID ), value: value )]
+            )
+            
+        }
+        
+        if !self.work_description.isEmpty {
+            
+            deluxeData.append( [DeluxeData( type: .block, caption: "Description", value: self.work_description )] )
+        }
+        
+        if !self.first_sentence.isEmpty {
+            
+            deluxeData.append( [DeluxeData( type: .block, caption: "First Sentence", value: self.first_sentence )] )
+        }
+        
+        if !self.notes.isEmpty {
+            
+            deluxeData.append( [DeluxeData( type: .block, caption: "Notes", value: self.notes )] )
+        }
+        
+        if !self.links.isEmpty {
+            
+            var newData = [DeluxeData]()
+            
+            for link in self.links {
+                
+                if let title = link["title"], url = link["url"] {
+                    newData.append( DeluxeData( type: .link, caption: title, value: url ) )
+                    print( "\(title) \(url)" )
+                }
+            }
+            
+            if 0 < newData.count {
+                
+                deluxeData.append( newData )
+            }
+        }
+        
+        if 1 < self.covers.count {
+            
+            var newData = [DeluxeData]()
+            
+            for index in 1..<self.covers.count {
+                
+                if -1 != covers[index] {
+                    
+                    let value = localURL( "M", index: index ).absoluteString
+                    newData.append(
+                        DeluxeData( type: .image, caption: String( covers[index] ), value: value )
+                    )
+                }
+            }
+            
+            if !newData.isEmpty {
+                
+                deluxeData.append( newData )
+            }
+        }
+
+        return deluxeData
+    }
 }

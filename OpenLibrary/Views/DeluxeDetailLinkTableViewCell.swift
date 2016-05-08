@@ -8,15 +8,23 @@
 
 import UIKit
 
-class DeluxeDetailLinkTableViewCell: UITableViewCell {
+class DeluxeDetailLinkTableViewCell: DeluxeDetailTableViewCell {
 
     @IBOutlet weak var linkView: UILabel!
 
     var linkURL: String?
 
-    func configure( data: DeluxeData ) {
+    override func configure( data: DeluxeData ) {
         
         linkView.text = data.caption
         linkURL = data.value
+    }
+}
+
+extension DeluxeDetailLinkTableViewCell {
+    
+    override class func registerCell( tableView: UITableView ) {
+        
+        registerCell( tableView, className: DeluxeDetail.link.rawValue )
     }
 }

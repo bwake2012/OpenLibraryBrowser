@@ -154,18 +154,6 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
         let key: String
     }
     
-    lazy var deluxeData: [[DeluxeData]] = {
-        
-        let deluxeData = self.buildDeluxeData()
-        
-        return deluxeData
-    }()
-    
-    lazy var hasDeluxeData: Bool = {
-        
-        return 1 < self.deluxeData.count || ( 1 == self.deluxeData.count && 1 < self.deluxeData[0].count )
-    }()
-    
     static let entityName = "AuthorDetail"
     
     class func parseJSON( parentObjectID: NSManagedObjectID, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLAuthorDetail? {
@@ -198,7 +186,11 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
         
         if let parent = moc.objectWithID( parentObjectID ) as? OLAuthorSearchResult {
             
-            assert( parent.key == newObject.key )
+            if parent.key != newObject.key {
+                
+                print( "parent:\(parent.key) != newObject:\(newObject.key)" )
+                assert( false )
+            }
             
             parent.toDetail = newObject
             parent.has_photos = newObject.hasImage
@@ -224,12 +216,17 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
     
     override var hasImage: Bool {
         
-        return 0 < self.photos.count
+        return 0 < self.photos.count && -1 != photos[0]
     }
 
     override var firstImageID: Int {
         
-        return 0 >= self.photos.count ? 0 : self.photos[0]
+        return !hasImage ? 0 : self.photos[0]
+    }
+    
+    override func imageID( index: Int ) -> Int {
+        
+        return !hasImage ? 0 : self.photos[index]
     }
     
     override func localURL( size: String, index: Int = 0 ) -> NSURL {
@@ -242,7 +239,15 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
         
         var deluxeData = [[DeluxeData]]()
         
-        deluxeData.append( [DeluxeData( type: .header, caption: "Name", value: self.name )] )
+        deluxeData.append( [DeluxeData( type: .heading, caption: "Name", value: self.name )] )
+        
+        if hasImage {
+
+            let value = localURL( "M", index: 0 ).absoluteString
+            deluxeData.append(
+                [DeluxeData( type: .image, caption: String( firstImageID ), value: value )]
+            )
+        }
         
         if !self.birth_date.isEmpty || !self.death_date.isEmpty {
             
@@ -298,7 +303,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
 
                     let value = localURL( "M", index: index ).absoluteString
                     newData.append(
-                        DeluxeData( type: .authorImage, caption: String( photos[index] ), value: value )
+                        DeluxeData( type: .image, caption: String( photos[index] ), value: value )
                     )
                 }
             }

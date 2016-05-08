@@ -8,14 +8,23 @@
 
 import UIKit
 
-class DeluxeDetailInlineTableViewCell: UITableViewCell {
+class DeluxeDetailInlineTableViewCell: DeluxeDetailTableViewCell {
 
     @IBOutlet weak var captionView: UILabel!
     @IBOutlet weak var inlineTextView: UILabel!
 
-    func configure( data: DeluxeData ) {
+    override func configure( data: DeluxeData ) {
         
         captionView.text = data.caption
         inlineTextView.text = data.value
     }
+}
+
+extension DeluxeDetailInlineTableViewCell {
+    
+    override class func registerCell( tableView: UITableView ) {
+        
+        registerCell( tableView, className: DeluxeDetail.inline.rawValue )
+    }
+    
 }

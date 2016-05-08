@@ -27,6 +27,7 @@ class OLWorkDetailEditionsTableViewController: UITableViewController {
         
         self.tableView.estimatedRowHeight = 68.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.tableFooterView = UIView(frame: .zero)
     }
     
     override func didReceiveMemoryWarning() {
@@ -45,6 +46,14 @@ class OLWorkDetailEditionsTableViewController: UITableViewController {
                     
                 }
             }
+        } else if segue.identifier == "displayEditionDeluxeDetail" {
+            
+            if let destVC = segue.destinationViewController as? OLDeluxeDetailTableViewController {
+                if let indexPath = self.tableView.indexPathForSelectedRow {
+                    
+                    queryCoordinator!.installEditionDeluxeCoordinator( destVC, indexPath: indexPath )
+                }
+            }
         }
     }
     
@@ -53,12 +62,12 @@ class OLWorkDetailEditionsTableViewController: UITableViewController {
     // MARK: UITableviewDataSource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
-        return queryCoordinator!.numberOfSections() ?? 0
+        return queryCoordinator!.numberOfSections()
     }
     
     override func tableView( tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
         
-        return queryCoordinator!.numberOfRowsInSection( section ) ?? 0
+        return queryCoordinator!.numberOfRowsInSection( section )
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -68,7 +77,6 @@ class OLWorkDetailEditionsTableViewController: UITableViewController {
             queryCoordinator!.displayToCell( cell, indexPath: indexPath )
             
         }
-        
         
         return cell
     }

@@ -9,13 +9,10 @@
 import Foundation
 
 protocol OLDataSource {
-    
-    associatedtype OLObject
-//    associatedtype OLTableViewCell
-    
+
     func numberOfSections() -> Int
     func numberOfRowsInSection( section: Int ) -> Int
-    func objectAtIndexPath( indexPath: NSIndexPath ) -> OLObject?
-//    func displayToCell( cell: OLTableViewCell, indexPath: NSIndexPath ) -> OLObject?
+    func objectAtIndexPath( indexPath: NSIndexPath ) -> OLManagedObject?
+//    func displayToCell( cell: OLTableViewCell, indexPath: NSIndexPath ) -> OLManagedObject?
 
 }

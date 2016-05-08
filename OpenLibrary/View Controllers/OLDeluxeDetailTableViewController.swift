@@ -8,9 +8,9 @@
 
 import UIKit
 
-class OLAuthorDeluxeDetailTableViewController: UITableViewController {
+class OLDeluxeDetailTableViewController: UITableViewController {
 
-    var queryCoordinator: AuthorDeluxeDetailCoordinator?
+    var queryCoordinator: OLDeluxeDetailCoordinator?
     
     // MARK: UIView
     override func viewDidLoad() {
@@ -19,16 +19,24 @@ class OLAuthorDeluxeDetailTableViewController: UITableViewController {
         // Do any additional setup after loading the view, typically from a nib.
         self.tableView.estimatedRowHeight = 68.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.tableFooterView = UIView(frame: .zero)
+
+        DeluxeDetailHeadingTableViewCell.registerCell( tableView )
+        DeluxeDetailSubheadingTableViewCell.registerCell( tableView )
+        DeluxeDetailBodyTableViewCell.registerCell( tableView )
+        DeluxeDetailImageTableViewCell.registerCell( tableView )
+        DeluxeDetailInlineTableViewCell.registerCell( tableView )
+        DeluxeDetailBlockTableViewCell.registerCell( tableView )
+        DeluxeDetailLinkTableViewCell.registerCell( tableView )
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if "zoomDeluxeDetailPrimaryImage" == segue.identifier ||
-           "zoomDeluxeDetailImage" == segue.identifier {
+        if "zoomDeluxeDetailImage" == segue.identifier {
             
             if let destVC = segue.destinationViewController as? OLPictureViewController {
                 
-                queryCoordinator?.installAuthorPictureCoordinator( destVC )
+                queryCoordinator?.installPictureCoordinator( destVC )
             }
         }
     }
@@ -78,27 +86,15 @@ class OLAuthorDeluxeDetailTableViewController: UITableViewController {
     }
 }
 
-extension OLAuthorDeluxeDetailTableViewController: ImageViewTransitionSource {
+extension OLDeluxeDetailTableViewController: ImageViewTransitionSource {
     
-    func transitionSourceRectangle() -> UIImageView {
+    func transitionSourceRectangle() -> UIImageView? {
         
-        if let indexPath = tableView.indexPathForSelectedRow {
-            
-            if let headerCell = tableView.cellForRowAtIndexPath( indexPath ) as? DeluxeDetailHeaderTableViewCell {
-                
-                return headerCell.deluxeImage
-                
-            } else if let imageCell = tableView.cellForRowAtIndexPath( indexPath ) as? DeluxedDetailImageTableViewCell {
-
-                return imageCell.deluxeImage
-            }
-        }
-
-        let cell = tableView.cellForRowAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) as? DeluxeDetailHeaderTableViewCell
+        guard let indexPath = tableView.indexPathForSelectedRow else { return nil }
         
-        return cell!.deluxeImage
+        guard let imageCell = tableView.cellForRowAtIndexPath( indexPath ) as? DeluxeDetailImageTableViewCell else { return nil }
 
-
+        return imageCell.deluxeImage
     }
 }
 
