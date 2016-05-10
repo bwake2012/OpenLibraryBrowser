@@ -268,6 +268,11 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             
         }
         
+        if !self.first_publish_date.isEmpty {
+            
+            deluxeData.append( [DeluxeData( type: .inline, caption: "First Published:", value: self.first_publish_date )] )
+        }
+        
         if !self.work_description.isEmpty {
             
             deluxeData.append( [DeluxeData( type: .block, caption: "Description", value: self.work_description )] )

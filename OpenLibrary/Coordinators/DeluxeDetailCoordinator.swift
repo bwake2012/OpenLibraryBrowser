@@ -128,9 +128,6 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
                     }
                     cell = imageCell
                 }
-                
-            default:
-                assert( false )
             }
         }
         

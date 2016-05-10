@@ -30,7 +30,7 @@ class GeneralSearchOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, offset: Int, limit: Int, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater, completionHandler: Void -> Void ) {
+    init( queryParms: [String: String], offset: Int, limit: Int, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater, completionHandler: Void -> Void ) {
 
         self.coreDataStack = coreDataStack
         
@@ -46,7 +46,7 @@ class GeneralSearchOperation: GroupOperation {
         
             There is an optional operation 0 to delete the existing contents of the Core Data store
         */
-        downloadOperation = GeneralSearchResultsDownloadOperation( queryText: queryText, offset: offset, limit: limit, cacheFile: cacheFile )
+        downloadOperation = GeneralSearchResultsDownloadOperation( queryParms: queryParms, offset: offset, limit: limit, cacheFile: cacheFile )
         parseOperation = GeneralSearchResultsParseOperation( cacheFile: cacheFile, coreDataStack: coreDataStack, updateResults: updateResults )
         
         let finishOperation = NSBlockOperation( block: completionHandler )
@@ -69,7 +69,7 @@ class GeneralSearchOperation: GroupOperation {
 
         addCondition( MutuallyExclusive<GeneralSearchOperation>() )
         
-        name = "General Search " + queryText
+        name = "General Search "
     }
     
     override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
