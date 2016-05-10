@@ -39,7 +39,7 @@ class OLEditionDetailViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if segue.identifier == "largeEditionCoverImage" {
+        if segue.identifier == "zoomDeluxeDetailImage" {
             
             if let destVC = segue.destinationViewController as? OLPictureViewController {
                 
@@ -61,7 +61,7 @@ class OLEditionDetailViewController: UIViewController {
         
         self.displayLargeCover.enabled = editionDetail.coversFound
         if !editionDetail.coversFound {
-            editionCoverView.image = UIImage( named: "96-book.png" )
+            editionCoverView.image = UIImage( named: editionDetail.defaultImageName )
         }
     }
     
@@ -81,7 +81,7 @@ class OLEditionDetailViewController: UIViewController {
 
 extension OLEditionDetailViewController: ImageViewTransitionSource {
     
-    func transitionSourceRectangle() -> UIImageView {
+    func transitionSourceRectangle() -> UIImageView? {
         
         return editionCoverView
     }

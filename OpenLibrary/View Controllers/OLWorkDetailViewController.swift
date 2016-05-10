@@ -58,6 +58,13 @@ class OLWorkDetailViewController: UIViewController {
                 queryCoordinator!.installCoverPictureViewCoordinator( destVC )
                 
             }
+        } else if segue.identifier == "displayDeluxeWorkDetail" {
+            
+            if let destVC = segue.destinationViewController as? OLDeluxeDetailTableViewController {
+                
+                queryCoordinator?.installWorkDeluxeDetailCoordinator( destVC )
+            }
+            
         }
     }
 
@@ -101,7 +108,7 @@ class OLWorkDetailViewController: UIViewController {
         self.workSubtitle.text = workDetail.subtitle
         self.workAuthor.text = authorName
         self.displayLargeCover.enabled = workDetail.coversFound
-        self.workCover.image = UIImage( named: "96-book.png" )
+        self.workCover.image = UIImage( named: workDetail.defaultImageName )
     }
     
     // MARK: Utility
@@ -110,7 +117,7 @@ class OLWorkDetailViewController: UIViewController {
 
 extension OLWorkDetailViewController: ImageViewTransitionSource {
     
-    func transitionSourceRectangle() -> UIImageView {
+    func transitionSourceRectangle() -> UIImageView? {
         
         return workCover
     }
@@ -118,7 +125,7 @@ extension OLWorkDetailViewController: ImageViewTransitionSource {
 
 extension OLWorkDetailViewController: UncoverBottomTransitionSource {
     
-    func uncoverSourceRectangle() -> UIView {
+    func uncoverSourceRectangle() -> UIView? {
         
         return containerView
     }

@@ -17,7 +17,7 @@ class OLPictureViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     // MARK: Properties
-    var queryCoordinator: PictureViewCoordinatorProtocol?
+    var queryCoordinator: PictureViewCoordinator?
     
     override func viewDidLoad() {
 

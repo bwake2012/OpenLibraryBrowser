@@ -16,7 +16,7 @@ class GeneralSearchResultsDownloadOperation: GroupOperation {
     // MARK: Initialization
     
     /// - parameter cacheFile: The file `NSURL` to which the general search results feed will be downloaded.
-    init( queryText: String, offset: Int, limit: Int, cacheFile: NSURL) {
+    init( queryParms: [String: String], offset: Int, limit: Int, cacheFile: NSURL) {
 
         self.cacheFile = cacheFile
         super.init(operations: [])
@@ -30,9 +30,15 @@ class GeneralSearchResultsDownloadOperation: GroupOperation {
             or when the services you use offer secure communication options, you
             should always prefer to use https.
         */
-        let query = queryText.stringByAddingPercentEncodingForRFC3986()!
-        let urlString = "https://openlibrary.org/search.json?offset=\(offset)&limit=\(limit)&q=\(query)"
-        let url = NSURL( string: urlString )!
+        var queryString = ""
+        for parm in queryParms {
+            
+            let value = parm.1.stringByReplacingOccurrencesOfString( " ", withString: "+" )
+            
+            queryString += "&" + parm.0 + "=" + value
+        }
+        let urlString = "https://openlibrary.org/search.json?offset=\(offset)&limit=\(limit)"
+        let url = NSURL( string: urlString + queryString )!
         let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
             
             url, response, error in

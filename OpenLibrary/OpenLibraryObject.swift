@@ -160,22 +160,24 @@ class OpenLibraryObject {
         return valueArray
     }
     
-    static func OLStringStringDictionaryArray( match: AnyObject? ) -> [[String: String]] {
+    static func OLTableOfContents( match: AnyObject? ) -> [[String: AnyObject]] {
         
-        var arrayOfDictionaries = [[String: String]]()
+        var toc = [[String: AnyObject]]()
         
         if let match = match as? [AnyObject] {
             
             for dict in match {
                 
-                if let dict = dict as? [String: String] {
+                if let dict = dict as? [String: AnyObject] {
                     
-                    arrayOfDictionaries.append( dict )
+                    toc.append( dict )
                 }
             }
+            
+            return toc
         }
         
-        return arrayOfDictionaries
+        return toc
     }
     
     static func OLText( match: AnyObject? ) -> String {

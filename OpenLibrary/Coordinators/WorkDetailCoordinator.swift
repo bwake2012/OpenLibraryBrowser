@@ -145,6 +145,23 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         )
      }
     
+    func installWorkDeluxeDetailCoordinator( destVC: OLDeluxeDetailTableViewController ) {
+        
+        guard let workDetail = searchInfo  else {
+            assert( false )
+            return
+        }
+        
+        destVC.queryCoordinator =
+            DeluxeDetailCoordinator(
+                operationQueue: operationQueue,
+                coreDataStack: coreDataStack,
+                deluxeData: workDetail.deluxeData,
+                imageType: "b",
+                deluxeDetailVC: destVC
+        )
+    }
+    
     func installCoverPictureViewCoordinator( destVC: OLPictureViewController ) {
         
         guard let workDetail = searchInfo  else {
@@ -153,12 +170,14 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         }
         
         destVC.queryCoordinator =
-            CoverPictureViewCoordinator(
-                    operationQueue: self.operationQueue,
-                    coreDataStack: self.coreDataStack,
-                    managedObject: workDetail,
-                    pictureVC: destVC
-                )
+            PictureViewCoordinator(
+                operationQueue: operationQueue,
+                coreDataStack: coreDataStack,
+                localURL: workDetail.localURL( "L", index: 0 ),
+                imageID: workDetail.firstImageID,
+                pictureType: "b",
+                pictureVC: destVC
+        )
 
     }
 }

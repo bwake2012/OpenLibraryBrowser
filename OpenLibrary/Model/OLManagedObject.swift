@@ -41,9 +41,56 @@ enum HasPhoto: Int {
     }
 }
 
-class OLManagedObject: NSManagedObject {
+enum DeluxeDetail: String {
+    
+    case unknown     = "unknown"
+    case inline      = "DeluxeDetailInlineTableViewCell"
+    case block       = "DeluxeDetailBlockTableViewCell"
+    case link        = "DeluxeDetailLinkTableViewCell"
+    case heading     = "DeluxeDetailHeadingTableViewCell"
+    case subheading  = "DeluxeDetailSubheadingTableViewCell"
+    case body        = "DeluxeDetailBodyTableViewCell"
+    case image       = "DeluxeDetailImageTableViewCell"
+}
 
-    func localURL( key:String, size: String ) -> NSURL {
+struct DeluxeData {
+    
+    let type: DeluxeDetail
+    let caption: String
+    let value: String
+}
+
+
+class OLManagedObject: NSManagedObject {
+    
+    var heading: String {
+        
+        return ""
+    }
+    
+    var subheading: String {
+        
+        return ""
+    }
+    
+    var defaultImageName: String {
+        
+        return "96-book.png"
+    }
+
+    lazy var deluxeData: [[DeluxeData]] = {
+        
+        let deluxeData = self.buildDeluxeData()
+        
+        return deluxeData
+    }()
+    
+    lazy var hasDeluxeData: Bool = {
+        
+        return 1 < self.deluxeData.count || ( 1 == self.deluxeData.count && 1 < self.deluxeData[0].count )
+    }()
+    
+    func localURL( key:String, size: String, index: Int = 0 ) -> NSURL {
         
         let docFolder = try! NSFileManager.defaultManager().URLForDirectory( .DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false )
         
@@ -57,7 +104,11 @@ class OLManagedObject: NSManagedObject {
         try! NSFileManager.defaultManager().createDirectoryAtURL(
             imagesSubFolder, withIntermediateDirectories: true, attributes: nil )
         
-        let fileName = "\(goodParts[1])-\(size).jpg"
+        var fileName = "\(goodParts[1])-\(size)"
+        if 0 < index {
+            fileName += "\(index)"
+        }
+        fileName += ".jpg"
         let url = imagesSubFolder.URLByAppendingPathComponent( fileName )
         
         return url
@@ -66,11 +117,22 @@ class OLManagedObject: NSManagedObject {
     var hasImage: Bool { return true }
     var firstImageID: Int { return 0 }
     
-    func localURL( size: String ) -> NSURL {
+    func imageID( index: Int ) -> Int {
+        
+        return 0
+    }
+    
+    func localURL( size: String, index: Int = 0 ) -> NSURL {
         
         return NSURL()
     }
     
+    func buildDeluxeData() -> [[DeluxeData]] {
+        
+        let deluxeData = [[DeluxeData]]()
+
+        return deluxeData
+    }
 }
 
 

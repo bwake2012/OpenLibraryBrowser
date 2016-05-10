@@ -27,6 +27,7 @@ class OLAuthorDetailWorksTableViewController: UITableViewController {
         
         self.tableView.estimatedRowHeight = 68.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.tableFooterView = UIView(frame: .zero)
     }
     
     override func didReceiveMemoryWarning() {

@@ -10,23 +10,6 @@ import CoreData
 
 import BNRCoreDataStack
 
-enum DeluxeDetail: String {
-    
-    case unknown = "unknown"
-    case header  = "deluxeAuthorHeaderCell"
-    case inline  = "deluxeInlineCell"
-    case block   = "deluxeBlockCell"
-    case link    = "deluxeLinkCell"
-}
-
-struct DeluxeData {
-    
-    let type: DeluxeDetail
-    let caption: String
-    let value: String
-}
-
-
 
 /// An object to represent a parsed author search result.
 private class ParsedSearchResult: OpenLibraryObject {
@@ -171,18 +154,6 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
         let key: String
     }
     
-    lazy var deluxeData: [[DeluxeData]] = {
-        
-        let deluxeData = self.buildDeluxeData()
-        
-        return deluxeData
-    }()
-    
-    lazy var hasDeluxeData: Bool = {
-        
-        return 1 <= self.deluxeData.count && 1 < self.deluxeData[0].count
-    }()
-    
     static let entityName = "AuthorDetail"
     
     class func parseJSON( parentObjectID: NSManagedObjectID, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLAuthorDetail? {
@@ -215,13 +186,27 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
         
         if let parent = moc.objectWithID( parentObjectID ) as? OLAuthorSearchResult {
             
-            assert( parent.key == newObject.key )
+            if parent.key != newObject.key {
+                
+                print( "parent:\(parent.key) != newObject:\(newObject.key)" )
+                assert( false )
+            }
             
             parent.toDetail = newObject
             parent.has_photos = newObject.hasImage
         }
 
         return newObject
+    }
+    
+    override var heading: String {
+        
+        return self.name
+    }
+    
+    override var defaultImageName: String {
+        
+        return "253-person.png"
     }
     
     var searchInfo: SearchInfo {
@@ -231,49 +216,101 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
     
     override var hasImage: Bool {
         
-        return 0 < self.photos.count
+        return 0 < self.photos.count && -1 != photos[0]
     }
 
     override var firstImageID: Int {
         
-        return 0 >= self.photos.count ? 0 : self.photos[0]
+        return !hasImage ? 0 : self.photos[0]
     }
     
-    override func localURL( size: String ) -> NSURL {
+    override func imageID( index: Int ) -> Int {
         
-        return super.localURL( self.key, size: size )
+        return !hasImage ? 0 : self.photos[index]
+    }
+    
+    override func localURL( size: String, index: Int = 0 ) -> NSURL {
+        
+        return super.localURL( self.key, size: size, index: index )
     }
     
     // MARK: Deluxe Detail
-    func buildDeluxeData() -> [[DeluxeData]] {
+    override func buildDeluxeData() -> [[DeluxeData]] {
         
         var deluxeData = [[DeluxeData]]()
         
-        deluxeData.append( [DeluxeData( type: .header, caption: "Name", value: self.name )] )
+        deluxeData.append( [DeluxeData( type: .heading, caption: "Name", value: self.name )] )
         
-        if !self.birth_date.isEmpty {
-            
-            deluxeData[0].append( DeluxeData( type: .inline, caption: "Born:", value: self.birth_date ) )
+        if hasImage {
+
+            let value = localURL( "M", index: 0 ).absoluteString
+            deluxeData.append(
+                [DeluxeData( type: .image, caption: String( firstImageID ), value: value )]
+            )
         }
         
-        if !self.death_date.isEmpty {
+        if !self.birth_date.isEmpty || !self.death_date.isEmpty {
             
-            deluxeData[0].append( DeluxeData( type: .inline, caption: "Died:", value: self.death_date ) )
+            var newData = [DeluxeData]()
+            if !self.birth_date.isEmpty {
+                
+                newData.append( DeluxeData( type: .inline, caption: "Born:", value: self.birth_date ) )
+            }
+            
+            if !self.death_date.isEmpty {
+                
+                newData.append( DeluxeData( type: .inline, caption: "Died:", value: self.death_date ) )
+            }
+            
+            deluxeData.append( newData )
         }
         
         if !self.bio.isEmpty {
             
-            deluxeData[0].append( DeluxeData( type: .block, caption: "Biography", value: self.bio ) )
+            deluxeData.append( [DeluxeData( type: .block, caption: "Biography", value: self.bio )] )
         }
         
         if !self.links.isEmpty {
             
+            var newData = [DeluxeData]()
+            
             for link in self.links {
                 
                 if let title = link["title"], url = link["url"] {
-                    deluxeData[0].append( DeluxeData( type: .link, caption: title, value: url ) )
+                    newData.append( DeluxeData( type: .link, caption: title, value: url ) )
                     print( "\(title) \(url)" )
                 }
+            }
+            
+            if 0 < newData.count {
+                
+                deluxeData.append( newData )
+            }
+        }
+
+        if !self.wikipedia.isEmpty {
+            
+            deluxeData[0].append( DeluxeData( type: .link, caption: "Wiikipedia", value: wikipedia ) )
+        }
+        
+        if 1 < self.photos.count {
+            
+            var newData = [DeluxeData]()
+            
+            for index in 1..<self.photos.count {
+                
+                if -1 != photos[index] {
+
+                    let value = localURL( "M", index: index ).absoluteString
+                    newData.append(
+                        DeluxeData( type: .image, caption: String( photos[index] ), value: value )
+                    )
+                }
+            }
+            
+            if 0 < newData.count {
+                
+                deluxeData.append( newData )
             }
         }
         

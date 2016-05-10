@@ -76,6 +76,7 @@ class AuthorNameSearchResultsParseOperation: Operation {
     
     let cacheFile: NSURL
     let context: NSManagedObjectContext
+    let detailContext: NSManagedObjectContext
     let updateResults: SearchResultsUpdater
     
     var searchResults = SearchResults()
@@ -99,6 +100,7 @@ class AuthorNameSearchResultsParseOperation: Operation {
         
         self.cacheFile = cacheFile
         self.context = coreDataStack.newChildContext()
+        self.detailContext = coreDataStack.newChildContext()
         self.context.mergePolicy = NSOverwriteMergePolicy
         self.updateResults = updateResults
         
@@ -180,24 +182,63 @@ class AuthorNameSearchResultsParseOperation: Operation {
     
     private func insert( parsed: ParsedSearchResult ) {
 
-        let result = NSEntityDescription.insertNewObjectForEntityForName( OLAuthorSearchResult.entityName, inManagedObjectContext: context) as! OLAuthorSearchResult
+        let newObject = NSEntityDescription.insertNewObjectForEntityForName( OLAuthorSearchResult.entityName, inManagedObjectContext: context) as! OLAuthorSearchResult
         
-        result.sequence = parsed.sequence
-        result.index = parsed.index
+        newObject.sequence = parsed.sequence
+        newObject.index = parsed.index
         if parsed.key.hasPrefix( kAuthorsPrefix ) {
-            result.key = parsed.key
+            newObject.key = parsed.key
         } else {
-            result.key = kAuthorsPrefix + parsed.key
+            newObject.key = kAuthorsPrefix + parsed.key
         }
-        result.name = parsed.name
-        result.type = parsed.type
-        result.birth_date = parsed.birth_date
-        result.death_date = parsed.death_date
-        result.top_work = parsed.top_work
-        result.work_count = Int64( parsed.work_count )
+        newObject.name = parsed.name
+        newObject.type = parsed.type
+        newObject.birth_date = parsed.birth_date
+        newObject.death_date = parsed.death_date
+        newObject.top_work = parsed.top_work
+        newObject.work_count = Int64( parsed.work_count )
         
-        result.havePhoto = HasPhoto.unknown
-        result.has_photos = true
+        newObject.havePhoto = HasPhoto.unknown
+        newObject.has_photos = true
+        
+//        let fetchRequest = NSFetchRequest( entityName: OLAuthorDetail.entityName )
+//        let key = newObject.key
+//        fetchRequest.predicate = NSPredicate( format: "key==%@", "\(key)" )
+//        
+//        fetchRequest.sortDescriptors =
+//            [
+//                NSSortDescriptor(key: "index", ascending: true)
+//            ]
+//        
+//        let frc = NSFetchedResultsController(
+//                        fetchRequest: fetchRequest,
+//                        managedObjectContext: detailContext,
+//                        sectionNameKeyPath: nil,
+//                        cacheName: nil
+//                    )
+//        
+//        do {
+//            try frc.performFetch()
+//            
+//            if let fetchedObjects = frc.fetchedObjects where 0 < fetchedObjects.count {
+//                
+//                if let fetchedDetail = fetchedObjects[0] as? OLAuthorDetail {
+//                    
+//                    let objectID = fetchedDetail.objectID
+//                    
+//                    if let detail = context.objectWithID( objectID ) as? OLAuthorDetail {
+//                        
+//                        assert( detail.key == newObject.key )
+//                        
+//                        newObject.toDetail = detail
+//                        newObject.has_photos = detail.hasImage
+//                    }
+//                }
+//            }
+//        }
+//        catch {
+//            print("Error in the fetched results controller: \(error).")
+//        }
     }
     
     /**

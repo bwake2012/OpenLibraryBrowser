@@ -60,7 +60,7 @@ extension OLEditionDetail {
     @NSManaged var source_records: [String]
     @NSManaged var subjects: [String]
     @NSManaged var subtitle: String
-    @NSManaged var table_of_contents: [[String: String]]
+    @NSManaged var table_of_contents: [[String: AnyObject]]
     @NSManaged var title_prefix: String
     @NSManaged var title: String
     @NSManaged var translated_from: [String]

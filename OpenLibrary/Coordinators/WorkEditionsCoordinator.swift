@@ -79,12 +79,12 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         }
         
         let section = sections[indexPath.section]
-        if indexPath.row >= section.objects.count {
+        guard indexPath.row < section.objects.count else {
+            assertionFailure( "row:\(indexPath.row) out of bounds" )
             return nil
-        } else {
-            
-            return section.objects[indexPath.row]
         }
+
+        return section.objects[indexPath.row]
     }
     
     func displayToCell( cell: WorkEditionTableViewCell, indexPath: NSIndexPath ) -> OLEditionDetail? {
@@ -279,5 +279,18 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
                 )
         
         editionDetailVC.editionDetail = editionDetail
+    }
+    
+    func installEditionDeluxeCoordinator( deluxeDetailVC: OLDeluxeDetailTableViewController, indexPath: NSIndexPath ) {
+        
+        let editionDetail = objectAtIndexPath( indexPath )!
+        deluxeDetailVC.queryCoordinator =
+            DeluxeDetailCoordinator(
+                    operationQueue: operationQueue,
+                    coreDataStack: coreDataStack,
+                    deluxeData: editionDetail.deluxeData,
+                    imageType: "b",
+                    deluxeDetailVC: deluxeDetailVC
+                )
     }
 }

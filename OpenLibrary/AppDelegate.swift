@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 
 import BNRCoreDataStack
+//import Reachability
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,25 +18,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: Properties
     var window: UIWindow?
     
+//    private lazy var reachability: Reachability = {
+//        
+//        return Reachability.reachabilityForInternetConnection()
+//
+//    }()
+
     private let operationQueue = OperationQueue()
 
-    private var coreDataStack: CoreDataStack? {
-        
-        didSet {
-            
-//            if nil != coreDataStack {
-//                languagesCoordinator =
-//                    LanguagesCoordinator( operationQueue: operationQueue, coreDataStack: coreDataStack! )
-//            }
-        
-        }
-    }
+    private var coreDataStack: CoreDataStack?
+    
     private let launchStoryboard = UIStoryboard( name: "LaunchScreen", bundle: nil)
     private let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
 
-//    private lazy var loadingVC: UIViewController = {
-//        return self.launchStoryboard.instantiateViewControllerWithIdentifier("launchVC")
-//    }()
     private lazy var navController: UINavigationController = {
         return self.mainStoryboard.instantiateViewControllerWithIdentifier("rootNavigationController")
             as! UINavigationController
@@ -45,10 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-        // Override point for customization after application launch.
-//        window = UIWindow(frame: UIScreen.mainScreen().bounds)
-//        window?.rootViewController = loadingVC
-        
         CoreDataStack.constructSQLiteStack(withModelName: "OpenLibraryBrowser") { result in
             switch result {
             case .Success(let stack):
@@ -71,6 +62,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+
+//        reachability.stopNotifier()
     }
 
     func applicationDidEnterBackground(application: UIApplication) {

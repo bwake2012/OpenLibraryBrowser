@@ -138,9 +138,9 @@ class OLTitleSearchResult: OLManagedObject, CoreDataModelable {
     override var hasImage: Bool { return 0 != cover_i }
     override var firstImageID: Int { return Int( cover_i ) }
     
-    override func localURL( size: String ) -> NSURL {
+    override func localURL( size: String, index: Int = 0 ) -> NSURL {
         
         let key = self.key
-        return super.localURL( key, size: size )
+        return super.localURL( key, size: size, index: index )
     }
 }

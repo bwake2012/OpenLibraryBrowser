@@ -10,12 +10,12 @@ import UIKit
 
 protocol ImageViewTransitionSource {
     
-    func transitionSourceRectangle() -> UIImageView
+    func transitionSourceRectangle() -> UIImageView?
     
 //    func transitionSourceImageRectangle() -> CGRect
 }
 
 protocol UncoverBottomTransitionSource {
     
-    func uncoverSourceRectangle() -> UIView
+    func uncoverSourceRectangle() -> UIView?
 }

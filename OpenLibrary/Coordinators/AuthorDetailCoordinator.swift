@@ -121,24 +121,27 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
                 )
     }
     
-    func installAuthorDeluxeDetailCoordinator( destVC: OLAuthorDeluxeDetailTableViewController ) {
+    func installAuthorDeluxeDetailCoordinator( destVC: OLDeluxeDetailTableViewController ) {
         
         destVC.queryCoordinator =
-            AuthorDeluxeDetailCoordinator(
+            DeluxeDetailCoordinator(
                     operationQueue: operationQueue,
                     coreDataStack: coreDataStack,
-                    authorDetail: searchInfo.toDetail!,
-                    authorDeluxeDetailVC: destVC
+                    deluxeData: searchInfo.toDetail!.deluxeData,
+                    imageType: "a",
+                    deluxeDetailVC: destVC
                 )
     }
     
     func installAuthorPictureCoordinator( destVC: OLPictureViewController ) {
         
         destVC.queryCoordinator =
-            AuthorPictureViewCoordinator(
+            PictureViewCoordinator(
                     operationQueue: operationQueue,
                     coreDataStack: coreDataStack,
-                    authorDetail: searchInfo.toDetail!,
+                    localURL: searchInfo.toDetail!.localURL( "L", index: 0 ),
+                    imageID: searchInfo.toDetail!.firstImageID,
+                    pictureType: "a",
                     pictureVC: destVC
                 )
     }

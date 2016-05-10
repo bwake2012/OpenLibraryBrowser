@@ -8,9 +8,9 @@
 
 import UIKit
 
-class OLAuthorDeluxeDetailTableViewController: UITableViewController {
+class OLDeluxeDetailTableViewController: UITableViewController {
 
-    var queryCoordinator: AuthorDeluxeDetailCoordinator?
+    var queryCoordinator: OLDeluxeDetailCoordinator?
     
     // MARK: UIView
     override func viewDidLoad() {
@@ -19,6 +19,26 @@ class OLAuthorDeluxeDetailTableViewController: UITableViewController {
         // Do any additional setup after loading the view, typically from a nib.
         self.tableView.estimatedRowHeight = 68.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.tableFooterView = UIView(frame: .zero)
+
+        DeluxeDetailHeadingTableViewCell.registerCell( tableView )
+        DeluxeDetailSubheadingTableViewCell.registerCell( tableView )
+        DeluxeDetailBodyTableViewCell.registerCell( tableView )
+        DeluxeDetailImageTableViewCell.registerCell( tableView )
+        DeluxeDetailInlineTableViewCell.registerCell( tableView )
+        DeluxeDetailBlockTableViewCell.registerCell( tableView )
+        DeluxeDetailLinkTableViewCell.registerCell( tableView )
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if "zoomDeluxeDetailImage" == segue.identifier {
+            
+            if let destVC = segue.destinationViewController as? OLPictureViewController {
+                
+                queryCoordinator?.installPictureCoordinator( destVC )
+            }
+        }
     }
 
     // MARK: UITableViewDataSource
@@ -65,3 +85,17 @@ class OLAuthorDeluxeDetailTableViewController: UITableViewController {
         }
     }
 }
+
+extension OLDeluxeDetailTableViewController: ImageViewTransitionSource {
+    
+    func transitionSourceRectangle() -> UIImageView? {
+        
+        guard let indexPath = tableView.indexPathForSelectedRow else { return nil }
+        
+        guard let imageCell = tableView.cellForRowAtIndexPath( indexPath ) as? DeluxeDetailImageTableViewCell else { return nil }
+
+        return imageCell.deluxeImage
+    }
+}
+
+
