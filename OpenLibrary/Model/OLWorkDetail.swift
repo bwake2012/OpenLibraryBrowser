@@ -76,7 +76,7 @@ private class ParsedSearchResult: OpenLibraryObject {
         
         let other_titles = OpenLibraryObject.OLStringArray( match["other_titles"] )
         
-        let first_publish_date = OpenLibraryObject.OLDateStamp( "first_publish_date" )
+        let first_publish_date = OpenLibraryObject.OLDateStamp( match["first_publish_date"] )
         
         let links = OpenLibraryObject.OLLinks( match )
         

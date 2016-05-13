@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15E65" minimumToolsVersion="Automatic">
     <entity name="AuthorDetail" representedClassName=".OLAuthorDetail" syncable="YES">
         <attribute name="alternate_names" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="bio" optional="YES" attributeType="String" syncable="YES"/>
@@ -30,6 +30,48 @@
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="work_count" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="toDetail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AuthorDetail" inverseName="toSearchResults" inverseEntity="AuthorDetail" syncable="YES"/>
+    </entity>
+    <entity name="EBookFile" syncable="YES">
+        <attribute name="atime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="crc32" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ctime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="eBookKey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="editionKey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="format" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="md5" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mtime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="original" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="originalName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sha1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="size" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="source" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="workKey" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="EBookItem" representedClassName=".OLEBookItem" syncable="YES">
+        <attribute name="contributor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cover_id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="editionKey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="enumcron" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="fromRecord" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="match" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="publish_date" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="workKey" optional="YES" attributeType="String" syncable="YES"/>
+        <compoundIndexes>
+            <compoundIndex>
+                <index value="editionKey"/>
+            </compoundIndex>
+            <compoundIndex>
+                <index value="workKey"/>
+            </compoundIndex>
+        </compoundIndexes>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="itemURL"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="EditionDetail" representedClassName=".OLEditionDetail" syncable="YES">
         <attribute name="accompanying_material" optional="YES" attributeType="String" syncable="YES"/>
@@ -213,10 +255,12 @@
     <elements>
         <element name="AuthorDetail" positionX="-63" positionY="-18" width="128" height="285"/>
         <element name="AuthorSearchResult" positionX="-54" positionY="81" width="128" height="210"/>
+        <element name="EBookFile" positionX="-63" positionY="135" width="128" height="270"/>
         <element name="EditionDetail" positionX="-45" positionY="144" width="128" height="885"/>
         <element name="GeneralSearchResult" positionX="-63" positionY="135" width="128" height="555"/>
         <element name="Language" positionX="-63" positionY="135" width="128" height="120"/>
         <element name="TitleSearchResult" positionX="-63" positionY="135" width="128" height="225"/>
         <element name="WorkDetail" positionX="-54" positionY="99" width="128" height="450"/>
+        <element name="EBookItem" positionX="-63" positionY="135" width="128" height="195"/>
     </elements>
 </model>
