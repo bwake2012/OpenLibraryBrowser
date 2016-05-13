@@ -50,6 +50,8 @@ class AuthorDetailGetOperation: GroupOperation {
         
         super.init( operations: [downloadOperation, parseOperation, finishOperation] )
 
+        addCondition( MutuallyExclusive<AuthorDetailGetOperation>() )
+        
         name = "Get Author Detail " + queryText
     }
         

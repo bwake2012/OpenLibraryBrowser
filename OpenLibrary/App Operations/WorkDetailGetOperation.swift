@@ -53,6 +53,8 @@ class WorkDetailGetOperation: GroupOperation {
         
         super.init( operations: [downloadOperation, parseOperation, finishOperation] )
 
+        addCondition( MutuallyExclusive<WorkDetailGetOperation>() )
+        
         name = "Get Work Detail"
     }
     
