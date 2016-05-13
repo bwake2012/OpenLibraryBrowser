@@ -93,7 +93,7 @@ class GeneralSearchResultsParseOperation: Operation {
             var index = Int64( start )
             for result in results {
                 
-                if nil != OLGeneralSearchResult.parseJSON( 0, index: index, match: result, moc: self.context ) {
+                if nil != OLGeneralSearchResult.parseJSON( 0, index: index, json: result, moc: self.context ) {
                     
                     index += 1
                     

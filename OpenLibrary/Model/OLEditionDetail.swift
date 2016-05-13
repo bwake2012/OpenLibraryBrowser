@@ -72,113 +72,113 @@ private class ParsedSearchResult: OpenLibraryObject {
     
     // MARK: Initialization
     
-    class func fromJSON( match: [String: AnyObject] ) -> ParsedSearchResult? {
+    class func fromJSON( json: [String: AnyObject] ) -> ParsedSearchResult? {
         
-        guard let revision = match["revision"] as? Int else { return nil }
+        guard let revision = json["revision"] as? Int else { return nil }
         
-        guard let latest_revision = match["latest_revision"] as? Int else { return nil }
+        guard let latest_revision = json["latest_revision"] as? Int else { return nil }
         
-        let created = OpenLibraryObject.OLTimeStamp( match["created"] )
+        let created = OpenLibraryObject.OLTimeStamp( json["created"] )
         
-        let last_modified = OpenLibraryObject.OLTimeStamp( match["last_modified"] )
+        let last_modified = OpenLibraryObject.OLTimeStamp( json["last_modified"] )
         
-        let type = OpenLibraryObject.OLKeyedValue( match["type"], key: "key" )
+        let type = OpenLibraryObject.OLKeyedValue( json["type"], key: "key" )
         
-        guard let key = match["key"] as? String where !key.isEmpty else { return nil }
+        guard let key = json["key"] as? String where !key.isEmpty else { return nil }
         
-        guard let title = match["title"] as? String where !title.isEmpty else { return nil }
+        guard let title = json["title"] as? String where !title.isEmpty else { return nil }
         
-        let title_prefix = OpenLibraryObject.OLString( match["title_prefix"] )
+        let title_prefix = OpenLibraryObject.OLString( json["title_prefix"] )
         
-        let subtitle = OpenLibraryObject.OLString( match["subtitle"] )
+        let subtitle = OpenLibraryObject.OLString( json["subtitle"] )
         
-        let other_titles = OpenLibraryObject.OLStringArray( match["other_titles"] )
+        let other_titles = OpenLibraryObject.OLStringArray( json["other_titles"] )
         
         // authors
-        let authors = OpenLibraryObject.OLKeyedValueArray( match["authors"], key: "key" )
+        let authors = OpenLibraryObject.OLKeyedValueArray( json["authors"], key: "key" )
         
-        let by_statement = OpenLibraryObject.OLString( match["by_statement"] )
+        let by_statement = OpenLibraryObject.OLString( json["by_statement"] )
         
-        let publish_date = OpenLibraryObject.OLString( match["publish_date"] )
+        let publish_date = OpenLibraryObject.OLString( json["publish_date"] )
         
-        let copyright_date = OpenLibraryObject.OLString( match["copyright_date"] )
+        let copyright_date = OpenLibraryObject.OLString( json["copyright_date"] )
         
-        let edition_name = OpenLibraryObject.OLString( match["edition_name"] )
+        let edition_name = OpenLibraryObject.OLString( json["edition_name"] )
         
-        let languages = OpenLibraryObject.OLKeyedValueArray( match["languages"], key: "key" )
+        let languages = OpenLibraryObject.OLKeyedValueArray( json["languages"], key: "key" )
         
-        let edition_description = OpenLibraryObject.OLText( match["description"] )
+        let edition_description = OpenLibraryObject.OLText( json["description"] )
         
-        let notes = OpenLibraryObject.OLText( match["notes"] )
+        let notes = OpenLibraryObject.OLText( json["notes"] )
         
-        let genres = OpenLibraryObject.OLStringArray( match["genres"] )
+        let genres = OpenLibraryObject.OLStringArray( json["genres"] )
         
-        let table_of_contents = OpenLibraryObject.OLTableOfContents( match["table_of_contents"] )
+        let table_of_contents = OpenLibraryObject.OLTableOfContents( json["table_of_contents"] )
         
-        let work_titles = OpenLibraryObject.OLStringArray( match["work_titles"] )
+        let work_titles = OpenLibraryObject.OLStringArray( json["work_titles"] )
         
-        let series = OpenLibraryObject.OLStringArray( match["series"] )
+        let series = OpenLibraryObject.OLStringArray( json["series"] )
         
-        let physical_dimensions = OpenLibraryObject.OLString( match["physical_dimensions"] )
+        let physical_dimensions = OpenLibraryObject.OLString( json["physical_dimensions"] )
         
-        let physical_format = OpenLibraryObject.OLString( match["physical_format"] )
+        let physical_format = OpenLibraryObject.OLString( json["physical_format"] )
         
-        let number_of_pages = OpenLibraryObject.OLInt( match["number_of_pages"] )
+        let number_of_pages = OpenLibraryObject.OLInt( json["number_of_pages"] )
         
-        let subjects = OpenLibraryObject.OLStringArray( match["subjects"] )
+        let subjects = OpenLibraryObject.OLStringArray( json["subjects"] )
         
-        let pagination = OpenLibraryObject.OLString( match["pagination"] )
+        let pagination = OpenLibraryObject.OLString( json["pagination"] )
         
-        let lccn = OpenLibraryObject.OLStringArray( match["lccn"] )
+        let lccn = OpenLibraryObject.OLStringArray( json["lccn"] )
         
-        let ocaid = OpenLibraryObject.OLString( match["ocaid"] )
+        let ocaid = OpenLibraryObject.OLString( json["ocaid"] )
         
-        let oclc_numbers = OpenLibraryObject.OLStringArray( match["oclc_numbers"] )
+        let oclc_numbers = OpenLibraryObject.OLStringArray( json["oclc_numbers"] )
         
-        let isbn_10 = OpenLibraryObject.OLStringArray( match["isbn_10"] )
+        let isbn_10 = OpenLibraryObject.OLStringArray( json["isbn_10"] )
         
-        let isbn_13 = OpenLibraryObject.OLStringArray( match["isbn_13"] )
+        let isbn_13 = OpenLibraryObject.OLStringArray( json["isbn_13"] )
         
-        let dewey_decimal_class = OpenLibraryObject.OLStringArray( match["dewey_decimal_class"] )
+        let dewey_decimal_class = OpenLibraryObject.OLStringArray( json["dewey_decimal_class"] )
         
-        let lc_classifications = OpenLibraryObject.OLStringArray( match["lc_classifications"] )
+        let lc_classifications = OpenLibraryObject.OLStringArray( json["lc_classifications"] )
         
-        let contributions = OpenLibraryObject.OLStringArray( match["contributions"] )
+        let contributions = OpenLibraryObject.OLStringArray( json["contributions"] )
         
-        let publish_places = OpenLibraryObject.OLStringArray( match["publish_places"] )
+        let publish_places = OpenLibraryObject.OLStringArray( json["publish_places"] )
         
-        let publish_country = OpenLibraryObject.OLString( match["publish_country"] )
+        let publish_country = OpenLibraryObject.OLString( json["publish_country"] )
         
-        let publishers = OpenLibraryObject.OLStringArray( match["publishers"] )
+        let publishers = OpenLibraryObject.OLStringArray( json["publishers"] )
         
-        let distributors = OpenLibraryObject.OLStringArray( match["distributors"] )
+        let distributors = OpenLibraryObject.OLStringArray( json["distributors"] )
         
-        let first_sentence = OpenLibraryObject.OLText( match["first_sentence"] )
+        let first_sentence = OpenLibraryObject.OLText( json["first_sentence"] )
         
-        let weight = OpenLibraryObject.OLString( match["weight"] )
+        let weight = OpenLibraryObject.OLString( json["weight"] )
         
-        let location = OpenLibraryObject.OLStringArray( match["location"] )
+        let location = OpenLibraryObject.OLStringArray( json["location"] )
         
-        let scan_on_demand = OpenLibraryObject.OLBool( match["scan_on_demand"] )
+        let scan_on_demand = OpenLibraryObject.OLBool( json["scan_on_demand"] )
         
-        let collections = OpenLibraryObject.OLKeyedValueArray( match["collections"], key: "name" )
+        let collections = OpenLibraryObject.OLKeyedValueArray( json["collections"], key: "name" )
         
-        let uris = OpenLibraryObject.OLStringArray( match["uris"] )
+        let uris = OpenLibraryObject.OLStringArray( json["uris"] )
         
-        let uri_descriptions = OpenLibraryObject.OLStringArray( match["uri_descriptions"] )
+        let uri_descriptions = OpenLibraryObject.OLStringArray( json["uri_descriptions"] )
         
-        let translation_of = OpenLibraryObject.OLString( match["translation_of"] )
+        let translation_of = OpenLibraryObject.OLString( json["translation_of"] )
         
-        let works = OpenLibraryObject.OLKeyedValueArray( match["works"], key: "key" )
+        let works = OpenLibraryObject.OLKeyedValueArray( json["works"], key: "key" )
         
-        let source_records = OpenLibraryObject.OLStringArray( match["source_records"] )
+        let source_records = OpenLibraryObject.OLStringArray( json["source_records"] )
         
-        let translated_from = OpenLibraryObject.OLKeyedValueArray( match["translated_from"], key: "key" )
+        let translated_from = OpenLibraryObject.OLKeyedValueArray( json["translated_from"], key: "key" )
         //    let scan_records[]: AnyObject,
         //    let volumes[]: AnyObject,
-        let accompanying_material = OpenLibraryObject.OLString( match["accompanying_material"] )
+        let accompanying_material = OpenLibraryObject.OLString( json["accompanying_material"] )
         
-        let covers = OpenLibraryObject.OLIntArray( match["covers"] )
+        let covers = OpenLibraryObject.OLIntArray( json["covers"] )
         
         return ParsedSearchResult(
             key: key,

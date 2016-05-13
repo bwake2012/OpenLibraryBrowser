@@ -118,43 +118,43 @@ private class ParsedSearchResult: OpenLibraryObject {
         self.type = type
     }
     
-    convenience init?( match: [String: AnyObject] ) {
+    convenience init?( json: [String: AnyObject] ) {
         
-        guard let key = match["key"] as? String else { return nil }
+        guard let key = json["key"] as? String else { return nil }
         
-        guard let type = match["type"] as? String else { return nil }
+        guard let type = json["type"] as? String else { return nil }
         
-        let author_key         = match["author_key"] as? [String] ?? [String]()
-        let author_name        = match["author_name"] as? [String] ?? [String]()
-        let cover_edition_key  = match["cover_edition_key"] as? String ?? ""
-        let cover_i            = match["cover_i"] as? Int64 ?? 0
-        let ebook_count_i      = match["ebook_count_i"] as? Int64 ?? 0
-        let edition_count      = match["edition_count"] as? Int64 ?? 0
-        let edition_key        = match["edition_key"] as? [String] ?? [String]()
-        let first_publish_year = match["first_publish_year"] as? Int16 ?? 0
-        let first_sentence     = match["first_sentence"] as? [String] ?? [String]()
-        let has_fulltext       = match["has_fulltext"] as? Bool ?? false
-        let ia_collection_s    = match["ia_collection_s"] as? String ?? ""
-        let ia                 = match["ia"] as? [String] ?? [String]()
-        let id_goodreads       = match["id_goodreads"] as? [String] ?? [String]()
-        let id_librarything    = match["id_librarything"] as? [String] ?? [String]()
-        let isbn               = match["isbn"] as? [String] ?? [String]()
+        let author_key         = json["author_key"] as? [String] ?? [String]()
+        let author_name        = json["author_name"] as? [String] ?? [String]()
+        let cover_edition_key  = json["cover_edition_key"] as? String ?? ""
+        let cover_i            = json["cover_i"] as? Int64 ?? 0
+        let ebook_count_i      = json["ebook_count_i"] as? Int64 ?? 0
+        let edition_count      = json["edition_count"] as? Int64 ?? 0
+        let edition_key        = json["edition_key"] as? [String] ?? [String]()
+        let first_publish_year = json["first_publish_year"] as? Int16 ?? 0
+        let first_sentence     = json["first_sentence"] as? [String] ?? [String]()
+        let has_fulltext       = json["has_fulltext"] as? Bool ?? false
+        let ia_collection_s    = json["ia_collection_s"] as? String ?? ""
+        let ia                 = json["ia"] as? [String] ?? [String]()
+        let id_goodreads       = json["id_goodreads"] as? [String] ?? [String]()
+        let id_librarything    = json["id_librarything"] as? [String] ?? [String]()
+        let isbn               = json["isbn"] as? [String] ?? [String]()
 
-        let language           = match["language"] as? [String] ?? [String]()
-        let last_modified_i    = match["last_modified_i"] as? Int64 ?? 0
-        let lccn               = match["lccn"] as? [String] ?? [String]()
-        let person             = match["person"] as? [String] ?? [String]()
-        let printdisabled_s    = match["printdisabled_s"] as? String ?? ""
-        let public_scan_b      = match["public_scan_b"] as? Bool ?? false
-        let publish_date       = match["publish_date"] as? [String] ?? [String]()
-        let publish_place      = match["publish_place"] as? [String] ?? [String]()
-        let publish_year       = match["publish_year"] as? [Int] ?? [Int]()
-        let publisher          = match["publisher"] as? [String] ?? [String]()
-        let seed               = match["seed"] as? [String] ?? [String]()
-        let subject            = match["subject"] as? [String] ?? [String]()
-        let text               = match["text"] as? [String] ?? [String]()
-        let title_suggest      = match["title_suggest"] as? String ?? ""
-        let title              = match["title"] as? String ?? ""
+        let language           = json["language"] as? [String] ?? [String]()
+        let last_modified_i    = json["last_modified_i"] as? Int64 ?? 0
+        let lccn               = json["lccn"] as? [String] ?? [String]()
+        let person             = json["person"] as? [String] ?? [String]()
+        let printdisabled_s    = json["printdisabled_s"] as? String ?? ""
+        let public_scan_b      = json["public_scan_b"] as? Bool ?? false
+        let publish_date       = json["publish_date"] as? [String] ?? [String]()
+        let publish_place      = json["publish_place"] as? [String] ?? [String]()
+        let publish_year       = json["publish_year"] as? [Int] ?? [Int]()
+        let publisher          = json["publisher"] as? [String] ?? [String]()
+        let seed               = json["seed"] as? [String] ?? [String]()
+        let subject            = json["subject"] as? [String] ?? [String]()
+        let text               = json["text"] as? [String] ?? [String]()
+        let title_suggest      = json["title_suggest"] as? String ?? ""
+        let title              = json["title"] as? String ?? ""
         
         self.init(
             author_key: author_key,
@@ -200,9 +200,9 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
     // Insert code here to add functionality to your managed object subclass
     static let entityName = "GeneralSearchResult"
     
-    class func parseJSON(sequence: Int64, index: Int64, match: [String: AnyObject], moc: NSManagedObjectContext ) -> OLGeneralSearchResult? {
+    class func parseJSON(sequence: Int64, index: Int64, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLGeneralSearchResult? {
         
-        guard let parsed = ParsedSearchResult( match: match ) else { return nil }
+        guard let parsed = ParsedSearchResult( json: json ) else { return nil }
         
         guard let newObject =
             NSEntityDescription.insertNewObjectForEntityForName(

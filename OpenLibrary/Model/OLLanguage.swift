@@ -33,13 +33,13 @@ private class ParsedSearchResult: OpenLibraryObject {
         self.name = name
     }
     
-    convenience init?( match: [String: AnyObject] ) {
+    convenience init?( json: [String: AnyObject] ) {
         
-        guard let key = match["key"] as? String else { return nil }
+        guard let key = json["key"] as? String else { return nil }
         
-        guard let code = match["code"] as? String else { return nil }
+        guard let code = json["code"] as? String else { return nil }
         
-        guard let name = match["name"] as? String else { return nil }
+        guard let name = json["name"] as? String else { return nil }
         
         self.init(
             key: key,
@@ -55,9 +55,9 @@ class OLLanguage: NSManagedObject, CoreDataModelable {
 // Insert code here to add functionality to your managed object subclass
     static let entityName = "Language"
     
-    class func parseJSON(sequence: Int64, index: Int64, match: [String: AnyObject], moc: NSManagedObjectContext ) -> OLLanguage? {
+    class func parseJSON(sequence: Int64, index: Int64, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLLanguage? {
         
-        guard let parsed = ParsedSearchResult( match: match ) else { return nil }
+        guard let parsed = ParsedSearchResult( json: json ) else { return nil }
         
         guard let newObject =
             NSEntityDescription.insertNewObjectForEntityForName(
