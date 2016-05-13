@@ -21,6 +21,8 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
     var deluxeData: [[DeluxeData]]
     var imageType: String
     
+    var imageGetOperation: ImageGetOperation?
+    
     init(
             operationQueue: OperationQueue,
             coreDataStack: CoreDataStack,
@@ -40,13 +42,13 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
     // MARK: OLDataSource
     func numberOfSections() -> Int {
         
-        print( "sections: \(deluxeData.count)" )
+//        print( "sections: \(deluxeData.count)" )
         return deluxeData.count
     }
     
     func numberOfRowsInSection( section: Int ) -> Int {
         
-        print( "section:\(section) rows:\(deluxeData[section].count)" )
+//        print( "section:\(section) rows:\(deluxeData[section].count)" )
         return section < 0 || section >= deluxeData.count ? 0 : deluxeData[section].count
     }
     
@@ -80,7 +82,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
         var cell: UITableViewCell?
         if let object = objectAtIndexPath( indexPath ) {
             
-            print( "display section:\(indexPath.section) row:\(indexPath.row) \(object.type.rawValue)" )
+//            print( "display section:\(indexPath.section) row:\(indexPath.row) \(object.type.rawValue)" )
             
             switch object.type {
             case .unknown:
@@ -106,24 +108,28 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
                     if let url = NSURL( string: object.value ) {
                         if !imageCell.displayFromURL( url ) {
                             
-                            let imageGetOperation =
-                                ImageGetOperation( stringID: object.caption, imageKeyName: "ID", localURL: url, size: "M", type: "a" ) {
-                                    
-                                    [weak self] in
-                                    
-                                    guard let strongSelf = self else { return }
-                                    guard let vc = strongSelf.deluxeDetailVC else { return }
-                                    
-                                    dispatch_async( dispatch_get_main_queue() ) {
+                            if nil == imageGetOperation {
+                                imageGetOperation =
+                                    ImageGetOperation( stringID: object.caption, imageKeyName: "ID", localURL: url, size: "M", type: "a" ) {
                                         
-                                        vc.tableView.reloadRowsAtIndexPaths(
-                                            [indexPath], withRowAnimation: .Automatic
-                                        )
-                                    }
+                                        [weak self] in
+                                        
+                                        guard let strongSelf = self else { return }
+                                        guard let vc = strongSelf.deluxeDetailVC else { return }
+                                        
+                                        dispatch_async( dispatch_get_main_queue() ) {
+                                            
+                                            vc.tableView.reloadRowsAtIndexPaths(
+                                                [indexPath], withRowAnimation: .Automatic
+                                            )
+                                        }
+                                        
+                                        strongSelf.imageGetOperation = nil
+                                }
+                                
+                                imageGetOperation!.userInitiated = true
+                                operationQueue.addOperation( imageGetOperation! )
                             }
-                            
-                            imageGetOperation.userInitiated = true
-                            operationQueue.addOperation( imageGetOperation )
                         }
                     }
                     cell = imageCell
@@ -134,6 +140,10 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
         return cell!
     }
     
+    func cancelOperations() {
+        
+        imageGetOperation?.cancel()
+    }
 
     // MARK: utility
     
