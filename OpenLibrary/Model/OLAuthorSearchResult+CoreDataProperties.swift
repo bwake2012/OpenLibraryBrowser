@@ -19,7 +19,7 @@ extension OLAuthorSearchResult {
     @NSManaged var birth_date: String
     @NSManaged var death_date: String
     @NSManaged var type: String
-    @NSManaged var top_work: String?
+    @NSManaged var top_work: String
     @NSManaged var work_count: Int64
     @NSManaged var has_photos: Bool
 

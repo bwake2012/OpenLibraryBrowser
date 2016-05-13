@@ -17,6 +17,9 @@ protocol OLDeluxeDetailCoordinator {
     func didSelectRowAtIndexPath( indexPath: NSIndexPath )
     
     func displayToTableViewCell( tableView: UITableView, indexPath: NSIndexPath ) -> UITableViewCell
+    
+    func cancelOperations() -> Void
+    
     func installPictureCoordinator( destVC: OLPictureViewController )
 }
 

@@ -1,4 +1,4 @@
-//  GeneralSearchResultsParseOperation.swift
+//  IAEBookItemParseOperation.swift
 //  OpenLibrary
 //
 //  Created by Bob Wakefield on 2/24/16.
@@ -11,24 +11,23 @@ import CoreData
 
 import BNRCoreDataStack
 
-/// An `Operation` to parse earthquakes out of a downloaded feed from the USGS.
-class GeneralSearchResultsParseOperation: Operation {
+/// An `Operation` to parse Editions out of a query from OpenLibrary.
+class IAEBookItemParseOperation: Operation {
     
     let cacheFile: NSURL
     let context: NSManagedObjectContext
-    let updateResults: SearchResultsUpdater
     
     var searchResults = SearchResults()
     
     /**
-        - parameter cacheFile: The file `NSURL` from which to load General query data.
+        - parameter cacheFile: The file `NSURL` from which to load author query data.
         - parameter context: The `NSManagedObjectContext` that will be used as the
                              basis for importing data. The operation will internally
                              construct a new `NSManagedObjectContext` that points
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( cacheFile: NSURL, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater ) {
+    init( cacheFile: NSURL, coreDataStack: CoreDataStack ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -38,11 +37,10 @@ class GeneralSearchResultsParseOperation: Operation {
         self.cacheFile = cacheFile
         self.context = coreDataStack.newChildContext()
         self.context.mergePolicy = NSOverwriteMergePolicy
-        self.updateResults = updateResults
         
         super.init()
 
-        name = "Parse General Search Results"
+        name = "Parse IAEBookItem"
     }
     
     override func execute() {
@@ -73,41 +71,30 @@ class GeneralSearchResultsParseOperation: Operation {
     
     private func parse( resultSet: [String: AnyObject] ) {
 
-        guard let start = resultSet["start"] as? Int else {
+        guard let items = resultSet["items"] as? [[String: AnyObject]] else {
+            
             finishWithError( nil )
             return
         }
         
-        guard let numFound = resultSet["numFound"] as? Int else {
+        guard 0 < items.count else {
+            
             finishWithError( nil )
             return
         }
-    
-        guard let results = resultSet["docs"] as? [[String: AnyObject]] else {
-            finishWithError( nil )
-            return
-        }
-
+        
         context.performBlock {
             
-            var index = Int64( start )
-            for result in results {
+            var index = 0
+            for item in items {
                 
-                if nil != OLGeneralSearchResult.parseJSON( 0, index: index, json: result, moc: self.context ) {
-                    
+                if let newItem = OLEBookItem.parseJSON( item, moc: self.context ) {
+                
                     index += 1
-                    
-//                    print( "\(newObject.index) \(newObject.title)" )
                 }
             }
 
             let error = self.saveContext()
-
-            if nil == error {
-                self.updateResults(
-                        SearchResults( start: Int( start ), numFound: Int( numFound ), pageSize: results.count )
-                    )
-            }
         
             self.finishWithError( error )
         }
@@ -135,8 +122,4 @@ class GeneralSearchResultsParseOperation: Operation {
         return error
     }
     
-    func Update( searchResults: SearchResults ) {
-        
-        self.searchResults = searchResults
-    }
 }

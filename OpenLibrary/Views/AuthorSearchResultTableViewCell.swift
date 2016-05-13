@@ -17,7 +17,7 @@ class AuthorSearchResultTableViewCell: OLTableViewCell {
         
         if let r = result {
             authorName.text = "\(r.sequence).\(r.index) \(r.name)"
-            authorInfo.text = "\(r.key) \(r.top_work!)"
+            authorInfo.text = "\(r.key) \(r.top_work)"
         } else {
             authorName.text = ""
             authorInfo.text = ""

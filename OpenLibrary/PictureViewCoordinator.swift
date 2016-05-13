@@ -19,6 +19,8 @@ class PictureViewCoordinator: OLQueryCoordinator {
     var imageID: Int = 0
     var pictureType = "a"
 
+    var imageGetOperation: ImageGetOperation?
+    
     init(
         operationQueue: OperationQueue,
         coreDataStack: CoreDataStack,
@@ -41,30 +43,39 @@ class PictureViewCoordinator: OLQueryCoordinator {
         
         if let pictureVC = pictureVC {
 
-            if !(pictureVC.displayImage( localURL )) {
+            if !( pictureVC.displayImage( localURL ) ) {
 
-                let getImageOperation =
-                    ImageGetOperation(
-                        numberID: imageID,
-                        imageKeyName: "id",
-                        localURL: localURL,
-                        size: "L",
-                        type: pictureType
-                    ) {
-                        [weak self] in
-                        
-                        if let strongSelf = self {
+                if nil == imageGetOperation {
+                    imageGetOperation =
+                        ImageGetOperation(
+                            numberID: imageID,
+                            imageKeyName: "id",
+                            localURL: localURL,
+                            size: "L",
+                            type: pictureType
+                        ) {
+                            [weak self] in
+                            
+                            if let strongSelf = self {
 
-                            dispatch_async( dispatch_get_main_queue() ) {
+                                dispatch_async( dispatch_get_main_queue() ) {
+                                    
+                                    strongSelf.pictureVC?.displayImage( strongSelf.localURL )
+                                }
                                 
-                                strongSelf.pictureVC?.displayImage( strongSelf.localURL )
+                                strongSelf.imageGetOperation = nil
                             }
-                        }
+                    }
+                    
+                    imageGetOperation!.userInitiated = true
+                    operationQueue.addOperation( imageGetOperation! )
                 }
-                
-                getImageOperation.userInitiated = true
-                operationQueue.addOperation( getImageOperation )
             }
         }
+    }
+    
+    func cancelOperations() {
+        
+        imageGetOperation?.cancel()
     }
 }

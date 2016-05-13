@@ -33,6 +33,11 @@
 		C412FE601CC3D47100EDB935 /* OLWorkDetail+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412FE5E1CC3D47100EDB935 /* OLWorkDetail+CoreDataProperties.swift */; };
 		C412FE611CC3D47100EDB935 /* OLTitleSearchResult+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412FE5F1CC3D47100EDB935 /* OLTitleSearchResult+CoreDataProperties.swift */; };
 		C412FE631CC3DFA200EDB935 /* LanguagesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412FE621CC3DFA200EDB935 /* LanguagesCoordinator.swift */; };
+		C4188A251CE4FD9500D02E19 /* OLEBookItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4188A231CE4FD9500D02E19 /* OLEBookItem+CoreDataProperties.swift */; };
+		C4188A261CE4FD9500D02E19 /* OLEBookItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4188A241CE4FD9500D02E19 /* OLEBookItem.swift */; };
+		C4188A2A1CE511D200D02E19 /* IAEBookItemDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4188A271CE511D200D02E19 /* IAEBookItemDownloadOperation.swift */; };
+		C4188A2B1CE511D200D02E19 /* IAEBookItemGetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4188A281CE511D200D02E19 /* IAEBookItemGetOperation.swift */; };
+		C4188A2C1CE511D200D02E19 /* IAEBookItemParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4188A291CE511D200D02E19 /* IAEBookItemParseOperation.swift */; };
 		C422A49D1CCAD08800A6B4A7 /* DeluxeDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C422A49C1CCAD08800A6B4A7 /* DeluxeDetailCoordinator.swift */; };
 		C422A49F1CCD22AC00A6B4A7 /* SegueWithUnfold.swift in Sources */ = {isa = PBXBuildFile; fileRef = C422A49E1CCD22AC00A6B4A7 /* SegueWithUnfold.swift */; };
 		C422A4A11CCD233700A6B4A7 /* UnfoldTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C422A4A01CCD233700A6B4A7 /* UnfoldTransition.swift */; };
@@ -60,6 +65,11 @@
 		C444C4F71CBF170D00CFD0E1 /* 96-book@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C444C4F51CBF170D00CFD0E1 /* 96-book@2x.png */; };
 		C444C4FA1CBF17C500CFD0E1 /* 253-person.png in Resources */ = {isa = PBXBuildFile; fileRef = C444C4F81CBF17C500CFD0E1 /* 253-person.png */; };
 		C444C4FB1CBF17C500CFD0E1 /* 253-person@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C444C4F91CBF17C500CFD0E1 /* 253-person@2x.png */; };
+		C45E81B91CE42C6D00307BAC /* OLEBookFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E81B71CE42C6D00307BAC /* OLEBookFile.swift */; };
+		C45E81BA1CE42C6D00307BAC /* OLEBookFile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E81B81CE42C6D00307BAC /* OLEBookFile+CoreDataProperties.swift */; };
+		C45E82091CE42CC900307BAC /* IAEBookInfoDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E82061CE42CC900307BAC /* IAEBookInfoDownloadOperation.swift */; };
+		C45E820A1CE42CC900307BAC /* IAEBookInfoGetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E82071CE42CC900307BAC /* IAEBookInfoGetOperation.swift */; };
+		C45E820B1CE42CC900307BAC /* IAEBookInfoParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E82081CE42CC900307BAC /* IAEBookInfoParseOperation.swift */; };
 		C4677E9F1C9CE35A0070CDFD /* UIImageView+DisplayFromURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4677E9E1C9CE35A0070CDFD /* UIImageView+DisplayFromURL.swift */; };
 		C4677EA11C9DDB7D0070CDFD /* OLManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4677EA01C9DDB7D0070CDFD /* OLManagedObject.swift */; };
 		C4677EA31C9DF4030070CDFD /* OLTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4677EA21C9DF4030070CDFD /* OLTableViewCell.swift */; };
@@ -212,6 +222,11 @@
 		C412FE5E1CC3D47100EDB935 /* OLWorkDetail+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "OLWorkDetail+CoreDataProperties.swift"; path = "Model/OLWorkDetail+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C412FE5F1CC3D47100EDB935 /* OLTitleSearchResult+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "OLTitleSearchResult+CoreDataProperties.swift"; path = "Model/OLTitleSearchResult+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C412FE621CC3DFA200EDB935 /* LanguagesCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguagesCoordinator.swift; path = Coordinators/LanguagesCoordinator.swift; sourceTree = "<group>"; };
+		C4188A231CE4FD9500D02E19 /* OLEBookItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "OLEBookItem+CoreDataProperties.swift"; path = "Model/OLEBookItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C4188A241CE4FD9500D02E19 /* OLEBookItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLEBookItem.swift; path = Model/OLEBookItem.swift; sourceTree = "<group>"; };
+		C4188A271CE511D200D02E19 /* IAEBookItemDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IAEBookItemDownloadOperation.swift; path = "App Operations/IAEBookItemDownloadOperation.swift"; sourceTree = "<group>"; };
+		C4188A281CE511D200D02E19 /* IAEBookItemGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IAEBookItemGetOperation.swift; path = "App Operations/IAEBookItemGetOperation.swift"; sourceTree = "<group>"; };
+		C4188A291CE511D200D02E19 /* IAEBookItemParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IAEBookItemParseOperation.swift; path = "App Operations/IAEBookItemParseOperation.swift"; sourceTree = "<group>"; };
 		C422A49C1CCAD08800A6B4A7 /* DeluxeDetailCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeluxeDetailCoordinator.swift; path = Coordinators/DeluxeDetailCoordinator.swift; sourceTree = "<group>"; };
 		C422A49E1CCD22AC00A6B4A7 /* SegueWithUnfold.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegueWithUnfold.swift; path = Transitions/SegueWithUnfold.swift; sourceTree = "<group>"; };
 		C422A4A01CCD233700A6B4A7 /* UnfoldTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UnfoldTransition.swift; path = Transitions/UnfoldTransition.swift; sourceTree = "<group>"; };
@@ -239,6 +254,11 @@
 		C444C4F51CBF170D00CFD0E1 /* 96-book@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "96-book@2x.png"; path = "Graphics/96-book@2x.png"; sourceTree = "<group>"; };
 		C444C4F81CBF17C500CFD0E1 /* 253-person.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "253-person.png"; path = "Graphics/253-person.png"; sourceTree = "<group>"; };
 		C444C4F91CBF17C500CFD0E1 /* 253-person@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "253-person@2x.png"; path = "Graphics/253-person@2x.png"; sourceTree = "<group>"; };
+		C45E81B71CE42C6D00307BAC /* OLEBookFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLEBookFile.swift; path = Model/OLEBookFile.swift; sourceTree = "<group>"; };
+		C45E81B81CE42C6D00307BAC /* OLEBookFile+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "OLEBookFile+CoreDataProperties.swift"; path = "Model/OLEBookFile+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C45E82061CE42CC900307BAC /* IAEBookInfoDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IAEBookInfoDownloadOperation.swift; path = "App Operations/IAEBookInfoDownloadOperation.swift"; sourceTree = "<group>"; };
+		C45E82071CE42CC900307BAC /* IAEBookInfoGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IAEBookInfoGetOperation.swift; path = "App Operations/IAEBookInfoGetOperation.swift"; sourceTree = "<group>"; };
+		C45E82081CE42CC900307BAC /* IAEBookInfoParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IAEBookInfoParseOperation.swift; path = "App Operations/IAEBookInfoParseOperation.swift"; sourceTree = "<group>"; };
 		C4677E9E1C9CE35A0070CDFD /* UIImageView+DisplayFromURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIImageView+DisplayFromURL.swift"; path = "Utility/UIImageView+DisplayFromURL.swift"; sourceTree = "<group>"; };
 		C4677EA01C9DDB7D0070CDFD /* OLManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLManagedObject.swift; path = Model/OLManagedObject.swift; sourceTree = "<group>"; };
 		C4677EA21C9DF4030070CDFD /* OLTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLTableViewCell.swift; path = Views/OLTableViewCell.swift; sourceTree = "<group>"; };
@@ -609,6 +629,10 @@
 				C412FE581CC3D45A00EDB935 /* OLAuthorDetail+CoreDataProperties.swift */,
 				C46E7E5A1C861EF500D2ED51 /* OLAuthorSearchResult.swift */,
 				C412FE591CC3D45A00EDB935 /* OLAuthorSearchResult+CoreDataProperties.swift */,
+				C45E81B71CE42C6D00307BAC /* OLEBookFile.swift */,
+				C45E81B81CE42C6D00307BAC /* OLEBookFile+CoreDataProperties.swift */,
+				C4188A241CE4FD9500D02E19 /* OLEBookItem.swift */,
+				C4188A231CE4FD9500D02E19 /* OLEBookItem+CoreDataProperties.swift */,
 				C4E8638F1C99D9F0002C0E6B /* OLEditionDetail.swift */,
 				C412FE5A1CC3D45A00EDB935 /* OLEditionDetail+CoreDataProperties.swift */,
 				C40E97F01CC6C2E10013A3F5 /* OLGeneralSearchResult.swift */,
@@ -649,6 +673,12 @@
 				C40E97F31CC7D1540013A3F5 /* GeneralSearchResultsParseOperation.swift */,
 				C42D61D61C87D63800909D43 /* ImageGetOperation.swift */,
 				C42D61D71C87D63800909D43 /* ImagelDownloadOperation.swift */,
+				C45E82061CE42CC900307BAC /* IAEBookInfoDownloadOperation.swift */,
+				C45E82071CE42CC900307BAC /* IAEBookInfoGetOperation.swift */,
+				C45E82081CE42CC900307BAC /* IAEBookInfoParseOperation.swift */,
+				C4188A271CE511D200D02E19 /* IAEBookItemDownloadOperation.swift */,
+				C4188A281CE511D200D02E19 /* IAEBookItemGetOperation.swift */,
+				C4188A291CE511D200D02E19 /* IAEBookItemParseOperation.swift */,
 				C412FE501CC29D2400EDB935 /* LanguagesDownloadOperation.swift */,
 				C412FE4F1CC29D2400EDB935 /* LanguagesGetOperation.swift */,
 				C412FE4E1CC29D2400EDB935 /* LanguagesParseOperation.swift */,
@@ -1000,6 +1030,7 @@
 			files = (
 				C41082191CBA961500319B83 /* TitleSearchOperation.swift in Sources */,
 				C4DA1F7E1C8A329B00DFA4BF /* AuthorWorksParseOperation.swift in Sources */,
+				C45E820B1CE42CC900307BAC /* IAEBookInfoParseOperation.swift in Sources */,
 				C4E35E7E1C7E07D40015D187 /* NSOperation+Operations.swift in Sources */,
 				C4817C1E1CA37DC300BDCD4D /* WorkDetailGetOperation.swift in Sources */,
 				C422A4A11CCD233700A6B4A7 /* UnfoldTransition.swift in Sources */,
@@ -1012,6 +1043,7 @@
 				C4E35E7C1C7E07D40015D187 /* NegatedCondition.swift in Sources */,
 				C4E35EAA1C7E4CD90015D187 /* AuthorSearchResultTableViewCell.swift in Sources */,
 				C4E35EC91C80DE760015D187 /* String+PercentEncoding.swift in Sources */,
+				C45E82091CE42CC900307BAC /* IAEBookInfoDownloadOperation.swift in Sources */,
 				C4E35E231C7E07950015D187 /* AppDelegate.swift in Sources */,
 				C49BDD1C1CB6EC0900A2EEEF /* EditionDetailCoordinator.swift in Sources */,
 				C4E35E861C7E07D40015D187 /* ReachabilityCondition.swift in Sources */,
@@ -1048,6 +1080,7 @@
 				C4DA1F801C8A5AA700DFA4BF /* OLAuthorDetailWorksTableViewController.swift in Sources */,
 				C41082141CB9E13B00319B83 /* OLTitleSearchResult.swift in Sources */,
 				C4DA1F7B1C8A329B00DFA4BF /* AuthorWorksGetOperation.swift in Sources */,
+				C4188A2A1CE511D200D02E19 /* IAEBookItemDownloadOperation.swift in Sources */,
 				C4F00C551CD929D6002D7E14 /* DeluxeDetailSubheadingTableViewCell.swift in Sources */,
 				C4677EA31C9DF4030070CDFD /* OLTableViewCell.swift in Sources */,
 				C412FE521CC29D2400EDB935 /* LanguagesGetOperation.swift in Sources */,
@@ -1082,12 +1115,14 @@
 				C4F00C531CD929AD002D7E14 /* DeluxeDetailHeadingTableViewCell.swift in Sources */,
 				C4E35E731C7E07D40015D187 /* CloudCondition.swift in Sources */,
 				C412FE561CC2C99800EDB935 /* OLLanguage+CoreDataProperties.swift in Sources */,
+				C4188A261CE4FD9500D02E19 /* OLEBookItem.swift in Sources */,
 				C4E35E751C7E07D40015D187 /* Dictionary+Operations.swift in Sources */,
 				C42DBE6B1CBD68740048788E /* SegueWithImageZoom.swift in Sources */,
 				C412FE531CC29D2400EDB935 /* LanguagesDownloadOperation.swift in Sources */,
 				C4EF99D51CA3707900BEF2D3 /* OLWorkDetailEditionsTableViewController.swift in Sources */,
 				C410821B1CBA961500319B83 /* TitleSearchResultsDownloadOperation.swift in Sources */,
 				C4EF99DE1CA3714900BEF2D3 /* WorkEditionsCoordinator.swift in Sources */,
+				C4188A2B1CE511D200D02E19 /* IAEBookItemGetOperation.swift in Sources */,
 				C4E35E9B1C7E0BB90015D187 /* LocationOperation.swift in Sources */,
 				C4E863951C99E951002C0E6B /* AuthorEditionsGetOperation.swift in Sources */,
 				C4E35E7B1C7E07D40015D187 /* MutuallyExclusive.swift in Sources */,
@@ -1103,6 +1138,8 @@
 				C4E35E781C7E07D40015D187 /* HealthCondition.swift in Sources */,
 				C4677E9F1C9CE35A0070CDFD /* UIImageView+DisplayFromURL.swift in Sources */,
 				C4F00C591CD96D4E002D7E14 /* OLDeluxeDetailCoordinator.swift in Sources */,
+				C4188A2C1CE511D200D02E19 /* IAEBookItemParseOperation.swift in Sources */,
+				C45E81B91CE42C6D00307BAC /* OLEBookFile.swift in Sources */,
 				C410821C1CBA961500319B83 /* TitleSearchResultsParseOperation.swift in Sources */,
 				C4AB16E41CDA801100D6DF05 /* DeluxeDetailTableViewCell.swift in Sources */,
 				C42DBE6F1CBD68740048788E /* ZoomTransition.swift in Sources */,
@@ -1110,6 +1147,7 @@
 				C4E35E841C7E07D40015D187 /* PassbookCondition.swift in Sources */,
 				C410821A1CBA961500319B83 /* TitleSearchResultsDeleteOperation.swift in Sources */,
 				C412FE601CC3D47100EDB935 /* OLWorkDetail+CoreDataProperties.swift in Sources */,
+				C45E820A1CE42CC900307BAC /* IAEBookInfoGetOperation.swift in Sources */,
 				C4E35E761C7E07D40015D187 /* ExclusivityController.swift in Sources */,
 				C422A4A31CD1328100A6B4A7 /* UncoverBottomZoomTransition.swift in Sources */,
 				C40E97F81CC7D1540013A3F5 /* GeneralSearchResultsDownloadOperation.swift in Sources */,
@@ -1125,6 +1163,7 @@
 				C46E7E591C861EE900D2ED51 /* AuthorNameSearchResultsParseOperation.swift in Sources */,
 				C430E9CC1CD2B2AC007E15AD /* DeluxeDetailBlockTableViewCell.swift in Sources */,
 				C4E35E831C7E07D40015D187 /* OperationQueue.swift in Sources */,
+				C45E81BA1CE42C6D00307BAC /* OLEBookFile+CoreDataProperties.swift in Sources */,
 				C4E35EC01C7EA3350015D187 /* NetworkObserver.swift in Sources */,
 				C42D61D31C8738CC00909D43 /* AuthorDetailDownloadOperation.swift in Sources */,
 				C4E35E821C7E07D40015D187 /* OperationObserver.swift in Sources */,
@@ -1132,6 +1171,7 @@
 				C4E863941C99E951002C0E6B /* AuthorEditionsDownloadOperation.swift in Sources */,
 				C4E35E8A1C7E07D40015D187 /* UIUserNotifications+Operations.swift in Sources */,
 				C412FE631CC3DFA200EDB935 /* LanguagesCoordinator.swift in Sources */,
+				C4188A251CE4FD9500D02E19 /* OLEBookItem+CoreDataProperties.swift in Sources */,
 				C4E35E881C7E07D40015D187 /* SilentCondition.swift in Sources */,
 				C42D61D51C8738CC00909D43 /* AuthorDetailParseOperation.swift in Sources */,
 				C4E35E851C7E07D40015D187 /* PhotosCondition.swift in Sources */,

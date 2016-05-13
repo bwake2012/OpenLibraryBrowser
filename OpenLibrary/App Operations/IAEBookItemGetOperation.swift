@@ -1,38 +1,39 @@
-//  WorkDetailGetOperation.swift
+//  IAEBookItemGetOperation.swift
 //  OpenLibrary
 //
-//  Created by Bob Wakefield on 3/2/16.
+//  Created by Bob Wakefield on 2/24/16.
 //  Copyright © 2016 Bob Wakefield. All rights reserved.
 //
 //  Modified from code in the Apple sample app Earthquakes in the Advanced NSOperations project
+
+//  https://openlibrary.org/works/OL262759W/editions.json?*=
 
 import CoreData
 
 import BNRCoreDataStack
 
-/// A composite `Operation` to both download and parse Work search result data.
-class WorkDetailGetOperation: GroupOperation {
+/// A composite `Operation` to both download and parse work editions data.
+class IAEBookItemGetOperation: GroupOperation {
     // MARK: Properties
-    var objectID: NSManagedObjectID?
     
-    let downloadOperation: WorkDetailDownloadOperation
-    let parseOperation: WorkDetailParseOperation
+    let downloadOperation: IAEBookItemDownloadOperation
+    let parseOperation: IAEBookItemParseOperation
    
     private var hasProducedAlert = false
     
     /**
         - parameter context: The `NSManagedObjectContext` into which the parsed
-                             Work query results will be imported.
+                             author query results will be imported.
 
         - parameter completionHandler: The handler to call after downloading and
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, coreDataStack: CoreDataStack, resultHandler: ObjectResultClosure, completionHandler: Void -> Void ) {
+    init( editionKey: String, coreDataStack: CoreDataStack, completionHandler: Void -> Void ) {
 
         let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
 
-        let cacheFile = cachesFolder.URLByAppendingPathComponent("WorkDetailResults.json")
+        let cacheFile = cachesFolder.URLByAppendingPathComponent("InternetArchiveEBookItems.json")
         
         /*
             This operation is made of three child operations:
@@ -42,8 +43,8 @@ class WorkDetailGetOperation: GroupOperation {
         
             There is an optional operation 0 to delete the existing contents of the Core Data store
         */
-        downloadOperation = WorkDetailDownloadOperation( queryText: queryText, cacheFile: cacheFile )
-        parseOperation = WorkDetailParseOperation( cacheFile: cacheFile, coreDataStack: coreDataStack, resultHandler: resultHandler )
+        downloadOperation = IAEBookItemDownloadOperation( editionKey: editionKey, cacheFile: cacheFile )
+        parseOperation = IAEBookItemParseOperation( cacheFile: cacheFile, coreDataStack: coreDataStack )
         
         let finishOperation = NSBlockOperation( block: completionHandler )
         
@@ -51,19 +52,17 @@ class WorkDetailGetOperation: GroupOperation {
         parseOperation.addDependency(downloadOperation)
         finishOperation.addDependency(parseOperation)
         
-        super.init( operations: [downloadOperation, parseOperation, finishOperation] )
+        let operations = [downloadOperation, parseOperation, finishOperation]
+        super.init( operations: operations )
 
-        addCondition( MutuallyExclusive<WorkDetailGetOperation>() )
+        addCondition( MutuallyExclusive<IAEBookItemGetOperation>() )
         
-        name = "Get Work Detail"
+        name = "Get IAEBookItems"
     }
     
     override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
         if let firstError = errors.first where (operation === downloadOperation || operation === parseOperation) {
             produceAlert(firstError)
-        } else if operation === parseOperation {
-            
-            objectID = parseOperation.objectID
         }
     }
     
@@ -94,7 +93,7 @@ class WorkDetailGetOperation: GroupOperation {
             case failedJSON:
                 // We failed because the JSON was malformed.
                 alert.title = "Unable to Download"
-                alert.message = "Cannot parse Work Detail results. Try again later."
+                alert.message = "Cannot parse Work Editions results. Try again later."
 
             default:
                 return

@@ -30,6 +30,13 @@ class OLDeluxeDetailTableViewController: UITableViewController {
         DeluxeDetailLinkTableViewCell.registerCell( tableView )
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        
+        queryCoordinator?.cancelOperations()
+        
+        super.viewWillDisappear( animated )
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if "zoomDeluxeDetailImage" == segue.identifier {

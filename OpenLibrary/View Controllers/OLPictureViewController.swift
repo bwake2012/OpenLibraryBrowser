@@ -31,7 +31,17 @@ class OLPictureViewController: UIViewController {
             queryCoordinator.updateUI()
         }
     }
+    
+    override func viewWillDisappear(animated: Bool) {
 
+        if let queryCoordinator = queryCoordinator {
+            
+            queryCoordinator.cancelOperations()
+        }
+        
+        super.viewWillDisappear( animated )
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

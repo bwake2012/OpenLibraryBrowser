@@ -32,7 +32,7 @@
                     <constraint firstItem="IV9-di-edx" firstAttribute="centerY" secondItem="hWR-GX-g7U" secondAttribute="centerY" id="YMG-MY-06O"/>
                     <constraint firstItem="IV9-di-edx" firstAttribute="centerX" secondItem="hWR-GX-g7U" secondAttribute="centerX" id="gqg-Wp-JJw"/>
                     <constraint firstItem="hWR-GX-g7U" firstAttribute="leading" secondItem="F18-x3-RBU" secondAttribute="leadingMargin" id="km4-rE-rXg"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="hWR-GX-g7U" secondAttribute="bottom" id="peL-Oq-GOv"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="hWR-GX-g7U" secondAttribute="bottom" priority="990" id="peL-Oq-GOv"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
