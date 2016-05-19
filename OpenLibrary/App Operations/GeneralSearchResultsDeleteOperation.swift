@@ -24,11 +24,13 @@ class GeneralSearchResultsDeleteOperation: Operation {
         
         let fetchRequest = NSFetchRequest( entityName: OLGeneralSearchResult.entityName )
         let deleteRequest = NSBatchDeleteRequest( fetchRequest: fetchRequest )
+        deleteRequest.resultType = .ResultTypeObjectIDs
         
         do {
 
-            try deleteContext.persistentStoreCoordinator?.executeRequest( deleteRequest, withContext: self.deleteContext )
-
+            try deleteContext.persistentStoreCoordinator?.executeRequest(
+                        deleteRequest, withContext: self.deleteContext
+                    )
         } catch let error as NSError {
             
             // TODO: handle the error

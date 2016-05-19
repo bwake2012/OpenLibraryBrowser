@@ -22,7 +22,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControl
     
     let tableVC: UITableViewController
 
-    var GeneralSearchOperation: Operation?
+    var generalSearchOperation: Operation?
     
     private lazy var fetchedResultsController: FetchedOLGeneralSearchResultController = {
         
@@ -47,7 +47,8 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControl
         return controller
     }()
     
-    var titleText = ""
+    var searchKeys = [String: String]()
+    
     var searchResults = SearchResults()
     
     var highWaterMark = 0
@@ -115,6 +116,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControl
     
     func updateUI( searchResult: OLGeneralSearchResult, cell: GeneralSearchResultTableViewCell ) {
         
+        print( "\(searchResult.title) \(searchResult.hasImage ? "has" : "has no") cover image")
         if searchResult.hasImage {
             
             let localURL = searchResult.localURL( "S" )
@@ -122,7 +124,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControl
                 
                 let url = localURL
                 let imageGetOperation =
-                    ImageGetOperation( numberID: searchResult.firstImageID, imageKeyName: "id", localURL: url, size: "S", type: "a" ) {
+                    ImageGetOperation( numberID: searchResult.firstImageID, imageKeyName: "id", localURL: url, size: "S", type: "b" ) {
                         
                         dispatch_async( dispatch_get_main_queue() ) {
                             
@@ -150,7 +152,9 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControl
         tableVC.tableView.reloadData()
     }
 
-    func newQuery( titleText: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
+    func newQuery( newSearchKeys: [String: String], userInitiated: Bool, refreshControl: UIRefreshControl? ) {
+        
+        self.searchKeys = newSearchKeys
         
         if numberOfSections() > 0 {
             
@@ -158,16 +162,15 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControl
             tableVC.tableView.scrollToRowAtIndexPath( top, atScrollPosition: UITableViewScrollPosition.Top, animated: true );
         }
         
-        if titleText != self.titleText && nil == GeneralSearchOperation {
+        if nil == generalSearchOperation {
             
             self.searchResults = SearchResults()
-            self.titleText = titleText
             self.highWaterMark = 0
             self.nextOffset = kPageSize
             
-            GeneralSearchOperation =
+            generalSearchOperation =
                 GeneralSearchOperation(
-                        queryText: titleText,
+                        queryParms: newSearchKeys,
                         offset: highWaterMark, limit: kPageSize,
                         coreDataStack: coreDataStack,
                         updateResults: self.updateResults
@@ -181,23 +184,23 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControl
                                     refreshControl?.endRefreshing()
                                     strongSelf.updateUI()
                                 }
-                            strongSelf.GeneralSearchOperation = nil
+                            strongSelf.generalSearchOperation = nil
                         }
                     }
             
-            GeneralSearchOperation!.userInitiated = userInitiated
-            operationQueue.addOperation( GeneralSearchOperation! )
+            generalSearchOperation!.userInitiated = userInitiated
+            operationQueue.addOperation( generalSearchOperation! )
         }
     }
     
     func nextQueryPage( offset: Int ) -> Void {
         
-        if !titleText.isEmpty && nil == self.GeneralSearchOperation {
+        if !searchKeys.isEmpty && nil == self.generalSearchOperation {
             
             nextOffset = offset + kPageSize
-            GeneralSearchOperation =
+            generalSearchOperation =
                 GeneralSearchOperation(
-                        queryText: self.titleText,
+                        queryParms: self.searchKeys,
                         offset: offset, limit: kPageSize,
                         coreDataStack: coreDataStack,
                         updateResults: self.updateResults
@@ -210,12 +213,12 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControl
                     }
                     if let strongSelf = self {
                         
-                        strongSelf.GeneralSearchOperation = nil
+                        strongSelf.generalSearchOperation = nil
                     }
             }
-            
-            GeneralSearchOperation!.userInitiated = false
-            operationQueue.addOperation( GeneralSearchOperation! )
+
+            generalSearchOperation!.userInitiated = false
+            operationQueue.addOperation( generalSearchOperation! )
         }
     }
     
@@ -231,8 +234,8 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControl
     private func needAnotherPage( index: Int ) -> Bool {
         
         return
-            nil == self.GeneralSearchOperation &&
-            !titleText.isEmpty &&
+            nil == self.generalSearchOperation &&
+            !searchKeys.isEmpty &&
             highWaterMark < searchResults.numFound &&
             index >= ( self.fetchedResultsController.count - 1 )
     }
@@ -247,7 +250,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControl
     // MARK: FetchedResultsControllerDelegate
     func fetchedResultsControllerDidPerformFetch(controller: FetchedResultsController< OLGeneralSearchResult >) {
 
-        if titleText.isEmpty {
+        if searchKeys.isEmpty {
             self.highWaterMark = fetchedResultsController.count
             self.searchResults = SearchResults( start: 0, numFound: highWaterMark, pageSize: 100 )
             tableVC.tableView.reloadData()

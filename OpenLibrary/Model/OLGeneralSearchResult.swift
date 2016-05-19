@@ -127,7 +127,7 @@ private class ParsedSearchResult: OpenLibraryObject {
         let author_key         = json["author_key"] as? [String] ?? [String]()
         let author_name        = json["author_name"] as? [String] ?? [String]()
         let cover_edition_key  = json["cover_edition_key"] as? String ?? ""
-        let cover_i            = json["cover_i"] as? Int64 ?? 0
+        let cover_i            = json["cover_i"] as? Int ?? 0
         let ebook_count_i      = json["ebook_count_i"] as? Int64 ?? 0
         let edition_count      = json["edition_count"] as? Int64 ?? 0
         let edition_key        = json["edition_key"] as? [String] ?? [String]()
@@ -160,7 +160,7 @@ private class ParsedSearchResult: OpenLibraryObject {
             author_key: author_key,
             author_name: author_name,
             cover_edition_key: cover_edition_key,
-            cover_i: cover_i,
+            cover_i: Int64( cover_i ),
             ebook_count_i: ebook_count_i,
             edition_count: edition_count,
             edition_key: edition_key,

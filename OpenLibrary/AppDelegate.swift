@@ -103,5 +103,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 )
     }
 
+    func getGeneralSearchCoordinator( destVC: OLSearchResultsTableViewController ) -> GeneralSearchResultsCoordinator {
+        
+        return
+            GeneralSearchResultsCoordinator(
+                tableVC: destVC,
+                coreDataStack: coreDataStack!,
+                operationQueue: operationQueue
+        )
+    }
+    
 }
 

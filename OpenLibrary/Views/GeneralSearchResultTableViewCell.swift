@@ -1,31 +1,31 @@
 //
-//  OLTitleSearchResultTableviewCell.swift
+//  GeneralSearchResultTableViewCell.swift
 //  OpenLibrary
 //
-//  Created by Bob Wakefield on 4/10/2016.
+//  Created by Bob Wakefield on 5/18/16.
 //  Copyright © 2016 Bob Wakefield. All rights reserved.
 //
 
 import UIKit
 
-class TitleSearchResultTableViewCell: OLTableViewCell {
+class GeneralSearchResultTableViewCell: OLTableViewCell {
 
     @IBOutlet weak var titleText: UILabel!
-    @IBOutlet weak var subtitleText: UILabel!
+    @IBOutlet weak var authorName: UILabel!
     
-    func configure( titleResult: OLTitleSearchResult? ) {
+    func configure( generalResult: OLGeneralSearchResult? ) {
         
-        if let r = titleResult {
+        if let r = generalResult {
             titleText.text = "\(r.sequence).\(r.index) \(r.title)"
-            subtitleText.text = "\(r.key) \(r.subtitle)"
+            authorName.text = "\(r.key) \(r.author_name)"
         } else {
             titleText.text = ""
-            subtitleText.text = ""
+            authorName.text = ""
         }
         
         clearCurrentImage()
     }
-
+    
     override func clearCurrentImage() -> Void {
         
         currentImageURL = nil

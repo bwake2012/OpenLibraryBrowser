@@ -13,8 +13,10 @@ import BNRCoreDataStack
 
 enum SearchType: Int {
     
+    case searchUnknown = -1
     case searchAuthor = 0
     case searchTitle = 1
+    case searchGeneral = 2
 }
 
 class OLSearchResultsTableViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate {
@@ -34,11 +36,22 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
         return appDelegate.getTitleSearchCoordinator( self )
     }()
     
+    lazy var generalSearchCoordinator: GeneralSearchResultsCoordinator = {
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        return appDelegate.getGeneralSearchCoordinator( self )
+    }()
+    
     var searchController = UISearchController( searchResultsController: nil )
     var searchType: SearchType = .searchAuthor
+    var bookSearchVC: OLBookSearchViewController?
 
+    @IBAction func presentGeneralSearch(sender: UIBarButtonItem) {
+    }
     // MARK: UIViewController
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         // Do any additional setup after loading the view, typically from a nib.
@@ -57,6 +70,10 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
         
         searchController.searchBar.sizeToFit()
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        
+    }
         
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -65,21 +82,36 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if let indexPath = self.tableView.indexPathForSelectedRow {
-            if segue.identifier == "displayAuthorDetail" {
+        if segue.identifier == "openBookSearch" {
             
-                if let destVC = segue.destinationViewController as? OLAuthorDetailViewController {
+            if let destVC = segue.destinationViewController as? OLBookSearchViewController {
+                if let delegate = segue as? UIViewControllerTransitioningDelegate {
                     
-                    searchController.active = false
-                    authorSearchCoordinator.installAuthorDetailCoordinator( destVC, indexPath: indexPath )
+                    destVC.transitioningDelegate = delegate
+                    destVC.queryCoordinator = self.generalSearchCoordinator
+                    
+                    self.bookSearchVC = destVC
                 }
+            }
 
-            } else if segue.identifier == "displaySearchWorkDetail" {
+        } else {
+
+            if let indexPath = self.tableView.indexPathForSelectedRow {
+                if segue.identifier == "displayAuthorDetail" {
                 
-                if let destVC = segue.destinationViewController as? OLWorkDetailViewController {
+                    if let destVC = segue.destinationViewController as? OLAuthorDetailViewController {
+                        
+                        searchController.active = false
+                        authorSearchCoordinator.installAuthorDetailCoordinator( destVC, indexPath: indexPath )
+                    }
+
+                } else if segue.identifier == "displaySearchWorkDetail" {
                     
-                    searchController.active = false
-                    titleSearchCoordinator.installTitleDetailCoordinator( destVC, indexPath: indexPath )
+                    if let destVC = segue.destinationViewController as? OLWorkDetailViewController {
+                        
+                        searchController.active = false
+                        titleSearchCoordinator.installTitleDetailCoordinator( destVC, indexPath: indexPath )
+                    }
                 }
             }
         }
@@ -94,6 +126,8 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
             return authorSearchCoordinator.numberOfSections() ?? 1
         } else if .searchTitle == searchType {
             return titleSearchCoordinator.numberOfSections() ?? 1
+        } else if .searchGeneral == searchType {
+            return generalSearchCoordinator.numberOfSections() ?? 1
         } else {
             assert( false )
             return 1
@@ -109,6 +143,10 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
         } else if .searchTitle == searchType {
             
             return titleSearchCoordinator.numberOfRowsInSection( section ) ?? 0
+
+        } else if .searchGeneral == searchType {
+            
+            return generalSearchCoordinator.numberOfRowsInSection( section ) ?? 0
         }
         
         return 0
@@ -116,23 +154,33 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
+        var cell: UITableViewCell? = nil
         if .searchAuthor == searchType {
 
             let authorCell = tableView.dequeueReusableCellWithIdentifier("authorSearchResult", forIndexPath: indexPath) as! AuthorSearchResultTableViewCell
             
             authorSearchCoordinator.displayToCell( authorCell, indexPath: indexPath )
             
-            return authorCell
+            cell = authorCell
 
-        } else {
+        } else if .searchTitle == searchType {
             
             let titleCell = tableView.dequeueReusableCellWithIdentifier("titleSearchResult", forIndexPath: indexPath) as! TitleSearchResultTableViewCell
             
             titleSearchCoordinator.displayToCell( titleCell, indexPath: indexPath )
             
-            return titleCell
+            cell = titleCell
+            
+        } else if .searchGeneral == searchType {
+            
+            let generalCell = tableView.dequeueReusableCellWithIdentifier( "generalSearchResult", forIndexPath: indexPath) as! GeneralSearchResultTableViewCell
+            
+            generalSearchCoordinator.displayToCell( generalCell, indexPath: indexPath )
+            
+            cell = generalCell
         }
-        
+     
+        return cell!
     }
     
     // MARK: Search
@@ -141,28 +189,31 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
 
         if SearchType( rawValue: scopeIndex ) == .searchAuthor {
 
-            self.title = "Author Search"
+            self.title = "Author"
             authorSearchCoordinator.newQuery( authorName, userInitiated: userInitiated, refreshControl: self.refreshControl )
         
         } else if SearchType( rawValue: scopeIndex ) == .searchTitle {
         
-            self.title = "Title Search"
+            self.title = "Title"
             titleSearchCoordinator.newQuery( authorName, userInitiated: userInitiated, refreshControl: self.refreshControl )
+            
+        } else if SearchType( rawValue: scopeIndex ) == .searchGeneral {
+            
+            self.title = "Search"
         }
         
-        if scopeIndex != searchType.rawValue {
-            
-            searchType = SearchType( rawValue: scopeIndex )!
-            tableView.reloadData()
-        }
+        searchType = SearchType( rawValue: scopeIndex )!
+        tableView.reloadData()
     }
     
     func clearSearchResults() {
         
-        if searchType == .searchAuthor {
+        if .searchAuthor == searchType {
             authorSearchCoordinator.clearQuery()
-        } else {
+        } else if .searchTitle == searchType {
             titleSearchCoordinator.clearQuery()
+        } else if .searchGeneral == searchType {
+            generalSearchCoordinator.clearQuery()
         }
     }
     
@@ -170,8 +221,10 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
         
         if searchType == .searchAuthor {
             authorSearchCoordinator.updateUI()
-        } else {
+        } else if .searchTitle == searchType {
             titleSearchCoordinator.updateUI()
+        } else if .searchGeneral == searchType {
+            generalSearchCoordinator.updateUI()
         }
     }
 
@@ -200,5 +253,25 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
         
         
     }
+    
+    // MARK: Search View Controller
+    
+    func presentSearch() -> Void {
+        
+        performSegueWithIdentifier( "openBookSearch", sender: self )
+    }
+    
+    @IBAction func dismiss(segue: UIStoryboardSegue) {
+        
+        if let vc = bookSearchVC {
+            if !vc.searchKeys.isEmpty {
+                
+                searchType = .searchGeneral
+                tableView.reloadData()
+            }
+        }
+    }
+
+    
 }
 
