@@ -71,7 +71,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
 
             showLinkedWebSite( vc, url: NSURL( string: obj.value ) )
         
-        } else if .image == obj.type {
+        } else if .imageAuthor == obj.type || .imageBook == obj.type {
             
             vc.performSegueWithIdentifier( "zoomDeluxeDetailImage", sender: self )
         }
@@ -102,15 +102,18 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
                 }
                 break
                 
-            case .image:
+            case .imageAuthor, .imageBook:
                 if let imageCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? DeluxeDetailImageTableViewCell {
                     
                     if let url = NSURL( string: object.value ) {
                         if !imageCell.displayFromURL( url ) {
                             
                             if nil == imageGetOperation {
+                                
+                                let imageType = .imageAuthor == object.type ? "a" : "b"
+                                
                                 imageGetOperation =
-                                    ImageGetOperation( stringID: object.caption, imageKeyName: "ID", localURL: url, size: "M", type: "a" ) {
+                                    ImageGetOperation( stringID: object.caption, imageKeyName: "ID", localURL: url, size: "M", type: imageType ) {
                                         
                                         [weak self] in
                                         
