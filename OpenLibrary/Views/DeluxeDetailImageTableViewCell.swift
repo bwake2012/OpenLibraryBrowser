@@ -27,7 +27,8 @@ extension DeluxeDetailImageTableViewCell {
     
     override class func registerCell( tableView: UITableView ) {
         
-        registerCell( tableView, className: DeluxeDetail.image.rawValue )
+        registerCell( tableView, className: DeluxeDetail.imageAuthor.rawValue )
+        registerCell( tableView, className: DeluxeDetail.imageBook.rawValue )
     }
     
 }
