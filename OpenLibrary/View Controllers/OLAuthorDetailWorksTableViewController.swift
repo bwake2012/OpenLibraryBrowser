@@ -1,5 +1,5 @@
 //
-//  OLAuthorDetailBookTableViewController.swift
+//  OLAuthorDetailWorksTableViewController.swift
 //  OpenLibrary
 //
 //  Created by Bob Wakefield on 3/4/16.

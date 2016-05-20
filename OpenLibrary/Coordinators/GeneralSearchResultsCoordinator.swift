@@ -116,7 +116,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControl
     
     func updateUI( searchResult: OLGeneralSearchResult, cell: GeneralSearchResultTableViewCell ) {
         
-        print( "\(searchResult.title) \(searchResult.hasImage ? "has" : "has no") cover image")
+//        print( "\(searchResult.title) \(searchResult.hasImage ? "has" : "has no") cover image")
         if searchResult.hasImage {
             
             let localURL = searchResult.localURL( "S" )
@@ -316,21 +316,30 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControl
     
     // MARK: set coordinator for view controller
     
-    func setTitleDetailCoordinator( destVC: OLWorkDetailViewController, indexPath: NSIndexPath ) {
+    func installAuthorDetailCoordinator( destVC: OLAuthorDetailViewController, indexPath: NSIndexPath ) {
+        
+        destVC.queryCoordinator =
+            AuthorDetailCoordinator(
+                operationQueue: operationQueue,
+                coreDataStack: coreDataStack,
+                searchInfo: objectAtIndexPath( indexPath )!,
+                authorDetailVC: destVC
+        )
+    }
+    
+    func installTitleDetailCoordinator( destVC: OLWorkDetailViewController, indexPath: NSIndexPath ) {
         
         if let searchResult = objectAtIndexPath( indexPath ) {
-        
+            
             destVC.queryCoordinator =
                 WorkDetailCoordinator(
-                        authorNames: searchResult.author_name,
-                        operationQueue: operationQueue,
-                        coreDataStack: coreDataStack,
-                        workKey: searchResult.key,
-                        workDetailVC: destVC
-                    )
+                    authorNames: searchResult.author_name,
+                    operationQueue: operationQueue,
+                    coreDataStack: coreDataStack,
+                    workKey: searchResult.key,
+                    workDetailVC: destVC
+            )
             
         }
     }
-    
-
 }

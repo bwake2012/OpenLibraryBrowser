@@ -12,15 +12,43 @@ import CoreData
 
 import BNRCoreDataStack
 
-let kWorkDetailCache = "workDetailSearch"
+private let kWorkDetailCache = "workDetailSearch"
 
-class WorkDetailCoordinator: OLQueryCoordinator {
+class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate {
     
     weak var workDetailVC: OLWorkDetailViewController?
 
     var authorNames = [String]()
-    var searchInfo: OLWorkDetail?
+    var workDetail: OLWorkDetail?
     var workKey = ""
+    
+    var workDetailGetOperation: Operation?
+    
+    typealias FetchedWorkDetailController    = FetchedResultsController< OLWorkDetail >
+    typealias FetchedWorkDetailChange        = FetchedResultsObjectChange< OLWorkDetail >
+    typealias FetchedWorkDetailSectionChange = FetchedResultsSectionChange< OLWorkDetail >
+    
+    private lazy var fetchedResultsController: FetchedWorkDetailController = {
+        
+        let fetchRequest = NSFetchRequest( entityName: OLWorkDetail.entityName )
+        
+        let key = self.workKey
+        fetchRequest.predicate = NSPredicate( format: "key==%@", "\(key)" )
+        
+        fetchRequest.sortDescriptors =
+            [
+                NSSortDescriptor(key: "title", ascending: true)
+            ]
+        
+        let frc = FetchedWorkDetailController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: self.coreDataStack.mainQueueContext,
+            sectionNameKeyPath: nil,
+            cacheName: kWorkDetailCache )
+        
+        frc.setDelegate( self )
+        return frc
+    }()
     
     init(
             authorNames: [String],
@@ -31,7 +59,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         ) {
         
         self.authorNames = authorNames
-        self.searchInfo = searchInfo
+        self.workDetail = searchInfo
         self.workDetailVC = workDetailVC
 
         super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
@@ -48,26 +76,11 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         assert( !workKey.isEmpty )
         
         self.authorNames = authorNames
-        self.searchInfo = nil
+        self.workDetail = nil
         self.workKey = workKey
         self.workDetailVC = workDetailVC
         
         super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
-        
-        let workDetailGetOperation =
-            WorkDetailGetOperation( queryText: workKey, coreDataStack: coreDataStack, resultHandler: getSearchInfo ) {
-                
-                [weak self] in
-                
-                if let strongSelf = self {
-                    dispatch_async( dispatch_get_main_queue() ) {
-                        
-                        strongSelf.updateUI()
-                    }
-                }
-        }
-        workDetailGetOperation.userInitiated = true
-        operationQueue.addOperation( workDetailGetOperation )
     }
     
     func updateUI( workDetail: OLWorkDetail ) {
@@ -105,34 +118,141 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         }
     }
     
-    func updateUI() -> Void {
-        
-        if let workDetail = searchInfo {
-            updateUI( workDetail )
-        }
-    }
-    
     func getSearchInfo( objectID: NSManagedObjectID ) {
         
         dispatch_async( dispatch_get_main_queue() ) {
             if let workDetail = self.coreDataStack.mainQueueContext.objectWithID( objectID ) as? OLWorkDetail {
                 
-                self.searchInfo = workDetail
+                self.workDetail = workDetail
             }
         }
     }
     
+    func updateUI() {
+        
+        do {
+            NSFetchedResultsController.deleteCacheWithName( kWorkDetailCache )
+            try fetchedResultsController.performFetch()
+        }
+        catch let fetchError as NSError {
+            print("Error in the fetched results controller: \(fetchError).")
+        }
+    }
+    
+    func newQuery( workKey: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
+        
+        if nil == workDetailGetOperation {
+            workDetailGetOperation =
+                WorkDetailGetOperation(
+                    queryText: workKey,
+                    coreDataStack: coreDataStack,
+                    resultHandler: getSearchInfo
+                ) {
+                    [weak self] in
+                    
+                    if let strongSelf = self {
+                        dispatch_async( dispatch_get_main_queue() ) {
+                            
+                            if let detail = strongSelf.workDetail {
+                                
+                                strongSelf.updateUI( detail )
+                            }
+                        }
+                    }
+            }
+            
+            workDetailGetOperation!.userInitiated = true
+            operationQueue.addOperation( workDetailGetOperation! )
+        }
+    }
+    
+    func objectAtIndexPath( indexPath: NSIndexPath ) -> OLWorkDetail? {
+        
+        guard let sections = fetchedResultsController.sections else {
+            assertionFailure("Sections missing")
+            return nil
+        }
+        
+        let section = sections[indexPath.section]
+        if indexPath.row >= section.objects.count {
+            return nil
+        } else {
+            return section.objects[indexPath.row]
+        }
+    }
+    
+    // MARK: FetchedResultsControllerDelegate
+    
+    func fetchedResultsControllerDidPerformFetch(controller: FetchedWorkDetailController) {
+        
+        if 0 == controller.count {
+            
+            newQuery( workKey, userInitiated: true, refreshControl: nil )
+        } else {
+            
+            if let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {
+                
+                workDetail = detail
+                updateUI( detail )
+            }
+        }
+    }
+    
+    func fetchedResultsControllerWillChangeContent( controller: FetchedWorkDetailController ) {
+        //        tableView?.beginUpdates()
+    }
+    
+    func fetchedResultsControllerDidChangeContent( controller: FetchedWorkDetailController ) {
+        //        tableView?.endUpdates()
+    }
+    
+    func fetchedResultsController( controller: FetchedWorkDetailController,
+                                   didChangeObject change: FetchedWorkDetailChange ) {
+        switch change {
+        case let .Insert(_, indexPath):
+            if let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {
+                
+                updateUI( detail )
+                workDetail = detail
+            }
+            break
+            
+        case let .Delete(_, indexPath):
+            // tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            break
+            
+        case let .Move(_, fromIndexPath, toIndexPath):
+            // tableVC.tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
+            break
+            
+        case let .Update(_, indexPath):
+            if let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {
+                
+                updateUI( detail )
+                workDetail = detail
+            }
+            break
+        }
+    }
+    
+    func fetchedResultsController( controller: FetchedWorkDetailController,
+                                   didChangeSection change: FetchedWorkDetailSectionChange ) {
+        switch change {
+        case let .Insert(_, index):
+            // tableVC.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+            break
+            
+        case let .Delete(_, index):
+            // tableVC.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+            break
+        }
+    }
+
     // MARK: install query coordinators
     
     func installWorkDetailEditionsQueryCoordinator( destVC: OLWorkDetailEditionsTableViewController ) {
         
-        var workKey = self.workKey
-        if let workDetail = searchInfo {
-            
-            workKey = workDetail.key
-
-        }
-        
+        let workKey = self.workKey
         assert( !workKey.isEmpty )
         
         destVC.queryCoordinator =
@@ -147,7 +267,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
     
     func installWorkDeluxeDetailCoordinator( destVC: OLDeluxeDetailTableViewController ) {
         
-        guard let workDetail = searchInfo  else {
+        guard let workDetail = workDetail else {
             assert( false )
             return
         }
@@ -157,14 +277,14 @@ class WorkDetailCoordinator: OLQueryCoordinator {
                 operationQueue: operationQueue,
                 coreDataStack: coreDataStack,
                 deluxeData: workDetail.deluxeData,
-                imageType: "b",
+                imageType: workDetail.imageType,
                 deluxeDetailVC: destVC
         )
     }
     
     func installCoverPictureViewCoordinator( destVC: OLPictureViewController ) {
         
-        guard let workDetail = searchInfo  else {
+        guard let workDetail = workDetail else {
             assert( false )
             return
         }
@@ -175,7 +295,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
                 coreDataStack: coreDataStack,
                 localURL: workDetail.localURL( "L", index: 0 ),
                 imageID: workDetail.firstImageID,
-                pictureType: "b",
+                pictureType: workDetail.imageType,
                 pictureVC: destVC
         )
 

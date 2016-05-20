@@ -101,8 +101,12 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
                 
                     if let destVC = segue.destinationViewController as? OLAuthorDetailViewController {
                         
-                        searchController.active = false
-                        authorSearchCoordinator.installAuthorDetailCoordinator( destVC, indexPath: indexPath )
+                        if .searchAuthor == searchType {
+                            searchController.active = false
+                            authorSearchCoordinator.installAuthorDetailCoordinator( destVC, indexPath: indexPath )
+                        } else if .searchGeneral == searchType {
+                            generalSearchCoordinator.installAuthorDetailCoordinator( destVC, indexPath: indexPath )
+                        }
                     }
 
                 } else if segue.identifier == "displaySearchWorkDetail" {
@@ -111,6 +115,13 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
                         
                         searchController.active = false
                         titleSearchCoordinator.installTitleDetailCoordinator( destVC, indexPath: indexPath )
+                    }
+                } else if segue.identifier == "displayGeneralSearchWorkDetail" {
+                    
+                    if let destVC = segue.destinationViewController as? OLWorkDetailViewController {
+                        
+                        searchController.active = false
+                        generalSearchCoordinator.installTitleDetailCoordinator( destVC, indexPath: indexPath )
                     }
                 }
             }

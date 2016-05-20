@@ -27,7 +27,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
     private lazy var fetchedResultsController: FetchedOLWorkDetailController = {
         
         let fetchRequest = NSFetchRequest( entityName: OLWorkDetail.entityName )
-        let key = self.searchInfo.key
+        let key = self.authorKey
         fetchRequest.predicate = NSPredicate( format: "author_key==%@", "\(key)" )
         
         fetchRequest.sortDescriptors =
@@ -44,14 +44,17 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         return frc
     }()
     
-    var searchInfo: OLAuthorSearchResult
+    var authorKey = ""
+    var authorNames = [String]()
+    var numFound = Int64( kPageSize * 2 )
     var searchResults = SearchResults()
 
     var highWaterMark = 0
     
-    init( searchInfo: OLAuthorSearchResult, authorWorksTableVC: OLAuthorDetailWorksTableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
+    init( authorKey: String, authorNames: [String], authorWorksTableVC: OLAuthorDetailWorksTableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         
-        self.searchInfo = searchInfo
+        self.authorKey = authorKey
+        self.authorNames = authorNames
 
         self.authorWorksTableVC = authorWorksTableVC
         
@@ -168,11 +171,11 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
     
     func nextQueryPage( offset: Int ) -> Void {
         
-        if nil == authorWorksGetOperation && !searchInfo.key.isEmpty {
+        if nil == authorWorksGetOperation && !authorKey.isEmpty {
             
             authorWorksGetOperation =
                 AuthorWorksGetOperation(
-                        queryText: self.searchInfo.key,
+                        queryText: self.authorKey,
                         offset: offset, limit: kPageSize,
                         coreDataStack: coreDataStack,
                         updateResults: self.updateResults
@@ -197,8 +200,8 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         
         return
             nil == authorWorksGetOperation &&
-            !self.searchInfo.key.isEmpty &&
-            highWaterMark < Int( self.searchInfo.work_count ) &&
+            !self.authorKey.isEmpty &&
+            highWaterMark < Int( self.numFound ) &&
             index >= ( highWaterMark - 1 )
     }
     
@@ -211,8 +214,8 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
             if let strongSelf = self {
                 strongSelf.searchResults = searchResults
                 strongSelf.highWaterMark = searchResults.start + searchResults.pageSize
-                if strongSelf.searchInfo.work_count != Int64( searchResults.numFound ) {
-                    strongSelf.searchInfo.work_count = Int64( searchResults.numFound )
+                if strongSelf.numFound != Int64( searchResults.numFound ) {
+                    strongSelf.numFound = Int64( searchResults.numFound )
                 }
             }
         }
@@ -223,7 +226,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         
         if 0 == controller.count {
             
-            newQuery( searchInfo.key, userInitiated: true, refreshControl: nil )
+            newQuery( authorKey, userInitiated: true, refreshControl: nil )
 
         } else {
             
@@ -277,7 +280,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
 
             destVC.queryCoordinator =
                 WorkDetailCoordinator(
-                        authorNames: [searchInfo.name],
+                        authorNames: authorNames,
                         operationQueue: self.operationQueue,
                         coreDataStack: self.coreDataStack,
                         searchInfo: workDetail,

@@ -15,10 +15,9 @@ import BNRCoreDataStack
 class OLAuthorDetailViewController: UIViewController {
 
     @IBOutlet weak var authorName: UILabel!
-    @IBOutlet weak var authorPhoto: UIImageView!
+    @IBOutlet weak var authorPhoto: AspectRatioImageView!
     @IBOutlet weak var displayLargePhoto: UIButton!
     @IBOutlet weak var displayDeluxeDetail: UIButton!
-    
     @IBOutlet weak var containerView: UIView!
 
     var queryCoordinator: AuthorDetailCoordinator?

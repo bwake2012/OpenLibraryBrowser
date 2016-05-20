@@ -14,6 +14,8 @@ import BNRCoreDataStack
 
 private let kAuthorEditonsCache = "authorEditionsCache"
     
+private let kPageSize = 100
+
 class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate {
     
     typealias FetchedAuthorEditionsController = FetchedResultsController< OLEditionDetail >
@@ -42,16 +44,15 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
     let withCoversOnly: Bool
     
     var authorKey = ""
-    var worksCount = Int( 0 )
+    var worksCount = Int( kPageSize * 2 )
     var searchResults = SearchResults()
     
     var highWaterMark = 0
     
-    init( searchInfo: OLAuthorSearchResult, withCoversOnly: Bool, tableVC: UITableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
+    init( authorKey: String, authorNames: [String], withCoversOnly: Bool, tableVC: UITableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         
-        self.authorKey = searchInfo.key
+        self.authorKey = authorKey
         self.withCoversOnly = withCoversOnly
-        self.worksCount = Int( searchInfo.work_count )
         self.tableVC = tableVC
         
         super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )

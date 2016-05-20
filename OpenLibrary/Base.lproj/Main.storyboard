@@ -396,6 +396,7 @@
                                     <outlet property="authorName" destination="E2Z-p9-UBW" id="2Bd-JY-oPc"/>
                                     <outlet property="cellImage" destination="b7D-ZT-JA9" id="qbK-E9-cku"/>
                                     <outlet property="titleText" destination="W47-GT-qSa" id="QSQ-u4-xyR"/>
+                                    <segue destination="CsL-qH-Mpk" kind="show" identifier="displayGeneralSearchWorkDetail" customClass="SegueWithTableViewCellZoom" customModule="OpenLibrary" id="WHs-h8-0AD"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -545,11 +546,11 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
-                        <outlet property="authorName" destination="YDN-2I-Ydz" id="yd9-Cj-06Y"/>
-                        <outlet property="authorPhoto" destination="Yde-7a-B86" id="AqC-kI-AEt"/>
-                        <outlet property="containerView" destination="GtZ-lM-FnV" id="mvG-Tu-19G"/>
-                        <outlet property="displayDeluxeDetail" destination="Yb4-Wu-cug" id="BOB-NU-YtU"/>
-                        <outlet property="displayLargePhoto" destination="nk3-ur-OJ1" id="TEY-tg-VuA"/>
+                        <outlet property="authorName" destination="YDN-2I-Ydz" id="adM-xd-0Zh"/>
+                        <outlet property="authorPhoto" destination="Yde-7a-B86" id="yET-7r-TVc"/>
+                        <outlet property="containerView" destination="GtZ-lM-FnV" id="ckz-mZ-wQJ"/>
+                        <outlet property="displayDeluxeDetail" destination="Yb4-Wu-cug" id="NAC-hs-EpC"/>
+                        <outlet property="displayLargePhoto" destination="nk3-ur-OJ1" id="kms-6m-MPn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cDB-bJ-tLH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1206,7 +1207,7 @@
         <image name="96-book.png" width="18" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5Aj-3x-pAW"/>
+        <segue reference="WHs-h8-0AD"/>
         <segue reference="fqf-5d-Edz"/>
     </inferredMetricsTieBreakers>
 </document>

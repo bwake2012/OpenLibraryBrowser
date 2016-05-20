@@ -30,8 +30,10 @@ class AuthorDetailDownloadOperation: GroupOperation {
             or when the services you use offer secure communication options, you
             should always prefer to use https.
         */
-        let query = queryText.stringByAddingPercentEncodingForRFC3986()!
-        let urlString = "https://openlibrary.org\(query).json"
+        
+        assert( queryText.hasPrefix( kAuthorsPrefix ) )
+        
+        let urlString = "https://openlibrary.org\(queryText).json"
         let url = NSURL( string: urlString )!
         let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
             

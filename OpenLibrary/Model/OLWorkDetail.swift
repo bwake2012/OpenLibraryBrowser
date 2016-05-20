@@ -240,6 +240,8 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         return 0 >= self.covers.count ? 0 : self.covers[0]
     }
     
+    override var imageType: String { return "b" }
+    
     override func imageID( index: Int ) -> Int {
         
         return index >= self.covers.count ? 0 : self.covers[index]
@@ -263,7 +265,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             
             let value = localURL( "M" ).absoluteString
             deluxeData.append(
-                [DeluxeData( type: .image, caption: String( firstImageID ), value: value )]
+                [DeluxeData( type: .imageBook, caption: String( firstImageID ), value: value )]
             )
             
         }
@@ -316,7 +318,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
                     
                     let value = localURL( "M", index: index ).absoluteString
                     newData.append(
-                        DeluxeData( type: .image, caption: String( covers[index] ), value: value )
+                        DeluxeData( type: .imageBook, caption: String( covers[index] ), value: value )
                     )
                 }
             }

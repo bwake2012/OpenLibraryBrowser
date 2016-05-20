@@ -156,7 +156,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
     
     static let entityName = "AuthorDetail"
     
-    class func parseJSON( parentObjectID: NSManagedObjectID, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLAuthorDetail? {
+    class func parseJSON( parentObjectID: NSManagedObjectID?, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLAuthorDetail? {
         
         guard let parsed = ParsedSearchResult.fromJSON( json ) else { return nil }
         
@@ -184,16 +184,19 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
         
         newObject.type = parsed.type
         
-        if let parent = moc.objectWithID( parentObjectID ) as? OLAuthorSearchResult {
-            
-            if parent.key != newObject.key {
+        if let parentObjectID = parentObjectID {
+
+            if let parent = moc.objectWithID( parentObjectID ) as? OLAuthorSearchResult {
                 
-                print( "parent:\(parent.key) != newObject:\(newObject.key)" )
-                assert( false )
+                if parent.key != newObject.key {
+                    
+                    print( "parent:\(parent.key) != newObject:\(newObject.key)" )
+                    assert( false )
+                }
+                
+                parent.toDetail = newObject
+                parent.has_photos = newObject.hasImage
             }
-            
-            parent.toDetail = newObject
-            parent.has_photos = newObject.hasImage
         }
 
         return newObject
@@ -224,6 +227,8 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
         return !hasImage ? 0 : self.photos[0]
     }
     
+    override var imageType: String { return "a" }
+    
     override func imageID( index: Int ) -> Int {
         
         return !hasImage ? 0 : self.photos[index]
@@ -245,7 +250,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
 
             let value = localURL( "M", index: 0 ).absoluteString
             deluxeData.append(
-                [DeluxeData( type: .image, caption: String( firstImageID ), value: value )]
+                [DeluxeData( type: .imageAuthor, caption: String( firstImageID ), value: value )]
             )
         }
         
@@ -303,7 +308,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
 
                     let value = localURL( "M", index: index ).absoluteString
                     newData.append(
-                        DeluxeData( type: .image, caption: String( photos[index] ), value: value )
+                        DeluxeData( type: .imageAuthor, caption: String( photos[index] ), value: value )
                     )
                 }
             }

@@ -148,7 +148,7 @@ private class ParsedSearchResult: OpenLibraryObject {
 /// An `Operation` to parse earthquakes out of a downloaded feed from the USGS.
 class AuthorDetailParseOperation: Operation {
     
-    let parentObjectID: NSManagedObjectID
+    let parentObjectID: NSManagedObjectID?
     let cacheFile: NSURL
     let context: NSManagedObjectContext
 
@@ -167,7 +167,7 @@ class AuthorDetailParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( parentObjectID: NSManagedObjectID, cacheFile: NSURL, coreDataStack: CoreDataStack ) {
+    init( parentObjectID: NSManagedObjectID?, cacheFile: NSURL, coreDataStack: CoreDataStack ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects

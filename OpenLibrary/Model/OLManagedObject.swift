@@ -50,7 +50,8 @@ enum DeluxeDetail: String {
     case heading     = "DeluxeDetailHeadingTableViewCell"
     case subheading  = "DeluxeDetailSubheadingTableViewCell"
     case body        = "DeluxeDetailBodyTableViewCell"
-    case image       = "DeluxeDetailImageTableViewCell"
+    case imageAuthor = "DeluxeDetailImageAuthorTableViewCell"
+    case imageBook   = "DeluxeDetailImageBookTableViewCell"
 }
 
 struct DeluxeData {
@@ -116,6 +117,8 @@ class OLManagedObject: NSManagedObject {
     
     var hasImage: Bool { return true }
     var firstImageID: Int { return 0 }
+    
+    var imageType: String { return "" }
     
     func imageID( index: Int ) -> Int {
         
