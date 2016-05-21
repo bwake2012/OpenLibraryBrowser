@@ -44,7 +44,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     let withCoversOnly: Bool
     
     var workKey = ""
-    var editionsCount = Int( 0 )
+    var editionsCount = Int( kPageSize * 2 )
     var searchResults = SearchResults()
     
     var highWaterMark = 0

@@ -27,29 +27,22 @@ class OLBookSearchViewController: UIViewController {
     weak var activeField: UITextField?
     
     var queryCoordinator: GeneralSearchResultsCoordinator?
-    var searchKeys: [String: String] {
-        
-        return self.assembleSearchKeys()
-    }
+    var searchKeys = [String: String]()
     
     @IBAction func ebookOnlySwitchChanged(sender: AnyObject) {
         
     }
     
-    @IBAction func searchButtonTapped(sender: AnyObject) {
+    @IBAction func cancelButtonTapped(sender: AnyObject) {
         
         if let activeField = activeField {
             
             activeField.resignFirstResponder()
         }
         
-        if let queryCoordinator = queryCoordinator {
-            
-            if !searchKeys.isEmpty {
-                
-                queryCoordinator.newQuery( searchKeys, userInitiated: true, refreshControl: nil )
-            }
-        }
+        searchKeys = [String: String]()
+        
+        performSegueWithIdentifier( "exitBookSearch", sender: self )
     }
     
     deinit {
@@ -74,6 +67,23 @@ class OLBookSearchViewController: UIViewController {
     
     func textFieldDidBeginEditing(textField: UITextField) {
         self.activeField = textField
+    }
+    
+    func textFieldShouldReturn( textField: UITextField ) -> Bool {
+        
+        textField.resignFirstResponder()
+        if let queryCoordinator = queryCoordinator {
+            
+            searchKeys = assembleSearchKeys()
+            if !searchKeys.isEmpty {
+                
+                queryCoordinator.newQuery( searchKeys, userInitiated: true, refreshControl: nil )
+            }
+        }
+
+        performSegueWithIdentifier( "exitBookSearch", sender: self )
+
+        return false
     }
     
     // MARK: Notifications

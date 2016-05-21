@@ -20,7 +20,7 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
 
     var authorNames = [String]()
     var workDetail: OLWorkDetail?
-    var workKey = ""
+    var workKey: String
     
     var workDetailGetOperation: Operation?
     
@@ -60,6 +60,7 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
         
         self.authorNames = authorNames
         self.workDetail = searchInfo
+        self.workKey = searchInfo.key
         self.workDetailVC = workDetailVC
 
         super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
@@ -247,6 +248,30 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
             break
         }
     }
+    
+    // MARK: Utility
+    
+    func findAuthorDetailInStack( navigationController: UINavigationController ) -> OLAuthorDetailViewController? {
+        
+        var index = navigationController.viewControllers.count - 1
+        repeat {
+            
+            let vc = navigationController.viewControllers[index]
+            
+            if let authorDetailVC = vc as? OLAuthorDetailViewController {
+                
+                if authorDetailVC.queryCoordinator?.authorKey == workDetail?.author_key {
+                    
+                    return authorDetailVC
+                }
+            }
+            
+            index -= 1
+            
+        } while index > 0
+        
+        return nil
+    }
 
     // MARK: install query coordinators
     
@@ -268,36 +293,50 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
     func installWorkDeluxeDetailCoordinator( destVC: OLDeluxeDetailTableViewController ) {
         
         guard let workDetail = workDetail else {
-            assert( false )
-            return
+            fatalError( "Work Detail object not retrieved.")
         }
         
         destVC.queryCoordinator =
             DeluxeDetailCoordinator(
-                operationQueue: operationQueue,
-                coreDataStack: coreDataStack,
-                deluxeData: workDetail.deluxeData,
-                imageType: workDetail.imageType,
-                deluxeDetailVC: destVC
-        )
+                    operationQueue: operationQueue,
+                    coreDataStack: coreDataStack,
+                    deluxeData: workDetail.deluxeData,
+                    imageType: workDetail.imageType,
+                    deluxeDetailVC: destVC
+                )
     }
     
     func installCoverPictureViewCoordinator( destVC: OLPictureViewController ) {
-        
+    
         guard let workDetail = workDetail else {
-            assert( false )
-            return
+            fatalError( "Work Detail object not retrieved.")
         }
         
         destVC.queryCoordinator =
             PictureViewCoordinator(
+                    operationQueue: operationQueue,
+                    coreDataStack: coreDataStack,
+                    localURL: workDetail.localURL( "L", index: 0 ),
+                    imageID: workDetail.firstImageID,
+                    pictureType: workDetail.imageType,
+                    pictureVC: destVC
+                )
+
+    }
+    
+    func installAuthorDetailCoordinator( destVC: OLAuthorDetailViewController ) {
+        
+        guard let workDetail = workDetail else {
+            fatalError( "Work Detail object not retrieved.")
+        }
+        
+        destVC.queryCoordinator =
+            AuthorDetailCoordinator(
                 operationQueue: operationQueue,
                 coreDataStack: coreDataStack,
-                localURL: workDetail.localURL( "L", index: 0 ),
-                imageID: workDetail.firstImageID,
-                pictureType: workDetail.imageType,
-                pictureVC: destVC
-        )
-
+                authorKey: workDetail.author_key,
+                authorName: authorNames.isEmpty ? "" : authorNames[0],
+                authorDetailVC: destVC
+            )
     }
 }

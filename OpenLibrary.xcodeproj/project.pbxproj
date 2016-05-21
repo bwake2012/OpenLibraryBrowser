@@ -104,7 +104,7 @@
 		C4AB170D1CDAF3C400D6DF05 /* DeluxeDetailBlockTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AB170C1CDAF3C400D6DF05 /* DeluxeDetailBlockTableViewCell.xib */; };
 		C4AB17121CDB83B800D6DF05 /* DeluxeDetailBodyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AB170E1CDB83B800D6DF05 /* DeluxeDetailBodyTableViewCell.xib */; };
 		C4AB17131CDB83B800D6DF05 /* DeluxeDetailHeadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AB170F1CDB83B800D6DF05 /* DeluxeDetailHeadingTableViewCell.xib */; };
-		C4AB17141CDB83B800D6DF05 /* DeluxeDetailImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AB17101CDB83B800D6DF05 /* DeluxeDetailImageTableViewCell.xib */; };
+		C4AB17141CDB83B800D6DF05 /* DeluxeDetailImageAuthorTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AB17101CDB83B800D6DF05 /* DeluxeDetailImageAuthorTableViewCell.xib */; };
 		C4AB17151CDB83B800D6DF05 /* DeluxeDetailSubheadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AB17111CDB83B800D6DF05 /* DeluxeDetailSubheadingTableViewCell.xib */; };
 		C4AB17171CDB86B200D6DF05 /* DeluxeDetailLinkTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AB17161CDB86B200D6DF05 /* DeluxeDetailLinkTableViewCell.xib */; };
 		C4B2648E1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C4B2648C1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodeld */; };
@@ -301,7 +301,7 @@
 		C4AB170C1CDAF3C400D6DF05 /* DeluxeDetailBlockTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeluxeDetailBlockTableViewCell.xib; path = Views/DeluxeDetailBlockTableViewCell.xib; sourceTree = "<group>"; };
 		C4AB170E1CDB83B800D6DF05 /* DeluxeDetailBodyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeluxeDetailBodyTableViewCell.xib; path = Views/DeluxeDetailBodyTableViewCell.xib; sourceTree = "<group>"; };
 		C4AB170F1CDB83B800D6DF05 /* DeluxeDetailHeadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeluxeDetailHeadingTableViewCell.xib; path = Views/DeluxeDetailHeadingTableViewCell.xib; sourceTree = "<group>"; };
-		C4AB17101CDB83B800D6DF05 /* DeluxeDetailImageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeluxeDetailImageTableViewCell.xib; path = Views/DeluxeDetailImageTableViewCell.xib; sourceTree = "<group>"; };
+		C4AB17101CDB83B800D6DF05 /* DeluxeDetailImageAuthorTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeluxeDetailImageAuthorTableViewCell.xib; path = Views/DeluxeDetailImageAuthorTableViewCell.xib; sourceTree = "<group>"; };
 		C4AB17111CDB83B800D6DF05 /* DeluxeDetailSubheadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeluxeDetailSubheadingTableViewCell.xib; path = Views/DeluxeDetailSubheadingTableViewCell.xib; sourceTree = "<group>"; };
 		C4AB17161CDB86B200D6DF05 /* DeluxeDetailLinkTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeluxeDetailLinkTableViewCell.xib; path = Views/DeluxeDetailLinkTableViewCell.xib; sourceTree = "<group>"; };
 		C4B2648D1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OpenLibraryBrowser.xcdatamodel; sourceTree = "<group>"; };
@@ -477,13 +477,13 @@
 		C4677E9D1C9CD7020070CDFD /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
-				C437DEA11CECEE45005CED1A /* GeneralSearchResultsCoordinator.swift */,
 				C4EF99DF1CA3792700BEF2D3 /* AuthorDetailCoordinator.swift */,
 				C4677EA41CA0351B0070CDFD /* AuthorEditionsCoordinator.swift */,
 				C41082211CBAE2AC00319B83 /* AuthorSearchResultsCoordinator.swift */,
 				C4677EA71CA035280070CDFD /* AuthorWorksCoordinator.swift */,
 				C422A49C1CCAD08800A6B4A7 /* DeluxeDetailCoordinator.swift */,
 				C49BDD1B1CB6EC0900A2EEEF /* EditionDetailCoordinator.swift */,
+				C437DEA11CECEE45005CED1A /* GeneralSearchResultsCoordinator.swift */,
 				C412FE621CC3DFA200EDB935 /* LanguagesCoordinator.swift */,
 				C430E9C51CD27E1F007E15AD /* OLDataSource.swift */,
 				C4F00C581CD96D4E002D7E14 /* OLDeluxeDetailCoordinator.swift */,
@@ -741,7 +741,6 @@
 		C4E35EA81C7E4C840015D187 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C4D0A9561CEF4DD20032E429 /* DeluxeDetailImageBookTableViewCell.xib */,
 				C468B9461CBD3E2800F3EAC3 /* AspectRatioImageView.swift */,
 				C4E35EA91C7E4CD90015D187 /* AuthorSearchResultTableViewCell.swift */,
 				C4E8638D1C9763E3002C0E6B /* AuthorWorksTableViewCell.swift */,
@@ -751,8 +750,9 @@
 				C4AB170E1CDB83B800D6DF05 /* DeluxeDetailBodyTableViewCell.xib */,
 				C4F00C521CD929AD002D7E14 /* DeluxeDetailHeadingTableViewCell.swift */,
 				C4AB170F1CDB83B800D6DF05 /* DeluxeDetailHeadingTableViewCell.xib */,
+				C4D0A9561CEF4DD20032E429 /* DeluxeDetailImageBookTableViewCell.xib */,
 				C4AA0EEB1CD7C11300AE33EF /* DeluxeDetailImageTableViewCell.swift */,
-				C4AB17101CDB83B800D6DF05 /* DeluxeDetailImageTableViewCell.xib */,
+				C4AB17101CDB83B800D6DF05 /* DeluxeDetailImageAuthorTableViewCell.xib */,
 				C430E9C91CD2B294007E15AD /* DeluxeDetailInlineTableViewCell.swift */,
 				C4AB170A1CDAF1A000D6DF05 /* DeluxeDetailInlineTableViewCell.xib */,
 				C430E9CD1CD41687007E15AD /* DeluxeDetailLinkTableViewCell.swift */,
@@ -760,11 +760,11 @@
 				C4F00C541CD929D6002D7E14 /* DeluxeDetailSubheadingTableViewCell.swift */,
 				C4AB17111CDB83B800D6DF05 /* DeluxeDetailSubheadingTableViewCell.xib */,
 				C4AB16E31CDA801100D6DF05 /* DeluxeDetailTableViewCell.swift */,
+				C437DEA31CECF8D9005CED1A /* GeneralSearchResultTableViewCell.swift */,
 				C42DBE491CBD5EAA0048788E /* JustifiedAspectRatioImageView.swift */,
 				C4677EA21C9DF4030070CDFD /* OLTableViewCell.swift */,
 				C410821D1CBAB26000319B83 /* TitleSearchResultTableViewCell.swift */,
 				C4E863991C9A3897002C0E6B /* WorkEditionTableViewCell.swift */,
-				C437DEA31CECF8D9005CED1A /* GeneralSearchResultTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -907,7 +907,7 @@
 				C444C4FB1CBF17C500CFD0E1 /* 253-person@2x.png in Resources */,
 				C437DE9E1CEA8A59005CED1A /* 708-search-toolbar.png in Resources */,
 				C444C4FA1CBF17C500CFD0E1 /* 253-person.png in Resources */,
-				C4AB17141CDB83B800D6DF05 /* DeluxeDetailImageTableViewCell.xib in Resources */,
+				C4AB17141CDB83B800D6DF05 /* DeluxeDetailImageAuthorTableViewCell.xib in Resources */,
 				C4AB17151CDB83B800D6DF05 /* DeluxeDetailSubheadingTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

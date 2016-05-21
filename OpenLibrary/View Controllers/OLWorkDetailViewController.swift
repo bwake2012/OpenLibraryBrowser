@@ -19,6 +19,7 @@ class OLWorkDetailViewController: UIViewController {
     @IBOutlet weak var workAuthor: UILabel!
     @IBOutlet weak var workCover: UIImageView!
     @IBOutlet weak var displayLargeCover: UIButton!
+    @IBOutlet weak var displayAuthorDetail: UIButton!
 
     @IBOutlet weak var containerView: UIView!
     
@@ -31,6 +32,19 @@ class OLWorkDetailViewController: UIViewController {
     
     var searchInfo: OLWorkDetail?
 
+    
+    @IBAction func displayAuthorDetail(sender: UIButton) {
+        
+        if let authorDetailVC = findAuthorDetailInStack( ) {
+            
+            self.navigationController?.popToViewController( authorDetailVC, animated: true )
+            
+        } else {
+            
+            performSegueWithIdentifier( "displayAuthorDetail", sender: self )
+        }
+    }
+    
     // MARK: UIViewController
     override func viewDidLoad() {
         
@@ -65,10 +79,27 @@ class OLWorkDetailViewController: UIViewController {
                 queryCoordinator?.installWorkDeluxeDetailCoordinator( destVC )
             }
             
+        } else if segue.identifier == "displayAuthorDetail" {
+            
+            if let destVC = segue.destinationViewController as? OLAuthorDetailViewController {
+                
+                queryCoordinator?.installAuthorDetailCoordinator( destVC )
+            }
         }
     }
 
     // MARK: Utility
+    func findAuthorDetailInStack() -> OLAuthorDetailViewController? {
+        
+        if let qc = queryCoordinator, navController = self.navigationController {
+
+            return qc.findAuthorDetailInStack( navController )
+        }
+        
+        return nil
+    }
+    
+    
     func displayImage( localURL: NSURL ) -> Bool {
         
         guard nil == currentImageURL || localURL == currentImageURL else { return true }
@@ -108,7 +139,11 @@ class OLWorkDetailViewController: UIViewController {
         self.workSubtitle.text = workDetail.subtitle
         self.workAuthor.text = authorName
         self.displayLargeCover.enabled = workDetail.coversFound
-        self.workCover.image = UIImage( named: workDetail.defaultImageName )
+        if !workDetail.coversFound {
+            self.workCover.image = nil
+        } else {
+            self.workCover.image = UIImage( named: workDetail.defaultImageName )
+        }
     }
     
     // MARK: Utility

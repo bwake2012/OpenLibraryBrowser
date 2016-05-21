@@ -44,8 +44,8 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         return frc
     }()
     
-    var authorKey = ""
-    var authorNames = [String]()
+    var authorKey: String
+    var authorNames: [String]
     var numFound = Int64( kPageSize * 2 )
     var searchResults = SearchResults()
 
@@ -276,16 +276,19 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
     
     func installWorkDetailCoordinator( destVC: OLWorkDetailViewController, indexPath: NSIndexPath ){
     
-        if let workDetail = objectAtIndexPath( indexPath ) {
-
-            destVC.queryCoordinator =
-                WorkDetailCoordinator(
-                        authorNames: authorNames,
-                        operationQueue: self.operationQueue,
-                        coreDataStack: self.coreDataStack,
-                        searchInfo: workDetail,
-                        workDetailVC: destVC
-                    )
+        guard let workDetail = objectAtIndexPath( indexPath ) else {
+            
+            fatalError( "work detail not found at: \(indexPath)" )
         }
+
+        destVC.queryCoordinator =
+            WorkDetailCoordinator(
+                    authorNames: authorNames,
+                    operationQueue: self.operationQueue,
+                    coreDataStack: self.coreDataStack,
+                    searchInfo: workDetail,
+                    workDetailVC: destVC
+                )
+
     }
 }

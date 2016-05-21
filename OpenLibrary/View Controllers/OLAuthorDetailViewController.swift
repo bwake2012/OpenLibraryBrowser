@@ -93,6 +93,8 @@ class OLAuthorDetailViewController: UIViewController {
         self.authorName.text = authorDetail.name
         
         if !authorDetail.hasImage {
+            self.authorPhoto.image = nil
+        } else {
             self.authorPhoto.image = UIImage( named: "253-person.png" )
         }
     }

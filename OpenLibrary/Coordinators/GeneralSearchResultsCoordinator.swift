@@ -327,7 +327,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControl
         )
     }
     
-    func installTitleDetailCoordinator( destVC: OLWorkDetailViewController, indexPath: NSIndexPath ) {
+    func installWorkDetailCoordinator( destVC: OLWorkDetailViewController, indexPath: NSIndexPath ) {
         
         if let searchResult = objectAtIndexPath( indexPath ) {
             

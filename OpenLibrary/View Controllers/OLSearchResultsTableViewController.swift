@@ -121,7 +121,7 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
                     if let destVC = segue.destinationViewController as? OLWorkDetailViewController {
                         
                         searchController.active = false
-                        generalSearchCoordinator.installTitleDetailCoordinator( destVC, indexPath: indexPath )
+                        generalSearchCoordinator.installWorkDetailCoordinator( destVC, indexPath: indexPath )
                     }
                 }
             }

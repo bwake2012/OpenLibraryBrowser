@@ -97,12 +97,36 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         assert( !authorKey.isEmpty )
     }
     
+    init(
+        operationQueue: OperationQueue,
+        coreDataStack: CoreDataStack,
+        authorKey: String,
+        authorName: String,
+        authorDetailVC: OLAuthorDetailViewController
+        ) {
+        
+        self.authorDetail = nil
+        
+        self.authorKey = authorKey
+        if !self.authorKey.hasPrefix( kAuthorsPrefix ) {
+            
+            self.authorKey = kAuthorsPrefix + self.authorKey
+        }
+        self.authorName = authorName
+        
+        self.authorDetailVC = authorDetailVC
+        
+        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
+        
+        assert( !authorKey.isEmpty )
+    }
     
     func updateUI( authorDetail: OLAuthorDetail ) {
         
         if let authorDetailVC = authorDetailVC {
             
             authorDetailVC.updateUI( authorDetail )
+            authorName = authorDetail.name
             
             if authorDetail.hasImage {
                 
