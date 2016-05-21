@@ -33,7 +33,11 @@ class IAEBookItemGetOperation: GroupOperation {
 
         let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
 
-        let cacheFile = cachesFolder.URLByAppendingPathComponent("InternetArchiveEBookItems.json")
+        let parts = editionKey.componentsSeparatedByString( "/" )
+        let goodParts = parts.filter { (x) -> Bool in !x.isEmpty }
+        let editionKey = goodParts.last!
+        let cacheFile =
+            cachesFolder.URLByAppendingPathComponent( "\(editionKey)InternetArchiveEBookItems.json")
         
         /*
             This operation is made of three child operations:

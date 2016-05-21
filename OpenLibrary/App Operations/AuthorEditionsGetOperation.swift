@@ -33,7 +33,10 @@ class AuthorEditionsGetOperation: GroupOperation {
 
         let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
 
-        let cacheFile = cachesFolder.URLByAppendingPathComponent("authorEditions.json")
+        let parts = queryText.componentsSeparatedByString( "/" )
+        let goodParts = parts.filter { (x) -> Bool in !x.isEmpty }
+        let authorKey = goodParts.last!
+        let cacheFile = cachesFolder.URLByAppendingPathComponent("\(authorKey)authorEditions.json")
         
         /*
             This operation is made of three child operations:

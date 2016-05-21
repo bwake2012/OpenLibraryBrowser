@@ -20,7 +20,7 @@ class WorkEditionsGetOperation: GroupOperation {
     let parseOperation: WorkEditionsParseOperation
    
     private var hasProducedAlert = false
-    
+     
     /**
         - parameter context: The `NSManagedObjectContext` into which the parsed
                              author query results will be imported.
@@ -33,7 +33,10 @@ class WorkEditionsGetOperation: GroupOperation {
 
         let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
 
-        let cacheFile = cachesFolder.URLByAppendingPathComponent("workEditions.json")
+        let parts = queryText.componentsSeparatedByString( "/" )
+        let goodParts = parts.filter { (x) -> Bool in !x.isEmpty }
+        let workKey = goodParts.last!
+        let cacheFile = cachesFolder.URLByAppendingPathComponent("\(workKey)workEditions.json")
         
         /*
             This operation is made of three child operations:
