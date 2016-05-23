@@ -73,7 +73,7 @@
                                                                 </connections>
                                                             </button>
                                                         </subviews>
-                                                        <color key="backgroundColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
                                                             <constraint firstItem="Yb4-Wu-cug" firstAttribute="centerY" secondItem="qKG-MX-xGl" secondAttribute="centerY" id="4he-Ri-A0b"/>
                                                             <constraint firstItem="nk3-ur-OJ1" firstAttribute="height" secondItem="Yde-7a-B86" secondAttribute="height" id="9a1-4e-Jfy"/>
@@ -93,7 +93,7 @@
                                                             <constraint firstItem="Yb4-Wu-cug" firstAttribute="width" secondItem="qKG-MX-xGl" secondAttribute="width" id="scM-jA-G24"/>
                                                         </constraints>
                                                     </view>
-                                                    <containerView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="760" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GtZ-lM-FnV">
+                                                    <containerView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="760" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GtZ-lM-FnV">
                                                         <rect key="frame" x="8" y="132" width="304" height="328"/>
                                                         <color key="tintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
@@ -104,10 +104,10 @@
                                                         </connections>
                                                     </containerView>
                                                 </subviews>
-                                                <color key="backgroundColor" red="0.50196081400000003" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstItem="GtZ-lM-FnV" firstAttribute="leading" secondItem="Re7-7g-ZgA" secondAttribute="leadingMargin" id="0Ee-if-iCB"/>
-                                                    <constraint firstItem="GtZ-lM-FnV" firstAttribute="trailing" secondItem="Re7-7g-ZgA" secondAttribute="trailingMargin" id="6tI-5g-SSt"/>
+                                                    <constraint firstItem="GtZ-lM-FnV" firstAttribute="leading" secondItem="Re7-7g-ZgA" secondAttribute="leading" id="0Ee-if-iCB"/>
+                                                    <constraint firstItem="GtZ-lM-FnV" firstAttribute="trailing" secondItem="Re7-7g-ZgA" secondAttribute="trailing" id="6tI-5g-SSt"/>
                                                     <constraint firstItem="GtZ-lM-FnV" firstAttribute="bottom" secondItem="Re7-7g-ZgA" secondAttribute="bottom" id="E41-Mj-ubz"/>
                                                     <constraint firstItem="GtZ-lM-FnV" firstAttribute="top" secondItem="y6h-dp-7RD" secondAttribute="bottom" constant="4" id="IT7-O5-kpg"/>
                                                     <constraint firstItem="y6h-dp-7RD" firstAttribute="trailing" secondItem="Re7-7g-ZgA" secondAttribute="trailingMargin" id="Lxj-bN-iaf"/>
@@ -116,7 +116,7 @@
                                                 </constraints>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="Re7-7g-ZgA" firstAttribute="bottom" secondItem="Q9t-Va-B6C" secondAttribute="bottom" id="2yT-12-5ay"/>
                                             <constraint firstItem="Re7-7g-ZgA" firstAttribute="top" secondItem="Q9t-Va-B6C" secondAttribute="top" id="GuU-pN-Jb8"/>
@@ -125,7 +125,7 @@
                                         </constraints>
                                     </scrollView>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="Q9t-Va-B6C" secondAttribute="bottom" id="0S5-3Z-a0J"/>
                                     <constraint firstItem="Re7-7g-ZgA" firstAttribute="height" relation="greaterThanOrEqual" secondItem="12p-2U-fA8" secondAttribute="height" id="AFt-9u-Bc7"/>
@@ -136,7 +136,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="12p-2U-fA8" firstAttribute="leading" secondItem="rhm-ph-9je" secondAttribute="leading" id="3Za-4r-y3D"/>
                             <constraint firstItem="12p-2U-fA8" firstAttribute="top" secondItem="WMK-h2-Oo1" secondAttribute="bottom" id="W2t-Aj-EV7"/>
