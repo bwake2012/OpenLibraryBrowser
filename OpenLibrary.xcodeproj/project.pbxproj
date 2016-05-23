@@ -99,6 +99,8 @@
 		C49BDD1A1CB6E75E00A2EEEF /* OLQueryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49BDD191CB6E75E00A2EEEF /* OLQueryCoordinator.swift */; };
 		C49BDD1C1CB6EC0900A2EEEF /* EditionDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49BDD1B1CB6EC0900A2EEEF /* EditionDetailCoordinator.swift */; };
 		C4AA0EEC1CD7C11300AE33EF /* DeluxeDetailImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AA0EEB1CD7C11300AE33EF /* DeluxeDetailImageTableViewCell.swift */; };
+		C4AA89441CF3986C0082B654 /* AuthorDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4AA89421CF3986C0082B654 /* AuthorDetail.storyboard */; };
+		C4AA89471CF39F110082B654 /* WorkDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4AA89451CF39F110082B654 /* WorkDetail.storyboard */; };
 		C4AB16E41CDA801100D6DF05 /* DeluxeDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AB16E31CDA801100D6DF05 /* DeluxeDetailTableViewCell.swift */; };
 		C4AB170B1CDAF1A000D6DF05 /* DeluxeDetailInlineTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AB170A1CDAF1A000D6DF05 /* DeluxeDetailInlineTableViewCell.xib */; };
 		C4AB170D1CDAF3C400D6DF05 /* DeluxeDetailBlockTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AB170C1CDAF3C400D6DF05 /* DeluxeDetailBlockTableViewCell.xib */; };
@@ -296,6 +298,8 @@
 		C49BDD191CB6E75E00A2EEEF /* OLQueryCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLQueryCoordinator.swift; path = Coordinators/OLQueryCoordinator.swift; sourceTree = "<group>"; };
 		C49BDD1B1CB6EC0900A2EEEF /* EditionDetailCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditionDetailCoordinator.swift; path = Coordinators/EditionDetailCoordinator.swift; sourceTree = "<group>"; };
 		C4AA0EEB1CD7C11300AE33EF /* DeluxeDetailImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeluxeDetailImageTableViewCell.swift; path = Views/DeluxeDetailImageTableViewCell.swift; sourceTree = "<group>"; };
+		C4AA89431CF3986C0082B654 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = OpenLibrary/Base.lproj/AuthorDetail.storyboard; sourceTree = "<group>"; };
+		C4AA89461CF39F110082B654 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = OpenLibrary/Base.lproj/WorkDetail.storyboard; sourceTree = "<group>"; };
 		C4AB16E31CDA801100D6DF05 /* DeluxeDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeluxeDetailTableViewCell.swift; path = Views/DeluxeDetailTableViewCell.swift; sourceTree = "<group>"; };
 		C4AB170A1CDAF1A000D6DF05 /* DeluxeDetailInlineTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeluxeDetailInlineTableViewCell.xib; path = Views/DeluxeDetailInlineTableViewCell.xib; sourceTree = "<group>"; };
 		C4AB170C1CDAF3C400D6DF05 /* DeluxeDetailBlockTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeluxeDetailBlockTableViewCell.xib; path = Views/DeluxeDetailBlockTableViewCell.xib; sourceTree = "<group>"; };
@@ -512,6 +516,8 @@
 				C4E35E2E1C7E07950015D187 /* Info.plist */,
 				C4E35E2B1C7E07950015D187 /* LaunchScreen.storyboard */,
 				C4E35E261C7E07950015D187 /* Main.storyboard */,
+				C4AA89451CF39F110082B654 /* WorkDetail.storyboard */,
+				C4AA89421CF3986C0082B654 /* AuthorDetail.storyboard */,
 				C4E35E291C7E07950015D187 /* Assets.xcassets */,
 				C4E35E361C7E07950015D187 /* OpenLibraryTests */,
 				C4E35E411C7E07950015D187 /* OpenLibraryUITests */,
@@ -892,6 +898,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4E35E2D1C7E07950015D187 /* LaunchScreen.storyboard in Resources */,
+				C4AA89441CF3986C0082B654 /* AuthorDetail.storyboard in Resources */,
 				C4AB17131CDB83B800D6DF05 /* DeluxeDetailHeadingTableViewCell.xib in Resources */,
 				C4AB17121CDB83B800D6DF05 /* DeluxeDetailBodyTableViewCell.xib in Resources */,
 				C4AB170D1CDAF3C400D6DF05 /* DeluxeDetailBlockTableViewCell.xib in Resources */,
@@ -900,6 +907,7 @@
 				C4E35E2A1C7E07950015D187 /* Assets.xcassets in Resources */,
 				C4AB17171CDB86B200D6DF05 /* DeluxeDetailLinkTableViewCell.xib in Resources */,
 				C437DE9F1CEA8A59005CED1A /* 708-search-toolbar@2x.png in Resources */,
+				C4AA89471CF39F110082B654 /* WorkDetail.storyboard in Resources */,
 				C4E35E281C7E07950015D187 /* Main.storyboard in Resources */,
 				C444C4F71CBF170D00CFD0E1 /* 96-book@2x.png in Resources */,
 				C437DEA01CEA8A59005CED1A /* 708-search-toolbar@3x.png in Resources */,
@@ -1242,6 +1250,22 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		C4AA89421CF3986C0082B654 /* AuthorDetail.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C4AA89431CF3986C0082B654 /* Base */,
+			);
+			name = AuthorDetail.storyboard;
+			sourceTree = "<group>";
+		};
+		C4AA89451CF39F110082B654 /* WorkDetail.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C4AA89461CF39F110082B654 /* Base */,
+			);
+			name = WorkDetail.storyboard;
+			sourceTree = "<group>";
+		};
 		C4E35E261C7E07950015D187 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

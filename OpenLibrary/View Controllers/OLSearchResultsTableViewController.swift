@@ -44,11 +44,11 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
     }()
     
     var searchController = UISearchController( searchResultsController: nil )
-    var searchType: SearchType = .searchAuthor
+    var searchType: SearchType = .searchGeneral
     var bookSearchVC: OLBookSearchViewController?
 
-    @IBAction func presentGeneralSearch(sender: UIBarButtonItem) {
-    }
+    @IBAction func presentGeneralSearch(sender: UIBarButtonItem) {}
+    
     // MARK: UIViewController
     override func viewDidLoad() {
         
@@ -58,24 +58,21 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
         self.tableView.estimatedRowHeight = 68.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
 
-        searchController.searchResultsUpdater = self
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.scopeButtonTitles = ["Author", "Title"]
-        searchController.searchBar.delegate = self
-
-        searchController.definesPresentationContext = true
-        
-        tableView.tableHeaderView = searchController.searchBar
-        
-        searchController.searchBar.sizeToFit()
+//        searchController.searchResultsUpdater = self
+//        searchController.dimsBackgroundDuringPresentation = false
+//        searchController.obscuresBackgroundDuringPresentation = false
+//        searchController.searchBar.scopeButtonTitles = ["Author", "Title"]
+//        searchController.searchBar.delegate = self
+//
+//        searchController.definesPresentationContext = true
+//        
+//        tableView.tableHeaderView = searchController.searchBar
+//        
+//        searchController.searchBar.sizeToFit()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        
-    }
-        
     override func didReceiveMemoryWarning() {
+
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }

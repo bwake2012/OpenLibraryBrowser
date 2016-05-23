@@ -14,6 +14,7 @@ import BNRCoreDataStack
 
 class OLWorkDetailViewController: UIViewController {
 
+    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var workTitle: UILabel!
     @IBOutlet weak var workSubtitle: UILabel!
     @IBOutlet weak var workAuthor: UILabel!
@@ -22,6 +23,7 @@ class OLWorkDetailViewController: UIViewController {
     @IBOutlet weak var displayAuthorDetail: UIButton!
 
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var containerViewHeightConstraint: NSLayoutConstraint!
     
     var queryCoordinator: WorkDetailCoordinator?
 
@@ -31,7 +33,6 @@ class OLWorkDetailViewController: UIViewController {
     var currentImageURL: NSURL?
     
     var searchInfo: OLWorkDetail?
-
     
     @IBAction func displayAuthorDetail(sender: UIButton) {
         
@@ -144,6 +145,21 @@ class OLWorkDetailViewController: UIViewController {
         } else {
             self.workCover.image = UIImage( named: workDetail.defaultImageName )
         }
+        
+        view.layoutIfNeeded()
+        
+        let viewHeight = self.view.bounds.height
+        
+        let minContentHeight = viewHeight - UIApplication.sharedApplication().statusBarFrame.height +
+            self.navigationController!.navigationBar.frame.height
+        
+        let headerViewHeight = headerView.bounds.height
+        
+        if headerViewHeight > minContentHeight / 2 {
+            
+            containerViewHeightConstraint.constant = minContentHeight
+        }
+        
     }
     
     // MARK: Utility

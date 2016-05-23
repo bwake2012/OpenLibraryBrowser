@@ -14,11 +14,15 @@ import BNRCoreDataStack
 
 class OLAuthorDetailViewController: UIViewController {
 
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var authorName: UILabel!
     @IBOutlet weak var authorPhoto: AspectRatioImageView!
     @IBOutlet weak var displayLargePhoto: UIButton!
     @IBOutlet weak var displayDeluxeDetail: UIButton!
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var containerViewHeightConstraint: NSLayoutConstraint!
 
     var queryCoordinator: AuthorDetailCoordinator?
     var authorWorksVC: OLAuthorDetailWorksTableViewController?
@@ -97,7 +101,21 @@ class OLAuthorDetailViewController: UIViewController {
         } else {
             self.authorPhoto.image = UIImage( named: "253-person.png" )
         }
-    }
+        
+        view.layoutIfNeeded()
+        
+        let viewHeight = self.view.bounds.height
+        
+        let minContentHeight = viewHeight - UIApplication.sharedApplication().statusBarFrame.height +
+            self.navigationController!.navigationBar.frame.height
+        
+        let headerViewHeight = headerView.bounds.height
+        
+        if headerViewHeight > minContentHeight / 2 {
+            
+            containerViewHeightConstraint.constant = minContentHeight
+        }
+     }
     
     // MARK: Utility
 
