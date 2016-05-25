@@ -37,6 +37,7 @@ class AuthorWorksGetOperation: GroupOperation {
         let goodParts = parts.filter { (x) -> Bool in !x.isEmpty }
         let authorKey = goodParts.last!
         let cacheFile = cachesFolder.URLByAppendingPathComponent("\(authorKey)authorWorks.json")
+//        print( "cache: \(cacheFile.absoluteString)" )
         
         /*
             This operation is made of three child operations:

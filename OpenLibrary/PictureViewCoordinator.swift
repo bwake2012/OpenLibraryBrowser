@@ -15,9 +15,9 @@ class PictureViewCoordinator: OLQueryCoordinator {
     
     weak var pictureVC: OLPictureViewController?
     
-    var localURL: NSURL
-    var imageID: Int = 0
-    var pictureType = "a"
+    private var localURL: NSURL
+    private var imageID: Int = 0
+    private var pictureType = "a"
 
     var imageGetOperation: ImageGetOperation?
     

@@ -102,6 +102,8 @@ class OLAuthorDetailViewController: UIViewController {
             self.authorPhoto.image = UIImage( named: "253-person.png" )
         }
         
+        self.displayDeluxeDetail.enabled = true
+        
         view.layoutIfNeeded()
         
         let viewHeight = self.view.bounds.height

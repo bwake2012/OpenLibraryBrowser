@@ -20,6 +20,7 @@ class OLWorkDetailViewController: UIViewController {
     @IBOutlet weak var workAuthor: UILabel!
     @IBOutlet weak var workCover: UIImageView!
     @IBOutlet weak var displayLargeCover: UIButton!
+    @IBOutlet weak var displayDeluxeDetail: UIButton!
     @IBOutlet weak var displayAuthorDetail: UIButton!
 
     @IBOutlet weak var containerView: UIView!
@@ -145,6 +146,8 @@ class OLWorkDetailViewController: UIViewController {
         } else {
             self.workCover.image = UIImage( named: workDetail.defaultImageName )
         }
+        self.displayDeluxeDetail.enabled = true
+        self.displayAuthorDetail.enabled = true
         
         view.layoutIfNeeded()
         

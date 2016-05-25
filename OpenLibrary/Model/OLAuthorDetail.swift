@@ -249,9 +249,16 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
         if hasImage {
 
             let value = localURL( "M", index: 0 ).absoluteString
-            deluxeData.append(
-                [DeluxeData( type: .imageAuthor, caption: String( firstImageID ), value: value )]
-            )
+            let extraValue = localURL( "L", index: 0 ).absoluteString
+            let deluxeItem =
+                DeluxeData(
+                        type: .imageAuthor,
+                        caption: String( firstImageID ),
+                        value: value,
+                        extraValue: extraValue
+                    )
+
+            deluxeData.append( [deluxeItem] )
         }
         
         if !self.birth_date.isEmpty || !self.death_date.isEmpty {
@@ -307,9 +314,16 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
                 if -1 != photos[index] {
 
                     let value = localURL( "M", index: index ).absoluteString
-                    newData.append(
-                        DeluxeData( type: .imageAuthor, caption: String( photos[index] ), value: value )
+                    let extraValue = localURL( "L", index: index ).absoluteString
+                    let deluxeItem =
+                        DeluxeData(
+                            type: .imageAuthor,
+                            caption: String( imageID( index ) ),
+                            value: value,
+                            extraValue: extraValue
                     )
+                    
+                    deluxeData.append( [deluxeItem] )
                 }
             }
             

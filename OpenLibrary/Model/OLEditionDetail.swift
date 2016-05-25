@@ -499,10 +499,16 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         if hasImage {
             
             let value = localURL( "M" ).absoluteString
-            deluxeData.append(
-                [DeluxeData( type: .imageBook, caption: String( firstImageID ), value: value )]
+            let extraValue = localURL( "L", index: 0 ).absoluteString
+            let deluxeItem =
+                DeluxeData(
+                    type: .imageBook,
+                    caption: String( firstImageID ),
+                    value: value,
+                    extraValue: extraValue
             )
             
+            deluxeData.append( [deluxeItem] )
         }
         
         if !by_statement.isEmpty {
@@ -618,9 +624,16 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                 if -1 != covers[index] {
                     
                     let value = localURL( "M", index: index ).absoluteString
-                    newData.append(
-                        DeluxeData( type: .imageBook, caption: String( covers[index] ), value: value )
+                    let extraValue = localURL( "L", index: index ).absoluteString
+                    let deluxeItem =
+                        DeluxeData(
+                            type: .imageBook,
+                            caption: String( covers[index] ),
+                            value: value,
+                            extraValue: extraValue
                     )
+                    
+                    deluxeData.append( [deluxeItem] )
                 }
             }
             

@@ -38,6 +38,7 @@ class IAEBookItemGetOperation: GroupOperation {
         let editionKey = goodParts.last!
         let cacheFile =
             cachesFolder.URLByAppendingPathComponent( "\(editionKey)InternetArchiveEBookItems.json")
+ //       print( "cache: \(cacheFile.absoluteString)" )
         
         /*
             This operation is made of three child operations:

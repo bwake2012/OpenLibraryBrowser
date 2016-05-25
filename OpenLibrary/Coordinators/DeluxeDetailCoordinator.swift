@@ -164,7 +164,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
             PictureViewCoordinator(
                     operationQueue: operationQueue,
                     coreDataStack: coreDataStack,
-                    localURL: NSURL( fileURLWithPath: object.value ),
+                    localURL: NSURL( fileURLWithPath: object.extraValue ),
                     imageID: Int( object.caption )!,
                     pictureType: imageType,
                     pictureVC: destVC

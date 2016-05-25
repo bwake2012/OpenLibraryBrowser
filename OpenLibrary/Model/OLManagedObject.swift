@@ -59,6 +59,23 @@ struct DeluxeData {
     let type: DeluxeDetail
     let caption: String
     let value: String
+    let extraValue: String
+    
+    init( type: DeluxeDetail, caption: String, value: String, extraValue: String ) {
+        
+        self.type = type
+        self.caption = caption
+        self.value = value
+        self.extraValue = extraValue
+    }
+
+    init( type: DeluxeDetail, caption: String, value: String ) {
+        
+        self.type = type
+        self.caption = caption
+        self.value = value
+        self.extraValue = ""
+    }
 }
 
 
@@ -102,9 +119,14 @@ class OLManagedObject: NSManagedObject {
 
         let imagesSubFolder = imagesFolder.URLByAppendingPathComponent( goodParts[0] )
         
-        try! NSFileManager.defaultManager().createDirectoryAtURL(
-            imagesSubFolder, withIntermediateDirectories: true, attributes: nil )
-        
+        do {
+            try NSFileManager.defaultManager().createDirectoryAtURL(
+                imagesSubFolder, withIntermediateDirectories: true, attributes: nil )
+        }
+        catch let error as NSError {
+            
+            print( "\(error)" )
+        }
         var fileName = "\(goodParts[1])-\(size)"
         if 0 < index {
             fileName += "\(index)"

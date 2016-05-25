@@ -61,13 +61,18 @@ class OLPictureViewController: UIViewController {
     // MARK: Utility
     func displayImage( localURL: NSURL ) -> Bool {
         
-        if let data = NSData( contentsOfURL: localURL ) {
+        do {
+            let data = try NSData( contentsOfURL: localURL, options: .DataReadingUncached  )
             if let image = UIImage( data: data ) {
                 
                 pictureView.image = image
                 activityIndicator.stopAnimating()
                 return true
             }
+        }
+        catch let error as NSError {
+            
+            print( "\(error)" )
         }
         
         return false

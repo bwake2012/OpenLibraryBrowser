@@ -29,7 +29,7 @@ class ImageGetOperation: GroupOperation {
     init( stringID: String, imageKeyName: String, localURL: NSURL, size: String, type: String, completionHandler: Void -> Void ) {
         
         downloadOperation =
-            ImageDownloadOperation( stringID: stringID, imageKeyName: imageKeyName, size: size, type: type, imageFile: localURL )
+            ImageDownloadOperation( stringID: stringID, imageKeyName: imageKeyName, size: size, type: type, imageURL: localURL )
         let finishOperation = NSBlockOperation( block: completionHandler )
         
         // These operations must be executed in order
@@ -84,6 +84,14 @@ class ImageGetOperation: GroupOperation {
 
             default:
                 print( "\(errorReason)" )
+                print( "Other Error" )
+                if let destPath = error.userInfo["NSDestinationFilePath"] {
+                    print( "destination: \(destPath)" )
+                }
+                if let srcPath = error.userInfo["NSSourceFilePathErrorKey"] {
+                    print( "source: \(srcPath)" )
+                }
+
                 return
         }
         

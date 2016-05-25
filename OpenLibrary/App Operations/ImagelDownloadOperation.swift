@@ -10,14 +10,14 @@ import Foundation
 
 class ImageDownloadOperation: GroupOperation {
     // MARK: Properties
-    let imageFile: NSURL
+    let imageURL: NSURL
 
     // MARK: Initialization
     
     /// - parameter cacheFile: The file `NSURL` to which the earthquake feed will be downloaded.
-    init( stringID: String, imageKeyName: String, size: String, type: String, imageFile: NSURL ) {
+    init( stringID: String, imageKeyName: String, size: String, type: String, imageURL: NSURL ) {
 
-        self.imageFile = imageFile
+        self.imageURL = imageURL
 
         super.init(operations: [])
         name = "Download Image"
@@ -51,26 +51,38 @@ class ImageDownloadOperation: GroupOperation {
     }
     
     func downloadFinished( url: NSURL?, response: NSHTTPURLResponse?, error: NSError? ) {
-        if let localURL = url {
+        
+        if let error = error {
+
+            aggregateError( error )
+
+        } else if let localURL = url {
+            
             do {
                 /*
                     If we already have a file at this location, just delete it.
                     Also, swallow the error, because we don't really care about it.
                 */
-                try NSFileManager.defaultManager().removeItemAtURL( self.imageFile )
+                try NSFileManager.defaultManager().removeItemAtURL( self.imageURL )
             }
-            catch { }
+            catch {}
             
+            if let directoryURL = self.imageURL.URLByDeletingLastPathComponent {
+
+                do {
+                    try NSFileManager.defaultManager().createDirectoryAtURL( directoryURL, withIntermediateDirectories: true, attributes: nil )
+                }
+                catch {}
+            }
+
             do {
-                try NSFileManager.defaultManager().moveItemAtURL( localURL, toURL: self.imageFile )
+                
+                try NSFileManager.defaultManager().moveItemAtURL( localURL, toURL: self.imageURL )
             }
             catch let error as NSError {
                 aggregateError(error)
             }
             
-        }
-        else if let error = error {
-            aggregateError(error)
         }
         else {
             // Do nothing, and the operation will automatically finish.

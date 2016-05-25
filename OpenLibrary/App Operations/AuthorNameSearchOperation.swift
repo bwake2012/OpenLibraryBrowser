@@ -37,6 +37,7 @@ class AuthorNameSearchOperation: GroupOperation {
         let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
 
         let cacheFile = cachesFolder.URLByAppendingPathComponent("authorSearchResults.json")
+//        print( "cache: \(cacheFile.absoluteString)" )
         
         /*
             This operation is made of three child operations:
