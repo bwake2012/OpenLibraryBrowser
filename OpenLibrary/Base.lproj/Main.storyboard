@@ -451,11 +451,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p7T-mp-Z6E">
-                                <rect key="frame" x="20" y="64" width="560" height="416"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p7T-mp-Z6E">
+                                <rect key="frame" x="20" y="20" width="560" height="580"/>
                             </imageView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="s8r-Ab-8re">
-                                <rect key="frame" x="282" y="253" width="37" height="37"/>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="s8r-Ab-8re">
+                                <rect key="frame" x="282" y="291.5" width="37" height="37"/>
                                 <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                         </subviews>
@@ -552,6 +552,7 @@
                                     <constraint firstItem="C8f-fw-Rkw" firstAttribute="leading" secondItem="gWQ-vo-SPB" secondAttribute="leading" id="715-79-tdr"/>
                                     <constraint firstAttribute="bottom" secondItem="wsl-iM-KOa" secondAttribute="bottom" id="Bq6-9n-g2g"/>
                                     <constraint firstItem="wsl-iM-KOa" firstAttribute="height" relation="greaterThanOrEqual" secondItem="C8f-fw-Rkw" secondAttribute="height" id="DIu-6l-mAU"/>
+                                    <constraint firstAttribute="height" secondItem="wsl-iM-KOa" secondAttribute="height" id="IPW-by-1nf"/>
                                     <constraint firstItem="wsl-iM-KOa" firstAttribute="leading" secondItem="C8f-fw-Rkw" secondAttribute="trailing" constant="8" id="J5I-GV-llY"/>
                                     <constraint firstItem="C8f-fw-Rkw" firstAttribute="top" secondItem="gWQ-vo-SPB" secondAttribute="top" id="Lg0-RV-uez"/>
                                     <constraint firstItem="jl8-gG-1vG" firstAttribute="centerY" secondItem="C8f-fw-Rkw" secondAttribute="centerY" id="YTg-Hz-UAz"/>
@@ -570,8 +571,6 @@
                             <constraint firstAttribute="trailingMargin" secondItem="gWQ-vo-SPB" secondAttribute="trailing" id="b4I-MC-kd2"/>
                         </constraints>
                     </view>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="600" height="600"/>
                     <connections>
                         <outlet property="displayLargeCover" destination="jl8-gG-1vG" id="DcE-a0-i13"/>
                         <outlet property="editionAuthorView" destination="bwY-e4-QV7" id="kdM-T2-7WK"/>
@@ -958,7 +957,7 @@
         <image name="96-book.png" width="18" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="r7n-rO-97o"/>
         <segue reference="cIP-f1-82w"/>
+        <segue reference="r7n-rO-97o"/>
     </inferredMetricsTieBreakers>
 </document>
