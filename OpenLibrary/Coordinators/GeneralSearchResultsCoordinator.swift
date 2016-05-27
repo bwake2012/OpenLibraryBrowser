@@ -104,7 +104,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControl
         
         guard let result = objectAtIndexPath( indexPath ) else { return nil }
 
-        cell.configure( result )
+        cell.configure( tableVC, generalResult: result )
         
         updateUI( result, cell: cell )
         
@@ -342,4 +342,5 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControl
             
         }
     }
+
 }

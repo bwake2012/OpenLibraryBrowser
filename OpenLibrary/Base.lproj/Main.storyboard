@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="l6R-CT-iTd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="K2s-7v-hMb">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -373,15 +373,25 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E2Z-p9-UBW" userLabel="Subtitle">
-                                            <rect key="frame" x="71" y="46.5" width="521" height="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E2Z-p9-UBW" userLabel="Author">
+                                            <rect key="frame" x="71" y="33.5" width="521" height="30"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u1h-ep-s9e">
+                                            <rect key="frame" x="71" y="33.5" width="521" height="30"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <connections>
+                                                <action selector="touchedAuthorName:" destination="bvp-Y1-lAG" eventType="touchUpInside" id="3MQ-qG-T7s"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="u1h-ep-s9e" firstAttribute="centerY" secondItem="E2Z-p9-UBW" secondAttribute="centerY" id="9AU-qa-yiI"/>
+                                        <constraint firstItem="u1h-ep-s9e" firstAttribute="width" secondItem="E2Z-p9-UBW" secondAttribute="width" id="9Io-ia-oRV"/>
                                         <constraint firstItem="b7D-ZT-JA9" firstAttribute="top" secondItem="vvD-eN-vUB" secondAttribute="topMargin" constant="0.5" id="PSZ-0g-XmW"/>
+                                        <constraint firstItem="u1h-ep-s9e" firstAttribute="centerX" secondItem="E2Z-p9-UBW" secondAttribute="centerX" id="SiG-Ca-Quz"/>
                                         <constraint firstItem="b7D-ZT-JA9" firstAttribute="leading" secondItem="vvD-eN-vUB" secondAttribute="leadingMargin" id="TKU-dv-3V1"/>
                                         <constraint firstItem="W47-GT-qSa" firstAttribute="leading" secondItem="b7D-ZT-JA9" secondAttribute="trailing" constant="8" id="ZIB-4T-EiQ"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="W47-GT-qSa" secondAttribute="trailing" id="ZSo-BZ-b2O"/>
@@ -389,7 +399,8 @@
                                         <constraint firstItem="W47-GT-qSa" firstAttribute="top" secondItem="vvD-eN-vUB" secondAttribute="topMargin" id="hLL-cw-d3i"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="E2Z-p9-UBW" secondAttribute="trailing" id="k3b-2y-lRT"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="E2Z-p9-UBW" secondAttribute="bottom" id="pZS-L1-3J4"/>
-                                        <constraint firstItem="E2Z-p9-UBW" firstAttribute="top" relation="greaterThanOrEqual" secondItem="W47-GT-qSa" secondAttribute="bottom" constant="13.5" id="yCy-y6-rIB"/>
+                                        <constraint firstItem="E2Z-p9-UBW" firstAttribute="top" relation="greaterThanOrEqual" secondItem="W47-GT-qSa" secondAttribute="bottom" constant="6" id="pwy-F0-Cw9"/>
+                                        <constraint firstItem="u1h-ep-s9e" firstAttribute="height" secondItem="E2Z-p9-UBW" secondAttribute="height" id="usv-q6-woj"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -413,6 +424,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="gFU-3t-GOM" kind="show" identifier="displayGeneralSearchAuthorDetail" customClass="SegueWithTableViewCellZoom" customModule="OpenLibrary" id="mPD-eq-awe"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XVD-jK-WP2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -670,80 +684,6 @@
             </objects>
             <point key="canvasLocation" x="267" y="1031"/>
         </scene>
-        <!--Launch Screen-->
-        <scene sceneID="i7I-3r-hCR">
-            <objects>
-                <viewController storyboardIdentifier="launchVC" title="Open Library" useStoryboardIdentifierAsRestorationIdentifier="YES" id="l6R-CT-iTd" userLabel="Launch Screen" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="XMC-UF-LSo"/>
-                        <viewControllerLayoutGuide type="bottom" id="jeC-KI-0xr"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="D3w-Ep-Pu9">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OpenLibrary" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="28" translatesAutoresizingMaskIntoConstraints="NO" id="30m-Hg-Swm">
-                                <rect key="frame" x="16" y="28" width="288" height="86"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="72"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="An iOS client for the database at openlibrary.org." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zzy-gv-IF6">
-                                <rect key="frame" x="16" y="114" width="288" height="41"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aknowlegements:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CtB-U5-2Hu">
-                                <rect key="frame" x="16" y="163" width="148" height="20.5"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GcC-N8-l6q">
-                                <rect key="frame" x="16" y="183" width="288" height="57.5"/>
-                                <string key="text">This application leans very heavily on the NSOperation based classes developed by Apple for their WWDC app and published with their WWDC 2015 sample Advanced NSOperations.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright 2016, Cockleburr Software" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="Qe1-BU-Qch">
-                                <rect key="frame" x="16" y="443" width="288" height="17"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="e5W-Ek-C1T">
-                                <rect key="frame" x="142" y="221" width="37" height="37"/>
-                                <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            </activityIndicatorView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="leadingMargin" secondItem="zzy-gv-IF6" secondAttribute="leading" id="CMb-A6-vR8"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="30m-Hg-Swm" secondAttribute="leading" id="IUX-Hv-lJi"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="GcC-N8-l6q" secondAttribute="trailing" id="LSE-i8-9ve"/>
-                            <constraint firstItem="CtB-U5-2Hu" firstAttribute="top" secondItem="zzy-gv-IF6" secondAttribute="bottom" constant="8" id="NUz-QE-a1J"/>
-                            <constraint firstItem="e5W-Ek-C1T" firstAttribute="centerY" secondItem="D3w-Ep-Pu9" secondAttribute="centerY" id="Rq6-7Q-NlI"/>
-                            <constraint firstItem="jeC-KI-0xr" firstAttribute="top" secondItem="Qe1-BU-Qch" secondAttribute="bottom" constant="20" id="TqU-W0-rLo"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="zzy-gv-IF6" secondAttribute="trailing" id="UWv-h8-KzY"/>
-                            <constraint firstItem="e5W-Ek-C1T" firstAttribute="centerX" secondItem="D3w-Ep-Pu9" secondAttribute="centerX" id="VvY-5R-n25"/>
-                            <constraint firstItem="30m-Hg-Swm" firstAttribute="top" secondItem="XMC-UF-LSo" secondAttribute="bottom" constant="8" id="Zci-qX-LYF"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="Qe1-BU-Qch" secondAttribute="leading" id="acM-sI-4sF"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="GcC-N8-l6q" secondAttribute="leading" id="etf-Ic-NiS"/>
-                            <constraint firstItem="GcC-N8-l6q" firstAttribute="top" secondItem="CtB-U5-2Hu" secondAttribute="bottom" id="jZd-ub-lnk"/>
-                            <constraint firstItem="zzy-gv-IF6" firstAttribute="top" secondItem="30m-Hg-Swm" secondAttribute="bottom" id="ml7-pu-6X8"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="CtB-U5-2Hu" secondAttribute="leading" id="qDc-jX-Vgf"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="30m-Hg-Swm" secondAttribute="trailing" id="xtn-gU-lO2"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Qe1-BU-Qch" secondAttribute="trailing" id="zOx-QA-WTp"/>
-                        </constraints>
-                    </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="A4K-B6-zFT" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="127" y="378"/>
-        </scene>
         <!--Deluxe Detail Table View Controller-->
         <scene sceneID="khe-cu-Afx">
             <objects>
@@ -951,13 +891,87 @@
             </objects>
             <point key="canvasLocation" x="2541" y="1799"/>
         </scene>
+        <!--Open Library-->
+        <scene sceneID="smY-AI-xbE">
+            <objects>
+                <viewController storyboardIdentifier="launchVC" title="Open Library" useStoryboardIdentifierAsRestorationIdentifier="YES" id="K2s-7v-hMb" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9RE-Cd-AON"/>
+                        <viewControllerLayoutGuide type="bottom" id="Taw-dX-Dua"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="el7-qg-pbV">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OpenLibrary" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="28" translatesAutoresizingMaskIntoConstraints="NO" id="N8Y-Hl-mZn">
+                                <rect key="frame" x="16" y="28" width="288" height="86"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="72"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="An iOS client for the database at openlibrary.org." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7eU-nC-dMn">
+                                <rect key="frame" x="16" y="114" width="288" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aknowlegements:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rb5-iV-6cX">
+                                <rect key="frame" x="16" y="163" width="148" height="20.5"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HGd-BP-EkF">
+                                <rect key="frame" x="16" y="183" width="288" height="57.5"/>
+                                <string key="text">This application leans very heavily on the NSOperation based classes developed by Apple for their WWDC app and published with their WWDC 2015 sample Advanced NSOperations.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright 2016, Cockleburr Software" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="GBP-gA-sIF">
+                                <rect key="frame" x="16" y="442.5" width="288" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="bKs-qm-dMu">
+                                <rect key="frame" x="150" y="124" width="20" height="20"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="GBP-gA-sIF" secondAttribute="trailing" id="2YI-dB-2Te"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="N8Y-Hl-mZn" secondAttribute="trailing" id="7j8-bS-Krh"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="N8Y-Hl-mZn" secondAttribute="leading" id="Erk-Cj-OFJ"/>
+                            <constraint firstItem="N8Y-Hl-mZn" firstAttribute="top" secondItem="9RE-Cd-AON" secondAttribute="bottom" constant="8" id="FVY-hd-Sec"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="HGd-BP-EkF" secondAttribute="trailing" id="IkJ-xe-BTp"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="GBP-gA-sIF" secondAttribute="leading" id="JRc-Mq-dWd"/>
+                            <constraint firstItem="Taw-dX-Dua" firstAttribute="top" secondItem="GBP-gA-sIF" secondAttribute="bottom" constant="20" id="JtX-jQ-4Di"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="HGd-BP-EkF" secondAttribute="leading" id="MOe-HH-PGs"/>
+                            <constraint firstItem="HGd-BP-EkF" firstAttribute="top" secondItem="rb5-iV-6cX" secondAttribute="bottom" id="QJz-Ni-pAJ"/>
+                            <constraint firstItem="rb5-iV-6cX" firstAttribute="top" secondItem="7eU-nC-dMn" secondAttribute="bottom" constant="8" id="RM4-so-QOq"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="7eU-nC-dMn" secondAttribute="trailing" id="aEw-IY-bTn"/>
+                            <constraint firstItem="bKs-qm-dMu" firstAttribute="centerY" secondItem="7eU-nC-dMn" secondAttribute="centerY" id="f4z-HD-OKd"/>
+                            <constraint firstItem="7eU-nC-dMn" firstAttribute="top" secondItem="N8Y-Hl-mZn" secondAttribute="bottom" id="gh3-eF-3LM"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="7eU-nC-dMn" secondAttribute="leading" id="mf4-wa-f1V"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="rb5-iV-6cX" secondAttribute="leading" id="nOh-6h-6Dk"/>
+                            <constraint firstItem="bKs-qm-dMu" firstAttribute="centerX" secondItem="7eU-nC-dMn" secondAttribute="centerX" id="uHh-wZ-Avd"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WB4-4A-5Hw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="53" y="375"/>
+        </scene>
     </scenes>
     <resources>
         <image name="708-search-toolbar.png" width="22" height="22"/>
         <image name="96-book.png" width="18" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="cIP-f1-82w"/>
+        <segue reference="mPD-eq-awe"/>
+        <segue reference="WHs-h8-0AD"/>
         <segue reference="r7n-rO-97o"/>
     </inferredMetricsTieBreakers>
 </document>

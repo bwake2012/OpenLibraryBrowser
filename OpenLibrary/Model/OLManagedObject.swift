@@ -93,7 +93,7 @@ class OLManagedObject: NSManagedObject {
     
     var defaultImageName: String {
         
-        return "96-book.png"
+        return "961-book-32.png"
     }
 
     lazy var deluxeData: [[DeluxeData]] = {

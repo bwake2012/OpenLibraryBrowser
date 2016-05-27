@@ -34,11 +34,30 @@ class WorkEditionTableViewCell: OLTableViewCell {
 
             editionSubTitle.text = entry.key + " " + entry.subtitle
             
+            if entry.hasImage {
+                
+                clearCurrentImage()
+            } else {
+                
+                if entry.physical_format == "Audio Cassette" {
+                    
+                    cellImage.image = UIImage( named: "565-cassette-tape.png" )
+                    
+                } else if entry.physical_format == "Audio CD" {
+                    
+                    cellImage.image = UIImage( named: "1043-album-disc.png" )
+                } else {
+                    
+                    clearCurrentImage()
+                }
+            }
         } else {
             editionTitle.text = ""
             editionSubTitle.text = ""
+            
+            clearCurrentImage()
         }
         
-        clearCurrentImage()
     }
+    
 }

@@ -46,6 +46,8 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
     var searchController = UISearchController( searchResultsController: nil )
     var searchType: SearchType = .searchGeneral
     var bookSearchVC: OLBookSearchViewController?
+    
+    var touchedCellIndexPath: NSIndexPath?
 
     @IBAction func presentGeneralSearch(sender: UIBarButtonItem) {}
     
@@ -88,6 +90,30 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
                     destVC.queryCoordinator = self.generalSearchCoordinator
                     
                     self.bookSearchVC = destVC
+                }
+            }
+
+        } else if segue.identifier == "displayGeneralSearchAuthorDetail" {
+
+            if let cell = sender as? UITableViewCell {
+                if let indexPath = tableView.indexPathForCell( cell ) {
+                    if let destVC = segue.destinationViewController as? OLAuthorDetailViewController {
+                        
+                        tableView.selectRowAtIndexPath( indexPath, animated: true, scrollPosition: .None )
+                        generalSearchCoordinator.installAuthorDetailCoordinator( destVC, indexPath: indexPath )
+                    }
+                }
+            }
+
+        } else if segue.identifier == "displayGeneralSearchWorkDetail" {
+            
+            if let cell = sender as? UITableViewCell {
+                if let indexPath = tableView.indexPathForCell( cell ) {
+                    if let destVC = segue.destinationViewController as? OLWorkDetailViewController {
+                        
+                        tableView.selectRowAtIndexPath( indexPath, animated: true, scrollPosition: .None )
+                        generalSearchCoordinator.installWorkDetailCoordinator( destVC, indexPath: indexPath )
+                    }
                 }
             }
 

@@ -59,7 +59,8 @@ class AspectRatioImageView: UIImageView {
                 for constraint in constraints {
                     if constraint.firstAttribute == .Width && constraint.secondAttribute == .NotAnAttribute {
                         constraint.constant = resize.width
-                    } else if constraint.firstAttribute == .Height && constraint.secondAttribute == .NotAnAttribute {
+                    }
+                    if constraint.firstAttribute == .Height && constraint.secondAttribute == .NotAnAttribute {
                         constraint.constant = resize.height
                     }
                 }

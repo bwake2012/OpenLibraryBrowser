@@ -460,7 +460,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
     
     override var defaultImageName: String {
         
-        return "96-book.png"
+        return "961-book-32.png"
     }
     
     override var hasImage: Bool {

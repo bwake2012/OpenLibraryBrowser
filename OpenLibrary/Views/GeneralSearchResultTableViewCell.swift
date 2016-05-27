@@ -10,11 +10,21 @@ import UIKit
 
 class GeneralSearchResultTableViewCell: OLTableViewCell {
 
+    var delegate: UITableViewController?
+    
     @IBOutlet weak var titleText: UILabel!
     @IBOutlet weak var authorName: UILabel!
     
-    func configure( generalResult: OLGeneralSearchResult? ) {
+    @IBAction func touchedAuthorName(sender: AnyObject) {
+
+        setSelected( true, animated: true )
+        delegate!.performSegueWithIdentifier( "displayGeneralSearchAuthorDetail", sender: self )
+    }
+    
+    func configure( delegate: UITableViewController, generalResult: OLGeneralSearchResult? ) {
         
+        self.delegate = delegate
+
         if let r = generalResult {
             titleText.text = "\(r.sequence).\(r.index) \(r.title)"
             authorName.text = "\(r.key) \(r.author_name)"
@@ -29,6 +39,6 @@ class GeneralSearchResultTableViewCell: OLTableViewCell {
     override func clearCurrentImage() -> Void {
         
         currentImageURL = nil
-        cellImage.image = UIImage( named: "96-book.png" )
+        cellImage.image = UIImage( named: "961-book-32.png" )
     }
 }
