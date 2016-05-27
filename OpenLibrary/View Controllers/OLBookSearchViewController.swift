@@ -7,6 +7,8 @@
 //
 
 import UIKit
+    
+typealias SaveSearchDictionary = ( searchDictionary: [String: String] ) -> Void
 
 class OLBookSearchViewController: UIViewController {
 
@@ -28,6 +30,8 @@ class OLBookSearchViewController: UIViewController {
     
     var queryCoordinator: GeneralSearchResultsCoordinator?
     var searchKeys = [String: String]()
+    
+    var saveSearchDictionary: SaveSearchDictionary?
     
     @IBAction func ebookOnlySwitchChanged(sender: AnyObject) {
         
@@ -53,6 +57,11 @@ class OLBookSearchViewController: UIViewController {
     override func viewDidLoad() {
 
         super.viewDidLoad()
+        
+        if !searchKeys.isEmpty {
+            
+            displaySearchKeys( searchKeys )
+        }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OLBookSearchViewController.keyboardDidShow(_:)), name: UIKeyboardDidShowNotification, object: nil)
         
@@ -83,6 +92,11 @@ class OLBookSearchViewController: UIViewController {
 
         performSegueWithIdentifier( "exitBookSearch", sender: self )
 
+        if let saveSearchDictionary = saveSearchDictionary {
+            
+            saveSearchDictionary( searchDictionary: searchKeys )
+        }
+        
         return false
     }
     
@@ -128,5 +142,26 @@ class OLBookSearchViewController: UIViewController {
         }
     
         return searchKeys
+    }
+    
+    func displaySearchKeys( searchKeys: [String: String] ) {
+        
+        let fields: [(field: UITextField, key: String)] =
+            [( generalSearch, "q" ), (titleSearch, "title"), (authorSearch, "author"),
+             (isbnSearch, "isbn"), (subjectSearch, "subject"), (placeSearch, "place"),
+             (personSearch, "person"), (publisherSearch, "publisher")]
+
+        for field in fields {
+            
+            if let text = searchKeys[field.key] {
+                
+                field.field.text = text
+            }
+        }
+        
+        if let hasFullText = searchKeys["has_fulltext"] {
+            
+            ebookOnlySwitch.on = "true" == hasFullText
+        }
     }
 }

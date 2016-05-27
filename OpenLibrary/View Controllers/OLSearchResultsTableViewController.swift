@@ -48,6 +48,8 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
     var bookSearchVC: OLBookSearchViewController?
     
     var touchedCellIndexPath: NSIndexPath?
+    
+    var savedSearchKeys = [String: String]()
 
     @IBAction func presentGeneralSearch(sender: UIBarButtonItem) {}
     
@@ -88,8 +90,10 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
                     
                     destVC.transitioningDelegate = delegate
                     destVC.queryCoordinator = self.generalSearchCoordinator
+                    destVC.searchKeys = savedSearchKeys
                     
                     self.bookSearchVC = destVC
+                    destVC.saveSearchDictionary = self.saveSearchKeys
                 }
             }
 
@@ -286,6 +290,13 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
     func updateSearchResultsForSearchController( searchController: UISearchController ) {
         
         
+    }
+    
+    // MARK: SaveSearchDictionary
+    
+    func saveSearchKeys( searchKeys: [String: String] ) -> Void {
+        
+        self.savedSearchKeys = searchKeys
     }
     
     // MARK: Search View Controller
