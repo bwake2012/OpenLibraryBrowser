@@ -48,7 +48,7 @@
                                                                             <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                         </state>
                                                                         <connections>
-                                                                            <segue destination="gIu-3o-oRC" kind="show" identifier="largeAuthorPhoto" customClass="SegueWithImageZoom" customModule="OpenLibrary" customModuleProvider="target" id="fqf-5d-Edz"/>
+                                                                            <segue destination="gIu-3o-oRC" kind="show" identifier="largeAuthorPhoto" customClass="SegueWithImageZoom" customModule="OpenLibrary" id="fqf-5d-Edz"/>
                                                                         </connections>
                                                                     </button>
                                                                     <view contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qKG-MX-xGl" userLabel="Summary">
@@ -72,7 +72,7 @@
                                                                         <rect key="frame" x="132" y="0.0" width="452" height="128"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                         <connections>
-                                                                            <segue destination="oHS-qH-mkf" kind="show" identifier="displayAuthorDeluxeDetail" customClass="SegueWithUnfold" customModule="OpenLibrary" customModuleProvider="target" id="kI8-RP-5D9"/>
+                                                                            <segue destination="oHS-qH-mkf" kind="show" identifier="displayAuthorDeluxeDetail" customClass="SegueWithUnfold" customModule="OpenLibrary" id="kI8-RP-5D9"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
