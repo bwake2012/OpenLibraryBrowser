@@ -11,7 +11,6 @@ import CoreData
 extension OLWorkDetail {
 
     @NSManaged var author_key: String
-    @NSManaged var work_key: String
     @NSManaged var index: Int64
     
     @NSManaged var retrieval_date: NSDate

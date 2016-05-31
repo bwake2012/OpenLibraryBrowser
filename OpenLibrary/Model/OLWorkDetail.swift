@@ -174,54 +174,83 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
     
     static let entityName = "WorkDetail"
     
+    class func findObject( workKey: String, moc: NSManagedObjectContext ) -> OLWorkDetail? {
+        
+        let fetchRequest = NSFetchRequest( entityName: OLWorkDetail.entityName )
+        
+        fetchRequest.predicate = NSPredicate( format: "key==%@", "\(workKey)" )
+        
+        fetchRequest.sortDescriptors =
+            [NSSortDescriptor(key: "retrieval_date", ascending: false)]
+        
+        var results = [OLWorkDetail]?()
+        do {
+            results = try moc.executeFetchRequest( fetchRequest ) as? [OLWorkDetail]
+        }
+        catch {
+            
+            return nil
+        }
+        
+        return results?.first
+    }
+    
     class func parseJSON( parentKey: String, index: Int, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLWorkDetail? {
         
         guard let parsed = ParsedSearchResult.fromJSON( json ) else { return nil }
             
-        guard let newObject =
-            NSEntityDescription.insertNewObjectForEntityForName(
-                    OLWorkDetail.entityName, inManagedObjectContext: moc
-                ) as? OLWorkDetail else { return nil }
+        var newObject: OLWorkDetail?
+        
+        newObject = findObject( parsed.key, moc: moc )
+        if nil == newObject {
             
-        if parentKey.hasPrefix( "/authors/" ) {
-            newObject.author_key = parentKey
-        } else if parentKey.hasPrefix( "/works/" ) {
-            newObject.work_key = parentKey
-        }
-        if newObject.author_key.isEmpty && !parsed.authors.isEmpty {
-            newObject.author_key = parsed.authors[0]
+            newObject =
+                NSEntityDescription.insertNewObjectForEntityForName(
+                    OLWorkDetail.entityName, inManagedObjectContext: moc
+                ) as? OLWorkDetail
+            
         }
         
-        newObject.index = Int64( index )
-        newObject.retrieval_date = NSDate()
+        if let newObject = newObject {
         
-        newObject.key = parsed.key
-        newObject.created = parsed.created
-        newObject.last_modified = parsed.last_modified
-        newObject.revision = parsed.revision
-        newObject.latest_revision = parsed.latest_revision
-        newObject.type = parsed.type
-        
-        newObject.title = parsed.title
-        newObject.subtitle = parsed.subtitle
-        newObject.authors = parsed.authors
-        newObject.translated_titles = parsed.translated_titles
-        newObject.subjects = parsed.subjects
-        newObject.subject_places = parsed.subject_places
-        newObject.subject_times = parsed.subject_times
-        newObject.subject_people = parsed.subject_people
-        newObject.work_description = parsed.work_description
-        newObject.dewey_number = parsed.dewey_number
-        newObject.lc_classifications = parsed.lc_classifications
-        newObject.first_sentence = parsed.first_sentence
-        newObject.original_languages = parsed.original_languages
-        newObject.other_titles = parsed.other_titles
-        newObject.first_publish_date = parsed.first_publish_date
-        newObject.links = parsed.links
-        newObject.notes = parsed.notes
-        // cover_edition of type /type/edition
-        newObject.covers = parsed.covers
-        newObject.coversFound = parsed.covers.count > 0 && -1 != parsed.covers[0]
+            if parentKey.hasPrefix( "/authors/" ) {
+                newObject.author_key = parentKey
+            }
+            if newObject.author_key.isEmpty && !parsed.authors.isEmpty {
+                newObject.author_key = parsed.authors[0]
+            }
+            
+            newObject.index = Int64( index )
+            newObject.retrieval_date = NSDate()
+            
+            newObject.key = parsed.key
+            newObject.created = parsed.created
+            newObject.last_modified = parsed.last_modified
+            newObject.revision = parsed.revision
+            newObject.latest_revision = parsed.latest_revision
+            newObject.type = parsed.type
+            
+            newObject.title = parsed.title
+            newObject.subtitle = parsed.subtitle
+            newObject.authors = parsed.authors
+            newObject.translated_titles = parsed.translated_titles
+            newObject.subjects = parsed.subjects
+            newObject.subject_places = parsed.subject_places
+            newObject.subject_times = parsed.subject_times
+            newObject.subject_people = parsed.subject_people
+            newObject.work_description = parsed.work_description
+            newObject.dewey_number = parsed.dewey_number
+            newObject.lc_classifications = parsed.lc_classifications
+            newObject.first_sentence = parsed.first_sentence
+            newObject.original_languages = parsed.original_languages
+            newObject.other_titles = parsed.other_titles
+            newObject.first_publish_date = parsed.first_publish_date
+            newObject.links = parsed.links
+            newObject.notes = parsed.notes
+            // cover_edition of type /type/edition
+            newObject.covers = parsed.covers
+            newObject.coversFound = parsed.covers.count > 0 && -1 != parsed.covers[0]
+        }
         
         return newObject
     }
@@ -343,6 +372,45 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
                 deluxeData.append( newData )
             }
         }
+        
+        let dateFormatter = NSDateFormatter()
+        
+        dateFormatter.dateStyle = .MediumStyle
+        dateFormatter.timeStyle = .MediumStyle
+        
+        var newData = [DeluxeData]()
+        
+        if let created = created {
+
+            newData.append(
+                    DeluxeData(
+                        type: .inline,
+                        caption: "Created:",
+                        value: dateFormatter.stringFromDate( created )
+                    )
+                )
+        }
+
+        if let last_modified = last_modified {
+            
+            newData.append(
+                DeluxeData(
+                    type: .inline,
+                    caption: "Last Modified:",
+                    value: dateFormatter.stringFromDate( last_modified )
+                )
+            )
+        }
+        
+        newData.append(
+                DeluxeData(
+                    type: .inline,
+                    caption: "Retrieved:",
+                    value: dateFormatter.stringFromDate( retrieval_date )
+                )
+            )
+        
+        deluxeData.append( newData )
 
         return deluxeData
     }

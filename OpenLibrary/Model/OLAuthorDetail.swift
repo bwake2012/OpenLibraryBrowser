@@ -158,51 +158,82 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
     
     static let entityName = "AuthorDetail"
     
+    class func findObject( workKey: String, moc: NSManagedObjectContext ) -> OLAuthorDetail? {
+        
+        let fetchRequest = NSFetchRequest( entityName: OLAuthorDetail.entityName )
+        
+        fetchRequest.predicate = NSPredicate( format: "key==%@", "\(workKey)" )
+        
+        fetchRequest.sortDescriptors =
+            [NSSortDescriptor(key: "retrieval_date", ascending: false)]
+        
+        var results = [OLAuthorDetail]?()
+        do {
+            results = try moc.executeFetchRequest( fetchRequest ) as? [OLAuthorDetail]
+        }
+        catch {
+            
+            return nil
+        }
+        
+        return results?.first
+    }
+    
     class func parseJSON( parentObjectID: NSManagedObjectID?, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLAuthorDetail? {
         
         guard let parsed = ParsedSearchResult.fromJSON( json ) else { return nil }
         
-        guard let newObject =
-            NSEntityDescription.insertNewObjectForEntityForName(
-                OLAuthorDetail.entityName, inManagedObjectContext: moc
-                ) as? OLAuthorDetail else { return nil }
+        var newObject: OLAuthorDetail?
         
-        newObject.retrieval_date = NSDate()
+        newObject = findObject( parsed.key, moc: moc )
+        if nil == newObject {
+            
+            newObject =
+                NSEntityDescription.insertNewObjectForEntityForName(
+                    OLAuthorDetail.entityName, inManagedObjectContext: moc
+                ) as? OLAuthorDetail
+            
+        }
         
-        newObject.key = parsed.key
-        newObject.name = parsed.name
-        newObject.personal_name = parsed.personal_name
-        newObject.birth_date = OpenLibraryObject.OLDateStamp( parsed.birth_date )
-        newObject.death_date = OpenLibraryObject.OLDateStamp( parsed.death_date )
-        
-        newObject.photos = parsed.photos
-        newObject.links = parsed.links
-        newObject.bio = parsed.bio
-        newObject.alternate_names = parsed.alternate_names
-        
-        newObject.revision = parsed.revision
-        newObject.latest_revision = parsed.latest_revision
-        
-        newObject.created = OpenLibraryObject.OLTimeStamp( parsed.created )
-        newObject.last_modified = OpenLibraryObject.OLTimeStamp( parsed.last_modified )
-        
-        newObject.type = parsed.type
-        
-        if let parentObjectID = parentObjectID {
+        if let newObject = newObject {
+            
+            newObject.retrieval_date = NSDate()
+            
+            newObject.key = parsed.key
+            newObject.name = parsed.name
+            newObject.personal_name = parsed.personal_name
+            newObject.birth_date = OpenLibraryObject.OLDateStamp( parsed.birth_date )
+            newObject.death_date = OpenLibraryObject.OLDateStamp( parsed.death_date )
+            
+            newObject.photos = parsed.photos
+            newObject.links = parsed.links
+            newObject.bio = parsed.bio
+            newObject.alternate_names = parsed.alternate_names
+            
+            newObject.revision = parsed.revision
+            newObject.latest_revision = parsed.latest_revision
+            
+            newObject.created = OpenLibraryObject.OLTimeStamp( parsed.created )
+            newObject.last_modified = OpenLibraryObject.OLTimeStamp( parsed.last_modified )
+            
+            newObject.type = parsed.type
+            
+            if let parentObjectID = parentObjectID {
 
-            if let parent = moc.objectWithID( parentObjectID ) as? OLAuthorSearchResult {
-                
-                if parent.key != newObject.key {
+                if let parent = moc.objectWithID( parentObjectID ) as? OLAuthorSearchResult {
                     
-                    print( "parent:\(parent.key) != newObject:\(newObject.key)" )
-                    assert( false )
+                    if parent.key != newObject.key {
+                        
+                        print( "parent:\(parent.key) != newObject:\(newObject.key)" )
+                        assert( false )
+                    }
+                    
+                    parent.toDetail = newObject
+                    parent.has_photos = newObject.hasImage
                 }
-                
-                parent.toDetail = newObject
-                parent.has_photos = newObject.hasImage
             }
         }
-
+        
         return newObject
     }
     
@@ -311,7 +342,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
         
         if 1 < self.photos.count {
             
-            var newData = [DeluxeData]()
+            let newData = [DeluxeData]()
             
             for index in 1..<self.photos.count {
                 
@@ -336,6 +367,45 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
                 deluxeData.append( newData )
             }
         }
+        
+        let dateFormatter = NSDateFormatter()
+        
+        dateFormatter.dateStyle = .MediumStyle
+        dateFormatter.timeStyle = .MediumStyle
+        
+        var newData = [DeluxeData]()
+        
+        if let created = created {
+            
+            newData.append(
+                DeluxeData(
+                    type: .inline,
+                    caption: "Created:",
+                    value: dateFormatter.stringFromDate( created )
+                )
+            )
+        }
+        
+        if let last_modified = last_modified {
+            
+            newData.append(
+                DeluxeData(
+                    type: .inline,
+                    caption: "Last Modified:",
+                    value: dateFormatter.stringFromDate( last_modified )
+                )
+            )
+        }
+        
+        newData.append(
+            DeluxeData(
+                type: .inline,
+                caption: "Retrieved:",
+                value: dateFormatter.stringFromDate( retrieval_date )
+            )
+        )
+        
+        deluxeData.append( newData )
         
         return deluxeData
     }
