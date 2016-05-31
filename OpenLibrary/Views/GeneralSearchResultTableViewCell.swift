@@ -26,8 +26,10 @@ class GeneralSearchResultTableViewCell: OLTableViewCell {
         self.delegate = delegate
 
         if let r = generalResult {
-            titleText.text = "\(r.sequence).\(r.index) \(r.title)"
-            authorName.text = "\(r.key) \(r.author_name)"
+            titleText.text = "\(r.title)"
+            authorName.text = r.author_name.joinWithSeparator( ", " )
+//            titleText.text = "\(r.sequence).\(r.index) \(r.title)"
+//            authorName.text = "\(r.key) \(r.author_name.joinWithSeparator( ", " )"
         } else {
             titleText.text = ""
             authorName.text = ""

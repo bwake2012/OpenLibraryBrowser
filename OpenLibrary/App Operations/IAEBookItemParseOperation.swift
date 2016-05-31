@@ -88,7 +88,7 @@ class IAEBookItemParseOperation: Operation {
             var index = 0
             for item in items {
                 
-                if let newItem = OLEBookItem.parseJSON( item, moc: self.context ) {
+                if OLEBookItem.parseJSON( item, moc: self.context ) != nil {
                 
                     index += 1
                 }

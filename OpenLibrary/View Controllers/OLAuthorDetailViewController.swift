@@ -35,6 +35,10 @@ class OLAuthorDetailViewController: UIViewController {
 
         super.viewDidLoad()
         
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget( self, action: #selector( testRefresh ), forControlEvents: .ValueChanged)
+        scrollView.addSubview( refreshControl )
+
         assert( nil != queryCoordinator )
         
         self.queryCoordinator!.updateUI()
@@ -72,6 +76,17 @@ class OLAuthorDetailViewController: UIViewController {
             }
         }
     }
+    
+
+    // MARK: UIRefreshControl
+    func testRefresh( refreshControl: UIRefreshControl ) {
+        
+        refreshControl.attributedTitle = NSAttributedString( string: "Refreshing data..." )
+        
+        queryCoordinator?.refreshQuery( nil )
+        authorWorksVC?.refreshQuery( refreshControl )
+    }
+    
 
     // MARK: Utility
     func displayImage( localURL: NSURL ) -> Bool {

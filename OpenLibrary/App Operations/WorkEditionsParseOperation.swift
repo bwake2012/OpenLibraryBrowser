@@ -116,7 +116,7 @@ class WorkEditionsParseOperation: Operation {
             var index = self.offset
             for entry in entries {
                 
-                if let newEdition = OLEditionDetail.parseJSON( "", workKey: self.parentKey, index: index, json: entry, moc: self.context ) {
+                if OLEditionDetail.parseJSON( "", workKey: self.parentKey, index: index, json: entry, moc: self.context ) != nil {
                 
                     index += 1
  

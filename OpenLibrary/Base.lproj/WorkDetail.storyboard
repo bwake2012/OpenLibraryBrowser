@@ -33,8 +33,8 @@
                                                             <view contentMode="scaleToFill" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fjd-Ew-qJ2" userLabel="Header Content">
                                                                 <rect key="frame" x="8" y="8" width="584" height="128"/>
                                                                 <subviews>
-                                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9cz-hg-htV">
-                                                                        <rect key="frame" x="-8" y="-28" width="30" height="30"/>
+                                                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9cz-hg-htV">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                         <state key="normal">
                                                                             <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -46,20 +46,20 @@
                                                                     <view contentMode="scaleToFill" verticalHuggingPriority="260" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lca-mu-40F" userLabel="summary">
                                                                         <rect key="frame" x="132" y="0.0" width="452" height="128"/>
                                                                         <subviews>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="760" verticalCompressionResistancePriority="760" ambiguous="YES" misplaced="YES" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EN2-0g-HD8">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="452" height="19.5"/>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="760" verticalCompressionResistancePriority="760" ambiguous="YES" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EN2-0g-HD8">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="452" height="22.5"/>
                                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="760" verticalCompressionResistancePriority="760" ambiguous="YES" misplaced="YES" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Sq-mI-aQN">
-                                                                                <rect key="frame" x="0.0" y="27" width="452" height="17"/>
+                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="760" verticalCompressionResistancePriority="760" ambiguous="YES" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Sq-mI-aQN">
+                                                                                <rect key="frame" x="0.0" y="30" width="452" height="0.0"/>
                                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
-                                                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgh-7c-zzn" userLabel="Display Deluxe Detail">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="452" height="44"/>
+                                                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgh-7c-zzn" userLabel="Display Deluxe Detail">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="452" height="30"/>
                                                                                 <connections>
                                                                                     <segue destination="4xQ-04-bzr" kind="show" identifier="displayDeluxeWorkDetail" customClass="SegueWithUnfold" customModule="OpenLibrary" id="bwO-V9-rF3"/>
                                                                                 </connections>
@@ -108,8 +108,12 @@
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="0.94999999999999996" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <constraints>
+                                                                    <constraint firstItem="9cz-hg-htV" firstAttribute="height" secondItem="Mkn-nJ-YcS" secondAttribute="height" id="3IT-aD-nos"/>
+                                                                    <constraint firstItem="9cz-hg-htV" firstAttribute="centerY" secondItem="Mkn-nJ-YcS" secondAttribute="centerY" id="4hR-8w-tP3"/>
+                                                                    <constraint firstItem="9cz-hg-htV" firstAttribute="width" secondItem="Mkn-nJ-YcS" secondAttribute="width" id="7LQ-EN-ntR"/>
                                                                     <constraint firstAttribute="top" secondItem="Lca-mu-40F" secondAttribute="top" id="8aD-jZ-BxB"/>
                                                                     <constraint firstItem="Lca-mu-40F" firstAttribute="height" relation="greaterThanOrEqual" secondItem="Mkn-nJ-YcS" secondAttribute="height" id="9H9-zj-hi2"/>
+                                                                    <constraint firstItem="9cz-hg-htV" firstAttribute="centerX" secondItem="Mkn-nJ-YcS" secondAttribute="centerX" id="Fvh-Pd-sAD"/>
                                                                     <constraint firstItem="Lca-mu-40F" firstAttribute="leading" secondItem="Mkn-nJ-YcS" secondAttribute="trailing" constant="4" id="P8R-y2-PSc"/>
                                                                     <constraint firstAttribute="trailing" secondItem="Lca-mu-40F" secondAttribute="trailing" id="Q7p-Y8-m2H"/>
                                                                     <constraint firstItem="Lca-mu-40F" firstAttribute="bottom" secondItem="Fjd-Ew-qJ2" secondAttribute="bottom" id="YFU-EW-X5c"/>
@@ -182,6 +186,7 @@
                         <outlet property="displayDeluxeDetail" destination="fgh-7c-zzn" id="6ru-qR-Sfu"/>
                         <outlet property="displayLargeCover" destination="9cz-hg-htV" id="usW-TZ-qPu"/>
                         <outlet property="headerView" destination="Hse-lU-SIx" id="cii-ur-Xdj"/>
+                        <outlet property="scrollView" destination="crG-FT-kbK" id="QY5-vU-pzM"/>
                         <outlet property="workAuthor" destination="iRV-Xe-mwp" id="k6g-2u-UB9"/>
                         <outlet property="workCover" destination="Mkn-nJ-YcS" id="0X6-GS-bHT"/>
                         <outlet property="workSubtitle" destination="8Sq-mI-aQN" id="GCM-3p-boK"/>

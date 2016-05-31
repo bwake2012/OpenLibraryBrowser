@@ -27,7 +27,12 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     private lazy var fetchedResultsController: FetchedWorkEditionsController = {
         
         let fetchRequest = NSFetchRequest( entityName: OLEditionDetail.entityName )
-        fetchRequest.predicate = NSPredicate( format: "work_key==%@", "\(self.workKey)" )
+ 
+        let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
+        let today = NSDate()
+        let yesterday = today.dateByAddingTimeInterval( -secondsPerDay )
+        
+        fetchRequest.predicate = NSPredicate( format: "work_key==%@ && retrieval_date > %@", "\(self.workKey)", yesterday )
         
         fetchRequest.sortDescriptors =
             [NSSortDescriptor(key: "coversFound", ascending: false),
@@ -193,6 +198,11 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             workEditionsGetOperation!.userInitiated = false
             operationQueue.addOperation( workEditionsGetOperation! )
         }
+    }
+    
+    func refreshQuery( refreshControl: UIRefreshControl? ) {
+        
+        newQuery( self.workKey, userInitiated: true, refreshControl: refreshControl )
     }
     
     private func needAnotherPage( index: Int, highWaterMark: Int ) -> Bool {

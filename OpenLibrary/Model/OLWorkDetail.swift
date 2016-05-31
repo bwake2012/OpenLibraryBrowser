@@ -193,6 +193,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         }
         
         newObject.index = Int64( index )
+        newObject.retrieval_date = NSDate()
         
         newObject.key = parsed.key
         newObject.created = parsed.created
@@ -267,11 +268,11 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             let extraValue = localURL( "L", index: 0 ).absoluteString
             let deluxeItem =
                 DeluxeData(
-                    type: .imageBook,
-                    caption: String( firstImageID ),
-                    value: value,
-                    extraValue: extraValue
-            )
+                        type: .imageBook,
+                        caption: String( firstImageID ),
+                        value: value,
+                        extraValue: extraValue
+                    )
             
             deluxeData.append( [deluxeItem] )
             
@@ -317,7 +318,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         
         if 1 < self.covers.count {
             
-            var newData = [DeluxeData]()
+            let newData = [DeluxeData]()
             
             for index in 1..<self.covers.count {
                 

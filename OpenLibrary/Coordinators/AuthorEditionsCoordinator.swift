@@ -27,7 +27,12 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
     private lazy var fetchedResultsController: FetchedAuthorEditionsController = {
         
         let fetchRequest = NSFetchRequest( entityName: OLEditionDetail.entityName )
-        fetchRequest.predicate = NSPredicate( format: "author_key==%@", "\(self.authorKey)" )
+
+        let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
+        let today = NSDate()
+        let yesterday = today.dateByAddingTimeInterval( -secondsPerDay )
+        
+        fetchRequest.predicate = NSPredicate( format: "author_key==%@ && retrieval_date > %@", "\(self.authorKey)", yesterday )
         
         fetchRequest.sortDescriptors =
             [NSSortDescriptor(key: "coversFound", ascending: false),

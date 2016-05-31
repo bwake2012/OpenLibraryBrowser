@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15E65" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Automatic">
     <entity name="AuthorDetail" representedClassName=".OLAuthorDetail" syncable="YES">
         <attribute name="alternate_names" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="bio" optional="YES" attributeType="String" syncable="YES"/>
@@ -13,6 +13,7 @@
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="personal_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="photos" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="retrieval_date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="revision" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="wikipedia" optional="YES" attributeType="String" syncable="YES"/>
@@ -112,6 +113,7 @@
         <attribute name="publish_date" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="publish_places" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="publishers" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="retrieval_date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="revision" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="scan_on_demand" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="series" optional="YES" attributeType="Transformable" syncable="YES"/>
@@ -235,6 +237,7 @@
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="original_languages" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="other_titles" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="retrieval_date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="revision" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="subject_people" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="subject_places" optional="YES" attributeType="Transformable" syncable="YES"/>
@@ -253,14 +256,14 @@
         </compoundIndexes>
     </entity>
     <elements>
-        <element name="AuthorDetail" positionX="-63" positionY="-18" width="128" height="285"/>
+        <element name="AuthorDetail" positionX="-63" positionY="-18" width="128" height="300"/>
         <element name="AuthorSearchResult" positionX="-54" positionY="81" width="128" height="210"/>
         <element name="EBookFile" positionX="-63" positionY="135" width="128" height="270"/>
-        <element name="EditionDetail" positionX="-45" positionY="144" width="128" height="885"/>
+        <element name="EBookItem" positionX="-63" positionY="135" width="128" height="195"/>
+        <element name="EditionDetail" positionX="-45" positionY="144" width="128" height="900"/>
         <element name="GeneralSearchResult" positionX="-63" positionY="135" width="128" height="555"/>
         <element name="Language" positionX="-63" positionY="135" width="128" height="120"/>
         <element name="TitleSearchResult" positionX="-63" positionY="135" width="128" height="225"/>
-        <element name="WorkDetail" positionX="-54" positionY="99" width="128" height="450"/>
-        <element name="EBookItem" positionX="-63" positionY="135" width="128" height="195"/>
+        <element name="WorkDetail" positionX="-54" positionY="99" width="128" height="465"/>
     </elements>
 </model>

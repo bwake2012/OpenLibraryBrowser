@@ -14,6 +14,7 @@ import BNRCoreDataStack
 
 class OLWorkDetailViewController: UIViewController {
 
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var workTitle: UILabel!
     @IBOutlet weak var workSubtitle: UILabel!
@@ -28,8 +29,7 @@ class OLWorkDetailViewController: UIViewController {
     
     var queryCoordinator: WorkDetailCoordinator?
 
-    var authorWorksVC: OLWorkDetailEditionsTableViewController?
-    var authorEditionsVC: OLWorkDetailEditionsTableViewController?
+    var workEditionsVC: OLWorkDetailEditionsTableViewController?
     
     var currentImageURL: NSURL?
     
@@ -52,6 +52,10 @@ class OLWorkDetailViewController: UIViewController {
         
         super.viewDidLoad()
         
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget( self, action: #selector( testRefresh ), forControlEvents: .ValueChanged)
+        scrollView.addSubview( refreshControl )
+        
         assert( nil != queryCoordinator )
         
         queryCoordinator!.updateUI()
@@ -63,7 +67,7 @@ class OLWorkDetailViewController: UIViewController {
             
             if let destVC = segue.destinationViewController as? OLWorkDetailEditionsTableViewController {
                 
-                self.authorEditionsVC = destVC
+                self.workEditionsVC = destVC
                 
                 queryCoordinator!.installWorkDetailEditionsQueryCoordinator( destVC )
             }
@@ -90,6 +94,16 @@ class OLWorkDetailViewController: UIViewController {
         }
     }
 
+    // MARK: UIRefreshControl
+    func testRefresh( refreshControl: UIRefreshControl ) {
+        
+        refreshControl.attributedTitle = NSAttributedString( string: "Refreshing data..." )
+        
+        queryCoordinator?.refreshQuery( nil )
+        workEditionsVC?.refreshQuery( refreshControl )
+    }
+    
+    
     // MARK: Utility
     func findAuthorDetailInStack() -> OLAuthorDetailViewController? {
         
@@ -111,6 +125,7 @@ class OLWorkDetailViewController: UIViewController {
             if let image = UIImage( data: data ) {
                 
                 workCover.image = image
+                self.displayLargeCover.enabled = true
                 return true
             }
         }
@@ -127,6 +142,7 @@ class OLWorkDetailViewController: UIViewController {
             if let image = UIImage( data: data ) {
                 
                 imageView.image = image
+                self.displayLargeCover.enabled = true
                 return true
             }
         }

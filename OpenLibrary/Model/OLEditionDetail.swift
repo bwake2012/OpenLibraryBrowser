@@ -388,6 +388,8 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
 
         newObject.index = Int64( index )
         
+        newObject.retrieval_date = NSDate()
+        
         newObject.key = parsed.key
         newObject.created = parsed.created
         newObject.last_modified = parsed.last_modified
@@ -512,18 +514,16 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         }
         
         if !by_statement.isEmpty {
+
             deluxeData.append(
                     [DeluxeData( type: .body, caption: "By Statement:", value: self.by_statement )]
                 )
+
         } else {
+
             if !authors.isEmpty {
-                var display = authors[0]
-                for index in 1..<authors.count {
-                    
-                    if !authors[index].isEmpty {
-                        display += ", " + authors[index]
-                    }
-                }
+
+                let display = authors.joinWithSeparator( ", " )
                 deluxeData.append( [DeluxeData( type: .body, caption: "Authors:", value: display )] )
             }
         }
@@ -531,13 +531,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         var newData = [DeluxeData]()
         if !self.publishers.isEmpty {
             
-            var display = publishers[0]
-            for index in 1..<publishers.count {
-                
-                if !publishers[index].isEmpty {
-                    display += ", " + publishers[index]
-                }
-            }
+            let display = publishers.joinWithSeparator( ", " )
             newData.append( DeluxeData( type: .body, caption: "Publishers:", value: display ) )
         }
         

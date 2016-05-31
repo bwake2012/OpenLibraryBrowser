@@ -28,7 +28,12 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         
         let fetchRequest = NSFetchRequest( entityName: OLWorkDetail.entityName )
         let key = self.authorKey
-        fetchRequest.predicate = NSPredicate( format: "author_key==%@", "\(key)" )
+
+        let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
+        let today = NSDate()
+        let yesterday = today.dateByAddingTimeInterval( -secondsPerDay )
+        
+        fetchRequest.predicate = NSPredicate( format: "author_key==%@ && retrieval_date > %@", "\(key)", yesterday )
         
         fetchRequest.sortDescriptors =
             [
@@ -161,6 +166,8 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
                                 strongSelf.updateUI()
                             }
                             strongSelf.authorWorksGetOperation = nil
+                            
+                            strongSelf.refreshComplete( refreshControl )
                         }
                     }
             
@@ -194,6 +201,11 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
             authorWorksGetOperation!.userInitiated = false
             operationQueue.addOperation( authorWorksGetOperation! )
         }
+    }
+    
+    func refreshQuery( refreshControl: UIRefreshControl? ) {
+        
+        newQuery( authorKey, userInitiated: true, refreshControl: refreshControl )
     }
     
     private func needAnotherPage( index: Int ) -> Bool {

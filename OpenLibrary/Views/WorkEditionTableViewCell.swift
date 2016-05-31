@@ -32,7 +32,8 @@ class WorkEditionTableViewCell: OLTableViewCell {
                         NSCharacterSet.whitespaceAndNewlineCharacterSet()
                     )
 
-            editionSubTitle.text = entry.key + " " + entry.subtitle
+            editionSubTitle.text = entry.subtitle
+//            editionSubTitle.text = entry.key + " " + entry.subtitle
             
             if entry.hasImage {
                 

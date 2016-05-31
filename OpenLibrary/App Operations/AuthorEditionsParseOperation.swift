@@ -93,7 +93,7 @@ class AuthorEditionsParseOperation: Operation {
             var index = self.offset
             for entry in resultSet {
                 
-                if let newEdition = OLEditionDetail.parseJSON( self.authorKey, workKey: "", index: index, json: entry, moc: self.context ) {
+                if nil != OLEditionDetail.parseJSON( self.authorKey, workKey: "", index: index, json: entry, moc: self.context ) {
                     
                     index += 1
                     

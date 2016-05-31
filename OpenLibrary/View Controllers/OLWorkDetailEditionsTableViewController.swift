@@ -81,5 +81,9 @@ class OLWorkDetailEditionsTableViewController: UITableViewController {
         return cell
     }
     
+    func refreshQuery( refreshControl: UIRefreshControl? ) {
+        
+        queryCoordinator?.refreshQuery( refreshControl )
+    }
 }
 

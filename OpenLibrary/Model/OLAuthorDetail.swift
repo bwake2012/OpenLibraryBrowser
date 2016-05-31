@@ -41,6 +41,8 @@ private class ParsedSearchResult: OpenLibraryObject {
     
     class func fromJSON ( match: [String: AnyObject] ) -> ParsedSearchResult? {
         
+        let retrieval_date = NSDate()
+        
         guard let key = match["key"] as? String else { return nil }
         
         guard let name = match["name"] as? String else { return nil }
@@ -164,6 +166,8 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
             NSEntityDescription.insertNewObjectForEntityForName(
                 OLAuthorDetail.entityName, inManagedObjectContext: moc
                 ) as? OLAuthorDetail else { return nil }
+        
+        newObject.retrieval_date = NSDate()
         
         newObject.key = parsed.key
         newObject.name = parsed.name
@@ -302,7 +306,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
 
         if !self.wikipedia.isEmpty {
             
-            deluxeData[0].append( DeluxeData( type: .link, caption: "Wiikipedia", value: wikipedia ) )
+            deluxeData[0].append( DeluxeData( type: .link, caption: "Wikipedia", value: wikipedia ) )
         }
         
         if 1 < self.photos.count {

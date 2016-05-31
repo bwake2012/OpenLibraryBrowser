@@ -36,7 +36,12 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         let fetchRequest = NSFetchRequest( entityName: OLAuthorDetail.entityName )
 
         let key = self.authorKey
-        fetchRequest.predicate = NSPredicate( format: "key==%@", "\(key)" )
+        
+        let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
+        let today = NSDate()
+        let yesterday = today.dateByAddingTimeInterval( -secondsPerDay )
+        
+        fetchRequest.predicate = NSPredicate( format: "key==%@ && retrieval_date > %@", "\(key)", yesterday )
         
         fetchRequest.sortDescriptors =
             [
@@ -180,6 +185,8 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
                             if let detail = strongSelf.authorDetail {
                                 
                                 strongSelf.updateUI( detail )
+
+                                strongSelf.refreshComplete( refreshControl )
                             }
                         }
                     }
@@ -188,6 +195,11 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             getAuthorOperation.userInitiated = true
             operationQueue.addOperation( getAuthorOperation )
         }
+    }
+    
+    func refreshQuery( refreshControl: UIRefreshControl? ) {
+        
+        newQuery( self.authorKey, userInitiated: true, refreshControl: refreshControl )
     }
     
     func objectAtIndexPath( indexPath: NSIndexPath ) -> OLAuthorDetail? {

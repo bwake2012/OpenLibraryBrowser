@@ -18,7 +18,8 @@ class AuthorWorksTableViewCell: OLTableViewCell {
         if let entry = entry   {
             
             workTitle.text = entry.title
-            workSubTitle.text = "\(entry.index) \(entry.key) \(entry.subtitle)"
+            workSubTitle.text = "\(entry.subtitle)"
+//            workSubTitle.text = "\(entry.index) \(entry.key) \(entry.subtitle)"
             
             
         } else {

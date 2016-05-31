@@ -33,7 +33,12 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
         let fetchRequest = NSFetchRequest( entityName: OLWorkDetail.entityName )
         
         let key = self.workKey
-        fetchRequest.predicate = NSPredicate( format: "key==%@", "\(key)" )
+        
+        let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
+        let today = NSDate()
+        let yesterday = today.dateByAddingTimeInterval( -secondsPerDay )
+        
+        fetchRequest.predicate = NSPredicate( format: "key==%@ && retrieval_date > %@", "\(key)", yesterday )
         
         fetchRequest.sortDescriptors =
             [
@@ -182,6 +187,12 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
         }
     }
     
+    func refreshQuery( refreshControl: UIRefreshControl? ) {
+        
+        newQuery( self.workKey, userInitiated: true, refreshControl: refreshControl )
+    }
+    
+    
     // MARK: FetchedResultsControllerDelegate
     
     func fetchedResultsControllerDidPerformFetch(controller: FetchedWorkDetailController) {
@@ -189,6 +200,7 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
         if 0 == controller.count {
             
             newQuery( workKey, userInitiated: true, refreshControl: nil )
+
         } else {
             
             if let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {

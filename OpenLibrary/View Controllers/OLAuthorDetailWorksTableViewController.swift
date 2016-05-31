@@ -71,5 +71,10 @@ class OLAuthorDetailWorksTableViewController: UITableViewController {
     }
     
     // MARK: Utility
+    
+    func refreshQuery( refreshControl: UIRefreshControl? ) {
+        
+        queryCoordinator?.refreshQuery( refreshControl )
+    }
 }
 

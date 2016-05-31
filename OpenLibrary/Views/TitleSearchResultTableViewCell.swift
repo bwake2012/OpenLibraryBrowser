@@ -16,8 +16,10 @@ class TitleSearchResultTableViewCell: OLTableViewCell {
     func configure( titleResult: OLTitleSearchResult? ) {
         
         if let r = titleResult {
-            titleText.text = "\(r.sequence).\(r.index) \(r.title)"
-            subtitleText.text = "\(r.key) \(r.subtitle)"
+            titleText.text = "\(r.title)"
+            subtitleText.text = "\(r.subtitle)"
+//            titleText.text = "\(r.sequence).\(r.index) \(r.title)"
+//            subtitleText.text = "\(r.key) \(r.subtitle)"
         } else {
             titleText.text = ""
             subtitleText.text = ""
