@@ -174,25 +174,30 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
     
     static let entityName = "WorkDetail"
     
-    class func findObject( workKey: String, moc: NSManagedObjectContext ) -> OLWorkDetail? {
+    private var author_name_cache = [String]()
+    var author_names: [String] {
         
-        let fetchRequest = NSFetchRequest( entityName: OLWorkDetail.entityName )
-        
-        fetchRequest.predicate = NSPredicate( format: "key==%@", "\(workKey)" )
-        
-        fetchRequest.sortDescriptors =
-            [NSSortDescriptor(key: "retrieval_date", ascending: false)]
-        
-        var results = [OLWorkDetail]?()
-        do {
-            results = try moc.executeFetchRequest( fetchRequest ) as? [OLWorkDetail]
-        }
-        catch {
+         get {
+            var names = author_name_cache
             
-            return nil
+            if names.isEmpty {
+            
+                if let moc = self.managedObjectContext {
+
+                    for olid in self.authors {
+                        
+                        if let author: OLAuthorDetail = OLWorkDetail.findObject( olid, entityName: OLAuthorDetail.entityName, moc: moc ) {
+                            
+                            author_name_cache.append( author.name )
+                        }
+                    }
+                    
+                    names = author_name_cache
+                }
+            }
+            
+            return names
         }
-        
-        return results?.first
     }
     
     class func parseJSON( parentKey: String, index: Int, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLWorkDetail? {
@@ -201,7 +206,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             
         var newObject: OLWorkDetail?
         
-        newObject = findObject( parsed.key, moc: moc )
+        newObject = findObject( parsed.key, entityName: entityName, moc: moc )
         if nil == newObject {
             
             newObject =
@@ -223,33 +228,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             newObject.index = Int64( index )
             newObject.retrieval_date = NSDate()
             
-            newObject.key = parsed.key
-            newObject.created = parsed.created
-            newObject.last_modified = parsed.last_modified
-            newObject.revision = parsed.revision
-            newObject.latest_revision = parsed.latest_revision
-            newObject.type = parsed.type
-            
-            newObject.title = parsed.title
-            newObject.subtitle = parsed.subtitle
-            newObject.authors = parsed.authors
-            newObject.translated_titles = parsed.translated_titles
-            newObject.subjects = parsed.subjects
-            newObject.subject_places = parsed.subject_places
-            newObject.subject_times = parsed.subject_times
-            newObject.subject_people = parsed.subject_people
-            newObject.work_description = parsed.work_description
-            newObject.dewey_number = parsed.dewey_number
-            newObject.lc_classifications = parsed.lc_classifications
-            newObject.first_sentence = parsed.first_sentence
-            newObject.original_languages = parsed.original_languages
-            newObject.other_titles = parsed.other_titles
-            newObject.first_publish_date = parsed.first_publish_date
-            newObject.links = parsed.links
-            newObject.notes = parsed.notes
-            // cover_edition of type /type/edition
-            newObject.covers = parsed.covers
-            newObject.coversFound = parsed.covers.count > 0 && -1 != parsed.covers[0]
+            newObject.populateObject( parsed )
         }
         
         return newObject
@@ -280,6 +259,40 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
     override func localURL( size: String, index: Int = 0 ) -> NSURL {
         
         return super.localURL( self.key, size: size, index: index )
+    }
+    
+    override func populateObject(parsed: OpenLibraryObject) {
+        
+        if let parsed = parsed as? ParsedSearchResult {
+            
+            self.key = parsed.key
+            self.created = parsed.created
+            self.last_modified = parsed.last_modified
+            self.revision = parsed.revision
+            self.latest_revision = parsed.latest_revision
+            self.type = parsed.type
+            
+            self.title = parsed.title
+            self.subtitle = parsed.subtitle
+            self.authors = parsed.authors
+            self.translated_titles = parsed.translated_titles
+            self.subjects = parsed.subjects
+            self.subject_places = parsed.subject_places
+            self.subject_times = parsed.subject_times
+            self.subject_people = parsed.subject_people
+            self.work_description = parsed.work_description
+            self.dewey_number = parsed.dewey_number
+            self.lc_classifications = parsed.lc_classifications
+            self.first_sentence = parsed.first_sentence
+            self.original_languages = parsed.original_languages
+            self.other_titles = parsed.other_titles
+            self.first_publish_date = parsed.first_publish_date
+            self.links = parsed.links
+            self.notes = parsed.notes
+            // cover_edition of type /type/edition
+            self.covers = parsed.covers
+            self.coversFound = parsed.covers.count > 0 && -1 != parsed.covers[0]
+        }
     }
     
     override func buildDeluxeData() -> [[DeluxeData]] {

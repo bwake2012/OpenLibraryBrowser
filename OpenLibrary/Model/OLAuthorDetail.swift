@@ -41,8 +41,6 @@ private class ParsedSearchResult: OpenLibraryObject {
     
     class func fromJSON ( match: [String: AnyObject] ) -> ParsedSearchResult? {
         
-        let retrieval_date = NSDate()
-        
         guard let key = match["key"] as? String else { return nil }
         
         guard let name = match["name"] as? String else { return nil }
@@ -158,82 +156,26 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
     
     static let entityName = "AuthorDetail"
     
-    class func findObject( workKey: String, moc: NSManagedObjectContext ) -> OLAuthorDetail? {
-        
-        let fetchRequest = NSFetchRequest( entityName: OLAuthorDetail.entityName )
-        
-        fetchRequest.predicate = NSPredicate( format: "key==%@", "\(workKey)" )
-        
-        fetchRequest.sortDescriptors =
-            [NSSortDescriptor(key: "retrieval_date", ascending: false)]
-        
-        var results = [OLAuthorDetail]?()
-        do {
-            results = try moc.executeFetchRequest( fetchRequest ) as? [OLAuthorDetail]
-        }
-        catch {
-            
-            return nil
-        }
-        
-        return results?.first
-    }
-    
     class func parseJSON( parentObjectID: NSManagedObjectID?, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLAuthorDetail? {
         
         guard let parsed = ParsedSearchResult.fromJSON( json ) else { return nil }
         
         var newObject: OLAuthorDetail?
         
-        newObject = findObject( parsed.key, moc: moc )
+        newObject = findObject( parsed.key, entityName: entityName, moc: moc )
         if nil == newObject {
             
             newObject =
                 NSEntityDescription.insertNewObjectForEntityForName(
                     OLAuthorDetail.entityName, inManagedObjectContext: moc
                 ) as? OLAuthorDetail
-            
         }
         
         if let newObject = newObject {
             
-            newObject.retrieval_date = NSDate()
-            
-            newObject.key = parsed.key
-            newObject.name = parsed.name
-            newObject.personal_name = parsed.personal_name
-            newObject.birth_date = OpenLibraryObject.OLDateStamp( parsed.birth_date )
-            newObject.death_date = OpenLibraryObject.OLDateStamp( parsed.death_date )
-            
-            newObject.photos = parsed.photos
-            newObject.links = parsed.links
-            newObject.bio = parsed.bio
-            newObject.alternate_names = parsed.alternate_names
-            
-            newObject.revision = parsed.revision
-            newObject.latest_revision = parsed.latest_revision
-            
-            newObject.created = OpenLibraryObject.OLTimeStamp( parsed.created )
-            newObject.last_modified = OpenLibraryObject.OLTimeStamp( parsed.last_modified )
-            
-            newObject.type = parsed.type
-            
-            if let parentObjectID = parentObjectID {
-
-                if let parent = moc.objectWithID( parentObjectID ) as? OLAuthorSearchResult {
-                    
-                    if parent.key != newObject.key {
-                        
-                        print( "parent:\(parent.key) != newObject:\(newObject.key)" )
-                        assert( false )
-                    }
-                    
-                    parent.toDetail = newObject
-                    parent.has_photos = newObject.hasImage
-                }
-            }
+            newObject.populateObject( parsed )
         }
-        
+       
         return newObject
     }
     
@@ -274,6 +216,33 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
         return super.localURL( self.key, size: size, index: index )
     }
     
+    override func populateObject( parsed: OpenLibraryObject ) {
+
+        self.retrieval_date = NSDate()
+        
+        if let parsed = parsed as? ParsedSearchResult {
+            
+            self.key = parsed.key
+            self.name = parsed.name
+            self.personal_name = parsed.personal_name
+            self.birth_date = OpenLibraryObject.OLDateStamp( parsed.birth_date )
+            self.death_date = OpenLibraryObject.OLDateStamp( parsed.death_date )
+            
+            self.photos = parsed.photos
+            self.links = parsed.links
+            self.bio = parsed.bio
+            self.alternate_names = parsed.alternate_names
+            
+            self.revision = parsed.revision
+            self.latest_revision = parsed.latest_revision
+            
+            self.created = OpenLibraryObject.OLTimeStamp( parsed.created )
+            self.last_modified = OpenLibraryObject.OLTimeStamp( parsed.last_modified )
+            
+            self.type = parsed.type
+        }
+    }
+ 
     // MARK: Deluxe Detail
     override func buildDeluxeData() -> [[DeluxeData]] {
         

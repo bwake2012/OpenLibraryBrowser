@@ -20,7 +20,6 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
 
     var authorDetail: OLAuthorDetail?
     var authorKey: String
-    var authorName: String
     var parentObjectID: NSManagedObjectID?
     
     var deluxeData = [[DeluxeData]]()
@@ -71,7 +70,6 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         } else {
             self.authorKey = kAuthorsPrefix + searchInfo.key
         }
-        self.authorName = searchInfo.name
         self.parentObjectID = searchInfo.objectID
 
         self.authorDetailVC = authorDetailVC
@@ -82,18 +80,17 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     init(
         operationQueue: OperationQueue,
         coreDataStack: CoreDataStack,
-        searchInfo: OLGeneralSearchResult,
+        authorKey: String,
         authorDetailVC: OLAuthorDetailViewController
         ) {
         
         self.authorDetail = nil
 
-        self.authorKey = searchInfo.author_key[0]
+        self.authorKey = authorKey
         if !self.authorKey.hasPrefix( kAuthorsPrefix ) {
             
             self.authorKey = kAuthorsPrefix + self.authorKey
         }
-        self.authorName = searchInfo.author_name[0]
         
         self.authorDetailVC = authorDetailVC
         
@@ -105,19 +102,17 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     init(
         operationQueue: OperationQueue,
         coreDataStack: CoreDataStack,
-        authorKey: String,
-        authorName: String,
+        searchInfo: OLGeneralSearchResult,
         authorDetailVC: OLAuthorDetailViewController
         ) {
         
         self.authorDetail = nil
         
-        self.authorKey = authorKey
+        self.authorKey = searchInfo.author_key[0]
         if !self.authorKey.hasPrefix( kAuthorsPrefix ) {
             
             self.authorKey = kAuthorsPrefix + self.authorKey
         }
-        self.authorName = authorName
         
         self.authorDetailVC = authorDetailVC
         
@@ -131,7 +126,6 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         if let authorDetailVC = authorDetailVC {
             
             authorDetailVC.updateUI( authorDetail )
-            authorName = authorDetail.name
             
             if authorDetail.hasImage {
                 
@@ -292,7 +286,6 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         destVC.queryCoordinator =
             AuthorWorksCoordinator(
                     authorKey: authorKey,
-                    authorNames: [authorName],
                     authorWorksTableVC: destVC,
                     coreDataStack: coreDataStack,
                     operationQueue: operationQueue
@@ -304,8 +297,6 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         destVC.queryCoordinator =
             AuthorEditionsCoordinator(
                     authorKey: authorKey,
-                    authorNames: [authorName],
-                    withCoversOnly: false,
                     tableVC: destVC,
                     coreDataStack: coreDataStack,
                     operationQueue: operationQueue

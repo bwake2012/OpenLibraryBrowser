@@ -18,11 +18,11 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
     
     weak var workDetailVC: OLWorkDetailViewController?
 
-    var authorNames = [String]()
     var workDetail: OLWorkDetail?
     var workKey: String
     
     var workDetailGetOperation: Operation?
+    var authorDetailGetOperation: Operation?
     
     typealias FetchedWorkDetailController    = FetchedResultsController< OLWorkDetail >
     typealias FetchedWorkDetailChange        = FetchedResultsObjectChange< OLWorkDetail >
@@ -56,14 +56,12 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
     }()
     
     init(
-            authorNames: [String],
             operationQueue: OperationQueue,
             coreDataStack: CoreDataStack,
             searchInfo: OLWorkDetail,
             workDetailVC: OLWorkDetailViewController
         ) {
         
-        self.authorNames = authorNames
         self.workDetail = searchInfo
         self.workKey = searchInfo.key
         self.workDetailVC = workDetailVC
@@ -72,7 +70,6 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
     }
     
     init(
-        authorNames: [String],
         operationQueue: OperationQueue,
         coreDataStack: CoreDataStack,
         workKey: String,
@@ -81,7 +78,6 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
         
         assert( !workKey.isEmpty )
         
-        self.authorNames = authorNames
         self.workDetail = nil
         self.workKey = workKey
         self.workDetailVC = workDetailVC
@@ -93,7 +89,9 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
         
         if let workDetailVC = workDetailVC {
             
-            workDetailVC.updateUI( workDetail, authorName: authorNames.isEmpty ? "" : authorNames[0] )
+            retrieveAuthors( workDetail )
+            
+            workDetailVC.updateUI( workDetail )
             
             if workDetail.hasImage {
                 
@@ -169,6 +167,56 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
             
             workDetailGetOperation!.userInitiated = true
             operationQueue.addOperation( workDetailGetOperation! )
+        }
+    }
+    
+    func retrieveAuthors ( workDetail: OLWorkDetail ) {
+        
+        if nil == authorDetailGetOperation {
+            let authorNames = workDetail.author_names
+            var authors = workDetail.authors
+            
+            if authorNames.count < authors.count {
+                
+                let firstOLID = authors.removeFirst()
+                
+                for olid in authors {
+                    
+                    if !olid.isEmpty {
+                        let operation =
+                            AuthorDetailGetOperation(
+                                    queryText: olid,
+                                    parentObjectID: nil,
+                                    coreDataStack: coreDataStack
+                                ) {}
+                        operationQueue.addOperation( operation )
+                    }
+                }
+                
+                if !firstOLID.isEmpty {
+                   
+                    authorDetailGetOperation =
+                        AuthorDetailGetOperation(
+                                queryText: firstOLID,
+                                parentObjectID: nil,
+                                coreDataStack: coreDataStack
+                            ) {
+                                
+                                [weak self] in
+                                
+                                if let strongSelf = self {
+
+                                    dispatch_async( dispatch_get_main_queue() ) {
+                                        
+                                        strongSelf.updateUI( workDetail )
+                    
+                                        strongSelf.authorDetailGetOperation = nil
+                                    }
+                                }
+                            }
+                    operationQueue.addOperation( authorDetailGetOperation! )
+                }
+            }
         }
     }
     
@@ -347,7 +395,6 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
                 operationQueue: operationQueue,
                 coreDataStack: coreDataStack,
                 authorKey: workDetail.author_key,
-                authorName: authorNames.isEmpty ? "" : authorNames[0],
                 authorDetailVC: destVC
             )
     }

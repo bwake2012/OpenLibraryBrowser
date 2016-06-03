@@ -16,6 +16,7 @@ class AuthorDetailWithThumbGetOperation: GroupOperation {
     
     let downloadOperation: AuthorDetailDownloadOperation
     let parseOperation: AuthorDetailParseOperation
+    let finishOperation: NSBlockOperation
    
     var getThumbOperation: ImageGetOperation?
     var getMediumOperation: ImageGetOperation?
@@ -57,7 +58,7 @@ class AuthorDetailWithThumbGetOperation: GroupOperation {
         downloadOperation = AuthorDetailDownloadOperation( queryText: queryText, cacheFile: cacheFile )
         parseOperation = AuthorDetailParseOperation( parentObjectID: parentObjectID, cacheFile: cacheFile, coreDataStack: coreDataStack )
         
-        let finishOperation = NSBlockOperation( block: completionHandler )
+        finishOperation = NSBlockOperation( block: completionHandler )
         
         // These operations must be executed in order
         parseOperation.addDependency(downloadOperation)
@@ -125,7 +126,13 @@ class AuthorDetailWithThumbGetOperation: GroupOperation {
                         
                         getLargeOperation!.addDependency( op )
                     }
+                    operation = getLargeOperation
                     addOperation( getLargeOperation! )
+                }
+                
+                if let operation = operation {
+                    
+                    finishOperation.addDependency( operation )
                 }
             }
         }

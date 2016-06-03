@@ -319,7 +319,6 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControlle
         
             destVC.queryCoordinator =
                 WorkDetailCoordinator(
-                        authorNames: searchResult.author_name,
                         operationQueue: operationQueue,
                         coreDataStack: coreDataStack,
                         workKey: searchResult.key,

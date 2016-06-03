@@ -38,6 +38,7 @@ class WorkEditionTableViewCell: OLTableViewCell {
             if entry.hasImage {
                 
                 clearCurrentImage()
+
             } else {
                 
                 if entry.physical_format == "Audio Cassette" {
@@ -47,6 +48,11 @@ class WorkEditionTableViewCell: OLTableViewCell {
                 } else if entry.physical_format == "Audio CD" {
                     
                     cellImage.image = UIImage( named: "1043-album-disc.png" )
+                    
+                } else if entry.physical_format == "Microform" {
+                    
+                    cellImage.image = UIImage( named: "788-video-film-strip-toolbar.png" )
+                    
                 } else {
                     
                     clearCurrentImage()

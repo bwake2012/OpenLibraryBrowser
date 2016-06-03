@@ -46,18 +46,15 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
         return frc
     }()
     
-    let withCoversOnly: Bool
-    
     var authorKey = ""
     var worksCount = Int( kPageSize * 2 )
     var searchResults = SearchResults()
     
     var highWaterMark = 0
     
-    init( authorKey: String, authorNames: [String], withCoversOnly: Bool, tableVC: UITableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
+    init( authorKey: String, tableVC: UITableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         
         self.authorKey = authorKey
-        self.withCoversOnly = withCoversOnly
         self.tableVC = tableVC
         
         super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
@@ -120,7 +117,6 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
             AuthorEditionsGetOperation(
                     queryText: authorKey,
                     offset: 0,
-                    withCoversOnly: withCoversOnly,
                     coreDataStack: coreDataStack,
                     updateResults: self.updateResults
                 ) {
@@ -150,7 +146,6 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
                 AuthorEditionsGetOperation(
                         queryText: self.authorKey,
                         offset: offset,
-                        withCoversOnly: withCoversOnly,
                         coreDataStack: coreDataStack,
                         updateResults: self.updateResults
                     ) {

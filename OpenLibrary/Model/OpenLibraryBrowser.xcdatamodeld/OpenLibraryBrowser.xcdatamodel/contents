@@ -31,8 +31,18 @@
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="work_count" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="toDetail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AuthorDetail" inverseName="toSearchResults" inverseEntity="AuthorDetail" syncable="YES"/>
+        <compoundIndexes>
+            <compoundIndex>
+                <index value="key"/>
+            </compoundIndex>
+        </compoundIndexes>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="key"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
-    <entity name="EBookFile" syncable="YES">
+    <entity name="EBookFile" representedClassName=".OLEBookFile" syncable="YES">
         <attribute name="atime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="crc32" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="ctime" optional="YES" attributeType="String" syncable="YES"/>
@@ -198,6 +208,11 @@
                 <index value="key"/>
             </compoundIndex>
         </compoundIndexes>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="key"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="TitleSearchResult" representedClassName=".OLTitleSearchResult" syncable="YES">
         <attribute name="author_key" optional="YES" attributeType="Transformable" syncable="YES"/>
@@ -217,7 +232,15 @@
                 <index value="sequence"/>
                 <index value="index"/>
             </compoundIndex>
+            <compoundIndex>
+                <index value="key"/>
+            </compoundIndex>
         </compoundIndexes>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="key"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="WorkDetail" representedClassName=".OLWorkDetail" syncable="YES">
         <attribute name="author_key" attributeType="String" syncable="YES"/>

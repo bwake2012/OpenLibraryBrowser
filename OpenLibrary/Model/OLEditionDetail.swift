@@ -357,6 +357,58 @@ private class ParsedSearchResult: OpenLibraryObject {
 
 class OLEditionDetail: OLManagedObject, CoreDataModelable {
 
+    private var author_name_cache = [String]()
+    var author_names: [String] {
+        
+        get {
+            var names = author_name_cache
+            
+            if names.isEmpty {
+                
+                if let moc = self.managedObjectContext {
+                    
+                    for olid in self.authors {
+                        
+                        if let author: OLAuthorDetail = OLWorkDetail.findObject( olid, entityName: OLAuthorDetail.entityName, moc: moc ) {
+                            
+                            author_name_cache.append( author.name )
+                        }
+                    }
+                    
+                    names = author_name_cache
+                }
+            }
+            
+            return names
+        }
+    }
+    
+    private var language_name_cache = [String]()
+    var language_names: [String] {
+        
+        get {
+            var names = language_name_cache
+            
+            if names.isEmpty {
+                
+                if let moc = self.managedObjectContext {
+                    
+                    for olid in self.authors {
+                        
+                        if let author: OLLanguage = OLEditionDetail.findObject( olid, entityName: OLLanguage.entityName, moc: moc ) {
+                            
+                            language_name_cache.append( author.name )
+                        }
+                    }
+                    
+                    names = language_name_cache
+                }
+            }
+            
+            return names
+        }
+    }
+    
     // MARK: Search Info
     struct SearchInfo {
         
@@ -366,34 +418,13 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
     
     static let entityName = "EditionDetail"
     
-    class func findObject( editionKey: String, moc: NSManagedObjectContext ) -> OLEditionDetail? {
-        
-        let fetchRequest = NSFetchRequest( entityName: OLEditionDetail.entityName )
-        
-        fetchRequest.predicate = NSPredicate( format: "key==%@", "\(editionKey)" )
-        
-        fetchRequest.sortDescriptors =
-            [NSSortDescriptor(key: "retrieval_date", ascending: false)]
-        
-        var results = [OLEditionDetail]?()
-        do {
-            results = try moc.executeFetchRequest( fetchRequest ) as? [OLEditionDetail]
-        }
-        catch {
-            
-            return nil
-        }
-        
-        return results?.first
-    }
-    
     class func parseJSON( authorKey: String, workKey: String, index: Int, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLEditionDetail? {
 
         guard let parsed = ParsedSearchResult.fromJSON( json ) else { return nil }
         
         var newObject: OLEditionDetail?
         
-        newObject = findObject( parsed.key, moc: moc )
+        newObject = findObject( parsed.key, entityName: entityName, moc: moc )
         if nil == newObject {
             
             newObject =
@@ -418,64 +449,8 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
 
             newObject.index = Int64( index )
             
-            newObject.retrieval_date = NSDate()
+            newObject.populateObject( parsed )
             
-            newObject.key = parsed.key
-            newObject.created = parsed.created
-            newObject.last_modified = parsed.last_modified
-            newObject.revision = parsed.revision
-            newObject.latest_revision = parsed.latest_revision
-            newObject.type = parsed.type
-            
-            newObject.accompanying_material = parsed.accompanying_material
-            newObject.authors = parsed.authors
-            newObject.by_statement = parsed.by_statement
-            newObject.collections = parsed.collections
-            newObject.contributions = parsed.contributions
-            newObject.copyright_date = parsed.copyright_date
-            newObject.covers = parsed.covers
-            newObject.coversFound = parsed.covers.count > 0 && -1 != parsed.covers[0]
-            newObject.dewey_decimal_class = parsed.dewey_decimal_class
-            newObject.distributors = parsed.distributors
-            newObject.edition_description = parsed.edition_description
-            newObject.edition_name = parsed.edition_name
-            newObject.first_sentence = parsed.first_sentence
-            newObject.genres = parsed.genres
-            newObject.isbn_10 = parsed.isbn_10
-            newObject.isbn_13 = parsed.isbn_13
-            newObject.languages = parsed.languages
-            newObject.lc_classifications = parsed.lc_classifications
-            newObject.lccn = parsed.lccn
-            newObject.location = parsed.location
-            newObject.notes = parsed.notes
-            newObject.number_of_pages = parsed.number_of_pages
-            newObject.ocaid = parsed.ocaid
-            newObject.oclc_numbers = parsed.oclc_numbers
-            newObject.other_titles = parsed.other_titles
-            newObject.pagination = parsed.pagination
-            newObject.physical_dimensions = parsed.physical_dimensions
-            newObject.physical_format = parsed.physical_format
-            newObject.publish_country = parsed.publish_country
-            newObject.publish_date = parsed.publish_date
-            newObject.publish_places = parsed.publish_places
-            newObject.publishers = parsed.publishers
-            newObject.scan_on_demand = parsed.scan_on_demand
-            newObject.series = parsed.series
-            newObject.source_records = parsed.source_records
-            newObject.subjects = parsed.subjects
-            newObject.subtitle = parsed.subtitle
-            newObject.table_of_contents = parsed.table_of_contents
-            newObject.title = parsed.title
-            newObject.title_prefix = parsed.title_prefix
-            newObject.translated_from = parsed.translated_from
-            newObject.translation_of = parsed.translation_of
-            newObject.uri_descriptions = parsed.uri_descriptions
-            newObject.uris = parsed.uris
-            newObject.weight = parsed.weight
-            newObject.work_titles = parsed.work_titles
-            newObject.works = parsed.works
-        //    newObject.scan_records[] = parsed.AnyObject
-        //    newObject.volumes[] = parsed.AnyObject
         }
 
         return newObject
@@ -518,7 +493,71 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         return super.localURL( self.key, size: size, index: index )
     }
 
-
+    override func populateObject( parsed: OpenLibraryObject ) {
+        
+        self.retrieval_date = NSDate()
+        
+        if let parsed = parsed as? ParsedSearchResult {
+            
+            self.key = parsed.key
+            self.created = parsed.created
+            self.last_modified = parsed.last_modified
+            self.revision = parsed.revision
+            self.latest_revision = parsed.latest_revision
+            self.type = parsed.type
+            
+            self.accompanying_material = parsed.accompanying_material
+            self.authors = parsed.authors
+            self.by_statement = parsed.by_statement
+            self.collections = parsed.collections
+            self.contributions = parsed.contributions
+            self.copyright_date = parsed.copyright_date
+            self.covers = parsed.covers
+            self.coversFound = parsed.covers.count > 0 && -1 != parsed.covers[0]
+            self.dewey_decimal_class = parsed.dewey_decimal_class
+            self.distributors = parsed.distributors
+            self.edition_description = parsed.edition_description
+            self.edition_name = parsed.edition_name
+            self.first_sentence = parsed.first_sentence
+            self.genres = parsed.genres
+            self.isbn_10 = parsed.isbn_10
+            self.isbn_13 = parsed.isbn_13
+            self.languages = parsed.languages
+            self.lc_classifications = parsed.lc_classifications
+            self.lccn = parsed.lccn
+            self.location = parsed.location
+            self.notes = parsed.notes
+            self.number_of_pages = parsed.number_of_pages
+            self.ocaid = parsed.ocaid
+            self.oclc_numbers = parsed.oclc_numbers
+            self.other_titles = parsed.other_titles
+            self.pagination = parsed.pagination
+            self.physical_dimensions = parsed.physical_dimensions
+            self.physical_format = parsed.physical_format
+            self.publish_country = parsed.publish_country
+            self.publish_date = parsed.publish_date
+            self.publish_places = parsed.publish_places
+            self.publishers = parsed.publishers
+            self.scan_on_demand = parsed.scan_on_demand
+            self.series = parsed.series
+            self.source_records = parsed.source_records
+            self.subjects = parsed.subjects
+            self.subtitle = parsed.subtitle
+            self.table_of_contents = parsed.table_of_contents
+            self.title = parsed.title
+            self.title_prefix = parsed.title_prefix
+            self.translated_from = parsed.translated_from
+            self.translation_of = parsed.translation_of
+            self.uri_descriptions = parsed.uri_descriptions
+            self.uris = parsed.uris
+            self.weight = parsed.weight
+            self.work_titles = parsed.work_titles
+            self.works = parsed.works
+            //    self.scan_records[] = parsed.AnyObject
+            //    self.volumes[] = parsed.AnyObject
+        }
+    }
+    
     // MARK: Deluxe Detail
     override func buildDeluxeData() -> [[DeluxeData]] {
         

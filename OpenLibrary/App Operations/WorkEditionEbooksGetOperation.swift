@@ -1,4 +1,4 @@
-//  AuthorEditionsGetOperation.swift
+//  WorkEditionEbooksGetOperation.swift
 //  OpenLibrary
 //
 //  Created by Bob Wakefield on 2/24/16.
@@ -6,37 +6,42 @@
 //
 //  Modified from code in the Apple sample app Earthquakes in the Advanced NSOperations project
 
-//  https://openlibrary.org/query.json?type=/type/edition&authors=/authors/OL26320A&*=
+//  https://openlibrary.org/works/OL262759W/editions.json?*=
 
 import CoreData
 
 import BNRCoreDataStack
 
-/// A composite `Operation` to both download and parse author search result data.
-class AuthorEditionsGetOperation: GroupOperation {
+/// A composite `Operation` to both download and parse work editions data.
+class WorkEditionEbooksGetOperation: GroupOperation {
     // MARK: Properties
     
-    let downloadOperation: AuthorEditionsDownloadOperation
-    let parseOperation: AuthorEditionsParseOperation
+    let downloadOperation: WorkEditionListDownloadOperation
+    let parseOperation: WorkEditionListParseOperation
+    let finishOperation: NSBlockOperation
    
     private var hasProducedAlert = false
     
+    private let coreDataStack: CoreDataStack
+     
     /**
-        - parameter context: The `NSManagedObjectContext` into which the parsed
-                             author query results will be imported.
+        - parameter coreDataStack: The Big Nerd Ranch Core Data Stack 
+                                   which will furnish the MOC to store the result
 
         - parameter completionHandler: The handler to call after downloading and
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, offset: Int, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater, completionHandler: Void -> Void ) {
+    init( queryText: String, coreDataStack: CoreDataStack, completionHandler: Void -> Void ) {
 
+        self.coreDataStack = coreDataStack
+        
         let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
 
         let parts = queryText.componentsSeparatedByString( "/" )
         let goodParts = parts.filter { (x) -> Bool in !x.isEmpty }
-        let authorKey = goodParts.last!
-        let cacheFile = cachesFolder.URLByAppendingPathComponent("\(authorKey)authorEditions.json")
+        let olid = goodParts.last!
+        let cacheFile = cachesFolder.URLByAppendingPathComponent("\(olid)workEditionEbooksList.json")
 //        print( "cache: \(cacheFile.absoluteString)" )
         
         /*
@@ -47,10 +52,10 @@ class AuthorEditionsGetOperation: GroupOperation {
         
             There is an optional operation 0 to delete the existing contents of the Core Data store
         */
-        downloadOperation = AuthorEditionsDownloadOperation( queryText: queryText, offset: offset, cacheFile: cacheFile )
-        parseOperation = AuthorEditionsParseOperation( authorKey: queryText, offset: offset, cacheFile: cacheFile, coreDataStack: coreDataStack, updateResults: updateResults )
+        downloadOperation = WorkEditionListDownloadOperation( queryText: queryText, cacheFile: cacheFile )
+        parseOperation = WorkEditionListParseOperation( parentKey: queryText, cacheFile: cacheFile )
         
-        let finishOperation = NSBlockOperation( block: completionHandler )
+        finishOperation = NSBlockOperation( block: completionHandler )
         
         // These operations must be executed in order
         parseOperation.addDependency(downloadOperation)
@@ -59,14 +64,30 @@ class AuthorEditionsGetOperation: GroupOperation {
         let operations = [downloadOperation, parseOperation, finishOperation]
         super.init( operations: operations )
 
-        addCondition( MutuallyExclusive<AuthorEditionsGetOperation>() )
+        addCondition( MutuallyExclusive<WorkEditionsGetOperation>() )
         
-        name = "Get Author Editions"
+        name = "Get Work Edition List"
     }
     
     override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
+
         if let firstError = errors.first where (operation === downloadOperation || operation === parseOperation) {
+            
             produceAlert(firstError)
+        
+        } else if operation == parseOperation {
+            
+            if !parseOperation.editions.isEmpty {
+                
+                let ebookOperation =
+                    IAEBookItemListGetOperation(
+                            editionKeys: parseOperation.editions, coreDataStack: coreDataStack, completionHandler: {}
+                        )
+                
+                finishOperation.addDependency( ebookOperation )
+                
+                addOperation( ebookOperation )
+            }
         }
     }
     
@@ -97,7 +118,7 @@ class AuthorEditionsGetOperation: GroupOperation {
             case failedJSON:
                 // We failed because the JSON was malformed.
                 alert.title = "Unable to Download"
-                alert.message = "Cannot parse Author Editions results. Try again later."
+                alert.message = "Cannot parse Work Editions results. Try again later."
 
             default:
                 return

@@ -15,6 +15,7 @@ class EditionDetailCoordinator: OLQueryCoordinator {
 
     let editionDetail: OLEditionDetail
     weak var editionDetailVC: OLEditionDetailViewController?
+    var authorDetailGetOperation: Operation?
     
     init(
         operationQueue: OperationQueue,
@@ -61,6 +62,57 @@ class EditionDetailCoordinator: OLQueryCoordinator {
     func updateUI() -> Void {
         
         updateUI( editionDetail )
+    }
+    
+    func retrieveAuthors ( editionDetail: OLEditionDetail ) {
+        
+        if nil == authorDetailGetOperation {
+
+            let authorNames = editionDetail.author_names
+            var authors = editionDetail.authors
+            
+            if authorNames.count < authors.count {
+                
+                let firstOLID = authors.removeFirst()
+                
+                for olid in authors {
+                    
+                    if !olid.isEmpty {
+                        let operation =
+                            AuthorDetailGetOperation(
+                                queryText: olid,
+                                parentObjectID: nil,
+                                coreDataStack: coreDataStack
+                            ) {}
+                        operationQueue.addOperation( operation )
+                    }
+                }
+                
+                if !firstOLID.isEmpty {
+                    
+                    authorDetailGetOperation =
+                        AuthorDetailGetOperation(
+                            queryText: firstOLID,
+                            parentObjectID: nil,
+                            coreDataStack: coreDataStack
+                        ) {
+                            
+                            [weak self] in
+                            
+                            if let strongSelf = self {
+                                
+                                dispatch_async( dispatch_get_main_queue() ) {
+                                    
+                                    strongSelf.updateUI( editionDetail )
+                                    
+                                    strongSelf.authorDetailGetOperation = nil
+                                }
+                            }
+                    }
+                    operationQueue.addOperation( authorDetailGetOperation! )
+                }
+            }
+        }
     }
     
     func installCoverPictureViewCoordinator( destVC: OLPictureViewController ) {

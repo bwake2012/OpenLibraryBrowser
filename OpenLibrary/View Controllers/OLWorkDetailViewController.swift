@@ -151,11 +151,11 @@ class OLWorkDetailViewController: UIViewController {
     }
     
     
-    func updateUI( workDetail: OLWorkDetail, authorName: String ) {
+    func updateUI( workDetail: OLWorkDetail ) {
         
         self.workTitle.text = workDetail.title
         self.workSubtitle.text = workDetail.subtitle
-        self.workAuthor.text = authorName
+        self.workAuthor.text = workDetail.author_names.joinWithSeparator( ", " )
         self.displayLargeCover.enabled = workDetail.coversFound
         if !workDetail.coversFound {
             self.workCover.image = nil

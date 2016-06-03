@@ -1,14 +1,14 @@
-//  IAEBookItemDownloadOperation
+//  WorkEditionListDownloadOperation
 //  OpenLibrary
 //
-//  Created by Bob Wakefield on 2/24/16.
+//  Created by Bob Wakefield on 6/1/2016.
 //  Copyright © 2016 Bob Wakefield. All rights reserved.
 //
 //  Modified from code in the Apple sample app Earthquakes in the Advanced NSOperations project
 
 import Foundation
 
-class IAEBookItemDownloadOperation: GroupOperation {
+class WorkEditionListDownloadOperation: GroupOperation {
     // MARK: Properties
 
     let cacheFile: NSURL
@@ -16,12 +16,11 @@ class IAEBookItemDownloadOperation: GroupOperation {
     // MARK: Initialization
     
     /// - parameter cacheFile: The file `NSURL` to which the list of author Editions will be downloaded.
-    
-    init( editionKey: String, cacheFile: NSURL) {
+    init( queryText: String, cacheFile: NSURL) {
 
         self.cacheFile = cacheFile
         super.init(operations: [])
-        name = "Download IAEBookItems"
+        name = "Download Work Editions"
         
         /*
             If this server is out of our control and does not offer a secure
@@ -32,7 +31,7 @@ class IAEBookItemDownloadOperation: GroupOperation {
             should always prefer to use https.
         */
         let urlString =
-            "https://openlibrary.org/api/volumes/brief/olid/\(editionKey).json"
+            "https://openlibrary.org/query.json?type=/type/edition&works=\(queryText)"
         let url = NSURL( string: urlString )!
         let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
             

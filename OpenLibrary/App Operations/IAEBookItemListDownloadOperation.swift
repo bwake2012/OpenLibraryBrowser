@@ -1,4 +1,4 @@
-//  IAEBookItemDownloadOperation
+//  IAEBookItemListDownloadOperation.swift
 //  OpenLibrary
 //
 //  Created by Bob Wakefield on 2/24/16.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class IAEBookItemDownloadOperation: GroupOperation {
+class IAEBookItemListDownloadOperation: GroupOperation {
     // MARK: Properties
 
     let cacheFile: NSURL
@@ -17,23 +17,25 @@ class IAEBookItemDownloadOperation: GroupOperation {
     
     /// - parameter cacheFile: The file `NSURL` to which the list of author Editions will be downloaded.
     
-    init( editionKey: String, cacheFile: NSURL) {
-
-        self.cacheFile = cacheFile
-        super.init(operations: [])
-        name = "Download IAEBookItems"
+    init( editionKeys: [String], cacheFile: NSURL ) {
         
-        /*
-            If this server is out of our control and does not offer a secure
-            communication channel, use the http version of the URL and add
-            the domain to the "NSExceptionDomains" value in the
-            app's Info.plist file. When you communicate with your own servers,
-            or when the services you use offer secure communication options, you
-            should always prefer to use https.
-        */
-        let urlString =
-            "https://openlibrary.org/api/volumes/brief/olid/\(editionKey).json"
-        let url = NSURL( string: urlString )!
+        self.cacheFile = cacheFile
+        super.init( operations: [] )
+        name = "Download IAEBookItems for list of edition OLIDs"
+        let urlString = "https://openlibrary.org/api/volumes/brief/json/"
+        
+        var olidString = ""
+        
+        for key in editionKeys {
+            
+            let parts = key.componentsSeparatedByString( "/" )
+            let goodParts = parts.filter { (x) -> Bool in !x.isEmpty }
+            let olid = goodParts.last!
+            
+            olidString += "OLID:" + olid + ";"
+        }
+            
+        let url = NSURL( string: urlString + olidString )!
         let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
             
             url, response, error in
@@ -45,7 +47,7 @@ class IAEBookItemDownloadOperation: GroupOperation {
         
         let reachabilityCondition = ReachabilityCondition(host: url)
         taskOperation.addCondition(reachabilityCondition)
-
+        
         let networkObserver = NetworkObserver()
         taskOperation.addObserver(networkObserver)
         

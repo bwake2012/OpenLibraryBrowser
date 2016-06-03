@@ -50,7 +50,7 @@ private class ParsedSearchResult: OpenLibraryObject {
     }
 }
 
-class OLLanguage: NSManagedObject, CoreDataModelable {
+class OLLanguage: OLManagedObject, CoreDataModelable {
 
 // Insert code here to add functionality to your managed object subclass
     static let entityName = "Language"
@@ -59,18 +59,26 @@ class OLLanguage: NSManagedObject, CoreDataModelable {
         
         guard let parsed = ParsedSearchResult( json: json ) else { return nil }
         
-        guard let newObject =
-            NSEntityDescription.insertNewObjectForEntityForName(
-                OLLanguage.entityName, inManagedObjectContext: moc
-                ) as? OLLanguage else { return nil }
+        var newObject: OLLanguage?
         
-        newObject.sequence = sequence
-        newObject.index = index
+        newObject = findObject( parsed.key, entityName: entityName, moc: moc )
+        if nil == newObject {
+            newObject =
+                NSEntityDescription.insertNewObjectForEntityForName(
+                        OLLanguage.entityName, inManagedObjectContext: moc
+                    ) as? OLLanguage
+        }
         
-        newObject.key = parsed.key
+        if let newObject = newObject {
+
+            newObject.sequence = sequence
+            newObject.index = index
         
-        newObject.code = parsed.code
-        newObject.name = parsed.name
+            newObject.key = parsed.key
+        
+            newObject.code = parsed.code
+            newObject.name = parsed.name
+        }
         
         return newObject
     }

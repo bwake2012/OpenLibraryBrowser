@@ -35,9 +35,9 @@ class IAEBookItemGetOperation: GroupOperation {
 
         let parts = editionKey.componentsSeparatedByString( "/" )
         let goodParts = parts.filter { (x) -> Bool in !x.isEmpty }
-        let editionKey = goodParts.last!
+        let olid = goodParts.last!
         let cacheFile =
-            cachesFolder.URLByAppendingPathComponent( "\(editionKey)InternetArchiveEBookItems.json")
+            cachesFolder.URLByAppendingPathComponent( "\(olid)InternetArchiveEBookItems.json")
  //       print( "cache: \(cacheFile.absoluteString)" )
         
         /*
@@ -45,8 +45,6 @@ class IAEBookItemGetOperation: GroupOperation {
             1. The operation to download the JSON feed
             2. The operation to parse the JSON feed and insert the elements into the Core Data store
             3. The operation to invoke the completion handler
-        
-            There is an optional operation 0 to delete the existing contents of the Core Data store
         */
         downloadOperation = IAEBookItemDownloadOperation( editionKey: editionKey, cacheFile: cacheFile )
         parseOperation = IAEBookItemParseOperation( cacheFile: cacheFile, coreDataStack: coreDataStack )

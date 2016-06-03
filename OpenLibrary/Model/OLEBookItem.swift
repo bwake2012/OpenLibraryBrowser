@@ -87,7 +87,7 @@ private class ParsedSearchResult: OpenLibraryObject {
     }
 }
 
-class OLEBookItem: NSManagedObject {
+class OLEBookItem: OLManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
     struct SearchInfo {
@@ -102,22 +102,28 @@ class OLEBookItem: NSManagedObject {
         
         guard let parsed = ParsedSearchResult.fromJSON( json ) else { return nil }
 
-        guard let newObject =
-            NSEntityDescription.insertNewObjectForEntityForName(
-                    OLEBookItem.entityName, inManagedObjectContext: moc
-                ) as? OLEBookItem else { return nil }
+        var newObject: OLEBookItem? = findObject( parsed.editionKey, entityName: OLEBookItem.entityName, keyFieldName: "editionKey", moc: moc )
+        if nil == newObject {
+            newObject =
+                NSEntityDescription.insertNewObjectForEntityForName(
+                        OLEBookItem.entityName, inManagedObjectContext: moc
+                    ) as? OLEBookItem
+        }
 
-        newObject.status       = parsed.status
-        newObject.workKey      = parsed.workKey
-        newObject.editionKey   = parsed.editionKey
-        newObject.cover_id     = parsed.cover_id
-        newObject.publish_date = parsed.publish_date
-        newObject.itemURL      = parsed.itemURL
-        newObject.enumcron     = parsed.enumcron
-        newObject.contributor  = parsed.contributor
-        newObject.fromRecord   = parsed.fromRecord
-        newObject.match        = parsed.match
+        if let newObject = newObject {
 
+            newObject.status       = parsed.status
+            newObject.workKey      = parsed.workKey
+            newObject.editionKey   = parsed.editionKey
+            newObject.cover_id     = parsed.cover_id
+            newObject.publish_date = parsed.publish_date
+            newObject.itemURL      = parsed.itemURL
+            newObject.enumcron     = parsed.enumcron
+            newObject.contributor  = parsed.contributor
+            newObject.fromRecord   = parsed.fromRecord
+            newObject.match        = parsed.match
+        }
+        
         return newObject
     }
 }

@@ -22,24 +22,25 @@ extension OLWorkDetail {
     @NSManaged var latest_revision: Int64
     @NSManaged var type: String
     
-    @NSManaged var title: String
-    @NSManaged var subtitle: String
-    @NSManaged var authors: [String]
-    @NSManaged var translated_titles: [String]
-    @NSManaged var subjects: [String]
-    @NSManaged var subject_places: [String]
-    @NSManaged var subject_times: [String]
-    @NSManaged var subject_people: [String]
-    @NSManaged var work_description: String
-    @NSManaged var dewey_number: [String]
-    @NSManaged var lc_classifications: [String]
-    @NSManaged var first_sentence: String
-    @NSManaged var original_languages: [String]
-    @NSManaged var other_titles: [String]
-    @NSManaged var first_publish_date: String
-    @NSManaged var links: [[String: String]]
-    @NSManaged var notes: String
-    // cover_edition of type /type/edition
+    @NSManaged var authors: [String]                // array of author OLIDs
     @NSManaged var covers: [Int]
     @NSManaged var coversFound: Bool
+    @NSManaged var dewey_number: [String]
+    @NSManaged var first_publish_date: String
+    @NSManaged var first_sentence: String
+    @NSManaged var lc_classifications: [String]
+    @NSManaged var links: [[String: String]]
+    @NSManaged var notes: String
+    @NSManaged var original_languages: [String]
+    @NSManaged var other_titles: [String]
+    @NSManaged var subject_people: [String]
+    @NSManaged var subject_places: [String]
+    @NSManaged var subject_times: [String]
+    @NSManaged var subjects: [String]
+    @NSManaged var subtitle: String
+    @NSManaged var title: String
+    @NSManaged var translated_titles: [String]
+    @NSManaged var work_description: String
+
+    // cover_edition of type /type/edition
 }

@@ -50,16 +50,14 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
     }()
     
     var authorKey: String
-    var authorNames: [String]
     var numFound = Int64( kPageSize * 2 )
     var searchResults = SearchResults()
 
     var highWaterMark = 0
     
-    init( authorKey: String, authorNames: [String], authorWorksTableVC: OLAuthorDetailWorksTableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
+    init( authorKey: String, authorWorksTableVC: OLAuthorDetailWorksTableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         
         self.authorKey = authorKey
-        self.authorNames = authorNames
 
         self.authorWorksTableVC = authorWorksTableVC
         
@@ -295,7 +293,6 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
 
         destVC.queryCoordinator =
             WorkDetailCoordinator(
-                    authorNames: authorNames,
                     operationQueue: self.operationQueue,
                     coreDataStack: self.coreDataStack,
                     searchInfo: workDetail,

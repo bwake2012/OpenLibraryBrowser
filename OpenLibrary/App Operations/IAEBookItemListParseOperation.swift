@@ -1,4 +1,4 @@
-//  AuthorEditionsParseOperation.swift
+//  IAEBookItemListParseOperation.swift
 //  OpenLibrary
 //
 //  Created by Bob Wakefield on 2/24/16.
@@ -12,13 +12,10 @@ import CoreData
 import BNRCoreDataStack
 
 /// An `Operation` to parse Editions out of a query from OpenLibrary.
-class AuthorEditionsParseOperation: Operation {
+class IAEBookItemListParseOperation: Operation {
     
-    let authorKey: String
-    let offset: Int
     let cacheFile: NSURL
     let context: NSManagedObjectContext
-    let updateResults: SearchResultsUpdater
     
     var searchResults = SearchResults()
     
@@ -30,7 +27,7 @@ class AuthorEditionsParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( authorKey: String, offset: Int, cacheFile: NSURL, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater ) {
+    init( cacheFile: NSURL, coreDataStack: CoreDataStack ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -40,13 +37,10 @@ class AuthorEditionsParseOperation: Operation {
         self.cacheFile = cacheFile
         self.context = coreDataStack.newChildContext()
         self.context.mergePolicy = NSOverwriteMergePolicy
-        self.updateResults = updateResults
-        self.offset = offset
-        self.authorKey = authorKey
         
         super.init()
 
-        name = "Parse Author Editions"
+        name = "Parse IAEBookItem"
     }
     
     override func execute() {
@@ -62,7 +56,7 @@ class AuthorEditionsParseOperation: Operation {
         }
         
         do {
-            if let json = try NSJSONSerialization.JSONObjectWithStream(stream, options: []) as? [[String: AnyObject]] {
+            if let json = try NSJSONSerialization.JSONObjectWithStream(stream, options: []) as? [String: AnyObject] {
             
                 parse( json )
             }
@@ -75,40 +69,40 @@ class AuthorEditionsParseOperation: Operation {
         }
     }
     
-    private func parse( resultSet: [[String: AnyObject]] ) {
+    private func parse( resultSet: [String: AnyObject] ) {
 
-        
-        // guard let numFound = resultSet["size"] as? Int where numFound > 0 else { return }
-        
-        let numFound = resultSet.count
-        if numFound <= 0 {
-            finishWithError( nil )
-            return
-        }
-        
-        context.performBlock {
+        if let resultEntry = resultSet.first {
             
-            var index = self.offset
-            for entry in resultSet {
+            if let result = resultEntry.1 as? [String: AnyObject] {
+        
+                guard let items = result["items"] as? [[String: AnyObject]] else {
+                    
+                    finishWithError( nil )
+                    return
+                }
                 
-                if nil != OLEditionDetail.parseJSON( self.authorKey, workKey: "", index: index, json: entry, moc: self.context ) {
+                guard 0 < items.count else {
                     
-                    index += 1
+                    finishWithError( nil )
+                    return
+                }
+                
+                context.performBlock {
                     
-//                    print( "\(self.authorKey) \(newEdition.key) \(newEdition.title)" )
+                    var index = 0
+                    for item in items {
+                        
+                        if OLEBookItem.parseJSON( item, moc: self.context ) != nil {
+                        
+                            index += 1
+                        }
+                    }
+
+                    let error = self.saveContext()
+                
+                    self.finishWithError( error )
                 }
             }
-
-            let error = self.saveContext()
-
-            if nil == error {
-                self.updateResults( SearchResults( start: self.offset, numFound: numFound, pageSize: resultSet.count ) )
-            } else {
-                
-                print( "\(error?.localizedDescription)" )
-            }
-        
-            self.finishWithError( error )
         }
     }
     
@@ -134,8 +128,4 @@ class AuthorEditionsParseOperation: Operation {
         return error
     }
     
-    func Update( searchResults: SearchResults ) {
-        
-        self.searchResults = searchResults
-    }
 }

@@ -56,8 +56,7 @@ class OLEditionDetailViewController: UIViewController {
         self.editionSubtitleView.text = editionDetail.subtitle
         self.editionAuthorView.text =
             !editionDetail.by_statement.isEmpty ?
-                editionDetail.by_statement :
-                ( editionDetail.authors.isEmpty ? "" : editionDetail.authors[0] )
+                editionDetail.by_statement : editionDetail.author_names.joinWithSeparator( ", " )
         
         self.displayLargeCover.enabled = editionDetail.coversFound
         if !editionDetail.coversFound {

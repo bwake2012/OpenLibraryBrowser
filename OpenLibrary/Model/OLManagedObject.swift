@@ -96,17 +96,40 @@ class OLManagedObject: NSManagedObject {
         return "961-book-32.png"
     }
 
-    lazy var deluxeData: [[DeluxeData]] = {
+    var deluxeData: [[DeluxeData]] {
         
-        let deluxeData = self.buildDeluxeData()
+        let data = self.buildDeluxeData()
         
-        return deluxeData
-    }()
+        return data
+    }
     
     lazy var hasDeluxeData: Bool = {
         
         return 1 < self.deluxeData.count || ( 1 == self.deluxeData.count && 1 < self.deluxeData[0].count )
     }()
+    
+    class func findObject<T: OLManagedObject>( key: String, entityName: String, keyFieldName: String = "key", moc: NSManagedObjectContext ) -> T? {
+        
+        let fetchRequest = NSFetchRequest( entityName: entityName )
+        
+        fetchRequest.predicate = NSPredicate( format: "\(keyFieldName)==%@", "\(key)" )
+        
+        fetchRequest.sortDescriptors =
+            [NSSortDescriptor(key: "retrieval_date", ascending: false)]
+        
+        var results = [T]?()
+        do {
+            results = try moc.executeFetchRequest( fetchRequest ) as? [T]
+        }
+        catch {
+            
+            return nil
+        }
+        
+        return results?.first
+    }
+    
+    // 
     
     func localURL( key:String, size: String, index: Int = 0 ) -> NSURL {
         
@@ -150,6 +173,9 @@ class OLManagedObject: NSManagedObject {
     func localURL( size: String, index: Int = 0 ) -> NSURL {
         
         return NSURL()
+    }
+    
+    func populateObject( parsed: OpenLibraryObject ) {
     }
     
     func buildDeluxeData() -> [[DeluxeData]] {
