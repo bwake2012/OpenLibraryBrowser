@@ -16,7 +16,7 @@ class LanguagesDownloadOperation: GroupOperation {
     // MARK: Initialization
     
     /// - parameter cacheFile: The file `NSURL` to which the list of author works will be downloaded.
-    init( offset: Int, limit: Int, cacheFile: NSURL) {
+    init( cacheFile: NSURL) {
 
         self.cacheFile = cacheFile
         super.init(operations: [])
@@ -30,7 +30,7 @@ class LanguagesDownloadOperation: GroupOperation {
             or when the services you use offer secure communication options, you
             should always prefer to use https.
         */
-        let urlString = "https://openlibrary.org/query.json?type=/type/language&code=&name=&offset=\(offset)&limit=\(limit)"
+        let urlString = "https://openlibrary.org/query.json?type=/type/language&code=&name=&limit=1000"
         let url = NSURL( string: urlString )!
         let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
             

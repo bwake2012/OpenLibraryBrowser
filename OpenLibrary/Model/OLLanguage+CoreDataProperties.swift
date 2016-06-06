@@ -19,5 +19,6 @@ extension OLLanguage {
     @NSManaged var key: String
     @NSManaged var code: String
     @NSManaged var name: String
+    @NSManaged var retrieval_date: NSDate
 
 }

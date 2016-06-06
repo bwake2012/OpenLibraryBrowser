@@ -47,16 +47,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 dispatch_async( dispatch_get_main_queue() ) {
 
-//                    let op = WorkEditionEbooksGetOperation( queryText: "/works/OL108456W", coreDataStack: stack ) {
-//                        
-//                        print( "WorkEditionEbooksGetOperation finished!" )
-//                    }
-//                    
-//                    op.userInitiated = true
-//                    self.operationQueue.addOperation( op )
-                    
                     self.window?.rootViewController = self.navController
-                }
+                 
+                    OLLanguage.retrieveLanguages( self.operationQueue, coreDataStack: self.coreDataStack! )
+               }
+                
             case .Failure(let error):
                 assertionFailure("\(error)")
             }

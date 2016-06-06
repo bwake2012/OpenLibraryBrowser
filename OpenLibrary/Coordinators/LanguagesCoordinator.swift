@@ -56,9 +56,7 @@ class LanguagesCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate
         
         self.languagesGetOperation =
             LanguagesGetOperation(
-                offset: 0, limit: kPageSize,
-                coreDataStack: coreDataStack,
-                updateResults: self.updateResults
+                coreDataStack: coreDataStack
             ) {
                 
                 dispatch_async( dispatch_get_main_queue() ) {

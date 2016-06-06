@@ -73,6 +73,8 @@ class OLLanguage: OLManagedObject, CoreDataModelable {
 
             newObject.sequence = sequence
             newObject.index = index
+            
+            newObject.retrieval_date = NSDate()
         
             newObject.key = parsed.key
         
@@ -83,5 +85,20 @@ class OLLanguage: OLManagedObject, CoreDataModelable {
         return newObject
     }
     
+    class func retrieveLanguages( operationQueue: OperationQueue, coreDataStack: CoreDataStack ) {
+        
+        let childContext = coreDataStack.newChildContext( name: "findLanguages" )
+        
+        childContext.performBlock {
+            
+            let language: OLLanguage? = OLLanguage.findObject( "/languages/eng", entityName: OLLanguage.entityName, moc: childContext )
+        
+            if nil == language {
+                
+                let operation = LanguagesGetOperation( coreDataStack: coreDataStack ) {}
+                operationQueue.addOperation( operation )
+            }
+        }
+    }
 
 }

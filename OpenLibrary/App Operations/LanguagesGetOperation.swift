@@ -29,7 +29,7 @@ class LanguagesGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( offset: Int, limit: Int, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater, completionHandler: Void -> Void ) {
+    init( coreDataStack: CoreDataStack, completionHandler: Void -> Void ) {
 
         let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
 
@@ -42,8 +42,8 @@ class LanguagesGetOperation: GroupOperation {
             2. The operation to parse the JSON feed and insert the elements into the Core Data store
             3. The operation to invoke the completion handler
         */
-        downloadOperation = LanguagesDownloadOperation( offset: offset, limit: limit, cacheFile: cacheFile )
-        parseOperation = LanguagesParseOperation( offset: offset, limit: limit, cacheFile: cacheFile, coreDataStack: coreDataStack, updateResults: updateResults )
+        downloadOperation = LanguagesDownloadOperation( cacheFile: cacheFile )
+        parseOperation = LanguagesParseOperation( cacheFile: cacheFile, coreDataStack: coreDataStack )
         
         let finishOperation = NSBlockOperation( block: completionHandler )
         

@@ -14,13 +14,8 @@ import BNRCoreDataStack
 /// An `Operation` to parse works out of a query from OpenLibrary.
 class LanguagesParseOperation: Operation {
     
-    let offset: Int
-    let limit: Int
     let cacheFile: NSURL
     let context: NSManagedObjectContext
-    let updateResults: SearchResultsUpdater
-    
-    var searchResults = SearchResults()
     
     /**
         - parameter cacheFile: The file `NSURL` from which to load author query data.
@@ -30,7 +25,7 @@ class LanguagesParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( offset: Int, limit: Int, cacheFile: NSURL, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater ) {
+    init( cacheFile: NSURL, coreDataStack: CoreDataStack ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -38,11 +33,8 @@ class LanguagesParseOperation: Operation {
         */
         
         self.cacheFile = cacheFile
-        self.context = coreDataStack.newChildContext()
+        self.context = coreDataStack.newChildContext( name: "saveLanguages" )
         self.context.mergePolicy = NSOverwriteMergePolicy
-        self.updateResults = updateResults
-        self.offset = offset
-        self.limit = limit
         
         super.init()
 
@@ -67,7 +59,6 @@ class LanguagesParseOperation: Operation {
                 parse( json )
             }
             else {
-                updateResults( SearchResults( start: offset, numFound: offset, pageSize: 0 ) )
                 finish()
             }
         }
@@ -81,7 +72,6 @@ class LanguagesParseOperation: Operation {
         let numFound = resultSet.count
         if 0 >= numFound {
             
-            updateResults( SearchResults( start: offset, numFound: offset, pageSize: 0 ) )
             finishWithError( nil )
             return
         }
@@ -89,7 +79,7 @@ class LanguagesParseOperation: Operation {
         context.performBlock {
             
             let sequence = Int64( 0 )
-            var index = Int64( self.offset )
+            var index: Int64 = 0
             for entry in resultSet {
                 
                 if nil != OLLanguage.parseJSON( sequence, index: index, json: entry, moc: self.context ) {
@@ -102,10 +92,6 @@ class LanguagesParseOperation: Operation {
 
             let error = self.saveContext()
 
-            if nil == error {
-                self.updateResults( SearchResults( start: self.offset, numFound: numFound, pageSize: resultSet.count ) )
-            }
-        
             self.finishWithError( error )
         }
     }
@@ -132,8 +118,4 @@ class LanguagesParseOperation: Operation {
         return error
     }
     
-    func Update( searchResults: SearchResults ) {
-        
-        self.searchResults = searchResults
-    }
 }
