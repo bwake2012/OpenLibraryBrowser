@@ -14,6 +14,7 @@ class GeneralSearchResultTableViewCell: OLTableViewCell {
     
     @IBOutlet weak var titleText: UILabel!
     @IBOutlet weak var authorName: UILabel!
+    @IBOutlet weak var displayAuthorDetail: UIButton!
     
     @IBAction func touchedAuthorName(sender: AnyObject) {
 
@@ -28,6 +29,9 @@ class GeneralSearchResultTableViewCell: OLTableViewCell {
         if let r = generalResult {
             titleText.text = "\(r.title)"
             authorName.text = r.author_name.joinWithSeparator( ", " )
+            
+            displayAuthorDetail.enabled = !r.author_name.isEmpty
+            
 //            titleText.text = "\(r.sequence).\(r.index) \(r.title)"
 //            authorName.text = "\(r.key) \(r.author_name.joinWithSeparator( ", " )"
         } else {

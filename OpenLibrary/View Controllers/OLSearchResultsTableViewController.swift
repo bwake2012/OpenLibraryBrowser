@@ -52,6 +52,8 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
     var savedSearchKeys = [String: String]()
 
     @IBAction func presentGeneralSearch(sender: UIBarButtonItem) {}
+    @IBAction func presentSearchResultsFilter(sender: UIBarButtonItem) {
+    }
     
     // MARK: UIViewController
     override func viewDidLoad() {
@@ -143,6 +145,7 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
                         searchController.active = false
                         titleSearchCoordinator.installTitleDetailCoordinator( destVC, indexPath: indexPath )
                     }
+
                 } else if segue.identifier == "displayGeneralSearchWorkDetail" {
                     
                     if let destVC = segue.destinationViewController as? OLWorkDetailViewController {
@@ -308,11 +311,17 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
     
     @IBAction func dismiss(segue: UIStoryboardSegue) {
         
-        if let vc = bookSearchVC {
-            if !vc.searchKeys.isEmpty {
-                
-                searchType = .searchGeneral
-                tableView.reloadData()
+        if segue.identifier == "beginBookSearch" {
+
+            if let vc = segue.sourceViewController as? OLBookSearchViewController {
+
+                if !vc.searchKeys.isEmpty {
+                    
+                    searchType = .searchGeneral
+
+                    generalSearchCoordinator.newQuery( vc.searchKeys, userInitiated: true, refreshControl: nil )
+                    tableView.reloadData()
+                }
             }
         }
     }

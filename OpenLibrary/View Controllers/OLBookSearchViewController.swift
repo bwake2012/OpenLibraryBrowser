@@ -32,6 +32,7 @@ class OLBookSearchViewController: UIViewController {
     var searchKeys = [String: String]()
     
     var saveSearchDictionary: SaveSearchDictionary?
+    var fields = [(field: UITextField, key: String)]()
     
     @IBAction func ebookOnlySwitchChanged(sender: AnyObject) {
         
@@ -46,8 +47,9 @@ class OLBookSearchViewController: UIViewController {
         
         searchKeys = [String: String]()
         
-        performSegueWithIdentifier( "exitBookSearch", sender: self )
+        performSegueWithIdentifier( "cancelBookSearch", sender: self )
     }
+    
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver( self )
@@ -57,6 +59,11 @@ class OLBookSearchViewController: UIViewController {
     override func viewDidLoad() {
 
         super.viewDidLoad()
+        
+        fields =
+            [( generalSearch, "q" ), (titleSearch, "title"), (authorSearch, "author"),
+             (isbnSearch, "isbn"), (subjectSearch, "subject"), (placeSearch, "place"),
+             (personSearch, "person"), (publisherSearch, "publisher")]
         
         if !searchKeys.isEmpty {
             
@@ -68,6 +75,12 @@ class OLBookSearchViewController: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OLBookSearchViewController.keyboardWillBeHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
 
+    override func didReceiveMemoryWarning() {
+        
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
     
     // MARK: UITextFieldDelegate
     func textFieldDidEndEditing(textField: UITextField) {
@@ -81,34 +94,31 @@ class OLBookSearchViewController: UIViewController {
     func textFieldShouldReturn( textField: UITextField ) -> Bool {
         
         textField.resignFirstResponder()
-        if let queryCoordinator = queryCoordinator {
-            
-            searchKeys = assembleSearchKeys()
-            if !searchKeys.isEmpty {
+
+        searchKeys = assembleSearchKeys()
+        if !searchKeys.isEmpty {
+            if let saveSearchDictionary = saveSearchDictionary {
                 
-                queryCoordinator.newQuery( searchKeys, userInitiated: true, refreshControl: nil )
+                saveSearchDictionary( searchDictionary: searchKeys )
             }
-        }
 
-        performSegueWithIdentifier( "exitBookSearch", sender: self )
-
-        if let saveSearchDictionary = saveSearchDictionary {
-            
-            saveSearchDictionary( searchDictionary: searchKeys )
+            performSegueWithIdentifier( "beginBookSearch", sender: self )
         }
-        
         return false
     }
     
     // MARK: Notifications
     func keyboardDidShow(notification: NSNotification) {
+
         if let activeField = self.activeField, keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+            
             let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
             self.scrollView.contentInset = contentInsets
             self.scrollView.scrollIndicatorInsets = contentInsets
             var aRect = self.view.frame
             aRect.size.height -= keyboardSize.size.height
             if (!CGRectContainsPoint(aRect, activeField.frame.origin)) {
+                
                 self.scrollView.scrollRectToVisible(activeField.frame, animated: true)
             }
         }
@@ -122,11 +132,6 @@ class OLBookSearchViewController: UIViewController {
     
     func assembleSearchKeys() -> [String: String] {
     
-        let fields: [(field: UITextField, key: String)] =
-                [( generalSearch, "q" ), (titleSearch, "title"), (authorSearch, "author"),
-                 (isbnSearch, "isbn"), (subjectSearch, "subject"), (placeSearch, "place"),
-                 (personSearch, "person"), (publisherSearch, "publisher")]
-        
         var searchKeys = [String: String]()
         for field in fields {
             
@@ -143,14 +148,9 @@ class OLBookSearchViewController: UIViewController {
     
         return searchKeys
     }
-    
+
     func displaySearchKeys( searchKeys: [String: String] ) {
         
-        let fields: [(field: UITextField, key: String)] =
-            [( generalSearch, "q" ), (titleSearch, "title"), (authorSearch, "author"),
-             (isbnSearch, "isbn"), (subjectSearch, "subject"), (placeSearch, "place"),
-             (personSearch, "person"), (publisherSearch, "publisher")]
-
         for field in fields {
             
             if let text = searchKeys[field.key] {
