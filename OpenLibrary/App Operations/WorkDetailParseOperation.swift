@@ -194,19 +194,23 @@ class WorkDetailParseOperation: Operation {
 
         context.performBlock {
             
-            let newObject = OLWorkDetail.parseJSON( "", index: 0, json: resultSet, moc: self.context )
+            if let newObject = OLWorkDetail.parseJSON( "", index: 0, json: resultSet, moc: self.context ) {
             
-            let error = self.saveContext()
-            
-            if nil == error && nil != self.resultHandler && nil != newObject {
-                
-                if let objectID = newObject?.objectID {
- 
-                    self.resultHandler!( objectID: objectID )
+                // sometimes we have one or more editions without an associated work
+                if "/type/edition" == newObject.type {
+                    
+                    let newEdition = OLEditionDetail.parseJSON( "", workKey: newObject.key, index: 0, json: resultSet, moc: self.context )
                 }
-            }
+                
+                let error = self.saveContext()
+                
+                if nil == error && nil != self.resultHandler {
+                    
+                    self.resultHandler!( objectID: newObject.objectID )
+                }
 
-            self.finishWithError( error )
+                self.finishWithError( error )
+            }
         }
     }
     
