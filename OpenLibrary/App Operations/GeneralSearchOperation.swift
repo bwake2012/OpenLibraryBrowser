@@ -70,6 +70,8 @@ class GeneralSearchOperation: GroupOperation {
 
         addCondition( MutuallyExclusive<GeneralSearchOperation>() )
         
+        queuePriority = .High
+        
         name = "General Search "
     }
     
