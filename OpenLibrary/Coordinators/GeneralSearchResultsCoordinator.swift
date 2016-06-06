@@ -16,7 +16,7 @@ private let kGeneralSearchCache = "GeneralSearch"
 
 private let kPageSize = 100
 
-class GeneralSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate {
+class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedResultsControllerDelegate {
     
     typealias FetchedOLGeneralSearchResultController = FetchedResultsController< OLGeneralSearchResult >
     
@@ -95,7 +95,12 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControl
         }
     }
     
-    func displayToCell( cell: GeneralSearchResultTableViewCell, indexPath: NSIndexPath ) -> OLGeneralSearchResult? {
+    func displayToCell( cell: OLTableViewCell, indexPath: NSIndexPath ) -> OLManagedObject? {
+        
+        guard let cell = cell as? GeneralSearchResultTableViewCell else {
+            assert( false )
+            return nil
+        }
         
         if needAnotherPage( indexPath.row ) {
             
@@ -318,13 +323,16 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControl
     
     func installAuthorDetailCoordinator( destVC: OLAuthorDetailViewController, indexPath: NSIndexPath ) {
         
-        destVC.queryCoordinator =
-            AuthorDetailCoordinator(
-                operationQueue: operationQueue,
-                coreDataStack: coreDataStack,
-                searchInfo: objectAtIndexPath( indexPath )!,
-                authorDetailVC: destVC
-        )
+        if let indexedObject = objectAtIndexPath( indexPath ) where 0 < indexedObject.author_key.count
+        {
+            destVC.queryCoordinator =
+                AuthorDetailCoordinator(
+                    operationQueue: operationQueue,
+                    coreDataStack: coreDataStack,
+                    authorKey: indexedObject.author_key[0],
+                    authorDetailVC: destVC
+            )
+        }
     }
     
     func installWorkDetailCoordinator( destVC: OLWorkDetailViewController, indexPath: NSIndexPath ) {

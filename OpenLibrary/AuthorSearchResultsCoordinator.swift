@@ -14,7 +14,7 @@ import BNRCoreDataStack
 
 private let kAuthorSearchCache = "authorNameSearch"
 
-class AuthorSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate {
+class AuthorSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedResultsControllerDelegate {
     
     private let kPageSize = 100
 
@@ -94,7 +94,12 @@ class AuthorSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControll
         }
     }
     
-    func displayToCell( cell: AuthorSearchResultTableViewCell, indexPath: NSIndexPath ) -> OLAuthorSearchResult? {
+    func displayToCell( cell: OLTableViewCell, indexPath: NSIndexPath ) -> OLManagedObject? {
+        
+        guard let cell = cell as? AuthorSearchResultTableViewCell else {
+            assert( false )
+            return nil
+        }
         
         if needAnotherPage( indexPath.row ) {
             

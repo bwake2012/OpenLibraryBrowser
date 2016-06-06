@@ -16,7 +16,7 @@ private let kTitleSearchCache = "TitleNameSearch"
 
 private let kPageSize = 100
 
-class TitleSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate {
+class TitleSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedResultsControllerDelegate {
     
     typealias FetchedOLTitleSearchResultController = FetchedResultsController< OLTitleSearchResult >
     
@@ -94,7 +94,12 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, FetchedResultsControlle
         }
     }
     
-    func displayToCell( cell: TitleSearchResultTableViewCell, indexPath: NSIndexPath ) -> OLTitleSearchResult? {
+    func displayToCell( cell: OLTableViewCell, indexPath: NSIndexPath ) -> OLManagedObject? {
+        
+        guard let cell = cell as? TitleSearchResultTableViewCell else {
+            assert( false )
+            return nil
+        }
         
         if needAnotherPage( indexPath.row ) {
             

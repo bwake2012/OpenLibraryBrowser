@@ -12,7 +12,10 @@ protocol OLDataSource {
 
     func numberOfSections() -> Int
     func numberOfRowsInSection( section: Int ) -> Int
-    func objectAtIndexPath( indexPath: NSIndexPath ) -> OLManagedObject?
-//    func displayToCell( cell: OLTableViewCell, indexPath: NSIndexPath ) -> OLManagedObject?
+//    func objectAtIndexPath( indexPath: NSIndexPath ) -> OLManagedObject?
 
+    func displayToCell( cell: OLTableViewCell, indexPath: NSIndexPath ) -> OLManagedObject?
+    func updateUI() -> Void
+
+    func clearQuery() -> Void
 }
