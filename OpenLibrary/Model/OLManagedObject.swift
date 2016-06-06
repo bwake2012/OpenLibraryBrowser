@@ -108,7 +108,7 @@ class OLManagedObject: NSManagedObject {
         return 1 < self.deluxeData.count || ( 1 == self.deluxeData.count && 1 < self.deluxeData[0].count )
     }()
     
-    class func findObject<T: OLManagedObject>( key: String, entityName: String, keyFieldName: String = "key", moc: NSManagedObjectContext ) -> T? {
+    class func findObject<T: OLManagedObject>( key: String, entityName: String, keyFieldName: String = "key", moc: NSManagedObjectContext ) -> [T]? {
         
         let fetchRequest = NSFetchRequest( entityName: entityName )
         
@@ -126,10 +126,23 @@ class OLManagedObject: NSManagedObject {
             return nil
         }
         
-        return results?.first
+//        print( "findObject: key:\(key) entity:\(entityName) keyFieldName:\(keyFieldName) moc:\(moc.name ?? "")" )
+        
+        return results
     }
     
-    // 
+    class func findObject<T: OLManagedObject>( key: String, entityName: String, keyFieldName: String = "key", moc: NSManagedObjectContext ) -> T? {
+        
+        let results: [T]? = findObject( key, entityName: entityName, keyFieldName: keyFieldName, moc: moc )
+        
+        if "key" == keyFieldName {
+            
+            assert( 1 >= results?.count )
+        }
+        
+        return results?.first
+    }
+    //
     
     func localURL( key:String, size: String, index: Int = 0 ) -> NSURL {
         
