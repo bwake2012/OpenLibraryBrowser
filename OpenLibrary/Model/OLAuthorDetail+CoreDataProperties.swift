@@ -32,6 +32,7 @@ extension OLAuthorDetail {
     @NSManaged var type: String
     
     @NSManaged var retrieval_date: NSDate
+    @NSManaged var provisional_date: NSDate?
     
     @NSManaged var toSearchResults: OLAuthorSearchResult?
 }

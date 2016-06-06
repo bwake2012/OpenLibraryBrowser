@@ -10,141 +10,6 @@ import CoreData
 
 import BNRCoreDataStack
 
-
-/// An object to represent a parsed author search result.
-private class ParsedSearchResult: OpenLibraryObject {
-    
-    // MARK: Properties.
-    
-    let key: String
-    let name: String
-    let personal_name: String
-    let birth_date: String
-    let death_date: String
-    
-    let photos: [Int]                // transformable
-    let links: [[String: String]]    // transformable
-    let bio: String
-    let alternate_names: [String]    // transformable
-    
-    let wikipedia: String
-    
-    let revision: Int64
-    let latest_revision: Int64
-    
-    let created: NSDate?
-    let last_modified: NSDate?
-    
-    let type: String
-    
-    // MARK: Class Factory
-    
-    class func fromJSON ( match: [String: AnyObject] ) -> ParsedSearchResult? {
-        
-        guard let key = match["key"] as? String else { return nil }
-        
-        guard let name = match["name"] as? String else { return nil }
-        
-        let personal_name = match["personal_name"] as? String ?? ""
-        
-        let birth_date = OpenLibraryObject.OLDateStamp( match["birth_date"] )
-        let death_date = OpenLibraryObject.OLDateStamp( match["death_date"] )
-        
-        let photos = OpenLibraryObject.OLIntArray( match["photos"] )
-        
-        let links = OpenLibraryObject.OLLinks( match )
-        
-        let bioText = OpenLibraryObject.OLText( match["bio"] )
-        
-        let alternate_names = OpenLibraryObject.OLStringArray( match["alternate_names"] )
-        
-        let wikipedia = OpenLibraryObject.OLString( match["wikipedia"] )
-        
-        var revision = match["revision"] as? Int64
-        var latest_revision = match["latest_revision"] as? Int64
-        if nil == revision && nil != latest_revision {
-            
-            revision = latest_revision
-            
-        } else if nil == latest_revision && nil != revision {
-            
-            latest_revision = revision
-            
-        } else if nil == revision && nil == latest_revision {
-            
-            revision = Int64( 0 )
-            latest_revision = Int64( 0 )
-            
-        }
-        
-        var created = OpenLibraryObject.OLTimeStamp( match["created"] )
-        var last_modified = OpenLibraryObject.OLTimeStamp( match["last_modified"] )
-        if nil == created && nil != last_modified {
-            
-            created = last_modified
-            
-        } else if nil == last_modified && nil != created {
-            
-            last_modified = created
-        }
-        
-        let type = match["type"] as? String ?? ""
-        
-        assert( nil != created )
-        assert( nil != last_modified )
-        assert( nil != revision )
-        assert( nil != latest_revision )
-        
-        return ParsedSearchResult( key: key, name: name, personal_name: personal_name, birth_date: birth_date, death_date: death_date, photos: photos, links: links, bio: bioText, alternate_names: alternate_names, wikipedia: wikipedia, revision: revision!, latest_revision: latest_revision!, created: created, last_modified: last_modified, type: type )
-    }
-    
-    // MARK: Initialization
-    init(
-        key: String,
-        name: String,
-        personal_name: String,
-        birth_date: String,
-        death_date: String,
-        
-        photos: [Int],                // transformable
-        links: [[String: String]],    // transformable
-        bio: String,
-        alternate_names: [String],    // transformable
-        
-        wikipedia: String,
-        
-        revision: Int64,
-        latest_revision: Int64,
-        
-        created: NSDate?,
-        last_modified: NSDate?,
-        
-        type: String
-        ) {
-        
-        self.key = key
-        self.name = name
-        self.personal_name = personal_name
-        self.birth_date = birth_date
-        self.death_date = death_date
-        
-        self.photos = photos
-        self.links = links
-        self.bio = bio
-        self.alternate_names = alternate_names
-        
-        self.wikipedia = wikipedia
-        
-        self.revision = revision
-        self.latest_revision = latest_revision
-        
-        self.created = created
-        self.last_modified = last_modified
-        
-        self.type = type
-    }
-}
-
 class OLAuthorDetail: OLManagedObject, CoreDataModelable {
 
     // MARK: Search Info
@@ -158,7 +23,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
     
     class func parseJSON( parentObjectID: NSManagedObjectID?, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLAuthorDetail? {
         
-        guard let parsed = ParsedSearchResult.fromJSON( json ) else { return nil }
+        guard let parsed = ParsedFromJSON.fromJSON( json ) else { return nil }
         
         var newObject: OLAuthorDetail?
         
@@ -220,7 +85,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
 
         self.retrieval_date = NSDate()
         
-        if let parsed = parsed as? ParsedSearchResult {
+        if let parsed = parsed as? ParsedFromJSON {
             
             self.key = parsed.key
             self.name = parsed.name
@@ -236,8 +101,8 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
             self.revision = parsed.revision
             self.latest_revision = parsed.latest_revision
             
-            self.created = OpenLibraryObject.OLTimeStamp( parsed.created )
-            self.last_modified = OpenLibraryObject.OLTimeStamp( parsed.last_modified )
+            self.created = parsed.created
+            self.last_modified = parsed.last_modified
             
             self.type = parsed.type
         }
@@ -367,6 +232,22 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
         }
         
         newData.append(
+            DeluxeData(type: .inline, caption: "Revision:", value: String( revision ) )
+        )
+        
+        newData.append(
+            DeluxeData(type: .inline, caption: "Latest Revision:", value: String( latest_revision ) )
+        )
+        
+        newData.append(
+            DeluxeData( type: .inline, caption: "Type:", value: type )
+        )
+
+        newData.append(
+            DeluxeData( type: .inline, caption: "OLID:", value: key )
+        )
+        
+        newData.append(
             DeluxeData(
                 type: .inline,
                 caption: "Retrieved:",
@@ -378,6 +259,142 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
         
         return deluxeData
     }
-    
-
 }
+
+extension OLAuthorDetail {
+    
+    /// An object to represent a parsed author search result.
+    class ParsedFromJSON: OpenLibraryObject {
+        
+        // MARK: Properties.
+        
+        let key: String
+        let name: String
+        let personal_name: String
+        let birth_date: String
+        let death_date: String
+        
+        let photos: [Int]                // transformable
+        let links: [[String: String]]    // transformable
+        let bio: String
+        let alternate_names: [String]    // transformable
+        
+        let wikipedia: String
+        
+        let revision: Int64
+        let latest_revision: Int64
+        
+        let created: NSDate?
+        let last_modified: NSDate?
+        
+        let type: String
+        
+        // MARK: Class Factory
+        
+        class func fromJSON ( json: [String: AnyObject] ) -> ParsedFromJSON? {
+            
+            guard let key = json["key"] as? String else { return nil }
+            
+            guard let name = json["name"] as? String else { return nil }
+            
+            let personal_name = json["personal_name"] as? String ?? ""
+            
+            let birth_date = OpenLibraryObject.OLDateStamp( json["birth_date"] )
+            let death_date = OpenLibraryObject.OLDateStamp( json["death_date"] )
+            
+            let photos = OpenLibraryObject.OLIntArray( json["photos"] )
+            
+            let links = OpenLibraryObject.OLLinks( json )
+            
+            let bioText = OpenLibraryObject.OLText( json["bio"] )
+            
+            let alternate_names = OpenLibraryObject.OLStringArray( json["alternate_names"] )
+            
+            let wikipedia = OpenLibraryObject.OLString( json["wikipedia"] )
+            
+            var revision = json["revision"] as? Int64
+            var latest_revision = json["latest_revision"] as? Int64
+            if nil == revision && nil != latest_revision {
+                
+                revision = latest_revision
+                
+            } else if nil == latest_revision && nil != revision {
+                
+                latest_revision = revision
+                
+            } else if nil == revision && nil == latest_revision {
+                
+                revision = Int64( 0 )
+                latest_revision = Int64( 0 )
+                
+            }
+            
+            var created = OpenLibraryObject.OLTimeStamp( json["created"] )
+            var last_modified = OpenLibraryObject.OLTimeStamp( json["last_modified"] )
+            if nil == created && nil != last_modified {
+                
+                created = last_modified
+                
+            } else if nil == last_modified && nil != created {
+                
+                last_modified = created
+            }
+            
+            let type = OpenLibraryObject.OLKeyedValue( json["type"], key: "key" )
+            
+            assert( nil != created )
+            assert( nil != last_modified )
+            assert( nil != revision )
+            assert( nil != latest_revision )
+            
+            return ParsedFromJSON( key: key, name: name, personal_name: personal_name, birth_date: birth_date, death_date: death_date, photos: photos, links: links, bio: bioText, alternate_names: alternate_names, wikipedia: wikipedia, revision: revision!, latest_revision: latest_revision!, created: created, last_modified: last_modified, type: type )
+        }
+        
+        // MARK: Initialization
+        init(
+            key: String,
+            name: String,
+            personal_name: String,
+            birth_date: String,
+            death_date: String,
+            
+            photos: [Int],                // transformable
+            links: [[String: String]],    // transformable
+            bio: String,
+            alternate_names: [String],    // transformable
+            
+            wikipedia: String,
+            
+            revision: Int64,
+            latest_revision: Int64,
+            
+            created: NSDate?,
+            last_modified: NSDate?,
+            
+            type: String
+            ) {
+            
+            self.key = key
+            self.name = name
+            self.personal_name = personal_name
+            self.birth_date = birth_date
+            self.death_date = death_date
+            
+            self.photos = photos
+            self.links = links
+            self.bio = bio
+            self.alternate_names = alternate_names
+            
+            self.wikipedia = wikipedia
+            
+            self.revision = revision
+            self.latest_revision = latest_revision
+            
+            self.created = created
+            self.last_modified = last_modified
+            
+            self.type = type
+        }
+    }
+}
+

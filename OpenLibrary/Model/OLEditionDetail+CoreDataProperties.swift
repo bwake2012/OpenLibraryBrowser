@@ -17,6 +17,7 @@ extension OLEditionDetail {
     @NSManaged var index: Int64
     
     @NSManaged var retrieval_date: NSDate
+    @NSManaged var provisional_date: NSDate?
     
     @NSManaged var key: String
     @NSManaged var created: NSDate?

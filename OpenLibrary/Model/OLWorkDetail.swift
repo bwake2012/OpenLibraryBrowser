@@ -10,159 +10,6 @@ import CoreData
 
 import BNRCoreDataStack
 
-/// A struct to represent a parsed work
-private class ParsedSearchResult: OpenLibraryObject {
-    
-    // MARK: Properties.
-    let key: String
-    let created: NSDate?
-    let last_modified: NSDate?
-    let revision: Int64
-    let latest_revision: Int64
-    let type: String
-    
-    let title: String                   // of type /type/string
-    let subtitle: String                // of type /type/string
-    let authors: [String]               // of type /type/author_role
-    let translated_titles: [String]     // of type /type/translated_string
-    let subjects: [String]              // of type /type/string
-    let subject_places: [String]        // of type /type/string
-    let subject_times: [String]         // of type /type/string
-    let subject_people: [String]        // of type /type/string
-    let work_description: String        // of type /type/text
-    let dewey_number: [String]          // of type /type/string
-    let lc_classifications: [String]    // of type /type/string
-    let first_sentence: String          // of type /type/text
-    let original_languages: [String]    // of type /type/language
-    let other_titles: [String]          // of type /type/string
-    let first_publish_date: String      // of type /type/string
-    let links: [[String: String]]       // transformable
-    let notes: String                   // of type /type/text
-    // cover_edition of type /type/edition
-    let covers: [Int]                   // of type /type/int
-    
-    // MARK: Initialization
-    
-    class func fromJSON( match: [String: AnyObject] ) -> ParsedSearchResult? {
-        
-        guard let key = match["key"] as? String where !key.isEmpty else { return nil }
-        
-        guard let title = match["title"] as? String where !title.isEmpty else { return nil }
-        
-        let subtitle = OpenLibraryObject.OLString( match["subtitle"] )
-        
-        // authors
-        let authors = OpenLibraryObject.OLAuthorRole( match["authors"] )
-        
-        let translated_titles = OpenLibraryObject.OLStringArray( match["translated_titles"] )
-        
-        let subjects = OpenLibraryObject.OLStringArray( match["subjects"] )
-        
-        let subject_places = OpenLibraryObject.OLStringArray( match["subject_places"] )
-        
-        let subject_times = OpenLibraryObject.OLStringArray( match["subject_times"] )
-        
-        let subject_people = OpenLibraryObject.OLStringArray( match["subject_people"] )
-        
-        let work_description = OpenLibraryObject.OLText( match["description"] )
-        
-        let dewey_number = OpenLibraryObject.OLStringArray( match["dewey_number"] )
-        
-        let lc_classifications = OpenLibraryObject.OLStringArray( match["lc_classifications"] )
-        
-        let first_sentence = OpenLibraryObject.OLText( match["first_sentence"] )
-        
-        let original_languages = OpenLibraryObject.OLStringArray( match["original_languages"] )
-        
-        let other_titles = OpenLibraryObject.OLStringArray( match["other_titles"] )
-        
-        let first_publish_date = OpenLibraryObject.OLDateStamp( match["first_publish_date"] )
-        
-        let links = OpenLibraryObject.OLLinks( match )
-        
-        let notes = OpenLibraryObject.OLText( match["notes"] )
-        
-        let covers = OpenLibraryObject.OLIntArray( match["covers"] )
-        
-        var revision = Int64( 0 )
-        if let r = match["revision"] as? Int64 {
-            
-            revision = r
-        }
-        
-        var latest_revision = Int64( 0 )
-        if let lr = match["latest_revision"] as? Int64 {
-            
-            latest_revision = lr
-        }
-        
-        let created = OpenLibraryObject.OLTimeStamp( match["created"] )
-        
-        let last_modified = OpenLibraryObject.OLTimeStamp( match["last_modified"] )
-        
-        let type = match["type"] as? String ?? ""
-        
-        return ParsedSearchResult( key: key, created: created, last_modified: last_modified, revision: revision, latest_revision: latest_revision, type: type, title: title, subtitle: subtitle, authors: authors, translated_titles: translated_titles, subjects: subjects, subject_places: subject_places, subject_times: subject_times, subject_people: subject_people, work_description: work_description, dewey_number: dewey_number, lc_classifications: lc_classifications, first_sentence: first_sentence, original_languages: original_languages, other_titles: other_titles, first_publish_date: first_publish_date, links: links, notes: notes, covers: covers )
-    }
-    
-    init(
-        key: String,
-        created: NSDate?,
-        last_modified: NSDate?,
-        revision: Int64,
-        latest_revision: Int64,
-        type: String,
-        
-        title: String,
-        subtitle: String,
-        authors: [String],
-        translated_titles: [String],
-        subjects: [String],
-        subject_places: [String],
-        subject_times: [String],
-        subject_people: [String],
-        work_description: String,
-        dewey_number: [String],
-        lc_classifications: [String],
-        first_sentence: String,
-        original_languages: [String],
-        other_titles: [String],
-        first_publish_date: String,
-        links: [[String: String]],
-        notes: String,
-        // cover_edition of type /type/edition
-        covers: [Int]                   // of type /type/int
-        ) {
-        
-        self.key = key
-        self.created = created
-        self.last_modified = last_modified
-        self.revision = revision
-        self.latest_revision = latest_revision
-        self.type = type
-        
-        self.title = title
-        self.subtitle = subtitle
-        self.authors = authors
-        self.translated_titles = translated_titles
-        self.subjects = subjects
-        self.subject_places = subject_places
-        self.subject_times = subject_times
-        self.subject_people = subject_people
-        self.work_description = work_description
-        self.dewey_number = dewey_number
-        self.lc_classifications = lc_classifications
-        self.first_sentence = first_sentence
-        self.original_languages = original_languages
-        self.other_titles = other_titles
-        self.first_publish_date = first_publish_date
-        self.links = links
-        self.notes = notes
-        // cover_edition of type /type/edition
-        self.covers = covers
-    }
-}
-
 class OLWorkDetail: OLManagedObject, CoreDataModelable {
 
     // MARK: Search Info
@@ -202,7 +49,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
     
     class func parseJSON( parentKey: String, index: Int, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLWorkDetail? {
         
-        guard let parsed = ParsedSearchResult.fromJSON( json ) else { return nil }
+        guard let parsed = ParsedFromJSON.fromJSON( json ) else { return nil }
             
         var newObject: OLWorkDetail?
         
@@ -263,7 +110,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
     
     override func populateObject(parsed: OpenLibraryObject) {
         
-        if let parsed = parsed as? ParsedSearchResult {
+        if let parsed = parsed as? ParsedFromJSON {
             
             self.key = parsed.key
             self.created = parsed.created
@@ -302,6 +149,18 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         deluxeData.append( [DeluxeData( type: .heading, caption: "Title", value: self.title )] )
         if !subtitle.isEmpty {
             deluxeData[0].append( DeluxeData( type: .subheading, caption: "Subtitle:", value: self.subtitle ) )
+        }
+        
+        if !author_names.isEmpty {
+            
+            let authorNames = author_names.joinWithSeparator( ", " )
+            deluxeData[0].append(
+                DeluxeData(
+                        type: .heading,
+                        caption: "Author\(author_names.count > 1 ? "s" : ""):",
+                        value: authorNames
+                    )
+                )
         }
         
         if hasImage {
@@ -416,6 +275,22 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         }
         
         newData.append(
+            DeluxeData(type: .inline, caption: "Revision:", value: String( revision ) )
+        )
+        
+        newData.append(
+            DeluxeData(type: .inline, caption: "Latest Revision:", value: String( latest_revision ) )
+        )
+        
+        newData.append(
+            DeluxeData( type: .inline, caption: "Type:", value: type )
+        )
+        
+        newData.append(
+            DeluxeData( type: .inline, caption: "OLID:", value: key )
+        )
+        
+        newData.append(
                 DeluxeData(
                     type: .inline,
                     caption: "Retrieved:",
@@ -426,5 +301,161 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         deluxeData.append( newData )
 
         return deluxeData
+    }
+}
+
+extension OLWorkDetail {
+    
+    /// A struct to represent a parsed work
+    class ParsedFromJSON: OpenLibraryObject {
+        
+        // MARK: Properties.
+        let key: String
+        let created: NSDate?
+        let last_modified: NSDate?
+        let revision: Int64
+        let latest_revision: Int64
+        let type: String
+        
+        let title: String                   // of type /type/string
+        let subtitle: String                // of type /type/string
+        let authors: [String]               // of type /type/author_role
+        let translated_titles: [String]     // of type /type/translated_string
+        let subjects: [String]              // of type /type/string
+        let subject_places: [String]        // of type /type/string
+        let subject_times: [String]         // of type /type/string
+        let subject_people: [String]        // of type /type/string
+        let work_description: String        // of type /type/text
+        let dewey_number: [String]          // of type /type/string
+        let lc_classifications: [String]    // of type /type/string
+        let first_sentence: String          // of type /type/text
+        let original_languages: [String]    // of type /type/language
+        let other_titles: [String]          // of type /type/string
+        let first_publish_date: String      // of type /type/string
+        let links: [[String: String]]       // transformable
+        let notes: String                   // of type /type/text
+        // cover_edition of type /type/edition
+        let covers: [Int]                   // of type /type/int
+        
+        // MARK: Initialization
+        
+        class func fromJSON( json: [String: AnyObject] ) -> ParsedFromJSON? {
+            
+            guard let key = json["key"] as? String where !key.isEmpty else { return nil }
+            
+            guard let title = json["title"] as? String where !title.isEmpty else { return nil }
+            
+            let subtitle = OpenLibraryObject.OLString( json["subtitle"] )
+            
+            // authors
+            let authors = OpenLibraryObject.OLAuthorRole( json["authors"] )
+            
+            let translated_titles = OpenLibraryObject.OLStringArray( json["translated_titles"] )
+            
+            let subjects = OpenLibraryObject.OLStringArray( json["subjects"] )
+            
+            let subject_places = OpenLibraryObject.OLStringArray( json["subject_places"] )
+            
+            let subject_times = OpenLibraryObject.OLStringArray( json["subject_times"] )
+            
+            let subject_people = OpenLibraryObject.OLStringArray( json["subject_people"] )
+            
+            let work_description = OpenLibraryObject.OLText( json["description"] )
+            
+            let dewey_number = OpenLibraryObject.OLStringArray( json["dewey_number"] )
+            
+            let lc_classifications = OpenLibraryObject.OLStringArray( json["lc_classifications"] )
+            
+            let first_sentence = OpenLibraryObject.OLText( json["first_sentence"] )
+            
+            let original_languages = OpenLibraryObject.OLStringArray( json["original_languages"] )
+            
+            let other_titles = OpenLibraryObject.OLStringArray( json["other_titles"] )
+            
+            let first_publish_date = OpenLibraryObject.OLDateStamp( json["first_publish_date"] )
+            
+            let links = OpenLibraryObject.OLLinks( json )
+            
+            let notes = OpenLibraryObject.OLText( json["notes"] )
+            
+            let covers = OpenLibraryObject.OLIntArray( json["covers"] )
+            
+            var revision = Int64( 0 )
+            if let r = json["revision"] as? Int64 {
+                
+                revision = r
+            }
+            
+            var latest_revision = Int64( 0 )
+            if let lr = json["latest_revision"] as? Int64 {
+                
+                latest_revision = lr
+            }
+            
+            let created = OpenLibraryObject.OLTimeStamp( json["created"] )
+            
+            let last_modified = OpenLibraryObject.OLTimeStamp( json["last_modified"] )
+            
+            let type = OpenLibraryObject.OLKeyedValue( json["type"], key: "key" )
+            
+            return ParsedFromJSON( key: key, created: created, last_modified: last_modified, revision: revision, latest_revision: latest_revision, type: type, title: title, subtitle: subtitle, authors: authors, translated_titles: translated_titles, subjects: subjects, subject_places: subject_places, subject_times: subject_times, subject_people: subject_people, work_description: work_description, dewey_number: dewey_number, lc_classifications: lc_classifications, first_sentence: first_sentence, original_languages: original_languages, other_titles: other_titles, first_publish_date: first_publish_date, links: links, notes: notes, covers: covers )
+        }
+        
+        init(
+            key: String,
+            created: NSDate?,
+            last_modified: NSDate?,
+            revision: Int64,
+            latest_revision: Int64,
+            type: String,
+            
+            title: String,
+            subtitle: String,
+            authors: [String],
+            translated_titles: [String],
+            subjects: [String],
+            subject_places: [String],
+            subject_times: [String],
+            subject_people: [String],
+            work_description: String,
+            dewey_number: [String],
+            lc_classifications: [String],
+            first_sentence: String,
+            original_languages: [String],
+            other_titles: [String],
+            first_publish_date: String,
+            links: [[String: String]],
+            notes: String,
+            // cover_edition of type /type/edition
+            covers: [Int]                   // of type /type/int
+            ) {
+            
+            self.key = key
+            self.created = created
+            self.last_modified = last_modified
+            self.revision = revision
+            self.latest_revision = latest_revision
+            self.type = type
+            
+            self.title = title
+            self.subtitle = subtitle
+            self.authors = authors
+            self.translated_titles = translated_titles
+            self.subjects = subjects
+            self.subject_places = subject_places
+            self.subject_times = subject_times
+            self.subject_people = subject_people
+            self.work_description = work_description
+            self.dewey_number = dewey_number
+            self.lc_classifications = lc_classifications
+            self.first_sentence = first_sentence
+            self.original_languages = original_languages
+            self.other_titles = other_titles
+            self.first_publish_date = first_publish_date
+            self.links = links
+            self.notes = notes
+            // cover_edition of type /type/edition
+            self.covers = covers
+        }
     }
 }

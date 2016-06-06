@@ -37,6 +37,12 @@ class OLEditionDetailViewController: UIViewController {
         queryCoordinator!.updateUI()
     }
     
+    override func didReceiveMemoryWarning() {
+        
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if segue.identifier == "zoomDeluxeDetailImage" {

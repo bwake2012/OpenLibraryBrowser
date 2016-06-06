@@ -61,6 +61,12 @@ class OLWorkDetailViewController: UIViewController {
         queryCoordinator!.updateUI()
     }
     
+    override func didReceiveMemoryWarning() {
+        
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if segue.identifier == "embedWorkEditions" {
@@ -163,7 +169,7 @@ class OLWorkDetailViewController: UIViewController {
             self.workCover.image = UIImage( named: workDetail.defaultImageName )
         }
         self.displayDeluxeDetail.enabled = true
-        self.displayAuthorDetail.enabled = true
+        self.displayAuthorDetail.enabled = !workDetail.author_names.isEmpty
         
         view.layoutIfNeeded()
         
