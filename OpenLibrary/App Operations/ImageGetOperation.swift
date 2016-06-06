@@ -37,6 +37,8 @@ class ImageGetOperation: GroupOperation {
         
         super.init( operations: [downloadOperation, finishOperation] )
         
+        queuePriority = .Low
+        
 //        addCondition( MutuallyExclusive<ImageGetOperation>() )
 
         name = "Get Image"
