@@ -51,7 +51,7 @@ class WorkEditionTableViewCell: OLTableViewCell {
                     
                 } else if entry.physical_format == "Microform" {
                     
-                    cellImage.image = UIImage( named: "788-video-film-strip-toolbar.png" )
+                    cellImage.image = UIImage( named: "788-video-film-strip.png" )
                     
                 } else {
                     

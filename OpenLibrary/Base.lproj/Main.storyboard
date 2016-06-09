@@ -421,13 +421,13 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Search Results" id="RCh-GL-Esl">
                         <rightBarButtonItems>
-                            <barButtonItem image="708-search-toolbar.png" id="BNu-Fv-bdn" userLabel="Bar Button Search">
+                            <barButtonItem image="708-search.png" id="BNu-Fv-bdn" userLabel="Bar Button Search">
                                 <connections>
                                     <action selector="presentGeneralSearch:" destination="7HV-bC-sJp" id="OjN-xT-bEx"/>
                                     <segue destination="565-lf-E8F" kind="presentation" identifier="openBookSearch" customClass="SegueForSearch" customModule="OpenLibrary" modalPresentationStyle="fullScreen" id="5xe-Sv-Rcu"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem enabled="NO" image="798-filter-toolbar.png" id="CYu-aZ-qg9" userLabel="Bar Button Filter">
+                            <barButtonItem enabled="NO" image="798-filter.png" id="CYu-aZ-qg9" userLabel="Bar Button Filter">
                                 <connections>
                                     <action selector="presentSearchResultsFilter:" destination="7HV-bC-sJp" id="hG0-4o-gEI"/>
                                 </connections>
@@ -975,8 +975,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="708-search-toolbar.png" width="22" height="22"/>
-        <image name="798-filter-toolbar.png" width="22" height="23"/>
+        <image name="708-search.png" width="28" height="28"/>
+        <image name="798-filter.png" width="28" height="28"/>
         <image name="96-book.png" width="18" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>

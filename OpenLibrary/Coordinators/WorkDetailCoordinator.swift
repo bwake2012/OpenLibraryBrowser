@@ -245,17 +245,20 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
     
     func fetchedResultsControllerDidPerformFetch(controller: FetchedWorkDetailController) {
         
-        if 0 == controller.count {
+        let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) )
+        if nil == detail {
             
             newQuery( workKey, userInitiated: true, refreshControl: nil )
 
-        } else {
+        } else if let detail = detail {
             
-            if let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {
+            if nil != detail.provisional_date {
                 
-                workDetail = detail
-                updateUI( detail )
+                newQuery( workKey, userInitiated: true, refreshControl: nil )
             }
+ 
+            workDetail = detail
+            updateUI( detail )
         }
     }
     
