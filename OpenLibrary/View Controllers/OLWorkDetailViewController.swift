@@ -168,7 +168,7 @@ class OLWorkDetailViewController: UIViewController {
         } else {
             self.workCover.image = UIImage( named: workDetail.defaultImageName )
         }
-        self.displayDeluxeDetail.enabled = true
+        self.displayDeluxeDetail.enabled = nil == workDetail.provisional_date
         self.displayAuthorDetail.enabled = !workDetail.author_names.isEmpty
         
         view.layoutIfNeeded()

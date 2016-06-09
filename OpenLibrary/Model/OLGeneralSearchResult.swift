@@ -28,39 +28,20 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
         newObject.sequence = sequence
         newObject.index = index
         
-        newObject.author_key = parsed.author_key
-        newObject.author_name = parsed.author_name
-        newObject.cover_edition_key = parsed.cover_edition_key
-        newObject.cover_i = parsed.cover_i
-        newObject.ebook_count_i = parsed.ebook_count_i
-        newObject.edition_count = parsed.edition_count
-        newObject.edition_key = parsed.edition_key
-        newObject.first_publish_year = parsed.first_publish_year
-        newObject.first_sentence = parsed.first_sentence
-        newObject.has_fulltext = parsed.has_fulltext
-        newObject.ia_collection_s = parsed.ia_collection_s
-        newObject.ia = parsed.ia
-        newObject.id_goodreads = parsed.id_goodreads
-        newObject.id_librarything = parsed.id_librarything
-        newObject.isbn = parsed.isbn
-        newObject.key = parsed.key
-        newObject.language = parsed.language
-        newObject.last_modified_i = parsed.last_modified_i
-        newObject.lccn = parsed.lccn
-        newObject.person = parsed.person
-        newObject.printdisabled_s = parsed.printdisabled_s
-        newObject.public_scan_b = parsed.public_scan_b
-        newObject.publish_date = parsed.publish_date
-        newObject.publish_place = parsed.publish_place
-        newObject.publish_year = parsed.publish_year
-        newObject.publisher = parsed.publisher
-        newObject.seed = parsed.seed
-        newObject.subject = parsed.subject
-        newObject.text = parsed.text
-        newObject.title_suggest = parsed.title_suggest
-        newObject.title = parsed.title
-        newObject.type = parsed.type
+        newObject.populateObject( parsed )
         
+        let workDetail = OLWorkDetail.savePreliminaryWork( parsed, moc: moc )
+
+        for authorIndex in 0..<parsed.author_key.count {
+            
+            let authorDetail = OLAuthorDetail.savePreliminaryAuthor( authorIndex, parsed: parsed, moc: moc )
+        }
+
+        for editionIndex in 0..<parsed.edition_key.count {
+            
+            let editionDetail = OLEditionDetail.savePreliminaryEdition( editionIndex, parsed: parsed, moc: moc )
+        }
+
         return newObject
     }
     
@@ -70,6 +51,42 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
     override func localURL( size: String, index: Int = 0 ) -> NSURL {
 
         return super.localURL( self.key, size: size, index: index )
+    }
+    
+    func populateObject( parsed: OLGeneralSearchResult.ParsedFromJSON ) {
+        
+        self.author_key = parsed.author_key
+        self.author_name = parsed.author_name
+        self.cover_edition_key = parsed.cover_edition_key
+        self.cover_i = parsed.cover_i
+        self.ebook_count_i = parsed.ebook_count_i
+        self.edition_count = parsed.edition_count
+        self.edition_key = parsed.edition_key
+        self.first_publish_year = parsed.first_publish_year
+        self.first_sentence = parsed.first_sentence
+        self.has_fulltext = parsed.has_fulltext
+        self.ia_collection_s = parsed.ia_collection_s
+        self.ia = parsed.ia
+        self.id_goodreads = parsed.id_goodreads
+        self.id_librarything = parsed.id_librarything
+        self.isbn = parsed.isbn
+        self.key = parsed.key
+        self.language = parsed.language
+        self.last_modified_i = parsed.last_modified_i
+        self.lccn = parsed.lccn
+        self.person = parsed.person
+        self.printdisabled_s = parsed.printdisabled_s
+        self.public_scan_b = parsed.public_scan_b
+        self.publish_date = parsed.publish_date
+        self.publish_place = parsed.publish_place
+        self.publish_year = parsed.publish_year
+        self.publisher = parsed.publisher
+        self.seed = parsed.seed
+        self.subject = parsed.subject
+        self.text = parsed.text
+        self.title_suggest = parsed.title_suggest
+        self.title = parsed.title
+        self.type = parsed.type
     }
 }
 
@@ -188,13 +205,40 @@ extension OLGeneralSearchResult {
             
             guard let type = json["type"] as? String else { return nil }
             
-            let author_key         = json["author_key"] as? [String] ?? [String]()
+            let tempAuthorKey = json["author_key"] as? [String] ?? [String]()
+            var author_key = [String]()
+            for authorKey in tempAuthorKey {
+                
+                if authorKey.hasPrefix( kAuthorsPrefix ) {
+                    
+                    author_key.append( authorKey )
+                    
+                } else {
+                    
+                    author_key.append( kAuthorsPrefix + authorKey )
+                }
+            }
+
             let author_name        = json["author_name"] as? [String] ?? [String]()
             let cover_edition_key  = json["cover_edition_key"] as? String ?? ""
             let cover_i            = json["cover_i"] as? Int ?? 0
             let ebook_count_i      = json["ebook_count_i"] as? Int64 ?? 0
             let edition_count      = json["edition_count"] as? Int64 ?? 0
-            let edition_key        = json["edition_key"] as? [String] ?? [String]()
+//            let edition_key        = json["edition_key"] as? [String] ?? [String]()
+            let tempEditionKey     = json["edition_key"] as? [String] ?? [String]()
+            var edition_key = [String]()
+            for editionKey in tempEditionKey {
+                
+                if editionKey.hasPrefix( kEditionsPrefix ) {
+                    
+                    edition_key.append( editionKey )
+                    
+                } else {
+                    
+                    edition_key.append( kEditionsPrefix + editionKey )
+                }
+            }
+            
             let first_publish_year = json["first_publish_year"] as? Int16 ?? 0
             let first_sentence     = json["first_sentence"] as? [String] ?? [String]()
             let has_fulltext       = json["has_fulltext"] as? Bool ?? false

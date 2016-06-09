@@ -10,6 +10,9 @@ import CoreData
 
 import BNRCoreDataStack
 
+let kEditionsPrefix = "/books/"
+let kEditionType = "/type/edition"
+
 class OLEditionDetail: OLManagedObject, CoreDataModelable {
 
     private var author_name_cache = [String]()
@@ -103,14 +106,66 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
             }
 
             newObject.index = Int64( index )
+            newObject.retrieval_date = NSDate()
+            newObject.provisional_date = nil
             
             newObject.populateObject( parsed )
-            
         }
 
         return newObject
     }
 
+    class func savePreliminaryEdition( editionIndex: Int, parsed: OLGeneralSearchResult.ParsedFromJSON, moc: NSManagedObjectContext ) -> OLEditionDetail? {
+        
+        var newObject: OLEditionDetail?
+        
+        if editionIndex < parsed.edition_key.count {
+            newObject = findObject( parsed.key, entityName: entityName, moc: moc )
+            if nil == newObject {
+                
+                newObject =
+                    NSEntityDescription.insertNewObjectForEntityForName(
+                        OLEditionDetail.entityName, inManagedObjectContext: moc
+                    ) as? OLEditionDetail
+                
+                if let newObject = newObject {
+                    
+                    newObject.retrieval_date = NSDate()
+                    newObject.provisional_date = NSDate()
+                    
+                    newObject.key = parsed.edition_key[editionIndex]
+                    newObject.type = "/type/edition"
+                    
+                    newObject.authors = parsed.author_key
+                    newObject.author_key = parsed.author_key.first ?? ""
+                    newObject.author_name_cache = parsed.author_name
+                    
+                    newObject.title = parsed.title
+                    if parsed.cover_i > 0 && newObject.key == parsed.cover_edition_key {
+                        newObject.covers = [Int( parsed.cover_i )]
+                    } else {
+                        newObject.covers = [Int]()
+                    }
+                    newObject.coversFound = !newObject.covers.isEmpty && 0 < newObject.covers[0]
+                    
+                    newObject.languages = [String]()
+                    
+                    if editionIndex < parsed.publish_date.count {
+
+                        newObject.publish_date = parsed.publish_date[editionIndex]
+
+                    } else {
+                        
+                        newObject.publish_date = ""
+                    }
+                    newObject.subjects = parsed.subject
+                }
+            }
+        }
+        
+        return newObject
+    }
+    
     override var heading: String {
         
         return self.title
@@ -124,6 +179,11 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
     override var defaultImageName: String {
         
         return "961-book-32.png"
+    }
+    
+    override var isProvisional: Bool {
+        
+        return nil != self.provisional_date
     }
     
     override var hasImage: Bool {
@@ -168,7 +228,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
             self.contributions = parsed.contributions
             self.copyright_date = parsed.copyright_date
             self.covers = parsed.covers
-            self.coversFound = parsed.covers.count > 0 && -1 != parsed.covers[0]
+            self.coversFound = parsed.covers.count > 0 && 0 < parsed.covers[0]
             self.dewey_decimal_class = parsed.dewey_decimal_class
             self.distributors = parsed.distributors
             self.edition_description = parsed.edition_description

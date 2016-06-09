@@ -11,8 +11,6 @@ import CoreData
 
 import BNRCoreDataStack
 
-let kAuthorsPrefix = "/authors/"
-
 /// A struct to represent a parsed author search result.
 private class ParsedSearchResult: OpenLibraryObject {
     

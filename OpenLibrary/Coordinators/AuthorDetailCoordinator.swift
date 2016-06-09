@@ -215,16 +215,20 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     
     func fetchedResultsControllerDidPerformFetch(controller: FetchedAuthorDetailController) {
         
-        if 0 == controller.count {
+        let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) )
+        if nil == detail {
             
             newQuery( authorKey, userInitiated: true, refreshControl: nil )
-        } else {
             
-            if let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {
+        } else if let detail = detail {
+            
+            if nil != detail.provisional_date {
                 
-                authorDetail = detail
-                updateUI( detail )
+                newQuery( authorKey, userInitiated: true, refreshControl: nil )
             }
+            
+            authorDetail = detail
+            updateUI( detail )
         }
     }
     

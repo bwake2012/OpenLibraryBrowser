@@ -161,7 +161,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
                             dispatch_async( dispatch_get_main_queue() ) {
 
                                 refreshControl?.endRefreshing()
-                                strongSelf.updateUI()
+//                                strongSelf.updateUI()
                             }
                             strongSelf.authorWorksGetOperation = nil
                             
@@ -237,10 +237,17 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         if 0 == controller.count {
             
             newQuery( authorKey, userInitiated: true, refreshControl: nil )
-
-        } else {
             
-            highWaterMark = controller.count
+        } else if let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {
+            
+            if detail.isProvisional {
+                
+                newQuery( authorKey, userInitiated: true, refreshControl: nil )
+
+            } else {
+                
+                highWaterMark = controller.count
+            }
         }
     }
     

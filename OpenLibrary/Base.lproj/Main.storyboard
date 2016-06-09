@@ -817,7 +817,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZNf-9T-ziR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2541" y="3005"/>
+            <point key="canvasLocation" x="2541" y="3152"/>
         </scene>
         <!--Author Detail Editions Table View Controller-->
         <scene sceneID="J12-Jv-jHu">
@@ -980,8 +980,8 @@
         <image name="96-book.png" width="18" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="J4Z-6m-v4p"/>
         <segue reference="WHs-h8-0AD"/>
-        <segue reference="Yjz-qW-0Hz"/>
+        <segue reference="J4Z-6m-v4p"/>
+        <segue reference="r7n-rO-97o"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -158,7 +158,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
                             dispatch_async( dispatch_get_main_queue() ) {
                                 
                                     refreshControl?.endRefreshing()
-                                    strongSelf.updateUI()
+//                                    strongSelf.updateUI()
                                 }
                             
                             strongSelf.workEditionsGetOperation = nil
@@ -230,10 +230,17 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         if 0 == controller.count {
             
             newQuery( workKey, userInitiated: true, refreshControl: nil )
-
-        } else {
             
-            highWaterMark = controller.count
+        } else if let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {
+            
+            if detail.isProvisional {
+                
+                newQuery( workKey, userInitiated: true, refreshControl: nil )
+                
+            } else {
+                
+                highWaterMark = controller.count
+            }
         }
     }
     

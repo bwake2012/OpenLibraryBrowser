@@ -117,13 +117,13 @@ class OLAuthorDetailViewController: UIViewController {
             
         self.authorName.text = authorDetail.name
         
-        if !authorDetail.hasImage {
+        if !authorDetail.hasImage && nil == authorDetail.provisional_date {
             self.authorPhoto.image = nil
         } else {
             self.authorPhoto.image = UIImage( named: "253-person.png" )
         }
         
-        self.displayDeluxeDetail.enabled = true
+        self.displayDeluxeDetail.enabled = nil == authorDetail.provisional_date
         
         view.layoutIfNeeded()
         

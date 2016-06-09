@@ -179,11 +179,21 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
     // MARK: FetchedResultsControllerDelegate
     func fetchedResultsControllerDidPerformFetch(controller: FetchedAuthorEditionsController) {
         
-        tableVC.tableView.reloadData()
-        
-        if 0 == controller.count {
+        let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) )
+        if nil == detail {
             
             newQuery( authorKey, userInitiated: true, refreshControl: nil )
+            
+        } else if let detail = detail {
+            
+            if detail.isProvisional {
+                
+                newQuery( authorKey, userInitiated: true, refreshControl: nil )
+
+            } else {
+                
+                highWaterMark = controller.count
+            }
         }
     }
     

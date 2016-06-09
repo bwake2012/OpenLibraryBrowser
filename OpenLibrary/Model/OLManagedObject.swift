@@ -103,6 +103,11 @@ class OLManagedObject: NSManagedObject {
         return data
     }
     
+    var isProvisional: Bool {
+        
+        return false
+    }
+    
     lazy var hasDeluxeData: Bool = {
         
         return 1 < self.deluxeData.count || ( 1 == self.deluxeData.count && 1 < self.deluxeData[0].count )
