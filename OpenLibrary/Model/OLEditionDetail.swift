@@ -115,12 +115,13 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         return newObject
     }
 
-    class func savePreliminaryEdition( editionIndex: Int, parsed: OLGeneralSearchResult.ParsedFromJSON, moc: NSManagedObjectContext ) -> OLEditionDetail? {
+    class func saveProvisionalEdition( editionIndex: Int, parsed: OLGeneralSearchResult.ParsedFromJSON, moc: NSManagedObjectContext ) -> OLEditionDetail? {
         
         var newObject: OLEditionDetail?
         
         if editionIndex < parsed.edition_key.count {
-            newObject = findObject( parsed.key, entityName: entityName, moc: moc )
+ 
+            newObject = findObject( parsed.edition_key[editionIndex], entityName: entityName, moc: moc )
             if nil == newObject {
                 
                 newObject =

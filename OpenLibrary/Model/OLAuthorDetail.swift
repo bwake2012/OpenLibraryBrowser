@@ -50,7 +50,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
         return newObject
     }
     
-    class func savePreliminaryAuthor( authorIndex: Int, parsed: OLGeneralSearchResult.ParsedFromJSON, moc: NSManagedObjectContext ) -> OLAuthorDetail? {
+    class func saveProvisionalAuthor( authorIndex: Int, parsed: OLGeneralSearchResult.ParsedFromJSON, moc: NSManagedObjectContext ) -> OLAuthorDetail? {
         
         var newObject: OLAuthorDetail?
         
@@ -190,7 +190,8 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
         
         if !self.bio.isEmpty {
 
-            let fancyOutput = fancyMarkdown.transform( self.bio )
+            let bio = self.bio
+            let fancyOutput = fancyMarkdown.transform( bio )
             
             deluxeData.append( [DeluxeData( type: .html, caption: "Biography", value: fancyOutput )] )
         }
@@ -203,7 +204,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
                 
                 if let title = link["title"], url = link["url"] {
                     newData.append( DeluxeData( type: .link, caption: title, value: url ) )
-                    print( "\(title) \(url)" )
+//                    print( "\(title) \(url)" )
                 }
             }
             

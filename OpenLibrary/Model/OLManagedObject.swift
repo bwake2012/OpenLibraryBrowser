@@ -163,7 +163,7 @@ class OLManagedObject: NSManagedObject {
             if nil == OLWorkDetail.cacheMarkdown {
                 
                 var options = MarkdownOptions()
-                options.autoHyperlink = true
+                options.autoHyperlink = false
                 options.autoNewlines = true
                 options.emptyElementSuffix = ">"
                 options.encodeProblemUrlCharacters = true

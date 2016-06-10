@@ -122,6 +122,7 @@
 		C488D61A1D09A75B0025B61D /* Markdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = C488D6191D09A75B0025B61D /* Markdown.swift */; };
 		C488D61C1D09C0460025B61D /* DeluxeDetailHTMLTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C488D61B1D09C0460025B61D /* DeluxeDetailHTMLTableViewCell.swift */; };
 		C488D6201D09ED130025B61D /* DeluxeDetailHTMLTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C488D61F1D09ED130025B61D /* DeluxeDetailHTMLTableViewCell.xib */; };
+		C488D6221D0B100F0025B61D /* HTMLTextDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C488D6211D0B100F0025B61D /* HTMLTextDisplayView.swift */; };
 		C49787411CB58A3700A0AEB1 /* OLPictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49787401CB58A3700A0AEB1 /* OLPictureViewController.swift */; };
 		C49BDD141CB59DAF00A2EEEF /* PictureViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49BDD131CB59DAF00A2EEEF /* PictureViewCoordinator.swift */; };
 		C49BDD181CB6E6A900A2EEEF /* OLEditionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49BDD171CB6E6A900A2EEEF /* OLEditionDetailViewController.swift */; };
@@ -350,6 +351,7 @@
 		C488D6191D09A75B0025B61D /* Markdown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Markdown.swift; path = Markingbird/Markdown.swift; sourceTree = "<group>"; };
 		C488D61B1D09C0460025B61D /* DeluxeDetailHTMLTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeluxeDetailHTMLTableViewCell.swift; path = Views/DeluxeDetailHTMLTableViewCell.swift; sourceTree = "<group>"; };
 		C488D61F1D09ED130025B61D /* DeluxeDetailHTMLTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeluxeDetailHTMLTableViewCell.xib; path = Views/DeluxeDetailHTMLTableViewCell.xib; sourceTree = "<group>"; };
+		C488D6211D0B100F0025B61D /* HTMLTextDisplayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HTMLTextDisplayView.swift; path = Views/HTMLTextDisplayView.swift; sourceTree = "<group>"; };
 		C49787401CB58A3700A0AEB1 /* OLPictureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLPictureViewController.swift; path = "View Controllers/OLPictureViewController.swift"; sourceTree = "<group>"; };
 		C49BDD131CB59DAF00A2EEEF /* PictureViewCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureViewCoordinator.swift; sourceTree = "<group>"; };
 		C49BDD171CB6E6A900A2EEEF /* OLEditionDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLEditionDetailViewController.swift; path = "View Controllers/OLEditionDetailViewController.swift"; sourceTree = "<group>"; };
@@ -862,6 +864,7 @@
 				C4AB17111CDB83B800D6DF05 /* DeluxeDetailSubheadingTableViewCell.xib */,
 				C4AB16E31CDA801100D6DF05 /* DeluxeDetailTableViewCell.swift */,
 				C437DEA31CECF8D9005CED1A /* GeneralSearchResultTableViewCell.swift */,
+				C488D6211D0B100F0025B61D /* HTMLTextDisplayView.swift */,
 				C42DBE491CBD5EAA0048788E /* JustifiedAspectRatioImageView.swift */,
 				C4677EA21C9DF4030070CDFD /* OLTableViewCell.swift */,
 				C410821D1CBAB26000319B83 /* TitleSearchResultTableViewCell.swift */,
@@ -1339,6 +1342,7 @@
 				C4E35E881C7E07D40015D187 /* SilentCondition.swift in Sources */,
 				C42D61D51C8738CC00909D43 /* AuthorDetailParseOperation.swift in Sources */,
 				C4E35E851C7E07D40015D187 /* PhotosCondition.swift in Sources */,
+				C488D6221D0B100F0025B61D /* HTMLTextDisplayView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

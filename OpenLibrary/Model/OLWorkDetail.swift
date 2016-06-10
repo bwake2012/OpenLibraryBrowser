@@ -85,7 +85,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         return newObject
     }
     
-    class func savePreliminaryWork( parsed: OLGeneralSearchResult.ParsedFromJSON, moc: NSManagedObjectContext ) -> OLWorkDetail? {
+    class func saveProvisionalWork( parsed: OLGeneralSearchResult.ParsedFromJSON, moc: NSManagedObjectContext ) -> OLWorkDetail? {
         
         var newObject: OLWorkDetail?
 
@@ -266,7 +266,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
                 
                 if let title = link["title"], url = link["url"] {
                     newData.append( DeluxeData( type: .link, caption: title, value: url ) )
-                    print( "\(title) \(url)" )
+//                    print( "\(title) \(url)" )
                 }
             }
             
