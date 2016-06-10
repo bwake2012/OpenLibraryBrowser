@@ -23,6 +23,7 @@ class OLBookSearchViewController: UIViewController {
     @IBOutlet weak var personSearch:    UITextField!
     @IBOutlet weak var publisherSearch: UITextField!
     
+    @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var ebookOnlySwitch: UISwitch!
     
@@ -45,11 +46,26 @@ class OLBookSearchViewController: UIViewController {
             activeField.resignFirstResponder()
         }
         
-        searchKeys = [String: String]()
-        
         performSegueWithIdentifier( "cancelBookSearch", sender: self )
     }
     
+    @IBAction func searchButtonTapped(sender: AnyObject) {
+        
+        if let activeField = activeField {
+            
+            activeField.resignFirstResponder()
+        }
+        
+        searchKeys = assembleSearchKeys()
+        if !searchKeys.isEmpty {
+            if let saveSearchDictionary = saveSearchDictionary {
+                
+                saveSearchDictionary( searchDictionary: searchKeys )
+            }
+            
+            performSegueWithIdentifier( "beginBookSearch", sender: self )
+        }
+    }
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver( self )

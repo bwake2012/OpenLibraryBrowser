@@ -23,127 +23,10 @@
                                 <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OJK-tn-ljV" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="389.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="441"/>
                                         <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="740" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bIn-rR-3ib">
-                                                <rect key="frame" x="8" y="8" width="235" height="30"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="565-lf-E8F" id="gy1-kc-sIu"/>
-                                                </connections>
-                                            </textField>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="761" horizontalCompressionResistancePriority="760" verticalCompressionResistancePriority="760" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1aZ-DR-GxD">
-                                                <rect key="frame" x="8" y="42" width="51" height="31"/>
-                                                <connections>
-                                                    <action selector="ebookOnlySwitchChanged:" destination="565-lf-E8F" eventType="valueChanged" id="aE8-MS-dwW"/>
-                                                </connections>
-                                            </switch>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show Only eBooks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NX4-wa-2bZ">
-                                                <rect key="frame" x="61" y="51" width="251" height="13.5"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Gx-mk-Ecz">
-                                                <rect key="frame" x="8" y="77" width="304" height="13.5"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="M7G-lr-9TT">
-                                                <rect key="frame" x="8" y="90" width="304" height="30"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="565-lf-E8F" id="SON-6O-gEV"/>
-                                                </connections>
-                                            </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kZb-yw-dsi">
-                                                <rect key="frame" x="8" y="120" width="304" height="13.5"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="yzG-JE-7DI">
-                                                <rect key="frame" x="8" y="134" width="304" height="30"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="565-lf-E8F" id="ruP-fK-bcj"/>
-                                                </connections>
-                                            </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="ISBN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I6X-4r-uFy">
-                                                <rect key="frame" x="8" y="164" width="304" height="13.5"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hHi-E3-Zq7">
-                                                <rect key="frame" x="8" y="177" width="304" height="30"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="565-lf-E8F" id="fm6-Dn-VzA"/>
-                                                </connections>
-                                            </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Subject" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kgh-5l-Rnb">
-                                                <rect key="frame" x="8" y="207" width="320" height="13.5"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="8Dw-ER-C6a">
-                                                <rect key="frame" x="8" y="221" width="304" height="30"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="565-lf-E8F" id="2Qv-JQ-36H"/>
-                                                </connections>
-                                            </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mf7-Yt-LHg">
-                                                <rect key="frame" x="8" y="251" width="304" height="13.5"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="LLA-yZ-bgg">
-                                                <rect key="frame" x="8" y="264" width="304" height="30"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="565-lf-E8F" id="CLK-D3-jvU"/>
-                                                </connections>
-                                            </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Person" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iIF-pt-ddg">
-                                                <rect key="frame" x="8" y="294" width="304" height="13.5"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rKM-QO-vqF">
-                                                <rect key="frame" x="8" y="308" width="304" height="30"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="565-lf-E8F" id="6Oa-lQ-wnt"/>
-                                                </connections>
-                                            </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Publisher" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MNt-a0-gSS">
-                                                <rect key="frame" x="8" y="338" width="304" height="13.5"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="eu6-f8-2Gb">
-                                                <rect key="frame" x="8" y="351" width="304" height="30"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="565-lf-E8F" id="rCD-l0-sib"/>
-                                                </connections>
-                                            </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="760" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JjT-CF-HFo" userLabel="Cancel Button">
-                                                <rect key="frame" x="247" y="10" width="65" height="26"/>
+                                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" horizontalCompressionResistancePriority="760" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JjT-CF-HFo" userLabel="Cancel Button">
+                                                <rect key="frame" x="8" y="8" width="65" height="26"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="65" id="thD-yU-qnu"/>
                                                 </constraints>
@@ -153,21 +36,155 @@
                                                     <action selector="cancelButtonTapped:" destination="565-lf-E8F" eventType="touchUpInside" id="Kl5-t6-lo5"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" horizontalCompressionResistancePriority="760" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DC1-0j-sIv" userLabel="Search Button">
+                                                <rect key="frame" x="247" y="8" width="65" height="26"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="65" id="zW7-Et-JQv"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                <state key="normal" title="Search"/>
+                                                <connections>
+                                                    <action selector="searchButtonTapped:" destination="565-lf-E8F" eventType="touchUpInside" id="Bch-yu-bnE"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="General" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HpN-Ja-Kph">
+                                                <rect key="frame" x="8" y="42" width="304" height="13.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="740" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bIn-rR-3ib">
+                                                <rect key="frame" x="8" y="55" width="304" height="30"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="565-lf-E8F" id="gy1-kc-sIu"/>
+                                                </connections>
+                                            </textField>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="761" horizontalCompressionResistancePriority="760" verticalCompressionResistancePriority="760" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="1aZ-DR-GxD">
+                                                <rect key="frame" x="8" y="93" width="51" height="31"/>
+                                                <connections>
+                                                    <action selector="ebookOnlySwitchChanged:" destination="565-lf-E8F" eventType="valueChanged" id="aE8-MS-dwW"/>
+                                                </connections>
+                                            </switch>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show Only eBooks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NX4-wa-2bZ">
+                                                <rect key="frame" x="65" y="102" width="247" height="13.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Gx-mk-Ecz">
+                                                <rect key="frame" x="8" y="132" width="304" height="13.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="M7G-lr-9TT">
+                                                <rect key="frame" x="8" y="145" width="304" height="30"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="565-lf-E8F" id="SON-6O-gEV"/>
+                                                </connections>
+                                            </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kZb-yw-dsi">
+                                                <rect key="frame" x="8" y="175" width="304" height="13.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="yzG-JE-7DI">
+                                                <rect key="frame" x="8" y="188" width="304" height="30"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="565-lf-E8F" id="ruP-fK-bcj"/>
+                                                </connections>
+                                            </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="ISBN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I6X-4r-uFy">
+                                                <rect key="frame" x="8" y="218" width="304" height="13.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hHi-E3-Zq7">
+                                                <rect key="frame" x="8" y="231" width="304" height="30"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="565-lf-E8F" id="fm6-Dn-VzA"/>
+                                                </connections>
+                                            </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Subject" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kgh-5l-Rnb">
+                                                <rect key="frame" x="8" y="261" width="320" height="13.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="8Dw-ER-C6a">
+                                                <rect key="frame" x="8" y="274" width="304" height="30"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="565-lf-E8F" id="2Qv-JQ-36H"/>
+                                                </connections>
+                                            </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mf7-Yt-LHg">
+                                                <rect key="frame" x="8" y="304" width="304" height="13.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="LLA-yZ-bgg">
+                                                <rect key="frame" x="8" y="317" width="304" height="30"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="565-lf-E8F" id="CLK-D3-jvU"/>
+                                                </connections>
+                                            </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Person" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iIF-pt-ddg">
+                                                <rect key="frame" x="8" y="347" width="304" height="13.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rKM-QO-vqF">
+                                                <rect key="frame" x="8" y="360" width="304" height="30"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="565-lf-E8F" id="6Oa-lQ-wnt"/>
+                                                </connections>
+                                            </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Publisher" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MNt-a0-gSS">
+                                                <rect key="frame" x="8" y="390" width="304" height="13.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="eu6-f8-2Gb">
+                                                <rect key="frame" x="8" y="403" width="304" height="30"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="565-lf-E8F" id="rCD-l0-sib"/>
+                                                </connections>
+                                            </textField>
                                         </subviews>
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstItem="JjT-CF-HFo" firstAttribute="leading" secondItem="bIn-rR-3ib" secondAttribute="trailing" constant="4" id="1mS-gh-tcu"/>
                                             <constraint firstItem="rKM-QO-vqF" firstAttribute="trailing" secondItem="OJK-tn-ljV" secondAttribute="trailingMargin" id="3Us-dw-yrb"/>
                                             <constraint firstItem="NX4-wa-2bZ" firstAttribute="centerY" secondItem="1aZ-DR-GxD" secondAttribute="centerY" id="3X8-Ti-FaH"/>
                                             <constraint firstItem="Mf7-Yt-LHg" firstAttribute="bottom" secondItem="LLA-yZ-bgg" secondAttribute="top" id="3aN-hH-8VC"/>
                                             <constraint firstItem="kZb-yw-dsi" firstAttribute="trailing" secondItem="OJK-tn-ljV" secondAttribute="trailingMargin" id="4MI-t6-zaB"/>
+                                            <constraint firstItem="bIn-rR-3ib" firstAttribute="top" secondItem="HpN-Ja-Kph" secondAttribute="bottom" id="4zP-yL-w7B"/>
                                             <constraint firstItem="eu6-f8-2Gb" firstAttribute="bottom" secondItem="OJK-tn-ljV" secondAttribute="bottomMargin" id="6J1-44-9RD"/>
                                             <constraint firstItem="iIF-pt-ddg" firstAttribute="top" secondItem="LLA-yZ-bgg" secondAttribute="bottom" id="6l6-fc-QPa"/>
                                             <constraint firstItem="eu6-f8-2Gb" firstAttribute="trailing" secondItem="OJK-tn-ljV" secondAttribute="trailingMargin" id="75k-Dc-Cze"/>
                                             <constraint firstItem="hHi-E3-Zq7" firstAttribute="leading" secondItem="OJK-tn-ljV" secondAttribute="leadingMargin" id="7d5-7r-bVC"/>
-                                            <constraint firstItem="bIn-rR-3ib" firstAttribute="top" secondItem="OJK-tn-ljV" secondAttribute="topMargin" id="8ms-dn-fuB"/>
                                             <constraint firstItem="rKM-QO-vqF" firstAttribute="leading" secondItem="OJK-tn-ljV" secondAttribute="leadingMargin" id="9cE-op-WqG"/>
                                             <constraint firstItem="I6X-4r-uFy" firstAttribute="leading" secondItem="OJK-tn-ljV" secondAttribute="leadingMargin" id="ABF-I0-7Bn"/>
+                                            <constraint firstItem="HpN-Ja-Kph" firstAttribute="trailing" secondItem="OJK-tn-ljV" secondAttribute="trailingMargin" id="AhU-fF-Obn"/>
                                             <constraint firstItem="yzG-JE-7DI" firstAttribute="leading" secondItem="OJK-tn-ljV" secondAttribute="leadingMargin" id="BXF-Hg-ucH"/>
                                             <constraint firstItem="8Dw-ER-C6a" firstAttribute="trailing" secondItem="OJK-tn-ljV" secondAttribute="trailingMargin" id="E9B-OY-mjZ"/>
                                             <constraint firstItem="Kgh-5l-Rnb" firstAttribute="bottom" secondItem="8Dw-ER-C6a" secondAttribute="top" id="EtN-Tu-fqy"/>
@@ -175,8 +192,10 @@
                                             <constraint firstItem="kZb-yw-dsi" firstAttribute="top" secondItem="M7G-lr-9TT" secondAttribute="bottom" id="GzC-F8-8e7"/>
                                             <constraint firstItem="Mf7-Yt-LHg" firstAttribute="leading" secondItem="OJK-tn-ljV" secondAttribute="leadingMargin" id="Hxy-Ec-OXI"/>
                                             <constraint firstItem="M7G-lr-9TT" firstAttribute="trailing" secondItem="OJK-tn-ljV" secondAttribute="trailingMargin" id="I3G-eF-1sq"/>
+                                            <constraint firstItem="DC1-0j-sIv" firstAttribute="top" secondItem="OJK-tn-ljV" secondAttribute="topMargin" id="J7o-XV-t2o"/>
                                             <constraint firstItem="eu6-f8-2Gb" firstAttribute="leading" secondItem="OJK-tn-ljV" secondAttribute="leadingMargin" id="LYb-q1-BR6"/>
                                             <constraint firstItem="8Dw-ER-C6a" firstAttribute="leading" secondItem="OJK-tn-ljV" secondAttribute="leadingMargin" id="M8l-dv-GLT"/>
+                                            <constraint firstItem="bIn-rR-3ib" firstAttribute="trailing" secondItem="OJK-tn-ljV" secondAttribute="trailingMargin" id="MQY-KQ-bAv"/>
                                             <constraint firstAttribute="trailing" secondItem="Kgh-5l-Rnb" secondAttribute="trailingMargin" id="OQd-gW-gfk"/>
                                             <constraint firstItem="5Gx-mk-Ecz" firstAttribute="trailing" secondItem="OJK-tn-ljV" secondAttribute="trailingMargin" id="OQw-xZ-bzc"/>
                                             <constraint firstItem="Mf7-Yt-LHg" firstAttribute="top" secondItem="8Dw-ER-C6a" secondAttribute="bottom" id="OhE-uo-W0D"/>
@@ -187,27 +206,30 @@
                                             <constraint firstItem="iIF-pt-ddg" firstAttribute="trailing" secondItem="OJK-tn-ljV" secondAttribute="trailingMargin" id="U3e-SG-ct4"/>
                                             <constraint firstItem="I6X-4r-uFy" firstAttribute="trailing" secondItem="OJK-tn-ljV" secondAttribute="trailingMargin" id="UIn-Qu-Ach"/>
                                             <constraint firstItem="M7G-lr-9TT" firstAttribute="leading" secondItem="OJK-tn-ljV" secondAttribute="leadingMargin" id="UUY-ez-0Fk"/>
+                                            <constraint firstItem="HpN-Ja-Kph" firstAttribute="leading" secondItem="OJK-tn-ljV" secondAttribute="leadingMargin" id="VfH-eA-4jE"/>
                                             <constraint firstItem="LLA-yZ-bgg" firstAttribute="trailing" secondItem="OJK-tn-ljV" secondAttribute="trailingMargin" id="W2u-xh-QBx"/>
                                             <constraint firstItem="kZb-yw-dsi" firstAttribute="leading" secondItem="OJK-tn-ljV" secondAttribute="leadingMargin" id="WeG-kl-qqZ"/>
                                             <constraint firstItem="hHi-E3-Zq7" firstAttribute="trailing" secondItem="OJK-tn-ljV" secondAttribute="trailingMargin" id="Wr3-ob-8it"/>
+                                            <constraint firstItem="JjT-CF-HFo" firstAttribute="leading" secondItem="OJK-tn-ljV" secondAttribute="leadingMargin" id="ZGl-kc-zRQ"/>
                                             <constraint firstItem="iIF-pt-ddg" firstAttribute="bottom" secondItem="rKM-QO-vqF" secondAttribute="top" id="Zmm-nR-Khb"/>
-                                            <constraint firstItem="JjT-CF-HFo" firstAttribute="trailing" secondItem="OJK-tn-ljV" secondAttribute="trailingMargin" id="aza-5B-hJR"/>
                                             <constraint firstItem="iIF-pt-ddg" firstAttribute="leading" secondItem="OJK-tn-ljV" secondAttribute="leadingMargin" id="bbq-Ed-eHg"/>
                                             <constraint firstItem="LLA-yZ-bgg" firstAttribute="leading" secondItem="OJK-tn-ljV" secondAttribute="leadingMargin" id="c0J-Fx-CyH"/>
-                                            <constraint firstItem="NX4-wa-2bZ" firstAttribute="leading" secondItem="1aZ-DR-GxD" secondAttribute="trailing" constant="4" id="ejx-bp-xZf"/>
+                                            <constraint firstItem="JjT-CF-HFo" firstAttribute="top" secondItem="OJK-tn-ljV" secondAttribute="topMargin" id="cin-lL-Sti"/>
+                                            <constraint firstItem="NX4-wa-2bZ" firstAttribute="leading" secondItem="1aZ-DR-GxD" secondAttribute="trailing" constant="8" symbolic="YES" id="ejx-bp-xZf"/>
                                             <constraint firstItem="MNt-a0-gSS" firstAttribute="trailing" secondItem="OJK-tn-ljV" secondAttribute="trailingMargin" id="el0-C6-qeK"/>
                                             <constraint firstItem="NX4-wa-2bZ" firstAttribute="trailing" secondItem="OJK-tn-ljV" secondAttribute="trailingMargin" id="h8D-hk-guz"/>
                                             <constraint firstItem="MNt-a0-gSS" firstAttribute="top" secondItem="rKM-QO-vqF" secondAttribute="bottom" id="kOg-7f-VCP"/>
                                             <constraint firstItem="MNt-a0-gSS" firstAttribute="leading" secondItem="OJK-tn-ljV" secondAttribute="leadingMargin" id="qF4-OJ-Ba5"/>
-                                            <constraint firstItem="1aZ-DR-GxD" firstAttribute="top" secondItem="bIn-rR-3ib" secondAttribute="bottom" constant="4" id="rJG-JL-Koh"/>
+                                            <constraint firstItem="1aZ-DR-GxD" firstAttribute="top" secondItem="bIn-rR-3ib" secondAttribute="bottom" constant="8" symbolic="YES" id="rJG-JL-Koh"/>
                                             <constraint firstItem="1aZ-DR-GxD" firstAttribute="leading" secondItem="OJK-tn-ljV" secondAttribute="leadingMargin" id="rXB-Kv-pc8"/>
                                             <constraint firstItem="bIn-rR-3ib" firstAttribute="leading" secondItem="OJK-tn-ljV" secondAttribute="leadingMargin" id="u3p-VP-k36"/>
                                             <constraint firstItem="kZb-yw-dsi" firstAttribute="bottom" secondItem="yzG-JE-7DI" secondAttribute="top" id="uCM-1O-ofh"/>
+                                            <constraint firstItem="HpN-Ja-Kph" firstAttribute="top" secondItem="JjT-CF-HFo" secondAttribute="bottom" constant="8" symbolic="YES" id="uS7-Ku-R8L"/>
                                             <constraint firstItem="I6X-4r-uFy" firstAttribute="top" secondItem="yzG-JE-7DI" secondAttribute="bottom" id="vRw-94-b3l"/>
-                                            <constraint firstItem="5Gx-mk-Ecz" firstAttribute="top" secondItem="1aZ-DR-GxD" secondAttribute="bottom" constant="4" id="w2W-nh-hsc"/>
+                                            <constraint firstItem="DC1-0j-sIv" firstAttribute="trailing" secondItem="OJK-tn-ljV" secondAttribute="trailingMargin" id="vfo-Td-YLF"/>
+                                            <constraint firstItem="5Gx-mk-Ecz" firstAttribute="top" secondItem="1aZ-DR-GxD" secondAttribute="bottom" constant="8" symbolic="YES" id="w2W-nh-hsc"/>
                                             <constraint firstItem="I6X-4r-uFy" firstAttribute="bottom" secondItem="hHi-E3-Zq7" secondAttribute="top" id="wPl-dn-6My"/>
                                             <constraint firstItem="5Gx-mk-Ecz" firstAttribute="bottom" secondItem="M7G-lr-9TT" secondAttribute="top" id="xn7-Jg-eo0"/>
-                                            <constraint firstItem="JjT-CF-HFo" firstAttribute="centerY" secondItem="bIn-rR-3ib" secondAttribute="centerY" id="xna-tq-b4R"/>
                                             <constraint firstItem="Kgh-5l-Rnb" firstAttribute="top" secondItem="hHi-E3-Zq7" secondAttribute="bottom" id="zLj-n9-FBZ"/>
                                         </constraints>
                                     </view>
@@ -234,6 +256,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="authorSearch" destination="yzG-JE-7DI" id="yR4-rg-Csc"/>
+                        <outlet property="cancelButton" destination="JjT-CF-HFo" id="8xe-Yw-6QA"/>
                         <outlet property="ebookOnlySwitch" destination="1aZ-DR-GxD" id="mmV-Oo-25g"/>
                         <outlet property="generalSearch" destination="bIn-rR-3ib" id="lOH-F6-3qd"/>
                         <outlet property="isbnSearch" destination="hHi-E3-Zq7" id="SKx-Es-9RL"/>
@@ -241,7 +264,7 @@
                         <outlet property="placeSearch" destination="LLA-yZ-bgg" id="SNW-0F-y4a"/>
                         <outlet property="publisherSearch" destination="eu6-f8-2Gb" id="YDb-QD-eN1"/>
                         <outlet property="scrollView" destination="40d-Cf-gTX" id="odz-T5-GH7"/>
-                        <outlet property="searchButton" destination="JjT-CF-HFo" id="2L1-9j-MSs"/>
+                        <outlet property="searchButton" destination="DC1-0j-sIv" id="LIo-tc-Ru8"/>
                         <outlet property="subjectSearch" destination="8Dw-ER-C6a" id="OJ1-lG-upo"/>
                         <outlet property="titleSearch" destination="M7G-lr-9TT" id="bdZ-Fa-JZk"/>
                         <segue destination="kBX-29-Dkl" kind="unwind" identifier="cancelBookSearch" unwindAction="dismiss:" id="vhn-uP-hRE"/>
