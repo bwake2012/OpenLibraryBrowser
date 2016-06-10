@@ -72,7 +72,9 @@ class ImageDownloadOperation: GroupOperation {
                 do {
                     try NSFileManager.defaultManager().createDirectoryAtURL( directoryURL, withIntermediateDirectories: true, attributes: nil )
                 }
-                catch {}
+                catch let error as NSError {
+                    print( "\(error)" )
+                }
             }
 
             do {

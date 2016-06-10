@@ -14,6 +14,7 @@ class OLDeluxeDetailTableViewController: UITableViewController {
     
     // MARK: UIView
     override func viewDidLoad() {
+
         super.viewDidLoad()
         
         // Do any additional setup after loading the view, typically from a nib.
@@ -28,6 +29,7 @@ class OLDeluxeDetailTableViewController: UITableViewController {
         DeluxeDetailInlineTableViewCell.registerCell( tableView )
         DeluxeDetailBlockTableViewCell.registerCell( tableView )
         DeluxeDetailLinkTableViewCell.registerCell( tableView )
+        DeluxeDetailHTMLTableViewCell.registerCell( tableView )
     }
     
     override func didReceiveMemoryWarning() {

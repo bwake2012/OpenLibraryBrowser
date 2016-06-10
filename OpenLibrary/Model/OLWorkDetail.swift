@@ -239,17 +239,23 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         
         if !self.work_description.isEmpty {
             
-            deluxeData.append( [DeluxeData( type: .block, caption: "Description", value: self.work_description )] )
+            let fancyOutput = fancyMarkdown.transform( self.work_description )
+            
+            deluxeData.append( [DeluxeData( type: .html, caption: "Description", value: fancyOutput )] )
         }
         
         if !self.first_sentence.isEmpty {
             
-            deluxeData.append( [DeluxeData( type: .block, caption: "First Sentence", value: self.first_sentence )] )
+            let fancyOutput = fancyMarkdown.transform( self.first_sentence )
+            
+            deluxeData.append( [DeluxeData( type: .block, caption: "First Sentence", value: fancyOutput )] )
         }
         
         if !self.notes.isEmpty {
             
-            deluxeData.append( [DeluxeData( type: .block, caption: "Notes", value: self.notes )] )
+            let fancyOutput = fancyMarkdown.transform( self.notes )
+            
+            deluxeData.append( [DeluxeData( type: .html, caption: "Notes", value: fancyOutput )] )
         }
         
         if !self.links.isEmpty {

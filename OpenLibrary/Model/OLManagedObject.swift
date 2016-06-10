@@ -52,6 +52,7 @@ enum DeluxeDetail: String {
     case body        = "DeluxeDetailBodyTableViewCell"
     case imageAuthor = "DeluxeDetailImageAuthorTableViewCell"
     case imageBook   = "DeluxeDetailImageBookTableViewCell"
+    case html        = "DeluxeDetailHTMLTableViewCell"
 }
 
 struct DeluxeData {
@@ -142,12 +143,44 @@ class OLManagedObject: NSManagedObject {
         
         if "key" == keyFieldName {
             
-            assert( 1 >= results?.count )
+            let count = results?.count
+            assert( 1 >= count )
         }
         
         return results?.first
     }
     //
+    
+    var hasImage: Bool { return true }
+    var firstImageID: Int { return 0 }
+    
+    var imageType: String { return "" }
+    
+    private static var cacheMarkdown: Markdown?
+    var fancyMarkdown: Markdown {
+        
+        get {
+            if nil == OLWorkDetail.cacheMarkdown {
+                
+                var options = MarkdownOptions()
+                options.autoHyperlink = true
+                options.autoNewlines = true
+                options.emptyElementSuffix = ">"
+                options.encodeProblemUrlCharacters = true
+                options.linkEmails = false
+                options.strictBoldItalic = true
+                
+                OLWorkDetail.cacheMarkdown = Markdown( options: options )
+            }
+            
+            return OLWorkDetail.cacheMarkdown!
+        }
+        
+        set {
+            
+            OLWorkDetail.cacheMarkdown = newValue
+        }
+    }
     
     func localURL( key:String, size: String, index: Int = 0 ) -> NSURL {
         
@@ -157,17 +190,9 @@ class OLManagedObject: NSManagedObject {
         
         let parts = key.componentsSeparatedByString( "/" )
         let goodParts = parts.filter { (x) -> Bool in !x.isEmpty }
-
+        
         let imagesSubFolder = imagesFolder.URLByAppendingPathComponent( goodParts[0] )
         
-        do {
-            try NSFileManager.defaultManager().createDirectoryAtURL(
-                imagesSubFolder, withIntermediateDirectories: true, attributes: nil )
-        }
-        catch let error as NSError {
-            
-            print( "\(error)" )
-        }
         var fileName = "\(goodParts[1])-\(size)"
         if 0 < index {
             fileName += "\(index)"
@@ -177,11 +202,6 @@ class OLManagedObject: NSManagedObject {
         
         return url
     }
-    
-    var hasImage: Bool { return true }
-    var firstImageID: Int { return 0 }
-    
-    var imageType: String { return "" }
     
     func imageID( index: Int ) -> Int {
         

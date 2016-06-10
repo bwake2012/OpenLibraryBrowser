@@ -189,8 +189,10 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
         }
         
         if !self.bio.isEmpty {
+
+            let fancyOutput = fancyMarkdown.transform( self.bio )
             
-            deluxeData.append( [DeluxeData( type: .block, caption: "Biography", value: self.bio )] )
+            deluxeData.append( [DeluxeData( type: .html, caption: "Biography", value: fancyOutput )] )
         }
         
         if !self.links.isEmpty {

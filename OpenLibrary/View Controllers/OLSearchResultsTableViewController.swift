@@ -63,6 +63,7 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
         // Do any additional setup after loading the view, typically from a nib.
         self.tableView.estimatedRowHeight = 68.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.tableFooterView = UIView(frame: .zero)
 
 //        searchController.searchResultsUpdater = self
 //        searchController.dimsBackgroundDuringPresentation = false

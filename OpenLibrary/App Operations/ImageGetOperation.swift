@@ -85,8 +85,8 @@ class ImageGetOperation: GroupOperation {
                 alert.message = "Cannot parse Image Get results. Try again later."
 
             default:
-                print( "\(errorReason)" )
                 print( "Other Error" )
+                print( "\(errorReason)" )
                 if let destPath = error.userInfo["NSDestinationFilePath"] {
                     print( "destination: \(destPath)" )
                 }

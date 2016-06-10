@@ -94,7 +94,8 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
                  .body,
                  .inline,
                  .block,
-                 .link:
+                 .link,
+                 .html:
                 if let headerCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? DeluxeDetailTableViewCell {
                     
                     headerCell.configure( object )
@@ -160,11 +161,13 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
         
         guard let object = objectAtIndexPath( indexPath ) else { return }
         
+        guard let largeImageURL = NSURL( string: object.extraValue ) else { return }
+        
         destVC.queryCoordinator =
             PictureViewCoordinator(
                     operationQueue: operationQueue,
                     coreDataStack: coreDataStack,
-                    localURL: NSURL( fileURLWithPath: object.extraValue ),
+                    localURL: largeImageURL,
                     imageID: Int( object.caption )!,
                     pictureType: imageType,
                     pictureVC: destVC
