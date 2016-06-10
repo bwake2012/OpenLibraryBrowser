@@ -11,7 +11,7 @@ import UIKit
 class AlertOperation: Operation {
     // MARK: Properties
 
-    private let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .Alert)
+    private lazy var alertController = UIAlertController( title: nil, message: nil, preferredStyle: .Alert )
     private let presentationContext: UIViewController?
     
     var title: String? {
