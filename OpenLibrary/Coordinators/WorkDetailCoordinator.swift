@@ -273,7 +273,7 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
     func fetchedResultsController( controller: FetchedWorkDetailController,
                                    didChangeObject change: FetchedWorkDetailChange ) {
         switch change {
-        case let .Insert(_, indexPath):
+        case .Insert(_, _):
             if let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {
                 
                 updateUI( detail )
@@ -281,15 +281,15 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
             }
             break
             
-        case let .Delete(_, indexPath):
+        case .Delete(_, _):
             // tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             break
             
-        case let .Move(_, fromIndexPath, toIndexPath):
+        case .Move(_, _, _):
             // tableVC.tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
             break
             
-        case let .Update(_, indexPath):
+        case .Update(_, _):
             if let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {
                 
                 updateUI( detail )
@@ -302,11 +302,11 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
     func fetchedResultsController( controller: FetchedWorkDetailController,
                                    didChangeSection change: FetchedWorkDetailSectionChange ) {
         switch change {
-        case let .Insert(_, index):
+        case .Insert(_, _):
             // tableVC.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
             break
             
-        case let .Delete(_, index):
+        case .Delete(_, _):
             // tableVC.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
             break
         }

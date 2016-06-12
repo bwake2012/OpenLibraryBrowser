@@ -243,7 +243,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     func fetchedResultsController( controller: FetchedAuthorDetailController,
                                    didChangeObject change: FetchedAuthorDetailChange ) {
         switch change {
-        case let .Insert(_, indexPath):
+        case .Insert(_, _):
             if let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {
                 
                 updateUI( detail )
@@ -251,15 +251,15 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             }
             break
             
-        case let .Delete(_, indexPath):
+        case .Delete(_, _):
             // tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             break
             
-        case let .Move(_, fromIndexPath, toIndexPath):
+        case .Move(_, _, _):
             // tableVC.tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
             break
             
-        case let .Update(_, indexPath):
+        case .Update(_, _):
             if let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {
                 
                 updateUI( detail )
@@ -272,11 +272,11 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     func fetchedResultsController( controller: FetchedAuthorDetailController,
                                    didChangeSection change: FetchedAuthorDetailSectionChange ) {
         switch change {
-        case let .Insert(_, index):
+        case .Insert(_, _):
             // tableVC.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
             break
             
-        case let .Delete(_, index):
+        case .Delete(_, _):
             // tableVC.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
             break
         }

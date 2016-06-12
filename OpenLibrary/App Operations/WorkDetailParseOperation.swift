@@ -199,7 +199,7 @@ class WorkDetailParseOperation: Operation {
                 // sometimes we have one or more editions without an associated work
                 if "/type/edition" == newObject.type {
                     
-                    let newEdition = OLEditionDetail.parseJSON( "", workKey: newObject.key, index: 0, json: resultSet, moc: self.context )
+                    _ = OLEditionDetail.parseJSON( "", workKey: newObject.key, index: 0, json: resultSet, moc: self.context )
                 }
                 
                 let error = self.saveContext()

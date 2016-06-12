@@ -208,11 +208,11 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
     func fetchedResultsController( controller: FetchedAuthorEditionsController,
         didChangeObject change: FetchedAuthorEditionChange ) {
             switch change {
-            case let .Insert(_, indexPath):
+            case .Insert(_, _):
                 // tableView?.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
-            case let .Delete(_, indexPath):
+            case .Delete(_, _):
                 // tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
