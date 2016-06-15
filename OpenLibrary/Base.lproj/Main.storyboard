@@ -279,7 +279,7 @@
         <!--Search Results-->
         <scene sceneID="6Fs-Ab-ohg">
             <objects>
-                <tableViewController id="7HV-bC-sJp" customClass="OLSearchResultsTableViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SearchResults" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7HV-bC-sJp" customClass="OLSearchResultsTableViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="72" sectionHeaderHeight="28" sectionFooterHeight="28" id="0lH-0F-sUZ">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1037,8 +1037,8 @@
         <image name="96-book.png" width="18" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="WHs-h8-0AD"/>
         <segue reference="J4Z-6m-v4p"/>
-        <segue reference="r7n-rO-97o"/>
+        <segue reference="cIP-f1-82w"/>
+        <segue reference="Yjz-qW-0Hz"/>
     </inferredMetricsTieBreakers>
 </document>

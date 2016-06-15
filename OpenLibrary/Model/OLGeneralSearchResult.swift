@@ -30,16 +30,19 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
         
         newObject.populateObject( parsed )
         
-        let workDetail = OLWorkDetail.saveProvisionalWork( parsed, moc: moc )
+        // let workDetail =
+        OLWorkDetail.saveProvisionalWork( parsed, moc: moc )
 
         for authorIndex in 0..<parsed.author_key.count {
             
-            let authorDetail = OLAuthorDetail.saveProvisionalAuthor( authorIndex, parsed: parsed, moc: moc )
+            // let authorDetail = 
+            OLAuthorDetail.saveProvisionalAuthor( authorIndex, parsed: parsed, moc: moc )
         }
 
         for editionIndex in 0..<parsed.edition_key.count {
             
-            let editionDetail = OLEditionDetail.saveProvisionalEdition( editionIndex, parsed: parsed, moc: moc )
+            // let editionDetail = 
+            OLEditionDetail.saveProvisionalEdition( editionIndex, parsed: parsed, moc: moc )
         }
 
         return newObject

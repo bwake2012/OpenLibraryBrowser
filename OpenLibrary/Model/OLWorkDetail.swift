@@ -248,7 +248,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             
             let fancyOutput = fancyMarkdown.transform( self.first_sentence )
             
-            deluxeData.append( [DeluxeData( type: .block, caption: "First Sentence", value: fancyOutput )] )
+            deluxeData.append( [DeluxeData( type: .html, caption: "First Sentence", value: fancyOutput )] )
         }
         
         if !self.notes.isEmpty {
