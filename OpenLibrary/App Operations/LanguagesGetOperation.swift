@@ -92,7 +92,7 @@ class LanguagesGetOperation: GroupOperation {
             case failedJSON:
                 // We failed because the JSON was malformed.
                 alert.title = "Unable to Download"
-                alert.message = "Cannot parse Author Works results. Try again later."
+                alert.message = "Cannot parse language information. Try again later."
 
             default:
                 return

@@ -20,7 +20,7 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedRe
     
     typealias FetchedOLTitleSearchResultController = FetchedResultsController< OLTitleSearchResult >
     
-    let tableVC: UITableViewController
+    weak var tableVC: UITableViewController?
 
     var titleSearchOperation: Operation?
     
@@ -152,7 +152,7 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedRe
             print("Error in the fetched results controller: \(error).")
         }
         
-        tableVC.tableView.reloadData()
+        tableVC?.tableView.reloadData()
     }
 
     func newQuery( titleText: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
@@ -160,7 +160,7 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedRe
         if numberOfSections() > 0 {
             
             let top = NSIndexPath( forRow: Foundation.NSNotFound, inSection: 0 );
-            tableVC.tableView.scrollToRowAtIndexPath( top, atScrollPosition: UITableViewScrollPosition.Top, animated: true );
+            tableVC?.tableView.scrollToRowAtIndexPath( top, atScrollPosition: UITableViewScrollPosition.Top, animated: true );
         }
         
         if titleText != self.titleText && nil == titleSearchOperation {
@@ -255,34 +255,34 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedRe
         if titleText.isEmpty {
             self.highWaterMark = fetchedResultsController.count
             self.searchResults = SearchResults( start: 0, numFound: highWaterMark, pageSize: 100 )
-            tableVC.tableView.reloadData()
+            tableVC?.tableView.reloadData()
         }
     }
     
     func fetchedResultsControllerWillChangeContent( controller: FetchedResultsController< OLTitleSearchResult > ) {
-        tableVC.tableView.beginUpdates()
+        tableVC?.tableView.beginUpdates()
     }
     
     func fetchedResultsControllerDidChangeContent( controller: FetchedResultsController< OLTitleSearchResult > ) {
-        tableVC.tableView.endUpdates()
+        tableVC?.tableView.endUpdates()
     }
     
     func fetchedResultsController( controller: FetchedResultsController< OLTitleSearchResult >,
         didChangeObject change: FetchedResultsObjectChange< OLTitleSearchResult > ) {
             switch change {
             case let .Insert(_, indexPath):
-                tableVC.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableVC?.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
             case let .Delete(_, indexPath):
-                tableVC.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableVC?.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
             case let .Move(_, fromIndexPath, toIndexPath):
-                tableVC.tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
+                tableVC?.tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
                 
             case let .Update(_, indexPath):
-                tableVC.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableVC?.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             }
     }
     
@@ -290,10 +290,10 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedRe
         didChangeSection change: FetchedResultsSectionChange< OLTitleSearchResult >) {
             switch change {
             case let .Insert(_, index):
-                tableVC.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+                tableVC?.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
                 
             case let .Delete(_, index):
-                tableVC.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+                tableVC?.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
             }
     }
     
@@ -307,7 +307,7 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedRe
                 if let strongSelf = self {
                     dispatch_async( dispatch_get_main_queue() ) {
                         
-                        strongSelf.tableVC.tableView.reloadRowsAtIndexPaths( [indexPath], withRowAnimation: .Automatic )
+                        strongSelf.tableVC?.tableView.reloadRowsAtIndexPaths( [indexPath], withRowAnimation: .Automatic )
                     }
                 }
         }

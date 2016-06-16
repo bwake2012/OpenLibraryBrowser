@@ -23,12 +23,13 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
     
     var workDetailGetOperation: Operation?
     var authorDetailGetOperation: Operation?
+    var ebookItemGetOperation: Operation?
     
     typealias FetchedWorkDetailController    = FetchedResultsController< OLWorkDetail >
     typealias FetchedWorkDetailChange        = FetchedResultsObjectChange< OLWorkDetail >
     typealias FetchedWorkDetailSectionChange = FetchedResultsSectionChange< OLWorkDetail >
     
-    private lazy var fetchedResultsController: FetchedWorkDetailController = {
+    private lazy var fetchedWorkDetailController: FetchedWorkDetailController = {
         
         let fetchRequest = NSFetchRequest( entityName: OLWorkDetail.entityName )
         
@@ -90,6 +91,7 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
         if let workDetailVC = workDetailVC {
             
             retrieveAuthors( workDetail )
+            retrieveEBookItems( workDetail )
             
             workDetailVC.updateUI( workDetail )
             
@@ -136,7 +138,7 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
         
         do {
             NSFetchedResultsController.deleteCacheWithName( kWorkDetailCache )
-            try fetchedResultsController.performFetch()
+            try fetchedWorkDetailController.performFetch()
         }
         catch let fetchError as NSError {
             print("Error in the fetched results controller: \(fetchError).")
@@ -172,57 +174,100 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
     
     func retrieveAuthors ( workDetail: OLWorkDetail ) {
         
+        if workDetail.author_names.count < workDetail.authors.count {
+
+            newAuthorQueries( workDetail )
+        }
+    }
+    
+    func newAuthorQueries( workDetail: OLWorkDetail ) {
+        
         if nil == authorDetailGetOperation {
-            let authorNames = workDetail.author_names
+            
             var authors = workDetail.authors
             
-            if authorNames.count < authors.count {
+            let firstOLID = authors.removeFirst()
+            
+            for olid in authors {
                 
-                let firstOLID = authors.removeFirst()
-                
-                for olid in authors {
-                    
-                    if !olid.isEmpty {
-                        let operation =
-                            AuthorDetailGetOperation(
-                                    queryText: olid,
-                                    parentObjectID: nil,
-                                    coreDataStack: coreDataStack
-                                ) {}
-                        operationQueue.addOperation( operation )
-                    }
-                }
-                
-                if !firstOLID.isEmpty {
-                   
-                    authorDetailGetOperation =
+                if !olid.isEmpty {
+                    let operation =
                         AuthorDetailGetOperation(
-                                queryText: firstOLID,
-                                parentObjectID: nil,
-                                coreDataStack: coreDataStack
-                            ) {
-                                
-                                [weak self] in
-                                
-                                if let strongSelf = self {
-
-                                    dispatch_async( dispatch_get_main_queue() ) {
-                                        
-                                        strongSelf.updateUI( workDetail )
-                    
-                                        strongSelf.authorDetailGetOperation = nil
-                                    }
-                                }
-                            }
-                    operationQueue.addOperation( authorDetailGetOperation! )
+                            queryText: olid,
+                            parentObjectID: nil,
+                            coreDataStack: coreDataStack
+                        ) {}
+                    operationQueue.addOperation( operation )
                 }
             }
+            
+            if !firstOLID.isEmpty {
+                
+                authorDetailGetOperation =
+                    AuthorDetailGetOperation(
+                        queryText: firstOLID,
+                        parentObjectID: nil,
+                        coreDataStack: coreDataStack
+                    ) {
+                        
+                        [weak self] in
+                        
+                        if let strongSelf = self {
+                            
+                            dispatch_async( dispatch_get_main_queue() ) {
+                                
+                                strongSelf.updateUI( workDetail )
+                                
+                                strongSelf.authorDetailGetOperation = nil
+                            }
+                        }
+                }
+                operationQueue.addOperation( authorDetailGetOperation! )
+            }
+        }
+    }
+    
+    func retrieveEBookItems ( workDetail: OLWorkDetail ) {
+        
+        if workDetail.mayHaveFullText && workDetail.ebook_items.isEmpty  {
+            
+            newEbookItemQuery( workDetail )
+        }
+    }
+    
+    func newEbookItemQuery( workDetail: OLWorkDetail ) {
+    
+        if nil == ebookItemGetOperation {
+            
+            ebookItemGetOperation =
+                WorkEditionEbooksGetOperation(
+                    queryText: workDetail.key,
+                    coreDataStack: coreDataStack
+                ) {
+                    
+                    [weak self] in
+                    
+                    if let strongSelf = self {
+                        
+                        dispatch_async( dispatch_get_main_queue() ) {
+                            
+                            if workDetail.ebook_items.isEmpty {
+                                
+                                workDetail.has_fulltext = 0
+                            }
+                            strongSelf.updateUI( workDetail )
+                            
+                            strongSelf.ebookItemGetOperation = nil
+                        }
+                    }
+            }
+            operationQueue.addOperation( ebookItemGetOperation! )
         }
     }
     
     func objectAtIndexPath( indexPath: NSIndexPath ) -> OLWorkDetail? {
         
-        guard let sections = fetchedResultsController.sections else {
+        guard let sections = fetchedWorkDetailController.sections else {
             assertionFailure("Sections missing")
             return nil
         }
@@ -238,6 +283,14 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
     func refreshQuery( refreshControl: UIRefreshControl? ) {
         
         newQuery( self.workKey, userInitiated: true, refreshControl: refreshControl )
+        if let workDetail = workDetail {
+            
+            workDetail.resetAuthors()
+            newAuthorQueries( workDetail )
+            
+            workDetail.resetFulltext()
+            newEbookItemQuery( workDetail )
+        }
     }
     
     

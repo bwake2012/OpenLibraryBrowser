@@ -49,7 +49,28 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             return names
         }
     }
-    
+
+    private var ebook_item_cache = [OLEBookItem]()
+    var ebook_items: [OLEBookItem] {
+        
+        get {
+            if ebook_item_cache.isEmpty && mayHaveFullText {
+                
+                if let moc = self.managedObjectContext {
+                    
+                    let items: [OLEBookItem]? = OLEBookItem.findObject( key, entityName: OLEBookItem.entityName, keyFieldName: "workKey", moc: moc )
+                    if let items = items where !items.isEmpty {
+                        
+                        ebook_item_cache = items
+                        has_fulltext = 1
+                    }
+                }
+            }
+            
+            return ebook_item_cache
+        }
+    }
+
     class func parseJSON( parentKey: String, index: Int, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLWorkDetail? {
         
         guard let parsed = ParsedFromJSON.fromJSON( json ) else { return nil }
@@ -102,6 +123,8 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
                 newObject.retrieval_date = NSDate()
                 newObject.provisional_date = NSDate()
                 
+                newObject.has_fulltext = parsed.has_fulltext ? 1 : 0
+                
                 if parsed.key.hasPrefix( kWorksPrefix ) {
                     newObject.key = parsed.key
                 } else {
@@ -127,6 +150,28 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         }
         
         return newObject
+    }
+    
+    var mayHaveFullText: Bool {
+        
+        return 0 != self.has_fulltext
+    }
+    
+    var hasFullText: Bool {
+        
+        return 1 == self.has_fulltext && !self.ebook_item_cache.isEmpty
+    }
+    
+    func resetFulltext() -> Void {
+        
+        has_fulltext = -1
+        ebook_item_cache = [OLEBookItem]()
+        
+    }
+    
+    func resetAuthors() -> Void {
+        
+        author_name_cache = [String]()
     }
     
     override var heading: String {
@@ -230,6 +275,29 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             
             deluxeData.append( [deluxeItem] )
             
+        }
+        
+        if hasFullText {
+            
+            var newData = [DeluxeData]()
+            
+            for item in ebook_items {
+                
+                let deluxeItem =
+                    DeluxeData(
+                        type: .inline,
+                        caption: "eBook:",
+                        value: item.status,
+                        extraValue: ""
+                )
+                
+                newData.append( deluxeItem )
+            }
+            
+            if !newData.isEmpty {
+                
+                deluxeData.append( newData )
+            }
         }
         
         if !self.first_publish_date.isEmpty {

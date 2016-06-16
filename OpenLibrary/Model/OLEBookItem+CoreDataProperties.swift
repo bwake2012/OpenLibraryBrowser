@@ -13,6 +13,8 @@ import Foundation
 import CoreData
 
 extension OLEBookItem {
+    
+    @NSManaged var retrieval_date: NSDate
 
     @NSManaged var status: String
     @NSManaged var workKey: String

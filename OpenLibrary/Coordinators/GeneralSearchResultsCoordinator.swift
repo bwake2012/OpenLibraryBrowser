@@ -20,7 +20,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
     
     typealias FetchedOLGeneralSearchResultController = FetchedResultsController< OLGeneralSearchResult >
     
-    let tableVC: UITableViewController
+    weak var tableVC: UITableViewController?
 
     var generalSearchOperation: Operation?
     
@@ -61,6 +61,10 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
         
         updateUI()
+    }
+    
+    deinit {
+        
     }
     
     func numberOfSections() -> Int {
@@ -109,7 +113,9 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         
         guard let result = objectAtIndexPath( indexPath ) else { return nil }
 
-        cell.configure( tableVC, generalResult: result )
+        if let tableVC = tableVC {
+            cell.configure( tableVC, generalResult: result )
+        }
         
         updateUI( result, cell: cell )
         
@@ -154,7 +160,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             print("Error in the fetched results controller: \(error).")
         }
         
-        tableVC.tableView.reloadData()
+        tableVC?.tableView.reloadData()
     }
 
     func newQuery( newSearchKeys: [String: String], userInitiated: Bool, refreshControl: UIRefreshControl? ) {
@@ -164,7 +170,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         if numberOfSections() > 0 {
             
             let top = NSIndexPath( forRow: Foundation.NSNotFound, inSection: 0 );
-            tableVC.tableView.scrollToRowAtIndexPath( top, atScrollPosition: UITableViewScrollPosition.Top, animated: true );
+            tableVC?.tableView.scrollToRowAtIndexPath( top, atScrollPosition: UITableViewScrollPosition.Top, animated: true );
         }
         
         if nil == generalSearchOperation {
@@ -258,34 +264,34 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         if searchKeys.isEmpty {
             self.highWaterMark = fetchedResultsController.count
             self.searchResults = SearchResults( start: 0, numFound: highWaterMark, pageSize: 100 )
-            tableVC.tableView.reloadData()
+            tableVC?.tableView.reloadData()
         }
     }
     
     func fetchedResultsControllerWillChangeContent( controller: FetchedResultsController< OLGeneralSearchResult > ) {
-        tableVC.tableView.beginUpdates()
+        tableVC?.tableView.beginUpdates()
     }
     
     func fetchedResultsControllerDidChangeContent( controller: FetchedResultsController< OLGeneralSearchResult > ) {
-        tableVC.tableView.endUpdates()
+        tableVC?.tableView.endUpdates()
     }
     
     func fetchedResultsController( controller: FetchedResultsController< OLGeneralSearchResult >,
         didChangeObject change: FetchedResultsObjectChange< OLGeneralSearchResult > ) {
             switch change {
             case let .Insert(_, indexPath):
-                tableVC.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableVC?.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
             case let .Delete(_, indexPath):
-                tableVC.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableVC?.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
             case let .Move(_, fromIndexPath, toIndexPath):
-                tableVC.tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
+                tableVC?.tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
                 
             case let .Update(_, indexPath):
-                tableVC.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableVC?.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             }
     }
     
@@ -293,10 +299,10 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         didChangeSection change: FetchedResultsSectionChange< OLGeneralSearchResult >) {
             switch change {
             case let .Insert(_, index):
-                tableVC.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+                tableVC?.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
                 
             case let .Delete(_, index):
-                tableVC.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+                tableVC?.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
             }
     }
     
@@ -310,7 +316,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
                 if let strongSelf = self {
                     dispatch_async( dispatch_get_main_queue() ) {
                         
-                        strongSelf.tableVC.tableView.reloadRowsAtIndexPaths( [indexPath], withRowAnimation: .Automatic )
+                        strongSelf.tableVC?.tableView.reloadRowsAtIndexPaths( [indexPath], withRowAnimation: .Automatic )
                     }
                 }
         }

@@ -41,6 +41,25 @@ enum HasPhoto: Int {
     }
 }
 
+enum FullText: Int {
+    
+    case unknown = -1
+    case none = 0
+    case available = 1
+
+    func label() -> String {
+        
+        switch( self ) {
+        case .unknown:
+            return( "unknown" )
+        case .none:
+            return( "none" )
+        case .available:
+            return( "available" )
+        }
+    }
+}
+
 enum DeluxeDetail: String {
     
     case unknown     = "unknown"

@@ -67,6 +67,27 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         }
     }
     
+    private var ebook_item_cache = [OLEBookItem]()
+    var ebook_items: [OLEBookItem] {
+        
+        get {
+            if ebook_item_cache.isEmpty && mayHaveFullText {
+                
+                if let moc = self.managedObjectContext {
+                    
+                    let items: [OLEBookItem]? = OLEBookItem.findObject( key, entityName: OLEBookItem.entityName, keyFieldName: "editionKey", moc: moc )
+                    if let items = items where !items.isEmpty {
+                        
+                        ebook_item_cache = items
+                        has_fulltext = 1
+                    }
+                }
+            }
+            
+            return ebook_item_cache
+        }
+    }
+    
     // MARK: Search Info
     struct SearchInfo {
         
@@ -134,6 +155,8 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                     newObject.retrieval_date = NSDate()
                     newObject.provisional_date = NSDate()
                     
+                    newObject.has_fulltext = parsed.has_fulltext ? 1 : 0
+                    
                     newObject.key = parsed.edition_key[editionIndex]
                     newObject.type = "/type/edition"
                     
@@ -165,6 +188,23 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         }
         
         return newObject
+    }
+    
+    var mayHaveFullText: Bool {
+        
+        return 0 != self.has_fulltext
+    }
+    
+    var hasFullText: Bool {
+        
+        return 1 == self.has_fulltext && !self.ebook_item_cache.isEmpty
+    }
+    
+    func resetFulltext() -> Void {
+        
+        has_fulltext = -1
+        ebook_item_cache = [OLEBookItem]()
+        
     }
     
     override var heading: String {
@@ -318,6 +358,29 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
             )
             
             deluxeData.append( [deluxeItem] )
+        }
+        
+        if mayHaveFullText && !ebook_items.isEmpty {
+            
+            var newData = [DeluxeData]()
+            
+            for item in ebook_items {
+                
+                let deluxeItem =
+                    DeluxeData(
+                        type: .inline,
+                        caption: "eBook:",
+                        value: item.status,
+                        extraValue: ""
+                )
+                
+                newData.append( deluxeItem )
+            }
+            
+            if !newData.isEmpty {
+                
+                deluxeData.append( newData )
+            }
         }
         
         var newData = [DeluxeData]()

@@ -16,6 +16,7 @@ class EditionDetailCoordinator: OLQueryCoordinator {
     let editionDetail: OLEditionDetail
     weak var editionDetailVC: OLEditionDetailViewController?
     var authorDetailGetOperation: Operation?
+    var ebookItemGetOperation: Operation?
     
     init(
         operationQueue: OperationQueue,
@@ -32,6 +33,9 @@ class EditionDetailCoordinator: OLQueryCoordinator {
     func updateUI( editionDetail: OLEditionDetail ) {
         
         if let editionDetailVC = editionDetailVC {
+            
+            retrieveAuthors( editionDetail )
+            retrieveEBookItems( editionDetail )
             
             editionDetailVC.updateUI( editionDetail )
             
@@ -52,7 +56,7 @@ class EditionDetailCoordinator: OLQueryCoordinator {
                     
                     imageGetOperation.userInitiated = true
                     operationQueue.addOperation( imageGetOperation )
-                    
+
                     editionDetailVC.displayImage( editionDetail.localURL( "S" ) )
                 }
             }
@@ -66,52 +70,94 @@ class EditionDetailCoordinator: OLQueryCoordinator {
     
     func retrieveAuthors ( editionDetail: OLEditionDetail ) {
         
+        if editionDetail.author_names.count < editionDetail.authors.count {
+            
+            newAuthorQueries( editionDetail )
+        }
+    }
+    
+    func newAuthorQueries( editionDetail: OLEditionDetail ) {
+        
         if nil == authorDetailGetOperation {
-
-            let authorNames = editionDetail.author_names
+            
             var authors = editionDetail.authors
             
-            if authorNames.count < authors.count {
+            let firstOLID = authors.removeFirst()
+            
+            for olid in authors {
                 
-                let firstOLID = authors.removeFirst()
-                
-                for olid in authors {
-                    
-                    if !olid.isEmpty {
-                        let operation =
-                            AuthorDetailGetOperation(
-                                queryText: olid,
-                                parentObjectID: nil,
-                                coreDataStack: coreDataStack
-                            ) {}
-                        operationQueue.addOperation( operation )
-                    }
-                }
-                
-                if !firstOLID.isEmpty {
-                    
-                    authorDetailGetOperation =
+                if !olid.isEmpty {
+                    let operation =
                         AuthorDetailGetOperation(
-                            queryText: firstOLID,
+                            queryText: olid,
                             parentObjectID: nil,
                             coreDataStack: coreDataStack
-                        ) {
-                            
-                            [weak self] in
-                            
-                            if let strongSelf = self {
-                                
-                                dispatch_async( dispatch_get_main_queue() ) {
-                                    
-                                    strongSelf.updateUI( editionDetail )
-                                    
-                                    strongSelf.authorDetailGetOperation = nil
-                                }
-                            }
-                    }
-                    operationQueue.addOperation( authorDetailGetOperation! )
+                        ) {}
+                    operationQueue.addOperation( operation )
                 }
             }
+            
+            if !firstOLID.isEmpty {
+                
+                authorDetailGetOperation =
+                    AuthorDetailGetOperation(
+                        queryText: firstOLID,
+                        parentObjectID: nil,
+                        coreDataStack: coreDataStack
+                    ) {
+                        
+                        [weak self] in
+                        
+                        if let strongSelf = self {
+                            
+                            dispatch_async( dispatch_get_main_queue() ) {
+                                
+                                strongSelf.updateUI( editionDetail )
+                                
+                                strongSelf.authorDetailGetOperation = nil
+                            }
+                        }
+                }
+                operationQueue.addOperation( authorDetailGetOperation! )
+            }
+        }
+    }
+    
+    func retrieveEBookItems ( editionDetail: OLEditionDetail ) {
+        
+        if editionDetail.mayHaveFullText && editionDetail.ebook_items.isEmpty  {
+            
+            newEbookItemQuery( editionDetail )
+        }
+    }
+    
+    func newEbookItemQuery( editionDetail: OLEditionDetail ) {
+        
+        if nil == ebookItemGetOperation {
+            
+            ebookItemGetOperation =
+                IAEBookItemGetOperation(
+                    editionKey: editionDetail.key,
+                    coreDataStack: coreDataStack
+                ) {
+                    
+                    [weak self] in
+                    
+                    if let strongSelf = self {
+                        
+                        dispatch_async( dispatch_get_main_queue() ) {
+                            
+                            if editionDetail.ebook_items.isEmpty {
+                                
+                                editionDetail.has_fulltext = 0
+                            }
+                            strongSelf.updateUI( editionDetail )
+                            
+                            strongSelf.ebookItemGetOperation = nil
+                        }
+                    }
+            }
+            operationQueue.addOperation( ebookItemGetOperation! )
         }
     }
     

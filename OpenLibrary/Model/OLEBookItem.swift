@@ -9,6 +9,8 @@
 import Foundation
 import CoreData
 
+import BNRCoreDataStack
+
 private class ParsedSearchResult: OpenLibraryObject {
     
     let status: String
@@ -27,8 +29,14 @@ private class ParsedSearchResult: OpenLibraryObject {
     class func fromJSON( json: [String: AnyObject] ) -> ParsedSearchResult? {
         
         let status       = json["status"] as? String ?? ""
-        let workKey      = json["ol-work-id"] as? String ?? ""
-        let editionKey   = json["ol-edition-id"] as? String ?? ""
+        var workKey      = json["ol-work-id"] as? String ?? ""
+        if !workKey.hasPrefix( kWorksPrefix ) {
+            workKey = kWorksPrefix + workKey
+        }
+        var editionKey   = json["ol-edition-id"] as? String ?? ""
+        if !editionKey.hasPrefix( kEditionsPrefix ) {
+            editionKey = kEditionsPrefix + editionKey
+        }
         let publish_date = json["publishDate"] as? String ?? ""
         let itemURL      = json["itemURL"] as? String ?? ""
         let enumcron     = json["enumcron"] as? Bool ?? false
@@ -87,7 +95,7 @@ private class ParsedSearchResult: OpenLibraryObject {
     }
 }
 
-class OLEBookItem: OLManagedObject {
+class OLEBookItem: OLManagedObject, CoreDataModelable {
 
 // Insert code here to add functionality to your managed object subclass
     struct SearchInfo {
@@ -111,6 +119,8 @@ class OLEBookItem: OLManagedObject {
         }
 
         if let newObject = newObject {
+            
+            newObject.retrieval_date = NSDate()
 
             newObject.status       = parsed.status
             newObject.workKey      = parsed.workKey

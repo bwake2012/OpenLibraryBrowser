@@ -69,6 +69,7 @@
         <attribute name="itemURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="match" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="publish_date" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="retrieval_date" attributeType="Date" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="workKey" optional="YES" attributeType="String" syncable="YES"/>
         <compoundIndexes>
@@ -102,6 +103,7 @@
         <attribute name="edition_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="first_sentence" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="genres" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="has_fulltext" attributeType="Integer 16" minValueString="-1" maxValueString="1" defaultValueString="-1" syncable="YES"/>
         <attribute name="index" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="isbn_10" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="isbn_13" optional="YES" attributeType="Transformable" syncable="YES"/>
@@ -254,6 +256,7 @@
         <attribute name="dewey_number" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="first_publish_date" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="first_sentence" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="has_fulltext" attributeType="Integer 16" minValueString="-1" maxValueString="1" defaultValueString="-1" syncable="YES"/>
         <attribute name="index" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="key" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="last_modified" optional="YES" attributeType="Date" syncable="YES"/>
@@ -286,11 +289,11 @@
         <element name="AuthorDetail" positionX="-63" positionY="-18" width="128" height="315"/>
         <element name="AuthorSearchResult" positionX="-54" positionY="81" width="128" height="210"/>
         <element name="EBookFile" positionX="-63" positionY="135" width="128" height="270"/>
-        <element name="EBookItem" positionX="-63" positionY="135" width="128" height="195"/>
-        <element name="EditionDetail" positionX="-45" positionY="144" width="128" height="915"/>
+        <element name="EBookItem" positionX="-63" positionY="135" width="128" height="210"/>
+        <element name="EditionDetail" positionX="-45" positionY="144" width="128" height="930"/>
         <element name="GeneralSearchResult" positionX="-63" positionY="135" width="128" height="555"/>
         <element name="Language" positionX="-63" positionY="135" width="128" height="135"/>
         <element name="TitleSearchResult" positionX="-63" positionY="135" width="128" height="225"/>
-        <element name="WorkDetail" positionX="-54" positionY="99" width="128" height="480"/>
+        <element name="WorkDetail" positionX="-54" positionY="99" width="128" height="495"/>
     </elements>
 </model>

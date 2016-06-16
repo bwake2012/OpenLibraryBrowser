@@ -100,7 +100,7 @@ class InternetArchiveEbookInfoGetOperation: GroupOperation {
             case failedJSON:
                 // We failed because the JSON was malformed.
                 alert.title = "Unable to Download"
-                alert.message = "Cannot parse Author Works results. Try again later."
+                alert.message = "Cannot parse eBook info results. Try again later."
 
             default:
                 return

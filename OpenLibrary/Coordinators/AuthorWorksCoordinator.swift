@@ -20,7 +20,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
     
     typealias FetchedOLWorkDetailController = FetchedResultsController< OLWorkDetail >
     
-    let authorWorksTableVC: OLAuthorDetailWorksTableViewController
+    weak var authorWorksTableVC: OLAuthorDetailWorksTableViewController?
 
     var authorWorksGetOperation: Operation?
     
@@ -252,29 +252,29 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
     }
     
     func fetchedResultsControllerWillChangeContent( controller: FetchedOLWorkDetailController ) {
-        authorWorksTableVC.tableView.beginUpdates()
+        authorWorksTableVC?.tableView.beginUpdates()
     }
     
     func fetchedResultsControllerDidChangeContent( controller: FetchedOLWorkDetailController ) {
-        authorWorksTableVC.tableView.endUpdates()
+        authorWorksTableVC?.tableView.endUpdates()
     }
     
     func fetchedResultsController( controller: FetchedOLWorkDetailController,
         didChangeObject change: FetchedResultsObjectChange< OLWorkDetail > ) {
             switch change {
             case let .Insert(_, indexPath):
-                authorWorksTableVC.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                authorWorksTableVC?.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
             case let .Delete(_, indexPath):
-                authorWorksTableVC.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                authorWorksTableVC?.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
             case let .Move(_, fromIndexPath, toIndexPath):
-                authorWorksTableVC.tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
+                authorWorksTableVC?.tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
                 
             case let .Update(_, indexPath):
-                authorWorksTableVC.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                authorWorksTableVC?.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             }
     }
     
@@ -282,10 +282,10 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         didChangeSection change: FetchedResultsSectionChange< OLWorkDetail >) {
             switch change {
             case let .Insert(_, index):
-                authorWorksTableVC.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+                authorWorksTableVC?.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
                 
             case let .Delete(_, index):
-                authorWorksTableVC.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+                authorWorksTableVC?.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
             }
     }
     

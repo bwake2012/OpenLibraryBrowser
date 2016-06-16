@@ -22,7 +22,7 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
     typealias FetchedAuthorEditionChange = FetchedResultsObjectChange< OLEditionDetail >
     typealias FetchedAuthorEditionSectionChange = FetchedResultsSectionChange< OLEditionDetail >
     
-    let tableVC: UITableViewController
+    weak var tableVC: UITableViewController?
 
     private lazy var fetchedResultsController: FetchedAuthorEditionsController = {
         
@@ -104,7 +104,7 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
             print("Error in the fetched results controller: \(error).")
         }
         
-        tableVC.tableView.reloadData()
+        tableVC?.tableView.reloadData()
     }
 
     func newQuery( authorKey: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
@@ -217,10 +217,10 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
                 break
                 
             case let .Move(_, fromIndexPath, toIndexPath):
-                tableVC.tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
+                tableVC?.tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
                 
             case let .Update(_, indexPath):
-                tableVC.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                tableVC?.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             }
     }
     
@@ -228,10 +228,10 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
         didChangeSection change: FetchedAuthorEditionSectionChange ) {
             switch change {
             case let .Insert(_, index):
-                tableVC.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+                tableVC?.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
                 
             case let .Delete(_, index):
-                tableVC.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+                tableVC?.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
             }
     }
 }

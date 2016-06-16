@@ -15,6 +15,8 @@ extension OLWorkDetail {
     
     @NSManaged var retrieval_date: NSDate
     @NSManaged var provisional_date: NSDate?
+    
+    @NSManaged var has_fulltext: Int16
 
     @NSManaged var key: String
     @NSManaged var created: NSDate?
