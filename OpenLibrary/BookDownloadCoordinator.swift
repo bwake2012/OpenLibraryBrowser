@@ -133,31 +133,23 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         //        tableView?.endUpdates()
     }
     
-    func fetchedResultsController( controller: FetchedEBookFileController,
-                                   didChangeObject change: FetchedEBookFileChange ) {
+    func fetchedResultsController(controller: FetchedEBookFileController,
+                                  didChangeObject change: FetchedEBookFileChange) {
         switch change {
-        case .Insert( object, indexPath ):
-            if let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {
-                
-//                updateUI( detail )
-//                workDetail = detail
-            }
+        case let .Insert(object, indexPath):
+//            tableView?.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             break
             
-        case .Delete(_, _):
-            // tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        case let .Delete(_, indexPath):
+//            tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             break
             
-        case .Move(_, _, _):
-            // tableVC.tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
+        case let .Move(_, fromIndexPath, toIndexPath):
+//            tableView?.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
             break
             
-        case .Update(_, _):
-            if let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {
-                
-//                updateUI( detail )
-//                workDetail = detail
-            }
+        case let .Update(_, indexPath):
+//            tableView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             break
         }
     }
