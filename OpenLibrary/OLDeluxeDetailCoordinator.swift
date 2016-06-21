@@ -20,6 +20,7 @@ protocol OLDeluxeDetailCoordinator {
     
     func cancelOperations() -> Void
     
-    func installPictureCoordinator( destVC: OLPictureViewController )
+    func installPictureCoordinator( destVC: OLPictureViewController ) -> Void
+    func installBookDownloadCoordinator( destVC: OLBookDownloadViewController ) -> Void
 }
 

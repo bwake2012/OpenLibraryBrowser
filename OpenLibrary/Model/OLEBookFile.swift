@@ -194,56 +194,68 @@ private class XMLParser: NSObject, NSXMLParserDelegate {
     
 }
 
-
-
-class OLEBookFile: NSManagedObject, CoreDataModelable {
+class OLEBookFile: OLManagedObject, CoreDataModelable {
 
     // Insert code here to add functionality to your managed object subclass
     static let entityName = "EBookFile"
 
-    private class func saveParsedResults( workKey: String, editionKey: String, eBookKey: String, parsedResults:[ParsedResult], moc: NSManagedObjectContext ) -> Int {
+    private class func saveParsedResults( eBookKey: String, parsedResults:[ParsedResult], moc: NSManagedObjectContext ) -> Int {
         
         var count = 0
-        for result in parsedResults {
-            
-            if !result.name.isEmpty && !result.format.isEmpty && !result.source.isEmpty {
+        
+        let existingItem: OLEBookItem? = OLEBookItem.findObject( eBookKey, entityName: OLEBookItem.entityName, keyFieldName: "eBookKey", moc: moc )
+        
+        if let existingItem = existingItem {
+            for result in parsedResults {
                 
-                if let newObject =
-                    NSEntityDescription.insertNewObjectForEntityForName(
-                        OLEBookFile.entityName, inManagedObjectContext: moc
-                        ) as? OLEBookFile {
+                if !result.name.isEmpty && !result.format.isEmpty && !result.source.isEmpty {
+
+                    var newObject: OLEBookFile? = findObject( result.name, entityName: entityName, keyFieldName: "name", moc: moc )
                     
-                    newObject.eBookKey     = eBookKey
-                    newObject.workKey      = workKey
-                    newObject.editionKey   = editionKey
-                    newObject.name         = result.name
-                    newObject.source       = result.source
-                    newObject.format       = result.format
-                    newObject.original     = result.original
-                    newObject.md5          = result.md5
-                    newObject.mtime        = result.mtime
-                    newObject.size         = result.size
-                    newObject.crc32        = result.crc32
-                    newObject.sha1         = result.sha1
-                    newObject.ctime        = result.ctime
-                    newObject.atime        = result.atime
-                    newObject.originalName = result.originalName
+                    if nil == newObject {
+                        newObject =
+                            NSEntityDescription.insertNewObjectForEntityForName(
+                                OLEBookFile.entityName, inManagedObjectContext: moc
+                                ) as? OLEBookFile
+                    }
                     
-                    count += 1
+                    if let newObject = newObject {
+                        
+                        newObject.retrieval_date = NSDate()
+                        
+                        newObject.eBookKey      = eBookKey
+                        newObject.workKey       = existingItem.workKey
+                        newObject.editionKey    = existingItem.editionKey
+                        
+                        newObject.name          = result.name
+                        newObject.source        = result.source
+                        newObject.format        = result.format
+                        newObject.original      = result.original
+                        newObject.md5           = result.md5
+                        newObject.mtime         = result.mtime
+                        newObject.size          = result.size
+                        newObject.crc32         = result.crc32
+                        newObject.sha1          = result.sha1
+                        newObject.ctime         = result.ctime
+                        newObject.atime         = result.atime
+                        newObject.originalName  = result.originalName
+                        
+                        count += 1
+                    }
                 }
             }
         }
- 
+        
         return count
     }
     
-    class func parseXML( workKey: String, editionKey: String, eBookKey: String, localURL: NSURL, moc: NSManagedObjectContext ) -> Int {
+    class func parseXML( eBookKey: String, localURL: NSURL, moc: NSManagedObjectContext ) -> Int {
         
         let xmlParser = XMLParser()
         let parsedResults = xmlParser.beginParsing( localURL: localURL )
         
         return saveParsedResults(
-                workKey, editionKey: editionKey, eBookKey: eBookKey, parsedResults: parsedResults, moc: moc
+                eBookKey, parsedResults: parsedResults, moc: moc
             )
     }
 

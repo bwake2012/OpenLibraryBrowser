@@ -74,6 +74,15 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
         } else if .imageAuthor == obj.type || .imageBook == obj.type {
             
             vc.performSegueWithIdentifier( "zoomDeluxeDetailImage", sender: self )
+            
+        } else if .downloadBookWork == obj.type || .downloadBookEdition == obj.type {
+            
+            vc.performSegueWithIdentifier( obj.type.rawValue, sender: self )
+            
+        } else if .downloadBookEdition == obj.type {
+            
+            vc.performSegueWithIdentifier( "downloadEditionEBook", sender: self )
+            
         }
     }
     
@@ -138,6 +147,14 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
                     }
                     cell = imageCell
                 }
+            case .downloadBookWork, .downloadBookEdition:
+                if let headerCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? DeluxeDetailTableViewCell {
+                    
+                    headerCell.configure( object )
+                    cell = headerCell
+                }
+                break
+                
             }
         }
         
@@ -153,7 +170,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
     
     // MARK: query coordinator installation
     
-    func installPictureCoordinator( destVC: OLPictureViewController ) {
+    func installPictureCoordinator( destVC: OLPictureViewController ) -> Void {
         
         guard let deluxeVC = deluxeDetailVC else { return }
         
@@ -171,6 +188,25 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
                     imageID: Int( object.caption )!,
                     pictureType: imageType,
                     pictureVC: destVC
+                )
+    }
+    
+    func installBookDownloadCoordinator( destVC: OLBookDownloadViewController ) -> Void {
+        
+        guard let deluxeVC = deluxeDetailVC else { return }
+        
+        guard let indexPath = deluxeVC.tableView.indexPathForSelectedRow else { return }
+        
+        guard let object = objectAtIndexPath( indexPath ) else { return }
+        
+        guard let bookURL = NSURL( string: object.extraValue ) else { return }
+
+        destVC.queryCoordinator =
+            BookDownloadCoordinator(
+                    operationQueue: operationQueue,
+                    coreDataStack: coreDataStack,
+                    bookURL: bookURL,
+                    downloadVC: destVC
                 )
     }
     

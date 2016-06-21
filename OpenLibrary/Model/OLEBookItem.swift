@@ -16,6 +16,7 @@ private class ParsedSearchResult: OpenLibraryObject {
     let status: String
     let workKey: String
     let editionKey: String
+    let eBookKey: String
     let cover_id: Int64
     let publish_date: String
     let itemURL: String
@@ -39,6 +40,16 @@ private class ParsedSearchResult: OpenLibraryObject {
         }
         let publish_date = json["publishDate"] as? String ?? ""
         let itemURL      = json["itemURL"] as? String ?? ""
+        var eBookKey = ""
+        if !itemURL.isEmpty {
+            if let url = NSURL( string: itemURL ) {
+            
+                if let lastComponent = url.lastPathComponent {
+                    
+                    eBookKey = lastComponent
+                }
+            }
+        }
         let enumcron     = json["enumcron"] as? Bool ?? false
         let contributor  = json["contributor"] as? String ?? ""
         let fromRecord   = json["fromRecord"] as? String ?? ""
@@ -66,13 +77,14 @@ private class ParsedSearchResult: OpenLibraryObject {
             }
         }
                 
-        return ParsedSearchResult( status: status, workKey: workKey, editionKey: editionKey, cover_id: cover_id, publish_date: publish_date, itemURL: itemURL, enumcron: enumcron, contributor: contributor, fromRecord: fromRecord, match: match )
+        return ParsedSearchResult( status: status, workKey: workKey, editionKey: editionKey, eBookKey: eBookKey, cover_id: cover_id, publish_date: publish_date, itemURL: itemURL, enumcron: enumcron, contributor: contributor, fromRecord: fromRecord, match: match )
     }
     
     init(
         status: String,
         workKey: String,
         editionKey: String,
+        eBookKey: String,
         cover_id: Int64,
         publish_date: String,
         itemURL: String,
@@ -85,6 +97,7 @@ private class ParsedSearchResult: OpenLibraryObject {
         self.status = status
         self.workKey = workKey
         self.editionKey = editionKey
+        self.eBookKey = eBookKey
         self.cover_id = cover_id
         self.publish_date = publish_date
         self.itemURL = itemURL
@@ -125,6 +138,7 @@ class OLEBookItem: OLManagedObject, CoreDataModelable {
             newObject.status       = parsed.status
             newObject.workKey      = parsed.workKey
             newObject.editionKey   = parsed.editionKey
+            newObject.eBookKey     = parsed.eBookKey
             newObject.cover_id     = parsed.cover_id
             newObject.publish_date = parsed.publish_date
             newObject.itemURL      = parsed.itemURL

@@ -13,6 +13,9 @@ import Foundation
 import CoreData
 
 extension OLEBookFile {
+    
+    @NSManaged var retrieval_date: NSDate
+    @NSManaged var provisional_date: NSDate?
 
     @NSManaged var workKey: String
     @NSManaged var editionKey: String

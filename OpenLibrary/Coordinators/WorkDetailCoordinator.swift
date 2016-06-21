@@ -159,6 +159,7 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
                     if let strongSelf = self {
                         dispatch_async( dispatch_get_main_queue() ) {
                             
+                            refreshControl?.endRefreshing()
                             if let detail = strongSelf.workDetail {
                                 
                                 strongSelf.updateUI( detail )

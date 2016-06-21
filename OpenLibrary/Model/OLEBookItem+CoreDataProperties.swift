@@ -19,6 +19,7 @@ extension OLEBookItem {
     @NSManaged var status: String
     @NSManaged var workKey: String
     @NSManaged var editionKey: String
+    @NSManaged var eBookKey: String
     @NSManaged var cover_id: Int64
     @NSManaged var publish_date: String
     @NSManaged var itemURL: String

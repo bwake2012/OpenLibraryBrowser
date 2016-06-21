@@ -274,7 +274,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vge-Vg-GvT" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="kBX-29-Dkl" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1009" y="199"/>
+            <point key="canvasLocation" x="1573" y="383"/>
         </scene>
         <!--Search Results-->
         <scene sceneID="6Fs-Ab-ohg">
@@ -480,11 +480,12 @@
                     </tableView>
                     <connections>
                         <segue destination="RJ5-x8-uas" kind="show" identifier="zoomDeluxeDetailImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" id="MSI-XC-TWv"/>
+                        <segue destination="QNA-1N-1O1" kind="presentation" identifier="DeluxeDetailBookDownloadWorkTableViewCell" modalPresentationStyle="overCurrentContext" modalTransitionStyle="coverVertical" id="DGw-06-isa"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="inl-a4-CKZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4019" y="471"/>
+            <point key="canvasLocation" x="4027" y="2407"/>
         </scene>
         <!--Photo/Cover Picture View Controller-->
         <scene sceneID="JHc-aF-Rl2">
@@ -523,7 +524,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Lb-GV-7Ci" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4019" y="1166"/>
+            <point key="canvasLocation" x="3339" y="3182"/>
         </scene>
         <!--Edition-->
         <scene sceneID="5Pb-wd-QF8">
@@ -628,7 +629,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EZr-py-EXB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4159" y="1859"/>
+            <point key="canvasLocation" x="2691" y="2407"/>
         </scene>
         <!--Author Detail Works Table View Controller-->
         <scene sceneID="qVi-i5-hwa">
@@ -695,7 +696,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cTy-4J-M0N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1791" y="1799"/>
+            <point key="canvasLocation" x="1031" y="1859"/>
         </scene>
         <!--Root Navigation Controller-->
         <scene sceneID="mFU-XY-Y4U">
@@ -717,6 +718,171 @@
             </objects>
             <point key="canvasLocation" x="267" y="1031"/>
         </scene>
+        <!--eBook Download-->
+        <scene sceneID="GvV-Xr-xLh">
+            <objects>
+                <viewController title="eBook Download" id="QNA-1N-1O1" customClass="OLBookDownloadViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="36Q-Yg-R5X"/>
+                        <viewControllerLayoutGuide type="bottom" id="S4A-DM-KHj"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="UyW-FP-DaY">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="svh-bE-pgV">
+                                <rect key="frame" x="99" y="20" width="122" height="380"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6zi-Zp-mPw" userLabel="Content View">
+                                        <rect key="frame" x="8" y="8" width="106" height="364"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dfl-mg-dhr">
+                                                <rect key="frame" x="36" y="0.0" width="33.5" height="19.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="2AC-lQ-LEj">
+                                                <rect key="frame" x="1" y="27" width="106" height="32"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <state key="normal" title="Read Online"/>
+                                                <connections>
+                                                    <action selector="readOnline:" destination="QNA-1N-1O1" eventType="touchUpInside" id="5Sq-RU-tAU"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Download" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fdm-hf-bPB">
+                                                <rect key="frame" x="21" y="67" width="64.5" height="17"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="r2D-oi-XhZ">
+                                                <rect key="frame" x="38" y="92" width="30" height="32"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <state key="normal" title="PDF"/>
+                                                <connections>
+                                                    <action selector="downloadPDF:" destination="QNA-1N-1O1" eventType="touchUpInside" id="ZbW-dl-YnD"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="crh-R6-hjV">
+                                                <rect key="frame" x="18" y="132" width="70" height="32"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <state key="normal" title="Plain Text"/>
+                                                <connections>
+                                                    <action selector="downloadPlainText:" destination="QNA-1N-1O1" eventType="touchUpInside" id="oh4-AU-BKq"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Hku-8a-mGk">
+                                                <rect key="frame" x="33" y="172" width="40" height="32"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <state key="normal" title="Daisy"/>
+                                                <connections>
+                                                    <action selector="downloadZippedDaisy:" destination="QNA-1N-1O1" eventType="touchUpInside" id="b4c-jf-NsS"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="O8i-Yk-rI6">
+                                                <rect key="frame" x="34" y="212" width="38" height="32"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <state key="normal" title="ePub"/>
+                                                <connections>
+                                                    <action selector="downloadePub:" destination="QNA-1N-1O1" eventType="touchUpInside" id="h0p-rR-IKT"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="TRq-cs-gUA">
+                                                <rect key="frame" x="35" y="252" width="35" height="32"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <state key="normal" title="DjVu"/>
+                                                <connections>
+                                                    <action selector="downloadDjVu:" destination="QNA-1N-1O1" eventType="touchUpInside" id="Op3-3H-6Yi"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="e0R-9A-ewM">
+                                                <rect key="frame" x="33" y="292" width="40" height="32"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <state key="normal" title="MOBI"/>
+                                                <connections>
+                                                    <action selector="downloadMOBI:" destination="QNA-1N-1O1" eventType="touchUpInside" id="ujx-pO-Eqb"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="XNA-ax-Yz7">
+                                                <rect key="frame" x="0.0" y="332" width="106" height="32"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <state key="normal" title="Send to Kindle"/>
+                                                <connections>
+                                                    <action selector="sendToKindle:" destination="QNA-1N-1O1" eventType="touchUpInside" id="fM5-tb-OUH"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="Hku-8a-mGk" firstAttribute="centerX" secondItem="6zi-Zp-mPw" secondAttribute="centerX" id="42f-zC-EhM"/>
+                                            <constraint firstItem="crh-R6-hjV" firstAttribute="centerX" secondItem="6zi-Zp-mPw" secondAttribute="centerX" id="5dI-Mk-77d"/>
+                                            <constraint firstItem="O8i-Yk-rI6" firstAttribute="centerX" secondItem="6zi-Zp-mPw" secondAttribute="centerX" id="5vF-o9-bLE"/>
+                                            <constraint firstItem="Fdm-hf-bPB" firstAttribute="top" secondItem="2AC-lQ-LEj" secondAttribute="bottom" constant="8" symbolic="YES" id="6VM-nS-Xu8"/>
+                                            <constraint firstItem="crh-R6-hjV" firstAttribute="top" secondItem="r2D-oi-XhZ" secondAttribute="bottom" constant="8" symbolic="YES" id="BQ5-iM-xHy"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" secondItem="Hku-8a-mGk" secondAttribute="width" id="Glf-eW-Q3f"/>
+                                            <constraint firstItem="2AC-lQ-LEj" firstAttribute="width" relation="greaterThanOrEqual" secondItem="6zi-Zp-mPw" secondAttribute="width" id="KqS-Fh-Mqa"/>
+                                            <constraint firstAttribute="bottom" secondItem="XNA-ax-Yz7" secondAttribute="bottom" id="LRE-ec-fJe"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" secondItem="Fdm-hf-bPB" secondAttribute="width" id="MIt-31-6KP"/>
+                                            <constraint firstItem="Fdm-hf-bPB" firstAttribute="centerX" secondItem="6zi-Zp-mPw" secondAttribute="centerX" id="N8R-Kp-9J2"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" secondItem="e0R-9A-ewM" secondAttribute="width" id="OtB-XM-8wh"/>
+                                            <constraint firstItem="r2D-oi-XhZ" firstAttribute="top" secondItem="Fdm-hf-bPB" secondAttribute="bottom" constant="8" symbolic="YES" id="Psl-Ng-9ff"/>
+                                            <constraint firstItem="XNA-ax-Yz7" firstAttribute="top" secondItem="e0R-9A-ewM" secondAttribute="bottom" constant="8" symbolic="YES" id="UiX-Km-qBL"/>
+                                            <constraint firstItem="e0R-9A-ewM" firstAttribute="centerX" secondItem="6zi-Zp-mPw" secondAttribute="centerX" id="ajC-5h-F38"/>
+                                            <constraint firstItem="dfl-mg-dhr" firstAttribute="top" secondItem="6zi-Zp-mPw" secondAttribute="top" id="c7T-CC-QaG"/>
+                                            <constraint firstItem="TRq-cs-gUA" firstAttribute="centerX" secondItem="6zi-Zp-mPw" secondAttribute="centerX" id="dek-qp-Hlg"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" secondItem="dfl-mg-dhr" secondAttribute="width" id="eq0-9y-3BL"/>
+                                            <constraint firstItem="O8i-Yk-rI6" firstAttribute="top" secondItem="Hku-8a-mGk" secondAttribute="bottom" constant="8" symbolic="YES" id="f78-O2-CIg"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" secondItem="XNA-ax-Yz7" secondAttribute="width" id="fWI-a3-B6B"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" secondItem="TRq-cs-gUA" secondAttribute="width" id="haY-Jl-atZ"/>
+                                            <constraint firstItem="TRq-cs-gUA" firstAttribute="top" secondItem="O8i-Yk-rI6" secondAttribute="bottom" constant="8" symbolic="YES" id="hcP-Am-tAk"/>
+                                            <constraint firstItem="r2D-oi-XhZ" firstAttribute="centerX" secondItem="6zi-Zp-mPw" secondAttribute="centerX" id="lmj-x8-Svd"/>
+                                            <constraint firstItem="e0R-9A-ewM" firstAttribute="top" secondItem="TRq-cs-gUA" secondAttribute="bottom" constant="8" symbolic="YES" id="njc-AQ-BMx"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" secondItem="O8i-Yk-rI6" secondAttribute="width" id="o8v-rJ-o8J"/>
+                                            <constraint firstItem="XNA-ax-Yz7" firstAttribute="centerX" secondItem="6zi-Zp-mPw" secondAttribute="centerX" id="oJ0-PC-K5A"/>
+                                            <constraint firstItem="dfl-mg-dhr" firstAttribute="centerX" secondItem="6zi-Zp-mPw" secondAttribute="centerX" id="q6g-Ld-Tj5"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" secondItem="r2D-oi-XhZ" secondAttribute="width" id="qYy-rK-yZi"/>
+                                            <constraint firstItem="2AC-lQ-LEj" firstAttribute="centerX" secondItem="6zi-Zp-mPw" secondAttribute="centerX" id="sjr-yg-N4m"/>
+                                            <constraint firstItem="2AC-lQ-LEj" firstAttribute="top" secondItem="dfl-mg-dhr" secondAttribute="bottom" constant="8" symbolic="YES" id="uRQ-qt-LLU"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" secondItem="crh-R6-hjV" secondAttribute="width" id="vRA-Vx-mea"/>
+                                            <constraint firstItem="Hku-8a-mGk" firstAttribute="top" secondItem="crh-R6-hjV" secondAttribute="bottom" constant="8" symbolic="YES" id="yEY-xC-qce"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottomMargin" secondItem="6zi-Zp-mPw" secondAttribute="bottom" id="S1h-OV-vMG"/>
+                                    <constraint firstItem="6zi-Zp-mPw" firstAttribute="leading" secondItem="svh-bE-pgV" secondAttribute="leadingMargin" id="VQd-4C-RwP"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="6zi-Zp-mPw" secondAttribute="trailing" id="nyO-vI-zfZ"/>
+                                    <constraint firstItem="6zi-Zp-mPw" firstAttribute="top" secondItem="svh-bE-pgV" secondAttribute="topMargin" id="q2n-YT-1l9"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="svh-bE-pgV" firstAttribute="centerX" secondItem="UyW-FP-DaY" secondAttribute="centerX" id="CQz-LK-5oG"/>
+                            <constraint firstItem="svh-bE-pgV" firstAttribute="top" secondItem="36Q-Yg-R5X" secondAttribute="bottom" id="bD3-Kp-2KG"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="downloadDjVuButton" destination="TRq-cs-gUA" id="hCM-fY-oa7"/>
+                        <outlet property="downloadMOBIButton" destination="e0R-9A-ewM" id="eqN-G7-zYq"/>
+                        <outlet property="downloadPDFButton" destination="r2D-oi-XhZ" id="pQs-GI-5Ps"/>
+                        <outlet property="downloadPlainTextButton" destination="crh-R6-hjV" id="W5M-ir-Np1"/>
+                        <outlet property="downloadZippedDaisyButton" destination="Hku-8a-mGk" id="gaA-MW-1Iy"/>
+                        <outlet property="downloadePubButton" destination="O8i-Yk-rI6" id="w8u-LP-BVs"/>
+                        <outlet property="readOnlineButton" destination="2AC-lQ-LEj" id="c6L-IM-qAE"/>
+                        <outlet property="sendToKindleButton" destination="XNA-ax-Yz7" id="8ne-XA-aG3"/>
+                        <outlet property="workTitleView" destination="dfl-mg-dhr" id="BaK-AI-VVG"/>
+                        <segue destination="MZH-wv-EnP" kind="unwind" identifier="dismissDownload" unwindAction="dismiss:" id="njZ-N0-fHV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lrT-NH-t17" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="MZH-wv-EnP" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="3599" y="1550"/>
+        </scene>
         <!--Deluxe Detail Table View Controller-->
         <scene sceneID="khe-cu-Afx">
             <objects>
@@ -732,11 +898,12 @@
                     </tableView>
                     <connections>
                         <segue destination="RJ5-x8-uas" kind="show" identifier="zoomDeluxeDetailImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" id="GFh-zh-PVi"/>
+                        <segue destination="QNA-1N-1O1" kind="presentation" identifier="DeluxeDetailBookDownloadWorkTableViewCell" modalPresentationStyle="overCurrentContext" id="3XC-3S-Rbd"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="atG-cR-bKE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3362" y="1881"/>
+            <point key="canvasLocation" x="3339" y="2407"/>
         </scene>
         <!--Work Detail Editions Table View Controller-->
         <scene sceneID="E9G-4p-byG">
@@ -819,7 +986,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1q4-8g-iFt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2541" y="2361"/>
+            <point key="canvasLocation" x="1917" y="2435"/>
         </scene>
         <!--Deluxe Detail Table View Controller-->
         <scene sceneID="l3a-bn-RTX">
@@ -840,7 +1007,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZNf-9T-ziR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2541" y="3152"/>
+            <point key="canvasLocation" x="1917" y="3192"/>
         </scene>
         <!--Author Detail Editions Table View Controller-->
         <scene sceneID="J12-Jv-jHu">
@@ -906,7 +1073,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tJt-zC-ZSz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1791" y="2498"/>
+            <point key="canvasLocation" x="1063" y="2634"/>
         </scene>
         <!--AuthorDetail-->
         <scene sceneID="dkQ-Pm-QpD">
@@ -914,7 +1081,7 @@
                 <viewControllerPlaceholder storyboardIdentifier="AuthorDetail" storyboardName="AuthorDetail" referencedIdentifier="AuthorDetail" id="gFU-3t-GOM" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="din-9s-GtI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1791" y="1061"/>
+            <point key="canvasLocation" x="1573.5" y="1057"/>
         </scene>
         <!--WorkDetail-->
         <scene sceneID="ab5-i2-xHU">
@@ -922,7 +1089,7 @@
                 <viewControllerPlaceholder storyboardIdentifier="WorkDetail" storyboardName="WorkDetail" referencedIdentifier="WorkDetail" id="xzb-fe-grp" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U4e-GR-Zd8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2541" y="1799"/>
+            <point key="canvasLocation" x="1492.5" y="1497"/>
         </scene>
         <!--Open Library-->
         <scene sceneID="smY-AI-xbE">
@@ -1028,7 +1195,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WB4-4A-5Hw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="267" y="323"/>
         </scene>
     </scenes>
     <resources>
@@ -1037,8 +1204,9 @@
         <image name="96-book.png" width="18" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="5Aj-3x-pAW"/>
         <segue reference="J4Z-6m-v4p"/>
-        <segue reference="cIP-f1-82w"/>
-        <segue reference="Yjz-qW-0Hz"/>
+        <segue reference="DGw-06-isa"/>
+        <segue reference="MSI-XC-TWv"/>
     </inferredMetricsTieBreakers>
 </document>

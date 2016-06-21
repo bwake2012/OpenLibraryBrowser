@@ -30,6 +30,8 @@ class OLDeluxeDetailTableViewController: UITableViewController {
         DeluxeDetailBlockTableViewCell.registerCell( tableView )
         DeluxeDetailLinkTableViewCell.registerCell( tableView )
         DeluxeDetailHTMLTableViewCell.registerCell( tableView )
+        DeluxeDetailBookDownloadWorkTableViewCell.registerCell( tableView )
+        DeluxeDetailBookDownloadEditionTableViewCell.registerCell( tableView )
     }
     
     override func didReceiveMemoryWarning() {
@@ -47,11 +49,20 @@ class OLDeluxeDetailTableViewController: UITableViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if "zoomDeluxeDetailImage" == segue.identifier {
+        if let queryCoordinator = queryCoordinator {
+
+            if "zoomDeluxeDetailImage" == segue.identifier {
             
-            if let destVC = segue.destinationViewController as? OLPictureViewController {
+                if let destVC = segue.destinationViewController as? OLPictureViewController {
+                    
+                    queryCoordinator.installPictureCoordinator( destVC )
+                }
+            } else if DeluxeDetail.downloadBookWork.rawValue == segue.identifier {
                 
-                queryCoordinator?.installPictureCoordinator( destVC )
+                if let destVC = segue.destinationViewController as? OLBookDownloadViewController {
+                    
+                    queryCoordinator.installBookDownloadCoordinator( destVC )
+                }
             }
         }
     }
@@ -98,6 +109,11 @@ class OLDeluxeDetailTableViewController: UITableViewController {
             
             queryCoordinator.didSelectRowAtIndexPath( indexPath )
         }
+    }
+    
+    @IBAction func dismiss(segue: UIStoryboardSegue) {
+        
+
     }
 }
 

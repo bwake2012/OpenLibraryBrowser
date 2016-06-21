@@ -285,11 +285,11 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
                 
                 let deluxeItem =
                     DeluxeData(
-                        type: .inline,
-                        caption: "eBook:",
-                        value: item.status,
-                        extraValue: ""
-                )
+                            type: .downloadBookWork,
+                            caption: "eBook:",
+                            value: item.status,
+                            extraValue: item.itemURL
+                        )
                 
                 newData.append( deluxeItem )
             }

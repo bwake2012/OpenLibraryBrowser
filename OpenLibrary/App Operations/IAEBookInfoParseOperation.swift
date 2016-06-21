@@ -14,8 +14,6 @@ import BNRCoreDataStack
 /// An `Operation` to parse works out of a query from OpenLibrary.
 class InternetArchiveEbookInfoParseOperation: Operation {
     
-    let workKey:    String
-    let editionKey: String
     let eBookKey:   String
     
     let cacheFile: NSURL
@@ -29,15 +27,13 @@ class InternetArchiveEbookInfoParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( workKey: String, editionKey: String, eBookKey: String, cacheFile: NSURL, coreDataStack: CoreDataStack ) {
+    init( eBookKey: String, cacheFile: NSURL, coreDataStack: CoreDataStack ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
             to replace the ones in the store.
         */
         
-        self.workKey    = workKey
-        self.editionKey = editionKey
         self.eBookKey   = eBookKey
        
         self.cacheFile = cacheFile
@@ -65,7 +61,7 @@ class InternetArchiveEbookInfoParseOperation: Operation {
 
 //            let count = OLEBookFile.parseXML( self.workKey, editionKey: self.editionKey, eBookKey: self.eBookKey, stream: stream, moc: self.context )
             
-            let count = OLEBookFile.parseXML( self.workKey, editionKey: self.editionKey, eBookKey: self.eBookKey, localURL: self.cacheFile, moc: self.context )
+            let count = OLEBookFile.parseXML( self.eBookKey, localURL: self.cacheFile, moc: self.context )
  
             if 0 < count {
 

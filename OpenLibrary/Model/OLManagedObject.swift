@@ -62,16 +62,18 @@ enum FullText: Int {
 
 enum DeluxeDetail: String {
     
-    case unknown     = "unknown"
-    case inline      = "DeluxeDetailInlineTableViewCell"
-    case block       = "DeluxeDetailBlockTableViewCell"
-    case link        = "DeluxeDetailLinkTableViewCell"
-    case heading     = "DeluxeDetailHeadingTableViewCell"
-    case subheading  = "DeluxeDetailSubheadingTableViewCell"
-    case body        = "DeluxeDetailBodyTableViewCell"
-    case imageAuthor = "DeluxeDetailImageAuthorTableViewCell"
-    case imageBook   = "DeluxeDetailImageBookTableViewCell"
-    case html        = "DeluxeDetailHTMLTableViewCell"
+    case unknown                = "unknown"
+    case inline                 = "DeluxeDetailInlineTableViewCell"
+    case block                  = "DeluxeDetailBlockTableViewCell"
+    case link                   = "DeluxeDetailLinkTableViewCell"
+    case heading                = "DeluxeDetailHeadingTableViewCell"
+    case subheading             = "DeluxeDetailSubheadingTableViewCell"
+    case body                   = "DeluxeDetailBodyTableViewCell"
+    case imageAuthor            = "DeluxeDetailImageAuthorTableViewCell"
+    case imageBook              = "DeluxeDetailImageBookTableViewCell"
+    case html                   = "DeluxeDetailHTMLTableViewCell"
+    case downloadBookWork       = "DeluxeDetailBookDownloadWorkTableViewCell"
+    case downloadBookEdition    = "DeluxeDetailBookDownloadEditionTableViewCell"
 }
 
 struct DeluxeData {
@@ -203,7 +205,7 @@ class OLManagedObject: NSManagedObject {
     
     func localURL( key:String, size: String, index: Int = 0 ) -> NSURL {
         
-        let docFolder = try! NSFileManager.defaultManager().URLForDirectory( .DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false )
+        let docFolder = try! NSFileManager.defaultManager().URLForDirectory( .CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false )
         
         let imagesFolder = docFolder.URLByAppendingPathComponent( "images" )
         
