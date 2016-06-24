@@ -14,8 +14,8 @@ import BNRCoreDataStack
 
 let kEBookFileCache = "eBookXMLFileCache"
 
-let kFileTypeMOBI     = "mobi"
-let kFileTypeEPUB     = "epub"
+let kFileTypeMOBI     = "MobiPocket"
+let kFileTypeEPUB     = "ePub"
 let kFileTypeDjVu     = "DjVu"
 let kFileTypeTextPDF  = "Text PDF"
 let kFileTypeDjVuText = "DjVuTXT"
@@ -159,20 +159,20 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
                 if let remoteURL = assembleRemoteURL( eBookKey, fileFormat: bookType ),
                        localPath = assembleLocalPath( eBookKey, fileFormat: bookType ) {
                 
-                    downloadAndOpenBook( sourceView, localPath: localPath, remoteURL: remoteURL )
+                    downloadAndOpenBook( sourceView, localPath: localPath, remoteURL: remoteURL, fileFormat: bookType )
                 }
             }
         }
     }
     
-    func downloadAndOpenBook( sourceView: UIView, localPath: String, remoteURL: NSURL ) {
+    func downloadAndOpenBook( sourceView: UIView, localPath: String, remoteURL: NSURL, fileFormat: String ) {
         
         let localURL = NSURL( fileURLWithPath: localPath )
 
         // don't download a book if we already have a copy
         if NSFileManager.defaultManager().fileExistsAtPath( localPath ) {
             
-            openBook( sourceView, url: localURL )
+            openBook( sourceView, url: localURL, fileFormat: fileFormat )
             
         } else {
 
@@ -187,7 +187,7 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
                             
                             dispatch_async( dispatch_get_main_queue() ) {
                                 
-                                strongSelf.openBook( sourceView, url: localURL )
+                                strongSelf.openBook( sourceView, url: localURL, fileFormat: fileFormat )
                             }
                         }
                     }
@@ -289,7 +289,7 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         return path
     }
     
-    func openBook( sourceView: UIView, url: NSURL ) {
+    func openBook( sourceView: UIView, url: NSURL, fileFormat: String ) {
         
         if let downloadVC = self.downloadVC {
             
@@ -299,9 +299,21 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
                 docInteractionController.delegate = self
                 docInteractionController.name = self.heading
                 
-                docInteractionController.presentOpenInMenuFromRect(
-                        CGRectZero, inView: downloadVC.view, animated: true
-                    )
+                let success = docInteractionController.presentOpenInMenuFromRect(
+                                        CGRectZero, inView: downloadVC.view, animated: true
+                                    )
+                if !success {
+                    
+                    let alert =
+                            UIAlertController(
+                                    title: self.heading,
+                                    message: "Could not find an application to open your \(fileFormat) book.",
+                                    preferredStyle: .Alert
+                                )
+                    alert.addAction( UIAlertAction( title: "OK", style: .Default, handler: nil ) )
+                    
+                    downloadVC.presentViewController( alert, animated: true, completion: nil )
+                }
             }
             self.bookDownloadOperation = nil
         }
