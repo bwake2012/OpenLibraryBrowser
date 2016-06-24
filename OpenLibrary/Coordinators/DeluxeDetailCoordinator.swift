@@ -78,13 +78,9 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
             
             vc.performSegueWithIdentifier( "zoomDeluxeDetailImage", sender: self )
             
-        } else if .downloadBookWork == obj.type || .downloadBookEdition == obj.type {
+        } else if .downloadBook == obj.type {
             
             vc.performSegueWithIdentifier( obj.type.rawValue, sender: self )
-            
-        } else if .downloadBookEdition == obj.type {
-            
-            vc.performSegueWithIdentifier( "downloadEditionEBook", sender: self )
             
         }
     }
@@ -150,7 +146,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
                     }
                     cell = imageCell
                 }
-            case .downloadBookWork, .downloadBookEdition:
+            case .downloadBook:
                 if let headerCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? DeluxeDetailTableViewCell {
                     
                     headerCell.configure( object )

@@ -72,8 +72,7 @@ enum DeluxeDetail: String {
     case imageAuthor            = "DeluxeDetailImageAuthorTableViewCell"
     case imageBook              = "DeluxeDetailImageBookTableViewCell"
     case html                   = "DeluxeDetailHTMLTableViewCell"
-    case downloadBookWork       = "DeluxeDetailBookDownloadWorkTableViewCell"
-    case downloadBookEdition    = "DeluxeDetailBookDownloadEditionTableViewCell"
+    case downloadBook           = "DeluxeDetailBookDownloadTableViewCell"
 }
 
 struct DeluxeData {

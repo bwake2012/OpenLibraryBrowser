@@ -1,5 +1,5 @@
 //
-//  DeluxeDetailBookDownloadWorkTableViewCell.swift
+//  DeluxeDetailBookDownloadTableViewCell.swift
 //  OpenLibrary
 //
 //  Created by Bob Wakefield on 4/28/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DeluxeDetailBookDownloadWorkTableViewCell: DeluxeDetailTableViewCell {
+class DeluxeDetailBookDownloadTableViewCell: DeluxeDetailTableViewCell {
 
     @IBOutlet weak var captionView: UILabel!
     @IBOutlet weak var inlineTextView: UILabel!
@@ -20,11 +20,11 @@ class DeluxeDetailBookDownloadWorkTableViewCell: DeluxeDetailTableViewCell {
     }
 }
 
-extension DeluxeDetailBookDownloadWorkTableViewCell {
+extension DeluxeDetailBookDownloadTableViewCell {
     
     override class func registerCell( tableView: UITableView ) {
         
-        registerCell( tableView, className: DeluxeDetail.downloadBookWork.rawValue )
+        registerCell( tableView, className: DeluxeDetail.downloadBook.rawValue )
     }
     
 }

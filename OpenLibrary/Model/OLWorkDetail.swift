@@ -286,7 +286,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
                 if "full access" == item.status {
                     let deluxeItem =
                         DeluxeData(
-                                type: .downloadBookWork,
+                                type: .downloadBook,
                                 caption: "eBook:",
                                 value: item.status,
                                 extraValue: item.itemURL

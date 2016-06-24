@@ -368,7 +368,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                 
                 let deluxeItem =
                     DeluxeData(
-                        type: .downloadBookEdition,
+                        type: .downloadBook,
                         caption: "eBook:",
                         value: item.status,
                         extraValue: item.itemURL

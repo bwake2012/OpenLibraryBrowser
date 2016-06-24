@@ -30,8 +30,7 @@ class OLDeluxeDetailTableViewController: UITableViewController {
         DeluxeDetailBlockTableViewCell.registerCell( tableView )
         DeluxeDetailLinkTableViewCell.registerCell( tableView )
         DeluxeDetailHTMLTableViewCell.registerCell( tableView )
-        DeluxeDetailBookDownloadWorkTableViewCell.registerCell( tableView )
-        DeluxeDetailBookDownloadEditionTableViewCell.registerCell( tableView )
+        DeluxeDetailBookDownloadBookTableViewCell.registerCell( tableView )
     }
     
     override func didReceiveMemoryWarning() {
@@ -57,8 +56,7 @@ class OLDeluxeDetailTableViewController: UITableViewController {
                     
                     queryCoordinator.installPictureCoordinator( destVC )
                 }
-            } else if DeluxeDetail.downloadBookWork.rawValue == segue.identifier ||
-                      DeluxeDetail.downloadBookEdition.rawValue == segue.identifier {
+            } else if DeluxeDetail.downloadBook.rawValue == segue.identifier {
                 
                 if let destVC = segue.destinationViewController as? OLBookDownloadViewController {
                     
