@@ -30,7 +30,7 @@ class OLDeluxeDetailTableViewController: UITableViewController {
         DeluxeDetailBlockTableViewCell.registerCell( tableView )
         DeluxeDetailLinkTableViewCell.registerCell( tableView )
         DeluxeDetailHTMLTableViewCell.registerCell( tableView )
-        DeluxeDetailBookDownloadBookTableViewCell.registerCell( tableView )
+        DeluxeDetailBookDownloadTableViewCell.registerCell( tableView )
     }
     
     override func didReceiveMemoryWarning() {
