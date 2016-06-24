@@ -10,14 +10,14 @@ import Foundation
 
 class BookDownloadOperation: GroupOperation {
     // MARK: Properties
-    let bookURL: NSURL
+    let cacheBookURL: NSURL
 
     // MARK: Initialization
     
-    /// - parameter cacheFile: The file `NSURL` to which the earthquake feed will be downloaded.
-    init( stringID: String, bookKeyName: String, size: String, type: String, bookURL: NSURL ) {
+    /// - parameter cacheFile: The file `NSURL` to which the eBook will be downloaded.
+    init( cacheBookURL: NSURL, remoteBookURL: NSURL ) {
 
-        self.bookURL = bookURL
+        self.cacheBookURL = cacheBookURL
 
         super.init(operations: [])
         name = "Download book"
@@ -30,9 +30,7 @@ class BookDownloadOperation: GroupOperation {
             or when the services you use offer secure communication options, you
             should always prefer to use https.
         */
-        let urlString = "https://covers.openlibrary.org/\(type)/\(bookKeyName)/\(stringID)-\(size).jpg?default=false"
-        let url = NSURL( string: urlString )!
-        let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
+        let task = NSURLSession.sharedSession().downloadTaskWithURL( remoteBookURL ) {
             
             url, response, error in
             
@@ -41,7 +39,7 @@ class BookDownloadOperation: GroupOperation {
         
         let taskOperation = URLSessionTaskOperation(task: task)
         
-        let reachabilityCondition = ReachabilityCondition(host: url)
+        let reachabilityCondition = ReachabilityCondition( host: remoteBookURL )
         taskOperation.addCondition(reachabilityCondition)
 
         let networkObserver = NetworkObserver()
@@ -56,30 +54,20 @@ class BookDownloadOperation: GroupOperation {
 
             aggregateError( error )
 
-        } else if let localURL = url {
+        } else if let tempURL = url {
             
             do {
                 /*
                     If we already have a file at this location, just delete it.
                     Also, swallow the error, because we don't really care about it.
                 */
-                try NSFileManager.defaultManager().removeItemAtURL( self.bookURL )
+                try NSFileManager.defaultManager().removeItemAtURL( self.cacheBookURL )
             }
             catch {}
             
-            if let directoryURL = self.bookURL.URLByDeletingLastPathComponent {
-
-                do {
-                    try NSFileManager.defaultManager().createDirectoryAtURL( directoryURL, withIntermediateDirectories: true, attributes: nil )
-                }
-                catch let error as NSError {
-                    print( "\(error)" )
-                }
-            }
-
             do {
                 
-                try NSFileManager.defaultManager().moveItemAtURL( localURL, toURL: self.bookURL )
+                try NSFileManager.defaultManager().moveItemAtURL( tempURL, toURL: self.cacheBookURL )
             }
             catch let error as NSError {
                 aggregateError(error)

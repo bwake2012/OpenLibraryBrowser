@@ -27,38 +27,81 @@ class OLBookDownloadViewController: UIViewController, UIDocumentInteractionContr
 
     @IBAction func readOnline(sender: UIButton) {
         
-        performSegueWithIdentifier( "dismissDownload", sender: self )
+        queryCoordinator?.readOnline()
+        
+//        performSegueWithIdentifier( "dismissDownload", sender: self )
         
     }
 
     @IBAction func downloadPDF(sender: UIButton) {
+        
+        queryCoordinator?.readTextPDF( sender )
     }
 
     @IBAction func downloadPlainText(sender: UIButton) {
+        
+        queryCoordinator?.readText( sender )
     }
 
     @IBAction func downloadZippedDaisy(sender: UIButton) {
     }
 
     @IBAction func downloadePub(sender: UIButton) {
+        
+        queryCoordinator?.readEPUB( sender )
     }
 
     @IBAction func downloadDjVu(sender: UIButton) {
+        
+        queryCoordinator?.readDjVu( sender )
     }
 
     @IBAction func downloadMOBI(sender: UIButton) {
+        
+        queryCoordinator?.readMOBI( sender )
     }
 
     @IBAction func sendToKindle(sender: UIButton) {
+        
+        queryCoordinator?.sendToKindle( sender )
     }
 
+    @IBAction func closeView( sender: UIButton ) {
+        
+        performSegueWithIdentifier( "dismissDownload", sender: self )
+    }
+    
     // MARK: UIViewController
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
+
         assert( nil != queryCoordinator )
-        
         queryCoordinator!.updateUI()
     }
+    
+    // MARK: Utility
+    
+    func updateHeading( heading: String ) {
+        
+        workTitleView.text = heading
+    }
+    
+    func updateUI( eBookFile: OLEBookFile ) {
+        
+        switch( eBookFile.format ) {
+            
+            case kFileTypeDjVu:
+                downloadDjVuButton.enabled = true
+                break
+            case kFileTypeTextPDF:
+                downloadPDFButton.enabled = true
+                break
+            case kFileTypeDjVuText:
+                downloadPlainTextButton.enabled = true
+            default:
+                break
+        }
+    }
+    
 }

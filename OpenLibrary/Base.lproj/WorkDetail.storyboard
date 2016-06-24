@@ -204,7 +204,7 @@
                 <viewControllerPlaceholder storyboardIdentifier="AuthorDetail" storyboardName="AuthorDetail" referencedIdentifier="AuthorDetail" id="gFU-3t-GOM" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="din-9s-GtI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1791" y="1061"/>
+            <point key="canvasLocation" x="3290.5" y="1751"/>
         </scene>
         <!--photoCoverPictureViewController-->
         <scene sceneID="wO2-Fy-ujG">
@@ -212,7 +212,7 @@
                 <viewControllerPlaceholder storyboardIdentifier="photoCoverPictureViewController" storyboardName="Main" referencedIdentifier="photoCoverPictureViewController" id="I4B-nK-8hJ" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5aa-2l-LmQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4019" y="1166"/>
+            <point key="canvasLocation" x="3354" y="1799"/>
         </scene>
         <!--UITableViewController-zUC-U6-Nsg-->
         <scene sceneID="lKe-XV-7lP">
@@ -220,7 +220,7 @@
                 <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="UITableViewController-zUC-U6-Nsg" id="4xQ-04-bzr" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rxm-3x-Cvc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3362" y="1881"/>
+            <point key="canvasLocation" x="3361.5" y="1848"/>
         </scene>
         <!--WorkDetailEditons-->
         <scene sceneID="BDI-2e-s3K">

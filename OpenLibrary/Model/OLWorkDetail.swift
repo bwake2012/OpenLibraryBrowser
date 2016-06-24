@@ -283,15 +283,17 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             
             for item in ebook_items {
                 
-                let deluxeItem =
-                    DeluxeData(
-                            type: .downloadBookWork,
-                            caption: "eBook:",
-                            value: item.status,
-                            extraValue: item.itemURL
-                        )
-                
-                newData.append( deluxeItem )
+                if "full access" == item.status {
+                    let deluxeItem =
+                        DeluxeData(
+                                type: .downloadBookWork,
+                                caption: "eBook:",
+                                value: item.status,
+                                extraValue: item.itemURL
+                            )
+                    
+                    newData.append( deluxeItem )
+                }
             }
             
             if !newData.isEmpty {

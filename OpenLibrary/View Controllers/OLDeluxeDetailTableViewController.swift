@@ -57,7 +57,8 @@ class OLDeluxeDetailTableViewController: UITableViewController {
                     
                     queryCoordinator.installPictureCoordinator( destVC )
                 }
-            } else if DeluxeDetail.downloadBookWork.rawValue == segue.identifier {
+            } else if DeluxeDetail.downloadBookWork.rawValue == segue.identifier ||
+                      DeluxeDetail.downloadBookEdition.rawValue == segue.identifier {
                 
                 if let destVC = segue.destinationViewController as? OLBookDownloadViewController {
                     

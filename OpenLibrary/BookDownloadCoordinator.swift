@@ -8,19 +8,36 @@
 
 import Foundation
 import CoreData
+import SafariServices
 
 import BNRCoreDataStack
 
 let kEBookFileCache = "eBookXMLFileCache"
 
-class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate {
+let kFileTypeMOBI     = "mobi"
+let kFileTypeEPUB     = "epub"
+let kFileTypeDjVu     = "DjVu"
+let kFileTypeTextPDF  = "Text PDF"
+let kFileTypeDjVuText = "DjVuTXT"
+
+class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate, SFSafariViewControllerDelegate, UIDocumentInteractionControllerDelegate {
     
     weak var downloadVC: OLBookDownloadViewController?
     
+    private var heading: String
     private var bookURL: NSURL
     private var eBookKey = ""
 
-    var xmlFileDownloadOperation: InternetArchiveEbookInfoGetOperation?
+    private var xmlFileDownloadOperation: InternetArchiveEbookInfoGetOperation?
+    private var bookDownloadOperation: BookGetOperation?
+    
+    private var docInteractionController: UIDocumentInteractionController?
+    
+    private lazy var cachesFolder =
+        try! NSFileManager.defaultManager().URLForDirectory(
+                        .CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true
+                    )
+
     
     typealias FetchedEBookFileController    = FetchedResultsController< OLEBookFile >
     typealias FetchedEBookFileChange        = FetchedResultsObjectChange< OLEBookFile >
@@ -55,10 +72,12 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     init(
         operationQueue: OperationQueue,
         coreDataStack: CoreDataStack,
+        heading: String,
         bookURL: NSURL,
         downloadVC: OLBookDownloadViewController
     ) {
     
+        self.heading = heading
         self.bookURL = bookURL
         self.eBookKey = bookURL.lastPathComponent ?? ""
     
@@ -68,6 +87,11 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     }
     
     func updateUI() {
+        
+        if let downloadVC = downloadVC {
+            
+            downloadVC.updateHeading( heading )
+        }
         
         if nil != downloadVC {
             do {
@@ -79,6 +103,218 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             }
         }
     }
+    
+    // MARK: utility
+    
+    func readOnline() {
+        
+        if let downloadVC = downloadVC {
+            showLinkedWebSite( downloadVC, url: bookURL )
+        }
+    }
+    
+    func readMOBI( button: UIButton ) {
+        
+        downloadAndOpenBook( button, bookType: kFileTypeMOBI )
+    }
+    
+    func readEPUB( button: UIButton ) {
+        
+        downloadAndOpenBook( button, bookType: kFileTypeEPUB )
+    }
+    
+    func readTextPDF( button: UIButton ) {
+        
+        downloadAndOpenBook( button, bookType: kFileTypeTextPDF )
+    }
+    
+    func readText( button: UIButton ) {
+        
+        downloadAndOpenBook( button, bookType: kFileTypeDjVuText )
+    }
+    
+    func readDjVu( button: UIButton ) {
+        
+        downloadAndOpenBook( button, bookType: kFileTypeDjVu )
+    }
+    
+    func sendToKindle( button: UIButton ) {
+        
+        if let downloadVC = downloadVC {
+
+            if let amazonURL = assembleKindleURL( eBookKey ) {
+            
+                showLinkedWebSite( downloadVC, url: amazonURL )
+            }
+        }
+    }
+    
+    func downloadAndOpenBook( sourceView: UIView, bookType: String ) {
+
+        // don't try to open a book if a book download is in progress
+        if nil == bookDownloadOperation {
+            
+            if nil != downloadVC {
+
+                if let remoteURL = assembleRemoteURL( eBookKey, fileFormat: bookType ),
+                       localPath = assembleLocalPath( eBookKey, fileFormat: bookType ) {
+                
+                    downloadAndOpenBook( sourceView, localPath: localPath, remoteURL: remoteURL )
+                }
+            }
+        }
+    }
+    
+    func downloadAndOpenBook( sourceView: UIView, localPath: String, remoteURL: NSURL ) {
+        
+        let localURL = NSURL( fileURLWithPath: localPath )
+
+        // don't download a book if we already have a copy
+        if NSFileManager.defaultManager().fileExistsAtPath( localPath ) {
+            
+            openBook( sourceView, url: localURL )
+            
+        } else {
+
+            print( "local:\(localURL.absoluteString)\nremote:\(remoteURL.absoluteString)" )
+            
+            bookDownloadOperation =
+                BookGetOperation( cacheBookURL: localURL, remoteBookURL: remoteURL ) {
+                    
+                        [weak self] in
+                        
+                        if let strongSelf = self {
+                            
+                            dispatch_async( dispatch_get_main_queue() ) {
+                                
+                                strongSelf.openBook( sourceView, url: localURL )
+                            }
+                        }
+                    }
+            
+            bookDownloadOperation?.userInitiated = true
+            operationQueue.addOperation( bookDownloadOperation! )
+        }
+    }
+    
+    func findFileName( fileFormat: String ) -> String? {
+    
+        if let fetchedObjects = fetchedEBookFileController.fetchedObjects {
+            
+            for file in fetchedObjects {
+                
+                if fileFormat == file.format {
+                    
+                    return file.name
+                }
+            }
+        }
+        
+        return nil
+    }
+
+    func assembleRemoteURL( eBookKey: String, fileFormat: String ) -> NSURL? {
+        
+        var url: NSURL?
+        
+        if let rootURL = bookURL.host, components = bookURL.pathComponents {
+            
+            var fileName = ""
+            
+            switch fileFormat {
+            case kFileTypeEPUB:
+                fileName = eBookKey + ".epub"
+            case kFileTypeMOBI:
+                fileName = eBookKey + ".mobi"
+            default:
+                guard let name = findFileName( fileFormat ) else { return nil }
+                
+                fileName = name
+                break
+            }
+            
+            if !fileName.isEmpty {
+                var newComponents = [String]()
+                for component in components {
+                    
+                    if "stream" == component {
+                        
+                        newComponents.append( "download" )
+                        
+                    } else {
+                        
+                        newComponents.append( component )
+                    }
+                }
+                newComponents = newComponents.filter { (x) -> Bool in !x.isEmpty && "/" != x }
+                
+                let path = newComponents.joinWithSeparator( "/" )
+                let completePath = "https://" + rootURL + "/" + path + "/" + fileName
+                if let newURL = NSURL( string: completePath ) {
+                    
+                    url = newURL
+                }
+            }
+        }
+        
+        return url
+    }
+    
+    func assembleLocalPath( eBookKey: String, fileFormat: String ) -> String? {
+    
+        var path: String?
+        
+        if let rootPath = cachesFolder.path {
+
+            var fileName = ""
+
+            switch fileFormat {
+            case kFileTypeEPUB:
+                fileName = eBookKey + ".epub"
+            case kFileTypeMOBI:
+                fileName = eBookKey + ".mobi"
+            default:
+                guard let name = findFileName( fileFormat ) else { return nil }
+                
+                fileName = name
+                break
+            }
+            
+            if !fileName.isEmpty {
+
+                path = rootPath + "/" + fileName
+            }
+        }
+
+        return path
+    }
+    
+    func openBook( sourceView: UIView, url: NSURL ) {
+        
+        if let downloadVC = self.downloadVC {
+            
+            self.docInteractionController = UIDocumentInteractionController( URL: url )
+            if let docInteractionController = self.docInteractionController {
+
+                docInteractionController.delegate = self
+                docInteractionController.name = self.heading
+                
+                docInteractionController.presentOpenInMenuFromRect(
+                        CGRectZero, inView: downloadVC.view, animated: true
+                    )
+            }
+            self.bookDownloadOperation = nil
+        }
+    }
+    
+    func assembleKindleURL( eBookKey: String ) -> NSURL? {
+        
+        let urlString =
+            "https://www.amazon.com/gp/digital/fiona/web-to-kindle?" +
+                "clientid=IA" + "&itemid=\(eBookKey)" + "&docid=\(eBookKey)"
+        
+        return NSURL( string: urlString )
+    }
 
     func newQuery( eBookKey: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) -> Void {
         
@@ -87,7 +323,10 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
                 InternetArchiveEbookInfoGetOperation(
                     eBookKey: eBookKey,
                     coreDataStack: coreDataStack
-                ) {}
+                ) {
+                    
+                    self.xmlFileDownloadOperation = nil
+                }
             
             xmlFileDownloadOperation!.userInitiated = true
             operationQueue.addOperation( xmlFileDownloadOperation! )
@@ -122,6 +361,17 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             
             newQuery( eBookKey, userInitiated: true, refreshControl: nil )
             
+        } else {
+            
+            
+            if let fetchedObjects = fetchedEBookFileController.fetchedObjects {
+                
+                for file in fetchedObjects {
+                    
+                    downloadVC?.updateUI( file )
+                        
+                }
+            }
         }
     }
     
@@ -166,5 +416,23 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             break
         }
     }
+    
+    // MARK: Safari View Controller
+    func showLinkedWebSite( vc: UIViewController, url: NSURL? ) {
+        
+        if let url = url {
+            let webVC = SFSafariViewController( URL: url )
+            webVC.delegate = self
+            
+            vc.presentViewController( webVC, animated: true, completion: nil )
+        }
+    }
+    
+    // MARK: SFSafariViewControllerDelegate
+    func safariViewControllerDidFinish(controller: SFSafariViewController) {
+        
+        controller.dismissViewControllerAnimated( true, completion: nil )
+    }
+
 }
 

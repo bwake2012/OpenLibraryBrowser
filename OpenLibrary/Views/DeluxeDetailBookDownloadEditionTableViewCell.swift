@@ -24,7 +24,7 @@ extension DeluxeDetailBookDownloadEditionTableViewCell {
     
     override class func registerCell( tableView: UITableView ) {
         
-        registerCell( tableView, className: DeluxeDetail.downloadBookWork.rawValue )
+        registerCell( tableView, className: DeluxeDetail.downloadBookEdition.rawValue )
     }
     
 }

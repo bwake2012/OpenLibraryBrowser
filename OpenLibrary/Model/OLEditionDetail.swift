@@ -75,7 +75,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                 
                 if let moc = self.managedObjectContext {
                     
-                    let items: [OLEBookItem]? = OLEBookItem.findObject( key, entityName: OLEBookItem.entityName, keyFieldName: "editionKey", moc: moc )
+                    let items: [OLEBookItem]? = OLEBookItem.findObject( work_key, entityName: OLEBookItem.entityName, keyFieldName: "workKey", moc: moc )
                     if let items = items where !items.isEmpty {
                         
                         ebook_item_cache = items
@@ -368,10 +368,10 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                 
                 let deluxeItem =
                     DeluxeData(
-                        type: .inline,
+                        type: .downloadBookEdition,
                         caption: "eBook:",
                         value: item.status,
-                        extraValue: ""
+                        extraValue: item.itemURL
                 )
                 
                 newData.append( deluxeItem )

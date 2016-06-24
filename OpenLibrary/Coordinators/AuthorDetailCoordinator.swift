@@ -313,6 +313,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             DeluxeDetailCoordinator(
                     operationQueue: operationQueue,
                     coreDataStack: coreDataStack,
+                    heading: authorDetail!.name,
                     deluxeData: authorDetail!.deluxeData,
                     imageType: authorDetail!.imageType,
                     deluxeDetailVC: destVC

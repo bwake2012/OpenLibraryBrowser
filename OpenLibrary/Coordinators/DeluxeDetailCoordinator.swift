@@ -18,6 +18,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
     
     weak var deluxeDetailVC: OLDeluxeDetailTableViewController?
 
+    var heading: String
     var deluxeData: [[DeluxeData]]
     var imageType: String
     
@@ -26,11 +27,13 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
     init(
             operationQueue: OperationQueue,
             coreDataStack: CoreDataStack,
+            heading: String,
             deluxeData: [[DeluxeData]],
             imageType: String,
             deluxeDetailVC: OLDeluxeDetailTableViewController
         ) {
         
+        self.heading = heading
         self.deluxeData = deluxeData
         self.imageType = imageType
         self.deluxeDetailVC = deluxeDetailVC
@@ -167,7 +170,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
     }
 
     // MARK: utility
-    
+
     // MARK: query coordinator installation
     
     func installPictureCoordinator( destVC: OLPictureViewController ) -> Void {
@@ -205,13 +208,14 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
             BookDownloadCoordinator(
                     operationQueue: operationQueue,
                     coreDataStack: coreDataStack,
+                    heading: heading,
                     bookURL: bookURL,
                     downloadVC: destVC
                 )
     }
     
-    // MARK: SFSafariViewControllerDelegate
     
+    // MARK: Safari View Controller
     func showLinkedWebSite( vc: UIViewController, url: NSURL? ) {
         
         if let url = url {
@@ -221,6 +225,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
         }
     }
     
+    // MARK: SFSafariViewControllerDelegate
     func safariViewControllerDidFinish(controller: SFSafariViewController) {
         
         controller.dismissViewControllerAnimated( true, completion: nil )

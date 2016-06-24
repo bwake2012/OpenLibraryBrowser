@@ -26,10 +26,11 @@ class BookGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( stringID: String, bookKeyName: String, localURL: NSURL, size: String, type: String, completionHandler: Void -> Void ) {
+
+    init( cacheBookURL: NSURL, remoteBookURL: NSURL, completionHandler: Void -> Void ) {
         
         downloadOperation =
-            BookDownloadOperation( stringID: stringID, bookKeyName: bookKeyName, size: size, type: type, bookURL: localURL )
+            BookDownloadOperation( cacheBookURL: cacheBookURL, remoteBookURL: remoteBookURL )
         let finishOperation = NSBlockOperation( block: completionHandler )
         
         // These operations must be executed in order
@@ -37,18 +38,13 @@ class BookGetOperation: GroupOperation {
         
         super.init( operations: [downloadOperation, finishOperation] )
         
-        queuePriority = .Low
+//        queuePriority = .Low
         
-//        addCondition( MutuallyExclusive<BookGetOperation>() )
+        addCondition( MutuallyExclusive<BookGetOperation>() )
 
         name = "Get book"
     }
 
-    convenience init( numberID: Int, bookKeyName: String, localURL: NSURL, size: String, type: String, completionHandler: Void -> Void ) {
-
-        self.init( stringID: String( numberID ), bookKeyName: bookKeyName, localURL: localURL, size: size, type: type, completionHandler: completionHandler )
-    }
-    
     override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
         if let firstError = errors.first where (operation === downloadOperation) {
             produceAlert(firstError)

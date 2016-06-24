@@ -417,6 +417,7 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
             DeluxeDetailCoordinator(
                     operationQueue: operationQueue,
                     coreDataStack: coreDataStack,
+                    heading: workDetail.title,
                     deluxeData: workDetail.deluxeData,
                     imageType: workDetail.imageType,
                     deluxeDetailVC: destVC

@@ -305,6 +305,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             DeluxeDetailCoordinator(
                     operationQueue: operationQueue,
                     coreDataStack: coreDataStack,
+                    heading: editionDetail.title,
                     deluxeData: editionDetail.deluxeData,
                     imageType: "b",
                     deluxeDetailVC: deluxeDetailVC
