@@ -480,7 +480,7 @@
                     </tableView>
                     <connections>
                         <segue destination="RJ5-x8-uas" kind="show" identifier="zoomDeluxeDetailImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" id="MSI-XC-TWv"/>
-                        <segue destination="QNA-1N-1O1" kind="presentation" identifier="DeluxeDetailBookDownloadWorkTableViewCell" modalPresentationStyle="overCurrentContext" modalTransitionStyle="coverVertical" id="DGw-06-isa"/>
+                        <segue destination="QNA-1N-1O1" kind="presentation" identifier="DeluxeDetailBookDownloadTableViewCell" modalPresentationStyle="overCurrentContext" modalTransitionStyle="coverVertical" id="DGw-06-isa"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="inl-a4-CKZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -890,7 +890,7 @@
                     </tableView>
                     <connections>
                         <segue destination="RJ5-x8-uas" kind="show" identifier="zoomDeluxeDetailImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" id="GFh-zh-PVi"/>
-                        <segue destination="QNA-1N-1O1" kind="presentation" identifier="DeluxeDetailBookDownloadWorkTableViewCell" modalPresentationStyle="overCurrentContext" id="3XC-3S-Rbd"/>
+                        <segue destination="QNA-1N-1O1" kind="presentation" identifier="DeluxeDetailBookDownloadTableViewCell" modalPresentationStyle="overCurrentContext" id="3XC-3S-Rbd"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="atG-cR-bKE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -995,7 +995,7 @@
                     </tableView>
                     <connections>
                         <segue destination="RJ5-x8-uas" kind="show" identifier="zoomDeluxeDetailImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" id="Yjz-qW-0Hz"/>
-                        <segue destination="QNA-1N-1O1" kind="presentation" identifier="DeluxeDetailBookDownloadEditionTableViewCell" id="N1H-Eu-32X"/>
+                        <segue destination="QNA-1N-1O1" kind="presentation" identifier="DeluxeDetailBookDownloadTableViewCell" id="N1H-Eu-32X"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZNf-9T-ziR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1199,7 +1199,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="J4Z-6m-v4p"/>
         <segue reference="5Aj-3x-pAW"/>
-        <segue reference="3XC-3S-Rbd"/>
         <segue reference="GFh-zh-PVi"/>
+        <segue reference="3XC-3S-Rbd"/>
     </inferredMetricsTieBreakers>
 </document>
