@@ -38,7 +38,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
         self.imageType = imageType
         self.deluxeDetailVC = deluxeDetailVC
 
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
+        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: deluxeDetailVC )
         
     }
     

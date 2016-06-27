@@ -36,7 +36,7 @@ class PictureViewCoordinator: OLQueryCoordinator {
     
         self.pictureVC = pictureVC
 
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
+        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: pictureVC )
     }
     
     func updateUI() {
@@ -58,7 +58,7 @@ class PictureViewCoordinator: OLQueryCoordinator {
                             
                             if let strongSelf = self {
 
-                                dispatch_async( dispatch_get_main_queue() ) {
+                            dispatch_async( dispatch_get_main_queue() ) {
                                     
                                     strongSelf.pictureVC?.displayImage( strongSelf.localURL )
                                 }

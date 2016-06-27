@@ -46,21 +46,9 @@ class InternetArchiveEbookInfoParseOperation: Operation {
     }
 
     override func execute() {
-//        guard let stream = NSInputStream(URL: cacheFile) else {
-//            finish()
-//            return
-//        }
-//        
-//        stream.open()
-//        
-//        defer {
-//            stream.close()
-//        }
         
         context.performBlock {
 
-//            let count = OLEBookFile.parseXML( self.workKey, editionKey: self.editionKey, eBookKey: self.eBookKey, stream: stream, moc: self.context )
-            
             let count = OLEBookFile.parseXML( self.eBookKey, localURL: self.cacheFile, moc: self.context )
  
             if 0 < count {

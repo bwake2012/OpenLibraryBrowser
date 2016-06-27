@@ -92,14 +92,16 @@ class IAEBookItemListParseOperation: Operation {
                     var index = 0
                     for item in items {
                         
-                        if OLEBookItem.parseJSON( item, moc: self.context ) != nil {
+                        let object = OLEBookItem.parseJSON( item, moc: self.context )
+                        if nil != object {
+                            
+//                            print( "\(index): \(object.workKey) \(object.editionKey) \(object.eBookKey)" )
                         
                             index += 1
                         }
                     }
 
                     let error = self.saveContext()
-                
                     self.finishWithError( error )
                 }
             }

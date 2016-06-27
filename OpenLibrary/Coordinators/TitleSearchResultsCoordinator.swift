@@ -57,7 +57,7 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedRe
         
         self.tableVC = tableVC
         
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
+        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: tableVC )
         
         updateUI()
     }

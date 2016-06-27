@@ -43,9 +43,9 @@ class LanguagesCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate
         return frc
     }()
     
-    override init( operationQueue: OperationQueue, coreDataStack: CoreDataStack ) {
+    override init( operationQueue: OperationQueue, coreDataStack: CoreDataStack, viewController: UIViewController ) {
         
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
+        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: viewController )
         
         updateUI()
     }

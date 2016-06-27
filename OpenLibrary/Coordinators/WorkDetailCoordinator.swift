@@ -37,9 +37,9 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
         
         let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
         let today = NSDate()
-        let yesterday = today.dateByAddingTimeInterval( -secondsPerDay )
+        let lastWeek = today.dateByAddingTimeInterval( -7 * secondsPerDay )
         
-        fetchRequest.predicate = NSPredicate( format: "key==%@ && retrieval_date > %@", "\(key)", yesterday )
+        fetchRequest.predicate = NSPredicate( format: "key==%@ && retrieval_date > %@", "\(key)", lastWeek )
         
         fetchRequest.sortDescriptors =
             [
@@ -67,7 +67,7 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
         self.workKey = searchInfo.key
         self.workDetailVC = workDetailVC
 
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
+        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: workDetailVC )
     }
     
     init(
@@ -83,7 +83,7 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
         self.workKey = workKey
         self.workDetailVC = workDetailVC
         
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
+        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: workDetailVC )
     }
     
     func updateUI( workDetail: OLWorkDetail ) {

@@ -30,9 +30,9 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
  
         let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
         let today = NSDate()
-        let yesterday = today.dateByAddingTimeInterval( -secondsPerDay )
+        let lastWeek = today.dateByAddingTimeInterval( -7 * secondsPerDay )
         
-        fetchRequest.predicate = NSPredicate( format: "work_key==%@ && retrieval_date > %@", "\(self.workKey)", yesterday )
+        fetchRequest.predicate = NSPredicate( format: "work_key==%@ && retrieval_date > %@", "\(self.workKey)", lastWeek )
         
         fetchRequest.sortDescriptors =
             [NSSortDescriptor(key: "coversFound", ascending: false),
@@ -61,7 +61,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
 //        self.worksCount = searchInfo.work_count
         self.tableVC = tableVC
         
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
+        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: tableVC )
         
         updateUI()
     }

@@ -49,7 +49,7 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         
 //        let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
 //        let today = NSDate()
-//        let yesterday = today.dateByAddingTimeInterval( -secondsPerDay )
+//        let lastWeek = today.dateByAddingTimeInterval( -7 * secondsPerDay )
         
         fetchRequest.predicate = NSPredicate( format: "eBookKey==%@", "\(self.eBookKey)" )
         
@@ -83,7 +83,7 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     
         self.downloadVC = downloadVC
 
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
+        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: downloadVC )
     }
     
     func updateUI() {
@@ -297,7 +297,6 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             if let docInteractionController = self.docInteractionController {
 
                 docInteractionController.delegate = self
-                docInteractionController.name = self.heading
                 
                 let success = docInteractionController.presentOpenInMenuFromRect(
                                         CGRectZero, inView: downloadVC.view, animated: true
@@ -398,19 +397,19 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     func fetchedResultsController(controller: FetchedEBookFileController,
                                   didChangeObject change: FetchedEBookFileChange) {
         switch change {
-        case let .Insert(object, indexPath):
+        case .Insert(_, _):
 //            tableView?.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             break
             
-        case let .Delete(_, indexPath):
+        case .Delete(_, _):
 //            tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             break
             
-        case let .Move(_, fromIndexPath, toIndexPath):
+        case .Move(_, _, _):
 //            tableView?.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
             break
             
-        case let .Update(_, indexPath):
+        case .Update(_, _):
 //            tableView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             break
         }

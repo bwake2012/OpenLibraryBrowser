@@ -27,7 +27,7 @@ class EditionDetailCoordinator: OLQueryCoordinator {
         self.editionDetail = searchInfo
         self.editionDetailVC = editionDetailVC
         
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
+        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: editionDetailVC )
     }
     
     func updateUI( editionDetail: OLEditionDetail ) {

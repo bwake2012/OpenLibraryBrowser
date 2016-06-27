@@ -38,9 +38,9 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         
         let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
         let today = NSDate()
-        let yesterday = today.dateByAddingTimeInterval( -secondsPerDay )
+        let lastWeek = today.dateByAddingTimeInterval( -7 * secondsPerDay )
         
-        fetchRequest.predicate = NSPredicate( format: "key==%@ && retrieval_date > %@", "\(key)", yesterday )
+        fetchRequest.predicate = NSPredicate( format: "key==%@ && retrieval_date > %@", "\(key)", lastWeek )
         
         fetchRequest.sortDescriptors =
             [
@@ -74,7 +74,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
 
         self.authorDetailVC = authorDetailVC
 
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
+        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: authorDetailVC )
     }
     
     init(
@@ -94,7 +94,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         
         self.authorDetailVC = authorDetailVC
         
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
+        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: authorDetailVC )
 
         assert( !authorKey.isEmpty )
     }
@@ -116,7 +116,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         
         self.authorDetailVC = authorDetailVC
         
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
+        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: authorDetailVC )
         
         assert( !authorKey.isEmpty )
     }

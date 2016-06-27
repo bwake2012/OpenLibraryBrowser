@@ -30,9 +30,9 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
 
         let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
         let today = NSDate()
-        let yesterday = today.dateByAddingTimeInterval( -secondsPerDay )
+        let lastWeek = today.dateByAddingTimeInterval( -7 * secondsPerDay )
         
-        fetchRequest.predicate = NSPredicate( format: "author_key==%@ && retrieval_date > %@", "\(self.authorKey)", yesterday )
+        fetchRequest.predicate = NSPredicate( format: "author_key==%@ && retrieval_date > %@", "\(self.authorKey)", lastWeek )
         
         fetchRequest.sortDescriptors =
             [NSSortDescriptor(key: "coversFound", ascending: false),
@@ -57,7 +57,7 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
         self.authorKey = authorKey
         self.tableVC = tableVC
         
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack )
+        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: tableVC )
         
         updateUI()
     }
