@@ -80,7 +80,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
             
         } else if .downloadBook == obj.type {
             
-            vc.performSegueWithIdentifier( obj.type.rawValue, sender: self )
+            vc.performSegueWithIdentifier( obj.type.reuseIdentifier, sender: self )
             
         }
     }
@@ -104,7 +104,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
                  .block,
                  .link,
                  .html:
-                if let headerCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? DeluxeDetailTableViewCell {
+                if let headerCell = tableView.dequeueReusableCellWithIdentifier( object.type.reuseIdentifier ) as? DeluxeDetailTableViewCell {
                     
                     headerCell.configure( object )
                     cell = headerCell
@@ -112,7 +112,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
                 break
                 
             case .imageAuthor, .imageBook:
-                if let imageCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? DeluxeDetailImageTableViewCell {
+                if let imageCell = tableView.dequeueReusableCellWithIdentifier( object.type.reuseIdentifier ) as? DeluxeDetailImageTableViewCell {
                     
                     if let url = NSURL( string: object.value ) {
                         if !imageCell.displayFromURL( url ) {
@@ -147,7 +147,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
                     cell = imageCell
                 }
             case .downloadBook:
-                if let headerCell = tableView.dequeueReusableCellWithIdentifier( object.type.rawValue ) as? DeluxeDetailTableViewCell {
+                if let headerCell = tableView.dequeueReusableCellWithIdentifier( object.type.reuseIdentifier ) as? DeluxeDetailTableViewCell {
                     
                     headerCell.configure( object )
                     cell = headerCell

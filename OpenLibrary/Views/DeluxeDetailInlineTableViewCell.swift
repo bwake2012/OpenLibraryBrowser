@@ -20,11 +20,3 @@ class DeluxeDetailInlineTableViewCell: DeluxeDetailTableViewCell {
     }
 }
 
-extension DeluxeDetailInlineTableViewCell {
-    
-    override class func registerCell( tableView: UITableView ) {
-        
-        registerCell( tableView, className: DeluxeDetail.inline.rawValue )
-    }
-    
-}

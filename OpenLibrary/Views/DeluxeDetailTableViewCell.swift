@@ -26,8 +26,16 @@ class DeluxeDetailTableViewCell: UITableViewCell {
     }
 }
 
-extension DeluxeDetailTableViewCell {
+extension UITableViewCell {
     
+    class var nameOfClass: String {
+        return NSStringFromClass(self).componentsSeparatedByString(".").last!
+    }
+
+    var nameOfClass: String {
+        return NSStringFromClass(self.dynamicType).componentsSeparatedByString(".").last!
+    }
+
     class func registerCell( tableView: UITableView, className: String ) {
 
         let nib = UINib( nibName: className, bundle: nil )
@@ -37,6 +45,6 @@ extension DeluxeDetailTableViewCell {
     
     class func registerCell( tableView: UITableView ) {
         
-        registerCell( tableView, className: "" )
+        registerCell( tableView, className: nameOfClass )
     }
 }

@@ -18,11 +18,3 @@ class DeluxeDetailSubheadingTableViewCell: DeluxeDetailTableViewCell {
     }
 }
 
-extension DeluxeDetailSubheadingTableViewCell {
-    
-    override class func registerCell( tableView: UITableView ) {
-        
-        registerCell( tableView, className: DeluxeDetail.subheading.rawValue )
-    }
-    
-}

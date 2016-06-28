@@ -20,10 +20,3 @@ class DeluxeDetailBlockTableViewCell: DeluxeDetailTableViewCell {
     }
 }
 
-extension DeluxeDetailBlockTableViewCell {
-    
-    override class func registerCell( tableView: UITableView ) {
-        
-        registerCell( tableView, className: DeluxeDetail.block.rawValue )
-    }
-}

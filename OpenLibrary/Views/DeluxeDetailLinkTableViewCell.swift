@@ -21,10 +21,3 @@ class DeluxeDetailLinkTableViewCell: DeluxeDetailTableViewCell {
     }
 }
 
-extension DeluxeDetailLinkTableViewCell {
-    
-    override class func registerCell( tableView: UITableView ) {
-        
-        registerCell( tableView, className: DeluxeDetail.link.rawValue )
-    }
-}

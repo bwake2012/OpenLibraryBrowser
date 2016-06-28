@@ -60,19 +60,48 @@ enum FullText: Int {
     }
 }
 
-enum DeluxeDetail: String {
+enum DeluxeDetail: Int {
     
-    case unknown                = "unknown"
-    case inline                 = "DeluxeDetailInlineTableViewCell"
-    case block                  = "DeluxeDetailBlockTableViewCell"
-    case link                   = "DeluxeDetailLinkTableViewCell"
-    case heading                = "DeluxeDetailHeadingTableViewCell"
-    case subheading             = "DeluxeDetailSubheadingTableViewCell"
-    case body                   = "DeluxeDetailBodyTableViewCell"
-    case imageAuthor            = "DeluxeDetailImageAuthorTableViewCell"
-    case imageBook              = "DeluxeDetailImageBookTableViewCell"
-    case html                   = "DeluxeDetailHTMLTableViewCell"
-    case downloadBook           = "DeluxeDetailBookDownloadTableViewCell"
+    case unknown                = 0
+    case inline                 = 1
+    case block                  = 2
+    case link                   = 3
+    case heading                = 4
+    case subheading             = 5
+    case body                   = 6
+    case imageAuthor            = 7
+    case imageBook              = 8
+    case html                   = 9
+    case downloadBook           = 10
+    
+    var reuseIdentifier: String {
+        
+        switch self {
+        
+        case unknown:
+            return "unknown"
+        case inline:
+            return DeluxeDetailInlineTableViewCell.nameOfClass
+        case block:
+            return DeluxeDetailBlockTableViewCell.nameOfClass
+        case link:
+            return DeluxeDetailLinkTableViewCell.nameOfClass
+        case heading:
+            return DeluxeDetailHeadingTableViewCell.nameOfClass
+        case subheading:
+            return DeluxeDetailSubheadingTableViewCell.nameOfClass
+        case body:
+            return DeluxeDetailBodyTableViewCell.nameOfClass
+        case imageAuthor:
+            return DeluxeDetailImageTableViewCell.nameOfClass
+        case imageBook:
+            return DeluxeDetailImageTableViewCell.nameOfClass
+        case html:
+            return DeluxeDetailHTMLTableViewCell.nameOfClass
+        case downloadBook:
+            return DeluxeDetailBookDownloadTableViewCell.nameOfClass
+        }
+    }
 }
 
 struct DeluxeData {

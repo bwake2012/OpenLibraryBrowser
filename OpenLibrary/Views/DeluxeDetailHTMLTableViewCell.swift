@@ -47,10 +47,3 @@ class DeluxeDetailHTMLTableViewCell: DeluxeDetailTableViewCell {
     }
 }
 
-extension DeluxeDetailHTMLTableViewCell {
-    
-    override class func registerCell( tableView: UITableView ) {
-        
-        registerCell( tableView, className: DeluxeDetail.html.rawValue )
-    }
-}
