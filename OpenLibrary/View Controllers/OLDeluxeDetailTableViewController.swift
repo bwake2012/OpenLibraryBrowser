@@ -118,7 +118,7 @@ class OLDeluxeDetailTableViewController: UITableViewController {
 
 extension OLDeluxeDetailTableViewController: ImageViewTransitionSource {
     
-    func transitionSourceRectangle() -> UIImageView? {
+    func transitionSourceRectView() -> UIImageView? {
         
         guard let indexPath = tableView.indexPathForSelectedRow else { return nil }
         

@@ -13,15 +13,9 @@ class IAEBookItemListDownloadOperation: GroupOperation {
 
     let cacheFile: NSURL
     
-    // MARK: Initialization
-    
-    /// - parameter cacheFile: The file `NSURL` to which the list of author Editions will be downloaded.
-    
-    init( editionKeys: [String], cacheFile: NSURL ) {
+    // MARK: class funcs
+    class func urlString( editionKeys: [String] ) -> String {
         
-        self.cacheFile = cacheFile
-        super.init( operations: [] )
-        name = "Download IAEBookItems for list of edition OLIDs"
         let urlString = "https://openlibrary.org/api/volumes/brief/json/"
         
         var olidString = ""
@@ -34,8 +28,24 @@ class IAEBookItemListDownloadOperation: GroupOperation {
             
             olidString += "OLID:" + olid + ";"
         }
-            
-        let url = NSURL( string: urlString + olidString )!
+        
+        return urlString + olidString
+
+    }
+    
+    // MARK: Initialization
+    
+    /// - parameter cacheFile: The file `NSURL` to which the list of author Editions will be downloaded.
+    
+    init( editionKeys: [String], cacheFile: NSURL ) {
+        
+        self.cacheFile = cacheFile
+        super.init( operations: [] )
+        name = "Download IAEBookItems for list of edition OLIDs"
+
+        let urlString = IAEBookItemListDownloadOperation.urlString( editionKeys )
+        
+        let url = NSURL( string: urlString )!
         let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
             
             url, response, error in

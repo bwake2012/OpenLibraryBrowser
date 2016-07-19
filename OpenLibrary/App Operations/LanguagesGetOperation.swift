@@ -59,6 +59,10 @@ class LanguagesGetOperation: GroupOperation {
         name = "Get Languages"
     }
     
+    deinit {
+        
+    }
+    
     override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
         if let firstError = errors.first where (operation === downloadOperation || operation === parseOperation) {
             produceAlert(firstError)

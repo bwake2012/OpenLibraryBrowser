@@ -118,7 +118,7 @@ class WorkEditionEbooksGetOperation: GroupOperation {
             case failedJSON:
                 // We failed because the JSON was malformed.
                 alert.title = "Unable to Download"
-                alert.message = "Cannot parse Work Editions results. Try again later."
+                alert.message = "Cannot parse Work Editions eBook results. Try again later."
 
             default:
                 return

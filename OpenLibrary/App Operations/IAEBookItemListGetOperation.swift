@@ -50,9 +50,10 @@ class IAEBookItemListGetOperation: GroupOperation {
             cachesFolder.URLByAppendingPathComponent( "\(olid)InternetArchiveEBookItems.json")
         //       print( "cache: \(cacheFile.absoluteString)" )
         
+        let urlString = IAEBookItemListDownloadOperation.urlString( editionKeys )
         
         downloadOperation = IAEBookItemListDownloadOperation( editionKeys: editionKeys, cacheFile: cacheFile )
-        parseOperation = IAEBookItemListParseOperation( cacheFile: cacheFile, coreDataStack: coreDataStack )
+        parseOperation = IAEBookItemListParseOperation( urlString: urlString, cacheFile: cacheFile, coreDataStack: coreDataStack )
             
         let finishOperation = NSBlockOperation( block: completionHandler )
         
@@ -64,7 +65,7 @@ class IAEBookItemListGetOperation: GroupOperation {
 
         super.init( operations: operations )
         
-        addCondition( MutuallyExclusive<IAEBookItemGetOperation>() )
+        addCondition( MutuallyExclusive<IAEBookItemListGetOperation>() )
         
         name = "Get IAEBookItems"
     }
@@ -102,7 +103,7 @@ class IAEBookItemListGetOperation: GroupOperation {
             case failedJSON:
                 // We failed because the JSON was malformed.
                 alert.title = "Unable to Download"
-                alert.message = "Cannot parse Work Editions results. Try again later."
+                alert.message = "Cannot parse eBook Item List results. Try again later."
 
             default:
                 return

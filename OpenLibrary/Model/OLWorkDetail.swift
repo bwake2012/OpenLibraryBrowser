@@ -124,6 +124,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
                 newObject.provisional_date = NSDate()
                 
                 newObject.has_fulltext = parsed.has_fulltext ? 1 : 0
+                newObject.ebook_count_i = parsed.ebook_count_i
                 
                 if parsed.key.hasPrefix( kWorksPrefix ) {
                     newObject.key = parsed.key
@@ -152,6 +153,29 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         return newObject
     }
     
+    override func awakeFromFetch() {
+        
+        super.awakeFromFetch()
+        
+        if let moc = self.managedObjectContext {
+            
+            for olid in self.authors {
+                
+                if let author: OLAuthorDetail = OLWorkDetail.findObject( olid, entityName: OLAuthorDetail.entityName, moc: moc ) {
+                    
+                    author_name_cache.append( author.name )
+                }
+            }
+
+            let items: [OLEBookItem]? = OLEBookItem.findObject( key, entityName: OLEBookItem.entityName, keyFieldName: "workKey", moc: moc )
+            if let items = items where !items.isEmpty {
+                
+                ebook_item_cache = items
+                has_fulltext = 1
+            }
+        }
+    }
+    
     var mayHaveFullText: Bool {
         
         return 0 != self.has_fulltext
@@ -159,7 +183,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
     
     var hasFullText: Bool {
         
-        return 1 == self.has_fulltext && !self.ebook_item_cache.isEmpty
+        return 1 == self.has_fulltext && self.ebook_count_i > 0 && !self.ebook_item_cache.isEmpty
     }
     
     func resetFulltext() -> Void {
@@ -237,6 +261,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             // cover_edition of type /type/edition
             self.covers = parsed.covers
             self.coversFound = parsed.covers.count > 0 && 0 < parsed.covers[0]
+            self.ebook_count_i = 0
         }
     }
     
@@ -283,17 +308,15 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             
             for item in ebook_items {
                 
-                if "full access" == item.status {
-                    let deluxeItem =
-                        DeluxeData(
-                                type: .downloadBook,
-                                caption: "eBook:",
-                                value: item.status,
-                                extraValue: item.itemURL
-                            )
-                    
-                    newData.append( deluxeItem )
-                }
+                let deluxeItem =
+                    DeluxeData(
+                            type: "full access" == item.status ? .downloadBook : .borrowBook,
+                            caption: "eBook:",
+                            value: item.status,
+                            extraValue: item.itemURL
+                        )
+                
+                newData.append( deluxeItem )
             }
             
             if !newData.isEmpty {

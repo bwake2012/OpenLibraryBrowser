@@ -20,6 +20,8 @@ class GeneralSearchResultsParseOperation: Operation {
     
     var searchResults = SearchResults()
     
+    var eBookEditionArrays = [[String]]()
+    
     /**
         - parameter cacheFile: The file `NSURL` from which to load General query data.
         - parameter context: The `NSManagedObjectContext` that will be used as the
@@ -90,18 +92,29 @@ class GeneralSearchResultsParseOperation: Operation {
 
         context.performBlock {
             
+            var error: NSError?
             var index = Int64( start )
             for result in results {
                 
-                if nil != OLGeneralSearchResult.parseJSON( 0, index: index, json: result, moc: self.context ) {
+                if let newObject = OLGeneralSearchResult.parseJSON( 0, index: index, json: result, moc: self.context ) {
+                    
+                    if newObject.has_fulltext && newObject.ebook_count_i > 0 && newObject.edition_key.count > 0 {
+                        
+                        self.eBookEditionArrays.append( newObject.edition_key )
+                    }
                     
                     index += 1
+                    
+                    error = self.saveContext()
+                    if nil != error {
+                        
+                        break
+                    }
                     
 //                    print( "\(newObject.index) \(newObject.title)" )
                 }
             }
 
-            let error = self.saveContext()
 
             if nil == error {
                 self.updateResults(

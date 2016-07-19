@@ -17,6 +17,7 @@ class GeneralSearchOperation: GroupOperation {
     var deleteOperation: GeneralSearchResultsDeleteOperation?
     let downloadOperation: GeneralSearchResultsDownloadOperation
     let parseOperation: GeneralSearchResultsParseOperation
+    let finishOperation: NSBlockOperation
    
     private var hasProducedAlert = false
     
@@ -50,7 +51,7 @@ class GeneralSearchOperation: GroupOperation {
         downloadOperation = GeneralSearchResultsDownloadOperation( queryParms: queryParms, offset: offset, limit: limit, cacheFile: cacheFile )
         parseOperation = GeneralSearchResultsParseOperation( cacheFile: cacheFile, coreDataStack: coreDataStack, updateResults: updateResults )
         
-        let finishOperation = NSBlockOperation( block: completionHandler )
+        finishOperation = NSBlockOperation( block: completionHandler )
         
         // These operations must be executed in order
         parseOperation.addDependency(downloadOperation)
@@ -80,6 +81,32 @@ class GeneralSearchOperation: GroupOperation {
 
             if operation === downloadOperation || operation === parseOperation {
                 produceAlert(firstError)
+            }
+
+        } else if operation === parseOperation {
+            
+            for editions in parseOperation.eBookEditionArrays {
+                
+                if !editions.isEmpty {
+                    
+                    var index = 0
+                    let subsetSize = editions.count // 256
+                    while index < editions.count {
+                        
+                        let subset = Array( editions[index..<min(editions.count, index+subsetSize)] )
+                    
+                        let ebookOperation =
+                            IAEBookItemListGetOperation(
+                                    editionKeys: subset, coreDataStack: coreDataStack, completionHandler: {}
+                                )
+                        
+                        finishOperation.addDependency( ebookOperation )
+                        
+                        addOperation( ebookOperation )
+                        
+                        index += subsetSize
+                    }
+                }
             }
         }
     }

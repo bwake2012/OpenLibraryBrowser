@@ -146,7 +146,7 @@ class OLAuthorDetailViewController: UIViewController {
 
 extension OLAuthorDetailViewController: ImageViewTransitionSource {
     
-    func transitionSourceRectangle() -> UIImageView? {
+    func transitionSourceRectView() -> UIImageView? {
         
         return authorPhoto
     }

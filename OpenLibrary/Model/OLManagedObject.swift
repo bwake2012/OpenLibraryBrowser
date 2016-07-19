@@ -73,6 +73,8 @@ enum DeluxeDetail: Int {
     case imageBook              = 8
     case html                   = 9
     case downloadBook           = 10
+    case borrowBook             = 11
+    case buyBook                = 12
     
     var reuseIdentifier: String {
         
@@ -99,6 +101,10 @@ enum DeluxeDetail: Int {
         case html:
             return DeluxeDetailHTMLTableViewCell.nameOfClass
         case downloadBook:
+            return DeluxeDetailBookDownloadTableViewCell.nameOfClass
+        case borrowBook:
+            return DeluxeDetailBookDownloadTableViewCell.nameOfClass
+        case buyBook:
             return DeluxeDetailBookDownloadTableViewCell.nameOfClass
         }
     }

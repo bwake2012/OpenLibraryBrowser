@@ -10,7 +10,7 @@ import UIKit
 
 protocol ImageViewTransitionSource {
     
-    func transitionSourceRectangle() -> UIImageView?
+    func transitionSourceRectView() -> UIImageView?
     
 //    func transitionSourceImageRectangle() -> CGRect
 }

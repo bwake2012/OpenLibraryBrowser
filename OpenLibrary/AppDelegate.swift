@@ -31,7 +31,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-        CoreDataStack.constructSQLiteStack(withModelName: "OpenLibraryBrowser") { result in
+        CoreDataStack.constructSQLiteStack(withModelName: "OpenLibraryBrowser") {
+            
+            result in
+            
             switch result {
             case .Success(let stack):
                 self.coreDataStack = stack
@@ -40,6 +43,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
                     self.window?.rootViewController = self.navController
                  
+                    let reachabilityOperation = OLReachabilityOperation( host: "openlibrary.org" ) {}
+                    reachabilityOperation.userInitiated = true
+                    self.operationQueue.addOperation( reachabilityOperation )
+                    
                     OLLanguage.retrieveLanguages( self.operationQueue, coreDataStack: self.coreDataStack! )
                }
                 

@@ -29,6 +29,7 @@ extension OLWorkDetail {
     @NSManaged var covers: [Int]
     @NSManaged var coversFound: Bool
     @NSManaged var dewey_number: [String]
+    @NSManaged var ebook_count_i: Int64
     @NSManaged var first_publish_date: String
     @NSManaged var first_sentence: String
     @NSManaged var lc_classifications: [String]

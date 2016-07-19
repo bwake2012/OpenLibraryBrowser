@@ -14,6 +14,11 @@ class OLTableViewCell: UITableViewCell {
     
     @IBOutlet weak var cellImage: UIImageView!
 
+    func transitionSourceRectView() -> UIImageView? {
+        
+        return cellImage
+    }
+    
     func displayImage( localURL: NSURL ) -> Bool {
         
         guard nil == currentImageURL || localURL == currentImageURL else { return true }

@@ -96,7 +96,7 @@ class IAEBookItemGetOperation: GroupOperation {
             case failedJSON:
                 // We failed because the JSON was malformed.
                 alert.title = "Unable to Download"
-                alert.message = "Cannot parse Work Editions results. Try again later."
+                alert.message = "Cannot parse eBook Item results. Try again later."
 
             default:
                 return

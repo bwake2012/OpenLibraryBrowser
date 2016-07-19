@@ -146,7 +146,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
                     }
                     cell = imageCell
                 }
-            case .downloadBook:
+            case .downloadBook, .borrowBook, .buyBook:
                 if let headerCell = tableView.dequeueReusableCellWithIdentifier( object.type.reuseIdentifier ) as? DeluxeDetailTableViewCell {
                     
                     headerCell.configure( object )

@@ -309,27 +309,33 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     
     func installAuthorDeluxeDetailCoordinator( destVC: OLDeluxeDetailTableViewController ) {
         
-        destVC.queryCoordinator =
-            DeluxeDetailCoordinator(
-                    operationQueue: operationQueue,
-                    coreDataStack: coreDataStack,
-                    heading: authorDetail!.name,
-                    deluxeData: authorDetail!.deluxeData,
-                    imageType: authorDetail!.imageType,
-                    deluxeDetailVC: destVC
-                )
+        if let authorDetail = authorDetail {
+            
+            destVC.queryCoordinator =
+                DeluxeDetailCoordinator(
+                        operationQueue: operationQueue,
+                        coreDataStack: coreDataStack,
+                        heading: authorDetail.name,
+                        deluxeData: authorDetail.deluxeData,
+                        imageType: authorDetail.imageType,
+                        deluxeDetailVC: destVC
+                    )
+        }
     }
     
     func installAuthorPictureCoordinator( destVC: OLPictureViewController ) {
         
-        destVC.queryCoordinator =
-            PictureViewCoordinator(
-                    operationQueue: operationQueue,
-                    coreDataStack: coreDataStack,
-                    localURL: authorDetail!.localURL( "L", index: 0 ),
-                    imageID: authorDetail!.firstImageID,
-                    pictureType: authorDetail!.imageType,
-                    pictureVC: destVC
-                )
+        if let authorDetail = authorDetail {
+            
+            destVC.queryCoordinator =
+                PictureViewCoordinator(
+                        operationQueue: operationQueue,
+                        coreDataStack: coreDataStack,
+                        localURL: authorDetail.localURL( "L", index: 0 ),
+                        imageID: authorDetail.firstImageID,
+                        pictureType: authorDetail.imageType,
+                        pictureVC: destVC
+                    )
+        }
     }
 }

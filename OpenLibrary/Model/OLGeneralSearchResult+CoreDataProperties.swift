@@ -45,6 +45,7 @@ extension OLGeneralSearchResult {
     @NSManaged var 	    publisher: [String]
     @NSManaged var 	    seed: [String]
     @NSManaged var 	    subject: [String]
+    @NSManaged var      subtitle: String
     @NSManaged var 	    text: [String]
     @NSManaged var 	    title_suggest: String
     @NSManaged var 	    title: String

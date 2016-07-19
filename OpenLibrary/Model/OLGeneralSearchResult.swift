@@ -13,6 +13,32 @@ import BNRCoreDataStack
 
 class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
 
+    private var language_name_cache = [String]()
+    var language_names: [String] {
+        
+        get {
+            var names = language_name_cache
+            
+            if names.isEmpty {
+                
+                if let moc = self.managedObjectContext {
+                    
+                    for code in self.language {
+                        
+                        if let language: OLLanguage = OLEditionDetail.findObject( code, entityName: OLLanguage.entityName, keyFieldName: "code", moc: moc ) {
+                            
+                            language_name_cache.append( language.name )
+                        }
+                    }
+                    
+                    names = language_name_cache
+                }
+            }
+            
+            return names
+        }
+    }
+    
     // Insert code here to add functionality to your managed object subclass
     static let entityName = "GeneralSearchResult"
     
@@ -48,8 +74,26 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
         return newObject
     }
     
+    override func awakeFromFetch() {
+        
+        super.awakeFromFetch()
+        
+        if let moc = self.managedObjectContext {
+            
+            for code in self.language {
+                
+                if let language: OLLanguage = OLEditionDetail.findObject( code, entityName: OLLanguage.entityName, keyFieldName: "code", moc: moc ) {
+                    
+                    language_name_cache.append( language.name )
+                }
+            }
+        }
+    }
+    
     override var hasImage: Bool { return 0 != cover_i }
     override var firstImageID: Int { return Int( cover_i ) }
+    
+    override var imageType: String { return "b" }
     
     override func localURL( size: String, index: Int = 0 ) -> NSURL {
 
@@ -86,6 +130,7 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
         self.publisher = parsed.publisher
         self.seed = parsed.seed
         self.subject = parsed.subject
+        self.subtitle = parsed.subtitle
         self.text = parsed.text
         self.title_suggest = parsed.title_suggest
         self.title = parsed.title
@@ -127,6 +172,7 @@ extension OLGeneralSearchResult {
         var 	    publisher: [String]
         var 	    seed: [String]
         var 	    subject: [String]
+        var         subtitle: String
         var 	    text: [String]
         var 	    title_suggest: String
         var 	    title: String
@@ -163,6 +209,7 @@ extension OLGeneralSearchResult {
             publisher: [String],
             seed: [String],
             subject: [String],
+            subtitle: String,
             text: [String],
             title_suggest: String,
             title: String,
@@ -196,6 +243,7 @@ extension OLGeneralSearchResult {
             self.publisher = publisher
             self.seed = seed
             self.subject = subject
+            self.subtitle = subtitle
             self.text = text
             self.title_suggest = title_suggest
             self.title = title
@@ -225,8 +273,8 @@ extension OLGeneralSearchResult {
             let author_name        = json["author_name"] as? [String] ?? [String]()
             let cover_edition_key  = json["cover_edition_key"] as? String ?? ""
             let cover_i            = json["cover_i"] as? Int ?? 0
-            let ebook_count_i      = json["ebook_count_i"] as? Int64 ?? 0
-            let edition_count      = json["edition_count"] as? Int64 ?? 0
+            let ebook_count_i      = json["ebook_count_i"] as? Int ?? 0
+            let edition_count      = json["edition_count"] as? Int ?? 0
 //            let edition_key        = json["edition_key"] as? [String] ?? [String]()
             let tempEditionKey     = json["edition_key"] as? [String] ?? [String]()
             var edition_key = [String]()
@@ -242,7 +290,7 @@ extension OLGeneralSearchResult {
                 }
             }
             
-            let first_publish_year = json["first_publish_year"] as? Int16 ?? 0
+            let first_publish_year = json["first_publish_year"] as? Int ?? 0
             let first_sentence     = json["first_sentence"] as? [String] ?? [String]()
             let has_fulltext       = json["has_fulltext"] as? Bool ?? false
             let ia_collection_s    = json["ia_collection_s"] as? String ?? ""
@@ -263,6 +311,7 @@ extension OLGeneralSearchResult {
             let publisher          = json["publisher"] as? [String] ?? [String]()
             let seed               = json["seed"] as? [String] ?? [String]()
             let subject            = json["subject"] as? [String] ?? [String]()
+            let subtitle           = json["subtitle"] as? String ?? ""
             let text               = json["text"] as? [String] ?? [String]()
             let title_suggest      = json["title_suggest"] as? String ?? ""
             let title              = json["title"] as? String ?? ""
@@ -272,10 +321,10 @@ extension OLGeneralSearchResult {
                 author_name: author_name,
                 cover_edition_key: cover_edition_key,
                 cover_i: Int64( cover_i ),
-                ebook_count_i: ebook_count_i,
-                edition_count: edition_count,
+                ebook_count_i: Int64( ebook_count_i ),
+                edition_count: Int64( edition_count ),
                 edition_key: edition_key,
-                first_publish_year: first_publish_year,
+                first_publish_year: Int16( first_publish_year ),
                 first_sentence: first_sentence,
                 has_fulltext: has_fulltext,
                 ia_collection_s: ia_collection_s,
@@ -296,6 +345,7 @@ extension OLGeneralSearchResult {
                 publisher: publisher,
                 seed: seed,
                 subject: subject,
+                subtitle: subtitle,
                 text: text,
                 title_suggest: title_suggest,
                 title: title,

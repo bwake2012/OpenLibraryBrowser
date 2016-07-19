@@ -125,7 +125,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         return result
     }
     
-    func updateUI( searchResult: OLGeneralSearchResult, cell: GeneralSearchResultTableViewCell ) {
+    func updateUI( searchResult: OLGeneralSearchResult, cell: OLTableViewCell ) {
         
 //        print( "\(searchResult.title) \(searchResult.hasImage ? "has" : "has no") cover image")
         if searchResult.hasImage {
@@ -355,5 +355,24 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             
         }
     }
+    
+    func installCoverPictureViewCoordinator( destVC: OLPictureViewController, indexPath: NSIndexPath ) {
+        
+        guard let searchResult = objectAtIndexPath( indexPath ) else {
+            fatalError( "General Search Result object not retrieved." )
+        }
+        
+        destVC.queryCoordinator =
+            PictureViewCoordinator(
+                operationQueue: operationQueue,
+                coreDataStack: coreDataStack,
+                localURL: searchResult.localURL( "L", index: 0 ),
+                imageID: searchResult.firstImageID,
+                pictureType: searchResult.imageType,
+                pictureVC: destVC
+        )
+        
+    }
+
 
 }

@@ -17,6 +17,7 @@ enum SearchType: Int {
     case searchAuthor = 0
     case searchTitle = 1
     case searchGeneral = 2
+    case searchGeneralExpanding = 3
 }
 
 class OLSearchResultsTableViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate {
@@ -44,7 +45,7 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
     }()
     
     var searchController = UISearchController( searchResultsController: nil )
-    var searchType: SearchType = .searchGeneral
+    var searchType: SearchType = .searchGeneralExpanding
     var bookSearchVC: OLBookSearchViewController?
     
     var touchedCellIndexPath: NSIndexPath?
@@ -52,8 +53,7 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
     var savedSearchKeys = [String: String]()
 
     @IBAction func presentGeneralSearch(sender: UIBarButtonItem) {}
-    @IBAction func presentSearchResultsFilter(sender: UIBarButtonItem) {
-    }
+    @IBAction func presentSearchResultsFilter(sender: UIBarButtonItem) {}
     
     // MARK: UIViewController
     override func viewDidLoad() {
@@ -62,20 +62,19 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
         
         // Do any additional setup after loading the view, typically from a nib.
         self.tableView.estimatedRowHeight = 68.0
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+//        self.tableView.rowHeight = UITableViewAutomaticDimension
+        
         self.tableView.tableFooterView = UIView(frame: .zero)
 
-//        searchController.searchResultsUpdater = self
-//        searchController.dimsBackgroundDuringPresentation = false
-//        searchController.obscuresBackgroundDuringPresentation = false
-//        searchController.searchBar.scopeButtonTitles = ["Author", "Title"]
-//        searchController.searchBar.delegate = self
-//
-//        searchController.definesPresentationContext = true
-//        
-//        tableView.tableHeaderView = searchController.searchBar
-//        
-//        searchController.searchBar.sizeToFit()
+//        UIView.animateWithDuration(
+//            0.3, delay: 0.0, options: .CurveLinear,
+//            
+//            animations: {
+//                () -> Void in
+//                self.tableView.beginUpdates()
+//                self.tableView.endUpdates()
+//            }
+//        ) { (finished) -> Void in }
     }
     
     override func didReceiveMemoryWarning() {
@@ -102,25 +101,28 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
 
         } else if segue.identifier == "displayGeneralSearchAuthorDetail" {
 
-            if let cell = sender as? UITableViewCell {
-                if let indexPath = tableView.indexPathForCell( cell ) {
-                    if let destVC = segue.destinationViewController as? OLAuthorDetailViewController {
-                        
-                        tableView.selectRowAtIndexPath( indexPath, animated: true, scrollPosition: .None )
-                        generalSearchCoordinator.installAuthorDetailCoordinator( destVC, indexPath: indexPath )
-                    }
+            if let indexPath = tableView.indexPathForSelectedRow {
+                if let destVC = segue.destinationViewController as? OLAuthorDetailViewController {
+                    
+                    generalSearchCoordinator.installAuthorDetailCoordinator( destVC, indexPath: indexPath )
                 }
             }
 
         } else if segue.identifier == "displayGeneralSearchWorkDetail" {
             
-            if let cell = sender as? UITableViewCell {
-                if let indexPath = tableView.indexPathForCell( cell ) {
-                    if let destVC = segue.destinationViewController as? OLWorkDetailViewController {
-                        
-                        tableView.selectRowAtIndexPath( indexPath, animated: true, scrollPosition: .None )
-                        generalSearchCoordinator.installWorkDetailCoordinator( destVC, indexPath: indexPath )
-                    }
+            if let indexPath = tableView.indexPathForSelectedRow {
+                if let destVC = segue.destinationViewController as? OLWorkDetailViewController {
+                    
+                    generalSearchCoordinator.installWorkDetailCoordinator( destVC, indexPath: indexPath )
+                }
+            }
+            
+        } else if segue.identifier == "largeCoverImage" {
+
+            if let indexPath = tableView.indexPathForSelectedRow {
+                if let destVC = segue.destinationViewController as? OLPictureViewController {
+                    
+                    generalSearchCoordinator.installCoverPictureViewCoordinator( destVC, indexPath: indexPath )
                 }
             }
 
@@ -134,7 +136,7 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
                         if .searchAuthor == searchType {
                             searchController.active = false
                             authorSearchCoordinator.installAuthorDetailCoordinator( destVC, indexPath: indexPath )
-                        } else if .searchGeneral == searchType {
+                        } else if .searchGeneral == searchType || .searchGeneralExpanding == searchType {
                             generalSearchCoordinator.installAuthorDetailCoordinator( destVC, indexPath: indexPath )
                         }
                     }
@@ -161,6 +163,95 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
     
     // MARK: UITableViewDelegate
     
+    override func tableView( tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath ) -> CGFloat {
+        
+        var height = UITableViewAutomaticDimension
+        if .searchGeneralExpanding == searchType {
+            
+            height =
+                SegmentedTableViewCell.cellHeight(
+                    indexPath,
+                    withData: nil
+                )
+        }
+
+        return height
+    }
+    
+    override func tableView( tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath ) -> CGFloat {
+        
+        var height = UITableViewAutomaticDimension
+        if .searchGeneralExpanding == searchType {
+
+            height =
+                SegmentedTableViewCell.cellHeight(
+                        indexPath,
+                        withData: generalSearchCoordinator.objectAtIndexPath( indexPath )
+                    )
+        }
+        
+        return height
+    }
+
+    override func tableView( tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        
+        if .searchGeneralExpanding == searchType {
+            
+            let cell = tableView.cellForRowAtIndexPath( indexPath ) as! SegmentedTableViewCell
+            
+            let isOpen = cell.isOpen( indexPath )
+            
+            if isOpen {
+                
+                contractCell( tableView, segmentedCell: cell, indexPath: indexPath )
+                
+            }
+            
+            if !isOpen {
+
+                expandCell( tableView, segmentedCell: cell, indexPath: indexPath )
+            }
+        }
+    }
+
+    override func tableView( tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath ) {
+        
+        if let cell = cell as? GeneralSearchResultSegmentedTableViewCell {
+            
+            cell.selectedAnimation( indexPath )
+        }
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if .searchGeneralExpanding == searchType {
+            
+            if let cell = tableView.cellForRowAtIndexPath( indexPath ) as? SegmentedTableViewCell {
+            
+                expandCell( tableView, segmentedCell: cell, indexPath: indexPath )
+
+            } else {
+                
+                SegmentedTableViewCell.setOpen( indexPath )
+            }
+        }
+    }
+    
+    override func tableView( tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath ) {
+        
+        if .searchGeneralExpanding == searchType {
+            
+            if let cell = tableView.cellForRowAtIndexPath( indexPath ) as? SegmentedTableViewCell {
+            
+                contractCell( tableView, segmentedCell: cell, indexPath: indexPath )
+            
+            } else {
+                
+                SegmentedTableViewCell.setClosed( indexPath )
+            }
+        }
+    }
+    
     // MARK: UITableviewDataSource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
@@ -168,7 +259,7 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
             return authorSearchCoordinator.numberOfSections() ?? 1
         } else if .searchTitle == searchType {
             return titleSearchCoordinator.numberOfSections() ?? 1
-        } else if .searchGeneral == searchType {
+        } else if .searchGeneral == searchType || .searchGeneralExpanding == searchType {
             return generalSearchCoordinator.numberOfSections() ?? 1
         } else {
             assert( false )
@@ -186,7 +277,7 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
             
             return titleSearchCoordinator.numberOfRowsInSection( section ) ?? 0
 
-        } else if .searchGeneral == searchType {
+        } else if .searchGeneral == searchType || .searchGeneralExpanding == searchType {
             
             return generalSearchCoordinator.numberOfRowsInSection( section ) ?? 0
         }
@@ -199,7 +290,7 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
         var cell: UITableViewCell? = nil
         if .searchAuthor == searchType {
 
-            let authorCell = tableView.dequeueReusableCellWithIdentifier("authorSearchResult", forIndexPath: indexPath) as! AuthorSearchResultTableViewCell
+            let authorCell = tableView.dequeueReusableCellWithIdentifier( "authorSearchResult", forIndexPath: indexPath ) as! AuthorSearchResultTableViewCell
             
             authorSearchCoordinator.displayToCell( authorCell, indexPath: indexPath )
             
@@ -207,7 +298,7 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
 
         } else if .searchTitle == searchType {
             
-            let titleCell = tableView.dequeueReusableCellWithIdentifier("titleSearchResult", forIndexPath: indexPath) as! TitleSearchResultTableViewCell
+            let titleCell = tableView.dequeueReusableCellWithIdentifier( "titleSearchResult", forIndexPath: indexPath ) as! TitleSearchResultTableViewCell
             
             titleSearchCoordinator.displayToCell( titleCell, indexPath: indexPath )
             
@@ -215,11 +306,24 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
             
         } else if .searchGeneral == searchType {
             
-            let generalCell = tableView.dequeueReusableCellWithIdentifier( "generalSearchResult", forIndexPath: indexPath) as! GeneralSearchResultTableViewCell
+            let generalCell = tableView.dequeueReusableCellWithIdentifier( "generalSearchResult", forIndexPath: indexPath ) as! GeneralSearchResultTableViewCell
             
             generalSearchCoordinator.displayToCell( generalCell, indexPath: indexPath )
             
             cell = generalCell
+
+        } else if .searchGeneralExpanding == searchType {
+            
+            if let expandingCell = tableView.dequeueReusableCellWithIdentifier( GeneralSearchResultSegmentedTableViewCell.nameOfClass ) as? GeneralSearchResultSegmentedTableViewCell {
+
+                if let object = generalSearchCoordinator.objectAtIndexPath( indexPath ) {
+                
+                    expandingCell.configure( self, indexPath: indexPath, generalResult: object )
+                    generalSearchCoordinator.updateUI( object, cell: expandingCell )
+                }
+
+                cell = expandingCell
+            }
         }
      
         return cell!
@@ -239,7 +343,7 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
             self.title = "Title"
             titleSearchCoordinator.newQuery( authorName, userInitiated: userInitiated, refreshControl: self.refreshControl )
             
-        } else if SearchType( rawValue: scopeIndex ) == .searchGeneral {
+        } else if SearchType( rawValue: scopeIndex ) == .searchGeneral || .searchGeneralExpanding == searchType {
             
             self.title = "Search"
         }
@@ -254,7 +358,7 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
             authorSearchCoordinator.clearQuery()
         } else if .searchTitle == searchType {
             titleSearchCoordinator.clearQuery()
-        } else if .searchGeneral == searchType {
+        } else if .searchGeneral == searchType || .searchGeneralExpanding == searchType {
             generalSearchCoordinator.clearQuery()
         }
     }
@@ -265,11 +369,11 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
             authorSearchCoordinator.updateUI()
         } else if .searchTitle == searchType {
             titleSearchCoordinator.updateUI()
-        } else if .searchGeneral == searchType {
+        } else if .searchGeneral == searchType || .searchGeneralExpanding == searchType {
             generalSearchCoordinator.updateUI()
         }
     }
-
+    
     // MARK: UISearchBarDelegate
     func searchBarSearchButtonClicked( searchBar: UISearchBar ) {
         
@@ -318,15 +422,82 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
 
                 if !vc.searchKeys.isEmpty {
                     
-                    searchType = .searchGeneral
+                    // searchType = .searchGeneral
 
+                    SegmentedTableViewCell.purgeCellHeights()
                     generalSearchCoordinator.newQuery( vc.searchKeys, userInitiated: true, refreshControl: nil )
                     tableView.reloadData()
                 }
             }
         }
     }
-
     
+    // MARK: cell expansion and contraction
+    
+    private func expandCell( tableView: UITableView, segmentedCell: SegmentedTableViewCell, indexPath: NSIndexPath ) {
+        
+//        if !SegmentedTableViewCell.animationInProgress() {
+            
+            let duration = 0.3
+            
+            segmentedCell.setOpen( indexPath )
+            
+            UIView.animateWithDuration(
+                duration, delay: 0, options: .CurveLinear,
+                animations: {
+                    () -> Void in
+                    tableView.beginUpdates()
+                    tableView.endUpdates()
+                }
+            ) {
+                (finished) -> Void in
+                
+                segmentedCell.selectedAnimation( indexPath, expandCell: true, animated: true ) {
+                    
+                    SegmentedTableViewCell.animationComplete()
+                }
+            }
+//        }
+    }
+    
+    private func contractCell( tableView: UITableView, segmentedCell: SegmentedTableViewCell, indexPath: NSIndexPath ) {
+        
+//        if !SegmentedTableViewCell.animationInProgress() {
+            
+            let duration = 0.1 // isOpen ? 0.3 : 0.1 // isOpen ? 1.1 : 0.6
+            
+            segmentedCell.selectedAnimation( indexPath, expandCell: false, animated: true ) {
+                
+                UIView.animateWithDuration(
+                    duration, delay: 0.0, options: .CurveLinear,
+                    
+                    animations: {
+                        () -> Void in
+                        tableView.beginUpdates()
+                        tableView.endUpdates()
+                    }
+                ) {
+                    (finished) -> Void in
+                    
+                    SegmentedTableViewCell.animationComplete()
+                }
+            }
+//        }
+    }
+}
+
+extension OLSearchResultsTableViewController: ImageViewTransitionSource {
+    
+    func transitionSourceRectView() -> UIImageView? {
+        
+        if let indexPath = tableView.indexPathForSelectedRow {
+            if let cell = tableView.cellForRowAtIndexPath( indexPath ) as? GeneralSearchResultSegmentedTableViewCell {
+                
+                return cell.transitionSourceRectView()
+            }
+        }
+        
+        return nil
+    }
 }
 

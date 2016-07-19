@@ -86,7 +86,7 @@ class OLEditionDetailViewController: UIViewController {
 
 extension OLEditionDetailViewController: ImageViewTransitionSource {
     
-    func transitionSourceRectangle() -> UIImageView? {
+    func transitionSourceRectView() -> UIImageView? {
         
         return editionCoverView
     }

@@ -102,8 +102,8 @@ extension ZoomTransition: ZoomTransitionGestureTarget {
     
     func addTransitionGesturesToView( view: UIView ) {
         
-        let pinchRecognizer = UIPinchGestureRecognizer.init( target: self, action: #selector(ZoomTransition.handlePinch(_:)) )
-        view.addGestureRecognizer( pinchRecognizer )
+//        let pinchRecognizer = UIPinchGestureRecognizer.init( target: self, action: #selector(ZoomTransition.handlePinch(_:)) )
+//        view.addGestureRecognizer( pinchRecognizer )
         
         let edgePanRecognizer =
         UIScreenEdgePanGestureRecognizer.init( target: self, action: #selector(ZoomTransition.handleEdgePan(_:)) )

@@ -175,8 +175,9 @@ class OLWorkDetailViewController: UIViewController {
         
         let viewHeight = self.view.bounds.height
         
-        let minContentHeight = viewHeight - UIApplication.sharedApplication().statusBarFrame.height +
-            self.navigationController!.navigationBar.frame.height
+        let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
+        let navBarHeight = self.navigationController?.navigationBar.frame.height ?? 0
+        let minContentHeight = viewHeight - ( statusBarHeight + navBarHeight )
         
         let headerViewHeight = headerView.bounds.height
         
@@ -193,7 +194,7 @@ class OLWorkDetailViewController: UIViewController {
 
 extension OLWorkDetailViewController: ImageViewTransitionSource {
     
-    func transitionSourceRectangle() -> UIImageView? {
+    func transitionSourceRectView() -> UIImageView? {
         
         return workCover
     }

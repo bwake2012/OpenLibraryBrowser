@@ -17,6 +17,8 @@ class IAEBookItemListParseOperation: Operation {
     let cacheFile: NSURL
     let context: NSManagedObjectContext
     
+    let urlString: String
+    
     var searchResults = SearchResults()
     
     /**
@@ -27,13 +29,14 @@ class IAEBookItemListParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( cacheFile: NSURL, coreDataStack: CoreDataStack ) {
+    init( urlString: String, cacheFile: NSURL, coreDataStack: CoreDataStack ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
             to replace the ones in the store.
         */
         
+        self.urlString = urlString
         self.cacheFile = cacheFile
         self.context = coreDataStack.newChildContext()
         self.context.mergePolicy = NSOverwriteMergePolicy
@@ -65,6 +68,8 @@ class IAEBookItemListParseOperation: Operation {
             }
         }
         catch let jsonError as NSError {
+            
+            print( self.urlString )
             finishWithError(jsonError)
         }
     }
