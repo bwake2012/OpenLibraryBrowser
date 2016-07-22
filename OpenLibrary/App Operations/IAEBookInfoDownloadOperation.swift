@@ -8,6 +8,8 @@
 
 import Foundation
 
+import PSOperations
+
 class IAEBookInfoDownloadOperation: GroupOperation {
     // MARK: Properties
 

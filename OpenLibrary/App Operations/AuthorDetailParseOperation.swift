@@ -10,6 +10,7 @@ import Foundation
 import CoreData
 
 import BNRCoreDataStack
+import PSOperations
 
 /// An object to represent a parsed author search result.
 private class ParsedSearchResult: OpenLibraryObject {

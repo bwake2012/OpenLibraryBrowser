@@ -7,10 +7,10 @@
 //
 
 import Foundation
-
 import CoreData
 
 import BNRCoreDataStack
+import PSOperations
 
 let kAuthorDetailCache = "authorDetailSearch"
 

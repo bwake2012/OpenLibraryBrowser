@@ -10,6 +10,8 @@ import Foundation
 import CoreData
 
 import BNRCoreDataStack
+import PSOperations
+
 
 /// A struct to represent a parsed Work search result.
 private class ParsedSearchResult: OpenLibraryObject {

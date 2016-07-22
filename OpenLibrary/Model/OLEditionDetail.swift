@@ -337,6 +337,27 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         }
     }
     
+    func findEBookItem() -> OLEBookItem? {
+        
+        var foundItem: OLEBookItem?
+        
+        print( "Edition OLID: \(key) \(ocaid)" )
+        if mayHaveFullText && !ebook_items.isEmpty {
+            
+            for item in ebook_items {
+                
+                print( "\(item.editionKey) \(item.fromRecord) \(item.eBookKey)" )
+                if item.editionKey == key {
+                    
+                    foundItem = item
+                    break
+                }
+            }
+        }
+
+        return foundItem
+    }
+    
     // MARK: Deluxe Detail
     override func buildDeluxeData() -> [[DeluxeData]] {
         

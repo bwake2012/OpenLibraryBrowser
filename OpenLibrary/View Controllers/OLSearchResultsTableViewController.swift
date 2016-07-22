@@ -51,6 +51,7 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
     var touchedCellIndexPath: NSIndexPath?
     
     var savedSearchKeys = [String: String]()
+    var savedIndexPath: NSIndexPath?
 
     @IBAction func presentGeneralSearch(sender: UIBarButtonItem) {}
     @IBAction func presentSearchResultsFilter(sender: UIBarButtonItem) {}
@@ -65,16 +66,24 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
 //        self.tableView.rowHeight = UITableViewAutomaticDimension
         
         self.tableView.tableFooterView = UIView(frame: .zero)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        super.viewWillAppear( animated )
+        
+        if let indexPath = savedIndexPath {
+            
+            tableView.selectRowAtIndexPath( indexPath, animated: animated, scrollPosition: .Top )
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        
+        if let indexPath = tableView.indexPathForSelectedRow {
 
-//        UIView.animateWithDuration(
-//            0.3, delay: 0.0, options: .CurveLinear,
-//            
-//            animations: {
-//                () -> Void in
-//                self.tableView.beginUpdates()
-//                self.tableView.endUpdates()
-//            }
-//        ) { (finished) -> Void in }
+            tableView( tableView, didSelectRowAtIndexPath: indexPath )
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -85,7 +94,9 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if segue.identifier == "openBookSearch" {
+        guard let segueName = segue.identifier else { assert( false ); return }
+        
+        if segueName == "openBookSearch" {
             
             if let destVC = segue.destinationViewController as? OLBookSearchViewController {
                 if let delegate = segue as? UIViewControllerTransitioningDelegate {
@@ -98,65 +109,74 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
                     destVC.saveSearchDictionary = self.saveSearchKeys
                 }
             }
+            
+        } else if let indexPath = tableView.indexPathForSelectedRow {
+        
+            if .searchGeneralExpanding == searchType {
+                
+                savedIndexPath = indexPath
+            }
+            
+            switch segueName {
+            
+            case "displayGeneralSearchAuthorDetail":
 
-        } else if segue.identifier == "displayGeneralSearchAuthorDetail" {
-
-            if let indexPath = tableView.indexPathForSelectedRow {
                 if let destVC = segue.destinationViewController as? OLAuthorDetailViewController {
                     
                     generalSearchCoordinator.installAuthorDetailCoordinator( destVC, indexPath: indexPath )
                 }
-            }
 
-        } else if segue.identifier == "displayGeneralSearchWorkDetail" {
-            
-            if let indexPath = tableView.indexPathForSelectedRow {
+            case "displayGeneralSearchWorkDetail":
+                
                 if let destVC = segue.destinationViewController as? OLWorkDetailViewController {
                     
                     generalSearchCoordinator.installWorkDetailCoordinator( destVC, indexPath: indexPath )
                 }
-            }
-            
-        } else if segue.identifier == "largeCoverImage" {
+                
+            case "largeCoverImage":
 
-            if let indexPath = tableView.indexPathForSelectedRow {
                 if let destVC = segue.destinationViewController as? OLPictureViewController {
                     
                     generalSearchCoordinator.installCoverPictureViewCoordinator( destVC, indexPath: indexPath )
                 }
-            }
+ 
+            case "displayEBookTableView":
 
-        } else {
-
-            if let indexPath = self.tableView.indexPathForSelectedRow {
-                if segue.identifier == "displayAuthorDetail" {
+                if let destVC = segue.destinationViewController as? OLEBookEditionsTableViewController {
+                    
+                    generalSearchCoordinator.installEBookEditionsCoordinator( destVC, indexPath: indexPath )
+                }
                 
-                    if let destVC = segue.destinationViewController as? OLAuthorDetailViewController {
-                        
-                        if .searchAuthor == searchType {
-                            searchController.active = false
-                            authorSearchCoordinator.installAuthorDetailCoordinator( destVC, indexPath: indexPath )
-                        } else if .searchGeneral == searchType || .searchGeneralExpanding == searchType {
-                            generalSearchCoordinator.installAuthorDetailCoordinator( destVC, indexPath: indexPath )
-                        }
-                    }
-
-                } else if segue.identifier == "displaySearchWorkDetail" {
+            case "displayAuthorDetail":
+                
+                if let destVC = segue.destinationViewController as? OLAuthorDetailViewController {
                     
-                    if let destVC = segue.destinationViewController as? OLWorkDetailViewController {
-                        
+                    if .searchAuthor == searchType {
                         searchController.active = false
-                        titleSearchCoordinator.installTitleDetailCoordinator( destVC, indexPath: indexPath )
-                    }
-
-                } else if segue.identifier == "displayGeneralSearchWorkDetail" {
-                    
-                    if let destVC = segue.destinationViewController as? OLWorkDetailViewController {
-                        
-                        searchController.active = false
-                        generalSearchCoordinator.installWorkDetailCoordinator( destVC, indexPath: indexPath )
+                        authorSearchCoordinator.installAuthorDetailCoordinator( destVC, indexPath: indexPath )
+                    } else if .searchGeneral == searchType || .searchGeneralExpanding == searchType {
+                        generalSearchCoordinator.installAuthorDetailCoordinator( destVC, indexPath: indexPath )
                     }
                 }
+
+            case "displaySearchWorkDetail":
+                
+                if let destVC = segue.destinationViewController as? OLWorkDetailViewController {
+                    
+                    searchController.active = false
+                    titleSearchCoordinator.installTitleDetailCoordinator( destVC, indexPath: indexPath )
+                }
+
+            case "displayGeneralSearchWorkDetail":
+                
+                if let destVC = segue.destinationViewController as? OLWorkDetailViewController {
+                    
+                    searchController.active = false
+                    generalSearchCoordinator.installWorkDetailCoordinator( destVC, indexPath: indexPath )
+                }
+            default:
+
+                assert( false )
             }
         }
     }

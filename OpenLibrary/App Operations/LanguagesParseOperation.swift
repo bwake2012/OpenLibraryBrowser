@@ -10,6 +10,7 @@ import Foundation
 import CoreData
 
 import BNRCoreDataStack
+import PSOperations
 
 /// An `Operation` to parse works out of a query from OpenLibrary.
 class LanguagesParseOperation: Operation {

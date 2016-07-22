@@ -11,6 +11,7 @@ import UIKit
 import CoreData
 
 import BNRCoreDataStack
+import PSOperations
 
 private let kAuthorSearchCache = "authorNameSearch"
 

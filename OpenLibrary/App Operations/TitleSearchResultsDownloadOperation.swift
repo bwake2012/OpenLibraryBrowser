@@ -7,6 +7,7 @@
 //  Modified from code in the Apple sample app Earthquakes in the Advanced NSOperations project
 
 import Foundation
+import PSOperations
 
 class TitleSearchResultsDownloadOperation: GroupOperation {
     // MARK: Properties

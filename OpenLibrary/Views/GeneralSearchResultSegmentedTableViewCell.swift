@@ -17,6 +17,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
     @IBOutlet weak private var authorNameText: UILabel!
     @IBOutlet weak private var viewAuthorDetail: UIButton!
     
+    @IBOutlet weak private var editionCountLabel: UILabel!
     @IBOutlet weak private var editionCount: UILabel!
     @IBOutlet weak private var viewWorkDetail: UIButton!
 
@@ -24,6 +25,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
     
     @IBOutlet weak private var firstPublished: UILabel!
     
+    @IBOutlet weak private var eBookCountLabel: UILabel!
     @IBOutlet weak private var eBookCount: UILabel!
     @IBOutlet weak private var viewBooks: UIButton!
 
@@ -64,8 +66,6 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
     
     @IBAction private func viewWorkEditionsTapped(sender: UIButton) {
 
-        if !isAnimating() {
-        }
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
@@ -76,9 +76,19 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
     private func updateButtons( selected: Bool ) {
 
         zoomCover.enabled = selected && isZoomEnabled
+        
         viewAuthorDetail.enabled = selected
-        viewWorkDetail.enabled = selected && haveEbooks
-        viewBooks.enabled = selected && haveEditions
+        authorNameText.textColor = viewAuthorDetail.titleColorForState( viewAuthorDetail.enabled ? .Normal : .Disabled )
+        
+        viewWorkDetail.enabled = selected && haveEditions
+        var textColor = viewWorkDetail.titleColorForState( viewWorkDetail.enabled ? .Normal : .Disabled )
+        editionCountLabel.textColor = textColor
+        editionCount.textColor = textColor
+        
+        viewBooks.enabled = selected && haveEbooks
+        textColor = viewBooks.titleColorForState( viewBooks.enabled ? .Normal : .Disabled )
+        eBookCountLabel.textColor = textColor
+        eBookCount.textColor = textColor
     }
 
     func configure( delegate: UITableViewController, indexPath: NSIndexPath, generalResult: OLGeneralSearchResult? ) {
@@ -97,8 +107,6 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
             languageNames.text = r.language_names.joinWithSeparator( ", " )
             
             firstPublished.text = String( r.first_publish_year )
-            
-            eBookCount.text = String( r.ebook_count_i )
             
             isZoomEnabled = r.hasImage
             haveEbooks = 0 < r.ebook_count_i
@@ -119,6 +127,8 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
             haveEbooks = false
             haveEditions = false
         }
+        
+        eBookCount.text = haveEbooks ? "found" : "not found"
         
         clearCurrentImage()
         

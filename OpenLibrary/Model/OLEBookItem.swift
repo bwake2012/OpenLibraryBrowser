@@ -38,7 +38,7 @@ private class ParsedSearchResult: OpenLibraryObject {
         if !editionKey.hasPrefix( kEditionsPrefix ) {
             editionKey = kEditionsPrefix + editionKey
         }
-        let publish_date = json["publishDate"] as? String ?? ""
+        let publish_date = json["publishDate"] as? String ?? "not recorded"
         let itemURL      = json["itemURL"] as? String ?? ""
         var eBookKey = ""
         if !itemURL.isEmpty {
@@ -149,5 +149,46 @@ class OLEBookItem: OLManagedObject, CoreDataModelable {
         }
         
         return newObject
+    }
+    
+    override var hasImage: Bool {
+        
+        return 0 < cover_id
+    }
+    
+    override var firstImageID: Int {
+        
+        return Int( cover_id )
+    }
+    
+    override var imageType: String { return "b" }
+    
+    override func imageID( index: Int ) -> Int {
+        
+        return index > 0 ? 0 : Int( cover_id )
+    }
+    
+    override func localURL( size: String, index: Int = 0 ) -> NSURL {
+        
+        return super.localURL( self.editionKey, size: size, index: index )
+    }
+    
+    var editionDetail: OLEditionDetail?
+
+    func matchingEdition() -> OLEditionDetail? {
+        
+        if nil == editionDetail {
+
+            if let moc = self.managedObjectContext {
+                
+                if let editionDetail: OLEditionDetail =
+                    OLEditionDetail.findObject( editionKey, entityName: OLEditionDetail.entityName, moc: moc ) {
+                    
+                    self.editionDetail = editionDetail
+                }
+            }
+        }
+        
+        return editionDetail
     }
 }

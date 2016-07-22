@@ -11,6 +11,7 @@ import CoreData
 import SafariServices
 
 import BNRCoreDataStack
+import PSOperations
 
 let kEBookFileCache = "eBookXMLFileCache"
 

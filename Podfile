@@ -5,13 +5,8 @@ use_frameworks!
 
 target 'OpenLibrary' do
     pod 'BNRCoreDataStack'
+    pod 'ReachabilitySwift'
+    pod 'PSOperations', '~> 2.3'
 end
 
-target 'OpenLibraryTests' do
-    pod 'BNRCoreDataStack'
-end
-
-target 'OpenLibraryUITests' do
-    pod 'BNRCoreDataStack'
-end
 

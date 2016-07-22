@@ -10,6 +10,7 @@ import Foundation
 import CoreData
 
 import BNRCoreDataStack
+import PSOperations
 
 let kTitlesPrefix = "/Titles/"
 

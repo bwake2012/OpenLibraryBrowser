@@ -8,6 +8,8 @@
 
 import Foundation
 
+import PSOperations
+
 class ImageDownloadOperation: GroupOperation {
     // MARK: Properties
     let imageURL: NSURL

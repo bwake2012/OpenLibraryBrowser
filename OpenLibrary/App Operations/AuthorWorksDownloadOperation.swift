@@ -8,6 +8,8 @@
 
 import Foundation
 
+import PSOperations
+
 class AuthorWorksDownloadOperation: GroupOperation {
     // MARK: Properties
 

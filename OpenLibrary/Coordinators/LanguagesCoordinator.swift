@@ -10,6 +10,7 @@ import Foundation
 import CoreData
 
 import BNRCoreDataStack
+import PSOperations
 
 private let kLanguagesCache = "languagesCache"
 

@@ -127,7 +127,7 @@ class SegmentedTableViewCell: OLTableViewCell {
         
         // return 60.0 + 1
         
-        return 100
+        return 100 + 1
     }
     
     class func cellHeight( indexPath: NSIndexPath, withData data: OLGeneralSearchResult? ) -> CGFloat {
@@ -172,6 +172,15 @@ class SegmentedTableViewCell: OLTableViewCell {
         }
         
         SegmentedTableViewCell.cellHeights[indexPath] = cellHeights!
+    }
+    
+    class func closeAllCells() -> Void {
+        
+        for (k,v) in SegmentedTableViewCell.cellHeights {
+            
+            SegmentedTableViewCell.cellHeights[k] =
+                CellHeights( closed: v.closed, open: v.open, isExpanded: false  )
+        }
     }
     
     private func segmentZeroHeight() -> CGFloat {

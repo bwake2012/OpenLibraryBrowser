@@ -7,6 +7,8 @@ Contains the code to manage the visibility of the network activity indicator
 */
 
 import UIKit
+import PSOperations
+
 
 /**
     An `OperationObserver` that will cause the network activity indicator to appear
@@ -23,6 +25,8 @@ struct NetworkObserver: OperationObserver {
             NetworkIndicatorController.sharedIndicatorController.networkActivityDidStart()
         }
     }
+    
+    func operationDidCancel(operation: Operation) {}
     
     func operation(operation: Operation, didProduceOperation newOperation: NSOperation) { }
     

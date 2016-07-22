@@ -10,7 +10,8 @@ import Foundation
 import CoreData
 
 import BNRCoreDataStack
-// import ReachabilitySwift
+import ReachabilitySwift
+import PSOperations
 
 class OLQueryCoordinator: NSObject {
 

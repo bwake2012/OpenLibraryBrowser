@@ -9,6 +9,7 @@
 import CoreData
 
 import BNRCoreDataStack
+import PSOperations
 
 /// A composite `Operation` to both download and parse General search result data.
 class GeneralSearchOperation: GroupOperation {
@@ -19,7 +20,7 @@ class GeneralSearchOperation: GroupOperation {
     let parseOperation: GeneralSearchResultsParseOperation
     let finishOperation: NSBlockOperation
    
-    private var hasProducedAlert = false
+//    private var hasProducedAlert = false
     
     private let coreDataStack: CoreDataStack
     
@@ -90,7 +91,7 @@ class GeneralSearchOperation: GroupOperation {
                 if !editions.isEmpty {
                     
                     var index = 0
-                    let subsetSize = editions.count // 256
+                    let subsetSize = 256
                     while index < editions.count {
                         
                         let subset = Array( editions[index..<min(editions.count, index+subsetSize)] )
@@ -111,42 +112,42 @@ class GeneralSearchOperation: GroupOperation {
         }
     }
     
-    private func produceAlert(error: NSError) {
-        /*
-            We only want to show the first error, since subsequent errors might
-            be caused by the first.
-        */
-        if hasProducedAlert { return }
-        
-        let alert = AlertOperation()
-        
-        let errorReason = (error.domain, error.code, error.userInfo[OperationConditionKey] as? String)
-        
-        // These are examples of errors for which we might choose to display an error to the user
-        let failedReachability = (OperationErrorDomain, OperationErrorCode.ConditionFailed, ReachabilityCondition.name)
-        
-        let failedJSON = (NSCocoaErrorDomain, NSPropertyListReadCorruptError, nil as String?)
-
-        switch errorReason {
-            case failedReachability:
-                // We failed because the network isn't reachable.
-                let hostURL = error.userInfo[ReachabilityCondition.hostKey] as! NSURL
-                
-                alert.title = "Unable to Connect"
-                alert.message = "Cannot connect to \(hostURL.host!). Make sure your device is connected to the internet and try again."
-            
-            case failedJSON:
-                // We failed because the JSON was malformed.
-                alert.title = "Unable to Download"
-                alert.message = "Cannot parse General Search results. Try again later."
-
-            default:
-                return
-        }
-        
-        produceOperation(alert)
-        hasProducedAlert = true
-    }
+//    private func produceAlert(error: NSError) {
+//        /*
+//            We only want to show the first error, since subsequent errors might
+//            be caused by the first.
+//        */
+//        if hasProducedAlert { return }
+//        
+//        let alert = AlertOperation()
+//        
+//        let errorReason = (error.domain, error.code, error.userInfo[OperationConditionKey] as? String)
+//        
+//        // These are examples of errors for which we might choose to display an error to the user
+//        let failedReachability = (OperationErrorDomain, OperationErrorCode.ConditionFailed, ReachabilityCondition.name)
+//        
+//        let failedJSON = (NSCocoaErrorDomain, NSPropertyListReadCorruptError, nil as String?)
+//
+//        switch errorReason {
+//            case failedReachability:
+//                // We failed because the network isn't reachable.
+//                let hostURL = error.userInfo[ReachabilityCondition.hostKey] as! NSURL
+//                
+//                alert.title = "Unable to Connect"
+//                alert.message = "Cannot connect to \(hostURL.host!). Make sure your device is connected to the internet and try again."
+//            
+//            case failedJSON:
+//                // We failed because the JSON was malformed.
+//                alert.title = "Unable to Download"
+//                alert.message = "Cannot parse General Search results. Try again later."
+//
+//            default:
+//                return
+//        }
+//        
+//        produceOperation(alert)
+//        hasProducedAlert = true
+//    }
 }
 
 // Operators to use in the switch statement.

@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 
 import BNRCoreDataStack
+import PSOperations
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     private let operationQueue = OperationQueue()
+    private var reachabilityOperation: OLReachabilityOperation?
 
     private var coreDataStack: CoreDataStack?
     
@@ -43,9 +45,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
                     self.window?.rootViewController = self.navController
                  
-                    let reachabilityOperation = OLReachabilityOperation( host: "openlibrary.org" ) {}
-                    reachabilityOperation.userInitiated = true
-                    self.operationQueue.addOperation( reachabilityOperation )
+                    self.reachabilityOperation = OLReachabilityOperation( host: "openlibrary.org" ) {
+//                        if let reachabilityOperation = self.reachabilityOperation where reachabilityOperation.errors.isEmpty {
+//                            self.reachabilityOperation = nil
+//                        }
+                    }
+                    self.reachabilityOperation?.userInitiated = true
+                    self.operationQueue.addOperation( self.reachabilityOperation! )
                     
                     OLLanguage.retrieveLanguages( self.operationQueue, coreDataStack: self.coreDataStack! )
                }

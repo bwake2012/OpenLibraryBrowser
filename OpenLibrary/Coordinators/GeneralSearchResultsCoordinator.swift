@@ -11,6 +11,7 @@ import UIKit
 import CoreData
 
 import BNRCoreDataStack
+import PSOperations
 
 private let kGeneralSearchCache = "GeneralSearch"
 
@@ -374,5 +375,18 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         
     }
 
-
+    func installEBookEditionsCoordinator( destVC: OLEBookEditionsTableViewController, indexPath: NSIndexPath ) {
+        
+        guard let searchResult = objectAtIndexPath( indexPath ) else {
+            fatalError( "General Search Result object not retrieved." )
+        }
+        
+        destVC.queryCoordinator =
+            EBookEditionsCoordinator(
+                    operationQueue: operationQueue,
+                    coreDataStack: coreDataStack,
+                    workKey: searchResult.key,
+                    tableVC: destVC
+                )
+    }
 }

@@ -10,6 +10,7 @@ import Foundation
 import CoreData
 
 import BNRCoreDataStack
+import PSOperations
 
 /// An `Operation` to parse earthquakes out of a downloaded feed from the USGS.
 class GeneralSearchResultsParseOperation: Operation {

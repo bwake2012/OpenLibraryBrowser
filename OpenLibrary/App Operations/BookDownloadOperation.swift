@@ -8,6 +8,8 @@
 
 import Foundation
 
+import PSOperations
+
 class BookDownloadOperation: GroupOperation {
     // MARK: Properties
     let cacheBookURL: NSURL

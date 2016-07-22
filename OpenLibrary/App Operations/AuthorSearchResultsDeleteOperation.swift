@@ -10,6 +10,7 @@ import Foundation
 import CoreData
 
 import BNRCoreDataStack
+import PSOperations
 
 class AuthorSearchResultsDeleteOperation: Operation {
     
