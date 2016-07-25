@@ -14,22 +14,17 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
     
     @IBOutlet weak private var titleText: UILabel!
     @IBOutlet weak private var subtitleText: UILabel!
-    @IBOutlet weak private var authorNameText: UILabel!
     @IBOutlet weak private var viewAuthorDetail: UIButton!
     
-    @IBOutlet weak private var editionCountLabel: UILabel!
-    @IBOutlet weak private var editionCount: UILabel!
     @IBOutlet weak private var viewWorkDetail: UIButton!
 
     @IBOutlet weak private var languageNames: UILabel!
     
     @IBOutlet weak private var firstPublished: UILabel!
     
-    @IBOutlet weak private var eBookCountLabel: UILabel!
-    @IBOutlet weak private var eBookCount: UILabel!
     @IBOutlet weak private var viewBooks: UIButton!
 
-    var delegate: UITableViewController?
+//    var delegate: UITableViewController?
 
     var isZoomEnabled = false
     var haveEditions = false
@@ -53,14 +48,14 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
 
         if !isAnimating() {
             
-            if let delegate = delegate, tableView = delegate.tableView {
-                
-                // [[[event touchesForView: button] anyObject] locationInView: self.tableView]]
-                if let indexPath = tableView.indexPathForRowAtPoint( sender.superview!.convertPoint( sender.center, toView: tableView ) ) {
-                    
-                    delegate.tableView( tableView, accessoryButtonTappedForRowWithIndexPath: indexPath )
-                }
-            }
+//            if let delegate = delegate, tableView = delegate.tableView {
+//                
+//                // [[[event touchesForView: button] anyObject] locationInView: self.tableView]]
+//                if let indexPath = tableView.indexPathForRowAtPoint( sender.superview!.convertPoint( sender.center, toView: tableView ) ) {
+//                    
+//                    delegate.tableView( tableView, accessoryButtonTappedForRowWithIndexPath: indexPath )
+//                }
+//            }
         }
     }
     
@@ -78,32 +73,23 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
         zoomCover.enabled = selected && isZoomEnabled
         
         viewAuthorDetail.enabled = selected
-        authorNameText.textColor = viewAuthorDetail.titleColorForState( viewAuthorDetail.enabled ? .Normal : .Disabled )
         
         viewWorkDetail.enabled = selected && haveEditions
-        var textColor = viewWorkDetail.titleColorForState( viewWorkDetail.enabled ? .Normal : .Disabled )
-        editionCountLabel.textColor = textColor
-        editionCount.textColor = textColor
         
         viewBooks.enabled = selected && haveEbooks
-        textColor = viewBooks.titleColorForState( viewBooks.enabled ? .Normal : .Disabled )
-        eBookCountLabel.textColor = textColor
-        eBookCount.textColor = textColor
     }
 
-    func configure( delegate: UITableViewController, indexPath: NSIndexPath, generalResult: OLGeneralSearchResult? ) {
+    override func configure( tableView: UITableView, indexPath: NSIndexPath, withData data: AnyObject? ) {
         
-        self.delegate = delegate
+        configureCell( tableView, indexPath: indexPath )
         
-        configureCell( delegate.tableView, indexPath: indexPath )
-        
-        if let r = generalResult {
+        if let r = data as? OLGeneralSearchResult {
 
             titleText.text = r.title
             subtitleText.text = r.subtitle
-            authorNameText.text = r.author_name.joinWithSeparator( ", " )
+            viewAuthorDetail.setTitle( r.author_name.joinWithSeparator( ", " ), forState: .Normal )
             
-            editionCount.text = String( r.edition_count )
+            viewWorkDetail.setTitle( "Editions: " + String( r.edition_count ), forState: .Normal )
             languageNames.text = r.language_names.joinWithSeparator( ", " )
             
             firstPublished.text = String( r.first_publish_year )
@@ -116,19 +102,24 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
             
             titleText.text = ""
             subtitleText.text = ""
-            authorNameText.text = ""
+            viewAuthorDetail.setTitle( "", forState: .Normal )
             
-            editionCount.text = ""
+            viewWorkDetail.setTitle( "", forState: .Normal )
             languageNames.text = ""
             
             firstPublished.text = ""
             
+            viewBooks.setTitle( "", forState: .Normal )
+
             isZoomEnabled = false
             haveEbooks = false
             haveEditions = false
         }
         
-        eBookCount.text = haveEbooks ? "found" : "not found"
+        viewBooks.setTitle(
+                "Electronic Editions " + ( haveEbooks ? "found" : "not found" ),
+                forState: .Normal
+            )
         
         clearCurrentImage()
         
@@ -137,7 +128,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
         setNeedsLayout()
         layoutIfNeeded()
         
-        adjustCellHeights( indexPath )
+//        adjustCellHeights( tableView, indexPath: indexPath )
         
 //        delegate.tableView.beginUpdates()
 //        delegate.tableView.endUpdates()

@@ -156,6 +156,7 @@
 		C4E863961C99E951002C0E6B /* AuthorEditionsParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E863931C99E951002C0E6B /* AuthorEditionsParseOperation.swift */; };
 		C4E863981C9A32FB002C0E6B /* OLAuthorDetailEditionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E863971C9A32FB002C0E6B /* OLAuthorDetailEditionsTableViewController.swift */; };
 		C4E8639A1C9A3897002C0E6B /* EBookEditionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E863991C9A3897002C0E6B /* EBookEditionTableViewCell.swift */; };
+		C4EF72F51D46818E0056D8E4 /* GeneralSearchResultSegmentedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4EF72F41D46818E0056D8E4 /* GeneralSearchResultSegmentedTableViewCell.xib */; };
 		C4EF99D21CA1B04C00BEF2D3 /* AuthorDetailWithThumbGetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EF99D11CA1B04C00BEF2D3 /* AuthorDetailWithThumbGetOperation.swift */; };
 		C4EF99D51CA3707900BEF2D3 /* OLWorkDetailEditionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EF99D31CA3707900BEF2D3 /* OLWorkDetailEditionsTableViewController.swift */; };
 		C4EF99D61CA3707900BEF2D3 /* OLWorkDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EF99D41CA3707900BEF2D3 /* OLWorkDetailViewController.swift */; };
@@ -347,6 +348,7 @@
 		C4E863931C99E951002C0E6B /* AuthorEditionsParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorEditionsParseOperation.swift; path = "App Operations/AuthorEditionsParseOperation.swift"; sourceTree = "<group>"; };
 		C4E863971C9A32FB002C0E6B /* OLAuthorDetailEditionsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLAuthorDetailEditionsTableViewController.swift; path = "View Controllers/OLAuthorDetailEditionsTableViewController.swift"; sourceTree = "<group>"; };
 		C4E863991C9A3897002C0E6B /* EBookEditionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EBookEditionTableViewCell.swift; path = Views/EBookEditionTableViewCell.swift; sourceTree = "<group>"; };
+		C4EF72F41D46818E0056D8E4 /* GeneralSearchResultSegmentedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GeneralSearchResultSegmentedTableViewCell.xib; path = Views/GeneralSearchResultSegmentedTableViewCell.xib; sourceTree = "<group>"; };
 		C4EF99D11CA1B04C00BEF2D3 /* AuthorDetailWithThumbGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorDetailWithThumbGetOperation.swift; path = "App Operations/AuthorDetailWithThumbGetOperation.swift"; sourceTree = "<group>"; };
 		C4EF99D31CA3707900BEF2D3 /* OLWorkDetailEditionsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLWorkDetailEditionsTableViewController.swift; path = "View Controllers/OLWorkDetailEditionsTableViewController.swift"; sourceTree = "<group>"; };
 		C4EF99D41CA3707900BEF2D3 /* OLWorkDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLWorkDetailViewController.swift; path = "View Controllers/OLWorkDetailViewController.swift"; sourceTree = "<group>"; };
@@ -658,6 +660,7 @@
 				C4AB16E31CDA801100D6DF05 /* DeluxeDetailTableViewCell.swift */,
 				C4E863991C9A3897002C0E6B /* EBookEditionTableViewCell.swift */,
 				C4A722151D2DE25100C4BCED /* GeneralSearchResultSegmentedTableViewCell.swift */,
+				C4EF72F41D46818E0056D8E4 /* GeneralSearchResultSegmentedTableViewCell.xib */,
 				C437DEA31CECF8D9005CED1A /* GeneralSearchResultTableViewCell.swift */,
 				C488D6211D0B100F0025B61D /* HTMLTextDisplayView.swift */,
 				C42DBE491CBD5EAA0048788E /* JustifiedAspectRatioImageView.swift */,
@@ -807,6 +810,7 @@
 				C4AB170D1CDAF3C400D6DF05 /* DeluxeDetailBlockTableViewCell.xib in Resources */,
 				C4AB170B1CDAF1A000D6DF05 /* DeluxeDetailInlineTableViewCell.xib in Resources */,
 				C4E35E2A1C7E07950015D187 /* Assets.xcassets in Resources */,
+				C4EF72F51D46818E0056D8E4 /* GeneralSearchResultSegmentedTableViewCell.xib in Resources */,
 				C4AB17171CDB86B200D6DF05 /* DeluxeDetailLinkTableViewCell.xib in Resources */,
 				C4A722121D2DDD0500C4BCED /* SegmentedTableViewCell.xib in Resources */,
 				C4AA89471CF39F110082B654 /* WorkDetail.storyboard in Resources */,

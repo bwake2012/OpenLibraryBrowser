@@ -19,6 +19,10 @@ class OLEBookEditionsTableViewController: UITableViewController {
         // Do any additional setup after loading the view, typically from a nib.
         assert( nil != queryCoordinator )
         
+//        let refreshControl = UIRefreshControl()
+//        refreshControl.addTarget( self, action: #selector( testRefresh ), forControlEvents: .ValueChanged)
+//        tableView.addSubview( refreshControl )
+
         self.tableView.estimatedRowHeight = 68.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.tableFooterView = UIView(frame: .zero)
@@ -67,8 +71,17 @@ class OLEBookEditionsTableViewController: UITableViewController {
         return cell
     }
     
-    func refreshQuery( refreshControl: UIRefreshControl? ) {
+    // MARK: dismiss model view controller
+    @IBAction func dismiss(segue: UIStoryboardSegue) {
         
-        queryCoordinator?.refreshQuery( refreshControl )
+        
+    }
+
+    // MARK: UIRefreshControl
+    func testRefresh( refreshControl: UIRefreshControl ) {
+        
+        refreshControl.attributedTitle = NSAttributedString( string: "Refreshing data..." )
+        
+        queryCoordinator?.refreshQuery( nil )
     }
 }

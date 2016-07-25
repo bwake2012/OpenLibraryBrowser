@@ -25,6 +25,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
     weak var tableVC: UITableViewController?
     
     var workEditionsGetOperation: Operation?
+    var ebookItemGetOperation: Operation?
     
     private lazy var fetchedResultsController: FetchedEBookItemController = {
         
@@ -98,11 +99,6 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
     
     func displayToCell( cell: EbookEditionTableViewCell, indexPath: NSIndexPath ) -> OLEBookItem? {
         
-        if needAnotherPage( indexPath.row, highWaterMark: highWaterMark ) {
-            
-            nextQueryPage( highWaterMark )
-        }
-        
         guard let result = objectAtIndexPath( indexPath ) else { return nil }
         
         if let matchingEdition = result.matchingEdition() {
@@ -121,7 +117,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
                 
                 let url = localURL
                 let editionCoverGetOperation =
-                    ImageGetOperation( numberID: Int( result.cover_id ), imageKeyName: "id", localURL: url, size: "S", type: "b" )
+                    ImageGetOperation( numberID: Int( result.cover_id ), imageKeyName: "id", localURL: url, size: "S", type: result.imageType )
                     {
                         dispatch_async( dispatch_get_main_queue() ) {
                             
@@ -163,12 +159,12 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
                     coreDataStack: coreDataStack,
                     updateResults: self.updateResults
                 ) {
-                    
+
                     [weak self] in
                     if let strongSelf = self {
                         dispatch_async( dispatch_get_main_queue() ) {
                             
-                            refreshControl?.endRefreshing()
+                            strongSelf.refreshComplete( refreshControl )
                             //                                    strongSelf.updateUI()
                         }
                         
@@ -181,49 +177,46 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         }
     }
     
-    func nextQueryPage( offset: Int ) -> Void {
+    func newEbookItemQuery( workKey: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
         
-        if nil == workEditionsGetOperation && !workKey.isEmpty {
+        if nil == ebookItemGetOperation {
             
-            workEditionsGetOperation =
-                WorkEditionsGetOperation(
-                    queryText: self.workKey,
-                    offset: offset, limit: kPageSize,
-                    withCoversOnly: false,
-                    coreDataStack: coreDataStack,
-                    updateResults: self.updateResults
+            ebookItemGetOperation =
+                WorkEditionEbooksGetOperation(
+                    workKey: workKey,
+                    coreDataStack: coreDataStack
                 ) {
                     
                     [weak self] in
+                    
                     if let strongSelf = self {
+                        
                         dispatch_async( dispatch_get_main_queue() ) {
                             
-                            //                                refreshControl?.endRefreshing()
-                            //                                strongSelf.updateUI()
+                            strongSelf.refreshComplete( refreshControl )
                         }
                         
-                        strongSelf.workEditionsGetOperation = nil
+                        strongSelf.ebookItemGetOperation = nil
                     }
             }
-            
-            workEditionsGetOperation!.userInitiated = false
-            operationQueue.addOperation( workEditionsGetOperation! )
+            operationQueue.addOperation( ebookItemGetOperation! )
         }
     }
     
     func refreshQuery( refreshControl: UIRefreshControl? ) {
         
-        newQuery( self.workKey, userInitiated: true, refreshControl: refreshControl )
+        newEbookItemQuery( workKey, userInitiated: true, refreshControl: refreshControl )
+        newQuery( workKey, userInitiated: true, refreshControl: refreshControl )
     }
     
-    private func needAnotherPage( index: Int, highWaterMark: Int ) -> Bool {
-        
-        return
-            nil == workEditionsGetOperation &&
-                !workKey.isEmpty &&
-                highWaterMark < editionsCount &&
-                index >= ( highWaterMark - ( searchResults.pageSize / 4 ) )
-    }
+//    private func needAnotherPage( index: Int, highWaterMark: Int ) -> Bool {
+//        
+//        return
+//            nil == workEditionsGetOperation &&
+//                !workKey.isEmpty &&
+//                highWaterMark < editionsCount &&
+//                index >= ( highWaterMark - ( searchResults.pageSize / 4 ) )
+//    }
     
     // MARK: SearchResultsUpdater
     func updateResults(searchResults: SearchResults) -> Void {
@@ -240,17 +233,14 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         
         if 0 == controller.count {
             
-            newQuery( workKey, userInitiated: true, refreshControl: nil )
+            newEbookItemQuery( workKey, userInitiated: false, refreshControl: nil )
             
-        } else if let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {
+        } else if let item = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {
             
-            if detail.isProvisional {
+            if nil == item.matchingEdition() {
                 
                 newQuery( workKey, userInitiated: true, refreshControl: nil )
                 
-            } else {
-                
-                highWaterMark = controller.count
             }
         }
     }

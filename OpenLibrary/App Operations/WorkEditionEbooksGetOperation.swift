@@ -33,16 +33,17 @@ class WorkEditionEbooksGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, coreDataStack: CoreDataStack, completionHandler: Void -> Void ) {
+    init( workKey: String, coreDataStack: CoreDataStack, completionHandler: Void -> Void ) {
 
         self.coreDataStack = coreDataStack
         
         let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
 
-        let parts = queryText.componentsSeparatedByString( "/" )
+        let parts = workKey.componentsSeparatedByString( "/" )
         let goodParts = parts.filter { (x) -> Bool in !x.isEmpty }
         let olid = goodParts.last!
-        let cacheFile = cachesFolder.URLByAppendingPathComponent("\(olid)workEditionEbooksList.json")
+        let cacheFile =
+            cachesFolder.URLByAppendingPathComponent("\(olid)workEditionEbooksList.json")
 //        print( "cache: \(cacheFile.absoluteString)" )
         
         /*
@@ -53,8 +54,8 @@ class WorkEditionEbooksGetOperation: GroupOperation {
         
             There is an optional operation 0 to delete the existing contents of the Core Data store
         */
-        downloadOperation = WorkEditionListDownloadOperation( queryText: queryText, cacheFile: cacheFile )
-        parseOperation = WorkEditionListParseOperation( parentKey: queryText, cacheFile: cacheFile )
+        downloadOperation = WorkEditionListDownloadOperation( workKey: workKey, cacheFile: cacheFile )
+        parseOperation = WorkEditionListParseOperation( parentKey: workKey, cacheFile: cacheFile )
         
         finishOperation = NSBlockOperation( block: completionHandler )
         

@@ -242,7 +242,7 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
             
             ebookItemGetOperation =
                 WorkEditionEbooksGetOperation(
-                    queryText: workDetail.key,
+                    workKey: workDetail.key,
                     coreDataStack: coreDataStack
                 ) {
                     

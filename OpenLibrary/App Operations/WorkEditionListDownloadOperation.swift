@@ -18,7 +18,7 @@ class WorkEditionListDownloadOperation: GroupOperation {
     // MARK: Initialization
     
     /// - parameter cacheFile: The file `NSURL` to which the list of author Editions will be downloaded.
-    init( queryText: String, cacheFile: NSURL) {
+    init( workKey: String, cacheFile: NSURL) {
 
         self.cacheFile = cacheFile
         super.init(operations: [])
@@ -33,7 +33,7 @@ class WorkEditionListDownloadOperation: GroupOperation {
             should always prefer to use https.
         */
         let urlString =
-            "https://openlibrary.org/query.json?type=/type/edition&works=\(queryText)"
+            "https://openlibrary.org/query.json?type=/type/edition&works=\(workKey)"
         let url = NSURL( string: urlString )!
         let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
             

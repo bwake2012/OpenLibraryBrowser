@@ -146,6 +146,8 @@ class OLEBookItem: OLManagedObject, CoreDataModelable {
             newObject.contributor  = parsed.contributor
             newObject.fromRecord   = parsed.fromRecord
             newObject.match        = parsed.match
+            
+            newObject.editionDetail = nil
         }
         
         return newObject
