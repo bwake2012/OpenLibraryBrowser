@@ -720,10 +720,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p7T-mp-Z6E">
-                                <rect key="frame" x="20" y="64" width="560" height="536"/>
+                                <rect key="frame" x="20" y="20" width="560" height="580"/>
                             </imageView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="s8r-Ab-8re">
-                                <rect key="frame" x="282" y="313.5" width="37" height="37"/>
+                                <rect key="frame" x="282" y="291.5" width="37" height="37"/>
                                 <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                         </subviews>
@@ -927,7 +927,7 @@
         <!--Deluxe Detail Table View Controller-->
         <scene sceneID="khe-cu-Afx">
             <objects>
-                <tableViewController storyboardIdentifier="UITableViewController-zUC-U6-Nsg" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zUC-U6-Nsg" customClass="OLDeluxeDetailTableViewController" customModule="OpenLibrary" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="workDeluxeDetailTableView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zUC-U6-Nsg" customClass="OLDeluxeDetailTableViewController" customModule="OpenLibrary" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="S6j-JV-erp">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -946,93 +946,10 @@
             </objects>
             <point key="canvasLocation" x="3339" y="2407"/>
         </scene>
-        <!--Work Detail Editions Table View Controller-->
-        <scene sceneID="E9G-4p-byG">
-            <objects>
-                <tableViewController storyboardIdentifier="WorkDetailEditons" useStoryboardIdentifierAsRestorationIdentifier="YES" id="R39-Is-PIX" customClass="OLWorkDetailEditionsTableViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="74" sectionHeaderHeight="28" sectionFooterHeight="28" id="v9d-IS-Xtx">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="workEditionEntry" selectionStyle="default" indentationWidth="10" reuseIdentifier="workEditionEntry" rowHeight="74" id="y3q-GV-8ni" customClass="WorkEditionTableViewCell" customModule="OpenLibrary">
-                                <rect key="frame" x="0.0" y="28" width="600" height="74"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" verticalHuggingPriority="260" tableViewCell="y3q-GV-8ni" id="RGb-Cq-BFK">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="73.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" translatesAutoresizingMaskIntoConstraints="NO" id="Sb6-I5-7rl" userLabel="WorkEditionCover">
-                                            <rect key="frame" x="8" y="8" width="56" height="56"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="56" id="HRM-SZ-VZB"/>
-                                                <constraint firstAttribute="height" constant="56" id="yqU-Rg-Vbn"/>
-                                            </constraints>
-                                        </imageView>
-                                        <view contentMode="scaleToFill" verticalCompressionResistancePriority="760" translatesAutoresizingMaskIntoConstraints="NO" id="F3N-xj-tSS" userLabel="Summary">
-                                            <rect key="frame" x="68" y="8" width="524" height="57.5"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AAL-xz-lag">
-                                                    <rect key="frame" x="0.0" y="0.0" width="524" height="19.5"/>
-                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LvO-Ua-saE">
-                                                    <rect key="frame" x="0.0" y="23.5" width="524" height="17"/>
-                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <constraints>
-                                                <constraint firstItem="LvO-Ua-saE" firstAttribute="leading" secondItem="F3N-xj-tSS" secondAttribute="leading" id="2wd-P9-nkL"/>
-                                                <constraint firstItem="LvO-Ua-saE" firstAttribute="top" secondItem="AAL-xz-lag" secondAttribute="bottom" constant="4" id="DJa-fy-5Z8"/>
-                                                <constraint firstItem="AAL-xz-lag" firstAttribute="leading" secondItem="F3N-xj-tSS" secondAttribute="leading" id="SeP-Jd-V6R"/>
-                                                <constraint firstItem="LvO-Ua-saE" firstAttribute="trailing" secondItem="F3N-xj-tSS" secondAttribute="trailing" id="TfH-Xj-zj8"/>
-                                                <constraint firstItem="AAL-xz-lag" firstAttribute="top" secondItem="F3N-xj-tSS" secondAttribute="top" id="ZI5-OY-Fwz"/>
-                                                <constraint firstItem="AAL-xz-lag" firstAttribute="trailing" secondItem="F3N-xj-tSS" secondAttribute="trailing" id="bJW-VF-K5t"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="LvO-Ua-saE" secondAttribute="bottom" id="qIk-G0-qmW"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <constraints>
-                                        <constraint firstItem="Sb6-I5-7rl" firstAttribute="leading" secondItem="RGb-Cq-BFK" secondAttribute="leadingMargin" id="cqT-Ge-rxC"/>
-                                        <constraint firstItem="F3N-xj-tSS" firstAttribute="trailing" secondItem="RGb-Cq-BFK" secondAttribute="trailingMargin" id="fta-eh-G3b"/>
-                                        <constraint firstItem="F3N-xj-tSS" firstAttribute="leading" secondItem="Sb6-I5-7rl" secondAttribute="trailing" constant="4" id="g8V-vy-Owk"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="F3N-xj-tSS" secondAttribute="bottom" id="iWL-0x-m9Q"/>
-                                        <constraint firstItem="F3N-xj-tSS" firstAttribute="top" secondItem="RGb-Cq-BFK" secondAttribute="topMargin" id="qGY-KL-UhB"/>
-                                        <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="Sb6-I5-7rl" secondAttribute="bottom" id="srY-z8-SkW"/>
-                                        <constraint firstItem="Sb6-I5-7rl" firstAttribute="top" secondItem="RGb-Cq-BFK" secondAttribute="topMargin" id="zDi-qZ-q2b"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="cellImage" destination="Sb6-I5-7rl" id="bGN-t9-XdO"/>
-                                    <outlet property="editionSubTitle" destination="LvO-Ua-saE" id="Mfw-z4-OgX"/>
-                                    <outlet property="editionTitle" destination="AAL-xz-lag" id="uyN-v8-a45"/>
-                                    <segue destination="eGT-aZ-iGV" kind="show" identifier="displayEditionDeluxeDetail" customClass="SegueWithTableViewCellZoom" customModule="OpenLibrary" id="HYh-i1-mc4"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="R39-Is-PIX" id="Kje-ex-VZG"/>
-                            <outlet property="delegate" destination="R39-Is-PIX" id="jfd-eb-8Bp"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1q4-8g-iFt" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1917" y="2435"/>
-        </scene>
         <!--Edition Deluxe Detail Table View Controller-->
         <scene sceneID="l3a-bn-RTX">
             <objects>
-                <tableViewController storyboardIdentifier="DeluxeDetailEditionTableView" id="eGT-aZ-iGV" userLabel="Edition Deluxe Detail Table View Controller" customClass="OLDeluxeDetailTableViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="editionDeluxeDetailTableView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="eGT-aZ-iGV" userLabel="Edition Deluxe Detail Table View Controller" customClass="OLDeluxeDetailTableViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="wKH-yP-0H4">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1278,9 +1195,9 @@
         <image name="961-book-32" width="20" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="9xU-aR-doR"/>
+        <segue reference="Yjz-qW-0Hz"/>
+        <segue reference="N1H-Eu-32X"/>
         <segue reference="aoy-OM-E4a"/>
         <segue reference="EJT-O4-lTU"/>
-        <segue reference="zej-n7-0Rr"/>
     </inferredMetricsTieBreakers>
 </document>

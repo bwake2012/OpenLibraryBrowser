@@ -136,7 +136,7 @@
                                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="278" id="1rB-ut-Qv6"/>
                                                         </constraints>
                                                         <connections>
-                                                            <segue destination="h2y-mG-MxY" kind="embed" identifier="embedWorkEditions" id="EFd-G4-tOu"/>
+                                                            <segue destination="B5O-yR-S4l" kind="embed" identifier="embedWorkEditions" id="1s5-T6-MrY"/>
                                                         </connections>
                                                     </containerView>
                                                 </subviews>
@@ -214,21 +214,104 @@
             </objects>
             <point key="canvasLocation" x="3354" y="1799"/>
         </scene>
-        <!--UITableViewController-zUC-U6-Nsg-->
+        <!--workDeluxeDetailTableView-->
         <scene sceneID="lKe-XV-7lP">
             <objects>
-                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="UITableViewController-zUC-U6-Nsg" id="4xQ-04-bzr" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardIdentifier="workDeluxeDetailTableView" storyboardName="Main" referencedIdentifier="workDeluxeDetailTableView" id="4xQ-04-bzr" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rxm-3x-Cvc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3361.5" y="1848"/>
         </scene>
-        <!--WorkDetailEditons-->
-        <scene sceneID="BDI-2e-s3K">
+        <!--Work Detail Editions Table View Controller-->
+        <scene sceneID="zGR-Hh-JOd">
             <objects>
-                <viewControllerPlaceholder storyboardIdentifier="WorkDetailEditons" storyboardName="Main" referencedIdentifier="WorkDetailEditons" id="h2y-mG-MxY" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IcJ-bd-FHB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewController storyboardIdentifier="WorkDetailEditons" useStoryboardIdentifierAsRestorationIdentifier="YES" id="B5O-yR-S4l" customClass="OLWorkDetailEditionsTableViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="74" sectionHeaderHeight="28" sectionFooterHeight="28" id="s7g-Ug-caf">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="436"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="workEditionEntry" selectionStyle="default" indentationWidth="10" reuseIdentifier="workEditionEntry" rowHeight="74" id="yeP-tF-kLr" customClass="WorkEditionTableViewCell" customModule="OpenLibrary">
+                                <rect key="frame" x="0.0" y="28" width="600" height="74"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" verticalHuggingPriority="260" tableViewCell="yeP-tF-kLr" id="hGs-dQ-WQ7">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="73.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" translatesAutoresizingMaskIntoConstraints="NO" id="GZj-Wc-MzS" userLabel="WorkEditionCover">
+                                            <rect key="frame" x="8" y="8" width="56" height="56"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="56" id="34M-2C-bgR"/>
+                                                <constraint firstAttribute="width" constant="56" id="mFx-ju-Xoc"/>
+                                            </constraints>
+                                        </imageView>
+                                        <view contentMode="scaleToFill" verticalCompressionResistancePriority="760" translatesAutoresizingMaskIntoConstraints="NO" id="hgS-ir-yJF" userLabel="Summary">
+                                            <rect key="frame" x="68" y="8" width="524" height="57.5"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TfL-nA-0i1">
+                                                    <rect key="frame" x="0.0" y="0.0" width="524" height="19.5"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W5t-0C-FXW">
+                                                    <rect key="frame" x="0.0" y="23.5" width="524" height="17"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstItem="W5t-0C-FXW" firstAttribute="leading" secondItem="hgS-ir-yJF" secondAttribute="leading" id="0Xd-mp-feO"/>
+                                                <constraint firstItem="W5t-0C-FXW" firstAttribute="trailing" secondItem="hgS-ir-yJF" secondAttribute="trailing" id="0k7-eX-jOw"/>
+                                                <constraint firstItem="TfL-nA-0i1" firstAttribute="leading" secondItem="hgS-ir-yJF" secondAttribute="leading" id="5BR-4O-R4E"/>
+                                                <constraint firstItem="TfL-nA-0i1" firstAttribute="trailing" secondItem="hgS-ir-yJF" secondAttribute="trailing" id="AM5-Na-YgI"/>
+                                                <constraint firstItem="W5t-0C-FXW" firstAttribute="top" secondItem="TfL-nA-0i1" secondAttribute="bottom" constant="4" id="Q8s-mG-h9e"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="W5t-0C-FXW" secondAttribute="bottom" id="S0L-TJ-A5a"/>
+                                                <constraint firstItem="TfL-nA-0i1" firstAttribute="top" secondItem="hgS-ir-yJF" secondAttribute="top" id="xvt-N7-n4D"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="hgS-ir-yJF" secondAttribute="bottom" id="B0o-8a-9uW"/>
+                                        <constraint firstItem="GZj-Wc-MzS" firstAttribute="top" secondItem="hGs-dQ-WQ7" secondAttribute="topMargin" id="Py3-cR-cNY"/>
+                                        <constraint firstItem="hgS-ir-yJF" firstAttribute="trailing" secondItem="hGs-dQ-WQ7" secondAttribute="trailingMargin" id="V06-B9-zmA"/>
+                                        <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="GZj-Wc-MzS" secondAttribute="bottom" id="aLx-J4-liH"/>
+                                        <constraint firstItem="hgS-ir-yJF" firstAttribute="leading" secondItem="GZj-Wc-MzS" secondAttribute="trailing" constant="4" id="gQk-yc-uzt"/>
+                                        <constraint firstItem="GZj-Wc-MzS" firstAttribute="leading" secondItem="hGs-dQ-WQ7" secondAttribute="leadingMargin" id="mWc-wk-auQ"/>
+                                        <constraint firstItem="hgS-ir-yJF" firstAttribute="top" secondItem="hGs-dQ-WQ7" secondAttribute="topMargin" id="nQz-7b-F0h"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="cellImage" destination="GZj-Wc-MzS" id="SRx-zz-L2J"/>
+                                    <outlet property="editionSubTitle" destination="W5t-0C-FXW" id="Kj6-og-YV7"/>
+                                    <outlet property="editionTitle" destination="TfL-nA-0i1" id="pSw-c5-eVX"/>
+                                    <segue destination="LP6-Or-omE" kind="show" identifier="displayEditionDeluxeDetail" customClass="SegueWithTableViewCellZoom" customModule="OpenLibrary" id="TjK-Ra-R9r"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="B5O-yR-S4l" id="Dsz-NA-9hX"/>
+                            <outlet property="delegate" destination="B5O-yR-S4l" id="l8P-ZB-YsF"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Q6C-JU-dIy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2541" y="2361"/>
+            <point key="canvasLocation" x="2541" y="2544"/>
+        </scene>
+        <!--editionDeluxeDetailTableView-->
+        <scene sceneID="r2v-5n-hJu">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="editionDeluxeDetailTableView" storyboardName="Main" referencedIdentifier="editionDeluxeDetailTableView" id="LP6-Or-omE" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5fO-5z-1VL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3084" y="2544"/>
         </scene>
     </scenes>
 </document>
