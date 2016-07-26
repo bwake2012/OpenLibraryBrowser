@@ -63,6 +63,14 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
 
     }
     
+    override func awakeFromNib() {
+        
+        super.awakeFromNib()
+        
+        self.layoutMargins = UIEdgeInsetsZero
+        self.preservesSuperviewLayoutMargins = false
+    }
+    
     override func setSelected(selected: Bool, animated: Bool) {
         
         updateButtons( selected )

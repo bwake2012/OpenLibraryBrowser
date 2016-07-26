@@ -159,8 +159,6 @@ class SegmentedTableViewCell: OLTableViewCell {
             
             height = cellHeights.isExpanded ? cellHeights.open : cellHeights.closed
 
-            print( "\(indexPath.row): \(cellHeights.open) \(cellHeights.closed) \(cellHeights.isExpanded)" )
-
         } else {
 
             var staticCell: SegmentedTableViewCell? = SegmentedTableViewCell.segmentedTableViewCells[tableView]
@@ -181,13 +179,15 @@ class SegmentedTableViewCell: OLTableViewCell {
                 staticCell.bounds = CGRectMake( 0.0, 0.0, tableView.bounds.width, staticCell.bounds.height )
                 staticCell.layoutIfNeeded()
                 
-                var openHeight: CGFloat = 0.0
-                for segment in staticCell.segmentViews {
-                    
-                    openHeight += segment.systemLayoutSizeFittingSize( UILayoutFittingCompressedSize ).height
-                }
-                let closedHeight = staticCell.segmentView0.systemLayoutSizeFittingSize( UILayoutFittingCompressedSize ).height
-                
+                let closedHeight =
+                    staticCell.segmentView0.systemLayoutSizeFittingSize( UILayoutFittingCompressedSize ).height
+                let openHeight = ceil(
+                    closedHeight +
+                        staticCell.segmentViews.reduce( 0.0 ) {
+                            $0 + ceil( $1.systemLayoutSizeFittingSize( UILayoutFittingCompressedSize ).height )
+                        }
+                    )
+
                 let cellHeights = CellHeights(
                     closed: closedHeight,
                     open: openHeight,
@@ -196,8 +196,6 @@ class SegmentedTableViewCell: OLTableViewCell {
                 SegmentedTableViewCell.tableCellHeights[tableView]![indexPath] = cellHeights
                 
                 height = cellHeights.isExpanded ? cellHeights.open : cellHeights.closed
-                
-                print( "\(indexPath.row): \(cellHeights.open) \(cellHeights.closed) \(cellHeights.isExpanded)" )
             }
         }
         
@@ -357,7 +355,7 @@ class SegmentedTableViewCell: OLTableViewCell {
             }
             
         } else {
-            
+
             let closedY = closedTop()
             if animated {
                 closeAnimation( segmentDuration, endY: closedY ) {
@@ -368,9 +366,7 @@ class SegmentedTableViewCell: OLTableViewCell {
 
                 setSegmementViewAlpha( 0 )
                 self.moveSegmentViewTops( closedY )
-
              }
-            
         }
         
         let cellHeights =
@@ -381,6 +377,8 @@ class SegmentedTableViewCell: OLTableViewCell {
             )
         
         SegmentedTableViewCell.tableCellHeights[tableView]![indexPath] = cellHeights
+        
+//        print( "\(indexPath.row) Segment0 top: \(segmentView0.frame.origin.y)")
         
         return expandCell
     }
@@ -474,9 +472,29 @@ class SegmentedTableViewCell: OLTableViewCell {
         
         let segmentViewEndFrames = moveSegmentFrames( segmentViews, yArray: endY )
 
-        let totalHeight: Double = segmentViews.reduce( 0.0 ) { $0 + Double( $1.frame.height ) }
+        var totalHeight = CGFloat( 0.0 )
+        for view in segmentViews {
+            
+            totalHeight += view.frame.height
+            view.hidden = false
+        }
         
         setSegmementViewAlpha( 1.0 )
+        
+        let minHeight = self.segmentView0.frame.height
+        var contentFrame = self.contentView.frame
+        var contentSize = contentFrame.size
+        if contentFrame.height > minHeight {
+            
+            contentSize.height = minHeight
+        
+        } else {
+            
+            contentSize.height = totalHeight
+        }
+        
+        contentFrame.size = contentSize
+        let contentView = self.contentView
         
         UIView.animateKeyframesWithDuration(
             totalDuration,
@@ -490,7 +508,7 @@ class SegmentedTableViewCell: OLTableViewCell {
                 for (index, view) in segmentViews.enumerate() {
                     
                     let dyN = view.frame.height
-                    let frameDuration = Double(dyN) / totalHeight
+                    let frameDuration = Double( dyN ) / Double( totalHeight )
                     
                     UIView.addKeyframeWithRelativeStartTime( frameStart, relativeDuration: frameDuration ) {
                         
@@ -513,9 +531,21 @@ class SegmentedTableViewCell: OLTableViewCell {
                     frameStart += frameDuration
                 }
 
+                UIView.addKeyframeWithRelativeStartTime( 0.0, relativeDuration: 100.0 ) {
+                    
+                    contentView.frame = contentFrame
+                }
         }) {
             
             ( finished ) -> Void in
+            
+            if contentFrame.height != minHeight {
+                
+                for view in segmentViews {
+                    
+                    view.hidden = true
+                }
+            }
             
             completion?()
         }
