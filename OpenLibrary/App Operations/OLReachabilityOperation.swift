@@ -54,7 +54,7 @@ class OLReachabilityOperation: GroupOperation {
                 produceAlert(firstError)
             
             } else if operation.cancelled {
-                
+
                 produceAlert(
                     NSError(
                         code: OperationErrorCode.ConditionFailed,
