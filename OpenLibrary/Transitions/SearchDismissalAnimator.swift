@@ -28,14 +28,15 @@ class SearchDismissalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             return
         }
         
+        // iOS8, and apparently iOS9, have a bug where viewForKey:to returns nil.
+        // The workaround is:
+        // A) get the 'toView' from 'toVC'.
+        // B) manually add the 'toView' to the container's
+        // superview (eg the root window) after the completeTransition
+        // call, as automatically happens on iOS7 where things work properly.
         var toView = transitionContext.viewForKey( UITransitionContextToViewKey )
-        guard nil != toView else {
-            
-            print( "missing animateTransition toView" )
-//            assert( false )
-            return
-        }
-        if nil == toView {
+        let toViewNilBug = nil == toView
+        if toViewNilBug {
             
             if let toVC = transitionContext.viewControllerForKey( UITransitionContextToViewControllerKey ) {
                 toView = toVC.view
@@ -48,6 +49,7 @@ class SearchDismissalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             assert( false )
             return
         }
+        let containerSuperView = containerView.superview
         
         let duration = transitionDuration( transitionContext )
         let halfDuration = duration / 2.0
@@ -80,6 +82,10 @@ class SearchDismissalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
                         }, completion: { (finished: Bool) -> Void in
                             if finished {
                                 transitionContext.completeTransition( true )
+                                if toViewNilBug {
+                                    
+                                    containerSuperView?.addSubview( toView! )
+                                }
                             }
                     })
                 }

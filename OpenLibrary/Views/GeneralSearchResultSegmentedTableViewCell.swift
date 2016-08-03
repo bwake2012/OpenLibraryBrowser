@@ -138,7 +138,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
         setNeedsLayout()
         layoutIfNeeded()
         
-//        adjustCellHeights( tableView, indexPath: indexPath )
+        adjustCellHeights( tableView, indexPath: indexPath )
         
 //        delegate.tableView.beginUpdates()
 //        delegate.tableView.endUpdates()
