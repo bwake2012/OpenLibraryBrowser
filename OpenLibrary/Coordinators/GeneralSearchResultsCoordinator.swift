@@ -25,35 +25,97 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
 
     var generalSearchOperation: Operation?
     
-    private lazy var fetchedResultsController: FetchedOLGeneralSearchResultController = {
+    private var cachedFetchedResultsController: FetchedOLGeneralSearchResultController?
         
-        let request = NSFetchRequest(entityName: OLGeneralSearchResult.entityName)
+    private var fetchedResultsController: FetchedOLGeneralSearchResultController {
+
+        guard let frc = cachedFetchedResultsController else {
+            
+            let frc = buildFetchedResultsController( self, stack: coreDataStack, sortFields: sortFields )
+            
+            cachedFetchedResultsController = frc
+            return frc
+        }
         
-        request.sortDescriptors = [
-            NSSortDescriptor( key: "sequence", ascending: true ),
-            NSSortDescriptor( key: "index", ascending: true )
-        ]
-        
-        // request.fetchLimit = 100
-        
-        let controller =
-            FetchedOLGeneralSearchResultController(
-                fetchRequest: request,
-                managedObjectContext: self.coreDataStack.mainQueueContext,
-                sectionNameKeyPath: nil,
-                cacheName: kGeneralSearchCache
-        )
-        
-        controller.setDelegate( self )
-        return controller
-    }()
+        return frc
+    }
     
     var searchKeys = [String: String]()
+    
+    private let defaultSortFields =
+        [
+            SortField( name: "sort_author_name", label: "Author", sort: .sortNone ),
+            SortField( name: "title", label: "Title", sort: .sortNone ),
+            SortField( name: "edition_count", label: "Edition Count", sort: .sortDown ),
+            SortField( name: "ebook_count_i", label: "Electronic Editions", sort: .sortNone ),
+            SortField( name: "first_publish_year", label: "Year First Published", sort: .sortNone )
+        ]
+    
+    private var cachedSortFields = [SortField]()
+    var sortFields: [SortField] {
+        
+        get {
+            
+            if cachedSortFields.isEmpty {
+                return defaultSortFields
+            } else {
+                return cachedSortFields
+            }
+        }
+        
+        set( newSortFields ) {
+            
+            cachedSortFields = newSortFields
+            cachedFetchedResultsController = nil
+            
+            tableVC?.tableView.reloadData()
+            updateUI()
+        }
+    }
     
     var searchResults = SearchResults()
     
     var highWaterMark = 0
     var nextOffset = 0
+    
+    // MARK: Fetched Results Controller
+    private func buildFetchedResultsController( delegate: GeneralSearchResultsCoordinator, stack: CoreDataStack, sortFields: [SortField] ) -> FetchedOLGeneralSearchResultController {
+        
+        let request = NSFetchRequest(entityName: OLGeneralSearchResult.entityName)
+        
+        request.sortDescriptors = buildSortDescriptors( sortFields )
+        assert( nil == request.sortDescriptors || !request.sortDescriptors!.isEmpty )
+        // request.fetchLimit = 100
+        
+        let controller =
+            FetchedOLGeneralSearchResultController(
+                    fetchRequest: request,
+                    managedObjectContext: stack.mainQueueContext,
+                    sectionNameKeyPath: nil,
+                    cacheName: kGeneralSearchCache
+                )
+        
+        controller.setDelegate( delegate )
+        return controller
+    }
+    
+    private func buildSortDescriptors( sortFields: [SortField] ) -> [NSSortDescriptor]? {
+        
+        var sortDescriptors = [NSSortDescriptor]()
+        for sortField in sortFields {
+            
+            if .sortNone != sortField.sort {
+                
+                sortDescriptors.append(
+                        NSSortDescriptor( key: sortField.name, ascending: sortField.sort.ascending )
+                    )
+            }
+        }
+        
+        return sortDescriptors.isEmpty ? nil : sortDescriptors
+    }
+    
+    // MARK: instance
     
     init( tableVC: UITableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         

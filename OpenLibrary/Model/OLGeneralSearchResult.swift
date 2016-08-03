@@ -109,7 +109,7 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
         self.ebook_count_i = parsed.ebook_count_i
         self.edition_count = parsed.edition_count
         self.edition_key = parsed.edition_key
-        self.first_publish_year = parsed.first_publish_year
+        self.first_publish_year = 0 == parsed.first_publish_year ? "Not entered" : "\(parsed.first_publish_year)"
         self.first_sentence = parsed.first_sentence
         self.has_fulltext = parsed.has_fulltext
         self.ia_collection_s = parsed.ia_collection_s
@@ -135,6 +135,8 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
         self.title_suggest = parsed.title_suggest
         self.title = parsed.title
         self.type = parsed.type
+        
+        self.sort_author_name = parsed.author_name.isEmpty ? "" : parsed.author_name[0]
     }
 }
 

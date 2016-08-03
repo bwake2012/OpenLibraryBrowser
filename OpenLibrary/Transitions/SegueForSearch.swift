@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SegueForSearch: UIStoryboardSegue, UIViewControllerTransitioningDelegate {
+class SegueForSearch: UIStoryboardSegue {
 
     override func perform() {
         
@@ -16,7 +16,9 @@ class SegueForSearch: UIStoryboardSegue, UIViewControllerTransitioningDelegate {
         
         super.perform()
     }
+}
 
+extension SegueForSearch: UIViewControllerTransitioningDelegate {
 
     // MARK: UIViewControllerTransitioningDelegate
     

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -37,26 +37,20 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w0S-dm-8Jf">
-                                <rect key="frame" x="16" y="183" width="288" height="57.5"/>
-                                <string key="text">This application leans very heavily on the NSOperation based classes developed by Apple for their WWDC app and published with their WWDC 2015 sample Advanced NSOperations.</string>
+                                <rect key="frame" x="16" y="183" width="288" height="86"/>
+                                <string key="text">This application leans very heavily on the NSOperation based classes originally developed by Apple for their WWDC app and published with their WWDC 2015 sample Advanced NSOperations, as adapted by Pluralsight in their version named PSOperations.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This application also uses the Big Nerd Ranch Core Data Stack. " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fTG-y6-sfr">
-                                <rect key="frame" x="16" y="248" width="288" height="29"/>
+                                <rect key="frame" x="16" y="276.5" width="288" height="29"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Icons made by Glyphish from www.glyphish.com" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xFA-Eb-d1J">
-                                <rect key="frame" x="16" y="285" width="288" height="14.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Icons made by Freepik from www.flaticon.com are licensed by Creative Commons BY 3.0" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Zx-Tj-a65">
-                                <rect key="frame" x="16" y="406" width="288" height="29"/>
+                                <rect key="frame" x="16" y="313.5" width="288" height="14.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -73,7 +67,6 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="TtJ-SR-yKp" firstAttribute="top" secondItem="6Zx-Tj-a65" secondAttribute="bottom" constant="8" id="7c7-Md-6Yn"/>
                             <constraint firstItem="fTG-y6-sfr" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="88n-Qc-Zsx"/>
                             <constraint firstItem="IUS-Pl-kbh" firstAttribute="centerX" secondItem="iLc-sG-h4x" secondAttribute="centerX" id="9Cd-o7-R3t"/>
                             <constraint firstItem="IUS-Pl-kbh" firstAttribute="centerY" secondItem="iLc-sG-h4x" secondAttribute="centerY" id="9I4-lY-Uk2"/>
@@ -84,7 +77,6 @@
                             <constraint firstItem="w0S-dm-8Jf" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="ERL-EZ-VSA"/>
                             <constraint firstItem="w0S-dm-8Jf" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="EbK-47-CQA"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xFA-Eb-d1J" secondAttribute="trailing" id="FJ5-kb-O49"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="6Zx-Tj-a65" secondAttribute="trailing" id="J1Y-UG-qc3"/>
                             <constraint firstAttribute="trailingMargin" secondItem="iLc-sG-h4x" secondAttribute="trailing" id="JYs-oA-xXn"/>
                             <constraint firstAttribute="leadingMargin" secondItem="Jj4-bI-FFk" secondAttribute="leading" id="eSP-XW-Meb"/>
                             <constraint firstAttribute="leadingMargin" secondItem="iLc-sG-h4x" secondAttribute="leading" id="ehK-PX-HEW"/>
@@ -93,7 +85,6 @@
                             <constraint firstItem="k7l-GP-5vN" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailing" id="hXY-mv-3Gh"/>
                             <constraint firstAttribute="trailingMargin" secondItem="TtJ-SR-yKp" secondAttribute="trailing" id="ihI-Ic-8Xx"/>
                             <constraint firstItem="k7l-GP-5vN" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="8" id="p2G-P3-dVn"/>
-                            <constraint firstItem="6Zx-Tj-a65" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="qf7-SH-kJa"/>
                             <constraint firstItem="iLc-sG-h4x" firstAttribute="top" secondItem="k7l-GP-5vN" secondAttribute="bottom" id="rAB-9C-50c"/>
                             <constraint firstItem="fTG-y6-sfr" firstAttribute="top" secondItem="w0S-dm-8Jf" secondAttribute="bottom" constant="8" id="waj-Y0-vfY"/>
                             <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="TtJ-SR-yKp" secondAttribute="bottom" constant="20" id="xTM-Tx-Wj2"/>

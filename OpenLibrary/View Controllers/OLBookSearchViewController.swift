@@ -39,17 +39,17 @@ class OLBookSearchViewController: UIViewController {
         
     }
     
-    @IBAction func cancelButtonTapped(sender: AnyObject) {
+    @IBAction func cancelButtonTapped(sender: UIButton) {
         
         if let activeField = activeField {
             
             activeField.resignFirstResponder()
         }
         
-        performSegueWithIdentifier( "cancelBookSearch", sender: self )
+        NSNotificationCenter.defaultCenter().removeObserver( self )
     }
     
-    @IBAction func searchButtonTapped(sender: AnyObject) {
+    @IBAction func searchButtonTapped(sender: UIButton) {
         
         if let activeField = activeField {
             
@@ -62,12 +62,8 @@ class OLBookSearchViewController: UIViewController {
                 
                 saveSearchDictionary( searchDictionary: searchKeys )
             }
-            
-            performSegueWithIdentifier( "beginBookSearch", sender: self )
         }
-    }
-    
-    deinit {
+
         NSNotificationCenter.defaultCenter().removeObserver( self )
     }
     
@@ -118,7 +114,6 @@ class OLBookSearchViewController: UIViewController {
                 saveSearchDictionary( searchDictionary: searchKeys )
             }
 
-            performSegueWithIdentifier( "beginBookSearch", sender: self )
         }
         return false
     }

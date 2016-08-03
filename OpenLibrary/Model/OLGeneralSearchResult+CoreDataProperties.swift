@@ -24,7 +24,7 @@ extension OLGeneralSearchResult {
     @NSManaged var 	    ebook_count_i: Int64
     @NSManaged var 	    edition_count: Int64
     @NSManaged var 	    edition_key: [String]
-    @NSManaged var 	    first_publish_year: Int16
+    @NSManaged var 	    first_publish_year: String
     @NSManaged var 	    first_sentence: [String]
     @NSManaged var 	    has_fulltext: Bool
     @NSManaged var 	    ia_collection_s: String
@@ -50,4 +50,6 @@ extension OLGeneralSearchResult {
     @NSManaged var 	    title_suggest: String
     @NSManaged var 	    title: String
     @NSManaged var 	    type: String
+    
+    @NSManaged var      sort_author_name: String
 }

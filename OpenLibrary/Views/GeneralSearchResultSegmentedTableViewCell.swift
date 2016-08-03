@@ -14,6 +14,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
     
     @IBOutlet weak private var titleText: UILabel!
     @IBOutlet weak private var subtitleText: UILabel!
+    @IBOutlet weak private var authorName: UILabel!
     @IBOutlet weak private var viewAuthorDetail: UIButton!
     
     @IBOutlet weak private var viewWorkDetail: UIButton!
@@ -81,6 +82,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
         zoomCover.enabled = selected && isZoomEnabled
         
         viewAuthorDetail.enabled = selected
+        authorName.textColor = viewAuthorDetail.currentTitleColor
         
         viewWorkDetail.enabled = selected && haveEditions
         
@@ -95,7 +97,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
 
             titleText.text = r.title
             subtitleText.text = r.subtitle
-            viewAuthorDetail.setTitle( r.author_name.joinWithSeparator( ", " ), forState: .Normal )
+            authorName.text = r.author_name.joinWithSeparator( ", " )
             
             viewWorkDetail.setTitle( "Editions: " + String( r.edition_count ), forState: .Normal )
             languageNames.text = r.language_names.joinWithSeparator( ", " )
@@ -110,7 +112,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
             
             titleText.text = ""
             subtitleText.text = ""
-            viewAuthorDetail.setTitle( "", forState: .Normal )
+            authorName.text = ""
             
             viewWorkDetail.setTitle( "", forState: .Normal )
             languageNames.text = ""

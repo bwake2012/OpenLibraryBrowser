@@ -46,7 +46,8 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
     
     var searchController = UISearchController( searchResultsController: nil )
     var searchType: SearchType = .searchGeneralExpanding
-    var bookSearchVC: OLBookSearchViewController?
+//    var bookSearchVC: OLBookSearchViewController?
+//    var bookSortVC: OLBookSortViewController?
     
     var touchedCellIndexPath: NSIndexPath?
     
@@ -54,7 +55,7 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
     var savedIndexPath: NSIndexPath?
 
     @IBAction func presentGeneralSearch(sender: UIBarButtonItem) {}
-    @IBAction func presentSearchResultsFilter(sender: UIBarButtonItem) {}
+    @IBAction func presentSearchResultsSort(sender: UIBarButtonItem) {}
     
     deinit {
         
@@ -114,8 +115,21 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
                     destVC.queryCoordinator = self.generalSearchCoordinator
                     destVC.searchKeys = savedSearchKeys
                     
-                    self.bookSearchVC = destVC
+//                    self.bookSearchVC = destVC
                     destVC.saveSearchDictionary = self.saveSearchKeys
+                }
+            }
+        } else if segueName == "openBookSort" {
+            
+            if let destVC = segue.destinationViewController as? OLBookSortViewController {
+                if let delegate = segue as? UIViewControllerTransitioningDelegate {
+                    
+                    destVC.transitioningDelegate = delegate
+                    destVC.queryCoordinator = self.generalSearchCoordinator
+                    destVC.sortFields = generalSearchCoordinator.sortFields
+                    
+//                    self.bookSortVC = destVC
+                    destVC.saveSortFields = self.saveSortFields
                 }
             }
             
@@ -426,15 +440,6 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
     
     // MARK: UISearchResultsUpdating
     func updateSearchResultsForSearchController( searchController: UISearchController ) {
-        
-        
-    }
-    
-    // MARK: SaveSearchDictionary
-    
-    func saveSearchKeys( searchKeys: [String: String] ) -> Void {
-        
-        self.savedSearchKeys = searchKeys
     }
     
     // MARK: Search View Controller
@@ -444,21 +449,51 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
         performSegueWithIdentifier( "openBookSearch", sender: self )
     }
     
-    @IBAction func dismiss(segue: UIStoryboardSegue) {
+    func saveSearchKeys( searchKeys: [String: String] ) -> Void {
         
-        if segue.identifier == "beginBookSearch" {
+        self.savedSearchKeys = searchKeys
+    }
+    
+    @IBAction func dismissSearch( segue: UIStoryboardSegue ) {
 
-            if let vc = segue.sourceViewController as? OLBookSearchViewController {
-
+        if let vc = segue.sourceViewController as? OLBookSearchViewController {
+        
+            if segue.identifier == "beginBookSearch" {
+            
                 if !vc.searchKeys.isEmpty {
                     
                     // searchType = .searchGeneral
-
+                    
                     SegmentedTableViewCell.emptyCellHeights( tableView )
                     generalSearchCoordinator.newQuery( vc.searchKeys, userInitiated: true, refreshControl: nil )
                     tableView.reloadData()
                 }
             }
+
+        }
+        
+    }
+    
+    // MARK: Sort View Controller
+    
+    func presentSort() -> Void {
+        
+        performSegueWithIdentifier( "openBookSort", sender: self )
+    }
+    
+    func saveSortFields( sortFields: [SortField] ) -> Void {
+        
+        generalSearchCoordinator.sortFields = sortFields
+    }
+    
+    // MARK: Search & Sort View Controllers common dismissal
+    
+    @IBAction func dismissSort(segue: UIStoryboardSegue) {
+        
+        if segue.identifier == "beginBookSort" {
+            
+            SegmentedTableViewCell.emptyCellHeights( tableView )
+            tableView.reloadData()
         }
     }
     
