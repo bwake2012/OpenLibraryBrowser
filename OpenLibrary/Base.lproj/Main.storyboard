@@ -757,7 +757,7 @@
                                                             <rect key="frame" x="0.0" y="53" width="516" height="32"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="260" verticalCompressionResistancePriority="1000" enabled="NO" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="yGF-oA-QhO">
@@ -878,7 +878,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="BVA-ze-kHd" firstAttribute="trailing" secondItem="1gQ-BS-OBG" secondAttribute="leading" constant="-8" id="K3k-fb-jdR"/>
                                     <constraint firstItem="BVA-ze-kHd" firstAttribute="top" secondItem="elg-AG-YLo" secondAttribute="top" id="KBe-Ey-ekc"/>
@@ -1006,7 +1006,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="2AC-lQ-LEj">
-                                                <rect key="frame" x="116" y="89.5" width="88" height="32"/>
+                                                <rect key="frame" x="116" y="89" width="88" height="32"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <state key="normal" title="Read Online"/>
                                                 <connections>
@@ -1014,13 +1014,13 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Download" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fdm-hf-bPB">
-                                                <rect key="frame" x="128" y="129.5" width="64.5" height="17"/>
+                                                <rect key="frame" x="128" y="129" width="64.5" height="17"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="r2D-oi-XhZ">
-                                                <rect key="frame" x="145" y="154.5" width="30" height="32"/>
+                                                <rect key="frame" x="145" y="154" width="30" height="32"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <state key="normal" title="PDF"/>
                                                 <connections>
@@ -1028,7 +1028,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="crh-R6-hjV">
-                                                <rect key="frame" x="125" y="194.5" width="70" height="32"/>
+                                                <rect key="frame" x="125" y="194" width="70" height="32"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <state key="normal" title="Plain Text"/>
                                                 <connections>
@@ -1036,7 +1036,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="O8i-Yk-rI6" userLabel="Download ePub Button">
-                                                <rect key="frame" x="141" y="234.5" width="38" height="32"/>
+                                                <rect key="frame" x="141" y="234" width="38" height="32"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <state key="normal" title="ePub"/>
                                                 <connections>
@@ -1044,7 +1044,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="TRq-cs-gUA">
-                                                <rect key="frame" x="142" y="274.5" width="35" height="32"/>
+                                                <rect key="frame" x="142" y="274" width="35" height="32"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <state key="normal" title="DjVu"/>
                                                 <connections>
@@ -1052,7 +1052,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="e0R-9A-ewM">
-                                                <rect key="frame" x="140" y="314.5" width="40" height="32"/>
+                                                <rect key="frame" x="140" y="314" width="40" height="32"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <state key="normal" title="MOBI"/>
                                                 <connections>
@@ -1060,7 +1060,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="XNA-ax-Yz7">
-                                                <rect key="frame" x="107" y="354.5" width="106" height="32"/>
+                                                <rect key="frame" x="107" y="354" width="106" height="32"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <state key="normal" title="Send to Kindle"/>
                                                 <connections>
@@ -1068,8 +1068,8 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nhj-WU-Au5">
-                                                <rect key="frame" x="139.5" y="394.5" width="41" height="32"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <rect key="frame" x="138.5" y="394.5" width="43" height="32"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <state key="normal" title="Close"/>
                                                 <connections>
                                                     <action selector="closeView:" destination="QNA-1N-1O1" eventType="touchUpInside" id="C32-xP-vQw"/>
