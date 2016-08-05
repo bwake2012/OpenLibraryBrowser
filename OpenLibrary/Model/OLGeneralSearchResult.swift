@@ -13,6 +13,8 @@ import BNRCoreDataStack
 
 class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
 
+    static let entityName = "GeneralSearchResult"
+
     private var language_name_cache = [String]()
     var language_names: [String] {
         
@@ -40,7 +42,6 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
     }
     
     // Insert code here to add functionality to your managed object subclass
-    static let entityName = "GeneralSearchResult"
     
     class func parseJSON(sequence: Int64, index: Int64, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLGeneralSearchResult? {
         

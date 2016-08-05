@@ -466,7 +466,6 @@ class OLSearchResultsTableViewController: UITableViewController, UISearchResults
                     
                     SegmentedTableViewCell.emptyCellHeights( tableView )
                     generalSearchCoordinator.newQuery( vc.searchKeys, userInitiated: true, refreshControl: nil )
-                    tableView.reloadData()
                 }
             }
 

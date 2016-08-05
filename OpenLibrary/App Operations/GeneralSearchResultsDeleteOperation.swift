@@ -23,7 +23,8 @@ class GeneralSearchResultsDeleteOperation: Operation {
     
     override func execute() {
         
-        let fetchRequest = NSFetchRequest( entityName: OLGeneralSearchResult.entityName )
+        let entityName = OLGeneralSearchResult.entityName
+        let fetchRequest = NSFetchRequest( entityName: entityName )
         let deleteRequest = NSBatchDeleteRequest( fetchRequest: fetchRequest )
         deleteRequest.resultType = .ResultTypeObjectIDs
         

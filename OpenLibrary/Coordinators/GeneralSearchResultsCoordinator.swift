@@ -229,6 +229,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
     func newQuery( newSearchKeys: [String: String], userInitiated: Bool, refreshControl: UIRefreshControl? ) {
         
         self.searchKeys = newSearchKeys
+        self.sortFields = defaultSortFields
         
         if numberOfSections() > 0 {
             
@@ -318,6 +319,10 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
     func updateResults(searchResults: SearchResults) -> Void {
         
         self.searchResults = searchResults
+        if 0 == highWaterMark {
+            
+            tableVC?.tableView.reloadData()
+        }
         self.highWaterMark = searchResults.start + searchResults.pageSize
     }
     
