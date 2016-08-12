@@ -84,9 +84,9 @@ class OLEditionDetailViewController: UIViewController {
     }
 }
 
-extension OLEditionDetailViewController: ImageViewTransitionSource {
+extension OLEditionDetailViewController: TransitionSourceImage {
     
-    func transitionSourceRectView() -> UIImageView? {
+    func transitionSourceRectImageView() -> UIImageView? {
         
         return editionCoverView
     }

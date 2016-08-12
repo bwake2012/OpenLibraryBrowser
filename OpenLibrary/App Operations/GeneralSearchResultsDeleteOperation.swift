@@ -33,6 +33,9 @@ class GeneralSearchResultsDeleteOperation: Operation {
             try deleteContext.persistentStoreCoordinator?.executeRequest(
                         deleteRequest, withContext: self.deleteContext
                     )
+            
+            try deleteContext.saveContextAndWait()
+            
         } catch let error as NSError {
             
             // TODO: handle the error

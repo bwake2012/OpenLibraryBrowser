@@ -103,7 +103,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         
         guard let workDetail = objectAtIndexPath( indexPath ) else { return nil }
         
-        cell.configure( workDetail )
+        cell.configure( authorWorksTableVC!.tableView, indexPath: indexPath, data: workDetail )
         
 //        print( "work: \(result.title) has covers: \(!result.covers.isEmpty)" )
         
@@ -253,40 +253,71 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
     }
     
     func fetchedResultsControllerWillChangeContent( controller: FetchedOLWorkDetailController ) {
-        authorWorksTableVC?.tableView.beginUpdates()
+//        authorWorksTableVC?.tableView.beginUpdates()
     }
     
     func fetchedResultsControllerDidChangeContent( controller: FetchedOLWorkDetailController ) {
-        authorWorksTableVC?.tableView.endUpdates()
+        
+        if let tableView = authorWorksTableVC?.tableView {
+            
+            tableView.beginUpdates()
+            
+            tableView.deleteSections( deletedSectionIndexes, withRowAnimation: .Automatic )
+            tableView.insertSections( insertedSectionIndexes, withRowAnimation: .Automatic )
+            
+            tableView.deleteRowsAtIndexPaths( deletedRowIndexPaths, withRowAnimation: .Left )
+            tableView.insertRowsAtIndexPaths( insertedRowIndexPaths, withRowAnimation: .Right )
+            tableView.reloadRowsAtIndexPaths( updatedRowIndexPaths, withRowAnimation: .Automatic )
+            
+            tableView.endUpdates()
+            
+            // nil out the collections so they are ready for their next use.
+            self.insertedSectionIndexes = NSMutableIndexSet()
+            self.deletedSectionIndexes = NSMutableIndexSet()
+            
+            self.deletedRowIndexPaths = []
+            self.insertedRowIndexPaths = []
+            self.updatedRowIndexPaths = []
+        }
     }
     
     func fetchedResultsController( controller: FetchedOLWorkDetailController,
         didChangeObject change: FetchedResultsObjectChange< OLWorkDetail > ) {
+        
             switch change {
             case let .Insert(_, indexPath):
-                authorWorksTableVC?.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                if !insertedSectionIndexes.containsIndex( indexPath.section ) {
+                    insertedRowIndexPaths.append( indexPath )
+                }
                 break
                 
             case let .Delete(_, indexPath):
-                authorWorksTableVC?.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                if !deletedSectionIndexes.containsIndex( indexPath.section ) {
+                    deletedRowIndexPaths.append( indexPath )
+                }
                 break
                 
             case let .Move(_, fromIndexPath, toIndexPath):
-                authorWorksTableVC?.tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
+                if !insertedSectionIndexes.containsIndex( toIndexPath.section ) {
+                    insertedRowIndexPaths.append( toIndexPath )
+                }
+                if !deletedSectionIndexes.containsIndex( fromIndexPath.section ) {
+                    deletedRowIndexPaths.append( fromIndexPath )
+                }
                 
             case let .Update(_, indexPath):
-                authorWorksTableVC?.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                updatedRowIndexPaths.append( indexPath )
             }
     }
     
     func fetchedResultsController(controller: FetchedOLWorkDetailController,
         didChangeSection change: FetchedResultsSectionChange< OLWorkDetail >) {
+        
             switch change {
             case let .Insert(_, index):
-                authorWorksTableVC?.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
-                
+                insertedSectionIndexes.addIndex( index )
             case let .Delete(_, index):
-                authorWorksTableVC?.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+                deletedSectionIndexes.addIndex( index )
             }
     }
     

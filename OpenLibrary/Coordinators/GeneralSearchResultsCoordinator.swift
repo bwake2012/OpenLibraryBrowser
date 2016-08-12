@@ -1,5 +1,5 @@
 //
-//  TitleQueryResultsCoordinator.swift
+//  GeneralSearchResultsCoordinator.swift
 //  OpenLibrary
 //
 //  Created by Bob Wakefield on 4/10/16.
@@ -15,13 +15,13 @@ import PSOperations
 
 private let kGeneralSearchCache = "GeneralSearch"
 
-private let kPageSize = 100
+private let kPageSize = 256
 
 class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedResultsControllerDelegate {
     
     typealias FetchedOLGeneralSearchResultController = FetchedResultsController< OLGeneralSearchResult >
     
-    weak var tableVC: UITableViewController?
+    weak var tableVC: OLSearchResultsTableViewController?
 
     var generalSearchOperation: Operation?
     
@@ -67,25 +67,28 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             
             cachedSortFields = newSortFields
             cachedFetchedResultsController = nil
-            
-            tableVC?.tableView.reloadData()
-            updateUI()
+            dispatch_async( dispatch_get_main_queue() ) {
+
+                self.updateUI()
+            }
         }
     }
     
     var searchResults = SearchResults()
     
+    var sequence = 1
     var highWaterMark = 0
     var nextOffset = 0
     
     // MARK: Fetched Results Controller
     private func buildFetchedResultsController( delegate: GeneralSearchResultsCoordinator, stack: CoreDataStack, sortFields: [SortField] ) -> FetchedOLGeneralSearchResultController {
         
-        let request = NSFetchRequest(entityName: OLGeneralSearchResult.entityName)
-        
+        let request = NSFetchRequest( entityName: OLGeneralSearchResult.entityName )
+        request.predicate = NSPredicate( format: "sequence==\(sequence)" )
+
         request.sortDescriptors = buildSortDescriptors( sortFields )
         assert( nil == request.sortDescriptors || !request.sortDescriptors!.isEmpty )
-        // request.fetchLimit = 100
+        request.fetchBatchSize = 100
         
         let controller =
             FetchedOLGeneralSearchResultController(
@@ -111,23 +114,34 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
                     )
             }
         }
-        
+
         return sortDescriptors.isEmpty ? nil : sortDescriptors
     }
     
     // MARK: instance
     
-    init( tableVC: UITableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
+    init( tableVC: OLSearchResultsTableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         
         self.tableVC = tableVC
-        
+
         super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: tableVC )
+        
+        if let searchState = SearchState.loadState() {
+        
+            searchKeys = searchState.searchFields
+            cachedSortFields = searchState.sortFields
+            searchResults = searchState.searchResults
+            sequence = searchState.sequence
+        }
+        
+        updateTableFooter()
         
         updateUI()
     }
     
     deinit {
         
+        saveState()
     }
     
     func numberOfSections() -> Int {
@@ -144,11 +158,16 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
     
     func objectAtIndexPath( indexPath: NSIndexPath ) -> OLGeneralSearchResult? {
         
-        if 0 == searchResults.numFound { return nil }
+//        if 0 == searchResults.numFound { return nil }
         
         guard let sections = fetchedResultsController.sections else {
             assertionFailure("Sections missing")
             return nil
+        }
+        
+        if needAnotherPage( indexPath.row ) {
+            
+            nextQueryPage( highWaterMark )
         }
         
         let section = sections[indexPath.section]
@@ -169,15 +188,10 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             return nil
         }
         
-        if needAnotherPage( indexPath.row ) {
-            
-            nextQueryPage( highWaterMark )
-        }
-        
         guard let result = objectAtIndexPath( indexPath ) else { return nil }
 
         if let tableVC = tableVC {
-            cell.configure( tableVC, generalResult: result )
+            cell.configure( tableVC.tableView, indexPath: indexPath, data: result )
         }
         
         updateUI( result, cell: cell )
@@ -228,43 +242,36 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
 
     func newQuery( newSearchKeys: [String: String], userInitiated: Bool, refreshControl: UIRefreshControl? ) {
         
-        self.searchKeys = newSearchKeys
-        self.sortFields = defaultSortFields
-        
-        if numberOfSections() > 0 {
-            
-            let top = NSIndexPath( forRow: Foundation.NSNotFound, inSection: 0 );
-            tableVC?.tableView.scrollToRowAtIndexPath( top, atScrollPosition: UITableViewScrollPosition.Top, animated: true );
-        }
-        
         if nil == generalSearchOperation {
             
+            self.searchKeys = newSearchKeys
+            if numberOfSections() > 0 {
+                
+                let top = NSIndexPath( forRow: Foundation.NSNotFound, inSection: 0 );
+                tableVC?.tableView.scrollToRowAtIndexPath( top, atScrollPosition: UITableViewScrollPosition.Top, animated: true );
+            }
+        
+            self.sequence += 1
             self.searchResults = SearchResults()
             self.highWaterMark = 0
             self.nextOffset = kPageSize
             
-            generalSearchOperation =
-                GeneralSearchOperation(
-                        queryParms: newSearchKeys,
-                        offset: highWaterMark, limit: kPageSize,
-                        coreDataStack: coreDataStack,
-                        updateResults: self.updateResults
-                    ) {
-                        [weak self] in
-
-                        if let strongSelf = self {
-                            
-                            dispatch_async( dispatch_get_main_queue() ) {
-                                
-                                    refreshControl?.endRefreshing()
-                                    strongSelf.updateUI()
-                                }
-                            strongSelf.generalSearchOperation = nil
-                        }
-                    }
+            coordinatorIsBusy()
             
-            generalSearchOperation!.userInitiated = userInitiated
-            operationQueue.addOperation( generalSearchOperation! )
+            saveState()
+            
+            cachedFetchedResultsController = nil
+            updateUI()
+
+            generalSearchOperation =
+                enqueueSearch(
+                        searchKeys,
+                        sequence: sequence,
+                        offset: highWaterMark,
+                        pageSize: kPageSize,
+                        userInitiated: userInitiated,
+                        refreshControl: refreshControl
+                    )
         }
     }
     
@@ -273,28 +280,55 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         if !searchKeys.isEmpty && nil == self.generalSearchOperation {
             
             nextOffset = offset + kPageSize
+            
             generalSearchOperation =
-                GeneralSearchOperation(
-                        queryParms: self.searchKeys,
-                        offset: offset, limit: kPageSize,
-                        coreDataStack: coreDataStack,
-                        updateResults: self.updateResults
-                    ) {
+                enqueueSearch(
+                        self.searchKeys,
+                        sequence: sequence,
+                        offset: offset,
+                        pageSize: kPageSize,
+                        userInitiated: false,
+                        refreshControl: nil
+                    )
+        }
+    }
+    
+    private func enqueueSearch(
+            searchKeys: [String: String],
+            sequence: Int,
+            offset: Int,
+            pageSize: Int,
+            userInitiated: Bool,
+            refreshControl: UIRefreshControl?
+        ) -> Operation {
+        
+        let generalSearchOperation =
+            GeneralSearchOperation(
+                queryParms: searchKeys,
+                sequence: sequence,
+                offset: offset, limit: pageSize,
+                coreDataStack: coreDataStack,
+                updateResults: updateResults
+            ) {
+                [weak self] in
                 
-                    [weak self] in
-                    dispatch_async( dispatch_get_main_queue() ) {
-//                        refreshControl?.endRefreshing()
-//                        self.updateUI()
-                    }
+                dispatch_async( dispatch_get_main_queue() ) {
+                        
                     if let strongSelf = self {
+                    
+                        strongSelf.coordinatorIsNoLongerBusy()
+
+                        refreshControl?.endRefreshing()
                         
                         strongSelf.generalSearchOperation = nil
                     }
-            }
-
-            generalSearchOperation!.userInitiated = false
-            operationQueue.addOperation( generalSearchOperation! )
+                }
         }
+
+        generalSearchOperation.userInitiated = userInitiated
+        operationQueue.addOperation( generalSearchOperation )
+        
+        return generalSearchOperation
     }
     
     func clearQuery() {
@@ -303,7 +337,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         
         queryClearOperation.userInitiated = false
         operationQueue.addOperation( queryClearOperation )
-            
+        
     }
     
     private func needAnotherPage( index: Int ) -> Bool {
@@ -312,30 +346,125 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             nil == self.generalSearchOperation &&
             !searchKeys.isEmpty &&
             highWaterMark < searchResults.numFound &&
-            index >= ( self.fetchedResultsController.count - 1 )
+            self.fetchedResultsController.count - index < 20
     }
     
     // MARK: SearchResultsUpdater
-    func updateResults(searchResults: SearchResults) -> Void {
+    private func updateResults(searchResults: SearchResults) -> Void {
         
         self.searchResults = searchResults
         if 0 == highWaterMark {
             
-            tableVC?.tableView.reloadData()
+            if (self.tableVC?.tableView) != nil {
+
+                dispatch_async( dispatch_get_main_queue() ) {
+                    
+                    self.coordinatorIsNoLongerBusy()
+
+                }
+            }
         }
         self.highWaterMark = searchResults.start + searchResults.pageSize
+ 
+        saveState()
+
+        dispatch_async( dispatch_get_main_queue() ) {
+            
+            self.updateTableFooter()
+        }
+    }
+    
+    private func updateTableFooter() -> Void {
+        
+        if let tableVC = self.tableVC {
+            if let footer = tableVC.tableView.tableFooterView as? OLTableViewHeaderFooterView {
+                
+                footer.footerLabel.text = "\(self.highWaterMark) of \(self.searchResults.numFound)"
+            }
+        }
     }
     
     // MARK: FetchedResultsControllerDelegate
     func fetchedResultsControllerDidPerformFetch(controller: FetchedResultsController< OLGeneralSearchResult >) {
 
-        if searchKeys.isEmpty {
-            self.highWaterMark = fetchedResultsController.count
+        self.highWaterMark = fetchedResultsController.count
+        if 0 == self.searchResults.pageSize {
             self.searchResults = SearchResults( start: 0, numFound: highWaterMark, pageSize: 100 )
-            tableVC?.tableView.reloadData()
+        }
+//        tableVC?.tableView.reloadData()
+    }
+    
+    func fetchedResultsControllerWillChangeContent( controller: FetchedOLGeneralSearchResultController ) {
+        //        authorWorksTableVC?.tableView.beginUpdates()
+    }
+    
+    func fetchedResultsControllerDidChangeContent( controller: FetchedOLGeneralSearchResultController ) {
+        
+        if let tableView = tableVC?.tableView {
+            
+            tableView.beginUpdates()
+            
+            tableView.deleteSections( deletedSectionIndexes, withRowAnimation: .Automatic )
+            tableView.insertSections( insertedSectionIndexes, withRowAnimation: .Automatic )
+            
+            tableView.deleteRowsAtIndexPaths( deletedRowIndexPaths, withRowAnimation: .Left )
+            tableView.insertRowsAtIndexPaths( insertedRowIndexPaths, withRowAnimation: .Right )
+            tableView.reloadRowsAtIndexPaths( updatedRowIndexPaths, withRowAnimation: .Automatic )
+            
+            tableView.endUpdates()
+            
+            // nil out the collections so they are ready for their next use.
+            self.insertedSectionIndexes = NSMutableIndexSet()
+            self.deletedSectionIndexes = NSMutableIndexSet()
+            
+            self.deletedRowIndexPaths = []
+            self.insertedRowIndexPaths = []
+            self.updatedRowIndexPaths = []
         }
     }
     
+    func fetchedResultsController( controller: FetchedOLGeneralSearchResultController,
+                                   didChangeObject change: FetchedResultsObjectChange< OLGeneralSearchResult > ) {
+        
+        switch change {
+        case let .Insert(_, indexPath):
+            if !insertedSectionIndexes.containsIndex( indexPath.section ) {
+                insertedRowIndexPaths.append( indexPath )
+            }
+            break
+            
+        case let .Delete(_, indexPath):
+            if !deletedSectionIndexes.containsIndex( indexPath.section ) {
+                deletedRowIndexPaths.append( indexPath )
+            }
+            break
+            
+        case let .Move(_, fromIndexPath, toIndexPath):
+            if !insertedSectionIndexes.containsIndex( toIndexPath.section ) {
+                insertedRowIndexPaths.append( toIndexPath )
+            }
+            if !deletedSectionIndexes.containsIndex( fromIndexPath.section ) {
+                deletedRowIndexPaths.append( fromIndexPath )
+            }
+            
+        case let .Update(_, indexPath):
+            updatedRowIndexPaths.append( indexPath )
+        }
+    }
+    
+    func fetchedResultsController(controller: FetchedOLGeneralSearchResultController,
+                                  didChangeSection change: FetchedResultsSectionChange< OLGeneralSearchResult >) {
+        
+        switch change {
+        case let .Insert(_, index):
+            insertedSectionIndexes.addIndex( index )
+        case let .Delete(_, index):
+            deletedSectionIndexes.addIndex( index )
+        }
+    }
+    
+
+/*
     func fetchedResultsControllerWillChangeContent( controller: FetchedResultsController< OLGeneralSearchResult > ) {
         tableVC?.tableView.beginUpdates()
     }
@@ -347,7 +476,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
     func fetchedResultsController( controller: FetchedResultsController< OLGeneralSearchResult >,
         didChangeObject change: FetchedResultsObjectChange< OLGeneralSearchResult > ) {
             switch change {
-            case let .Insert(_, indexPath):
+            case let .Insert( _, indexPath ):
                 tableVC?.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
@@ -373,7 +502,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
                 tableVC?.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
             }
     }
-    
+*/
     // MARK: Utility
     func queueGetTitleThumbByID( indexPath: NSIndexPath, id: Int, url: NSURL ) {
         
@@ -391,6 +520,34 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         
         TitleThumbnailGetOperation.userInitiated = true
         operationQueue.addOperation( TitleThumbnailGetOperation )
+    }
+    
+    func coordinatorIsBusy() -> Void {
+        
+        if let tableVC = tableVC {
+
+            tableVC.coordinatorIsBusy()
+        }
+    }
+    
+    func coordinatorIsNoLongerBusy() -> Void {
+    
+        if let tableVC = tableVC {
+            
+            tableVC.coordinatorIsNoLongerBusy()
+        }
+    }
+    
+    func saveState() -> Void {
+        
+        let searchState =
+            SearchState(
+                    searchFields: searchKeys,
+                    sortFields: sortFields,
+                    searchResults: searchResults,
+                    sequence: sequence
+                )
+        searchState.saveState()
     }
     
     // MARK: set coordinator for view controller

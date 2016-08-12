@@ -21,7 +21,7 @@ class AuthorSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedR
 
     typealias FetchedOLAuthorSearchResultController = FetchedResultsController< OLAuthorSearchResult >
     
-    weak var tableVC: UITableViewController?
+    weak var tableVC: OLSearchResultsTableViewController?
     
     var authorSearchOperation: Operation?
     
@@ -54,7 +54,7 @@ class AuthorSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedR
     var highWaterMark = 0
     var nextOffset = 0
     
-    init( tableVC: UITableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
+    init( tableVC: OLSearchResultsTableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         
         self.tableVC = tableVC
         
@@ -109,7 +109,7 @@ class AuthorSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedR
         
         guard let result = objectAtIndexPath( indexPath ) else { return nil }
         
-        cell.configure( result )
+        cell.configure( tableVC!.tableView, indexPath: indexPath, data: result )
         
         let localURL = result.localURL( "S" )
         self.coreDataStack.mainQueueContext.saveContext()

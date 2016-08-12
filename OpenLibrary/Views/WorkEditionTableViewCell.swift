@@ -13,9 +13,9 @@ class WorkEditionTableViewCell: OLTableViewCell {
     @IBOutlet weak var editionTitle: UILabel!
     @IBOutlet weak var editionSubTitle: UILabel!
 
-    func configure( entry: OLEditionDetail? ) {
+    override func configure( tableView: UITableView, indexPath: NSIndexPath, data: OLManagedObject? ) {
         
-        if let entry = entry   {
+        if let entry = data as? OLEditionDetail {
             
             let trimmedPrefix =
                 entry.title_prefix.stringByTrimmingCharactersInSet(

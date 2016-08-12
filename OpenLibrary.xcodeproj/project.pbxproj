@@ -68,6 +68,8 @@
 		C437DEA21CECEE45005CED1A /* GeneralSearchResultsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C437DEA11CECEE45005CED1A /* GeneralSearchResultsCoordinator.swift */; };
 		C437DEA41CECF8D9005CED1A /* GeneralSearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C437DEA31CECF8D9005CED1A /* GeneralSearchResultTableViewCell.swift */; };
 		C451837C1D3E8662006681B0 /* OperationErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C451837B1D3E8662006681B0 /* OperationErrors.swift */; };
+		C453C3821D5E1985003EAA45 /* OLTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453C3811D5E1985003EAA45 /* OLTableViewHeaderFooterView.swift */; };
+		C453C3841D5E2030003EAA45 /* OLTableViewHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C453C3831D5E2030003EAA45 /* OLTableViewHeaderFooterView.xib */; };
 		C45AA3B51D3BFB0000817901 /* OLReachabilityDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45AA3B41D3BFB0000817901 /* OLReachabilityDownloadOperation.swift */; };
 		C45E81B91CE42C6D00307BAC /* OLEBookFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E81B71CE42C6D00307BAC /* OLEBookFile.swift */; };
 		C45E81BA1CE42C6D00307BAC /* OLEBookFile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E81B81CE42C6D00307BAC /* OLEBookFile+CoreDataProperties.swift */; };
@@ -90,6 +92,7 @@
 		C46E7E571C861E8500D2ED51 /* OLAuthorDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E7E561C861E8500D2ED51 /* OLAuthorDetail.swift */; };
 		C46E7E591C861EE900D2ED51 /* AuthorNameSearchResultsParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E7E581C861EE900D2ED51 /* AuthorNameSearchResultsParseOperation.swift */; };
 		C46E7E5B1C861EF500D2ED51 /* OLAuthorSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E7E5A1C861EF500D2ED51 /* OLAuthorSearchResult.swift */; };
+		C47B03C01D5A352B001F323C /* SearchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47B03BF1D5A352B001F323C /* SearchState.swift */; };
 		C4817C1D1CA37DC300BDCD4D /* WorkDetailDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4817C1A1CA37DC300BDCD4D /* WorkDetailDownloadOperation.swift */; };
 		C4817C1E1CA37DC300BDCD4D /* WorkDetailGetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4817C1B1CA37DC300BDCD4D /* WorkDetailGetOperation.swift */; };
 		C4817C211CA3817300BDCD4D /* WorkDetailParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4817C201CA3817300BDCD4D /* WorkDetailParseOperation.swift */; };
@@ -99,6 +102,7 @@
 		C488D6221D0B100F0025B61D /* HTMLTextDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C488D6211D0B100F0025B61D /* HTMLTextDisplayView.swift */; };
 		C48AE6021D4FFE7800F2B1E6 /* SearchDismissalAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48AE6011D4FFE7800F2B1E6 /* SearchDismissalAnimator.swift */; };
 		C48B8A3F1D47E22C00C29D00 /* OLBookSortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48B8A3E1D47E22C00C29D00 /* OLBookSortViewController.swift */; };
+		C4973EC31D56A2450062170E /* GeneralSearchResultsDeleteGroupOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4973EC21D56A2450062170E /* GeneralSearchResultsDeleteGroupOperation.swift */; };
 		C49787411CB58A3700A0AEB1 /* OLPictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49787401CB58A3700A0AEB1 /* OLPictureViewController.swift */; };
 		C49BDD141CB59DAF00A2EEEF /* PictureViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49BDD131CB59DAF00A2EEEF /* PictureViewCoordinator.swift */; };
 		C49BDD181CB6E6A900A2EEEF /* OLEditionDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49BDD171CB6E6A900A2EEEF /* OLEditionDetailViewController.swift */; };
@@ -255,6 +259,8 @@
 		C437DEA11CECEE45005CED1A /* GeneralSearchResultsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneralSearchResultsCoordinator.swift; path = Coordinators/GeneralSearchResultsCoordinator.swift; sourceTree = "<group>"; };
 		C437DEA31CECF8D9005CED1A /* GeneralSearchResultTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneralSearchResultTableViewCell.swift; path = Views/GeneralSearchResultTableViewCell.swift; sourceTree = "<group>"; };
 		C451837B1D3E8662006681B0 /* OperationErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OperationErrors.swift; path = "App Operations/OperationErrors.swift"; sourceTree = "<group>"; };
+		C453C3811D5E1985003EAA45 /* OLTableViewHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLTableViewHeaderFooterView.swift; path = Views/OLTableViewHeaderFooterView.swift; sourceTree = "<group>"; };
+		C453C3831D5E2030003EAA45 /* OLTableViewHeaderFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OLTableViewHeaderFooterView.xib; path = Views/OLTableViewHeaderFooterView.xib; sourceTree = "<group>"; };
 		C45AA3B41D3BFB0000817901 /* OLReachabilityDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLReachabilityDownloadOperation.swift; path = "App Operations/OLReachabilityDownloadOperation.swift"; sourceTree = "<group>"; };
 		C45E81B71CE42C6D00307BAC /* OLEBookFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLEBookFile.swift; path = Model/OLEBookFile.swift; sourceTree = "<group>"; };
 		C45E81B81CE42C6D00307BAC /* OLEBookFile+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "OLEBookFile+CoreDataProperties.swift"; path = "Model/OLEBookFile+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -277,6 +283,8 @@
 		C46E7E561C861E8500D2ED51 /* OLAuthorDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLAuthorDetail.swift; path = Model/OLAuthorDetail.swift; sourceTree = "<group>"; };
 		C46E7E581C861EE900D2ED51 /* AuthorNameSearchResultsParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorNameSearchResultsParseOperation.swift; path = "App Operations/AuthorNameSearchResultsParseOperation.swift"; sourceTree = "<group>"; };
 		C46E7E5A1C861EF500D2ED51 /* OLAuthorSearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLAuthorSearchResult.swift; path = Model/OLAuthorSearchResult.swift; sourceTree = "<group>"; };
+		C47B03BF1D5A352B001F323C /* SearchState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchState.swift; path = Coordinators/SearchState.swift; sourceTree = "<group>"; };
+		C47B03C11D5BAC79001F323C /* OpenLibraryBrowser02.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OpenLibraryBrowser02.xcdatamodel; sourceTree = "<group>"; };
 		C4817C1A1CA37DC300BDCD4D /* WorkDetailDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkDetailDownloadOperation.swift; path = "App Operations/WorkDetailDownloadOperation.swift"; sourceTree = "<group>"; };
 		C4817C1B1CA37DC300BDCD4D /* WorkDetailGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkDetailGetOperation.swift; path = "App Operations/WorkDetailGetOperation.swift"; sourceTree = "<group>"; };
 		C4817C201CA3817300BDCD4D /* WorkDetailParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkDetailParseOperation.swift; path = "App Operations/WorkDetailParseOperation.swift"; sourceTree = "<group>"; };
@@ -286,6 +294,7 @@
 		C488D6211D0B100F0025B61D /* HTMLTextDisplayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HTMLTextDisplayView.swift; path = Views/HTMLTextDisplayView.swift; sourceTree = "<group>"; };
 		C48AE6011D4FFE7800F2B1E6 /* SearchDismissalAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchDismissalAnimator.swift; path = Transitions/SearchDismissalAnimator.swift; sourceTree = "<group>"; };
 		C48B8A3E1D47E22C00C29D00 /* OLBookSortViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLBookSortViewController.swift; path = "View Controllers/OLBookSortViewController.swift"; sourceTree = "<group>"; };
+		C4973EC21D56A2450062170E /* GeneralSearchResultsDeleteGroupOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneralSearchResultsDeleteGroupOperation.swift; path = "App Operations/GeneralSearchResultsDeleteGroupOperation.swift"; sourceTree = "<group>"; };
 		C49787401CB58A3700A0AEB1 /* OLPictureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLPictureViewController.swift; path = "View Controllers/OLPictureViewController.swift"; sourceTree = "<group>"; };
 		C49BDD131CB59DAF00A2EEEF /* PictureViewCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureViewCoordinator.swift; sourceTree = "<group>"; };
 		C49BDD171CB6E6A900A2EEEF /* OLEditionDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLEditionDetailViewController.swift; path = "View Controllers/OLEditionDetailViewController.swift"; sourceTree = "<group>"; };
@@ -452,6 +461,7 @@
 				C410821F1CBAB27700319B83 /* TitleSearchResultsCoordinator.swift */,
 				C4EF99E01CA3792700BEF2D3 /* WorkDetailCoordinator.swift */,
 				C4EF99DD1CA3714900BEF2D3 /* WorkEditionsCoordinator.swift */,
+				C47B03BF1D5A352B001F323C /* SearchState.swift */,
 			);
 			name = Coordinators;
 			sourceTree = "<group>";
@@ -575,6 +585,7 @@
 				C4A0F0821D1468C500D0F604 /* BookDownloadOperation.swift */,
 				C4A0F0831D1468C500D0F604 /* BookGetOperation.swift */,
 				C40E97F61CC7D1540013A3F5 /* GeneralSearchOperation.swift */,
+				C4973EC21D56A2450062170E /* GeneralSearchResultsDeleteGroupOperation.swift */,
 				C40E97F51CC7D1540013A3F5 /* GeneralSearchResultsDeleteOperation.swift */,
 				C40E97F41CC7D1540013A3F5 /* GeneralSearchResultsDownloadOperation.swift */,
 				C40E97F31CC7D1540013A3F5 /* GeneralSearchResultsParseOperation.swift */,
@@ -673,6 +684,8 @@
 				C4A722131D2DDF9000C4BCED /* TableViewCell.swift */,
 				C410821D1CBAB26000319B83 /* TitleSearchResultTableViewCell.swift */,
 				C4B34D851D4057DD00BC85E8 /* WorkEditionTableViewCell.swift */,
+				C453C3811D5E1985003EAA45 /* OLTableViewHeaderFooterView.swift */,
+				C453C3831D5E2030003EAA45 /* OLTableViewHeaderFooterView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -818,6 +831,7 @@
 				C4AB17171CDB86B200D6DF05 /* DeluxeDetailLinkTableViewCell.xib in Resources */,
 				C4A722121D2DDD0500C4BCED /* SegmentedTableViewCell.xib in Resources */,
 				C4AA89471CF39F110082B654 /* WorkDetail.storyboard in Resources */,
+				C453C3841D5E2030003EAA45 /* OLTableViewHeaderFooterView.xib in Resources */,
 				C4E35E281C7E07950015D187 /* Main.storyboard in Resources */,
 				C4D0A9571CEF4DD20032E429 /* DeluxeDetailImageTableViewCell.xib in Resources */,
 				C4AB17151CDB83B800D6DF05 /* DeluxeDetailSubheadingTableViewCell.xib in Resources */,
@@ -914,6 +928,7 @@
 				C45E820B1CE42CC900307BAC /* IAEBookInfoParseOperation.swift in Sources */,
 				C4817C1E1CA37DC300BDCD4D /* WorkDetailGetOperation.swift in Sources */,
 				C45F51841D3EA05300BFFB2A /* Operation+produceAlert.swift in Sources */,
+				C453C3821D5E1985003EAA45 /* OLTableViewHeaderFooterView.swift in Sources */,
 				C422A4A11CCD233700A6B4A7 /* UnfoldTransition.swift in Sources */,
 				C42DBE751CBD76170048788E /* NavigationControllerDelegate.swift in Sources */,
 				C4A0F0841D1468C500D0F604 /* BookDownloadOperation.swift in Sources */,
@@ -927,6 +942,7 @@
 				C45E82091CE42CC900307BAC /* IAEBookInfoDownloadOperation.swift in Sources */,
 				C4E35E231C7E07950015D187 /* AppDelegate.swift in Sources */,
 				C451837C1D3E8662006681B0 /* OperationErrors.swift in Sources */,
+				C4973EC31D56A2450062170E /* GeneralSearchResultsDeleteGroupOperation.swift in Sources */,
 				C4345E061CFFFC540091D4A0 /* IAEBookItemListGetOperation.swift in Sources */,
 				C49BDD1C1CB6EC0900A2EEEF /* EditionDetailCoordinator.swift in Sources */,
 				C4A0F0931D15FF3A00D0F604 /* BookDownloadCoordinator.swift in Sources */,
@@ -996,6 +1012,7 @@
 				C40E97F21CC6C2E10013A3F5 /* OLGeneralSearchResult.swift in Sources */,
 				C4677EA51CA0351B0070CDFD /* AuthorEditionsCoordinator.swift in Sources */,
 				C4E8638A1C9121A3002C0E6B /* OpenLibraryObject.swift in Sources */,
+				C47B03C01D5A352B001F323C /* SearchState.swift in Sources */,
 				C4F00C531CD929AD002D7E14 /* DeluxeDetailHeadingTableViewCell.swift in Sources */,
 				C412FE561CC2C99800EDB935 /* OLLanguage+CoreDataProperties.swift in Sources */,
 				C4A722161D2DE25100C4BCED /* GeneralSearchResultSegmentedTableViewCell.swift in Sources */,
@@ -1330,9 +1347,10 @@
 		C4B2648C1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				C47B03C11D5BAC79001F323C /* OpenLibraryBrowser02.xcdatamodel */,
 				C4B2648D1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodel */,
 			);
-			currentVersion = C4B2648D1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodel */;
+			currentVersion = C47B03C11D5BAC79001F323C /* OpenLibraryBrowser02.xcdatamodel */;
 			name = OpenLibraryBrowser.xcdatamodeld;
 			path = Model/OpenLibraryBrowser.xcdatamodeld;
 			sourceTree = "<group>";

@@ -32,7 +32,7 @@ class GeneralSearchOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryParms: [String: String], offset: Int, limit: Int, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater, completionHandler: Void -> Void ) {
+    init( queryParms: [String: String], sequence: Int, offset: Int, limit: Int, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater, completionHandler: Void -> Void ) {
 
         self.coreDataStack = coreDataStack
         
@@ -50,7 +50,7 @@ class GeneralSearchOperation: GroupOperation {
             There is an optional operation 0 to delete the existing contents of the Core Data store
         */
         downloadOperation = GeneralSearchResultsDownloadOperation( queryParms: queryParms, offset: offset, limit: limit, cacheFile: cacheFile )
-        parseOperation = GeneralSearchResultsParseOperation( cacheFile: cacheFile, coreDataStack: coreDataStack, updateResults: updateResults )
+        parseOperation = GeneralSearchResultsParseOperation( sequence: sequence, cacheFile: cacheFile, coreDataStack: coreDataStack, updateResults: updateResults )
         
         finishOperation = NSBlockOperation( block: completionHandler )
         
@@ -59,13 +59,13 @@ class GeneralSearchOperation: GroupOperation {
         finishOperation.addDependency(parseOperation)
         
         var operations = [NSOperation]()
-        if 0 == offset {
-            deleteOperation = GeneralSearchResultsDeleteOperation( coreDataStack: coreDataStack )
-            if let dO = deleteOperation {
-                downloadOperation.addDependency( dO )
-                operations.append( dO )
-            }
-        }
+//        if 0 == offset {
+//            deleteOperation = GeneralSearchResultsDeleteOperation( coreDataStack: coreDataStack )
+//            if let dO = deleteOperation {
+//                downloadOperation.addDependency( dO )
+//                operations.append( dO )
+//            }
+//        }
         
         operations += [downloadOperation, parseOperation, finishOperation]
         super.init( operations: operations )

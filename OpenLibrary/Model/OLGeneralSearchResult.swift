@@ -47,29 +47,41 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
         
         guard let parsed = ParsedFromJSON( json: json ) else { return nil }
         
-        guard let newObject =
-            NSEntityDescription.insertNewObjectForEntityForName(
-                OLGeneralSearchResult.entityName, inManagedObjectContext: moc
-                ) as? OLGeneralSearchResult else { return nil }
+        var newObject: OLGeneralSearchResult?
         
-        newObject.sequence = sequence
-        newObject.index = index
-        
-        newObject.populateObject( parsed )
-        
-        // let workDetail =
-        OLWorkDetail.saveProvisionalWork( parsed, moc: moc )
-
-        for authorIndex in 0..<parsed.author_key.count {
+        newObject = findObject( parsed.key, entityName: entityName, moc: moc )
+        if nil == newObject {
             
-            // let authorDetail = 
-            OLAuthorDetail.saveProvisionalAuthor( authorIndex, parsed: parsed, moc: moc )
+            newObject =
+                NSEntityDescription.insertNewObjectForEntityForName(
+                    OLGeneralSearchResult.entityName, inManagedObjectContext: moc
+                ) as? OLGeneralSearchResult
+            
         }
-
-        for editionIndex in 0..<parsed.edition_key.count {
+        
+        if let newObject = newObject {
             
-            // let editionDetail = 
-            OLEditionDetail.saveProvisionalEdition( editionIndex, parsed: parsed, moc: moc )
+            newObject.sequence = sequence
+            newObject.index = index
+            
+            newObject.retrieval_date = NSDate()
+            
+            newObject.populateObject( parsed )
+            
+            // let workDetail =
+            OLWorkDetail.saveProvisionalWork( parsed, moc: moc )
+
+            for authorIndex in 0..<parsed.author_key.count {
+                
+                // let authorDetail = 
+                OLAuthorDetail.saveProvisionalAuthor( authorIndex, parsed: parsed, moc: moc )
+            }
+
+            for editionIndex in 0..<parsed.edition_key.count {
+                
+                // let editionDetail = 
+                OLEditionDetail.saveProvisionalEdition( editionIndex, parsed: parsed, moc: moc )
+            }
         }
 
         return newObject

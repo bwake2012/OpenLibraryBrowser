@@ -18,6 +18,13 @@ class OLQueryCoordinator: NSObject {
     private static var reachability: Reachability?
     private static var viewControllerStack = [UIViewController]()
 
+    var deletedSectionIndexes = NSMutableIndexSet()
+    var insertedSectionIndexes = NSMutableIndexSet()
+    
+    var deletedRowIndexPaths: [NSIndexPath] = []
+    var insertedRowIndexPaths: [NSIndexPath] = []
+    var updatedRowIndexPaths: [NSIndexPath] = []
+    
     // MARK: Instance variables
     let operationQueue: OperationQueue
     let coreDataStack: CoreDataStack

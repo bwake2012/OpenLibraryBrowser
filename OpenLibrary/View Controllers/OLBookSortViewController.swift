@@ -7,51 +7,7 @@
 //
 
 import UIKit
-
-struct SortField {
-    
-    let name: String
-    let label: String
-    var sort: SortOptions
-    
-    func image() -> UIImage {
-        
-        return UIImage( named: sort.imageName )!
-    }
-}
-
-enum SortOptions: Int {
-    
-    case sortNone = 0, sortUp = 1, sortDown = 2, sortMax  = 3
-    
-    var imageName: String {
-        
-        switch self {
-        case sortNone: return "rsw-notsorted-28x26"
-        case sortUp:   return "763-arrow-up"
-        case sortDown: return "764-arrow-down"
-        case sortMax:
-            assert( self != sortMax )
-            return ""
-        }
-    }
-    
-    func nextSort() -> SortOptions {
-        
-        let rawNext = self.rawValue + 1
-        let rawMax  = sortMax.rawValue
-        
-        let rawNew = rawNext % rawMax
-        
-        return SortOptions( rawValue: rawNew )!
-    }
-    
-    var ascending: Bool {
-        
-        return self == .sortUp
-    }
-}
-    
+   
 typealias SaveSortFields = ( sortFields: [SortField] ) -> Void
 
 class OLBookSortViewController: UIViewController {

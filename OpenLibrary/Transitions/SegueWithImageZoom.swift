@@ -19,10 +19,11 @@ class SegueWithImageZoom: UIStoryboardSegue {
             if let ncd = navController.delegate as? NavigationControllerDelegate {
                 
                 var sourceRectView: UIImageView?
-                if let vc = sourceViewController as? ImageViewTransitionSource {
+                if let vc = sourceViewController as? TransitionSourceImage {
                     
-                    sourceRectView = vc.transitionSourceRectView()
+                    sourceRectView = vc.transitionSourceRectImageView()
                 }
+                assert( nil != sourceRectView )
                 ncd.pushZoomTransition( ImageZoomTransition( navigationController: navController, operation: .Push, sourceRectView: sourceRectView ) )
             }
         }

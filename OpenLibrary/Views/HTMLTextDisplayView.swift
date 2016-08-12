@@ -31,11 +31,11 @@ class HTMLTextDisplayView: UITextView {
             do {
                 let theAttributedString =
                     try NSMutableAttributedString(
-                        data: stringData,
-                        options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
-                        documentAttributes: nil
-                )
-            
+                                data: stringData,
+                                options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
+                                documentAttributes: nil
+                            )
+
                 self.attributedText = theAttributedString
             
                 setNeedsLayout()

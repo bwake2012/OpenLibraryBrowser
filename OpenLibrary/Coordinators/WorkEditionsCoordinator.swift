@@ -102,7 +102,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         
         guard let result = objectAtIndexPath( indexPath ) else { return nil }
         
-        cell.configure( result )
+        cell.configure( tableVC!.tableView, indexPath: indexPath, data: result )
         
         if result.hasImage {
                 

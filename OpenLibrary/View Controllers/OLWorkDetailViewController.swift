@@ -192,9 +192,9 @@ class OLWorkDetailViewController: UIViewController {
 
 }
 
-extension OLWorkDetailViewController: ImageViewTransitionSource {
+extension OLWorkDetailViewController: TransitionSourceImage {
     
-    func transitionSourceRectView() -> UIImageView? {
+    func transitionSourceRectImageView() -> UIImageView? {
         
         return workCover
     }

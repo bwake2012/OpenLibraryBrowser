@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private let operationQueue = OperationQueue()
     private var reachabilityOperation: OLReachabilityOperation?
+    private var generalSearchResultsCoordinator: GeneralSearchResultsCoordinator?
 
     private var coreDataStack: CoreDataStack?
     
@@ -33,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-        CoreDataStack.constructSQLiteStack(withModelName: "OpenLibraryBrowser") {
+        CoreDataStack.constructSQLiteStack( withModelName: "OpenLibraryBrowser" ) {
             
             result in
             
@@ -89,34 +90,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
 
-    func getAuthorSearchCoordinator( destVC: OLSearchResultsTableViewController ) -> AuthorSearchResultsCoordinator {
-
-        return
-            AuthorSearchResultsCoordinator(
-                    tableVC: destVC,
-                    coreDataStack: coreDataStack!,
-                    operationQueue: operationQueue
-                )
-    }
-    
-    func getTitleSearchCoordinator( destVC: OLSearchResultsTableViewController ) -> TitleSearchResultsCoordinator {
-        
-        return
-            TitleSearchResultsCoordinator(
-                    tableVC: destVC,
-                    coreDataStack: coreDataStack!,
-                    operationQueue: operationQueue
-                )
-    }
-
     func getGeneralSearchCoordinator( destVC: OLSearchResultsTableViewController ) -> GeneralSearchResultsCoordinator {
         
-        return
-            GeneralSearchResultsCoordinator(
-                tableVC: destVC,
-                coreDataStack: coreDataStack!,
-                operationQueue: operationQueue
-        )
+        guard let queryCoordinator = self.generalSearchResultsCoordinator else {
+        
+            generalSearchResultsCoordinator =
+                GeneralSearchResultsCoordinator(
+                        tableVC: destVC,
+                        coreDataStack: coreDataStack!,
+                        operationQueue: operationQueue
+                    )
+            
+            return self.generalSearchResultsCoordinator!
+        }
+        
+        return queryCoordinator
     }
     
 }

@@ -16,6 +16,7 @@ extension OLGeneralSearchResult {
 
     @NSManaged var      sequence: Int64
     @NSManaged var      index: Int64
+    @NSManaged var      retrieval_date: NSDate?
     
     @NSManaged var 	    author_key: [String]
     @NSManaged var 	    author_name: [String]

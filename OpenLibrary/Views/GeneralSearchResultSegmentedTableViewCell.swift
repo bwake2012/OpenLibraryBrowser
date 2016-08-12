@@ -76,6 +76,28 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
         
         updateButtons( selected )
     }
+    
+    override func prepareForReuse() {
+        
+        titleText.text = ""
+        subtitleText.text = ""
+        authorName.text = ""
+        
+        viewWorkDetail.setTitle( "", forState: .Normal )
+        languageNames.text = ""
+        
+        firstPublished.text = ""
+        
+        viewBooks.setTitle( "", forState: .Normal )
+        
+        clearCurrentImage()
+ 
+        isZoomEnabled = false
+        haveEbooks = false
+        haveEditions = false
+        
+        updateButtons( false )
+    }
 
     private func updateButtons( selected: Bool ) {
 
@@ -87,11 +109,10 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
         viewWorkDetail.enabled = selected && haveEditions
         
         viewBooks.enabled = selected && haveEbooks
+        
     }
 
-    override func configure( tableView: UITableView, indexPath: NSIndexPath, withData data: AnyObject? ) {
-        
-        configureCell( tableView, indexPath: indexPath )
+    override func configure( tableView: UITableView, indexPath: NSIndexPath, data: OLManagedObject? ) {
         
         if let r = data as? OLGeneralSearchResult {
 

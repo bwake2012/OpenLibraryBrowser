@@ -13,9 +13,9 @@ class TitleSearchResultTableViewCell: OLTableViewCell {
     @IBOutlet weak var titleText: UILabel!
     @IBOutlet weak var subtitleText: UILabel!
     
-    func configure( titleResult: OLTitleSearchResult? ) {
+    override func configure( tableView: UITableView, indexPath: NSIndexPath, data: OLManagedObject? ) {
         
-        if let r = titleResult {
+        if let r = data as? OLTitleSearchResult {
             titleText.text = "\(r.title)"
             subtitleText.text = "\(r.subtitle)"
 //            titleText.text = "\(r.sequence).\(r.index) \(r.title)"

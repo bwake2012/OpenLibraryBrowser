@@ -85,3 +85,21 @@ class OLEBookEditionsTableViewController: UITableViewController {
         queryCoordinator?.refreshQuery( nil )
     }
 }
+
+extension OLEBookEditionsTableViewController: TransitionSourceCell {
+    
+    func transitionSourceRectCellView() -> UITableViewCell? {
+        
+        var sourceRectView: UITableViewCell?
+        
+        if let indexPath = tableView.indexPathForSelectedRow {
+            
+            sourceRectView = tableView.cellForRowAtIndexPath( indexPath )
+        }
+        
+        return sourceRectView
+    }
+    
+}
+
+

@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UITableViewCell {
+extension UIView {
     
     class var nameOfClass: String {
         return NSStringFromClass(self).componentsSeparatedByString(".").last!
@@ -29,5 +29,14 @@ extension UITableViewCell {
         
         registerCell( tableView, className: nameOfClass )
     }
+
+    class func createFromNib() -> UIView? {
+        
+        guard let view = NSBundle.mainBundle().loadNibNamed( nameOfClass, owner: nil, options: nil ).last as? UIView else { return nil }
+        
+        return view
+    }
+
 }
+
 

@@ -8,12 +8,16 @@
 
 import UIKit
 
-protocol ImageViewTransitionSource {
+protocol TransitionSourceImage {
     
-    func transitionSourceRectView() -> UIImageView?
-    
-//    func transitionSourceImageRectangle() -> CGRect
+    func transitionSourceRectImageView() -> UIImageView?
 }
+
+protocol TransitionSourceCell {
+    
+    func transitionSourceRectCellView() -> UITableViewCell?
+}
+
 
 protocol UncoverBottomTransitionSource {
     

@@ -21,7 +21,7 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedRe
     
     typealias FetchedOLTitleSearchResultController = FetchedResultsController< OLTitleSearchResult >
     
-    weak var tableVC: UITableViewController?
+    weak var tableVC: OLSearchResultsTableViewController?
 
     var titleSearchOperation: Operation?
     
@@ -54,7 +54,7 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedRe
     var highWaterMark = 0
     var nextOffset = 0
     
-    init( tableVC: UITableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
+    init( tableVC: OLSearchResultsTableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         
         self.tableVC = tableVC
         
@@ -109,7 +109,7 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedRe
         
         guard let result = objectAtIndexPath( indexPath ) else { return nil }
 
-        cell.configure( result )
+        cell.configure( tableVC!.tableView, indexPath: indexPath, data: result )
         
         updateUI( result, cell: cell )
         

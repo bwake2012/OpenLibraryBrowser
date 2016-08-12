@@ -103,7 +103,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         
         if let matchingEdition = result.matchingEdition() {
 
-            cell.configure( matchingEdition )
+            cell.configure( tableVC!.tableView, indexPath: indexPath, data: matchingEdition )
         
         } else {
             

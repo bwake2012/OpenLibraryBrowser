@@ -15,6 +15,7 @@ import PSOperations
 /// An `Operation` to parse earthquakes out of a downloaded feed from the USGS.
 class GeneralSearchResultsParseOperation: Operation {
     
+    let sequence: Int64
     let cacheFile: NSURL
     let context: NSManagedObjectContext
     let updateResults: SearchResultsUpdater
@@ -31,13 +32,14 @@ class GeneralSearchResultsParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( cacheFile: NSURL, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater ) {
+    init( sequence: Int, cacheFile: NSURL, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
             to replace the ones in the store.
         */
         
+        self.sequence = Int64( sequence )
         self.cacheFile = cacheFile
         self.context = coreDataStack.newChildContext()
         self.context.mergePolicy = NSOverwriteMergePolicy
@@ -91,13 +93,14 @@ class GeneralSearchResultsParseOperation: Operation {
             return
         }
 
+        let sequence = self.sequence
         context.performBlock {
             
             var error: NSError?
             var index = Int64( start )
             for result in results {
                 
-                if let newObject = OLGeneralSearchResult.parseJSON( 0, index: index, json: result, moc: self.context ) {
+                if let newObject = OLGeneralSearchResult.parseJSON( sequence, index: index, json: result, moc: self.context ) {
                     
                     if newObject.has_fulltext && newObject.ebook_count_i > 0 && newObject.edition_key.count > 0 {
                         

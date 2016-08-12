@@ -10,8 +10,6 @@ import UIKit
 
 class GeneralSearchResultTableViewCell: OLTableViewCell {
 
-    var delegate: UITableViewController?
-    
     @IBOutlet weak var titleText: UILabel!
     @IBOutlet weak var authorName: UILabel!
     @IBOutlet weak var displayAuthorDetail: UIButton!
@@ -19,14 +17,11 @@ class GeneralSearchResultTableViewCell: OLTableViewCell {
     @IBAction func touchedAuthorName(sender: AnyObject) {
 
         setSelected( true, animated: true )
-        delegate!.performSegueWithIdentifier( "displayGeneralSearchAuthorDetail", sender: self )
     }
     
-    func configure( delegate: UITableViewController, generalResult: OLGeneralSearchResult? ) {
+    override func configure( tableView: UITableView, indexPath: NSIndexPath, data: OLManagedObject? ) {
         
-        self.delegate = delegate
-
-        if let r = generalResult {
+        if let r = data as? OLGeneralSearchResult {
             titleText.text = "\(r.title)"
             authorName.text = r.author_name.joinWithSeparator( ", " )
             

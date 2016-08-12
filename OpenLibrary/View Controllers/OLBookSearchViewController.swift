@@ -29,10 +29,9 @@ class OLBookSearchViewController: UIViewController {
     
     weak var activeField: UITextField?
     
-    var queryCoordinator: GeneralSearchResultsCoordinator?
-    var searchKeys = [String: String]()
-    
+    private var searchKeys = [String: String]()
     var saveSearchDictionary: SaveSearchDictionary?
+    
     var fields = [(field: UITextField, key: String)]()
     
     @IBAction func ebookOnlySwitchChanged(sender: AnyObject) {
@@ -54,13 +53,7 @@ class OLBookSearchViewController: UIViewController {
             activeField.resignFirstResponder()
         }
         
-        searchKeys = assembleSearchKeys()
-        if !searchKeys.isEmpty {
-            if let saveSearchDictionary = saveSearchDictionary {
-                
-                saveSearchDictionary( searchDictionary: searchKeys )
-            }
-        }
+        assembleAndSaveSearchKeys()
     }
     
     deinit {
@@ -94,33 +87,6 @@ class OLBookSearchViewController: UIViewController {
     }
     
     
-    // MARK: UITextFieldDelegate
-    func textFieldDidEndEditing(textField: UITextField) {
-        self.activeField = nil
-    }
-    
-    func textFieldDidBeginEditing(textField: UITextField) {
-        self.activeField = textField
-    }
-    
-    func textFieldShouldReturn( textField: UITextField ) -> Bool {
-        
-        textField.resignFirstResponder()
-
-        searchKeys = assembleSearchKeys()
-        if !searchKeys.isEmpty {
-
-            if let saveSearchDictionary = saveSearchDictionary {
-                
-                saveSearchDictionary( searchDictionary: searchKeys )
-                
-                performSegueWithIdentifier( "beginBookSearch", sender: self )
-            }
-        }
-
-        return false
-    }
-    
     // MARK: Notifications
     func keyboardDidShow(notification: NSNotification) {
 
@@ -144,7 +110,9 @@ class OLBookSearchViewController: UIViewController {
         self.scrollView.scrollIndicatorInsets = contentInsets
     }
     
-    func assembleSearchKeys() -> [String: String] {
+    // MARK: Search Keys
+    
+    private func assembleSearchKeys() -> [String: String] {
     
         var searchKeys = [String: String]()
         for field in fields {
@@ -177,5 +145,45 @@ class OLBookSearchViewController: UIViewController {
             
             ebookOnlySwitch.on = "true" == hasFullText
         }
+        
+        self.searchKeys = searchKeys
     }
+    
+    private func assembleAndSaveSearchKeys() {
+
+        searchKeys = assembleSearchKeys()
+        if !searchKeys.isEmpty {
+            
+            if let saveSearchDictionary = saveSearchDictionary {
+                
+                saveSearchDictionary( searchDictionary: searchKeys )
+                
+                performSegueWithIdentifier( "beginBookSearch", sender: self )
+            }
+        }
+        
+
+    }
+}
+
+extension OLBookSearchViewController: UITextFieldDelegate {
+    
+    // MARK: UITextFieldDelegate
+    func textFieldDidEndEditing(textField: UITextField) {
+        self.activeField = nil
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        self.activeField = textField
+    }
+    
+    func textFieldShouldReturn( textField: UITextField ) -> Bool {
+        
+        textField.resignFirstResponder()
+        
+        assembleAndSaveSearchKeys()
+        
+        return false
+    }
+    
 }

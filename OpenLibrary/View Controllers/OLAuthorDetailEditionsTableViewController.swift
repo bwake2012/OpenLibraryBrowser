@@ -54,11 +54,31 @@ class OLAuthorDetailEditionsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("editionsEntry", forIndexPath: indexPath) as! WorkEditionTableViewCell
         
-        cell.configure( queryCoordinator!.objectAtIndexPath( indexPath ) )
+        cell.configure(
+                tableView,
+                indexPath: indexPath,
+                data: queryCoordinator!.objectAtIndexPath( indexPath )
+            )
         
         return cell
     }
     
     // MARK: Utility
+}
+
+extension OLAuthorDetailEditionsTableViewController: TransitionSourceCell {
+    
+    func transitionSourceRectCellView() -> UITableViewCell? {
+        
+        var sourceRectView: UITableViewCell?
+        
+        if let indexPath = tableView.indexPathForSelectedRow {
+            
+            sourceRectView = tableView.cellForRowAtIndexPath( indexPath )
+        }
+        
+        return sourceRectView
+    }
+    
 }
 

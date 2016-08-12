@@ -13,9 +13,9 @@ class AuthorWorksTableViewCell: OLTableViewCell {
     @IBOutlet weak var workTitle: UILabel!
     @IBOutlet weak var workSubTitle: UILabel!
 
-    func configure( entry: OLWorkDetail? ) {
+    override func configure( tableView: UITableView, indexPath: NSIndexPath, data: OLManagedObject? ) {
         
-        if let entry = entry   {
+        if let entry = data as? OLWorkDetail {
             
             workTitle.text = entry.title
             workSubTitle.text = "\(entry.subtitle)"

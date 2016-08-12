@@ -87,3 +87,19 @@ class OLWorkDetailEditionsTableViewController: UITableViewController {
     }
 }
 
+extension OLWorkDetailEditionsTableViewController: TransitionSourceCell {
+    
+    func transitionSourceRectCellView() -> UITableViewCell? {
+        
+        var sourceRectView: UITableViewCell?
+        
+        if let indexPath = tableView.indexPathForSelectedRow {
+            
+            sourceRectView = tableView.cellForRowAtIndexPath( indexPath )
+        }
+        
+        return sourceRectView
+    }
+    
+}
+

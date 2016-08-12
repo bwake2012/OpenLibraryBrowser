@@ -226,7 +226,7 @@ class AuthorDetailParseOperation: Operation {
                     self.localLargeURL  = newObject.localURL( "L" )
                 }
                 
-                print( "detail: \(newObject.name)" )
+//                print( "detail: \(newObject.name)" )
             }
 
             let error = self.saveContext()

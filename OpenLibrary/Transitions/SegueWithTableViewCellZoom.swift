@@ -18,14 +18,11 @@ class SegueWithTableViewCellZoom: UIStoryboardSegue {
             if let ncd = navController.delegate as? NavigationControllerDelegate {
                 
                 var sourceRectView: UIView?
-                if let tableViewVC = sourceViewController as? UITableViewController {
-                    if let indexPath = tableViewVC.tableView.indexPathForSelectedRow {
-                        
-                        sourceRectView =
-                            tableViewVC.tableView.cellForRowAtIndexPath( indexPath )
-                    }
+                if let sourceVC = sourceViewController as? TransitionSourceCell {
+                    
+                    sourceRectView = sourceVC.transitionSourceRectCellView()
                 }
-
+                assert( nil != sourceRectView )
                 ncd.pushZoomTransition( TableviewCellZoomTransition( navigationController: navController, operation: .Push, sourceRectView: sourceRectView ) )
             }
         }

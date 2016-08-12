@@ -23,6 +23,7 @@ class SegueWithUnfold: UIStoryboardSegue {
                     
                     sourceRectView = vc.uncoverSourceRectangle()
                 }
+                assert( nil != sourceRectView )
                 ncd.pushZoomTransition( UncoverBottomZoomTransition( navigationController: navController, operation: .Push, sourceRectView: sourceRectView ) )
             }
         }

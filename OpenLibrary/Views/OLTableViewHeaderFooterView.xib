@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OLTableViewHeaderFooterView" customModule="OpenLibrary" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" verticalHuggingPriority="1000" id="Lyb-O0-c8G" customClass="OLTableViewHeaderFooterView" customModule="OpenLibrary" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="36"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d0h-eU-9P6" userLabel="Content View">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="36"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 of 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9rs-DC-4MD" userLabel="Footer Text">
+                            <rect key="frame" x="8" y="8" width="584" height="20"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="bottomMargin" secondItem="9rs-DC-4MD" secondAttribute="bottom" id="Gck-3g-r7C"/>
+                        <constraint firstItem="9rs-DC-4MD" firstAttribute="leading" secondItem="d0h-eU-9P6" secondAttribute="leadingMargin" id="X7x-lw-cby"/>
+                        <constraint firstItem="9rs-DC-4MD" firstAttribute="top" secondItem="d0h-eU-9P6" secondAttribute="topMargin" id="oLC-hs-dob"/>
+                        <constraint firstItem="9rs-DC-4MD" firstAttribute="trailing" secondItem="d0h-eU-9P6" secondAttribute="trailingMargin" id="umD-UH-0d6"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstItem="d0h-eU-9P6" firstAttribute="leading" secondItem="Lyb-O0-c8G" secondAttribute="leading" id="WqA-2t-vr0"/>
+                <constraint firstAttribute="bottom" secondItem="d0h-eU-9P6" secondAttribute="bottom" id="X8q-wN-ffJ"/>
+                <constraint firstItem="d0h-eU-9P6" firstAttribute="trailing" secondItem="Lyb-O0-c8G" secondAttribute="trailing" id="o3Z-Ue-ZRZ"/>
+                <constraint firstItem="d0h-eU-9P6" firstAttribute="top" secondItem="Lyb-O0-c8G" secondAttribute="top" id="rgS-TK-uKC"/>
+            </constraints>
+            <connections>
+                <outlet property="footerLabel" destination="9rs-DC-4MD" id="NJh-T9-hdf"/>
+            </connections>
+            <point key="canvasLocation" x="241" y="1013"/>
+        </view>
+    </objects>
+</document>
