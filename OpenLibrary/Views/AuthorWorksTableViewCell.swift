@@ -13,7 +13,7 @@ class AuthorWorksTableViewCell: OLTableViewCell {
     @IBOutlet weak var workTitle: UILabel!
     @IBOutlet weak var workSubTitle: UILabel!
 
-    override func configure( tableView: UITableView, indexPath: NSIndexPath, data: OLManagedObject? ) {
+    override func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
         
         if let entry = data as? OLWorkDetail {
             

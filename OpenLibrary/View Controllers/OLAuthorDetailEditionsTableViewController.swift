@@ -54,12 +54,13 @@ class OLAuthorDetailEditionsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("editionsEntry", forIndexPath: indexPath) as! WorkEditionTableViewCell
         
-        cell.configure(
-                tableView,
-                indexPath: indexPath,
-                data: queryCoordinator!.objectAtIndexPath( indexPath )
-            )
-        
+        if let object = queryCoordinator?.objectAtIndexPath( indexPath ) {
+            cell.configure(
+                    tableView,
+                    key: object.key,
+                    data: object
+                )
+        }
         return cell
     }
     

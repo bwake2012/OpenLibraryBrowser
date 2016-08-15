@@ -27,7 +27,10 @@ class OLWorkDetailEditionsTableViewController: UITableViewController {
         
         self.tableView.estimatedRowHeight = 68.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.tableFooterView = UIView(frame: .zero)
+        
+        self.tableView.tableFooterView = OLTableViewHeaderFooterView.createFromNib()
+
+        queryCoordinator?.updateUI()
     }
     
     override func didReceiveMemoryWarning() {

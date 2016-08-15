@@ -114,6 +114,7 @@
         <attribute name="isbn_10" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="isbn_13" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="key" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="language_names" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="languages" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="last_modified" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="latest_revision" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -182,6 +183,7 @@
         <attribute name="isbn" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="language" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="language_names" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="last_modified_i" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="lccn" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="person" optional="YES" attributeType="Transformable" syncable="YES"/>
@@ -300,8 +302,8 @@
         <element name="AuthorSearchResult" positionX="-54" positionY="81" width="128" height="210"/>
         <element name="EBookFile" positionX="-63" positionY="135" width="128" height="300"/>
         <element name="EBookItem" positionX="-63" positionY="135" width="128" height="225"/>
-        <element name="EditionDetail" positionX="-45" positionY="144" width="128" height="930"/>
-        <element name="GeneralSearchResult" positionX="-63" positionY="135" width="128" height="600"/>
+        <element name="EditionDetail" positionX="-45" positionY="144" width="128" height="945"/>
+        <element name="GeneralSearchResult" positionX="-63" positionY="135" width="128" height="615"/>
         <element name="Language" positionX="-63" positionY="135" width="128" height="135"/>
         <element name="TitleSearchResult" positionX="-63" positionY="135" width="128" height="225"/>
         <element name="WorkDetail" positionX="-54" positionY="99" width="128" height="510"/>

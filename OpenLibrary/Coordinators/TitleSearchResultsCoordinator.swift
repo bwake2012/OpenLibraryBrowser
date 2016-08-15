@@ -109,7 +109,7 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedRe
         
         guard let result = objectAtIndexPath( indexPath ) else { return nil }
 
-        cell.configure( tableVC!.tableView, indexPath: indexPath, data: result )
+        cell.configure( tableVC!.tableView, key: result.key, data: result )
         
         updateUI( result, cell: cell )
         
@@ -248,6 +248,18 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedRe
         
         self.searchResults = searchResults
         self.highWaterMark = searchResults.start + searchResults.pageSize
+
+        dispatch_async( dispatch_get_main_queue() ) {
+            [weak self] in
+            
+            if let strongSelf = self,
+                tableView = strongSelf.tableVC?.tableView,
+                footer = tableView.tableFooterView as? OLTableViewHeaderFooterView {
+                
+                footer.footerLabel.text =
+                    "\(strongSelf.highWaterMark) of \(strongSelf.searchResults.numFound)"
+            }
+        }
     }
     
     // MARK: FetchedResultsControllerDelegate

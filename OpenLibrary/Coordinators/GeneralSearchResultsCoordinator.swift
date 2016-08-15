@@ -15,7 +15,7 @@ import PSOperations
 
 private let kGeneralSearchCache = "GeneralSearch"
 
-private let kPageSize = 256
+private let kPageSize = 100
 
 class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedResultsControllerDelegate {
     
@@ -24,6 +24,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
     weak var tableVC: OLSearchResultsTableViewController?
 
     var generalSearchOperation: Operation?
+    var reachabilityOperation: Operation?
     
     private var cachedFetchedResultsController: FetchedOLGeneralSearchResultController?
         
@@ -134,9 +135,22 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             sequence = searchState.sequence
         }
         
-        updateTableFooter()
+        reachabilityOperation = OLReachabilityOperation( host: "openlibrary.org" ) {
+            //                        if let reachabilityOperation = self.reachabilityOperation where reachabilityOperation.errors.isEmpty {
+            //                            self.reachabilityOperation = nil
+            //                        }
+        }
+        self.reachabilityOperation?.userInitiated = true
+        self.operationQueue.addOperation( self.reachabilityOperation! )
         
-        updateUI()
+        OLLanguage.retrieveLanguages( operationQueue, coreDataStack: coreDataStack )
+
+        dispatch_async( dispatch_get_main_queue() ) {
+            
+            self.updateTableFooter()
+        
+            self.updateUI()
+        }
     }
     
     deinit {
@@ -165,11 +179,11 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             return nil
         }
         
-        if needAnotherPage( indexPath.row ) {
-            
-            nextQueryPage( highWaterMark )
-        }
-        
+//        if needAnotherPage( indexPath.row ) {
+//            
+//            nextQueryPage()
+//        }
+//        
         let section = sections[indexPath.section]
         if indexPath.row >= section.objects.count {
 
@@ -191,7 +205,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         guard let result = objectAtIndexPath( indexPath ) else { return nil }
 
         if let tableVC = tableVC {
-            cell.configure( tableVC.tableView, indexPath: indexPath, data: result )
+            cell.configure( tableVC.tableView, key: result.key, data: result )
         }
         
         updateUI( result, cell: cell )
@@ -244,6 +258,8 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         
         if nil == generalSearchOperation {
             
+            updateTableFooter( "fetching books..." )
+
             self.searchKeys = newSearchKeys
             if numberOfSections() > 0 {
                 
@@ -255,8 +271,6 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             self.searchResults = SearchResults()
             self.highWaterMark = 0
             self.nextOffset = kPageSize
-            
-            coordinatorIsBusy()
             
             saveState()
             
@@ -275,18 +289,19 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         }
     }
     
-    func nextQueryPage( offset: Int ) -> Void {
+    func nextQueryPage() -> Void {
         
         if !searchKeys.isEmpty && nil == self.generalSearchOperation {
             
-            nextOffset = offset + kPageSize
+            updateTableFooter( "fetching more books..." )
+
+            nextOffset = highWaterMark + kPageSize
             
             generalSearchOperation =
                 enqueueSearch(
                         self.searchKeys,
                         sequence: sequence,
-                        offset: offset,
-                        pageSize: kPageSize,
+                        offset: highWaterMark, pageSize: kPageSize,
                         userInitiated: false,
                         refreshControl: nil
                     )
@@ -301,6 +316,8 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             userInitiated: Bool,
             refreshControl: UIRefreshControl?
         ) -> Operation {
+        
+        coordinatorIsBusy()
         
         let generalSearchOperation =
             GeneralSearchOperation(
@@ -319,6 +336,9 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
                         strongSelf.coordinatorIsNoLongerBusy()
 
                         refreshControl?.endRefreshing()
+                        strongSelf.updateTableFooter()
+                        
+                        strongSelf.saveState()
                         
                         strongSelf.generalSearchOperation = nil
                     }
@@ -346,40 +366,27 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             nil == self.generalSearchOperation &&
             !searchKeys.isEmpty &&
             highWaterMark < searchResults.numFound &&
-            self.fetchedResultsController.count - index < 20
+            index >= self.fetchedResultsController.count - 1
     }
     
     // MARK: SearchResultsUpdater
     private func updateResults(searchResults: SearchResults) -> Void {
         
         self.searchResults = searchResults
-        if 0 == highWaterMark {
-            
-            if (self.tableVC?.tableView) != nil {
-
-                dispatch_async( dispatch_get_main_queue() ) {
-                    
-                    self.coordinatorIsNoLongerBusy()
-
-                }
-            }
-        }
         self.highWaterMark = searchResults.start + searchResults.pageSize
  
-        saveState()
-
-        dispatch_async( dispatch_get_main_queue() ) {
-            
-            self.updateTableFooter()
-        }
     }
     
-    private func updateTableFooter() -> Void {
+    private func updateTableFooter( text: String = "" ) -> Void {
         
         if let tableVC = self.tableVC {
             if let footer = tableVC.tableView.tableFooterView as? OLTableViewHeaderFooterView {
                 
-                footer.footerLabel.text = "\(self.highWaterMark) of \(self.searchResults.numFound)"
+                if !text.isEmpty {
+                    footer.footerLabel.text = text
+                } else {
+                    footer.footerLabel.text = "\(self.highWaterMark) of \(self.searchResults.numFound)"
+                }
             }
         }
     }
@@ -389,9 +396,10 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
 
         self.highWaterMark = fetchedResultsController.count
         if 0 == self.searchResults.pageSize {
-            self.searchResults = SearchResults( start: 0, numFound: highWaterMark, pageSize: 100 )
+            self.searchResults = SearchResults( start: 0, numFound: highWaterMark, pageSize: kPageSize )
         }
-//        tableVC?.tableView.reloadData()
+        
+        updateTableFooter()
     }
     
     func fetchedResultsControllerWillChangeContent( controller: FetchedOLGeneralSearchResultController ) {

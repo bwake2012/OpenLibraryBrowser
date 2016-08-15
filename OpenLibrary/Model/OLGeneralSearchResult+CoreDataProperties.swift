@@ -35,6 +35,7 @@ extension OLGeneralSearchResult {
     @NSManaged var 	    isbn: [String]
     @NSManaged var 	    key: String
     @NSManaged var 	    language: [String]
+    @NSManaged var      language_names: [String]
     @NSManaged var 	    last_modified_i: Int64
     @NSManaged var 	    lccn: [String]
     @NSManaged var 	    person: [String]

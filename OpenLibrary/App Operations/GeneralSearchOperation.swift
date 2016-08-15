@@ -50,7 +50,7 @@ class GeneralSearchOperation: GroupOperation {
             There is an optional operation 0 to delete the existing contents of the Core Data store
         */
         downloadOperation = GeneralSearchResultsDownloadOperation( queryParms: queryParms, offset: offset, limit: limit, cacheFile: cacheFile )
-        parseOperation = GeneralSearchResultsParseOperation( sequence: sequence, cacheFile: cacheFile, coreDataStack: coreDataStack, updateResults: updateResults )
+        parseOperation = GeneralSearchResultsParseOperation( sequence: sequence, offset: offset, cacheFile: cacheFile, coreDataStack: coreDataStack, updateResults: updateResults )
         
         finishOperation = NSBlockOperation( block: completionHandler )
         
@@ -59,13 +59,6 @@ class GeneralSearchOperation: GroupOperation {
         finishOperation.addDependency(parseOperation)
         
         var operations = [NSOperation]()
-//        if 0 == offset {
-//            deleteOperation = GeneralSearchResultsDeleteOperation( coreDataStack: coreDataStack )
-//            if let dO = deleteOperation {
-//                downloadOperation.addDependency( dO )
-//                operations.append( dO )
-//            }
-//        }
         
         operations += [downloadOperation, parseOperation, finishOperation]
         super.init( operations: operations )
@@ -84,31 +77,6 @@ class GeneralSearchOperation: GroupOperation {
                 produceAlert(firstError)
             }
 
-        } else if operation === parseOperation {
-            
-            for editions in parseOperation.eBookEditionArrays {
-                
-                if !editions.isEmpty {
-                    
-                    var index = 0
-                    let subsetSize = 256
-                    while index < editions.count {
-                        
-                        let subset = Array( editions[index..<min(editions.count, index+subsetSize)] )
-                    
-                        let ebookOperation =
-                            IAEBookItemListGetOperation(
-                                    editionKeys: subset, coreDataStack: coreDataStack, completionHandler: {}
-                                )
-                        
-                        finishOperation.addDependency( ebookOperation )
-                        
-                        addOperation( ebookOperation )
-                        
-                        index += subsetSize
-                    }
-                }
-            }
         }
     }
 }

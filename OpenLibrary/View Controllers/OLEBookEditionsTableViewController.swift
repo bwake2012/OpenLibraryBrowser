@@ -25,7 +25,15 @@ class OLEBookEditionsTableViewController: UITableViewController {
 
         self.tableView.estimatedRowHeight = 68.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.tableFooterView = UIView(frame: .zero)
+
+        self.tableView.tableFooterView = OLTableViewHeaderFooterView.createFromNib()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        super.viewWillAppear( animated )
+        
+        queryCoordinator?.updateUI()
     }
     
     override func didReceiveMemoryWarning() {

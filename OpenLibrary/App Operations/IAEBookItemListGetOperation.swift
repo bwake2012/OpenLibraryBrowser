@@ -13,18 +13,20 @@ import CoreData
 import BNRCoreDataStack
 import PSOperations
 
-/// A composite `Operation` to both download and parse work editions data.
+/// A composite `Operation` to both download and parse eBook item information in groups of 256.
 class IAEBookItemListGetOperation: GroupOperation {
+
     // MARK: Properties
-    
-    let downloadOperation: IAEBookItemListDownloadOperation
-    let parseOperation: IAEBookItemListParseOperation
-   
-//    private var hasProducedAlert = false
+    private var operations: [NSOperation] = []
+    private let finishOperation: NSBlockOperation
     
     /**
+     
+        - parameter editionKeys: The array of edition keys for which eBook item 
+                                 information will be retrieved
+     
         - parameter context: The `NSManagedObjectContext` into which the parsed
-                             author query results will be imported.
+                             eBook items will be imported.
 
         - parameter completionHandler: The handler to call after downloading and
                                        parsing are complete. This handler will be
@@ -34,37 +36,60 @@ class IAEBookItemListGetOperation: GroupOperation {
         
         let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
         
-        var olid = ""
-        if let editionKey = editionKeys.first {
+        /*
+         This operation is made of these child operations:
+         
+         1. The operation to download the JSON feed
+         2. The operation to parse the JSON feed and insert the elements into the Core Data store
+         
+         repeated as necessary to download eBook item information in chunks of 256
+         
+         3. The operation to invoke the completion handler
+         */
+        var index = 0
+        let subsetSize = 256
+        while index < editionKeys.count {
             
-            let parts = editionKey.componentsSeparatedByString( "/" )
-            let goodParts = parts.filter { (x) -> Bool in !x.isEmpty }
-            olid = goodParts.last!
-            /*
-             This operation is made of three child operations:
-             1. The operation to download the JSON feed
-             2. The operation to parse the JSON feed and insert the elements into the Core Data store
-             3. The operation to invoke the completion handler
-             */
+            let subset = Array( editionKeys[index..<min( editionKeys.count, index + subsetSize )] )
+            
+            var olid = ""
+            if let editionKey = subset.first {
+                
+                let parts = editionKey.componentsSeparatedByString( "/" )
+                let goodParts = parts.filter { (x) -> Bool in !x.isEmpty }
+                olid = goodParts.last!
+            }
+            let cacheFile =
+                cachesFolder.URLByAppendingPathComponent( "\(olid)InternetArchiveEBookItems.json")
+            //       print( "cache: \(cacheFile.absoluteString)" )
+            
+            let urlString = IAEBookItemListDownloadOperation.urlString( subset )
+            
+            let downloadOperation = IAEBookItemListDownloadOperation( editionKeys: subset, cacheFile: cacheFile )
+            if let previousOperation = operations.last {
+                
+                downloadOperation.addDependency( previousOperation )
+            }
+            operations.append( downloadOperation )
+
+            let parseOperation = IAEBookItemListParseOperation( urlString: urlString, cacheFile: cacheFile, coreDataStack: coreDataStack )
+            
+            parseOperation.addDependency( operations.last! )
+            
+            operations.append( parseOperation )
+
+            index += subsetSize
         }
-        let cacheFile =
-            cachesFolder.URLByAppendingPathComponent( "\(olid)InternetArchiveEBookItems.json")
-        //       print( "cache: \(cacheFile.absoluteString)" )
-        
-        let urlString = IAEBookItemListDownloadOperation.urlString( editionKeys )
-        
-        downloadOperation = IAEBookItemListDownloadOperation( editionKeys: editionKeys, cacheFile: cacheFile )
-        parseOperation = IAEBookItemListParseOperation( urlString: urlString, cacheFile: cacheFile, coreDataStack: coreDataStack )
-            
-        let finishOperation = NSBlockOperation( block: completionHandler )
-        
-        // These operations must be executed in order
-        parseOperation.addDependency(downloadOperation)
-        finishOperation.addDependency(parseOperation)
 
-        let operations: [NSOperation] = [downloadOperation, parseOperation, finishOperation]
+        finishOperation = NSBlockOperation( block: completionHandler )
 
+        if let previousOperation = operations.last {
+            finishOperation.addDependency( previousOperation )
+        }
+        
         super.init( operations: operations )
+        
+        addOperation( finishOperation )
         
         addCondition( MutuallyExclusive<IAEBookItemListGetOperation>() )
         
@@ -72,8 +97,10 @@ class IAEBookItemListGetOperation: GroupOperation {
     }
     
     override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
-        if let firstError = errors.first where (operation === downloadOperation || operation === parseOperation) {
-            produceAlert(firstError)
+
+        if let firstError = errors.first where operations.contains( operation ) {
+
+            produceAlert( firstError )
         }
     }
     

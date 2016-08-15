@@ -14,7 +14,7 @@ class EbookEditionTableViewCell: OLTableViewCell {
     @IBOutlet weak var editionSubTitle: UILabel!
     @IBOutlet weak var authorName: UILabel!
 
-    override func configure( tableView: UITableView, indexPath: NSIndexPath, data: OLManagedObject? ) {
+    override func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
         
         if let entry = data as? OLEditionDetail {
             

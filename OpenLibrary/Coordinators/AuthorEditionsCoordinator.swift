@@ -175,6 +175,18 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
         
         self.searchResults = searchResults
         self.highWaterMark = searchResults.start + searchResults.pageSize
+
+        dispatch_async( dispatch_get_main_queue() ) {
+            [weak self] in
+            
+            if let strongSelf = self,
+                   tableView = strongSelf.tableVC?.tableView,
+                   footer = tableView.tableFooterView as? OLTableViewHeaderFooterView {
+                        
+                footer.footerLabel.text =
+                    "\(strongSelf.highWaterMark) of \(strongSelf.searchResults.numFound)"
+            }
+        }
     }
     
     // MARK: FetchedResultsControllerDelegate

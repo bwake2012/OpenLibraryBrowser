@@ -19,7 +19,7 @@ class GeneralSearchResultTableViewCell: OLTableViewCell {
         setSelected( true, animated: true )
     }
     
-    override func configure( tableView: UITableView, indexPath: NSIndexPath, data: OLManagedObject? ) {
+    override func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
         
         if let r = data as? OLGeneralSearchResult {
             titleText.text = "\(r.title)"

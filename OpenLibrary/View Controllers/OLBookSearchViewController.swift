@@ -56,8 +56,29 @@ class OLBookSearchViewController: UIViewController {
         assembleAndSaveSearchKeys()
     }
     
+    // MARK: set initial search keys
+    func displaySearchKeys( searchKeys: [String: String] ) {
+        
+        for field in fields {
+            
+            if let text = searchKeys[field.key] {
+                
+                field.field.text = text
+            }
+        }
+        
+        if let hasFullText = searchKeys["has_fulltext"] {
+            
+            ebookOnlySwitch.on = "true" == hasFullText
+        }
+        
+        self.searchKeys = searchKeys
+    }
+    
+    // MARK: Swift classes
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver( self )
+        fields = []
     }
     
     // MARK: UIViewController
@@ -131,24 +152,6 @@ class OLBookSearchViewController: UIViewController {
         return searchKeys
     }
 
-    func displaySearchKeys( searchKeys: [String: String] ) {
-        
-        for field in fields {
-            
-            if let text = searchKeys[field.key] {
-                
-                field.field.text = text
-            }
-        }
-        
-        if let hasFullText = searchKeys["has_fulltext"] {
-            
-            ebookOnlySwitch.on = "true" == hasFullText
-        }
-        
-        self.searchKeys = searchKeys
-    }
-    
     private func assembleAndSaveSearchKeys() {
 
         searchKeys = assembleSearchKeys()
@@ -161,8 +164,6 @@ class OLBookSearchViewController: UIViewController {
                 performSegueWithIdentifier( "beginBookSearch", sender: self )
             }
         }
-        
-
     }
 }
 

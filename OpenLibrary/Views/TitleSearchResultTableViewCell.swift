@@ -13,7 +13,7 @@ class TitleSearchResultTableViewCell: OLTableViewCell {
     @IBOutlet weak var titleText: UILabel!
     @IBOutlet weak var subtitleText: UILabel!
     
-    override func configure( tableView: UITableView, indexPath: NSIndexPath, data: OLManagedObject? ) {
+    override func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
         
         if let r = data as? OLTitleSearchResult {
             titleText.text = "\(r.title)"

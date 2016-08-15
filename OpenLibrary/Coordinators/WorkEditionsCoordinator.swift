@@ -44,6 +44,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             sectionNameKeyPath: nil )
         
         frc.setDelegate( self )
+        
         return frc
     }()
     
@@ -63,8 +64,6 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         self.tableVC = tableVC
         
         super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: tableVC )
-        
-        updateUI()
     }
     
     func numberOfSections() -> Int {
@@ -102,7 +101,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         
         guard let result = objectAtIndexPath( indexPath ) else { return nil }
         
-        cell.configure( tableVC!.tableView, indexPath: indexPath, data: result )
+        cell.configure( tableVC!.tableView, key: result.key, data: result )
         
         if result.hasImage {
                 
@@ -159,7 +158,8 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
                             dispatch_async( dispatch_get_main_queue() ) {
                                 
                                     refreshControl?.endRefreshing()
-//                                    strongSelf.updateUI()
+                                
+                                    strongSelf.updateFooter()
                                 }
                             
                             strongSelf.workEditionsGetOperation = nil
@@ -186,11 +186,8 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
                 
                         [weak self] in
                         if let strongSelf = self {
-                            dispatch_async( dispatch_get_main_queue() ) {
-                                
-//                                refreshControl?.endRefreshing()
-//                                strongSelf.updateUI()
-                            }
+                            
+                            strongSelf.updateFooter()
                             
                             strongSelf.workEditionsGetOperation = nil
                         }
@@ -219,9 +216,26 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     func updateResults(searchResults: SearchResults) -> Void {
         
         self.searchResults = searchResults
-        self.highWaterMark = searchResults.start + searchResults.pageSize
-        if self.editionsCount != searchResults.numFound {
-            self.editionsCount = searchResults.numFound
+        if editionsCount != searchResults.numFound {
+            editionsCount = searchResults.numFound
+        }
+        highWaterMark = min( editionsCount, searchResults.start + searchResults.pageSize )
+
+    }
+    
+    private func updateFooter() {
+        
+        dispatch_async( dispatch_get_main_queue() ) {
+            
+            [weak self] in
+            
+            if let strongSelf = self,
+                tableView = strongSelf.tableVC?.tableView,
+                footer = tableView.tableFooterView as? OLTableViewHeaderFooterView {
+                
+                footer.footerLabel.text =
+                    "\(strongSelf.highWaterMark) of \(strongSelf.editionsCount)"
+            }
         }
     }
     
@@ -241,6 +255,15 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             } else {
                 
                 highWaterMark = controller.count
+                if 0 == searchResults.numFound {
+                    searchResults = SearchResults( start: 0, numFound: highWaterMark + kPageSize, pageSize: kPageSize )
+                }
+            }
+
+            if let tableView = tableVC?.tableView,
+                footer = tableView.tableFooterView as? OLTableViewHeaderFooterView {
+                
+                footer.footerLabel.text = "\(highWaterMark) of \(highWaterMark)"
             }
         }
     }

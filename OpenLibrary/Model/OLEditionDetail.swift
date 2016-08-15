@@ -41,29 +41,17 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         }
     }
     
-    private var language_name_cache = [String]()
-    var language_names: [String] {
+    private func setLanguageNames() {
         
-        get {
-            var names = language_name_cache
+        if let moc = self.managedObjectContext {
             
-            if names.isEmpty {
+            for code in self.languages {
                 
-                if let moc = self.managedObjectContext {
+                if let language: OLLanguage = OLEditionDetail.findObject( code, entityName: OLLanguage.entityName, keyFieldName: "code", moc: moc ) {
                     
-                    for olid in self.languages {
-                        
-                        if let language: OLLanguage = OLEditionDetail.findObject( olid, entityName: OLLanguage.entityName, moc: moc ) {
-                            
-                            language_name_cache.append( language.name )
-                        }
-                    }
-                    
-                    names = language_name_cache
+                    language_names.append( language.name )
                 }
             }
-            
-            return names
         }
     }
     
@@ -131,6 +119,8 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
             newObject.provisional_date = nil
             
             newObject.populateObject( parsed )
+            
+            newObject.setLanguageNames()
         }
 
         return newObject
@@ -183,6 +173,8 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                         newObject.publish_date = ""
                     }
                     newObject.subjects = parsed.subject
+                    
+                    
                 }
             }
         }

@@ -13,7 +13,7 @@ class AuthorSearchResultTableViewCell: OLTableViewCell {
     @IBOutlet weak var authorName: UILabel!
     @IBOutlet weak var authorInfo: UILabel!
     
-    override func configure( tableView: UITableView, indexPath: NSIndexPath, data: OLManagedObject? ) {
+    override func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
         
         if let r = data as? OLAuthorSearchResult {
             authorName.text = "\(r.name)"

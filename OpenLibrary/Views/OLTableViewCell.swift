@@ -37,7 +37,7 @@ class OLTableViewCell: UITableViewCell {
         cellImage.image = UIImage( named: "961-book-32.png" )
     }
     
-    func configure( tableView: UITableView, indexPath: NSIndexPath, data: OLManagedObject? ) -> Void {
+    func configure( tableView: UITableView, key: String, data: OLManagedObject? ) -> Void {
         
     }
 }

@@ -15,32 +15,6 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
 
     static let entityName = "GeneralSearchResult"
 
-    private var language_name_cache = [String]()
-    var language_names: [String] {
-        
-        get {
-            var names = language_name_cache
-            
-            if names.isEmpty {
-                
-                if let moc = self.managedObjectContext {
-                    
-                    for code in self.language {
-                        
-                        if let language: OLLanguage = OLEditionDetail.findObject( code, entityName: OLLanguage.entityName, keyFieldName: "code", moc: moc ) {
-                            
-                            language_name_cache.append( language.name )
-                        }
-                    }
-                    
-                    names = language_name_cache
-                }
-            }
-            
-            return names
-        }
-    }
-    
     // Insert code here to add functionality to your managed object subclass
     
     class func parseJSON(sequence: Int64, index: Int64, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLGeneralSearchResult? {
@@ -68,6 +42,8 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
             
             newObject.populateObject( parsed )
             
+            newObject.setLanguageNames()              // fill the array of language names
+            
             // let workDetail =
             OLWorkDetail.saveProvisionalWork( parsed, moc: moc )
 
@@ -87,19 +63,20 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
         return newObject
     }
     
-    override func awakeFromFetch() {
-        
-        super.awakeFromFetch()
+    private func setLanguageNames() {
         
         if let moc = self.managedObjectContext {
             
+            var tempNames = [String]()
             for code in self.language {
                 
                 if let language: OLLanguage = OLEditionDetail.findObject( code, entityName: OLLanguage.entityName, keyFieldName: "code", moc: moc ) {
                     
-                    language_name_cache.append( language.name )
+                    tempNames.append( language.name )
                 }
             }
+            
+            self.language_names = tempNames
         }
     }
     

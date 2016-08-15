@@ -51,7 +51,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
     }()
     
     var workKey = ""
-    var editionsCount = Int( kPageSize * 2 )
+    var editionsCount = 0
     var searchResults = SearchResults()
     
     var highWaterMark = 0
@@ -67,8 +67,6 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         self.tableVC = tableVC
         
         super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: tableVC )
-        
-        updateUI()
     }
     
     func numberOfSections() -> Int {
@@ -103,7 +101,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         
         if let matchingEdition = result.matchingEdition() {
 
-            cell.configure( tableVC!.tableView, indexPath: indexPath, data: matchingEdition )
+            cell.configure( tableVC!.tableView, key: matchingEdition.key, data: matchingEdition )
         
         } else {
             
@@ -194,6 +192,8 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
                         dispatch_async( dispatch_get_main_queue() ) {
                             
                             strongSelf.refreshComplete( refreshControl )
+                            
+                            strongSelf.updateUI()
                         }
                         
                         strongSelf.ebookItemGetOperation = nil
@@ -222,9 +222,21 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
     func updateResults(searchResults: SearchResults) -> Void {
         
         self.searchResults = searchResults
-        self.highWaterMark = searchResults.start + searchResults.pageSize
+        self.highWaterMark = min( searchResults.numFound, searchResults.start + searchResults.pageSize )
         if self.editionsCount != searchResults.numFound {
             self.editionsCount = searchResults.numFound
+        }
+
+        dispatch_async( dispatch_get_main_queue() ) {
+            [weak self] in
+            
+            if let strongSelf = self,
+                   tableView = strongSelf.tableVC?.tableView,
+                   footer = tableView.tableFooterView as? OLTableViewHeaderFooterView {
+                        
+//                footer.footerLabel.text =
+//                    "\(strongSelf.highWaterMark) of \(strongSelf.searchResults.numFound)"
+            }
         }
     }
     
@@ -243,8 +255,19 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
                 
             }
         }
+        
+        if 0 != controller.count {
+            
+            highWaterMark = controller.count
+            updateResults( SearchResults( start: 0, numFound: highWaterMark, pageSize: kPageSize ) )
+            if let tableView = tableVC?.tableView,
+                footer = tableView.tableFooterView as? OLTableViewHeaderFooterView {
+                
+                footer.footerLabel.text = "\(highWaterMark) of \(editionsCount)"
+            }
+        }
     }
-    
+
     func fetchedResultsControllerWillChangeContent( controller: FetchedEBookItemController ) {
         tableVC?.tableView.beginUpdates()
     }

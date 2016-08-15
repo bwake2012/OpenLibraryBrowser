@@ -51,7 +51,7 @@ class OLSearchResultsTableViewController: UIViewController {
         SegmentedTableViewCell.emptyCellHeights( tableView )
         
         // Do any additional setup after loading the view, typically from a nib.
-        self.tableView.estimatedRowHeight = 68.0
+        self.tableView.estimatedRowHeight = 102.0
 //        self.tableView.rowHeight = UITableViewAutomaticDimension
         
         self.tableView.tableFooterView = OLTableViewHeaderFooterView.createFromNib()
@@ -60,22 +60,12 @@ class OLSearchResultsTableViewController: UIViewController {
         
     }
     
-    override func viewWillAppear(animated: Bool) {
-        
-        super.viewWillAppear( animated )
+    override func viewDidAppear(animated: Bool) {
         
         if let indexPath = savedIndexPath {
             
-            tableView.selectRowAtIndexPath( indexPath, animated: animated, scrollPosition: .Top )
+            tableView.selectRowAtIndexPath( indexPath, animated: true, scrollPosition: .Top )
             savedIndexPath = nil
-        }
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        
-        if let indexPath = tableView.indexPathForSelectedRow {
-
-            tableView( tableView, didSelectRowAtIndexPath: indexPath )
         }
     }
     
@@ -164,6 +154,21 @@ class OLSearchResultsTableViewController: UIViewController {
 
                 assert( false )
             }
+        }
+    }
+    
+    // MARK: UIScrollViewController
+    
+    func scrollViewDidEndDragging( scrollView: UIScrollView, willDecelerate decelerate: Bool ) {
+        
+        // UITableView only moves in one direction, y axis
+        let currentOffset = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+        
+        // Change 10.0 to adjust the distance from bottom
+        if maximumOffset - currentOffset <= 10.0 {
+            
+            generalSearchCoordinator?.nextQueryPage()
         }
     }
     
@@ -265,41 +270,44 @@ class OLSearchResultsTableViewController: UIViewController {
     
     // MARK: cell expansion and contraction
     
-    private func expandCell( tableView: UITableView, segmentedCell: SegmentedTableViewCell, indexPath: NSIndexPath ) {
-        
-//        if !SegmentedTableViewCell.animationInProgress() {
-            
+    private func expandCell( tableView: UITableView, segmentedCell: SegmentedTableViewCell, key: String ) {
+
             let duration = 0.3
             
-            segmentedCell.setOpen( tableView, indexPath: indexPath )
+            segmentedCell.setOpen( tableView, key: key )
+        
+//            if let visibleRows = tableView.indexPathsForVisibleRows {
             
-            UIView.animateWithDuration(
-                duration, delay: 0, options: .CurveLinear,
-                animations: {
-                    () -> Void in
-                    tableView.beginUpdates()
-                    tableView.endUpdates()
-                }
-            ) {
-                (finished) -> Void in
-                
-                segmentedCell.selectedAnimation( tableView, indexPath: indexPath, expandCell: true, animated: true ) {
+                UIView.animateWithDuration(
+                    duration, delay: 0, options: .CurveLinear,
+                    animations: {
+                        () -> Void in
+                        
+//                        tableView.reloadRowsAtIndexPaths( visibleRows, withRowAnimation: .Automatic )
+                        tableView.beginUpdates()
+                        tableView.endUpdates()
+                    }
+                ) {
+                    (finished) -> Void in
                     
-                    SegmentedTableViewCell.animationComplete()
+                    segmentedCell.selectedAnimation( tableView, key: key, expandCell: true, animated: true ) {
+                        
+                        SegmentedTableViewCell.animationComplete()
+                    }
                 }
-            }
-//        }
+//            }
+        
     }
     
-    private func contractCell( tableView: UITableView, segmentedCell: SegmentedTableViewCell, indexPath: NSIndexPath ) {
+    private func contractCell( tableView: UITableView, segmentedCell: SegmentedTableViewCell, key: String ) {
         
 //        if !SegmentedTableViewCell.animationInProgress() {
             
             let duration = 0.1 // isOpen ? 0.3 : 0.1 // isOpen ? 1.1 : 0.6
             
-            segmentedCell.adjustCellHeights( tableView, indexPath: indexPath )
+            segmentedCell.adjustCellHeights( tableView, key: key )
         
-            segmentedCell.selectedAnimation( tableView, indexPath: indexPath, expandCell: false, animated: true ) {
+            segmentedCell.selectedAnimation( tableView, key: key, expandCell: false, animated: true ) {
                 
                 UIView.animateWithDuration(
                     duration, delay: 0.0, options: .CurveLinear,
@@ -354,26 +362,35 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
     
     // MARK: UITableViewDelegate
     
-    func tableView( tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath ) -> CGFloat {
-        
-        var height = UITableViewAutomaticDimension
-        
-        height = GeneralSearchResultSegmentedTableViewCell.estimatedCellHeight( tableView, indexPath: indexPath )
-        
-        return height
-    }
+    // do not implement this function! The overhead involved in getting the key isn't worth it
+
+//    func tableView( tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath ) -> CGFloat {
+//        
+//        estimatedHeightCalled += 1
+//        
+//        var height = UITableViewAutomaticDimension
+//        
+//        if let object = generalSearchCoordinator?.objectAtIndexPath( indexPath ) {
+//        
+//            height = GeneralSearchResultSegmentedTableViewCell.estimatedCellHeight( tableView, key: object.key )
+//        }
+//        
+//        return height
+//    }
     
     func tableView( tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath ) -> CGFloat {
         
         var height = UITableViewAutomaticDimension
 
-        height =
-            GeneralSearchResultSegmentedTableViewCell.cellHeight(
-                    tableView,
-                    indexPath: indexPath,
-                    withData: generalSearchCoordinator?.objectAtIndexPath( indexPath )
-                )
-        
+        if let object = generalSearchCoordinator?.objectAtIndexPath( indexPath ) {
+            height =
+                GeneralSearchResultSegmentedTableViewCell.cellHeight(
+                        tableView,
+                        key: object.key,
+                        withData: object
+                    )
+        }
+
         return height
     }
     
@@ -400,37 +417,44 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
     
     func tableView( tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath ) {
         
-        if let cell = cell as? GeneralSearchResultSegmentedTableViewCell {
+        if let cell = cell as? GeneralSearchResultSegmentedTableViewCell,
+               object = generalSearchCoordinator?.objectAtIndexPath( indexPath ) {
             
-            cell.adjustCellHeights( tableView, indexPath: indexPath )
+            cell.adjustCellHeights( tableView, key: object.key )
             
-            cell.selectedAnimation( tableView, indexPath: indexPath )
+            cell.selectedAnimation( tableView, key: object.key )
         }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        if let cell = tableView.cellForRowAtIndexPath( indexPath ) as? SegmentedTableViewCell {
+        if let object = generalSearchCoordinator?.objectAtIndexPath( indexPath ) {
+
+            if let cell = tableView.cellForRowAtIndexPath( indexPath ) as? SegmentedTableViewCell {
             
-            expandCell( tableView, segmentedCell: cell, indexPath: indexPath )
-            
-            tableView.scrollToNearestSelectedRowAtScrollPosition( .Top, animated: true )
-            
-        } else {
-            
-            SegmentedTableViewCell.setOpen( tableView, indexPath: indexPath )
+                expandCell( tableView, segmentedCell: cell, key: object.key )
+                
+                tableView.scrollToNearestSelectedRowAtScrollPosition( .Top, animated: true )
+                
+            } else {
+                
+                SegmentedTableViewCell.setOpen( tableView, key: object.key )
+            }
         }
     }
     
     func tableView( tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath ) {
         
-        if let cell = tableView.cellForRowAtIndexPath( indexPath ) as? SegmentedTableViewCell {
+        if let object = generalSearchCoordinator?.objectAtIndexPath( indexPath ) {
             
-            contractCell( tableView, segmentedCell: cell, indexPath: indexPath )
-            
-        } else {
-            
-            SegmentedTableViewCell.setClosed( tableView, indexPath: indexPath )
+            if let cell = tableView.cellForRowAtIndexPath( indexPath ) as? SegmentedTableViewCell {
+                
+                contractCell( tableView, segmentedCell: cell, key: object.key )
+                
+            } else {
+                
+                SegmentedTableViewCell.setClosed( tableView, key: object.key )
+            }
         }
     }
     
@@ -465,7 +489,7 @@ extension OLSearchResultsTableViewController: UITableViewDataSource {
             
             if let object = generalSearchCoordinator?.objectAtIndexPath( indexPath ) {
                 
-                expandingCell.configure( tableView, indexPath: indexPath, data: object )
+                expandingCell.configure( tableView, key: object.key, data: object )
                 generalSearchCoordinator?.updateUI( object, cell: expandingCell )
             }
             

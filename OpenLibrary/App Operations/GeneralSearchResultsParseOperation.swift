@@ -16,6 +16,7 @@ import PSOperations
 class GeneralSearchResultsParseOperation: Operation {
     
     let sequence: Int64
+    let offset: Int64
     let cacheFile: NSURL
     let context: NSManagedObjectContext
     let updateResults: SearchResultsUpdater
@@ -32,7 +33,7 @@ class GeneralSearchResultsParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( sequence: Int, cacheFile: NSURL, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater ) {
+    init( sequence: Int, offset: Int, cacheFile: NSURL, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -40,6 +41,7 @@ class GeneralSearchResultsParseOperation: Operation {
         */
         
         self.sequence = Int64( sequence )
+        self.offset = Int64( offset )
         self.cacheFile = cacheFile
         self.context = coreDataStack.newChildContext()
         self.context.mergePolicy = NSOverwriteMergePolicy
@@ -109,17 +111,11 @@ class GeneralSearchResultsParseOperation: Operation {
                     
                     index += 1
                     
-                    error = self.saveContext()
-                    if nil != error {
-                        
-                        break
-                    }
-                    
 //                    print( "\(newObject.index) \(newObject.title)" )
                 }
             }
 
-
+            error = self.saveContext()
             if nil == error {
                 self.updateResults(
                         SearchResults( start: Int( start ), numFound: Int( numFound ), pageSize: results.count )

@@ -90,8 +90,8 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
         
         viewBooks.setTitle( "", forState: .Normal )
         
-        clearCurrentImage()
- 
+        currentImageURL = nil
+
         isZoomEnabled = false
         haveEbooks = false
         haveEditions = false
@@ -112,7 +112,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
         
     }
 
-    override func configure( tableView: UITableView, indexPath: NSIndexPath, data: OLManagedObject? ) {
+    override func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
         
         if let r = data as? OLGeneralSearchResult {
 
@@ -129,6 +129,15 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
             haveEbooks = 0 < r.ebook_count_i
             haveEditions = 0 < r.edition_count
 
+            if r.hasImage {
+                
+                cellImage.image = nil
+                
+            } else {
+            
+                clearCurrentImage()
+            }
+            
         } else {
             
             titleText.text = ""
@@ -145,6 +154,8 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
             isZoomEnabled = false
             haveEbooks = false
             haveEditions = false
+            
+            clearCurrentImage()
         }
         
         viewBooks.setTitle(
@@ -152,14 +163,12 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
                 forState: .Normal
             )
         
-        clearCurrentImage()
-        
         updateButtons( selected )
         
-        setNeedsLayout()
+//        setNeedsLayout()
         layoutIfNeeded()
         
-        adjustCellHeights( tableView, indexPath: indexPath )
+        adjustCellHeights( tableView, key: key )
         
 //        delegate.tableView.beginUpdates()
 //        delegate.tableView.endUpdates()

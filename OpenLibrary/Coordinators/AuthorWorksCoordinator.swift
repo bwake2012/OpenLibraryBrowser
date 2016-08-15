@@ -63,8 +63,6 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         self.authorWorksTableVC = authorWorksTableVC
         
         super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: authorWorksTableVC )
-        
-        updateUI()
     }
     
     func numberOfSections() -> Int {
@@ -76,7 +74,6 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
 
         return fetchedResultsController.sections?[section].objects.count ?? 0
     }
-    
     
     func objectAtIndexPath( indexPath: NSIndexPath ) -> OLWorkDetail? {
         
@@ -103,7 +100,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         
         guard let workDetail = objectAtIndexPath( indexPath ) else { return nil }
         
-        cell.configure( authorWorksTableVC!.tableView, indexPath: indexPath, data: workDetail )
+        cell.configure( authorWorksTableVC!.tableView, key: workDetail.key, data: workDetail )
         
 //        print( "work: \(result.title) has covers: \(!result.covers.isEmpty)" )
         
@@ -227,6 +224,14 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
                 strongSelf.highWaterMark = searchResults.start + searchResults.pageSize
                 if strongSelf.numFound != Int64( searchResults.numFound ) {
                     strongSelf.numFound = Int64( searchResults.numFound )
+                }
+                
+                if let tableView = strongSelf.authorWorksTableVC?.tableView {
+                    
+                    if let footer = tableView.tableFooterView as? OLTableViewHeaderFooterView {
+                        
+                        footer.footerLabel.text = "\(strongSelf.highWaterMark) of \(strongSelf.numFound)"
+                    }
                 }
             }
         }

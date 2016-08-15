@@ -15,8 +15,8 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d0h-eU-9P6" userLabel="Content View">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="36"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 of 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9rs-DC-4MD" userLabel="Footer Text">
-                            <rect key="frame" x="8" y="8" width="584" height="20"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" text="0 of 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9rs-DC-4MD" userLabel="Footer Text">
+                            <rect key="frame" x="8" y="8" width="584" height="36"/>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -37,10 +37,14 @@
                 <constraint firstItem="d0h-eU-9P6" firstAttribute="trailing" secondItem="Lyb-O0-c8G" secondAttribute="trailing" id="o3Z-Ue-ZRZ"/>
                 <constraint firstItem="d0h-eU-9P6" firstAttribute="top" secondItem="Lyb-O0-c8G" secondAttribute="top" id="rgS-TK-uKC"/>
             </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="footerLabel" destination="9rs-DC-4MD" id="NJh-T9-hdf"/>
             </connections>
-            <point key="canvasLocation" x="241" y="1013"/>
+            <point key="canvasLocation" x="242" y="891.5"/>
         </view>
     </objects>
 </document>

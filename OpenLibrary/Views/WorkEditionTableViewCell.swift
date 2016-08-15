@@ -13,7 +13,7 @@ class WorkEditionTableViewCell: OLTableViewCell {
     @IBOutlet weak var editionTitle: UILabel!
     @IBOutlet weak var editionSubTitle: UILabel!
 
-    override func configure( tableView: UITableView, indexPath: NSIndexPath, data: OLManagedObject? ) {
+    override func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
         
         if let entry = data as? OLEditionDetail {
             
