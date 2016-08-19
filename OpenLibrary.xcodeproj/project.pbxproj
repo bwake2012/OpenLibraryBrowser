@@ -32,6 +32,7 @@
 		C412FE601CC3D47100EDB935 /* OLWorkDetail+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412FE5E1CC3D47100EDB935 /* OLWorkDetail+CoreDataProperties.swift */; };
 		C412FE611CC3D47100EDB935 /* OLTitleSearchResult+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412FE5F1CC3D47100EDB935 /* OLTitleSearchResult+CoreDataProperties.swift */; };
 		C412FE631CC3DFA200EDB935 /* LanguagesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412FE621CC3DFA200EDB935 /* LanguagesCoordinator.swift */; };
+		C4178EF51D67A50B00D274E8 /* NavigationControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4178EF41D67A50B00D274E8 /* NavigationControllerDelegate.swift */; };
 		C4188A251CE4FD9500D02E19 /* OLEBookItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4188A231CE4FD9500D02E19 /* OLEBookItem+CoreDataProperties.swift */; };
 		C4188A261CE4FD9500D02E19 /* OLEBookItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4188A241CE4FD9500D02E19 /* OLEBookItem.swift */; };
 		C4188A2A1CE511D200D02E19 /* IAEBookItemDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4188A271CE511D200D02E19 /* IAEBookItemDownloadOperation.swift */; };
@@ -53,7 +54,6 @@
 		C42DBE6E1CBD68740048788E /* TableviewCellZoomTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42DBE651CBD68740048788E /* TableviewCellZoomTransition.swift */; };
 		C42DBE6F1CBD68740048788E /* ZoomTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42DBE661CBD68740048788E /* ZoomTransition.swift */; };
 		C42DBE711CBD68B20048788E /* ImageViewTransitionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42DBE701CBD68B20048788E /* ImageViewTransitionSource.swift */; };
-		C42DBE751CBD76170048788E /* NavigationControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42DBE741CBD76170048788E /* NavigationControllerDelegate.swift */; };
 		C430E9C41CD19674007E15AD /* OLDeluxeDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C430E9C31CD19674007E15AD /* OLDeluxeDetailTableViewController.swift */; };
 		C430E9C61CD27E1F007E15AD /* OLDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C430E9C51CD27E1F007E15AD /* OLDataSource.swift */; };
 		C430E9CA1CD2B294007E15AD /* DeluxeDetailInlineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C430E9C91CD2B294007E15AD /* DeluxeDetailInlineTableViewCell.swift */; };
@@ -223,6 +223,7 @@
 		C412FE5E1CC3D47100EDB935 /* OLWorkDetail+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "OLWorkDetail+CoreDataProperties.swift"; path = "Model/OLWorkDetail+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C412FE5F1CC3D47100EDB935 /* OLTitleSearchResult+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "OLTitleSearchResult+CoreDataProperties.swift"; path = "Model/OLTitleSearchResult+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C412FE621CC3DFA200EDB935 /* LanguagesCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguagesCoordinator.swift; path = Coordinators/LanguagesCoordinator.swift; sourceTree = "<group>"; };
+		C4178EF41D67A50B00D274E8 /* NavigationControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavigationControllerDelegate.swift; path = Transitions/NavigationControllerDelegate.swift; sourceTree = "<group>"; };
 		C4188A231CE4FD9500D02E19 /* OLEBookItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "OLEBookItem+CoreDataProperties.swift"; path = "Model/OLEBookItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C4188A241CE4FD9500D02E19 /* OLEBookItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLEBookItem.swift; path = Model/OLEBookItem.swift; sourceTree = "<group>"; };
 		C4188A271CE511D200D02E19 /* IAEBookItemDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IAEBookItemDownloadOperation.swift; path = "App Operations/IAEBookItemDownloadOperation.swift"; sourceTree = "<group>"; };
@@ -244,7 +245,6 @@
 		C42DBE651CBD68740048788E /* TableviewCellZoomTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableviewCellZoomTransition.swift; path = Transitions/TableviewCellZoomTransition.swift; sourceTree = "<group>"; };
 		C42DBE661CBD68740048788E /* ZoomTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZoomTransition.swift; path = Transitions/ZoomTransition.swift; sourceTree = "<group>"; };
 		C42DBE701CBD68B20048788E /* ImageViewTransitionSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageViewTransitionSource.swift; path = Transitions/ImageViewTransitionSource.swift; sourceTree = "<group>"; };
-		C42DBE741CBD76170048788E /* NavigationControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavigationControllerDelegate.swift; path = ../../../Interviews/OrgSync/MusicBrowse/MusicBrowse/Utility/NavigationControllerDelegate.swift; sourceTree = "<group>"; };
 		C430E9C31CD19674007E15AD /* OLDeluxeDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLDeluxeDetailTableViewController.swift; path = "View Controllers/OLDeluxeDetailTableViewController.swift"; sourceTree = "<group>"; };
 		C430E9C51CD27E1F007E15AD /* OLDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLDataSource.swift; path = Coordinators/OLDataSource.swift; sourceTree = "<group>"; };
 		C430E9C91CD2B294007E15AD /* DeluxeDetailInlineTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeluxeDetailInlineTableViewCell.swift; path = Views/DeluxeDetailInlineTableViewCell.swift; sourceTree = "<group>"; };
@@ -416,9 +416,9 @@
 		C42DBE4B1CBD67B10048788E /* Transitions */ = {
 			isa = PBXGroup;
 			children = (
+				C4178EF41D67A50B00D274E8 /* NavigationControllerDelegate.swift */,
 				C42DBE701CBD68B20048788E /* ImageViewTransitionSource.swift */,
 				C42DBE5F1CBD68740048788E /* ImageZoomTransition.swift */,
-				C42DBE741CBD76170048788E /* NavigationControllerDelegate.swift */,
 				C48AE6011D4FFE7800F2B1E6 /* SearchDismissalAnimator.swift */,
 				C45F1F0E1CEA19FB002EDA5B /* SearchPresentationAnimator.swift */,
 				C45F1F121CEA1E5E002EDA5B /* SegueForSearch.swift */,
@@ -930,7 +930,6 @@
 				C45F51841D3EA05300BFFB2A /* Operation+produceAlert.swift in Sources */,
 				C453C3821D5E1985003EAA45 /* OLTableViewHeaderFooterView.swift in Sources */,
 				C422A4A11CCD233700A6B4A7 /* UnfoldTransition.swift in Sources */,
-				C42DBE751CBD76170048788E /* NavigationControllerDelegate.swift in Sources */,
 				C4A0F0841D1468C500D0F604 /* BookDownloadOperation.swift in Sources */,
 				C46E7E4D1C8619C300D2ED51 /* OLAuthorDetailViewController.swift in Sources */,
 				C46E7E571C861E8500D2ED51 /* OLAuthorDetail.swift in Sources */,
@@ -986,6 +985,7 @@
 				C4F00C551CD929D6002D7E14 /* DeluxeDetailSubheadingTableViewCell.swift in Sources */,
 				C4677EA31C9DF4030070CDFD /* OLTableViewCell.swift in Sources */,
 				C412FE521CC29D2400EDB935 /* LanguagesGetOperation.swift in Sources */,
+				C4178EF51D67A50B00D274E8 /* NavigationControllerDelegate.swift in Sources */,
 				C42DBE711CBD68B20048788E /* ImageViewTransitionSource.swift in Sources */,
 				C4E863981C9A32FB002C0E6B /* OLAuthorDetailEditionsTableViewController.swift in Sources */,
 				C42DBE6E1CBD68740048788E /* TableviewCellZoomTransition.swift in Sources */,
