@@ -34,7 +34,7 @@ class OLEditionDetailViewController: UIViewController {
         
         assert( nil != queryCoordinator )
         
-        queryCoordinator!.updateUI()
+        queryCoordinator?.updateUI()
     }
     
     override func didReceiveMemoryWarning() {
@@ -58,6 +58,8 @@ class OLEditionDetailViewController: UIViewController {
     // MARK: Utility
     func updateUI( editionDetail: OLEditionDetail ) {
         
+        assert( NSThread.isMainThread() )
+
         self.editionTitleView.text = editionDetail.title
         self.editionSubtitleView.text = editionDetail.subtitle
         self.editionAuthorView.text =
@@ -72,6 +74,8 @@ class OLEditionDetailViewController: UIViewController {
     
     func displayImage( localURL: NSURL ) -> Bool {
         
+        assert( NSThread.isMainThread() )
+
         if let data = NSData( contentsOfURL: localURL ) {
             if let image = UIImage( data: data ) {
                 

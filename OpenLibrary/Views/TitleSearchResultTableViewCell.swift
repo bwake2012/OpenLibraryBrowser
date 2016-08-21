@@ -15,6 +15,8 @@ class TitleSearchResultTableViewCell: OLTableViewCell {
     
     override func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
         
+        assert( NSThread.isMainThread() )
+        
         if let r = data as? OLTitleSearchResult {
             titleText.text = "\(r.title)"
             subtitleText.text = "\(r.subtitle)"

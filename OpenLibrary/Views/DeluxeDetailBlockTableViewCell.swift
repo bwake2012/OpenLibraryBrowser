@@ -15,6 +15,8 @@ class DeluxeDetailBlockTableViewCell: DeluxeDetailTableViewCell {
     
     override func configure( data: DeluxeData ) {
         
+        assert( NSThread.isMainThread() )
+        
         captionView.text = data.caption
         blockTextView.text = data.value
     }

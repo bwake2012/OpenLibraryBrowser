@@ -57,18 +57,18 @@ class OLAuthorDetailWorksTableViewController: UITableViewController {
     // MARK: UITableviewDataSource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
-        return queryCoordinator!.numberOfSections() ?? 0
+        return queryCoordinator?.numberOfSections() ?? 0
     }
     
     override func tableView( tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
         
-        return queryCoordinator!.numberOfRowsInSection( section ) ?? 0
+        return queryCoordinator?.numberOfRowsInSection( section ) ?? 0
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("authorWorksEntry", forIndexPath: indexPath) as! AuthorWorksTableViewCell
         
-        queryCoordinator!.displayToCell( cell, indexPath: indexPath )
+        queryCoordinator?.displayToCell( cell, indexPath: indexPath )
         
         return cell
     }

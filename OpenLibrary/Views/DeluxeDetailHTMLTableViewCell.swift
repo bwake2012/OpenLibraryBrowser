@@ -15,6 +15,8 @@ class DeluxeDetailHTMLTableViewCell: DeluxeDetailTableViewCell {
 
     override func configure( data: DeluxeData ) {
         
+        assert( NSThread.isMainThread() )
+        
         captionView.text = data.caption
         
         if let stringData = data.value.dataUsingEncoding( NSUTF8StringEncoding, allowLossyConversion: false ) {

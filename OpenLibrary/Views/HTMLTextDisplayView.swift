@@ -26,6 +26,8 @@ class HTMLTextDisplayView: UITextView {
     
     func displayHTML( htmlText: String ) {
         
+        assert( NSThread.isMainThread() )
+        
         if let stringData = htmlText.dataUsingEncoding( NSUTF8StringEncoding, allowLossyConversion: false ) {
             
             do {

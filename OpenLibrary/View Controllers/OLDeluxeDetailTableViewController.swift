@@ -12,6 +12,8 @@ class OLDeluxeDetailTableViewController: UITableViewController {
 
     var queryCoordinator: OLDeluxeDetailCoordinator?
     
+    var hidesBarsOnSwipe = false
+    
     // MARK: UIView
     override func viewDidLoad() {
 
@@ -31,6 +33,15 @@ class OLDeluxeDetailTableViewController: UITableViewController {
         DeluxeDetailLinkTableViewCell.registerCell( tableView )
         DeluxeDetailHTMLTableViewCell.registerCell( tableView )
         DeluxeDetailBookDownloadTableViewCell.registerCell( tableView )
+        
+        hidesBarsOnSwipe = navigationController?.hidesBarsOnSwipe ?? true
+        navigationController?.hidesBarsOnSwipe = false
+        navigationController?.setNavigationBarHidden( false, animated: true )
+    }
+    
+    deinit {
+        
+        navigationController?.hidesBarsOnSwipe = hidesBarsOnSwipe
     }
     
     override func didReceiveMemoryWarning() {

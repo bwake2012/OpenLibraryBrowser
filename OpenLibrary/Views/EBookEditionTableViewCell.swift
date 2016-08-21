@@ -16,6 +16,8 @@ class EbookEditionTableViewCell: OLTableViewCell {
 
     override func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
         
+        assert( NSThread.isMainThread() )
+        
         if let entry = data as? OLEditionDetail {
             
             let trimmedPrefix =

@@ -17,6 +17,8 @@ class OLQueryCoordinator: NSObject {
 
     private static var reachability: Reachability?
     private static var viewControllerStack = [UIViewController]()
+    
+    private static var dateFormatter: NSDateFormatter?
 
     var deletedSectionIndexes = NSMutableIndexSet()
     var insertedSectionIndexes = NSMutableIndexSet()
@@ -95,15 +97,24 @@ class OLQueryCoordinator: NSObject {
     func refreshComplete( refreshControl: UIRefreshControl? ) {
 
         if let refreshControl = refreshControl {
-            
-            let dateFormatter = NSDateFormatter()
-            
-            dateFormatter.dateFormat = "MMM d, h:mm a"
-            
-            let lastUpdate = "Last updated on \( dateFormatter.stringFromDate( NSDate() ) )"
-            
-            refreshControl.attributedTitle = NSAttributedString( string: lastUpdate )
-            refreshControl.endRefreshing()
+                
+            dispatch_async(dispatch_get_main_queue()) {
+                
+                if nil == OLQueryCoordinator.dateFormatter {
+                    
+                    OLQueryCoordinator.dateFormatter = NSDateFormatter()
+                
+                    OLQueryCoordinator.dateFormatter?.dateFormat = "MMM d, h:mm a"
+                }
+                
+                if let dateFormatter = OLQueryCoordinator.dateFormatter {
+                
+                    let lastUpdate = "Last updated on \( dateFormatter.stringFromDate( NSDate() ) )"
+                    
+                    refreshControl.attributedTitle = NSAttributedString( string: lastUpdate )
+                }
+                refreshControl.endRefreshing()
+            }
         }
     }
 }

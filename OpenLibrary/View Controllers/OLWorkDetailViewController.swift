@@ -88,14 +88,14 @@ class OLWorkDetailViewController: UIViewController {
             
             if let destVC = segue.destinationViewController as? OLDeluxeDetailTableViewController {
                 
-                queryCoordinator?.installWorkDeluxeDetailCoordinator( destVC )
+                queryCoordinator!.installWorkDeluxeDetailCoordinator( destVC )
             }
             
         } else if segue.identifier == "displayAuthorDetail" {
             
             if let destVC = segue.destinationViewController as? OLAuthorDetailViewController {
                 
-                queryCoordinator?.installAuthorDetailCoordinator( destVC )
+                queryCoordinator!.installAuthorDetailCoordinator( destVC )
             }
         }
     }
@@ -124,8 +124,12 @@ class OLWorkDetailViewController: UIViewController {
     
     func displayImage( localURL: NSURL ) -> Bool {
         
+        assert( NSThread.isMainThread() )
+
         guard nil == currentImageURL || localURL == currentImageURL else { return true }
         
+        assert( NSThread.isMainThread() )
+
         currentImageURL = localURL
         if let data = NSData( contentsOfURL: localURL ) {
             if let image = UIImage( data: data ) {
@@ -143,6 +147,8 @@ class OLWorkDetailViewController: UIViewController {
         
         guard nil == currentImageURL || localURL == currentImageURL else { return true }
         
+        assert( NSThread.isMainThread() )
+
         currentImageURL = localURL
         if let data = NSData( contentsOfURL: localURL ) {
             if let image = UIImage( data: data ) {
@@ -159,6 +165,8 @@ class OLWorkDetailViewController: UIViewController {
     
     func updateUI( workDetail: OLWorkDetail ) {
         
+        assert( NSThread.isMainThread() )
+
         self.workTitle.text = workDetail.title
         self.workSubtitle.text = workDetail.subtitle
         self.workAuthor.text = workDetail.author_names.joinWithSeparator( ", " )

@@ -140,7 +140,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             //                            self.reachabilityOperation = nil
             //                        }
         }
-        self.reachabilityOperation?.userInitiated = true
+        self.reachabilityOperation!.userInitiated = true
         self.operationQueue.addOperation( self.reachabilityOperation! )
         
         OLLanguage.retrieveLanguages( operationQueue, coreDataStack: coreDataStack )
@@ -218,6 +218,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
     
     func updateUI( searchResult: OLGeneralSearchResult, cell: OLTableViewCell ) {
         
+        assert( NSThread.isMainThread() )
 //        print( "\(searchResult.title) \(searchResult.hasImage ? "has" : "has no") cover image")
         if searchResult.hasImage {
             

@@ -15,6 +15,8 @@ class AuthorSearchResultTableViewCell: OLTableViewCell {
     
     override func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
         
+        assert( NSThread.isMainThread() )
+
         if let r = data as? OLAuthorSearchResult {
             authorName.text = "\(r.name)"
             authorInfo.text = "\(r.top_work)"
@@ -30,6 +32,8 @@ class AuthorSearchResultTableViewCell: OLTableViewCell {
 
     override func clearCurrentImage() -> Void {
         
+        assert( NSThread.isMainThread() )
+
         currentImageURL = nil
         cellImage.image = UIImage( named: "253-person.png" )
     }

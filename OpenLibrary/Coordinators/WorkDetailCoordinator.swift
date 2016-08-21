@@ -88,6 +88,8 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
     
     func updateUI( workDetail: OLWorkDetail ) {
         
+        assert( NSThread.isMainThread() )
+
         if let workDetailVC = workDetailVC {
             
             retrieveAuthors( workDetail )

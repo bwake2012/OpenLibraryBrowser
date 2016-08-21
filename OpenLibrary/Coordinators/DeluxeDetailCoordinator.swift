@@ -72,8 +72,58 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
         guard let obj = objectAtIndexPath( indexPath ) else { return }
         
         if .link == obj.type {
+            
+            var urlComponents = NSURLComponents( string: obj.value )
+            
+            if nil == urlComponents {
+                
+                urlComponents = NSURLComponents()
 
-            showLinkedWebSite( vc, url: NSURL( string: obj.value ) )
+                var hostPlusPath = obj.value
+
+                var scheme = ""
+                if hostPlusPath.hasPrefix( "http://" ) {
+                    
+                    hostPlusPath = hostPlusPath.substringFromIndex( hostPlusPath.startIndex.advancedBy( 7 ) )
+                    scheme = "http"
+                    
+                } else if hostPlusPath.hasPrefix( "https://" ) {
+                    
+                    hostPlusPath = hostPlusPath.substringFromIndex( hostPlusPath.startIndex.advancedBy( 8 ) )
+                    scheme = "https"
+                    
+                } else {
+                    
+                    hostPlusPath = ""
+                }
+                
+                if !hostPlusPath.isEmpty {
+                    
+                    var host: String?
+                    var path = ""
+                    for index in hostPlusPath.characters.indices {
+                        
+                        if "/" == hostPlusPath[index] {
+                            
+                            host = hostPlusPath.substringToIndex( index )
+                            path = hostPlusPath.substringFromIndex( index )
+                            break
+                        }
+                    }
+                    if path.isEmpty {
+                        
+                        path = hostPlusPath
+                    }
+                    
+                    urlComponents?.scheme = scheme
+                    urlComponents?.host = host
+                    urlComponents?.path = path
+                }
+                if let url = urlComponents?.URL {
+                    
+                    showLinkedWebSite( vc, url: url )
+                }
+            }
         
         } else if .imageAuthor == obj.type || .imageBook == obj.type {
             

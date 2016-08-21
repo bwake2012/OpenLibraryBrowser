@@ -18,19 +18,16 @@ class OLBookSortViewController: UIViewController {
     
     var sortFields = [SortField]()
     
-    @IBOutlet private var cancelButton: UIButton!
-    @IBOutlet private var sortButton: UIButton!
-    
     @IBOutlet private var sortLabels:  Array< UIButton >!
     @IBOutlet private var sortButtons: Array< UIButton >!
-    
-    @IBAction func cancelButtonTapped( sender: UIButton ) {}
     
     @IBAction func sortButtonTapped( sender: UIButton ) {
         
         if let saveSortFields = saveSortFields {
             
             saveSortFields( sortFields: sortFields )
+            
+            performSegueWithIdentifier( "beginBookSort", sender: self )
         }
     }
     
@@ -60,6 +57,8 @@ class OLBookSortViewController: UIViewController {
         self.sortButtons.sortInPlace{ $0.frame.origin.y < $1.frame.origin.y }
         
         displaySortKeys()
+        
+        navigationController?.hidesBarsOnSwipe = false
     }
     
     override func didReceiveMemoryWarning() {
@@ -86,7 +85,6 @@ class OLBookSortViewController: UIViewController {
                 
                 let nextSort = sortFields[index].sort.nextSort()
                 sortFields[index].sort = nextSort
-                sortButton.enabled = .sortNone != nextSort
                 
             } else {
                 

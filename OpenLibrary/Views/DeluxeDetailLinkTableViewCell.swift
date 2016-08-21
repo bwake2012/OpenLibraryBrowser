@@ -16,6 +16,8 @@ class DeluxeDetailLinkTableViewCell: DeluxeDetailTableViewCell {
 
     override func configure( data: DeluxeData ) {
         
+        assert( NSThread.isMainThread() )
+        
         linkView.text = data.caption
         linkURL = data.value
     }

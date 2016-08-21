@@ -23,8 +23,6 @@ class OLBookSearchViewController: UIViewController {
     @IBOutlet weak var personSearch:    UITextField!
     @IBOutlet weak var publisherSearch: UITextField!
     
-    @IBOutlet weak var cancelButton: UIButton!
-    @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var ebookOnlySwitch: UISwitch!
     
     weak var activeField: UITextField?
@@ -99,6 +97,8 @@ class OLBookSearchViewController: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OLBookSearchViewController.keyboardDidShow(_:)), name: UIKeyboardDidShowNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OLBookSearchViewController.keyboardWillBeHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        
+        navigationController?.hidesBarsOnSwipe = false
     }
 
     override func didReceiveMemoryWarning() {

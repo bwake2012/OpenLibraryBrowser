@@ -43,7 +43,7 @@ class OLAuthorDetailEditionsTableViewController: UITableViewController {
     // MARK: UITableviewDataSource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
-        return queryCoordinator!.numberOfSections() ?? 0
+        return queryCoordinator?.numberOfSections() ?? 0
     }
     
     override func tableView( tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {

@@ -77,7 +77,7 @@ class OLBookDownloadViewController: UIViewController, UIDocumentInteractionContr
         super.viewDidLoad()
 
         assert( nil != queryCoordinator )
-        queryCoordinator!.updateUI()
+        queryCoordinator?.updateUI()
     }
     
     // MARK: Utility
@@ -89,6 +89,8 @@ class OLBookDownloadViewController: UIViewController, UIDocumentInteractionContr
     
     func updateUI( eBookFile: OLEBookFile ) {
         
+        assert( NSThread.isMainThread() )
+
         switch( eBookFile.format ) {
             
             case kFileTypeDjVu:

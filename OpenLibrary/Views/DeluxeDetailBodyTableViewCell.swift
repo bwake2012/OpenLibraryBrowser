@@ -14,6 +14,8 @@ class DeluxeDetailBodyTableViewCell: DeluxeDetailTableViewCell {
     
     override func configure( data: DeluxeData ) {
         
+        assert( NSThread.isMainThread() )
+        
         label.text = data.value
     }
 }

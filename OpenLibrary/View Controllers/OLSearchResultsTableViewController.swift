@@ -30,8 +30,6 @@ class OLSearchResultsTableViewController: UIViewController {
     @IBOutlet private var refreshControl: UIRefreshControl?
     
     @IBOutlet private var activityView: UIActivityIndicatorView!
-    @IBOutlet private var searchButton: UIButton!
-    @IBOutlet private var sortButton:   UIButton!
     
     deinit {
         
@@ -51,7 +49,7 @@ class OLSearchResultsTableViewController: UIViewController {
         SegmentedTableViewCell.emptyCellHeights( tableView )
         
         // Do any additional setup after loading the view, typically from a nib.
-        self.tableView.estimatedRowHeight = 102.0
+        self.tableView.estimatedRowHeight = SegmentedTableViewCell.estimatedCellHeight
 //        self.tableView.rowHeight = UITableViewAutomaticDimension
         
         self.tableView.tableFooterView = OLTableViewHeaderFooterView.createFromNib()
@@ -62,6 +60,8 @@ class OLSearchResultsTableViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         
+        navigationController?.hidesBarsOnSwipe = true
+
         if let indexPath = savedIndexPath {
             
             tableView.selectRowAtIndexPath( indexPath, animated: true, scrollPosition: .Top )
@@ -89,24 +89,24 @@ class OLSearchResultsTableViewController: UIViewController {
         if segueName == "openBookSearch" {
             
             if let destVC = segue.destinationViewController as? OLBookSearchViewController {
-                if let delegate = segue as? UIViewControllerTransitioningDelegate {
+//                if let delegate = segue as? UIViewControllerTransitioningDelegate {
                     
-                    destVC.transitioningDelegate = delegate
+//                    destVC.transitioningDelegate = delegate
                     destVC.displaySearchKeys( generalSearchCoordinator.searchKeys )
                     
                     destVC.saveSearchDictionary = saveSearchKeys
-                }
+//                }
             }
         } else if segueName == "openBookSort" {
             
             if let destVC = segue.destinationViewController as? OLBookSortViewController {
-                if let delegate = segue as? UIViewControllerTransitioningDelegate {
+//                if let delegate = segue as? UIViewControllerTransitioningDelegate {
                     
-                    destVC.transitioningDelegate = delegate
+//                    destVC.transitioningDelegate = delegate
                     destVC.sortFields = generalSearchCoordinator.sortFields
                     
                     destVC.saveSortFields = self.saveSortFields
-                }
+//                }
             }
             
         } else if let indexPath = tableView.indexPathForSelectedRow {
@@ -246,7 +246,7 @@ class OLSearchResultsTableViewController: UIViewController {
         
         if segue.identifier == "beginBookSort" {
             
-            SegmentedTableViewCell.emptyCellHeights( tableView )
+//            SegmentedTableViewCell.emptyCellHeights( tableView )
             savedIndexPath = nil
             tableView.reloadData()
         }
@@ -257,15 +257,15 @@ class OLSearchResultsTableViewController: UIViewController {
     func coordinatorIsBusy() -> Void {
         
         activityView?.startAnimating()
-        searchButton.enabled = false
-        sortButton.enabled = false
+        self.navigationItem.leftBarButtonItem?.enabled = false
+        self.navigationItem.rightBarButtonItem?.enabled = false
     }
     
     func coordinatorIsNoLongerBusy() -> Void {
         
         activityView?.stopAnimating()
-        searchButton.enabled = true
-        sortButton.enabled = true
+        self.navigationItem.leftBarButtonItem?.enabled = true
+        self.navigationItem.rightBarButtonItem?.enabled = true
     }
     
     // MARK: cell expansion and contraction
@@ -358,29 +358,27 @@ extension OLSearchResultsTableViewController: TransitionSourceCell {
         
 }
 
+// MARK: UITableViewDelegate
+
 extension OLSearchResultsTableViewController: UITableViewDelegate {
-    
-    // MARK: UITableViewDelegate
     
     // do not implement this function! The overhead involved in getting the key isn't worth it
 
-//    func tableView( tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath ) -> CGFloat {
-//        
-//        estimatedHeightCalled += 1
-//        
-//        var height = UITableViewAutomaticDimension
-//        
+    func tableView( tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath ) -> CGFloat {
+        
+        var height = SegmentedTableViewCell.estimatedCellHeight
+        
 //        if let object = generalSearchCoordinator?.objectAtIndexPath( indexPath ) {
 //        
 //            height = GeneralSearchResultSegmentedTableViewCell.estimatedCellHeight( tableView, key: object.key )
 //        }
-//        
-//        return height
-//    }
+        
+        return height
+    }
     
     func tableView( tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath ) -> CGFloat {
         
-        var height = UITableViewAutomaticDimension
+        var height = SegmentedTableViewCell.estimatedCellHeight
 
         if let object = generalSearchCoordinator?.objectAtIndexPath( indexPath ) {
             height =
@@ -460,9 +458,10 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
     
 }
 
+// MARK: UITableviewDataSource
+
 extension OLSearchResultsTableViewController: UITableViewDataSource {
     
-    // MARK: UITableviewDataSource
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
         guard let generalSearchCoordinator = generalSearchCoordinator else {

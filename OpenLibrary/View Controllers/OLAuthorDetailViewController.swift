@@ -41,7 +41,7 @@ class OLAuthorDetailViewController: UIViewController {
 
         assert( nil != queryCoordinator )
         
-        self.queryCoordinator!.updateUI()
+        queryCoordinator?.updateUI()
     }
     
     override func didReceiveMemoryWarning() {
@@ -57,28 +57,28 @@ class OLAuthorDetailViewController: UIViewController {
             if let destVC = segue.destinationViewController as? OLAuthorDetailWorksTableViewController {
                 
                 self.authorWorksVC = destVC
-                queryCoordinator?.installAuthorWorksCoordinator( destVC )
+                queryCoordinator!.installAuthorWorksCoordinator( destVC )
             }
         } else if segue.identifier == "embedAuthorEditions" {
             
             if let destVC = segue.destinationViewController as? OLAuthorDetailEditionsTableViewController {
                 
                 self.authorEditionsVC = destVC
-                queryCoordinator?.installAuthorEditionsCoordinator( destVC )
+                queryCoordinator!.installAuthorEditionsCoordinator( destVC )
 
             }
         } else if segue.identifier == "displayAuthorDeluxeDetail" {
             
             if let destVC = segue.destinationViewController as? OLDeluxeDetailTableViewController {
                 
-                queryCoordinator?.installAuthorDeluxeDetailCoordinator( destVC )
+                queryCoordinator!.installAuthorDeluxeDetailCoordinator( destVC )
             }
             
         } else if segue.identifier == "largeAuthorPhoto" {
             
             if let destVC = segue.destinationViewController as? OLPictureViewController {
 
-                queryCoordinator?.installAuthorPictureCoordinator( destVC )
+                queryCoordinator!.installAuthorPictureCoordinator( destVC )
             }
         }
     }
@@ -97,6 +97,8 @@ class OLAuthorDetailViewController: UIViewController {
     // MARK: Utility
     func displayImage( localURL: NSURL ) -> Bool {
         
+        assert( NSThread.isMainThread() )
+
         currentImageURL = localURL
         if let data = NSData( contentsOfURL: localURL ) {
             if let image = UIImage( data: data ) {
@@ -112,6 +114,8 @@ class OLAuthorDetailViewController: UIViewController {
     
     func updateUI( authorDetail: OLAuthorDetail ) {
         
+        assert( NSThread.isMainThread() )
+
         self.displayLargePhoto.enabled = authorDetail.hasImage
         self.displayDeluxeDetail.enabled = authorDetail.hasDeluxeData
             
@@ -129,8 +133,9 @@ class OLAuthorDetailViewController: UIViewController {
         
         let viewHeight = self.view.bounds.height
         
-        let minContentHeight = viewHeight - UIApplication.sharedApplication().statusBarFrame.height +
-            self.navigationController!.navigationBar.frame.height
+        var minContentHeight = viewHeight - UIApplication.sharedApplication().statusBarFrame.height
+        
+        minContentHeight -= navigationController?.navigationBar.frame.height ?? 0
         
         let headerViewHeight = headerView.bounds.height
         

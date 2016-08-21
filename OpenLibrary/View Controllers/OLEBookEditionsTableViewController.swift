@@ -60,19 +60,19 @@ class OLEBookEditionsTableViewController: UITableViewController {
     // MARK: UITableviewDataSource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
-        return queryCoordinator!.numberOfSections()
+        return queryCoordinator?.numberOfSections() ?? 0
     }
     
     override func tableView( tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
         
-        return queryCoordinator!.numberOfRowsInSection( section )
+        return queryCoordinator?.numberOfRowsInSection( section ) ?? 0
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("EbookEditionTableViewCell", forIndexPath: indexPath)
         if let cell = cell as? EbookEditionTableViewCell {
             
-            queryCoordinator!.displayToCell( cell, indexPath: indexPath )
+            queryCoordinator?.displayToCell( cell, indexPath: indexPath )
             
         }
         

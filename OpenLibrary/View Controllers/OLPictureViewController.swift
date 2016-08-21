@@ -30,6 +30,9 @@ class OLPictureViewController: UIViewController {
             
             queryCoordinator.updateUI()
         }
+        
+        navigationController?.hidesBarsOnSwipe = false
+        navigationController?.setNavigationBarHidden( false, animated: true )
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -61,6 +64,8 @@ class OLPictureViewController: UIViewController {
     // MARK: Utility
     func displayImage( localURL: NSURL ) -> Bool {
         
+        assert( NSThread.isMainThread() )
+
         if let data = NSData( contentsOfURL: localURL ) {
             if let image = UIImage( data: data ) {
                 

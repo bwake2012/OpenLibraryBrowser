@@ -123,6 +123,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     
     func updateUI( authorDetail: OLAuthorDetail ) {
         
+        assert( NSThread.isMainThread() )
         if let authorDetailVC = authorDetailVC {
             
             authorDetailVC.updateUI( authorDetail )

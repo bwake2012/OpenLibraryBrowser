@@ -63,8 +63,8 @@ class ImageZoomTransition: ZoomTransition {
                 if .Push == self.operation {
                 
                     var layoutMargins = toView.layoutMargins
-                    layoutMargins.top += UIApplication.sharedApplication().statusBarFrame.height +
-                        dvc.navigationController!.navigationBar.frame.height
+                    layoutMargins.top += UIApplication.sharedApplication().statusBarFrame.height
+                    layoutMargins.top += dvc.navigationController?.navigationBar.frame.height ?? 0
                     fullscreenPictureRect =
                         CGRect(
                             x: toFinalFrame.origin.x + layoutMargins.left,

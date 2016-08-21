@@ -52,7 +52,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
 //            if let delegate = delegate, tableView = delegate.tableView {
 //                
 //                // [[[event touchesForView: button] anyObject] locationInView: self.tableView]]
-//                if let indexPath = tableView.indexPathForRowAtPoint( sender.superview!.convertPoint( sender.center, toView: tableView ) ) {
+//                if let indexPath = tableView.indexPathForRowAtPoint( sender.superview?.convertPoint( sender.center, toView: tableView ) ) {
 //                    
 //                    delegate.tableView( tableView, accessoryButtonTappedForRowWithIndexPath: indexPath )
 //                }
@@ -101,6 +101,8 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
 
     private func updateButtons( selected: Bool ) {
 
+        assert( NSThread.isMainThread() )
+        
         zoomCover.enabled = selected && isZoomEnabled
         
         viewAuthorDetail.enabled = selected
@@ -113,6 +115,8 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
     }
 
     override func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
+        
+        assert( NSThread.isMainThread() )
         
         if let r = data as? OLGeneralSearchResult {
 

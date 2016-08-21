@@ -21,6 +21,8 @@ class GeneralSearchResultTableViewCell: OLTableViewCell {
     
     override func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
         
+        assert( NSThread.isMainThread() )
+        
         if let r = data as? OLGeneralSearchResult {
             titleText.text = "\(r.title)"
             authorName.text = r.author_name.joinWithSeparator( ", " )
@@ -38,6 +40,8 @@ class GeneralSearchResultTableViewCell: OLTableViewCell {
     }
     
     override func clearCurrentImage() -> Void {
+        
+        assert( NSThread.isMainThread() )
         
         currentImageURL = nil
         cellImage.image = UIImage( named: "961-book-32.png" )

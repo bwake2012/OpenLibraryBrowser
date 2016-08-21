@@ -193,7 +193,7 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
                         }
                     }
             
-            bookDownloadOperation?.userInitiated = true
+            bookDownloadOperation!.userInitiated = true
             operationQueue.addOperation( bookDownloadOperation! )
         }
     }

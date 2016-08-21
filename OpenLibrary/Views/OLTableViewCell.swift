@@ -21,6 +21,8 @@ class OLTableViewCell: UITableViewCell {
     
     func displayImage( localURL: NSURL ) -> Bool {
         
+        assert( NSThread.isMainThread() )
+
         guard nil == currentImageURL || localURL == currentImageURL else { return true }
         
         if cellImage.displayFromURL( localURL ) {

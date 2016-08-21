@@ -15,6 +15,8 @@ class AuthorWorksTableViewCell: OLTableViewCell {
 
     override func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
         
+        assert( NSThread.isMainThread() )
+        
         if let entry = data as? OLWorkDetail {
             
             workTitle.text = entry.title

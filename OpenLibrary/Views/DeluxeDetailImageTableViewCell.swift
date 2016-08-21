@@ -15,6 +15,8 @@ class DeluxeDetailImageTableViewCell: DeluxeDetailTableViewCell {
     
     func displayFromURL( url: NSURL ) -> Bool {
         
+        assert( NSThread.isMainThread() )
+        
         let success = deluxeImage.displayFromURL( url )
         if success {
             activityIndicator.stopAnimating()

@@ -15,6 +15,8 @@ class DeluxeDetailBookDownloadTableViewCell: DeluxeDetailTableViewCell {
 
     override func configure( data: DeluxeData ) {
         
+        assert( NSThread.isMainThread() )
+        
         captionView.text = data.caption
         inlineTextView.text = data.value
     }

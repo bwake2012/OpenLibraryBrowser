@@ -121,6 +121,8 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedRe
     
     func updateUI( searchResult: OLTitleSearchResult, cell: TitleSearchResultTableViewCell ) {
         
+        assert( NSThread.isMainThread() )
+
         if searchResult.hasImage {
             
             let localURL = searchResult.localURL( "S" )

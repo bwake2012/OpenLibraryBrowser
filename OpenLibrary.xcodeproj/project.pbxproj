@@ -33,6 +33,8 @@
 		C412FE611CC3D47100EDB935 /* OLTitleSearchResult+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412FE5F1CC3D47100EDB935 /* OLTitleSearchResult+CoreDataProperties.swift */; };
 		C412FE631CC3DFA200EDB935 /* LanguagesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412FE621CC3DFA200EDB935 /* LanguagesCoordinator.swift */; };
 		C4178EF51D67A50B00D274E8 /* NavigationControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4178EF41D67A50B00D274E8 /* NavigationControllerDelegate.swift */; };
+		C4178EF81D67B1E400D274E8 /* WindowShadeTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4178EF61D67B1E400D274E8 /* WindowShadeTransition.swift */; };
+		C4178EF91D67B1E400D274E8 /* SegueWithWindowShade.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4178EF71D67B1E400D274E8 /* SegueWithWindowShade.swift */; };
 		C4188A251CE4FD9500D02E19 /* OLEBookItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4188A231CE4FD9500D02E19 /* OLEBookItem+CoreDataProperties.swift */; };
 		C4188A261CE4FD9500D02E19 /* OLEBookItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4188A241CE4FD9500D02E19 /* OLEBookItem.swift */; };
 		C4188A2A1CE511D200D02E19 /* IAEBookItemDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4188A271CE511D200D02E19 /* IAEBookItemDownloadOperation.swift */; };
@@ -224,6 +226,8 @@
 		C412FE5F1CC3D47100EDB935 /* OLTitleSearchResult+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "OLTitleSearchResult+CoreDataProperties.swift"; path = "Model/OLTitleSearchResult+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C412FE621CC3DFA200EDB935 /* LanguagesCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguagesCoordinator.swift; path = Coordinators/LanguagesCoordinator.swift; sourceTree = "<group>"; };
 		C4178EF41D67A50B00D274E8 /* NavigationControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavigationControllerDelegate.swift; path = Transitions/NavigationControllerDelegate.swift; sourceTree = "<group>"; };
+		C4178EF61D67B1E400D274E8 /* WindowShadeTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WindowShadeTransition.swift; path = Transitions/WindowShadeTransition.swift; sourceTree = "<group>"; };
+		C4178EF71D67B1E400D274E8 /* SegueWithWindowShade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegueWithWindowShade.swift; path = Transitions/SegueWithWindowShade.swift; sourceTree = "<group>"; };
 		C4188A231CE4FD9500D02E19 /* OLEBookItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "OLEBookItem+CoreDataProperties.swift"; path = "Model/OLEBookItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C4188A241CE4FD9500D02E19 /* OLEBookItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLEBookItem.swift; path = Model/OLEBookItem.swift; sourceTree = "<group>"; };
 		C4188A271CE511D200D02E19 /* IAEBookItemDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IAEBookItemDownloadOperation.swift; path = "App Operations/IAEBookItemDownloadOperation.swift"; sourceTree = "<group>"; };
@@ -416,6 +420,8 @@
 		C42DBE4B1CBD67B10048788E /* Transitions */ = {
 			isa = PBXGroup;
 			children = (
+				C4178EF61D67B1E400D274E8 /* WindowShadeTransition.swift */,
+				C4178EF71D67B1E400D274E8 /* SegueWithWindowShade.swift */,
 				C4178EF41D67A50B00D274E8 /* NavigationControllerDelegate.swift */,
 				C42DBE701CBD68B20048788E /* ImageViewTransitionSource.swift */,
 				C42DBE5F1CBD68740048788E /* ImageZoomTransition.swift */,
@@ -978,6 +984,7 @@
 				C4A0F0851D1468C500D0F604 /* BookGetOperation.swift in Sources */,
 				C4EF99D21CA1B04C00BEF2D3 /* AuthorDetailWithThumbGetOperation.swift in Sources */,
 				C4A722111D2DDD0500C4BCED /* SegmentedTableViewCell.swift in Sources */,
+				C4178EF91D67B1E400D274E8 /* SegueWithWindowShade.swift in Sources */,
 				C4DA1F801C8A5AA700DFA4BF /* OLAuthorDetailWorksTableViewController.swift in Sources */,
 				C41082141CB9E13B00319B83 /* OLTitleSearchResult.swift in Sources */,
 				C4DA1F7B1C8A329B00DFA4BF /* AuthorWorksGetOperation.swift in Sources */,
@@ -990,6 +997,7 @@
 				C4E863981C9A32FB002C0E6B /* OLAuthorDetailEditionsTableViewController.swift in Sources */,
 				C42DBE6E1CBD68740048788E /* TableviewCellZoomTransition.swift in Sources */,
 				C430E9CA1CD2B294007E15AD /* DeluxeDetailInlineTableViewCell.swift in Sources */,
+				C4178EF81D67B1E400D274E8 /* WindowShadeTransition.swift in Sources */,
 				C4F00C571CD93128002D7E14 /* DeluxeDetailBodyTableViewCell.swift in Sources */,
 				C488D61C1D09C0460025B61D /* DeluxeDetailHTMLTableViewCell.swift in Sources */,
 				C4EF99E21CA3792700BEF2D3 /* WorkDetailCoordinator.swift in Sources */,

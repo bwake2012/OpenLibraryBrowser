@@ -33,6 +33,7 @@ class EditionDetailCoordinator: OLQueryCoordinator {
     
     func updateUI( editionDetail: OLEditionDetail ) {
         
+        assert( NSThread.isMainThread() )
         if let editionDetailVC = editionDetailVC {
             
             retrieveAuthors( editionDetail )
