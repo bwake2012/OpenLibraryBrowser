@@ -159,6 +159,9 @@
                                             <constraint firstItem="3EA-Cy-qd5" firstAttribute="leading" secondItem="crG-FT-kbK" secondAttribute="leading" id="Ucp-Db-nvq"/>
                                             <constraint firstItem="3EA-Cy-qd5" firstAttribute="top" secondItem="crG-FT-kbK" secondAttribute="top" id="cYy-yg-SJL"/>
                                         </constraints>
+                                        <connections>
+                                            <outlet property="delegate" destination="CsL-qH-Mpk" id="iXR-5o-NKR"/>
+                                        </connections>
                                     </scrollView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

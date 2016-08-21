@@ -67,6 +67,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         set( newSortFields ) {
             
             cachedSortFields = newSortFields
+            saveState()
             cachedFetchedResultsController = nil
             dispatch_async( dispatch_get_main_queue() ) {
 
@@ -147,7 +148,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
 
         dispatch_async( dispatch_get_main_queue() ) {
             
-            self.updateTableFooter()
+            self.updateFooter()
         
             self.updateUI()
         }
@@ -259,7 +260,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         
         if nil == generalSearchOperation {
             
-            updateTableFooter( "fetching books..." )
+            updateFooter( "fetching books..." )
 
             self.searchKeys = newSearchKeys
             if numberOfSections() > 0 {
@@ -292,9 +293,9 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
     
     func nextQueryPage() -> Void {
         
-        if !searchKeys.isEmpty && nil == self.generalSearchOperation {
+        if nil == self.generalSearchOperation && !searchKeys.isEmpty && highWaterMark < searchResults.numFound {
             
-            updateTableFooter( "fetching more books..." )
+            updateFooter( "fetching more books..." )
 
             nextOffset = highWaterMark + kPageSize
             
@@ -337,7 +338,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
                         strongSelf.coordinatorIsNoLongerBusy()
 
                         refreshControl?.endRefreshing()
-                        strongSelf.updateTableFooter()
+                        strongSelf.updateFooter()
                         
                         strongSelf.saveState()
                         
@@ -374,24 +375,15 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
     private func updateResults(searchResults: SearchResults) -> Void {
         
         self.searchResults = searchResults
-        self.highWaterMark = searchResults.start + searchResults.pageSize
+        self.highWaterMark = min(searchResults.numFound, searchResults.start + searchResults.pageSize )
  
     }
     
-    private func updateTableFooter( text: String = "" ) -> Void {
+    private func updateFooter( text: String = "" ) -> Void {
         
-        if let tableVC = self.tableVC {
-            if let footer = tableVC.tableView.tableFooterView as? OLTableViewHeaderFooterView {
-                
-                if !text.isEmpty {
-                    footer.footerLabel.text = text
-                } else {
-                    footer.footerLabel.text = "\(self.highWaterMark) of \(self.searchResults.numFound)"
-                }
-            }
-        }
+        updateTableFooter( tableVC?.tableView, highWaterMark: highWaterMark, numFound: searchResults.numFound, text: text )
     }
-    
+
     // MARK: FetchedResultsControllerDelegate
     func fetchedResultsControllerDidPerformFetch(controller: FetchedResultsController< OLGeneralSearchResult >) {
 
@@ -400,7 +392,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             self.searchResults = SearchResults( start: 0, numFound: highWaterMark, pageSize: kPageSize )
         }
         
-        updateTableFooter()
+        updateFooter()
     }
     
     func fetchedResultsControllerWillChangeContent( controller: FetchedOLGeneralSearchResultController ) {

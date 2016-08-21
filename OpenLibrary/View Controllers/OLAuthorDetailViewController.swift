@@ -104,6 +104,8 @@ class OLAuthorDetailViewController: UIViewController {
             if let image = UIImage( data: data ) {
                 
                 authorPhoto.image = image
+                
+                headerView.layoutIfNeeded()
                 return true
             }
         }

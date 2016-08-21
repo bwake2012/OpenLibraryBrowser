@@ -18,7 +18,7 @@ class WorkEditionsDownloadOperation: GroupOperation {
     // MARK: Initialization
     
     /// - parameter cacheFile: The file `NSURL` to which the list of author Editions will be downloaded.
-    init( queryText: String, offset: Int, cacheFile: NSURL) {
+    init( queryText: String, offset: Int, limit: Int, cacheFile: NSURL) {
 
         self.cacheFile = cacheFile
         super.init(operations: [])
@@ -34,7 +34,7 @@ class WorkEditionsDownloadOperation: GroupOperation {
         */
         let query = queryText.stringByAddingPercentEncodingForRFC3986()!
         let urlString =
-            "https://openlibrary.org\(query)/editions.json?*="
+            "https://openlibrary.org\(query)/editions.json?offset=\(offset)&limit=\(limit)&*="
         let url = NSURL( string: urlString )!
         let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
             

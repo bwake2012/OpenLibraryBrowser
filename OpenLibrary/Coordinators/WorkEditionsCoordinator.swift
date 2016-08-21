@@ -15,7 +15,7 @@ import PSOperations
 
 private let kWorkEditonsCache = "workEditionsCache"
 
-private let kPageSize = 100
+private let kPageSize = 50
 
 class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate {
     
@@ -29,11 +29,11 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         
         let fetchRequest = NSFetchRequest( entityName: OLEditionDetail.entityName )
  
-        let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
-        let today = NSDate()
-        let lastWeek = today.dateByAddingTimeInterval( -7 * secondsPerDay )
+//        let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
+//        let today = NSDate()
+//        let lastWeek = today.dateByAddingTimeInterval( -7 * secondsPerDay )
         
-        fetchRequest.predicate = NSPredicate( format: "work_key==%@ && retrieval_date > %@", "\(self.workKey)", lastWeek )
+        fetchRequest.predicate = NSPredicate( format: "work_key==%@", "\(self.workKey)" )
         
         fetchRequest.sortDescriptors =
             [NSSortDescriptor(key: "coversFound", ascending: false),
@@ -94,11 +94,11 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     
     func displayToCell( cell: WorkEditionTableViewCell, indexPath: NSIndexPath ) -> OLEditionDetail? {
         
-        if needAnotherPage( indexPath.row, highWaterMark: highWaterMark ) {
-            
-            nextQueryPage( highWaterMark )
-        }
-        
+//        if needAnotherPage( indexPath.row, highWaterMark: highWaterMark ) {
+//            
+//            nextQueryPage( highWaterMark )
+//        }
+
         guard let result = objectAtIndexPath( indexPath ) else { return nil }
         
         cell.configure( tableVC!.tableView, key: result.key, data: result )
@@ -144,6 +144,8 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             self.workKey = workKey
             self.highWaterMark = 0
             
+            updateFooter( "fetching editions..." )
+            
             workEditionsGetOperation =
                 WorkEditionsGetOperation(
                         queryText: workKey,
@@ -171,14 +173,16 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         }
     }
     
-    func nextQueryPage( offset: Int ) -> Void {
+    func nextQueryPage() -> Void {
         
-        if nil == workEditionsGetOperation && !workKey.isEmpty {
+        if nil == workEditionsGetOperation && !workKey.isEmpty && highWaterMark < searchResults.numFound {
+            
+            updateFooter( "fetching more editions..." )
             
             workEditionsGetOperation =
                 WorkEditionsGetOperation(
                         queryText: self.workKey,
-                        offset: offset, limit: kPageSize,
+                        offset: highWaterMark, limit: kPageSize,
                         withCoversOnly: withCoversOnly,
                         coreDataStack: coreDataStack,
                         updateResults: self.updateResults
@@ -208,7 +212,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         return
             nil == workEditionsGetOperation &&
             !workKey.isEmpty &&
-            highWaterMark < editionsCount &&
+            highWaterMark < searchResults.numFound &&
             index >= ( highWaterMark - ( searchResults.pageSize / 4 ) )
     }
     
@@ -217,26 +221,15 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         
         self.searchResults = searchResults
         if editionsCount != searchResults.numFound {
-            editionsCount = searchResults.numFound
+            editionsCount = max( searchResults.numFound, fetchedResultsController.count )
         }
         highWaterMark = min( editionsCount, searchResults.start + searchResults.pageSize )
 
     }
     
-    private func updateFooter() {
+    private func updateFooter( text: String = "" ) {
         
-        dispatch_async( dispatch_get_main_queue() ) {
-            
-            [weak self] in
-            
-            if let strongSelf = self,
-                tableView = strongSelf.tableVC?.tableView,
-                footer = tableView.tableFooterView as? OLTableViewHeaderFooterView {
-                
-                footer.footerLabel.text =
-                    "\(strongSelf.highWaterMark) of \(strongSelf.editionsCount)"
-            }
-        }
+        updateTableFooter( tableVC?.tableView, highWaterMark: highWaterMark, numFound: editionsCount, text: text )
     }
     
     // MARK: FetchedResultsControllerDelegate
@@ -255,55 +248,90 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             } else {
                 
                 highWaterMark = controller.count
+                if highWaterMark % kPageSize != 0 {
+                    editionsCount = highWaterMark
+                } else {
+                    editionsCount = highWaterMark + kPageSize
+                }
                 if 0 == searchResults.numFound {
-                    searchResults = SearchResults( start: 0, numFound: highWaterMark + kPageSize, pageSize: kPageSize )
+                    searchResults = SearchResults( start: 0, numFound: editionsCount + 1, pageSize: kPageSize )
                 }
             }
 
-            if let tableView = tableVC?.tableView,
-                footer = tableView.tableFooterView as? OLTableViewHeaderFooterView {
-                
-                footer.footerLabel.text = "\(highWaterMark) of \(highWaterMark)"
-            }
+            updateFooter()
         }
     }
     
     func fetchedResultsControllerWillChangeContent( controller: FetchedWorkEditionsController ) {
-        tableVC?.tableView.beginUpdates()
+//        tableVC?.tableView.beginUpdates()
     }
     
     func fetchedResultsControllerDidChangeContent( controller: FetchedWorkEditionsController ) {
-        tableVC?.tableView.endUpdates()
+
+        if let tableView = tableVC?.tableView {
+            
+            tableView.beginUpdates()
+            
+            tableView.deleteSections( deletedSectionIndexes, withRowAnimation: .Automatic )
+            tableView.insertSections( insertedSectionIndexes, withRowAnimation: .Automatic )
+            
+            tableView.deleteRowsAtIndexPaths( deletedRowIndexPaths, withRowAnimation: .Left )
+            tableView.insertRowsAtIndexPaths( insertedRowIndexPaths, withRowAnimation: .Right )
+            tableView.reloadRowsAtIndexPaths( updatedRowIndexPaths, withRowAnimation: .Automatic )
+            
+            tableView.endUpdates()
+            
+            // nil out the collections so they are ready for their next use.
+            self.insertedSectionIndexes = NSMutableIndexSet()
+            self.deletedSectionIndexes = NSMutableIndexSet()
+            
+            self.deletedRowIndexPaths = []
+            self.insertedRowIndexPaths = []
+            self.updatedRowIndexPaths = []
+            
+            highWaterMark = max( highWaterMark, controller.count )
+            updateFooter()
+        }
     }
     
     func fetchedResultsController( controller: FetchedWorkEditionsController,
         didChangeObject change: FetchedResultsObjectChange< OLEditionDetail > ) {
-            switch change {
-            case let .Insert(_, indexPath):
-                tableVC?.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-                break
-                
-            case let .Delete(_, indexPath):
-                tableVC?.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-                break
-                
-            case let .Move(_, fromIndexPath, toIndexPath):
-                tableVC?.tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
-                
-            case let .Update(_, indexPath):
-                tableVC?.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+
+        switch change {
+        case let .Insert(_, indexPath):
+            if !insertedSectionIndexes.containsIndex( indexPath.section ) {
+                insertedRowIndexPaths.append( indexPath )
             }
+            break
+            
+        case let .Delete(_, indexPath):
+            if !deletedSectionIndexes.containsIndex( indexPath.section ) {
+                deletedRowIndexPaths.append( indexPath )
+            }
+            break
+            
+        case let .Move(_, fromIndexPath, toIndexPath):
+            if !insertedSectionIndexes.containsIndex( toIndexPath.section ) {
+                insertedRowIndexPaths.append( toIndexPath )
+            }
+            if !deletedSectionIndexes.containsIndex( fromIndexPath.section ) {
+                deletedRowIndexPaths.append( fromIndexPath )
+            }
+            
+        case let .Update(_, indexPath):
+            updatedRowIndexPaths.append( indexPath )
+        }
     }
     
     func fetchedResultsController(controller: FetchedWorkEditionsController,
         didChangeSection change: FetchedResultsSectionChange< OLEditionDetail >) {
-            switch change {
-            case let .Insert(_, index):
-                tableVC?.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
-                
-            case let .Delete(_, index):
-                tableVC?.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
-            }
+
+        switch change {
+        case let .Insert(_, index):
+            insertedSectionIndexes.addIndex( index )
+        case let .Delete(_, index):
+            deletedSectionIndexes.addIndex( index )
+        }
     }
 
     // MARK: install query coordinators

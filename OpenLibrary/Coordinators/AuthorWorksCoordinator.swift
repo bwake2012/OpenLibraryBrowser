@@ -51,7 +51,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
     }()
     
     var authorKey: String
-    var numFound = Int64( kPageSize * 2 )
+    var numFound = kPageSize * 2
     var searchResults = SearchResults()
 
     var highWaterMark = 0
@@ -82,6 +82,11 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
             return nil
         }
         
+        if needAnotherPage( indexPath.row ) {
+            
+            nextQueryPage( highWaterMark )
+        }
+        
         let section = sections[indexPath.section]
         if indexPath.row >= section.objects.count {
             return nil
@@ -92,11 +97,6 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
     }
     
     func displayToCell( cell: AuthorWorksTableViewCell, indexPath: NSIndexPath ) -> OLWorkDetail? {
-        
-        if needAnotherPage( indexPath.row ) {
-            
-            nextQueryPage( highWaterMark )
-        }
         
         guard let workDetail = objectAtIndexPath( indexPath ) else { return nil }
         
@@ -145,6 +145,8 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
             self.searchResults = SearchResults()
             self.highWaterMark = 0
             
+            updateFooter( "fetching author works..." )
+            
             authorWorksGetOperation =
                 AuthorWorksGetOperation(
                         queryText: authorKey,
@@ -161,9 +163,12 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
                                 refreshControl?.endRefreshing()
 //                                strongSelf.updateUI()
                             }
-                            strongSelf.authorWorksGetOperation = nil
                             
                             strongSelf.refreshComplete( refreshControl )
+                            
+                            strongSelf.updateFooter()
+
+                            strongSelf.authorWorksGetOperation = nil
                         }
                     }
             
@@ -175,6 +180,8 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
     func nextQueryPage( offset: Int ) -> Void {
         
         if nil == authorWorksGetOperation && !authorKey.isEmpty {
+            
+            updateFooter( "fetching more author works..." )
             
             authorWorksGetOperation =
                 AuthorWorksGetOperation(
@@ -190,6 +197,8 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         //                refreshControl?.endRefreshing()
     //                    self.updateUI()
                     }
+                    
+                    strongSelf.updateFooter()
                     strongSelf.authorWorksGetOperation = nil
                 }
             }
@@ -222,19 +231,17 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
             if let strongSelf = self {
                 strongSelf.searchResults = searchResults
                 strongSelf.highWaterMark = searchResults.start + searchResults.pageSize
-                if strongSelf.numFound != Int64( searchResults.numFound ) {
-                    strongSelf.numFound = Int64( searchResults.numFound )
+                if strongSelf.numFound != searchResults.numFound {
+                    strongSelf.numFound = searchResults.numFound
                 }
                 
-                if let tableView = strongSelf.authorWorksTableVC?.tableView {
-                    
-                    if let footer = tableView.tableFooterView as? OLTableViewHeaderFooterView {
-                        
-                        footer.footerLabel.text = "\(strongSelf.highWaterMark) of \(strongSelf.numFound)"
-                    }
-                }
             }
         }
+    }
+    
+    func updateFooter( text: String = "" ) {
+        
+        updateTableFooter( authorWorksTableVC?.tableView, highWaterMark: highWaterMark, numFound: Int( numFound ), text: text )
     }
     
     // MARK: FetchedResultsControllerDelegate
@@ -253,6 +260,13 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
             } else {
                 
                 highWaterMark = controller.count
+                if highWaterMark % kPageSize != 0 {
+                    numFound = highWaterMark
+                } else {
+                    numFound = highWaterMark + kPageSize
+                }
+                
+                updateFooter()
             }
         }
     }
@@ -283,6 +297,9 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
             self.deletedRowIndexPaths = []
             self.insertedRowIndexPaths = []
             self.updatedRowIndexPaths = []
+            
+            highWaterMark = max( highWaterMark, controller.count )
+            updateFooter()
         }
     }
     

@@ -48,7 +48,7 @@ class WorkEditionsGetOperation: GroupOperation {
         
             There is an optional operation 0 to delete the existing contents of the Core Data store
         */
-        downloadOperation = WorkEditionsDownloadOperation( queryText: queryText, offset: offset, cacheFile: cacheFile )
+        downloadOperation = WorkEditionsDownloadOperation( queryText: queryText, offset: offset, limit: limit, cacheFile: cacheFile )
         parseOperation = WorkEditionsParseOperation( parentKey: queryText, offset: offset, limit: limit, withCoversOnly: withCoversOnly, cacheFile: cacheFile, coreDataStack: coreDataStack, updateResults: updateResults )
         
         let finishOperation = NSBlockOperation( block: completionHandler )

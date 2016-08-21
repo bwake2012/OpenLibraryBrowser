@@ -20,6 +20,7 @@ class OLQueryCoordinator: NSObject {
     
     private static var dateFormatter: NSDateFormatter?
 
+    // MARK: Instance variables
     var deletedSectionIndexes = NSMutableIndexSet()
     var insertedSectionIndexes = NSMutableIndexSet()
     
@@ -27,7 +28,6 @@ class OLQueryCoordinator: NSObject {
     var insertedRowIndexPaths: [NSIndexPath] = []
     var updatedRowIndexPaths: [NSIndexPath] = []
     
-    // MARK: Instance variables
     let operationQueue: OperationQueue
     let coreDataStack: CoreDataStack
 
@@ -117,4 +117,26 @@ class OLQueryCoordinator: NSObject {
             }
         }
     }
+
+    func updateTableFooter( tableView: UITableView?, highWaterMark: Int, numFound: Int, text: String = "" ) -> Void {
+        
+        dispatch_async( dispatch_get_main_queue() ) {
+            
+            [weak tableView] in
+            
+            if let tableView = tableView {
+                if let footer = tableView.tableFooterView as? OLTableViewHeaderFooterView {
+                    
+                    if !text.isEmpty {
+                        footer.footerLabel.text = text
+                    } else if 0 == highWaterMark && 0 == numFound {
+                        footer.footerLabel.text = "No results found."
+                    } else {
+                        footer.footerLabel.text = "\(highWaterMark) of \(numFound)"
+                    }
+                }
+            }
+        }
+    }
+    
 }

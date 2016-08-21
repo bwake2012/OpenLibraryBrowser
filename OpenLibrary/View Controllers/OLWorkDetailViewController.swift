@@ -12,7 +12,7 @@ import CoreData
 
 import BNRCoreDataStack
 
-class OLWorkDetailViewController: UIViewController {
+class OLWorkDetailViewController: UIViewController, UIScrollViewDelegate {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var headerView: UIView!
@@ -109,6 +109,18 @@ class OLWorkDetailViewController: UIViewController {
         workEditionsVC?.refreshQuery( refreshControl )
     }
     
+    func scrollViewDidEndDragging( scrollView: UIScrollView, willDecelerate decelerate: Bool ) {
+        
+        // UITableView only moves in one direction, y axis
+        let currentOffset = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+        
+        // Change 10.0 to adjust the distance from bottom
+        if maximumOffset - currentOffset <= 10.0 {
+            
+            workEditionsVC?.queryCoordinator?.nextQueryPage()
+        }
+    }
     
     // MARK: Utility
     func findAuthorDetailInStack() -> OLAuthorDetailViewController? {

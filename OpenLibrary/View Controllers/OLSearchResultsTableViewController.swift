@@ -366,7 +366,7 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
 
     func tableView( tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath ) -> CGFloat {
         
-        var height = SegmentedTableViewCell.estimatedCellHeight
+        let height = SegmentedTableViewCell.estimatedCellHeight
         
 //        if let object = generalSearchCoordinator?.objectAtIndexPath( indexPath ) {
 //        

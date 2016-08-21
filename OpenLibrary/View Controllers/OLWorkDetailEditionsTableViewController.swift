@@ -60,6 +60,21 @@ class OLWorkDetailEditionsTableViewController: UITableViewController {
         }
     }
     
+    // MARK: UIScrollViewController
+    
+    override func scrollViewDidEndDragging( scrollView: UIScrollView, willDecelerate decelerate: Bool ) {
+        
+        // UITableView only moves in one direction, y axis
+        let currentOffset = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+        
+        // Change 10.0 to adjust the distance from bottom
+        if maximumOffset - currentOffset <= 10.0 {
+            
+            queryCoordinator?.nextQueryPage()
+        }
+    }
+    
     // MARK: UITableViewDelegate
     
     // MARK: UITableviewDataSource

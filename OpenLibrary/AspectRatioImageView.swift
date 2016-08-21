@@ -65,7 +65,7 @@ class AspectRatioImageView: UIImageView {
                     }
                 }
                 
-                self.superview?.layoutIfNeeded()
+                setNeedsLayout()
             }
         }
     }

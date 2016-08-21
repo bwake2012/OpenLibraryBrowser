@@ -96,9 +96,11 @@ class WorkEditionsParseOperation: Operation {
             return
         }
         
+        let pageSizeReturned = entries.count
+        
         if 0 == numFound {
             
-            numFound = offset + entries.count
+            numFound = offset + pageSizeReturned
         }
         
         if 0 == numFound {
@@ -106,10 +108,6 @@ class WorkEditionsParseOperation: Operation {
             updateResults( SearchResults( start: offset, numFound: offset, pageSize: 0 ) )
             finishWithError( nil )
             return
-        }
-        
-        if entries.count < limit {
-            numFound = min( numFound, offset + entries.count )
         }
         
         context.performBlock {
@@ -128,7 +126,7 @@ class WorkEditionsParseOperation: Operation {
             let error = self.saveContext()
 
             if nil == error {
-                self.updateResults( SearchResults( start: self.offset, numFound: numFound, pageSize: resultSet.count ) )
+                self.updateResults( SearchResults( start: self.offset, numFound: numFound, pageSize: pageSizeReturned ) )
             } else {
                 
                 print( "\(error?.localizedDescription)" )
