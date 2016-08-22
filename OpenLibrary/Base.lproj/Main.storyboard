@@ -555,7 +555,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="authorSearch" destination="yzG-JE-7DI" id="yR4-rg-Csc"/>
-                        <outlet property="ebookOnlySwitch" destination="1aZ-DR-GxD" id="mmV-Oo-25g"/>
+                        <outlet property="ebookOnlySwitch" destination="1aZ-DR-GxD" id="buN-GG-bbs"/>
                         <outlet property="generalSearch" destination="bIn-rR-3ib" id="lOH-F6-3qd"/>
                         <outlet property="isbnSearch" destination="hHi-E3-Zq7" id="SKx-Es-9RL"/>
                         <outlet property="personSearch" destination="rKM-QO-vqF" id="vrG-ak-wio"/>

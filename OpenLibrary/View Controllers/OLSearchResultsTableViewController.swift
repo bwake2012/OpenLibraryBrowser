@@ -92,7 +92,7 @@ class OLSearchResultsTableViewController: UIViewController {
 //                if let delegate = segue as? UIViewControllerTransitioningDelegate {
                     
 //                    destVC.transitioningDelegate = delegate
-                    destVC.displaySearchKeys( generalSearchCoordinator.searchKeys )
+                    destVC.initialSearchKeys( generalSearchCoordinator.searchKeys )
                     
                     destVC.saveSearchDictionary = saveSearchKeys
 //                }

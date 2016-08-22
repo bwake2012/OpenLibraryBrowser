@@ -55,7 +55,12 @@ class OLBookSearchViewController: UIViewController {
     }
     
     // MARK: set initial search keys
-    func displaySearchKeys( searchKeys: [String: String] ) {
+    func initialSearchKeys( searchKeys: [String: String] ) {
+        
+        self.searchKeys = searchKeys
+    }
+
+    private func displaySearchKeys( searchKeys: [String: String] ) {
         
         for field in fields {
             
@@ -70,7 +75,6 @@ class OLBookSearchViewController: UIViewController {
             ebookOnlySwitch.on = "true" == hasFullText
         }
         
-        self.searchKeys = searchKeys
     }
     
     // MARK: Swift classes
