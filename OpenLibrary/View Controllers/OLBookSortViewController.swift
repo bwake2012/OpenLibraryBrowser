@@ -58,7 +58,7 @@ class OLBookSortViewController: UIViewController {
         
         displaySortKeys()
         
-        navigationController?.hidesBarsOnSwipe = false
+        // navigationController?.hidesBarsOnSwipe = false
     }
     
     override func didReceiveMemoryWarning() {

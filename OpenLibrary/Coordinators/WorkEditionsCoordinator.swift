@@ -38,6 +38,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         fetchRequest.sortDescriptors =
             [NSSortDescriptor(key: "coversFound", ascending: false),
              NSSortDescriptor(key: "index", ascending: true)]
+        fetchRequest.fetchBatchSize = 100
         
         let frc = FetchedWorkEditionsController( fetchRequest: fetchRequest,
             managedObjectContext: self.coreDataStack.mainQueueContext,
@@ -162,9 +163,9 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
                                     refreshControl?.endRefreshing()
                                 
                                     strongSelf.updateFooter()
+                                
+                                    strongSelf.workEditionsGetOperation = nil
                                 }
-                            
-                            strongSelf.workEditionsGetOperation = nil
                         }
                     }
             

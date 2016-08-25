@@ -37,8 +37,9 @@ class AuthorEditionsDownloadOperation: GroupOperation {
         let urlString =
             "https://openlibrary.org/query.json?type=/type/edition&authors=\(query)&*="
         let url = NSURL( string: urlString )!
-        let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
-            
+        
+        let task = NSURLSession.sharedSession().jsonDownloadTaskWithURL( url ) {
+        
             url, response, error in
             
             self.downloadFinished(url, response: response as? NSHTTPURLResponse, error: error)

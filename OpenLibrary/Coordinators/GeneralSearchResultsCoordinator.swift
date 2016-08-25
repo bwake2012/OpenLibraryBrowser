@@ -85,16 +85,16 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
     // MARK: Fetched Results Controller
     private func buildFetchedResultsController( delegate: GeneralSearchResultsCoordinator, stack: CoreDataStack, sortFields: [SortField] ) -> FetchedOLGeneralSearchResultController {
         
-        let request = NSFetchRequest( entityName: OLGeneralSearchResult.entityName )
-        request.predicate = NSPredicate( format: "sequence==\(sequence)" )
+        let fetchRequest = NSFetchRequest( entityName: OLGeneralSearchResult.entityName )
+        fetchRequest.predicate = NSPredicate( format: "sequence==\(sequence)" )
 
-        request.sortDescriptors = buildSortDescriptors( sortFields )
-        assert( nil == request.sortDescriptors || !request.sortDescriptors!.isEmpty )
-        request.fetchBatchSize = 100
+        fetchRequest.sortDescriptors = buildSortDescriptors( sortFields )
+        assert( nil == fetchRequest.sortDescriptors || !fetchRequest.sortDescriptors!.isEmpty )
+        fetchRequest.fetchBatchSize = 100
         
         let controller =
             FetchedOLGeneralSearchResultController(
-                    fetchRequest: request,
+                    fetchRequest: fetchRequest,
                     managedObjectContext: stack.mainQueueContext,
                     sectionNameKeyPath: nil,
                     cacheName: kGeneralSearchCache
@@ -137,12 +137,12 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         }
         
         reachabilityOperation = OLReachabilityOperation( host: "openlibrary.org" ) {
-            //                        if let reachabilityOperation = self.reachabilityOperation where reachabilityOperation.errors.isEmpty {
-            //                            self.reachabilityOperation = nil
-            //                        }
-        }
-        self.reachabilityOperation!.userInitiated = true
-        self.operationQueue.addOperation( self.reachabilityOperation! )
+//                if let reachabilityOperation = self.reachabilityOperation where reachabilityOperation.errors.isEmpty {
+//                    self.reachabilityOperation = nil
+//                }
+            }
+        reachabilityOperation!.userInitiated = true
+        operationQueue.addOperation( reachabilityOperation! )
         
         OLLanguage.retrieveLanguages( operationQueue, coreDataStack: coreDataStack )
 

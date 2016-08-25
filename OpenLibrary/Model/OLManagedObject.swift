@@ -177,6 +177,7 @@ class OLManagedObject: NSManagedObject {
         
         fetchRequest.sortDescriptors =
             [NSSortDescriptor(key: "retrieval_date", ascending: false)]
+        fetchRequest.fetchBatchSize = 100
         
         var results = [T]?()
         do {

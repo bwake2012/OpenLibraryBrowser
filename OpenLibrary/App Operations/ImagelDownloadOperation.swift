@@ -34,7 +34,7 @@ class ImageDownloadOperation: GroupOperation {
         */
         let urlString = "https://covers.openlibrary.org/\(type)/\(imageKeyName)/\(stringID)-\(size).jpg?default=false"
         let url = NSURL( string: urlString )!
-        let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
+        let task = NSURLSession.sharedSession().jpgDownloadTaskWithURL( url ) {
             
             url, response, error in
             

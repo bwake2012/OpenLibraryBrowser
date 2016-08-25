@@ -9,8 +9,6 @@
 import UIKit
 import CoreData
 
-import BNRCoreDataStack
-
 class OLSearchResultsTableViewController: UIViewController {
 
     // MARK: Properties
@@ -60,7 +58,7 @@ class OLSearchResultsTableViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         
-        navigationController?.hidesBarsOnSwipe = true
+        // navigationController?.hidesBarsOnSwipe = true
 
         if let indexPath = savedIndexPath {
             

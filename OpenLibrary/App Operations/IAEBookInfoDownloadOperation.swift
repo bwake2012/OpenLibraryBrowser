@@ -35,7 +35,7 @@ class IAEBookInfoDownloadOperation: GroupOperation {
         let urlString = "https://archive.org/download/\(eBookKey)/\(eBookKey)_files.xml"
         print( urlString )
         let url = NSURL( string: urlString )!
-        let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
+        let task = NSURLSession.sharedSession().xmlDownloadTaskWithURL( url ) {
             
             url, response, error in
             

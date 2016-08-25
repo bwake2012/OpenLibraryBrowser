@@ -46,6 +46,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             [
                 NSSortDescriptor(key: "name", ascending: true)
             ]
+        fetchRequest.fetchBatchSize = 100
         
         let frc = FetchedAuthorDetailController(
             fetchRequest: fetchRequest,

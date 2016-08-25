@@ -40,7 +40,7 @@ class WorkDetailDownloadOperation: GroupOperation {
         query = query.stringByAddingPercentEncodingForRFC3986()!
         let urlString = "https://openlibrary.org/works/\(query).json"
         let url = NSURL( string: urlString )!
-        let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
+        let task = NSURLSession.sharedSession().jsonDownloadTaskWithURL( url ) {
             
             url, response, error in
             

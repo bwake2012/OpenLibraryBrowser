@@ -27,18 +27,19 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedRe
     
     private lazy var fetchedResultsController: FetchedOLTitleSearchResultController = {
         
-        let request = NSFetchRequest(entityName: OLTitleSearchResult.entityName)
+        let fetchRequest = NSFetchRequest(entityName: OLTitleSearchResult.entityName)
         
-        request.sortDescriptors = [
+        fetchRequest.sortDescriptors = [
             NSSortDescriptor( key: "sequence", ascending: true ),
             NSSortDescriptor( key: "index", ascending: true )
         ]
+        fetchRequest.fetchBatchSize = 100
         
         // request.fetchLimit = 100
         
         let controller =
             FetchedOLTitleSearchResultController(
-                fetchRequest: request,
+                fetchRequest: fetchRequest,
                 managedObjectContext: self.coreDataStack.mainQueueContext,
                 sectionNameKeyPath: nil,
                 cacheName: kTitleSearchCache

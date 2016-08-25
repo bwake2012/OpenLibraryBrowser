@@ -38,6 +38,7 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
         fetchRequest.sortDescriptors =
             [NSSortDescriptor(key: "coversFound", ascending: false),
              NSSortDescriptor(key: "index", ascending: true)]
+        fetchRequest.fetchBatchSize = 100
         
         let frc = FetchedAuthorEditionsController( fetchRequest: fetchRequest,
             managedObjectContext: self.coreDataStack.mainQueueContext,

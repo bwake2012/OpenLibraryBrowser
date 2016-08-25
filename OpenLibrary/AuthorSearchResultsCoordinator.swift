@@ -27,18 +27,19 @@ class AuthorSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedR
     
     private lazy var fetchedResultsController: FetchedOLAuthorSearchResultController = {
         
-        let request = NSFetchRequest(entityName: OLAuthorSearchResult.entityName)
+        let fetchRequest = NSFetchRequest(entityName: OLAuthorSearchResult.entityName)
         
-        request.sortDescriptors = [
+        fetchRequest.sortDescriptors = [
             NSSortDescriptor( key: "sequence", ascending: true ),
             NSSortDescriptor( key: "index", ascending: true )
         ]
+        fetchRequest.fetchBatchSize = 100
         
         // request.fetchLimit = 100
         
         let controller =
             FetchedOLAuthorSearchResultController(
-                fetchRequest: request,
+                fetchRequest: fetchRequest,
                 managedObjectContext: self.coreDataStack.mainQueueContext,
                 sectionNameKeyPath: nil,
                 cacheName: kAuthorSearchCache

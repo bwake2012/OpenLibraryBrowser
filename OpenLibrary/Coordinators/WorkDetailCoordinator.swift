@@ -45,6 +45,7 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
             [
                 NSSortDescriptor(key: "title", ascending: true)
             ]
+        fetchRequest.fetchBatchSize = 100
         
         let frc = FetchedWorkDetailController(
             fetchRequest: fetchRequest,

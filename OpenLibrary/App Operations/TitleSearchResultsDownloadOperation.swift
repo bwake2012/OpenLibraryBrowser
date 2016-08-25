@@ -34,7 +34,7 @@ class TitleSearchResultsDownloadOperation: GroupOperation {
         let query = queryText.stringByAddingPercentEncodingForRFC3986()!
         let urlString = "https://openlibrary.org/search.json?offset=\(offset)&limit=\(limit)&title=\(query)"
         let url = NSURL( string: urlString )!
-        let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
+        let task = NSURLSession.sharedSession().jsonDownloadTaskWithURL( url ) {
             
             url, response, error in
             

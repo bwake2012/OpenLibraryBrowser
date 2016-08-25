@@ -35,7 +35,7 @@ class WorkEditionListDownloadOperation: GroupOperation {
         let urlString =
             "https://openlibrary.org/query.json?type=/type/edition&works=\(workKey)"
         let url = NSURL( string: urlString )!
-        let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
+        let task = NSURLSession.sharedSession().jsonDownloadTaskWithURL( url ) {
             
             url, response, error in
             

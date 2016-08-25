@@ -33,6 +33,7 @@ class LanguagesCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate
             [
                 NSSortDescriptor(key: "index", ascending: true)
             ]
+        fetchRequest.fetchBatchSize = 100
         
         let frc = FetchedOLLanguageController(
                         fetchRequest: fetchRequest,

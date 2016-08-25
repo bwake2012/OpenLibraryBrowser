@@ -12,15 +12,16 @@ import PSOperations
 
 class OLReachabilityDownloadOperation: GroupOperation {
 
-    static let indexHTMLOpenLibrary404 = "<html><head><title>404 Not Found</title></head><body bgcolor=\"white\"><center><h1>404 Not Found</h1></center><hr><center>nginx/1.4.6 (Ubuntu)</center></body></html>"
-
+    private static let indexHTMLOpenLibrary404 = "<html><head><title>404 Not Found</title></head><body bgcolor=\"white\"><center><h1>404 Not Found</h1></center><hr><center>nginx/1.4.6 (Ubuntu)</center></body></html>"
+    
     init( host: String ) {
         
         super.init(operations: [])
         
         let urlString = "https://openlibrary.org/index.html"
         let url = NSURL( string: urlString )!
-        let task = NSURLSession.sharedSession().dataTaskWithURL( url ) {
+        
+        let task = NSURLSession.sharedSession().htmlDataTaskWithURL( url ) {
             
             data, response, error in
             
@@ -41,7 +42,15 @@ class OLReachabilityDownloadOperation: GroupOperation {
     
     func downloadFinished( data: NSData?, response: NSHTTPURLResponse?, error: NSError? ) {
 
-        if let data = data {
+        if let error = error {
+            
+            aggregateError( error )
+        
+        } else if let error = validateDataMIMEType( htmlMIMEType, response: response, data: data ) {
+                
+            aggregateError( error )
+
+        } else if let data = data {
             
             let dataString = NSString( data: data, encoding: NSUTF8StringEncoding )
             if let dataString = dataString {
@@ -53,11 +62,8 @@ class OLReachabilityDownloadOperation: GroupOperation {
                     print( "unexpected result:\n\(massagedString)" )
                 }
             }
-        }
-        else if let error = error {
-            aggregateError(error)
-        }
-        else {
+
+        } else {
             // Do nothing, and the operation will automatically finish.
         }
     }

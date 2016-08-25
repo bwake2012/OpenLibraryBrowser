@@ -83,42 +83,6 @@ class AuthorNameSearchOperation: GroupOperation {
         }
     }
     
-//    private func produceAlert(error: NSError) {
-//        /*
-//            We only want to show the first error, since subsequent errors might
-//            be caused by the first.
-//        */
-//        if hasProducedAlert { return }
-//        
-//        let alert = AlertOperation()
-//        
-//        let errorReason = (error.domain, error.code, error.userInfo[OperationConditionKey] as? String)
-//        
-//        // These are examples of errors for which we might choose to display an error to the user
-//        let failedReachability = (OperationErrorDomain, OperationErrorCode.ConditionFailed, ReachabilityCondition.name)
-//        
-//        let failedJSON = (NSCocoaErrorDomain, NSPropertyListReadCorruptError, nil as String?)
-//
-//        switch errorReason {
-//            case failedReachability:
-//                // We failed because the network isn't reachable.
-//                let hostURL = error.userInfo[ReachabilityCondition.hostKey] as! NSURL
-//                
-//                alert.title = "Unable to Connect"
-//                alert.message = "Cannot connect to \(hostURL.host!). Make sure your device is connected to the internet and try again."
-//            
-//            case failedJSON:
-//                // We failed because the JSON was malformed.
-//                alert.title = "Unable to Download"
-//                alert.message = "Cannot parse Author Search results. Try again later."
-//
-//            default:
-//                return
-//        }
-//        
-//        produceOperation(alert)
-//        hasProducedAlert = true
-//    }
 }
 
 // Operators to use in the switch statement.

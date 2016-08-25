@@ -13,8 +13,9 @@ class EbookEditionTableViewCell: OLTableViewCell {
     @IBOutlet weak var editionTitle: UILabel!
     @IBOutlet weak var editionSubTitle: UILabel!
     @IBOutlet weak var authorName: UILabel!
+    @IBOutlet weak var eBookStatus: UILabel!
 
-    override func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
+    func configure( tableView: UITableView, key: String, eBookStatusText: String, data: OLManagedObject? ) {
         
         assert( NSThread.isMainThread() )
         
@@ -46,6 +47,8 @@ class EbookEditionTableViewCell: OLTableViewCell {
                 
                 authorName.text = entry.author_names.joinWithSeparator( ", " )
             }
+            
+            eBookStatus.text = eBookStatusText
             
             if entry.hasImage {
                 

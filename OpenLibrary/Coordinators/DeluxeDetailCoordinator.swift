@@ -15,7 +15,7 @@ import PSOperations
 
 // let kAuthorDeluxeDetailCache = "authorDeluxeDetail"
 
-class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SFSafariViewControllerDelegate {
+class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
     
     weak var deluxeDetailVC: OLDeluxeDetailTableViewController?
 
@@ -263,6 +263,10 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator, SF
     
     
     // MARK: Safari View Controller
+}
+
+extension DeluxeDetailCoordinator: SFSafariViewControllerDelegate {
+    
     func showLinkedWebSite( vc: UIViewController, url: NSURL? ) {
         
         if let url = url {

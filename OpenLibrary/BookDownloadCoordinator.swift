@@ -21,7 +21,7 @@ let kFileTypeDjVu     = "DjVu"
 let kFileTypeTextPDF  = "Text PDF"
 let kFileTypeDjVuText = "DjVuTXT"
 
-class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate, SFSafariViewControllerDelegate, UIDocumentInteractionControllerDelegate {
+class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate, UIDocumentInteractionControllerDelegate {
     
     weak var downloadVC: OLBookDownloadViewController?
     
@@ -59,6 +59,7 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
                 NSSortDescriptor( key: "format", ascending: true ),
                 NSSortDescriptor( key: "name", ascending: true )
             ]
+        fetchRequest.fetchBatchSize = 100
         
         let frc = FetchedEBookFileController(
             fetchRequest: fetchRequest,
@@ -429,13 +430,15 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         }
     }
     
-    // MARK: Safari View Controller
+}
+
+extension BookDownloadCoordinator: SFSafariViewControllerDelegate {
+    
     func showLinkedWebSite( vc: UIViewController, url: NSURL? ) {
         
         if let url = url {
             let webVC = SFSafariViewController( URL: url )
             webVC.delegate = self
-            
             vc.presentViewController( webVC, animated: true, completion: nil )
         }
     }
@@ -445,6 +448,5 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         
         controller.dismissViewControllerAnimated( true, completion: nil )
     }
-
+    
 }
-

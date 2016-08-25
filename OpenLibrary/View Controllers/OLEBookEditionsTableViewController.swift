@@ -57,6 +57,11 @@ class OLEBookEditionsTableViewController: UITableViewController {
     
     // MARK: UITableViewDelegate
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        queryCoordinator?.didSelectItemAtIndexPath( indexPath )
+    }
+    
     // MARK: UITableviewDataSource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
@@ -69,6 +74,7 @@ class OLEBookEditionsTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCellWithIdentifier("EbookEditionTableViewCell", forIndexPath: indexPath)
         if let cell = cell as? EbookEditionTableViewCell {
             

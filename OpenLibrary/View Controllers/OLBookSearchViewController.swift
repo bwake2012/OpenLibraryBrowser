@@ -102,7 +102,7 @@ class OLBookSearchViewController: UIViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OLBookSearchViewController.keyboardWillBeHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
-        navigationController?.hidesBarsOnSwipe = false
+        // navigationController?.hidesBarsOnSwipe = false
     }
 
     override func didReceiveMemoryWarning() {

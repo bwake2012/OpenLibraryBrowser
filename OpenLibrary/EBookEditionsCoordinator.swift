@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import CoreData
+import SafariServices
 
 import BNRCoreDataStack
 import PSOperations
@@ -39,6 +40,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
             NSPredicate( format: "workKey==%@", "\(self.workKey)" )
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "publish_date", ascending: false)]
+        fetchRequest.fetchBatchSize = 100
         
         let frc = FetchedEBookItemController(
                         fetchRequest: fetchRequest,
@@ -95,13 +97,38 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         return section.objects[indexPath.row]
     }
     
+    func didSelectItemAtIndexPath( indexPath: NSIndexPath ) -> Void {
+        
+        guard let object = objectAtIndexPath( indexPath ) else { return }
+        
+        switch object.status {
+            
+            case "full access":
+                tableVC?.performSegueWithIdentifier( "EbookEditionTableViewCell", sender: tableVC )
+                break
+            
+            case "lendable":
+                if let url = NSURL( string: object.itemURL ) {
+                    showLinkedWebSite( tableVC!, url: url )
+                }
+                break
+            
+            case "checked out", "restricted":
+                break
+            
+            default:
+                print( "unknown eBook status: \(object.status)" )
+                break
+        }
+    }
+    
     func displayToCell( cell: EbookEditionTableViewCell, indexPath: NSIndexPath ) -> OLEBookItem? {
         
         guard let result = objectAtIndexPath( indexPath ) else { return nil }
         
         if let matchingEdition = result.matchingEdition() {
 
-            cell.configure( tableVC!.tableView, key: matchingEdition.key, data: matchingEdition )
+            cell.configure( tableVC!.tableView, key: matchingEdition.key, eBookStatusText: result.status, data: matchingEdition )
         
         } else {
             
@@ -163,7 +190,6 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
                         dispatch_async( dispatch_get_main_queue() ) {
                             
                             strongSelf.refreshComplete( refreshControl )
-                            //                                    strongSelf.updateUI()
                         }
                         
                         strongSelf.workEditionsGetOperation = nil
@@ -318,4 +344,23 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
                 downloadVC: destVC
         )
     }
+}
+
+extension EBookEditionsCoordinator: SFSafariViewControllerDelegate {
+    
+    func showLinkedWebSite( vc: UIViewController, url: NSURL? ) {
+        
+        if let url = url {
+            let webVC = SFSafariViewController( URL: url )
+            webVC.delegate = self
+            vc.presentViewController( webVC, animated: true, completion: nil )
+        }
+    }
+    
+    // MARK: SFSafariViewControllerDelegate
+    func safariViewControllerDidFinish(controller: SFSafariViewController) {
+        
+        controller.dismissViewControllerAnimated( true, completion: nil )
+    }
+    
 }

@@ -12,21 +12,37 @@ import ObjectiveC
 
 import PSOperations
 
-var AssociatedObjectHandle: UInt8 = 0
+private var extensionPropertiesKey: UInt8 = 0
 
-extension Operation {
+extension GroupOperation {
     
-    var hasProducedAlert: Bool {
-        get {
-            return objc_getAssociatedObject(self, &AssociatedObjectHandle) as? Bool ?? false
-        }
+    private class ExtensionProperties {
         
-        set {
-            objc_setAssociatedObject(self, &AssociatedObjectHandle, newValue, objc_AssociationPolicy (rawValue: 01401)! ) // (OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+        var hasProducedAlert: Bool = false
+        
+        init() {
+            
+            hasProducedAlert = false
         }
     }
+
+    private var extensionProperties: ExtensionProperties {
+        
+        get {
+            return
+                associatedObject( self, key: &extensionPropertiesKey ) { return ExtensionProperties() }
+        }
+        
+        set { associateObject( self, key: &extensionPropertiesKey, value: newValue ) }
+    }
     
-    func produceAlert(error: NSError) {
+    var hasProducedAlert: Bool {
+
+        get { return extensionProperties.hasProducedAlert }
+        set { extensionProperties.hasProducedAlert = newValue }
+    }
+    
+    func produceAlert( error: NSError ) {
         /*
          We only want to show the first error, since subsequent errors might
          be caused by the first.
@@ -41,6 +57,8 @@ extension Operation {
         let failedReachability = (OperationErrorDomain, OperationErrorCode.ConditionFailed, ReachabilityCondition.name)
         
         let failedJSON = (NSCocoaErrorDomain, NSPropertyListReadCorruptError, nil as String?)
+        
+        let failedServerError = (OperationErrorDomain, OperationErrorCode.ExecutionFailed.rawValue, nil as String?)
         
         let failedOther = (NSURLErrorDomain, -1200, nil as String?)
         
@@ -57,6 +75,17 @@ extension Operation {
             alert.title = "Unable to Download"
             alert.message = "Cannot parse General Search results. Try again later."
             
+        case failedServerError:
+            if let desiredMIMEType = error.userInfo[mimeTypeDesiredKey] as? String,
+               let returnedMIMEType = error.userInfo[mimeTypeReturnedKey] as? String {
+                
+                if jsonMIMEType == desiredMIMEType && htmlMIMEType == returnedMIMEType {
+                    
+                    alert.title = "Server Returned an Error"
+                    alert.message = "Server returned an HTML error page."
+                }
+            }
+
         case failedOther:
             alert.title = "Not Logged In to WiFi"
             alert.message = "Please log on to the WiFi access point."

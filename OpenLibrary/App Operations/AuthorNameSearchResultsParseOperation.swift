@@ -200,44 +200,6 @@ class AuthorNameSearchResultsParseOperation: Operation {
         newObject.havePhoto = HasPhoto.unknown
         newObject.has_photos = true
         
-//        let fetchRequest = NSFetchRequest( entityName: OLAuthorDetail.entityName )
-//        let key = newObject.key
-//        fetchRequest.predicate = NSPredicate( format: "key==%@", "\(key)" )
-//        
-//        fetchRequest.sortDescriptors =
-//            [
-//                NSSortDescriptor(key: "index", ascending: true)
-//            ]
-//        
-//        let frc = NSFetchedResultsController(
-//                        fetchRequest: fetchRequest,
-//                        managedObjectContext: detailContext,
-//                        sectionNameKeyPath: nil,
-//                        cacheName: nil
-//                    )
-//        
-//        do {
-//            try frc.performFetch()
-//            
-//            if let fetchedObjects = frc.fetchedObjects where 0 < fetchedObjects.count {
-//                
-//                if let fetchedDetail = fetchedObjects[0] as? OLAuthorDetail {
-//                    
-//                    let objectID = fetchedDetail.objectID
-//                    
-//                    if let detail = context.objectWithID( objectID ) as? OLAuthorDetail {
-//                        
-//                        assert( detail.key == newObject.key )
-//                        
-//                        newObject.toDetail = detail
-//                        newObject.has_photos = detail.hasImage
-//                    }
-//                }
-//            }
-//        }
-//        catch {
-//            print("Error in the fetched results controller: \(error).")
-//        }
     }
     
     /**

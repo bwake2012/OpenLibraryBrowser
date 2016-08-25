@@ -41,7 +41,7 @@ class GeneralSearchResultsDownloadOperation: GroupOperation {
         }
         let urlString = "https://openlibrary.org/search.json?offset=\(offset)&limit=\(limit)"
         let url = NSURL( string: urlString + queryString )!
-        let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
+        let task = NSURLSession.sharedSession().jsonDownloadTaskWithURL( url ) {
             
             url, response, error in
             

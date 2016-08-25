@@ -34,7 +34,7 @@ class LanguagesDownloadOperation: GroupOperation {
         */
         let urlString = "https://openlibrary.org/query.json?type=/type/language&code=&name=&limit=1000"
         let url = NSURL( string: urlString )!
-        let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
+        let task = NSURLSession.sharedSession().jsonDownloadTaskWithURL( url ) {
             
             url, response, error in
             
