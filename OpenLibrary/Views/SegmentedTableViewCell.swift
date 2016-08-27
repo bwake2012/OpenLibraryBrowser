@@ -359,7 +359,6 @@ class SegmentedTableViewCell: OLTableViewCell {
         
         let revEndY: [CGFloat] = endY.reverse()
         
-//        for view in reversedSegmentViews { view.hidden = false }
         animate(
                 reversedSegmentViews,
                 segmentViewTops: reversedSegmentViewTops,
@@ -379,7 +378,6 @@ class SegmentedTableViewCell: OLTableViewCell {
                 totalDuration: totalDuration,
                 endY: endY, endAlpha: 0.0
             ) {
-//                for view in self.segmentViews { view.hidden = true }
 
                 completion? ()
             }
@@ -394,7 +392,6 @@ class SegmentedTableViewCell: OLTableViewCell {
             frames[index] = segmentViews[index].frame
             frames[index].origin.y = y
 
-//            print( "\(index): \(y) \(frames[index])")
         }
         
         return frames

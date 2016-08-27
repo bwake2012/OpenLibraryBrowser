@@ -358,8 +358,6 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
         
         let height = SegmentedTableViewCell.estimatedCellHeight
         
-        print( "estimatedHeight: \(indexPath.row) \(height)" )
-        
         return height
     }
     
@@ -376,8 +374,6 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
                     )
         }
 
-        print( "height: \(indexPath.row) \(height)" )
-        
         return height
     }
     
