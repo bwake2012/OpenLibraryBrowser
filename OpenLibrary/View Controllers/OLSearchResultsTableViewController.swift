@@ -54,6 +54,7 @@ class OLSearchResultsTableViewController: UIViewController {
 
         generalSearchCoordinator = buildQueryCoordinator()
         
+        GeneralSearchResultSegmentedTableViewCell.registerCell( tableView )
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -270,58 +271,49 @@ class OLSearchResultsTableViewController: UIViewController {
     
     private func expandCell( tableView: UITableView, segmentedCell: SegmentedTableViewCell, key: String ) {
 
-            let duration = 0.3
-            
-            segmentedCell.setOpen( tableView, key: key )
+        let duration = 0.3
         
-//            if let visibleRows = tableView.indexPathsForVisibleRows {
+        segmentedCell.setOpen( tableView, key: key )
+        
+        UIView.animateWithDuration(
+            duration, delay: 0, options: .CurveLinear,
+            animations: {
+                () -> Void in
+                
+                tableView.beginUpdates()
+                tableView.endUpdates()
+            }
+        ) {
+            (finished) -> Void in
             
-                UIView.animateWithDuration(
-                    duration, delay: 0, options: .CurveLinear,
-                    animations: {
-                        () -> Void in
-                        
-//                        tableView.reloadRowsAtIndexPaths( visibleRows, withRowAnimation: .Automatic )
-                        tableView.beginUpdates()
-                        tableView.endUpdates()
-                    }
-                ) {
-                    (finished) -> Void in
-                    
-                    segmentedCell.selectedAnimation( tableView, key: key, expandCell: true, animated: true ) {
-                        
-                        SegmentedTableViewCell.animationComplete()
-                    }
-                }
-//            }
+            segmentedCell.selectedAnimation( tableView, key: key, expandCell: true, animated: true ) {
+                
+                SegmentedTableViewCell.animationComplete()
+            }
+        }
         
     }
     
     private func contractCell( tableView: UITableView, segmentedCell: SegmentedTableViewCell, key: String ) {
         
-//        if !SegmentedTableViewCell.animationInProgress() {
-            
-            let duration = 0.1 // isOpen ? 0.3 : 0.1 // isOpen ? 1.1 : 0.6
-            
-            segmentedCell.adjustCellHeights( tableView, key: key )
+        let duration = 0.1 // isOpen ? 0.3 : 0.1 // isOpen ? 1.1 : 0.6
         
-            segmentedCell.selectedAnimation( tableView, key: key, expandCell: false, animated: true ) {
+        segmentedCell.selectedAnimation( tableView, key: key, expandCell: false, animated: true ) {
+            
+            UIView.animateWithDuration(
+                duration, delay: 0.0, options: .CurveLinear,
                 
-                UIView.animateWithDuration(
-                    duration, delay: 0.0, options: .CurveLinear,
-                    
-                    animations: {
-                        () -> Void in
-                        tableView.beginUpdates()
-                        tableView.endUpdates()
-                    }
-                ) {
-                    (finished) -> Void in
-                    
-                    SegmentedTableViewCell.animationComplete()
+                animations: {
+                    () -> Void in
+                    tableView.beginUpdates()
+                    tableView.endUpdates()
                 }
+            ) {
+                (finished) -> Void in
+                
+                SegmentedTableViewCell.animationComplete()
             }
-//        }
+        }
     }
 }
 
@@ -366,10 +358,7 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
         
         let height = SegmentedTableViewCell.estimatedCellHeight
         
-//        if let object = generalSearchCoordinator?.objectAtIndexPath( indexPath ) {
-//        
-//            height = GeneralSearchResultSegmentedTableViewCell.estimatedCellHeight( tableView, key: object.key )
-//        }
+        print( "estimatedHeight: \(indexPath.row) \(height)" )
         
         return height
     }
@@ -387,6 +376,8 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
                     )
         }
 
+        print( "height: \(indexPath.row) \(height)" )
+        
         return height
     }
     
@@ -415,8 +406,6 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
         
         if let cell = cell as? GeneralSearchResultSegmentedTableViewCell,
                object = generalSearchCoordinator?.objectAtIndexPath( indexPath ) {
-            
-            cell.adjustCellHeights( tableView, key: object.key )
             
             cell.selectedAnimation( tableView, key: object.key )
         }
@@ -486,6 +475,7 @@ extension OLSearchResultsTableViewController: UITableViewDataSource {
             
             if let object = generalSearchCoordinator?.objectAtIndexPath( indexPath ) {
                 
+                expandingCell.tableVC = self
                 expandingCell.configure( tableView, key: object.key, data: object )
                 generalSearchCoordinator?.updateUI( object, cell: expandingCell )
             }

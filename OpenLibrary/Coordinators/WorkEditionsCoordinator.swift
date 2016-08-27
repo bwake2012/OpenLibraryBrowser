@@ -181,7 +181,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         
         if nil == workEditionsGetOperation && !workKey.isEmpty && highWaterMark < searchResults.numFound {
             
-            tableVC?.coordinatorIsBusy()
+//            tableVC?.coordinatorIsBusy()
             updateFooter( "fetching more editions..." )
             
             workEditionsGetOperation =

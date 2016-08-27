@@ -81,6 +81,7 @@
 		C45E82091CE42CC900307BAC /* IAEBookInfoDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E82061CE42CC900307BAC /* IAEBookInfoDownloadOperation.swift */; };
 		C45E820A1CE42CC900307BAC /* IAEBookInfoGetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E82071CE42CC900307BAC /* IAEBookInfoGetOperation.swift */; };
 		C45E820B1CE42CC900307BAC /* IAEBookInfoParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E82081CE42CC900307BAC /* IAEBookInfoParseOperation.swift */; };
+		C45EA5651D71E26F00C007A2 /* MultilineLabelForTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45EA5641D71E26F00C007A2 /* MultilineLabelForTableViewCell.swift */; };
 		C45EBBFF1D6C9C3A00ED1908 /* NSURLSession+JSONTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45EBBFE1D6C9C3A00ED1908 /* NSURLSession+JSONTasks.swift */; };
 		C45EBC031D6DFD2900ED1908 /* AlertOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45EBC021D6DFD2900ED1908 /* AlertOperation.swift */; };
 		C45EBC051D6E034E00ED1908 /* OLHTMLServerErrorPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45EBC041D6E034E00ED1908 /* OLHTMLServerErrorPageViewController.swift */; };
@@ -282,6 +283,7 @@
 		C45E82061CE42CC900307BAC /* IAEBookInfoDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IAEBookInfoDownloadOperation.swift; path = "App Operations/IAEBookInfoDownloadOperation.swift"; sourceTree = "<group>"; };
 		C45E82071CE42CC900307BAC /* IAEBookInfoGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IAEBookInfoGetOperation.swift; path = "App Operations/IAEBookInfoGetOperation.swift"; sourceTree = "<group>"; };
 		C45E82081CE42CC900307BAC /* IAEBookInfoParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IAEBookInfoParseOperation.swift; path = "App Operations/IAEBookInfoParseOperation.swift"; sourceTree = "<group>"; };
+		C45EA5641D71E26F00C007A2 /* MultilineLabelForTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultilineLabelForTableViewCell.swift; path = Views/MultilineLabelForTableViewCell.swift; sourceTree = "<group>"; };
 		C45EBBFE1D6C9C3A00ED1908 /* NSURLSession+JSONTasks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLSession+JSONTasks.swift"; sourceTree = "<group>"; };
 		C45EBC021D6DFD2900ED1908 /* AlertOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlertOperation.swift; path = "App Operations/AlertOperation.swift"; sourceTree = "<group>"; };
 		C45EBC041D6E034E00ED1908 /* OLHTMLServerErrorPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLHTMLServerErrorPageViewController.swift; path = "View Controllers/OLHTMLServerErrorPageViewController.swift"; sourceTree = "<group>"; };
@@ -715,6 +717,7 @@
 				C4B34D851D4057DD00BC85E8 /* WorkEditionTableViewCell.swift */,
 				C453C3811D5E1985003EAA45 /* OLTableViewHeaderFooterView.swift */,
 				C453C3831D5E2030003EAA45 /* OLTableViewHeaderFooterView.xib */,
+				C45EA5641D71E26F00C007A2 /* MultilineLabelForTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1025,6 +1028,7 @@
 				C42DBE6E1CBD68740048788E /* TableviewCellZoomTransition.swift in Sources */,
 				C430E9CA1CD2B294007E15AD /* DeluxeDetailInlineTableViewCell.swift in Sources */,
 				C4178EF81D67B1E400D274E8 /* WindowShadeTransition.swift in Sources */,
+				C45EA5651D71E26F00C007A2 /* MultilineLabelForTableViewCell.swift in Sources */,
 				C4F00C571CD93128002D7E14 /* DeluxeDetailBodyTableViewCell.swift in Sources */,
 				C488D61C1D09C0460025B61D /* DeluxeDetailHTMLTableViewCell.swift in Sources */,
 				C4EF99E21CA3792700BEF2D3 /* WorkDetailCoordinator.swift in Sources */,

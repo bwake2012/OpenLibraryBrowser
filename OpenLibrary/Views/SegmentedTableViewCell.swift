@@ -261,21 +261,6 @@ class SegmentedTableViewCell: OLTableViewCell {
             SegmentedTableViewCell.openCells[tableView] = nil
         }
     }
-
-    func adjustCellHeights( tableView: UITableView, key: String ) -> CellHeights {
-        
-        assert( nil != SegmentedTableViewCell.tableCellHeights[tableView] )
-        
-        let cellHeights =
-            CellHeights(
-                    closed: segmentZeroHeight(),
-                    open: totalSegmentHeight()
-                )
-        
-        SegmentedTableViewCell.tableCellHeights[tableView]![key] = cellHeights
-        
-        return cellHeights
-    }
     
     func selectedAnimation( tableView: UITableView, key: String ) -> Bool {
         
@@ -290,8 +275,6 @@ class SegmentedTableViewCell: OLTableViewCell {
         
         assert( nil != SegmentedTableViewCell.tableCellHeights[tableView] )
 
-        adjustCellHeights( tableView, key: key )
-        
         if expandCell {
             
             let openY = openTop()

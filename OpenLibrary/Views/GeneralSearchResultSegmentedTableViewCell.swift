@@ -23,9 +23,10 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
     
     @IBOutlet weak private var firstPublished: UILabel!
     
+    @IBOutlet weak private var eBooksLabel: UILabel!
     @IBOutlet weak private var viewBooks: UIButton!
 
-//    var delegate: UITableViewController?
+    var tableVC: UIViewController?
 
     var isZoomEnabled = false
     var haveEditions = false
@@ -33,35 +34,22 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
     
     @IBAction private func zoomCoverTapped(sender: UIButton) {
         
-        if !isAnimating() {
-            
-        }
+        tableVC?.performSegueWithIdentifier( "largeCoverImage", sender: self )
     }
     
     @IBAction private func viewAuthorDetailTapped(sender: UIButton) {
         
-        if !isAnimating() {
-            
-        }
+        tableVC?.performSegueWithIdentifier( "displayGeneralSearchAuthorDetail", sender: self )
     }
     
     @IBAction private func viewBooksTapped( sender: UIButton ) {
 
-        if !isAnimating() {
-            
-//            if let delegate = delegate, tableView = delegate.tableView {
-//                
-//                // [[[event touchesForView: button] anyObject] locationInView: self.tableView]]
-//                if let indexPath = tableView.indexPathForRowAtPoint( sender.superview?.convertPoint( sender.center, toView: tableView ) ) {
-//                    
-//                    delegate.tableView( tableView, accessoryButtonTappedForRowWithIndexPath: indexPath )
-//                }
-//            }
-        }
-    }
+        tableVC?.performSegueWithIdentifier( "displayEBookTableView", sender: self )
+     }
     
     @IBAction private func viewWorkEditionsTapped(sender: UIButton) {
 
+        tableVC?.performSegueWithIdentifier( "displayGeneralSearchWorkDetail", sender: self )
     }
     
     override func awakeFromNib() {
@@ -88,7 +76,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
         
         firstPublished.text = ""
         
-        viewBooks.setTitle( "", forState: .Normal )
+        eBooksLabel.text = ""
         
         currentImageURL = nil
 
@@ -111,7 +99,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
         viewWorkDetail.enabled = selected && haveEditions
         
         viewBooks.enabled = selected && haveEbooks
-        
+        eBooksLabel.textColor = viewBooks.currentTitleColor
     }
 
     override func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
@@ -153,7 +141,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
             
             firstPublished.text = ""
             
-            viewBooks.setTitle( "", forState: .Normal )
+            eBooksLabel.text = ""
 
             isZoomEnabled = false
             haveEbooks = false
@@ -162,20 +150,14 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
             clearCurrentImage()
         }
         
-        viewBooks.setTitle(
-                "Electronic Editions " + ( haveEbooks ? "found" : "not found" ),
-                forState: .Normal
-            )
-        
+        eBooksLabel.text = "Electronic Editions " + ( haveEbooks ? "found" : "not found" )
         updateButtons( selected )
         
 //        setNeedsLayout()
         layoutIfNeeded()
         
-        adjustCellHeights( tableView, key: key )
+//        adjustCellHeights( tableView, key: key )
         
-//        delegate.tableView.beginUpdates()
-//        delegate.tableView.endUpdates()
     }
 
 }
