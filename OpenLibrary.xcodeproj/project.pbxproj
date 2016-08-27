@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C40A28631D71121A001ABC20 /* EditionDetailDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40A28601D711219001ABC20 /* EditionDetailDownloadOperation.swift */; };
+		C40A28641D71121A001ABC20 /* EditionDetailGetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40A28611D711219001ABC20 /* EditionDetailGetOperation.swift */; };
+		C40A28651D71121A001ABC20 /* EditionDetailParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40A28621D711219001ABC20 /* EditionDetailParseOperation.swift */; };
 		C40E97F11CC6C2E10013A3F5 /* OLGeneralSearchResult+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40E97EF1CC6C2E10013A3F5 /* OLGeneralSearchResult+CoreDataProperties.swift */; };
 		C40E97F21CC6C2E10013A3F5 /* OLGeneralSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40E97F01CC6C2E10013A3F5 /* OLGeneralSearchResult.swift */; };
 		C40E97F71CC7D1540013A3F5 /* GeneralSearchResultsParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40E97F31CC7D1540013A3F5 /* GeneralSearchResultsParseOperation.swift */; };
@@ -205,6 +208,9 @@
 /* Begin PBXFileReference section */
 		9BFE85C38BA4E6A6270EB33B /* Pods_OpenLibraryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenLibraryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3C677C979511952CF2D2ADC /* Pods-OpenLibrary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenLibrary.release.xcconfig"; path = "Pods/Target Support Files/Pods-OpenLibrary/Pods-OpenLibrary.release.xcconfig"; sourceTree = "<group>"; };
+		C40A28601D711219001ABC20 /* EditionDetailDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditionDetailDownloadOperation.swift; path = "App Operations/EditionDetailDownloadOperation.swift"; sourceTree = "<group>"; };
+		C40A28611D711219001ABC20 /* EditionDetailGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditionDetailGetOperation.swift; path = "App Operations/EditionDetailGetOperation.swift"; sourceTree = "<group>"; };
+		C40A28621D711219001ABC20 /* EditionDetailParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditionDetailParseOperation.swift; path = "App Operations/EditionDetailParseOperation.swift"; sourceTree = "<group>"; };
 		C40E97EF1CC6C2E10013A3F5 /* OLGeneralSearchResult+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "OLGeneralSearchResult+CoreDataProperties.swift"; path = "Model/OLGeneralSearchResult+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C40E97F01CC6C2E10013A3F5 /* OLGeneralSearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLGeneralSearchResult.swift; path = Model/OLGeneralSearchResult.swift; sourceTree = "<group>"; };
 		C40E97F31CC7D1540013A3F5 /* GeneralSearchResultsParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneralSearchResultsParseOperation.swift; path = "App Operations/GeneralSearchResultsParseOperation.swift"; sourceTree = "<group>"; };
@@ -583,6 +589,9 @@
 		C4E35EA41C7E1F1C0015D187 /* App Operations */ = {
 			isa = PBXGroup;
 			children = (
+				C40A28601D711219001ABC20 /* EditionDetailDownloadOperation.swift */,
+				C40A28611D711219001ABC20 /* EditionDetailGetOperation.swift */,
+				C40A28621D711219001ABC20 /* EditionDetailParseOperation.swift */,
 				C45EBC021D6DFD2900ED1908 /* AlertOperation.swift */,
 				C42D61D01C8738CC00909D43 /* AuthorDetailDownloadOperation.swift */,
 				C42D61D11C8738CC00909D43 /* AuthorDetailGetOperation.swift */,
@@ -965,6 +974,7 @@
 				C4973EC31D56A2450062170E /* GeneralSearchResultsDeleteGroupOperation.swift in Sources */,
 				C4345E061CFFFC540091D4A0 /* IAEBookItemListGetOperation.swift in Sources */,
 				C49BDD1C1CB6EC0900A2EEEF /* EditionDetailCoordinator.swift in Sources */,
+				C40A28631D71121A001ABC20 /* EditionDetailDownloadOperation.swift in Sources */,
 				C4A0F0931D15FF3A00D0F604 /* BookDownloadCoordinator.swift in Sources */,
 				C4E863901C99D9F0002C0E6B /* OLEditionDetail.swift in Sources */,
 				C437DEA41CECF8D9005CED1A /* GeneralSearchResultTableViewCell.swift in Sources */,
@@ -974,6 +984,7 @@
 				C4B2648E1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodeld in Sources */,
 				C430E9C61CD27E1F007E15AD /* OLDataSource.swift in Sources */,
 				C4E35ECB1C80E2780015D187 /* SearchResults.swift in Sources */,
+				C40A28641D71121A001ABC20 /* EditionDetailGetOperation.swift in Sources */,
 				C45AA3B51D3BFB0000817901 /* OLReachabilityDownloadOperation.swift in Sources */,
 				C410821E1CBAB26000319B83 /* TitleSearchResultTableViewCell.swift in Sources */,
 				C430E9CE1CD41687007E15AD /* DeluxeDetailLinkTableViewCell.swift in Sources */,
@@ -1061,6 +1072,7 @@
 				C42D61D91C87D63800909D43 /* ImageGetOperation.swift in Sources */,
 				C4DA1F7D1C8A329B00DFA4BF /* AuthorWorksDownloadOperation.swift in Sources */,
 				C4E35EA61C7E41B60015D187 /* OLSearchResultsTableViewController.swift in Sources */,
+				C40A28651D71121A001ABC20 /* EditionDetailParseOperation.swift in Sources */,
 				C4B2AC1E1CE0F44F003E3E74 /* OLBookSearchViewController.swift in Sources */,
 				C4677E9F1C9CE35A0070CDFD /* UIImageView+DisplayFromURL.swift in Sources */,
 				C4F00C591CD96D4E002D7E14 /* OLDeluxeDetailCoordinator.swift in Sources */,

@@ -19,9 +19,11 @@ class OLEBookEditionsTableViewController: UITableViewController {
         // Do any additional setup after loading the view, typically from a nib.
         assert( nil != queryCoordinator )
         
-//        let refreshControl = UIRefreshControl()
-//        refreshControl.addTarget( self, action: #selector( testRefresh ), forControlEvents: .ValueChanged)
-//        tableView.addSubview( refreshControl )
+        self.refreshControl?.addTarget(
+                self,
+                action: #selector(OLEBookEditionsTableViewController.testRefresh(_:)),
+                forControlEvents: UIControlEvents.ValueChanged
+            )
 
         self.tableView.estimatedRowHeight = 68.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -96,7 +98,7 @@ class OLEBookEditionsTableViewController: UITableViewController {
         
         refreshControl.attributedTitle = NSAttributedString( string: "Refreshing data..." )
         
-        queryCoordinator?.refreshQuery( nil )
+        queryCoordinator?.refreshQuery( self.refreshControl )
     }
 }
 

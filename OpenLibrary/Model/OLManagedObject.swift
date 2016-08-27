@@ -188,8 +188,6 @@ class OLManagedObject: NSManagedObject {
             return nil
         }
         
-//        print( "findObject: key:\(key) entity:\(entityName) keyFieldName:\(keyFieldName) moc:\(moc.name ?? "")" )
-        
         return results
     }
     

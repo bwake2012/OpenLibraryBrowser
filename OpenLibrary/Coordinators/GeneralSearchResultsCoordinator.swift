@@ -611,6 +611,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
                     operationQueue: operationQueue,
                     coreDataStack: coreDataStack,
                     workKey: searchResult.key,
+                    editionKeys: searchResult.edition_key,
                     tableVC: destVC
                 )
     }

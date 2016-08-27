@@ -27,6 +27,8 @@ class OLWorkDetailViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var containerViewHeightConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var activityView: UIActivityIndicatorView!
+    
     var queryCoordinator: WorkDetailCoordinator?
 
     var workEditionsVC: OLWorkDetailEditionsTableViewController?
@@ -131,6 +133,18 @@ class OLWorkDetailViewController: UIViewController, UIScrollViewDelegate {
         }
         
         return nil
+    }
+    
+    // MARK: query in progress
+    
+    func coordinatorIsBusy() -> Void {
+        
+        activityView?.startAnimating()
+    }
+    
+    func coordinatorIsNoLongerBusy() -> Void {
+        
+        activityView?.stopAnimating()
     }
     
     

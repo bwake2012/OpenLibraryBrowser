@@ -12,6 +12,7 @@ class WorkEditionTableViewCell: OLTableViewCell {
 
     @IBOutlet weak var editionTitle: UILabel!
     @IBOutlet weak var editionSubTitle: UILabel!
+    @IBOutlet weak var editionPublishDate: UILabel!
 
     override func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
         
@@ -36,6 +37,8 @@ class WorkEditionTableViewCell: OLTableViewCell {
 
             editionSubTitle.text = entry.subtitle
 //            editionSubTitle.text = entry.key + " " + entry.subtitle
+            
+            editionPublishDate.text = entry.publish_date
             
             if entry.hasImage {
                 
@@ -63,6 +66,7 @@ class WorkEditionTableViewCell: OLTableViewCell {
         } else {
             editionTitle.text = ""
             editionSubTitle.text = ""
+            editionPublishDate.text = ""
             
             clearCurrentImage()
         }

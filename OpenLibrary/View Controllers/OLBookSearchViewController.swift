@@ -25,6 +25,8 @@ class OLBookSearchViewController: UIViewController {
     
     @IBOutlet weak var ebookOnlySwitch: UISwitch!
     
+    @IBOutlet weak var aboutButton: UIButton!
+    
     weak var activeField: UITextField?
     
     private var searchKeys = [String: String]()
@@ -67,6 +69,9 @@ class OLBookSearchViewController: UIViewController {
             if let text = searchKeys[field.key] {
                 
                 field.field.text = text
+            } else {
+                
+                field.field.text = ""
             }
         }
         
@@ -93,16 +98,22 @@ class OLBookSearchViewController: UIViewController {
              (isbnSearch, "isbn"), (subjectSearch, "subject"), (placeSearch, "place"),
              (personSearch, "person"), (publisherSearch, "publisher")]
         
-        if !searchKeys.isEmpty {
-            
-            displaySearchKeys( searchKeys )
-        }
+        displaySearchKeys( searchKeys )
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OLBookSearchViewController.keyboardDidShow(_:)), name: UIKeyboardDidShowNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OLBookSearchViewController.keyboardWillBeHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
-        // navigationController?.hidesBarsOnSwipe = false
+        // First get the nsObject by defining as an optional anyObject
+        if let infoDictionary = NSBundle.mainBundle().infoDictionary {
+
+            let nsObject: AnyObject? = infoDictionary["CFBundleShortVersionString"]
+        
+            // Then just cast the object as a String, but be careful, you may want to double check for nil
+            let version = nsObject as? String ?? ""
+            
+            aboutButton.titleLabel?.text = version
+        }
     }
 
     override func didReceiveMemoryWarning() {

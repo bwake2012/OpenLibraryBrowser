@@ -174,16 +174,23 @@
                                     <constraint firstItem="3EA-Cy-qd5" firstAttribute="height" relation="greaterThanOrEqual" secondItem="79a-aY-mSm" secondAttribute="height" id="yQN-g5-DLS"/>
                                 </constraints>
                             </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="uN5-a9-Cwg">
+                                <rect key="frame" x="282" y="281" width="37" height="37"/>
+                                <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="uN5-a9-Cwg" firstAttribute="centerY" secondItem="sv2-JV-oVl" secondAttribute="centerY" id="1ZN-E4-ctz"/>
                             <constraint firstItem="79a-aY-mSm" firstAttribute="top" secondItem="iIS-Mq-bMH" secondAttribute="bottom" id="4Ym-i8-cER"/>
                             <constraint firstItem="79a-aY-mSm" firstAttribute="trailing" secondItem="sv2-JV-oVl" secondAttribute="trailing" id="UcL-A3-RIl"/>
                             <constraint firstItem="79a-aY-mSm" firstAttribute="leading" secondItem="sv2-JV-oVl" secondAttribute="leading" id="Uwe-oJ-QWR"/>
                             <constraint firstItem="oyS-Hd-MJ5" firstAttribute="top" secondItem="79a-aY-mSm" secondAttribute="bottom" id="h5J-q4-okJ"/>
+                            <constraint firstItem="uN5-a9-Cwg" firstAttribute="centerX" secondItem="sv2-JV-oVl" secondAttribute="centerX" id="m9S-R4-VaF"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityView" destination="uN5-a9-Cwg" id="PkR-wg-HLq"/>
                         <outlet property="containerView" destination="y3I-Gm-Wdh" id="Dto-8Z-v8B"/>
                         <outlet property="containerViewHeightConstraint" destination="1rB-ut-Qv6" id="Vds-rm-5I0"/>
                         <outlet property="displayAuthorDetail" destination="e6Z-2k-DUN" id="z3N-LF-qrv"/>
@@ -250,19 +257,25 @@
                                                 <constraint firstAttribute="width" constant="56" id="mFx-ju-Xoc"/>
                                             </constraints>
                                         </imageView>
-                                        <view contentMode="scaleToFill" verticalCompressionResistancePriority="760" translatesAutoresizingMaskIntoConstraints="NO" id="hgS-ir-yJF" userLabel="Summary">
+                                        <view contentMode="scaleToFill" verticalHuggingPriority="260" verticalCompressionResistancePriority="760" translatesAutoresizingMaskIntoConstraints="NO" id="hgS-ir-yJF" userLabel="Summary">
                                             <rect key="frame" x="68" y="8" width="524" height="57.5"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TfL-nA-0i1">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="260" verticalCompressionResistancePriority="760" text=" " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TfL-nA-0i1">
                                                     <rect key="frame" x="0.0" y="0.0" width="524" height="19.5"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W5t-0C-FXW">
-                                                    <rect key="frame" x="0.0" y="23.5" width="524" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="260" verticalCompressionResistancePriority="760" text=" " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W5t-0C-FXW">
+                                                    <rect key="frame" x="0.0" y="23" width="524" height="17"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2g0-tJ-LdK">
+                                                    <rect key="frame" x="0.0" y="40" width="524" height="17"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -270,12 +283,15 @@
                                             </subviews>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="2g0-tJ-LdK" secondAttribute="bottom" id="02q-Jf-2Pf"/>
                                                 <constraint firstItem="W5t-0C-FXW" firstAttribute="leading" secondItem="hgS-ir-yJF" secondAttribute="leading" id="0Xd-mp-feO"/>
                                                 <constraint firstItem="W5t-0C-FXW" firstAttribute="trailing" secondItem="hgS-ir-yJF" secondAttribute="trailing" id="0k7-eX-jOw"/>
+                                                <constraint firstItem="2g0-tJ-LdK" firstAttribute="trailing" secondItem="hgS-ir-yJF" secondAttribute="trailing" id="4aw-cp-ayb"/>
                                                 <constraint firstItem="TfL-nA-0i1" firstAttribute="leading" secondItem="hgS-ir-yJF" secondAttribute="leading" id="5BR-4O-R4E"/>
+                                                <constraint firstItem="W5t-0C-FXW" firstAttribute="bottom" secondItem="2g0-tJ-LdK" secondAttribute="top" id="5qp-jQ-Lem"/>
                                                 <constraint firstItem="TfL-nA-0i1" firstAttribute="trailing" secondItem="hgS-ir-yJF" secondAttribute="trailing" id="AM5-Na-YgI"/>
                                                 <constraint firstItem="W5t-0C-FXW" firstAttribute="top" secondItem="TfL-nA-0i1" secondAttribute="bottom" constant="4" id="Q8s-mG-h9e"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="W5t-0C-FXW" secondAttribute="bottom" id="S0L-TJ-A5a"/>
+                                                <constraint firstItem="2g0-tJ-LdK" firstAttribute="leading" secondItem="hgS-ir-yJF" secondAttribute="leading" id="Ufo-82-rGL"/>
                                                 <constraint firstItem="TfL-nA-0i1" firstAttribute="top" secondItem="hgS-ir-yJF" secondAttribute="top" id="xvt-N7-n4D"/>
                                             </constraints>
                                         </view>
@@ -294,6 +310,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="cellImage" destination="GZj-Wc-MzS" id="SRx-zz-L2J"/>
+                                    <outlet property="editionPublishDate" destination="2g0-tJ-LdK" id="qMd-iO-FCh"/>
                                     <outlet property="editionSubTitle" destination="W5t-0C-FXW" id="Kj6-og-YV7"/>
                                     <outlet property="editionTitle" destination="TfL-nA-0i1" id="pSw-c5-eVX"/>
                                     <segue destination="LP6-Or-omE" kind="show" identifier="displayEditionDeluxeDetail" customClass="SegueWithTableViewCellZoom" customModule="OpenLibrary" id="TjK-Ra-R9r"/>

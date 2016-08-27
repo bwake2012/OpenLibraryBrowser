@@ -75,6 +75,25 @@ class OLWorkDetailEditionsTableViewController: UITableViewController {
         }
     }
     
+    // MARK: Query in Progress
+    func coordinatorIsBusy() -> Void {
+        
+        if let parentVC = parentViewController as? OLWorkDetailViewController {
+
+            parentVC.coordinatorIsBusy()
+        }
+    }
+    
+    func coordinatorIsNoLongerBusy() -> Void {
+        
+        if let parentVC = parentViewController as? OLWorkDetailViewController {
+            
+            parentVC.coordinatorIsNoLongerBusy()
+        }
+    }
+    
+
+    
     // MARK: UITableViewDelegate
     
     // MARK: UITableviewDataSource

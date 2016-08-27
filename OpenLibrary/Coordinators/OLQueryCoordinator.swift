@@ -96,9 +96,9 @@ class OLQueryCoordinator: NSObject {
     
     func refreshComplete( refreshControl: UIRefreshControl? ) {
 
-        if let refreshControl = refreshControl {
+        dispatch_async(dispatch_get_main_queue()) {
                 
-            dispatch_async(dispatch_get_main_queue()) {
+            if let refreshControl = refreshControl {
                 
                 if nil == OLQueryCoordinator.dateFormatter {
                     

@@ -21,7 +21,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     
     typealias FetchedWorkEditionsController = FetchedResultsController< OLEditionDetail >
     
-    weak var tableVC: UITableViewController?
+    weak var tableVC: OLWorkDetailEditionsTableViewController?
 
     var workEditionsGetOperation: Operation?
     
@@ -62,7 +62,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         self.workKey = workKey
         self.withCoversOnly = withCoversOnly
 //        self.worksCount = searchInfo.work_count
-        self.tableVC = tableVC
+        self.tableVC = tableVC as? OLWorkDetailEditionsTableViewController
         
         super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: tableVC )
     }
@@ -145,6 +145,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             self.workKey = workKey
             self.highWaterMark = 0
             
+            tableVC?.coordinatorIsBusy()
             updateFooter( "fetching editions..." )
             
             workEditionsGetOperation =
@@ -164,6 +165,8 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
                                 
                                     strongSelf.updateFooter()
                                 
+                                    strongSelf.tableVC?.coordinatorIsNoLongerBusy()
+                                
                                     strongSelf.workEditionsGetOperation = nil
                                 }
                         }
@@ -178,6 +181,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         
         if nil == workEditionsGetOperation && !workKey.isEmpty && highWaterMark < searchResults.numFound {
             
+            tableVC?.coordinatorIsBusy()
             updateFooter( "fetching more editions..." )
             
             workEditionsGetOperation =
@@ -193,6 +197,8 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
                         if let strongSelf = self {
                             
                             strongSelf.updateFooter()
+                            
+                            strongSelf.tableVC?.coordinatorIsNoLongerBusy()
                             
                             strongSelf.workEditionsGetOperation = nil
                         }
