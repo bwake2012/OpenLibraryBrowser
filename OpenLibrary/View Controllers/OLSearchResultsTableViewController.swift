@@ -473,7 +473,7 @@ extension OLSearchResultsTableViewController: UITableViewDataSource {
                 
                 expandingCell.tableVC = self
                 expandingCell.configure( tableView, key: object.key, data: object )
-                generalSearchCoordinator?.updateUI( object, cell: expandingCell )
+                generalSearchCoordinator?.displayThumbnail( object, cell: expandingCell )
             }
             
             cell = expandingCell

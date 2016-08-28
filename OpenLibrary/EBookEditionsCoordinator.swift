@@ -149,26 +149,8 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
             newQuery( false, refreshControl: nil )
         }
         
-        if result.hasImage {
-            
-            let localURL = result.localURL( result.editionKey, size: "S" )
-            if !cell.displayImage( localURL ) {
+        displayThumbnail( result, cell: cell )
                 
-                let url = localURL
-                let editionCoverGetOperation =
-                    ImageGetOperation( numberID: Int( result.cover_id ), imageKeyName: "id", localURL: url, size: "S", type: result.imageType )
-                    {
-                        dispatch_async( dispatch_get_main_queue() ) {
-                            
-                            cell.displayImage( url )
-                        }
-                }
-                
-                editionCoverGetOperation.userInitiated = true
-                operationQueue.addOperation( editionCoverGetOperation )
-            }
-        }
-        
         return result
     }
     

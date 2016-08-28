@@ -105,26 +105,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         
 //        print( "work: \(result.title) has covers: \(!result.covers.isEmpty)" )
         
-        if workDetail.hasImage {
-                
-            let localURL = workDetail.localURL( "S" )
-            if !cell.displayImage( localURL ) {
-            
-                let url = localURL
-                let workCoverGetOperation =
-                    ImageGetOperation( numberID: workDetail.firstImageID, imageKeyName: "id", localURL: url, size: "S", type: "b" )
-                        {
-                        
-                        dispatch_async( dispatch_get_main_queue() ) {
-                            
-                            cell.displayImage( url )
-                        }
-                }
-                
-                workCoverGetOperation.userInitiated = true
-                operationQueue.addOperation( workCoverGetOperation )
-            }
-        }
+        displayThumbnail( workDetail, cell: cell )
         
         return workDetail
     }

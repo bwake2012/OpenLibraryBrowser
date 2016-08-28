@@ -209,37 +209,12 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             cell.configure( tableVC.tableView, key: result.key, data: result )
         }
         
-        updateUI( result, cell: cell )
+        displayThumbnail( result, cell: cell )
         
         // not all the Titles have photos under their OLID. Some only have them under a photo ID
 //        print( "\(result.index) Title: \(result.title) has cover: \(result.hasImage)" )
 
         return result
-    }
-    
-    func updateUI( searchResult: OLGeneralSearchResult, cell: OLTableViewCell ) {
-        
-        assert( NSThread.isMainThread() )
-//        print( "\(searchResult.title) \(searchResult.hasImage ? "has" : "has no") cover image")
-        if searchResult.hasImage {
-            
-            let localURL = searchResult.localURL( "S" )
-            if !( cell.displayImage( localURL ) ) {
-                
-                let url = localURL
-                let imageGetOperation =
-                    ImageGetOperation( numberID: searchResult.firstImageID, imageKeyName: "id", localURL: url, size: "S", type: "b" ) {
-                        
-                        dispatch_async( dispatch_get_main_queue() ) {
-                            
-                            cell.displayImage( url )
-                        }
-                }
-                
-                imageGetOperation.userInitiated = true
-                operationQueue.addOperation( imageGetOperation )
-            }
-        }
     }
     
     func updateUI() {

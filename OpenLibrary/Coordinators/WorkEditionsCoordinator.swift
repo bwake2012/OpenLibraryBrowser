@@ -104,25 +104,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         
         cell.configure( tableVC!.tableView, key: result.key, data: result )
         
-        if result.hasImage {
-                
-            let localURL = result.localURL( result.key, size: "S" )
-            if !cell.displayImage( localURL ) {
-            
-                let url = localURL
-                let editionCoverGetOperation =
-                    ImageGetOperation( numberID: result.covers[0], imageKeyName: "id", localURL: url, size: "S", type: "b" )
-                    {
-                        dispatch_async( dispatch_get_main_queue() ) {
-                            
-                            cell.displayImage( url )
-                        }
-                }
-                
-                editionCoverGetOperation.userInitiated = true
-                operationQueue.addOperation( editionCoverGetOperation )
-            }
-        }
+        displayThumbnail( result, cell: cell )
         
         return result
     }

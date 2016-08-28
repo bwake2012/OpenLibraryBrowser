@@ -55,11 +55,14 @@ class OLAuthorDetailEditionsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("editionsEntry", forIndexPath: indexPath) as! WorkEditionTableViewCell
         
         if let object = queryCoordinator?.objectAtIndexPath( indexPath ) {
+            
             cell.configure(
                     tableView,
                     key: object.key,
                     data: object
                 )
+            
+            queryCoordinator?.displayThumbnail( object, cell: cell )
         }
         return cell
     }

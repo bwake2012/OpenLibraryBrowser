@@ -12,15 +12,18 @@ extension UIImageView {
     
     func displayFromURL( localURL: NSURL ) -> Bool {
         
-        if let data = NSData( contentsOfURL: localURL ) {
+        if localURL.fileURL {
 
-            if let image = UIImage( data: data ) {
-                
-                self.image = image
-                return true
+            if let data = NSData( contentsOfURL: localURL ) {
+
+                if let image = UIImage( data: data ) {
+                    
+                    self.image = image
+                    return true
+                }
             }
         }
-
+        
         return false
     }
 }

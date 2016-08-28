@@ -14,6 +14,8 @@ import ReachabilitySwift
 import PSOperations
 
 class OLQueryCoordinator: NSObject {
+    
+    private static var thumbnailCache = NSCache()
 
     private static var reachability: Reachability?
     private static var viewControllerStack = [UIViewController]()
@@ -139,4 +141,58 @@ class OLQueryCoordinator: NSObject {
         }
     }
     
+    func cachedImage( localURL: NSURL ) -> UIImage? {
+        
+        if let image = OLQueryCoordinator.thumbnailCache.objectForKey( localURL ) as? UIImage {
+            
+            return image
+            
+        } else if localURL.fileURL {
+            
+            if let data = NSData( contentsOfURL: localURL ) {
+                
+                if let image = UIImage( data: data ) {
+
+                    OLQueryCoordinator.thumbnailCache.setObject( image, forKey: localURL )
+                    
+                    return image
+                }
+            }
+        }
+        
+        return nil
+    }
+    
+    func displayThumbnail( object: OLManagedObject, cell: OLTableViewCell ) {
+        
+        assert( NSThread.isMainThread() )
+        //        print( "\(object.title) \(object.hasImage ? "has" : "has no") cover image")
+        if object.hasImage {
+            
+            let localURL = object.localURL( "S" )
+            if let image = cachedImage( localURL ) {
+                
+                cell.displayImage( localURL, image: image )
+                
+            } else {
+                
+                let url = localURL
+                let imageGetOperation =
+                    ImageGetOperation( numberID: object.firstImageID, imageKeyName: "id", localURL: url, size: "S", type: object.imageType ) {
+                        
+                        if let image = self.cachedImage( localURL ) {
+                            
+                            dispatch_async( dispatch_get_main_queue() ) {
+                                
+                                cell.displayImage( url, image: image )
+                            }
+                        }
+                }
+                
+                imageGetOperation.userInitiated = true
+                operationQueue.addOperation( imageGetOperation )
+            }
+        }
+    }
+
 }
