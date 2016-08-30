@@ -172,6 +172,8 @@ class OLQueryCoordinator: NSObject {
         if object.hasImage {
             
             let localURL = object.localURL( "S" )
+            let firstImageID = object.firstImageID
+            let imageType = object.imageType
             
             dispatch_async( dispatch_queue_create( "preloadThumbnail", nil ) ) {
                 
@@ -183,7 +185,7 @@ class OLQueryCoordinator: NSObject {
                     
                     let url = localURL
                     let imageGetOperation =
-                        ImageGetOperation( numberID: object.firstImageID, imageKeyName: "id", localURL: url, size: "S", type: object.imageType ) {
+                        ImageGetOperation( numberID: firstImageID, imageKeyName: "id", localURL: url, size: "S", type: imageType ) {
                             
                             self.cachedImage( localURL )                }
                     

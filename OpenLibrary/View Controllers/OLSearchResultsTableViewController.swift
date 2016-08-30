@@ -12,6 +12,9 @@ import CoreData
 class OLSearchResultsTableViewController: UIViewController {
 
     // MARK: Properties
+    var sortButton: UIBarButtonItem?
+    var searchButton: UIBarButtonItem?
+    
     var generalSearchCoordinator: GeneralSearchResultsCoordinator?
     
     var searchController = UISearchController( searchResultsController: nil )
@@ -21,8 +24,14 @@ class OLSearchResultsTableViewController: UIViewController {
     var savedSearchKeys = [String: String]()
     var savedIndexPath: NSIndexPath?
 
-    @IBAction func presentGeneralSearch(sender: UIBarButtonItem) {}
-    @IBAction func presentSearchResultsSort(sender: UIBarButtonItem) {}
+    @IBAction func presentGeneralSearch(sender: UIBarButtonItem) {
+        
+        performSegueWithIdentifier( "openBookSearch", sender: sender )
+    }
+    @IBAction func presentSearchResultsSort(sender: UIBarButtonItem) {
+        
+        performSegueWithIdentifier( "openBookSort", sender: sender )
+    }
     
     @IBOutlet var tableView: UITableView!
     @IBOutlet private var refreshControl: UIRefreshControl?
@@ -47,6 +56,26 @@ class OLSearchResultsTableViewController: UIViewController {
         SegmentedTableViewCell.emptyCellHeights( tableView )
         
         // Do any additional setup after loading the view, typically from a nib.
+        let editImage   = UIImage(named: "rsw-sort-20x28")!
+        let searchImage = UIImage(named: "708-search")!
+        
+        sortButton =
+            UIBarButtonItem(
+                    image: editImage,
+                    style: .Plain,
+                    target: self,
+                    action: #selector( OLSearchResultsTableViewController.presentSearchResultsSort( _: ) )
+                )
+        searchButton =
+            UIBarButtonItem(
+                    image: searchImage,
+                    style: .Plain,
+                    target: self,
+                    action: #selector(OLSearchResultsTableViewController.presentGeneralSearch( _: ) )
+                )
+        
+        navigationItem.rightBarButtonItems = [searchButton!, sortButton!]
+        
         self.tableView.estimatedRowHeight = SegmentedTableViewCell.estimatedCellHeight
 //        self.tableView.rowHeight = UITableViewAutomaticDimension
         
@@ -256,15 +285,15 @@ class OLSearchResultsTableViewController: UIViewController {
     func coordinatorIsBusy() -> Void {
         
         activityView?.startAnimating()
-        self.navigationItem.leftBarButtonItem?.enabled = false
-        self.navigationItem.rightBarButtonItem?.enabled = false
+        sortButton?.enabled = false
+        searchButton?.enabled = false
     }
     
     func coordinatorIsNoLongerBusy() -> Void {
         
         activityView?.stopAnimating()
-        self.navigationItem.leftBarButtonItem?.enabled = true
-        self.navigationItem.rightBarButtonItem?.enabled = true
+        sortButton?.enabled = true
+        searchButton?.enabled = true
     }
     
     // MARK: cell expansion and contraction
