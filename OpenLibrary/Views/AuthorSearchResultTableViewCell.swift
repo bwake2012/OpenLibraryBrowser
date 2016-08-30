@@ -34,7 +34,7 @@ class AuthorSearchResultTableViewCell: OLTableViewCell {
         
         assert( NSThread.isMainThread() )
 
-        currentImageURL = nil
+        currentImageFile = nil
         cellImage.image = UIImage( named: "253-person.png" )
     }
 }

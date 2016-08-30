@@ -32,7 +32,7 @@ class TitleSearchResultTableViewCell: OLTableViewCell {
 
     override func clearCurrentImage() -> Void {
         
-        currentImageURL = nil
+        currentImageFile = nil
         cellImage.image = UIImage( named: "961-book-32.png" )
     }
 }

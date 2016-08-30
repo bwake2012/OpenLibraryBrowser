@@ -43,7 +43,7 @@ class GeneralSearchResultTableViewCell: OLTableViewCell {
         
         assert( NSThread.isMainThread() )
         
-        currentImageURL = nil
+        currentImageFile = nil
         cellImage.image = UIImage( named: "961-book-32.png" )
     }
 }

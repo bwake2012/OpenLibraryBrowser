@@ -124,25 +124,7 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedRe
         
         assert( NSThread.isMainThread() )
 
-        if searchResult.hasImage {
-            
-            let localURL = searchResult.localURL( "S" )
-            if !( cell.displayImage( localURL ) ) {
-                
-                let url = localURL
-                let imageGetOperation =
-                    ImageGetOperation( numberID: searchResult.firstImageID, imageKeyName: "id", localURL: url, size: "S", type: "a" ) {
-                        
-                        dispatch_async( dispatch_get_main_queue() ) {
-                            
-                            cell.displayImage( url )
-                        }
-                }
-                
-                imageGetOperation.userInitiated = true
-                operationQueue.addOperation( imageGetOperation )
-            }
-        }
+        displayThumbnail( searchResult, cell: cell )
     }
     
     func updateUI() {

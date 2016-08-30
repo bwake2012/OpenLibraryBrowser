@@ -136,11 +136,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             sequence = searchState.sequence
         }
         
-        reachabilityOperation = OLReachabilityOperation( host: "openlibrary.org" ) {
-//                if let reachabilityOperation = self.reachabilityOperation where reachabilityOperation.errors.isEmpty {
-//                    self.reachabilityOperation = nil
-//                }
-            }
+        reachabilityOperation = OLReachabilityOperation( host: "openlibrary.org" ) {}
         reachabilityOperation!.userInitiated = true
         operationQueue.addOperation( reachabilityOperation! )
         
@@ -173,18 +169,11 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
     
     func objectAtIndexPath( indexPath: NSIndexPath ) -> OLGeneralSearchResult? {
         
-//        if 0 == searchResults.numFound { return nil }
-        
         guard let sections = fetchedResultsController.sections else {
             assertionFailure("Sections missing")
             return nil
         }
         
-//        if needAnotherPage( indexPath.row ) {
-//            
-//            nextQueryPage()
-//        }
-//        
         let section = sections[indexPath.section]
         if indexPath.row >= section.objects.count {
 
@@ -207,13 +196,9 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
 
         if let tableVC = tableVC {
             cell.configure( tableVC.tableView, key: result.key, data: result )
+            displayThumbnail( result, tableView: tableVC.tableView, indexPath: indexPath )
         }
         
-        displayThumbnail( result, cell: cell )
-        
-        // not all the Titles have photos under their OLID. Some only have them under a photo ID
-//        print( "\(result.index) Title: \(result.title) has cover: \(result.hasImage)" )
-
         return result
     }
     

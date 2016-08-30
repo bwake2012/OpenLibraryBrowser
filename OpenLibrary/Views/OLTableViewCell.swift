@@ -10,7 +10,7 @@ import UIKit
 
 class OLTableViewCell: UITableViewCell {
 
-    var currentImageURL: NSURL?
+    var currentImageFile: String?
     
     @IBOutlet weak var cellImage: UIImageView!
 
@@ -23,31 +23,18 @@ class OLTableViewCell: UITableViewCell {
         
         assert( NSThread.isMainThread() )
         
-        guard nil == currentImageURL || localURL == currentImageURL else { return true }
+        let newImageFile = localURL.lastPathComponent
+        guard nil == currentImageFile || newImageFile == currentImageFile else { return true }
 
         cellImage.image = image
-        currentImageURL = localURL
+        currentImageFile = newImageFile
 
         return true
     }
     
-    func displayImage( localURL: NSURL ) -> Bool {
-        
-        assert( NSThread.isMainThread() )
-
-        guard nil == currentImageURL || localURL == currentImageURL else { return true }
-        
-        if cellImage.displayFromURL( localURL ) {
-            currentImageURL = localURL
-            return true
-        }
-        
-        return false
-    }
-    
     func clearCurrentImage() -> Void {
     
-        currentImageURL = nil
+        currentImageFile = nil
         cellImage.image = UIImage( named: "961-book-32.png" )
     }
     

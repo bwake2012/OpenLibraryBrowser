@@ -78,7 +78,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
         
         eBooksLabel.text = ""
         
-        currentImageURL = nil
+        currentImageFile = nil
 
         isZoomEnabled = false
         haveEbooks = false

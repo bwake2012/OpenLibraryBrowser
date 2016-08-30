@@ -72,6 +72,7 @@
 		C4345E071CFFFC540091D4A0 /* IAEBookItemListParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4345E041CFFFC540091D4A0 /* IAEBookItemListParseOperation.swift */; };
 		C437DEA21CECEE45005CED1A /* GeneralSearchResultsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C437DEA11CECEE45005CED1A /* GeneralSearchResultsCoordinator.swift */; };
 		C437DEA41CECF8D9005CED1A /* GeneralSearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C437DEA31CECF8D9005CED1A /* GeneralSearchResultTableViewCell.swift */; };
+		C43CC7041D74BD07003CE7B5 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = C43CC7031D74BD07003CE7B5 /* README.md */; };
 		C451837C1D3E8662006681B0 /* OperationErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C451837B1D3E8662006681B0 /* OperationErrors.swift */; };
 		C453C3821D5E1985003EAA45 /* OLTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453C3811D5E1985003EAA45 /* OLTableViewHeaderFooterView.swift */; };
 		C453C3841D5E2030003EAA45 /* OLTableViewHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C453C3831D5E2030003EAA45 /* OLTableViewHeaderFooterView.xib */; };
@@ -274,6 +275,7 @@
 		C4345E041CFFFC540091D4A0 /* IAEBookItemListParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IAEBookItemListParseOperation.swift; path = "App Operations/IAEBookItemListParseOperation.swift"; sourceTree = "<group>"; };
 		C437DEA11CECEE45005CED1A /* GeneralSearchResultsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneralSearchResultsCoordinator.swift; path = Coordinators/GeneralSearchResultsCoordinator.swift; sourceTree = "<group>"; };
 		C437DEA31CECF8D9005CED1A /* GeneralSearchResultTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneralSearchResultTableViewCell.swift; path = Views/GeneralSearchResultTableViewCell.swift; sourceTree = "<group>"; };
+		C43CC7031D74BD07003CE7B5 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C451837B1D3E8662006681B0 /* OperationErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OperationErrors.swift; path = "App Operations/OperationErrors.swift"; sourceTree = "<group>"; };
 		C453C3811D5E1985003EAA45 /* OLTableViewHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLTableViewHeaderFooterView.swift; path = Views/OLTableViewHeaderFooterView.swift; sourceTree = "<group>"; };
 		C453C3831D5E2030003EAA45 /* OLTableViewHeaderFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OLTableViewHeaderFooterView.xib; path = Views/OLTableViewHeaderFooterView.xib; sourceTree = "<group>"; };
@@ -501,6 +503,7 @@
 		C4E35E161C7E07950015D187 = {
 			isa = PBXGroup;
 			children = (
+				C43CC7031D74BD07003CE7B5 /* README.md */,
 				C4E35E211C7E07950015D187 /* OpenLibrary */,
 				C4E35E221C7E07950015D187 /* AppDelegate.swift */,
 				C4E35E2E1C7E07950015D187 /* Info.plist */,
@@ -1072,6 +1075,7 @@
 				C4EF99DA1CA3708900BEF2D3 /* WorkEditionsDownloadOperation.swift in Sources */,
 				C4817C1D1CA37DC300BDCD4D /* WorkDetailDownloadOperation.swift in Sources */,
 				C4E863961C99E951002C0E6B /* AuthorEditionsParseOperation.swift in Sources */,
+				C43CC7041D74BD07003CE7B5 /* README.md in Sources */,
 				C46E7E5B1C861EF500D2ED51 /* OLAuthorSearchResult.swift in Sources */,
 				C42D61D91C87D63800909D43 /* ImageGetOperation.swift in Sources */,
 				C4DA1F7D1C8A329B00DFA4BF /* AuthorWorksDownloadOperation.swift in Sources */,
