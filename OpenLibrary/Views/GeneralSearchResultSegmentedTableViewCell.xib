@@ -15,17 +15,17 @@
                 <rect key="frame" x="0.0" y="0.0" width="600" height="211.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YxY-dk-PfV" userLabel="Segment 4">
-                        <rect key="frame" x="0.0" y="182" width="600" height="29.5"/>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="YxY-dk-PfV" userLabel="Segment 4">
+                        <rect key="frame" x="0.0" y="182" width="600" height="40.5"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="260" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2OK-jG-BJB">
-                                <rect key="frame" x="8" y="0.0" width="592" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="260" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2OK-jG-BJB">
+                                <rect key="frame" x="8" y="0.0" width="592" height="32"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="260" misplaced="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="O8X-wH-yY8">
-                                <rect key="frame" x="8" y="0.0" width="592" height="21"/>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="260" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="O8X-wH-yY8">
+                                <rect key="frame" x="8" y="0.0" width="592" height="32"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <connections>
                                     <action selector="viewBooksTapped:" destination="n1u-oY-SfK" eventType="touchUpInside" id="q4O-Vc-TDD"/>
@@ -209,7 +209,7 @@
                             <constraint firstItem="Vb0-VM-Bhg" firstAttribute="width" secondItem="hje-ug-82W" secondAttribute="width" id="6zA-KY-Bn1"/>
                             <constraint firstItem="4P9-JZ-NDH" firstAttribute="leading" secondItem="hje-ug-82W" secondAttribute="trailing" constant="8" symbolic="YES" id="7Cx-lZ-F4U"/>
                             <constraint firstItem="hje-ug-82W" firstAttribute="leading" secondItem="urb-tw-FQ5" secondAttribute="leadingMargin" id="8sC-QY-1bR"/>
-                            <constraint firstItem="hje-ug-82W" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="urb-tw-FQ5" secondAttribute="bottom" id="C10-ES-2GR"/>
+                            <constraint firstItem="hje-ug-82W" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="urb-tw-FQ5" secondAttribute="bottomMargin" id="C10-ES-2GR"/>
                             <constraint firstItem="Vb0-VM-Bhg" firstAttribute="height" secondItem="hje-ug-82W" secondAttribute="height" id="NEs-rG-0TC"/>
                             <constraint firstItem="hje-ug-82W" firstAttribute="height" relation="greaterThanOrEqual" secondItem="4P9-JZ-NDH" secondAttribute="height" id="O3y-w0-byc"/>
                             <constraint firstItem="Vb0-VM-Bhg" firstAttribute="centerY" secondItem="hje-ug-82W" secondAttribute="centerY" id="Wq4-k1-cnE"/>
