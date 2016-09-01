@@ -24,14 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private var coreDataStack: CoreDataStack?
     
-    private let launchStoryboard = UIStoryboard( name: "LaunchScreen", bundle: nil)
-    private let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-
-    private lazy var navController: UINavigationController = {
-        return self.mainStoryboard.instantiateViewControllerWithIdentifier("rootNavigationController")
-            as! UINavigationController
-    }()
-    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
         CoreDataStack.constructSQLiteStack( withModelName: "OpenLibraryBrowser" ) {
@@ -41,13 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             switch result {
             case .Success(let stack):
                 self.coreDataStack = stack
-                
-                dispatch_async( dispatch_get_main_queue() ) {
-
-                    self.window?.rootViewController = self.navController
-                 
-               }
-                
             case .Failure(let error):
                 assertionFailure("\(error)")
             }

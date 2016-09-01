@@ -797,7 +797,7 @@
         <!--Open Library-->
         <scene sceneID="smY-AI-xbE">
             <objects>
-                <viewController storyboardIdentifier="launchVC" title="Open Library" useStoryboardIdentifierAsRestorationIdentifier="YES" id="K2s-7v-hMb" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="launchVC" title="Open Library" useStoryboardIdentifierAsRestorationIdentifier="YES" id="K2s-7v-hMb" customClass="OLLaunchViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9RE-Cd-AON"/>
                         <viewControllerLayoutGuide type="bottom" id="Taw-dX-Dua"/>
@@ -995,7 +995,7 @@
         <!--Navigation Controller-->
         <scene sceneID="YWK-eT-OB5">
             <objects>
-                <navigationController storyboardIdentifier="rootNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" hidesBarsOnSwipe="YES" id="NJ0-nM-swT" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="rootNavigationController" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" hidesBarsOnSwipe="YES" id="NJ0-nM-swT" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="3G7-NY-hHa">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

@@ -15,6 +15,8 @@ import PSOperations
 
 class OLQueryCoordinator: NSObject {
     
+    private static var previousNetStatus: Reachability.NetworkStatus = .ReachableViaWiFi
+    
     private static var thumbnailCache = NSCache()
     private class CacheData {
         
@@ -60,10 +62,14 @@ class OLQueryCoordinator: NSObject {
                 
                 if let reachability = OLQueryCoordinator.reachability {
                     
-                    reachability.whenReachable = { reachability in
+                    reachability.whenReachable = {
+                        
+                        reachability in
+
                         // this is called on a background thread, but UI updates must
                         // be on the main thread, like this:
                         dispatch_async(dispatch_get_main_queue()) {
+
                             if reachability.isReachableViaWiFi() {
                                 print("Reachable via WiFi")
                             } else if reachability.isReachableViaWWAN() {
@@ -106,6 +112,65 @@ class OLQueryCoordinator: NSObject {
                 
                 OLQueryCoordinator.reachability = nil
             }
+        }
+    }
+    
+    func libraryIsReachable() -> Bool {
+        
+        var isReachable = false
+        
+        if let netStatus = OLQueryCoordinator.reachability?.currentReachabilityStatus {
+
+            switch netStatus {
+            
+            case .NotReachable:
+                showNetworkUnreachableAlert()
+                break
+            case .ReachableViaWWAN:
+                break
+            case .ReachableViaWiFi:
+                isReachable = true
+                break
+            }
+            
+            OLQueryCoordinator.previousNetStatus = netStatus
+        }
+        
+        return isReachable
+    }
+
+    func showNetworkUnreachableAlert() {
+        
+        dispatch_async( dispatch_get_main_queue() ) {
+
+            guard let presentationContext = UIApplication.topViewController() else {
+
+                return
+            }
+            
+            let alertController =
+                UIAlertController(
+                        title: "Sad Face Emoji!",
+                        message: "Cell data permission was not authorized. Please enable it in Settings to continue.",
+                        preferredStyle: .Alert
+                    )
+            
+            let settingsAction =
+                UIAlertAction( title: "Settings", style: .Default ) {
+                    
+                    (alertAction) in
+                    
+                        // THIS IS WHERE THE MAGIC HAPPENS!!!!
+                        if let appSettings = NSURL(string: UIApplicationOpenSettingsURLString) {
+                            UIApplication.sharedApplication().openURL(appSettings)
+                        }
+                    }
+            alertController.addAction( settingsAction )
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+            alertController.addAction( cancelAction )
+            
+            presentationContext.presentViewController( alertController, animated: true, completion: nil )
         }
     }
     

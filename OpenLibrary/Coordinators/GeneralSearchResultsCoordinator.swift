@@ -148,6 +148,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         
             self.updateUI()
         }
+        
     }
     
     deinit {
@@ -218,55 +219,61 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
 
     func newQuery( newSearchKeys: [String: String], userInitiated: Bool, refreshControl: UIRefreshControl? ) {
         
-        if nil == generalSearchOperation {
+        if libraryIsReachable() {
             
-            updateFooter( "fetching books..." )
-
-            self.searchKeys = newSearchKeys
-            if numberOfSections() > 0 {
+            if nil == generalSearchOperation {
                 
-                let top = NSIndexPath( forRow: Foundation.NSNotFound, inSection: 0 );
-                tableVC?.tableView.scrollToRowAtIndexPath( top, atScrollPosition: UITableViewScrollPosition.Top, animated: true );
-            }
-        
-            self.sequence += 1
-            self.searchResults = SearchResults()
-            self.highWaterMark = 0
-            self.nextOffset = kPageSize
-            
-            saveState()
-            
-            cachedFetchedResultsController = nil
-            updateUI()
+                updateFooter( "fetching books..." )
 
-            generalSearchOperation =
-                enqueueSearch(
-                        searchKeys,
-                        sequence: sequence,
-                        offset: highWaterMark,
-                        pageSize: kPageSize,
-                        userInitiated: userInitiated,
-                        refreshControl: refreshControl
-                    )
+                self.searchKeys = newSearchKeys
+                if numberOfSections() > 0 {
+                    
+                    let top = NSIndexPath( forRow: Foundation.NSNotFound, inSection: 0 );
+                    tableVC?.tableView.scrollToRowAtIndexPath( top, atScrollPosition: UITableViewScrollPosition.Top, animated: true );
+                }
+            
+                self.sequence += 1
+                self.searchResults = SearchResults()
+                self.highWaterMark = 0
+                self.nextOffset = kPageSize
+                
+                saveState()
+                
+                cachedFetchedResultsController = nil
+                updateUI()
+
+                generalSearchOperation =
+                    enqueueSearch(
+                            searchKeys,
+                            sequence: sequence,
+                            offset: highWaterMark,
+                            pageSize: kPageSize,
+                            userInitiated: userInitiated,
+                            refreshControl: refreshControl
+                        )
+            }
         }
     }
     
     func nextQueryPage() -> Void {
         
-        if nil == self.generalSearchOperation && !searchKeys.isEmpty && highWaterMark < searchResults.numFound {
+        if libraryIsReachable() {
             
-            updateFooter( "fetching more books..." )
+            if nil == self.generalSearchOperation && !searchKeys.isEmpty && highWaterMark < searchResults.numFound {
+                
+                updateFooter( "fetching more books..." )
 
-            nextOffset = highWaterMark + kPageSize
-            
-            generalSearchOperation =
-                enqueueSearch(
-                        self.searchKeys,
-                        sequence: sequence,
-                        offset: highWaterMark, pageSize: kPageSize,
-                        userInitiated: false,
-                        refreshControl: nil
-                    )
+                nextOffset = highWaterMark + kPageSize
+                
+                generalSearchOperation =
+                    enqueueSearch(
+                            self.searchKeys,
+                            sequence: sequence,
+                            offset: highWaterMark, pageSize: kPageSize,
+                            userInitiated: false,
+                            refreshControl: nil
+                        )
+            }
         }
     }
     

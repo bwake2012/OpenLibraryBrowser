@@ -142,6 +142,8 @@
 		C4AB17171CDB86B200D6DF05 /* DeluxeDetailLinkTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AB17161CDB86B200D6DF05 /* DeluxeDetailLinkTableViewCell.xib */; };
 		C4B2648E1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C4B2648C1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodeld */; };
 		C4B2AC1E1CE0F44F003E3E74 /* OLBookSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B2AC1D1CE0F44F003E3E74 /* OLBookSearchViewController.swift */; };
+		C4B31B5E1D789700002DA5CD /* OLLaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B31B5D1D789700002DA5CD /* OLLaunchViewController.swift */; };
+		C4B31B601D78A0B1002DA5CD /* UIApplication+topViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B31B5F1D78A0B1002DA5CD /* UIApplication+topViewController.swift */; };
 		C4B34D821D400A5600BC85E8 /* OLEBookEditionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B34D811D400A5600BC85E8 /* OLEBookEditionsTableViewController.swift */; };
 		C4B34D841D400ADF00BC85E8 /* EBookEditionsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B34D831D400ADF00BC85E8 /* EBookEditionsCoordinator.swift */; };
 		C4B34D861D4057DD00BC85E8 /* WorkEditionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B34D851D4057DD00BC85E8 /* WorkEditionTableViewCell.swift */; };
@@ -345,6 +347,8 @@
 		C4AB17161CDB86B200D6DF05 /* DeluxeDetailLinkTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeluxeDetailLinkTableViewCell.xib; path = Views/DeluxeDetailLinkTableViewCell.xib; sourceTree = "<group>"; };
 		C4B2648D1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OpenLibraryBrowser.xcdatamodel; sourceTree = "<group>"; };
 		C4B2AC1D1CE0F44F003E3E74 /* OLBookSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLBookSearchViewController.swift; path = "View Controllers/OLBookSearchViewController.swift"; sourceTree = "<group>"; };
+		C4B31B5D1D789700002DA5CD /* OLLaunchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLLaunchViewController.swift; path = "View Controllers/OLLaunchViewController.swift"; sourceTree = "<group>"; };
+		C4B31B5F1D78A0B1002DA5CD /* UIApplication+topViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIApplication+topViewController.swift"; path = "Utility/UIApplication+topViewController.swift"; sourceTree = "<group>"; };
 		C4B34D811D400A5600BC85E8 /* OLEBookEditionsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLEBookEditionsTableViewController.swift; path = "View Controllers/OLEBookEditionsTableViewController.swift"; sourceTree = "<group>"; };
 		C4B34D831D400ADF00BC85E8 /* EBookEditionsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EBookEditionsCoordinator.swift; sourceTree = "<group>"; };
 		C4B34D851D4057DD00BC85E8 /* WorkEditionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkEditionTableViewCell.swift; path = Views/WorkEditionTableViewCell.swift; sourceTree = "<group>"; };
@@ -591,9 +595,6 @@
 		C4E35EA41C7E1F1C0015D187 /* App Operations */ = {
 			isa = PBXGroup;
 			children = (
-				C40A28601D711219001ABC20 /* EditionDetailDownloadOperation.swift */,
-				C40A28611D711219001ABC20 /* EditionDetailGetOperation.swift */,
-				C40A28621D711219001ABC20 /* EditionDetailParseOperation.swift */,
 				C45EBC021D6DFD2900ED1908 /* AlertOperation.swift */,
 				C42D61D01C8738CC00909D43 /* AuthorDetailDownloadOperation.swift */,
 				C42D61D11C8738CC00909D43 /* AuthorDetailGetOperation.swift */,
@@ -611,6 +612,9 @@
 				C4DA1F7A1C8A329B00DFA4BF /* AuthorWorksParseOperation.swift */,
 				C4A0F0821D1468C500D0F604 /* BookDownloadOperation.swift */,
 				C4A0F0831D1468C500D0F604 /* BookGetOperation.swift */,
+				C40A28601D711219001ABC20 /* EditionDetailDownloadOperation.swift */,
+				C40A28611D711219001ABC20 /* EditionDetailGetOperation.swift */,
+				C40A28621D711219001ABC20 /* EditionDetailParseOperation.swift */,
 				C40E97F61CC7D1540013A3F5 /* GeneralSearchOperation.swift */,
 				C4973EC21D56A2450062170E /* GeneralSearchResultsDeleteGroupOperation.swift */,
 				C40E97F51CC7D1540013A3F5 /* GeneralSearchResultsDeleteOperation.swift */,
@@ -674,6 +678,7 @@
 				C4EF99D31CA3707900BEF2D3 /* OLWorkDetailEditionsTableViewController.swift */,
 				C4EF99D41CA3707900BEF2D3 /* OLWorkDetailViewController.swift */,
 				C45EBC041D6E034E00ED1908 /* OLHTMLServerErrorPageViewController.swift */,
+				C4B31B5D1D789700002DA5CD /* OLLaunchViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -728,6 +733,7 @@
 				C4E35EC81C80DE760015D187 /* String+PercentEncoding.swift */,
 				C4677E9E1C9CE35A0070CDFD /* UIImageView+DisplayFromURL.swift */,
 				C45EBC061D6E15D000ED1908 /* AssociatedObject.swift */,
+				C4B31B5F1D78A0B1002DA5CD /* UIApplication+topViewController.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -966,6 +972,7 @@
 				C4A0F0841D1468C500D0F604 /* BookDownloadOperation.swift in Sources */,
 				C46E7E4D1C8619C300D2ED51 /* OLAuthorDetailViewController.swift in Sources */,
 				C46E7E571C861E8500D2ED51 /* OLAuthorDetail.swift in Sources */,
+				C4B31B5E1D789700002DA5CD /* OLLaunchViewController.swift in Sources */,
 				C412FE5D1CC3D45A00EDB935 /* OLEditionDetail+CoreDataProperties.swift in Sources */,
 				C412FE511CC29D2400EDB935 /* LanguagesParseOperation.swift in Sources */,
 				C4E8638C1C974303002C0E6B /* OLWorkDetail.swift in Sources */,
@@ -1053,6 +1060,7 @@
 				C4E35EC21C7EA4000015D187 /* HTMLPageOperation.swift in Sources */,
 				C40E97F21CC6C2E10013A3F5 /* OLGeneralSearchResult.swift in Sources */,
 				C4677EA51CA0351B0070CDFD /* AuthorEditionsCoordinator.swift in Sources */,
+				C4B31B601D78A0B1002DA5CD /* UIApplication+topViewController.swift in Sources */,
 				C4E8638A1C9121A3002C0E6B /* OpenLibraryObject.swift in Sources */,
 				C47B03C01D5A352B001F323C /* SearchState.swift in Sources */,
 				C4F00C531CD929AD002D7E14 /* DeluxeDetailHeadingTableViewCell.swift in Sources */,
