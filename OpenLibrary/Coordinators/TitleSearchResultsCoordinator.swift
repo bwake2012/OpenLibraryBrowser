@@ -108,25 +108,18 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedRe
             nextQueryPage( highWaterMark )
         }
         
-        guard let result = objectAtIndexPath( indexPath ) else { return nil }
-
-        cell.configure( tableVC!.tableView, key: result.key, data: result )
+        guard let object = objectAtIndexPath( indexPath ) else { return nil }
         
-        updateUI( result, cell: cell )
+        if let tableView = tableVC?.tableView {
+            
+            cell.configure( tableView, key: object.key, data: object )
+            
+            displayThumbnail( object, cell: cell )
+        }
         
-        // not all the Titles have photos under their OLID. Some only have them under a photo ID
-//        print( "\(result.index) Title: \(result.title) has cover: \(result.hasImage)" )
-
-        return result
+        return object
     }
-    
-    func updateUI( searchResult: OLTitleSearchResult, cell: TitleSearchResultTableViewCell ) {
-        
-        assert( NSThread.isMainThread() )
 
-        displayThumbnail( searchResult, cell: cell )
-    }
-    
     func updateUI() {
 
         do {

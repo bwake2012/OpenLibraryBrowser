@@ -107,12 +107,14 @@ class OLBookSearchViewController: UIViewController {
         // First get the nsObject by defining as an optional anyObject
         if let infoDictionary = NSBundle.mainBundle().infoDictionary {
 
-            let nsObject: AnyObject? = infoDictionary["CFBundleShortVersionString"]
+            let tempVersion: AnyObject? = infoDictionary["CFBundleShortVersionString"]
+            let tempBuild: AnyObject? = infoDictionary["CFBundleVersion"]
         
             // Then just cast the object as a String, but be careful, you may want to double check for nil
-            let version = nsObject as? String ?? ""
+            let version = tempVersion as? String ?? "version not found"
+            let build = tempBuild as? String ?? "build not found"
             
-            aboutButton.titleLabel?.text = version
+            aboutButton.setTitle( "\(version) (\(build))", forState: .Normal )
         }
     }
 

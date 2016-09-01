@@ -100,13 +100,16 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
 //            nextQueryPage( highWaterMark )
 //        }
 
-        guard let result = objectAtIndexPath( indexPath ) else { return nil }
+        guard let object = objectAtIndexPath( indexPath ) else { return nil }
         
-        cell.configure( tableVC!.tableView, key: result.key, data: result )
+        if let tableView = tableVC?.tableView {
+
+            cell.configure( tableView, key: object.key, data: object )
         
-        displayThumbnail( result, cell: cell )
+            displayThumbnail( object, cell: cell )
+        }
         
-        return result
+        return object
     }
     
     func updateUI() {

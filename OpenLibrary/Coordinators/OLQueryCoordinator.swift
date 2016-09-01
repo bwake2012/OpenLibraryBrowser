@@ -16,6 +16,19 @@ import PSOperations
 class OLQueryCoordinator: NSObject {
     
     private static var thumbnailCache = NSCache()
+    private class CacheData {
+        
+        var fetchInProgress: Bool {
+            
+            return nil == image
+        }
+        var image: UIImage?
+        
+        init( image: UIImage? ) {
+            
+            self.image = image
+        }
+    }
 
     private static var reachability: Reachability?
     private static var viewControllerStack = [UIViewController]()
@@ -141,53 +154,65 @@ class OLQueryCoordinator: NSObject {
         }
     }
     
+    private func cachedData( cacheKey: String ) -> CacheData? {
+        
+        return OLQueryCoordinator.thumbnailCache.objectForKey( cacheKey ) as? CacheData
+    }
+    
     func cachedImage( localURL: NSURL ) -> UIImage? {
+        
+        guard localURL.fileURL else {
+            
+            return nil
+        }
         
         guard let cacheKey = localURL.lastPathComponent else {
             return nil
         }
         
-        if let image = OLQueryCoordinator.thumbnailCache.objectForKey( cacheKey ) as? UIImage {
+        guard let cacheData = cachedData( cacheKey ) else {
+            
+            return nil
+        }
+        
+        if let image = cacheData.image {
             
             return image
             
-        } else if localURL.fileURL {
-            
-            if let data = NSData( contentsOfURL: localURL ) {
+        } else if let data = NSData( contentsOfURL: localURL ) {
                 
-                if let image = UIImage( data: data ) {
+            if let image = UIImage( data: data ) {
 
-                    OLQueryCoordinator.thumbnailCache.setObject( image, forKey: cacheKey )
-                    
-                    return image
-                }
+                OLQueryCoordinator.thumbnailCache.setObject( CacheData( image: image ), forKey: cacheKey )
+                
+                return image
             }
         }
         
         return nil
     }
     
-    func preloadThumbnail( object: OLManagedObject ) -> Void {
+    func preloadThumbnail( object: OLManagedObject, tableView: UITableView, indexPath: NSIndexPath ) -> Void {
         
         if object.hasImage {
             
-            let localURL = object.localURL( "S" )
+            let url = object.localURL( "S" )
             let firstImageID = object.firstImageID
             let imageType = object.imageType
             
             dispatch_async( dispatch_queue_create( "preloadThumbnail", nil ) ) {
                 
-                if nil != self.cachedImage( localURL ) {
+                if nil != self.cachedImage( url ) {
                     
                     return
                     
                 } else {
                     
-                    let url = localURL
                     let imageGetOperation =
                         ImageGetOperation( numberID: firstImageID, imageKeyName: "id", localURL: url, size: "S", type: imageType ) {
                             
-                            self.cachedImage( localURL )                }
+                            self.cachedImage( url )
+                        }
                     
                     imageGetOperation.userInitiated = true
                     self.operationQueue.addOperation( imageGetOperation )
@@ -196,77 +221,129 @@ class OLQueryCoordinator: NSObject {
         }
     }
     
-    func displayThumbnail( object: OLManagedObject, tableView: UITableView, indexPath: NSIndexPath ) {
+    private func displayThumbnailImage(
+                    url: NSURL,
+                    image: UIImage,
+                    cell: OLTableViewCell?
+                ) {
         
-        assert( NSThread.isMainThread() )
-        //        print( "\(object.title) \(object.hasImage ? "has" : "has no") cover image")
+        dispatch_async( dispatch_get_main_queue() ) {
+            
+            [weak cell] in
+            
+            if let cell = cell {
+                
+                cell.displayImage( url, image: image )
+            }
+        }
         
-        guard let cell = tableView.cellForRowAtIndexPath( indexPath ) as? OLTableViewCell else {
+    }
+    
+    func enqueueImageFetch( url: NSURL, imageID: Int, imageType: String, cell: OLTableViewCell ) {
+        
+        let imageGetOperation =
+            ImageGetOperation( numberID: imageID, imageKeyName: "id", localURL: url, size: "S", type: imageType ) {
+                
+                [weak self, weak cell] in
+                
+                if let strongSelf = self, cell = cell {
+                    
+                    if let image = strongSelf.cachedImage( url ) {
+                        
+                        strongSelf.displayThumbnailImage( url, image: image, cell: cell )
+                    }
+                }
+        }
+        
+        imageGetOperation.userInitiated = true
+        operationQueue.addOperation( imageGetOperation )
+    }
+    
+    func displayThumbnail( object: OLManagedObject, cell: OLTableViewCell? ) {
+        
+        guard object.hasImage else {
             return
         }
-
-        if object.hasImage {
-            
-            let localURL = object.localURL( "S" )
-            if let image = cachedImage( localURL ) {
-                
-                cell.displayImage( localURL, image: image )
-                
-            } else {
-                
-                let url = localURL
-                let imageGetOperation =
-                    ImageGetOperation( numberID: object.firstImageID, imageKeyName: "id", localURL: url, size: "S", type: object.imageType ) {
-                        
-                        if let image = self.cachedImage( localURL ) {
-                            
-                            dispatch_async( dispatch_get_main_queue() ) {
-                                    
-                                guard let cell = tableView.cellForRowAtIndexPath( indexPath ) as? OLTableViewCell else {
-                                    return
-                                }
-                                    
-                                cell.displayImage( url, image: image )
-                            }
-                        }
-                }
-                
-                imageGetOperation.userInitiated = true
-                operationQueue.addOperation( imageGetOperation )
-            }
-        }
-    }
-
-    func displayThumbnail( object: OLManagedObject, cell: OLTableViewCell ) {
         
-        assert( NSThread.isMainThread() )
-        //        print( "\(object.title) \(object.hasImage ? "has" : "has no") cover image")
-        if object.hasImage {
+        let url = object.localURL( "S" )
+        guard let cacheKey = url.lastPathComponent else {
+            assert( false )
+            return
+        }
+        
+        let cacheData = cachedData( cacheKey )
+        let image: UIImage? = cacheData?.image
+        if let image = image {
             
-            let localURL = object.localURL( "S" )
-            if let image = cachedImage( localURL ) {
+            if let cell = cell {
                 
-                cell.displayImage( localURL, image: image )
+                cell.displayImage( url, image: image )
+            }
+            
+        } else if nil == cacheData {
+            
+            OLQueryCoordinator.thumbnailCache.setObject( CacheData( image: image ), forKey: cacheKey )
+            
+            let imageID = object.firstImageID
+            let imageType = object.imageType
+            dispatch_async( dispatch_queue_create( "preloadThumbnail", nil ) ) {
                 
-            } else {
-                
-                let url = localURL
-                let imageGetOperation =
-                    ImageGetOperation( numberID: object.firstImageID, imageKeyName: "id", localURL: url, size: "S", type: object.imageType ) {
+                [weak self, weak cell] in
+
+                if let strongSelf = self, cell = cell {
+
+                    if let image = strongSelf.cachedImage( url ) {
                         
-                        if let image = self.cachedImage( localURL ) {
-                            
-                            dispatch_async( dispatch_get_main_queue() ) {
-                                
-                                cell.displayImage( url, image: image )
-                            }
-                        }
+                        strongSelf.displayThumbnailImage(
+                                url,
+                                image: image,
+                                cell: cell
+                            )
+                        
+                    } else {
+                        
+                        strongSelf.enqueueImageFetch(
+                                url,
+                                imageID: imageID,
+                                imageType: imageType,
+                                cell: cell
+                            )
+                    }
                 }
-                
-                imageGetOperation.userInitiated = true
-                operationQueue.addOperation( imageGetOperation )
             }
         }
     }
+
+//    func displayThumbnail( object: OLManagedObject, cell: OLTableViewCell ) {
+//        
+//        assert( NSThread.isMainThread() )
+//        //        print( "\(object.title) \(object.hasImage ? "has" : "has no") cover image")
+//        if object.hasImage {
+//            
+//            let localURL = object.localURL( "S" )
+//            if let image = cachedImage( localURL ) {
+//                
+//                cell.displayImage( localURL, image: image )
+//                
+//            } else {
+//                
+//                let url = localURL
+//                let imageGetOperation =
+//                    ImageGetOperation( numberID: object.firstImageID, imageKeyName: "id", localURL: url, size: "S", type: object.imageType ) {
+//                        
+//                        if let image = self.cachedImage( localURL ) {
+//                            
+//                            dispatch_async( dispatch_get_main_queue() ) {
+//                                
+//                                cell.displayImage( url, image: image )
+//                            }
+//                        }
+//                }
+//                
+//                imageGetOperation.userInitiated = true
+//                operationQueue.addOperation( imageGetOperation )
+//            }
+//        }
+//    }
 
 }

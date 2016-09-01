@@ -67,6 +67,8 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
     
     override func prepareForReuse() {
         
+        key = ""
+        
         titleText.text = ""
         subtitleText.text = ""
         authorName.text = ""
@@ -107,6 +109,8 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
         assert( NSThread.isMainThread() )
         
         if let r = data as? OLGeneralSearchResult {
+            
+            self.key = key
 
             titleText.text = r.title
             subtitleText.text = r.subtitle
@@ -124,40 +128,19 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
             if r.hasImage {
                 
                 cellImage.image = nil
+                let url = data?.localURL( "S" )
+                currentImageFile = url?.lastPathComponent
                 
             } else {
             
                 clearCurrentImage()
             }
-            
-        } else {
-            
-            titleText.text = ""
-            subtitleText.text = ""
-            authorName.text = ""
-            
-            viewWorkDetail.setTitle( "", forState: .Normal )
-            languageNames.text = ""
-            
-            firstPublished.text = ""
-            
-            eBooksLabel.text = ""
 
-            isZoomEnabled = false
-            haveEbooks = false
-            haveEditions = false
+            eBooksLabel.text = "Electronic Editions " + ( haveEbooks ? "found" : "not found" )
+            updateButtons( selected )
             
-            clearCurrentImage()
+            saveCellHeights( tableView, key: key, isExpanded: false )
         }
-        
-        eBooksLabel.text = "Electronic Editions " + ( haveEbooks ? "found" : "not found" )
-        updateButtons( selected )
-        
-//        setNeedsLayout()
-        layoutIfNeeded()
-        
-//        adjustCellHeights( tableView, key: key )
-        
     }
 
 }

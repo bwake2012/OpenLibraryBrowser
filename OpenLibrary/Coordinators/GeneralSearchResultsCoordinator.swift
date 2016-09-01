@@ -117,7 +117,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             }
         }
 
-        return sortDescriptors.isEmpty ? nil : sortDescriptors
+        return !sortDescriptors.isEmpty ? sortDescriptors : [NSSortDescriptor( key: "index", ascending: true )]
     }
     
     // MARK: instance
@@ -196,7 +196,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
 
         if let tableVC = tableVC {
             cell.configure( tableVC.tableView, key: result.key, data: result )
-            displayThumbnail( result, tableView: tableVC.tableView, indexPath: indexPath )
+            displayThumbnail( result, cell: cell )
         }
         
         return result
@@ -386,7 +386,6 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
     
     func fetchedResultsController( controller: FetchedOLGeneralSearchResultController,
                                    didChangeObject change: FetchedResultsObjectChange< OLGeneralSearchResult > ) {
-        
         switch change {
         case let .Insert(_, indexPath):
             if !insertedSectionIndexes.containsIndex( indexPath.section ) {
@@ -424,46 +423,6 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         }
     }
     
-
-/*
-    func fetchedResultsControllerWillChangeContent( controller: FetchedResultsController< OLGeneralSearchResult > ) {
-        tableVC?.tableView.beginUpdates()
-    }
-    
-    func fetchedResultsControllerDidChangeContent( controller: FetchedResultsController< OLGeneralSearchResult > ) {
-        tableVC?.tableView.endUpdates()
-    }
-    
-    func fetchedResultsController( controller: FetchedResultsController< OLGeneralSearchResult >,
-        didChangeObject change: FetchedResultsObjectChange< OLGeneralSearchResult > ) {
-            switch change {
-            case let .Insert( _, indexPath ):
-                tableVC?.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-                break
-                
-            case let .Delete(_, indexPath):
-                tableVC?.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-                break
-                
-            case let .Move(_, fromIndexPath, toIndexPath):
-                tableVC?.tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
-                
-            case let .Update(_, indexPath):
-                tableVC?.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-            }
-    }
-    
-    func fetchedResultsController(controller: FetchedResultsController< OLGeneralSearchResult >,
-        didChangeSection change: FetchedResultsSectionChange< OLGeneralSearchResult >) {
-            switch change {
-            case let .Insert(_, index):
-                tableVC?.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
-                
-            case let .Delete(_, index):
-                tableVC?.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
-            }
-    }
-*/
     // MARK: Utility
     func queueGetTitleThumbByID( indexPath: NSIndexPath, id: Int, url: NSURL ) {
         

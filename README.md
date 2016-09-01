@@ -4,5 +4,6 @@ This is a mobile front end for the OpenLibrary book database. It's a universal a
 
 It leans heavily on the NSOperation based classes originally developed by Apple for their WWDC app and published with their WWDC 2015 sample Advanced NSOperations, as adapted by Pluralsight in their version named [PSOperations](https://github.com/pluralsight/PSOperations).
 
-It also uses the [Big Nerd Ranch Core Data stack](https://github.com/bignerdranch/CoreDataStack). 
+It builds its Core Data stack with the [Big Nerd Ranch Core Data stack](https://github.com/bignerdranch/CoreDataStack). 
 
+It converts markdown text into HTML with [Markingbird](Kristopher Johnson) by Kristopher Johnson
