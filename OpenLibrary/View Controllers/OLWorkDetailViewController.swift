@@ -12,7 +12,7 @@ import CoreData
 
 import BNRCoreDataStack
 
-class OLWorkDetailViewController: UIViewController, UIScrollViewDelegate {
+class OLWorkDetailViewController: UIViewController {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var headerView: UIView!
@@ -54,9 +54,10 @@ class OLWorkDetailViewController: UIViewController, UIScrollViewDelegate {
         
         super.viewDidLoad()
         
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget( self, action: #selector( testRefresh ), forControlEvents: .ValueChanged)
-        scrollView.addSubview( refreshControl )
+//        let refreshControl = UIRefreshControl()
+//        refreshControl.addTarget( self, action: #selector( testRefresh ), forControlEvents: .ValueChanged)
+//        scrollView.addSubview( refreshControl )
+        scrollView.delegate = self
         
         assert( nil != queryCoordinator )
         
@@ -109,19 +110,6 @@ class OLWorkDetailViewController: UIViewController, UIScrollViewDelegate {
         
         queryCoordinator?.refreshQuery( nil )
         workEditionsVC?.refreshQuery( refreshControl )
-    }
-    
-    func scrollViewDidEndDragging( scrollView: UIScrollView, willDecelerate decelerate: Bool ) {
-        
-        // UITableView only moves in one direction, y axis
-        let currentOffset = scrollView.contentOffset.y
-        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
-        
-        // Change 10.0 to adjust the distance from bottom
-        if maximumOffset - currentOffset <= 10.0 {
-            
-            workEditionsVC?.queryCoordinator?.nextQueryPage()
-        }
     }
     
     // MARK: Utility
@@ -239,6 +227,27 @@ extension OLWorkDetailViewController: UncoverBottomTransitionSource {
     func uncoverSourceRectangle() -> UIView? {
         
         return containerView
+    }
+}
+
+extension OLWorkDetailViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidEndDragging( scrollView: UIScrollView, willDecelerate decelerate: Bool ) {
+        
+        // UITableView only moves in one direction, y axis
+        let currentOffset = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+        
+        // Change 10.0 to adjust the distance from bottom
+        if maximumOffset - currentOffset <= -10.0 {
+            
+            workEditionsVC?.queryCoordinator?.nextQueryPage()
+            
+        } else if currentOffset <= -10.0 {
+            
+            navigationController?.navigationBarHidden = false
+        }
+        
     }
 }
 

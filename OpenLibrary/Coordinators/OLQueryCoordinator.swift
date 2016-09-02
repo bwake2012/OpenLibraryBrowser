@@ -33,7 +33,7 @@ class OLQueryCoordinator: NSObject {
     }
 
     private static var reachability: Reachability?
-    private static var viewControllerStack = [UIViewController]()
+    private static var queryCoordinatorCount: Int = 0
     
     private static var dateFormatter: NSDateFormatter?
 
@@ -47,13 +47,8 @@ class OLQueryCoordinator: NSObject {
     
     let operationQueue: OperationQueue
     let coreDataStack: CoreDataStack
-
-    init( operationQueue: OperationQueue, coreDataStack: CoreDataStack, viewController: UIViewController ) {
-        
-        OLQueryCoordinator.viewControllerStack.append( viewController )
-        
-        self.operationQueue = operationQueue
-        self.coreDataStack = coreDataStack
+    
+    private var reachability: Reachability {
         
         if nil == OLQueryCoordinator.reachability {
             
@@ -65,11 +60,11 @@ class OLQueryCoordinator: NSObject {
                     reachability.whenReachable = {
                         
                         reachability in
-
+                        
                         // this is called on a background thread, but UI updates must
                         // be on the main thread, like this:
                         dispatch_async(dispatch_get_main_queue()) {
-
+                            
                             if reachability.isReachableViaWiFi() {
                                 print("Reachable via WiFi")
                             } else if reachability.isReachableViaWWAN() {
@@ -79,7 +74,10 @@ class OLQueryCoordinator: NSObject {
                             }
                         }
                     }
-                    reachability.whenUnreachable = { reachability in
+                    reachability.whenUnreachable = {
+                        
+                        reachability in
+                        
                         // this is called on a background thread, but UI updates must
                         // be on the main thread, like this:
                         dispatch_async(dispatch_get_main_queue()) {
@@ -90,21 +88,29 @@ class OLQueryCoordinator: NSObject {
                     do {
                         try reachability.startNotifier()
                     } catch {
-                        print("Unable to start notifier")
+                        fatalError( "Unable to start network reachability notifier.")
                     }
                 }
                 
             } catch {
-                print("Unable to create Reachability")
+                fatalError( "Unable to create network reachability monitor.")
             }
         }
         
+        return OLQueryCoordinator.reachability!
+    }
+    
+    init( operationQueue: OperationQueue, coreDataStack: CoreDataStack, viewController: UIViewController ) {
+        
+        OLQueryCoordinator.queryCoordinatorCount += 1
+        self.operationQueue = operationQueue
+        self.coreDataStack = coreDataStack
     }
     
     deinit {
 
-        OLQueryCoordinator.viewControllerStack.removeLast()
-        if OLQueryCoordinator.viewControllerStack.isEmpty {
+        OLQueryCoordinator.queryCoordinatorCount -= 1
+        if 0 == OLQueryCoordinator.queryCoordinatorCount {
             
             if let reachability = OLQueryCoordinator.reachability {
                 
@@ -115,31 +121,36 @@ class OLQueryCoordinator: NSObject {
         }
     }
     
-    func libraryIsReachable() -> Bool {
+    func libraryIsReachable( tattle tattle: Bool = false ) -> Bool {
         
         var isReachable = false
         
-        if let netStatus = OLQueryCoordinator.reachability?.currentReachabilityStatus {
+        let newStatus = reachability.currentReachabilityStatus
 
-            switch netStatus {
-            
+        let oldStatus = OLQueryCoordinator.previousNetStatus
+        OLQueryCoordinator.previousNetStatus = newStatus
+        
+        switch newStatus {
+        
             case .NotReachable:
-                showNetworkUnreachableAlert()
+                if tattle && newStatus != oldStatus {
+                    showNetworkUnreachableAlert( oldStatus, newStatus: newStatus )
+                }
                 break
             case .ReachableViaWWAN:
                 break
             case .ReachableViaWiFi:
                 isReachable = true
                 break
-            }
-            
-            OLQueryCoordinator.previousNetStatus = netStatus
         }
         
         return isReachable
     }
 
-    func showNetworkUnreachableAlert() {
+    func showNetworkUnreachableAlert(
+                oldStatus: Reachability.NetworkStatus,
+                newStatus: Reachability.NetworkStatus
+            ) {
         
         dispatch_async( dispatch_get_main_queue() ) {
 
@@ -224,7 +235,7 @@ class OLQueryCoordinator: NSObject {
         return OLQueryCoordinator.thumbnailCache.objectForKey( cacheKey ) as? CacheData
     }
     
-    func cachedImage( localURL: NSURL ) -> UIImage? {
+    private func cachedImage( localURL: NSURL ) -> UIImage? {
         
         guard localURL.fileURL else {
             
@@ -257,35 +268,6 @@ class OLQueryCoordinator: NSObject {
         return nil
     }
     
-    func preloadThumbnail( object: OLManagedObject, tableView: UITableView, indexPath: NSIndexPath ) -> Void {
-        
-        if object.hasImage {
-            
-            let url = object.localURL( "S" )
-            let firstImageID = object.firstImageID
-            let imageType = object.imageType
-            
-            dispatch_async( dispatch_queue_create( "preloadThumbnail", nil ) ) {
-                
-                if nil != self.cachedImage( url ) {
-                    
-                    return
-                    
-                } else {
-                    
-                    let imageGetOperation =
-                        ImageGetOperation( numberID: firstImageID, imageKeyName: "id", localURL: url, size: "S", type: imageType ) {
-                            
-                            self.cachedImage( url )
-                        }
-                    
-                    imageGetOperation.userInitiated = true
-                    self.operationQueue.addOperation( imageGetOperation )
-                }
-            }
-        }
-    }
-    
     private func displayThumbnailImage(
                     url: NSURL,
                     image: UIImage,
@@ -305,6 +287,10 @@ class OLQueryCoordinator: NSObject {
     }
     
     func enqueueImageFetch( url: NSURL, imageID: Int, imageType: String, cell: OLTableViewCell ) {
+        
+        guard libraryIsReachable() else {
+            return
+        }
         
         let imageGetOperation =
             ImageGetOperation( numberID: imageID, imageKeyName: "id", localURL: url, size: "S", type: imageType ) {
@@ -378,37 +364,4 @@ class OLQueryCoordinator: NSObject {
             }
         }
     }
-
-//    func displayThumbnail( object: OLManagedObject, cell: OLTableViewCell ) {
-//        
-//        assert( NSThread.isMainThread() )
-//        //        print( "\(object.title) \(object.hasImage ? "has" : "has no") cover image")
-//        if object.hasImage {
-//            
-//            let localURL = object.localURL( "S" )
-//            if let image = cachedImage( localURL ) {
-//                
-//                cell.displayImage( localURL, image: image )
-//                
-//            } else {
-//                
-//                let url = localURL
-//                let imageGetOperation =
-//                    ImageGetOperation( numberID: object.firstImageID, imageKeyName: "id", localURL: url, size: "S", type: object.imageType ) {
-//                        
-//                        if let image = self.cachedImage( localURL ) {
-//                            
-//                            dispatch_async( dispatch_get_main_queue() ) {
-//                                
-//                                cell.displayImage( url, image: image )
-//                            }
-//                        }
-//                }
-//                
-//                imageGetOperation.userInitiated = true
-//                operationQueue.addOperation( imageGetOperation )
-//            }
-//        }
-//    }
-
 }

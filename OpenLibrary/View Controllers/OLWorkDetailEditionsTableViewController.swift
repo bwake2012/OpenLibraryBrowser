@@ -11,11 +11,12 @@ import CoreData
 
 import BNRCoreDataStack
 
-class OLWorkDetailEditionsTableViewController: UITableViewController {
+class OLWorkDetailEditionsTableViewController: UIViewController {
 
     // MARK: Properties
     var searchInfo: OLWorkDetail?
 
+    @IBOutlet var tableView: UITableView!
     var queryCoordinator: WorkEditionsCoordinator?
     
     // MARK: UIViewController
@@ -60,21 +61,6 @@ class OLWorkDetailEditionsTableViewController: UITableViewController {
         }
     }
     
-    // MARK: UIScrollViewController
-    
-    override func scrollViewDidEndDragging( scrollView: UIScrollView, willDecelerate decelerate: Bool ) {
-        
-        // UITableView only moves in one direction, y axis
-        let currentOffset = scrollView.contentOffset.y
-        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
-        
-        // Change 10.0 to adjust the distance from bottom
-        if maximumOffset - currentOffset <= 10.0 {
-            
-            queryCoordinator?.nextQueryPage()
-        }
-    }
-    
     // MARK: Query in Progress
     func coordinatorIsBusy() -> Void {
         
@@ -92,31 +78,7 @@ class OLWorkDetailEditionsTableViewController: UITableViewController {
         }
     }
     
-
     
-    // MARK: UITableViewDelegate
-    
-    // MARK: UITableviewDataSource
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        
-        return queryCoordinator!.numberOfSections()
-    }
-    
-    override func tableView( tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
-        
-        return queryCoordinator!.numberOfRowsInSection( section )
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("workEditionEntry", forIndexPath: indexPath)
-        if let cell = cell as? WorkEditionTableViewCell {
-            
-            queryCoordinator!.displayToCell( cell, indexPath: indexPath )
-            
-        }
-        
-        return cell
-    }
     
     func refreshQuery( refreshControl: UIRefreshControl? ) {
         
@@ -140,3 +102,56 @@ extension OLWorkDetailEditionsTableViewController: TransitionSourceCell {
     
 }
 
+// MARK: UIScrollViewDelegate
+
+extension OLWorkDetailEditionsTableViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidEndDragging( scrollView: UIScrollView, willDecelerate decelerate: Bool ) {
+        
+        // UITableView only moves in one direction, y axis
+        let currentOffset = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+        
+        // Change 10.0 to adjust the distance from bottom
+        if maximumOffset - currentOffset <= -10.0 {
+            
+            queryCoordinator?.nextQueryPage()
+            
+        } else if currentOffset <= -10.0 {
+            
+            navigationController?.navigationBarHidden = false
+        }
+        
+    }
+}
+
+// MARK: UITableViewDelegate
+extension OLWorkDetailEditionsTableViewController: UITableViewDelegate {
+    
+}
+
+// MARK: UITableviewDataSource
+extension OLWorkDetailEditionsTableViewController: UITableViewDataSource {
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        
+        return queryCoordinator!.numberOfSections()
+    }
+    
+    func tableView( tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
+        
+        return queryCoordinator!.numberOfRowsInSection( section )
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+
+        let cell = tableView.dequeueReusableCellWithIdentifier("workEditionEntry", forIndexPath: indexPath)
+        if let cell = cell as? WorkEditionTableViewCell {
+            
+            queryCoordinator!.displayToCell( cell, indexPath: indexPath )
+            
+        }
+        
+        return cell
+    }
+}

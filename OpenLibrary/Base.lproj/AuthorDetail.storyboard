@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -146,6 +146,10 @@
                                     <constraint firstItem="Re7-7g-ZgA" firstAttribute="width" secondItem="12p-2U-fA8" secondAttribute="width" id="orW-of-iK1"/>
                                 </constraints>
                             </view>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="8zT-S9-MSn">
+                                <rect key="frame" x="282" y="281" width="37" height="37"/>
+                                <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -156,6 +160,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityView" destination="8zT-S9-MSn" id="Bb1-KO-9lw"/>
                         <outlet property="authorName" destination="YDN-2I-Ydz" id="adM-xd-0Zh"/>
                         <outlet property="authorPhoto" destination="Yde-7a-B86" id="yET-7r-TVc"/>
                         <outlet property="containerView" destination="GtZ-lM-FnV" id="ckz-mZ-wQJ"/>
@@ -270,6 +275,9 @@
                             <outlet property="delegate" destination="zwq-ib-FDJ" id="mLT-yd-gYP"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="tableView" destination="54q-gE-kUZ" id="czY-ua-Vlt"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c5B-2w-dBC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -46,6 +46,11 @@ class PictureViewCoordinator: OLQueryCoordinator {
 
             if !( pictureVC.displayImage( localURL ) ) {
 
+                guard libraryIsReachable() else {
+                    
+                    return
+                }
+                
                 if nil == imageGetOperation {
                     imageGetOperation =
                         ImageGetOperation(

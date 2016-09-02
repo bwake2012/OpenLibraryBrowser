@@ -23,6 +23,8 @@ class OLAuthorDetailViewController: UIViewController {
     @IBOutlet weak var displayDeluxeDetail: UIButton!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var containerViewHeightConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var activityView: UIActivityIndicatorView!
 
     var queryCoordinator: AuthorDetailCoordinator?
     var authorWorksVC: OLAuthorDetailWorksTableViewController?
@@ -35,10 +37,12 @@ class OLAuthorDetailViewController: UIViewController {
 
         super.viewDidLoad()
         
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget( self, action: #selector( testRefresh ), forControlEvents: .ValueChanged)
-        scrollView.addSubview( refreshControl )
+//        let refreshControl = UIRefreshControl()
+//        refreshControl.addTarget( self, action: #selector( testRefresh ), forControlEvents: .ValueChanged)
+//        scrollView.addSubview( refreshControl )
 
+        scrollView.delegate = self
+        
         assert( nil != queryCoordinator )
         
         queryCoordinator?.updateUI()
@@ -147,6 +151,18 @@ class OLAuthorDetailViewController: UIViewController {
         }
      }
     
+    // MARK: query in progress
+    
+    func coordinatorIsBusy() -> Void {
+        
+        activityView?.startAnimating()
+    }
+    
+    func coordinatorIsNoLongerBusy() -> Void {
+        
+        activityView?.stopAnimating()
+    }
+    
     // MARK: Utility
 
 }
@@ -164,6 +180,26 @@ extension OLAuthorDetailViewController: UncoverBottomTransitionSource {
     func uncoverSourceRectangle() -> UIView? {
         
         return containerView
+    }
+}
+
+extension OLAuthorDetailViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidEndDragging( scrollView: UIScrollView, willDecelerate decelerate: Bool ) {
+        
+        // UITableView only moves in one direction, y axis
+        let currentOffset = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+        
+        // Change 10.0 to adjust the distance from bottom
+        if maximumOffset - currentOffset <= -10.0 {
+            
+            authorWorksVC?.queryCoordinator?.nextQueryPage()
+            
+        } else if currentOffset <= -10.0 {
+            
+            navigationController?.navigationBarHidden = false
+        }
     }
 }
 

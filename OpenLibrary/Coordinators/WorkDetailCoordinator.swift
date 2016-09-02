@@ -241,6 +241,11 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
     
     func newEbookItemQuery( workDetail: OLWorkDetail ) {
     
+        guard libraryIsReachable() else {
+            
+            return
+        }
+        
         if nil == ebookItemGetOperation {
             
             ebookItemGetOperation =

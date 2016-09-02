@@ -219,61 +219,67 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
 
     func newQuery( newSearchKeys: [String: String], userInitiated: Bool, refreshControl: UIRefreshControl? ) {
         
-        if libraryIsReachable() {
+        guard libraryIsReachable( tattle: true ) else {
             
-            if nil == generalSearchOperation {
-                
-                updateFooter( "fetching books..." )
-
-                self.searchKeys = newSearchKeys
-                if numberOfSections() > 0 {
-                    
-                    let top = NSIndexPath( forRow: Foundation.NSNotFound, inSection: 0 );
-                    tableVC?.tableView.scrollToRowAtIndexPath( top, atScrollPosition: UITableViewScrollPosition.Top, animated: true );
-                }
+            updateFooter( "library is unreachable" )
+            return
+        }
+        
+        if nil == generalSearchOperation {
             
-                self.sequence += 1
-                self.searchResults = SearchResults()
-                self.highWaterMark = 0
-                self.nextOffset = kPageSize
-                
-                saveState()
-                
-                cachedFetchedResultsController = nil
-                updateUI()
+            updateFooter( "fetching books..." )
 
-                generalSearchOperation =
-                    enqueueSearch(
-                            searchKeys,
-                            sequence: sequence,
-                            offset: highWaterMark,
-                            pageSize: kPageSize,
-                            userInitiated: userInitiated,
-                            refreshControl: refreshControl
-                        )
+            self.searchKeys = newSearchKeys
+            if numberOfSections() > 0 {
+                
+                let top = NSIndexPath( forRow: Foundation.NSNotFound, inSection: 0 );
+                tableVC?.tableView.scrollToRowAtIndexPath( top, atScrollPosition: UITableViewScrollPosition.Top, animated: true );
             }
+        
+            self.sequence += 1
+            self.searchResults = SearchResults()
+            self.highWaterMark = 0
+            self.nextOffset = kPageSize
+            
+            saveState()
+            
+            cachedFetchedResultsController = nil
+            updateUI()
+
+            generalSearchOperation =
+                enqueueSearch(
+                        searchKeys,
+                        sequence: sequence,
+                        offset: highWaterMark,
+                        pageSize: kPageSize,
+                        userInitiated: userInitiated,
+                        refreshControl: refreshControl
+                    )
         }
     }
     
     func nextQueryPage() -> Void {
         
-        if libraryIsReachable() {
+        guard libraryIsReachable( tattle: true ) else {
             
-            if nil == self.generalSearchOperation && !searchKeys.isEmpty && highWaterMark < searchResults.numFound {
-                
-                updateFooter( "fetching more books..." )
+            updateFooter( "library is unreachable" )
+            return
+        }
+            
+        if nil == self.generalSearchOperation && !searchKeys.isEmpty && highWaterMark < searchResults.numFound {
+            
+            updateFooter( "fetching more books..." )
 
-                nextOffset = highWaterMark + kPageSize
-                
-                generalSearchOperation =
-                    enqueueSearch(
-                            self.searchKeys,
-                            sequence: sequence,
-                            offset: highWaterMark, pageSize: kPageSize,
-                            userInitiated: false,
-                            refreshControl: nil
-                        )
-            }
+            nextOffset = highWaterMark + kPageSize
+            
+            generalSearchOperation =
+                enqueueSearch(
+                        self.searchKeys,
+                        sequence: sequence,
+                        offset: highWaterMark, pageSize: kPageSize,
+                        userInitiated: false,
+                        refreshControl: nil
+                    )
         }
     }
     
@@ -357,9 +363,10 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         self.highWaterMark = fetchedResultsController.count
         if 0 == self.searchResults.pageSize {
             self.searchResults = SearchResults( start: 0, numFound: highWaterMark, pageSize: kPageSize )
-        }
+        } else {
         
-        updateFooter()
+            updateFooter()
+        }
     }
     
     func fetchedResultsControllerWillChangeContent( controller: FetchedOLGeneralSearchResultController ) {

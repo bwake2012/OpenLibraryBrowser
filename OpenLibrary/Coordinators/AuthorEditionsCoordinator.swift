@@ -24,6 +24,8 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
     typealias FetchedAuthorEditionSectionChange = FetchedResultsSectionChange< OLEditionDetail >
     
     weak var tableVC: UITableViewController?
+    
+    var authorEditionsGetOperation: Operation?
 
     private lazy var fetchedResultsController: FetchedAuthorEditionsController = {
         
@@ -111,40 +113,49 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
 
     func newQuery( authorKey: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
 
-        self.searchResults = SearchResults()
-        self.authorKey = authorKey
-        self.highWaterMark = 0
+        guard libraryIsReachable() else {
+            
+            updateFooter( "library is unreachable" )
+            return
+        }
         
-        let authorEditionsGetOperation =
-            AuthorEditionsGetOperation(
-                    queryText: authorKey,
-                    offset: 0,
-                    coreDataStack: coreDataStack,
-                    updateResults: self.updateResults
-                ) {
+        if nil == authorEditionsGetOperation {
+        
+            self.searchResults = SearchResults()
+            self.authorKey = authorKey
+            self.highWaterMark = 0
+            
+            authorEditionsGetOperation =
+                AuthorEditionsGetOperation(
+                        queryText: authorKey,
+                        offset: 0,
+                        coreDataStack: coreDataStack,
+                        updateResults: self.updateResults
+                    ) {
 
-                    dispatch_async( dispatch_get_main_queue() ) {
-                        
-                            refreshControl?.endRefreshing()
-                            self.updateUI()
-                        }
-                }
-        
-        authorEditionsGetOperation.userInitiated = userInitiated
-        operationQueue.addOperation( authorEditionsGetOperation )
-        
-//        print( "operationQueue:\(operationQueue.operationCount) \(operationQueue.suspended ? "Suspended" : "Active")" )
-//        for op in operationQueue.operations {
-//            
-//            print( "\(op.name) \(op.executing ? "executing" : (op.finished ? "finished" : (op.cancelled ? "cancelled" : (op.ready ? "ready" : "not ready"))))" )
-//        }
+                        dispatch_async( dispatch_get_main_queue() ) {
+                            
+                                refreshControl?.endRefreshing()
+                                self.updateUI()
+                            }
+                    }
+            
+            authorEditionsGetOperation!.userInitiated = userInitiated
+            operationQueue.addOperation( authorEditionsGetOperation! )
+        }
     }
     
     func nextQueryPage( offset: Int ) -> Void {
         
+        guard libraryIsReachable() else {
+            
+            updateFooter( "library is unreachable" )
+            return
+        }
+        
         if 0 == operationQueue.operationCount && !authorKey.isEmpty {
             
-            let authorEditionsGetOperation =
+            authorEditionsGetOperation =
                 AuthorEditionsGetOperation(
                         queryText: self.authorKey,
                         offset: offset,
@@ -158,8 +169,8 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
                 }
             }
             
-            authorEditionsGetOperation.userInitiated = false
-            operationQueue.addOperation( authorEditionsGetOperation )
+            authorEditionsGetOperation!.userInitiated = false
+            operationQueue.addOperation( authorEditionsGetOperation! )
         }
     }
     
@@ -180,14 +191,16 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
         dispatch_async( dispatch_get_main_queue() ) {
             [weak self] in
             
-            if let strongSelf = self,
-                   tableView = strongSelf.tableVC?.tableView,
-                   footer = tableView.tableFooterView as? OLTableViewHeaderFooterView {
-                        
-                footer.footerLabel.text =
-                    "\(strongSelf.highWaterMark) of \(strongSelf.searchResults.numFound)"
+            if let strongSelf = self {
+                
+                strongSelf.updateFooter()
             }
         }
+    }
+    
+    private func updateFooter( text: String = "" ) -> Void {
+        
+        updateTableFooter( tableVC?.tableView, highWaterMark: highWaterMark, numFound: searchResults.numFound, text: text )
     }
     
     // MARK: FetchedResultsControllerDelegate

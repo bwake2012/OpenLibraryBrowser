@@ -31,10 +31,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             result in
             
             switch result {
+                
             case .Success(let stack):
+                
                 self.coreDataStack = stack
+
+                let delayTime = dispatch_time( DISPATCH_TIME_NOW, Int64( 0.5 * Double( NSEC_PER_SEC ) ) )
+                
+                dispatch_after( delayTime, dispatch_get_main_queue() ) {
+                    
+                    if let topViewController = UIApplication.topViewController() as? OLLaunchViewController {
+                        
+                        topViewController.loadAppRootViewController()
+                    }
+                }
+
             case .Failure(let error):
                 assertionFailure("\(error)")
+                
             }
         }
         

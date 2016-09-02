@@ -166,7 +166,14 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     
     func newQuery( authorKey: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
         
+        guard libraryIsReachable() else {
+            
+            refreshComplete( refreshControl )
+            return
+        }
+        
         if nil == authorDetailGetOperation {
+
             let getAuthorOperation =
                 AuthorDetailGetOperation(
                     queryText: authorKey,

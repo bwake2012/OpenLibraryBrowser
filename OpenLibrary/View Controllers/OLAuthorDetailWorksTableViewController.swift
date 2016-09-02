@@ -11,11 +11,14 @@ import CoreData
 
 import BNRCoreDataStack
 
-class OLAuthorDetailWorksTableViewController: UITableViewController {
+class OLAuthorDetailWorksTableViewController: UIViewController {
 
     // MARK: Properties
     var searchInfo: OLAuthorSearchResult?
 
+    @IBOutlet var tableView: UITableView!
+    
+    var parentVC: OLAuthorDetailViewController?
     var queryCoordinator: AuthorWorksCoordinator?
 
     // MARK: UIViewController
@@ -52,25 +55,21 @@ class OLAuthorDetailWorksTableViewController: UITableViewController {
         }
     }
     
-    // MARK: UITableViewDelegate
-    
-    // MARK: UITableviewDataSource
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    // MARK: Query in Progress
+    func coordinatorIsBusy() -> Void {
         
-        return queryCoordinator?.numberOfSections() ?? 0
+        if let parentVC = parentViewController as? OLAuthorDetailViewController {
+            
+            parentVC.coordinatorIsBusy()
+        }
     }
     
-    override func tableView( tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
+    func coordinatorIsNoLongerBusy() -> Void {
         
-        return queryCoordinator?.numberOfRowsInSection( section ) ?? 0
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("authorWorksEntry", forIndexPath: indexPath) as! AuthorWorksTableViewCell
-        
-        queryCoordinator?.displayToCell( cell, indexPath: indexPath )
-        
-        return cell
+        if let parentVC = parentViewController as? OLAuthorDetailViewController {
+            
+            parentVC.coordinatorIsNoLongerBusy()
+        }
     }
     
     // MARK: Utility
@@ -97,4 +96,52 @@ extension OLAuthorDetailWorksTableViewController: TransitionSourceCell {
     
 }
 
+// MARK: UIScrollViewDelegate
 
+extension OLAuthorDetailWorksTableViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidEndDragging( scrollView: UIScrollView, willDecelerate decelerate: Bool ) {
+        
+        // UITableView only moves in one direction, y axis
+        let currentOffset = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+        
+        // Change 10.0 to adjust the distance from bottom
+        if maximumOffset - currentOffset <= -10.0 {
+            
+            queryCoordinator?.nextQueryPage()
+            
+        } else if currentOffset <= -10.0 {
+            
+            navigationController?.navigationBarHidden = false
+        }
+        
+    }
+}
+
+// MARK: UITableViewDelegate
+extension OLAuthorDetailWorksTableViewController: UITableViewDelegate {
+    
+}
+
+// MARK: UITableviewDataSource
+extension OLAuthorDetailWorksTableViewController: UITableViewDataSource {
+
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        
+        return queryCoordinator?.numberOfSections() ?? 0
+    }
+
+    func tableView( tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
+        
+        return queryCoordinator?.numberOfRowsInSection( section ) ?? 0
+    }
+
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("authorWorksEntry", forIndexPath: indexPath) as! AuthorWorksTableViewCell
+        
+        queryCoordinator?.displayToCell( cell, indexPath: indexPath )
+        
+        return cell
+    }
+}

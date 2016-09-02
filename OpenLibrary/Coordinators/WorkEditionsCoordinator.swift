@@ -57,12 +57,12 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     
     var highWaterMark = 0
     
-    init( workKey: String, withCoversOnly: Bool, tableVC: UITableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
+    init( workKey: String, withCoversOnly: Bool, tableVC: OLWorkDetailEditionsTableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         
         self.workKey = workKey
         self.withCoversOnly = withCoversOnly
 //        self.worksCount = searchInfo.work_count
-        self.tableVC = tableVC as? OLWorkDetailEditionsTableViewController
+        self.tableVC = tableVC
         
         super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: tableVC )
     }
@@ -125,6 +125,12 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     
     func newQuery( workKey: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
 
+        guard libraryIsReachable() else {
+            
+            updateFooter( "library is unreachable" )
+            return
+        }
+        
         if nil == workEditionsGetOperation {
             self.searchResults = SearchResults()
             self.workKey = workKey
@@ -163,6 +169,12 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     }
     
     func nextQueryPage() -> Void {
+        
+        guard libraryIsReachable() else {
+            
+            updateFooter( "library is unreachable" )
+            return
+        }
         
         if nil == workEditionsGetOperation && !workKey.isEmpty && highWaterMark < searchResults.numFound {
             

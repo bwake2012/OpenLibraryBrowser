@@ -83,11 +83,6 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
             return nil
         }
         
-        if needAnotherPage( indexPath.row ) {
-            
-            nextQueryPage( highWaterMark )
-        }
-        
         let section = sections[indexPath.section]
         if indexPath.row >= section.objects.count {
             return nil
@@ -123,10 +118,17 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
 
     func newQuery( authorKey: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
 
+        guard libraryIsReachable() else {
+            
+            updateFooter( "library is unreachable" )
+            return
+        }
+        
         if nil == authorWorksGetOperation {
             self.searchResults = SearchResults()
             self.highWaterMark = 0
             
+            authorWorksTableVC?.coordinatorIsBusy()
             updateFooter( "fetching author works..." )
             
             authorWorksGetOperation =
@@ -146,7 +148,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
 //                                strongSelf.updateUI()
                             }
                             
-                            strongSelf.refreshComplete( refreshControl )
+                            strongSelf.authorWorksTableVC?.coordinatorIsNoLongerBusy()
                             
                             strongSelf.updateFooter()
 
@@ -159,16 +161,23 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         }
     }
     
-    func nextQueryPage( offset: Int ) -> Void {
+    func nextQueryPage() -> Void {
+        
+        guard libraryIsReachable() else {
+            
+            updateFooter( "library is unreachable" )
+            return
+        }
         
         if nil == authorWorksGetOperation && !authorKey.isEmpty {
             
+            authorWorksTableVC?.coordinatorIsBusy()
             updateFooter( "fetching more author works..." )
             
             authorWorksGetOperation =
                 AuthorWorksGetOperation(
                         queryText: self.authorKey,
-                        offset: offset, limit: kPageSize,
+                        offset: highWaterMark, limit: kPageSize,
                         coreDataStack: coreDataStack,
                         updateResults: self.updateResults
                     ) {
@@ -180,6 +189,8 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
     //                    self.updateUI()
                     }
                     
+                    strongSelf.authorWorksTableVC?.coordinatorIsNoLongerBusy()
+
                     strongSelf.updateFooter()
                     strongSelf.authorWorksGetOperation = nil
                 }
