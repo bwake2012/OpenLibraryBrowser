@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -19,13 +19,13 @@
                         <rect key="frame" x="0.0" y="182" width="600" height="40.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="260" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2OK-jG-BJB">
-                                <rect key="frame" x="8" y="0.0" width="592" height="32"/>
+                                <rect key="frame" x="8" y="0.0" width="39.5" height="32"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="260" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="O8X-wH-yY8">
-                                <rect key="frame" x="8" y="0.0" width="592" height="32"/>
+                                <rect key="frame" x="8" y="0.0" width="39.5" height="32"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <connections>
                                     <action selector="viewBooksTapped:" destination="n1u-oY-SfK" eventType="touchUpInside" id="q4O-Vc-TDD"/>
@@ -40,7 +40,7 @@
                             <constraint firstItem="O8X-wH-yY8" firstAttribute="height" secondItem="2OK-jG-BJB" secondAttribute="height" id="S22-p8-iF0"/>
                             <constraint firstItem="O8X-wH-yY8" firstAttribute="centerX" secondItem="2OK-jG-BJB" secondAttribute="centerX" id="SfP-Nf-3de"/>
                             <constraint firstAttribute="bottomMargin" secondItem="O8X-wH-yY8" secondAttribute="bottom" id="Yje-Tf-Nzv"/>
-                            <constraint firstItem="2OK-jG-BJB" firstAttribute="trailing" secondItem="YxY-dk-PfV" secondAttribute="trailing" id="c5J-Yz-I0a"/>
+                            <constraint firstItem="2OK-jG-BJB" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="YxY-dk-PfV" secondAttribute="trailing" id="c5J-Yz-I0a"/>
                             <constraint firstItem="2OK-jG-BJB" firstAttribute="top" secondItem="YxY-dk-PfV" secondAttribute="top" id="pqI-Zj-RRU"/>
                         </constraints>
                     </view>
@@ -104,7 +104,7 @@
                         <rect key="frame" x="0.0" y="102" width="600" height="32"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="eJe-sN-0NA">
-                                <rect key="frame" x="8" y="0.0" width="584" height="32"/>
+                                <rect key="frame" x="8" y="0.0" width="30" height="32"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <connections>
                                     <action selector="viewWorkEditionsTapped:" destination="n1u-oY-SfK" eventType="touchUpInside" id="UCU-J0-bjJ"/>
@@ -115,7 +115,7 @@
                         <constraints>
                             <constraint firstItem="eJe-sN-0NA" firstAttribute="leading" secondItem="BGe-Lv-tgt" secondAttribute="leadingMargin" id="AKi-Js-tya"/>
                             <constraint firstItem="eJe-sN-0NA" firstAttribute="top" secondItem="BGe-Lv-tgt" secondAttribute="top" id="FIl-IZ-cgT"/>
-                            <constraint firstItem="eJe-sN-0NA" firstAttribute="trailing" secondItem="BGe-Lv-tgt" secondAttribute="trailingMargin" id="Mhq-Zb-XWZ"/>
+                            <constraint firstItem="eJe-sN-0NA" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="BGe-Lv-tgt" secondAttribute="trailingMargin" id="Mhq-Zb-XWZ"/>
                             <constraint firstAttribute="bottom" secondItem="eJe-sN-0NA" secondAttribute="bottom" id="gtT-HN-F5O"/>
                         </constraints>
                     </view>
@@ -167,15 +167,15 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Author Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Za-Sr-Ye5" customClass="MultilineLabelForTableViewCell" customModule="OpenLibrary" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="53" width="516" height="32"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="260" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Author Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Za-Sr-Ye5">
+                                        <rect key="frame" x="0.0" y="53" width="100" height="32"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="260" verticalCompressionResistancePriority="1000" enabled="NO" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="yIe-k2-ACW">
-                                        <rect key="frame" x="0.0" y="53" width="516" height="32"/>
+                                        <rect key="frame" x="0.0" y="53" width="100" height="32"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <connections>
@@ -186,7 +186,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="8zj-6u-Xpf" firstAttribute="top" secondItem="3iW-fI-Yzj" secondAttribute="bottom" constant="8" symbolic="YES" id="4gf-L1-ca3"/>
-                                    <constraint firstItem="8Za-Sr-Ye5" firstAttribute="trailing" secondItem="4P9-JZ-NDH" secondAttribute="trailing" id="7jC-xs-qt6"/>
+                                    <constraint firstItem="8Za-Sr-Ye5" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="4P9-JZ-NDH" secondAttribute="trailing" id="7jC-xs-qt6"/>
                                     <constraint firstItem="3iW-fI-Yzj" firstAttribute="top" secondItem="4P9-JZ-NDH" secondAttribute="top" id="8bq-rM-NtQ"/>
                                     <constraint firstItem="8zj-6u-Xpf" firstAttribute="trailing" secondItem="4P9-JZ-NDH" secondAttribute="trailing" id="EHi-2I-rcq"/>
                                     <constraint firstItem="yIe-k2-ACW" firstAttribute="centerX" secondItem="8Za-Sr-Ye5" secondAttribute="centerX" id="FOk-Xz-yR0"/>
