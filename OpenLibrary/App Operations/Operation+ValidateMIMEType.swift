@@ -19,21 +19,21 @@ let mimeTypeReturnedKey = "MIMETypeReturned"
 
 extension Operation {
     
-    func validateDataMIMEType( mimeType: String, response: NSHTTPURLResponse?, data: NSData? ) -> NSError? {
+    func validateDataMIMEType( mimeTypes: [String], response: NSHTTPURLResponse?, data: NSData? ) -> NSError? {
         
         guard let response = response, responseMIMEType = response.MIMEType else {
             
             return nil
         }
         
-        if mimeType != response.MIMEType {
+        if !mimeTypes.contains( responseMIMEType ) {
             
 //            let className = NSStringFromClass(self.dynamicType).componentsSeparatedByString(".").last!
             
             var userInfo: [NSObject: AnyObject] =
                 [
 //                    OperationConditionKey: className,
-                    mimeTypeDesiredKey: mimeType,
+                    mimeTypeDesiredKey: mimeTypes,
                     mimeTypeReturnedKey: responseMIMEType
             ]
             if let data = data {
@@ -47,21 +47,19 @@ extension Operation {
         return nil
     }
 
-    func validateStreamMIMEType( mimeType: String, response: NSHTTPURLResponse?, url: NSURL? ) -> NSError? {
+    func validateStreamMIMEType( mimeTypes: [String], response: NSHTTPURLResponse?, url: NSURL? ) -> NSError? {
         
         guard let response = response, responseMIMEType = response.MIMEType else {
             
             return nil
         }
         
-        if mimeType != responseMIMEType {
-            
-//            let className = NSStringFromClass( self.dynamicType ).componentsSeparatedByString(".").last!
-            
+        if !mimeTypes.contains( responseMIMEType ) {
+        
             var userInfo: [NSObject: AnyObject] =
                 [
-//                    OperationConditionKey: className,
-                    mimeTypeDesiredKey: mimeType,
+    //                    OperationConditionKey: className,
+                    mimeTypeDesiredKey: mimeTypes,
                     mimeTypeReturnedKey: responseMIMEType
                 ]
             if let url = url {

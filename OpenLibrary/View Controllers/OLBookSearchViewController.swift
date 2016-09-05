@@ -124,6 +124,17 @@ class OLBookSearchViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        if "aboutOpenLibraryBrowser" == segue.identifier {
+            
+            if let vc = segue.destinationViewController as? OLLaunchViewController {
+                
+                vc.enableClose = true
+            }
+        }
+    }
+    
     
     // MARK: Notifications
     func keyboardDidShow(notification: NSNotification) {

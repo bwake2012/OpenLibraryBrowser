@@ -92,7 +92,7 @@ class OLSearchResultsTableViewController: UIViewController {
 
         if let indexPath = savedIndexPath {
             
-            tableView.selectRowAtIndexPath( indexPath, animated: true, scrollPosition: .Top )
+            tableView.selectRowAtIndexPath( indexPath, animated: true, scrollPosition: .None )
             savedIndexPath = nil
         }
     }
@@ -103,6 +103,25 @@ class OLSearchResultsTableViewController: UIViewController {
         // Dispose of any resources that can be recreated.
         
         generalSearchCoordinator?.saveState()
+    }
+    
+    override func viewDidLayoutSubviews() {
+
+        super.viewDidLayoutSubviews()
+        
+        // Dynamic sizing for the header view
+        if let footerView = tableView.tableFooterView {
+            let height = footerView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+            var footerFrame = footerView.frame
+            
+            // If we don't have this check, viewDidLayoutSubviews() will get
+            // repeatedly, causing the app to hang.
+            if height != footerFrame.size.height {
+                footerFrame.size.height = height
+                footerView.frame = footerFrame
+                tableView.tableFooterView = footerView
+            }
+        }
     }
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
@@ -122,24 +141,18 @@ class OLSearchResultsTableViewController: UIViewController {
         if segueName == "openBookSearch" {
             
             if let destVC = segue.destinationViewController as? OLBookSearchViewController {
-//                if let delegate = segue as? UIViewControllerTransitioningDelegate {
+
+                destVC.initialSearchKeys( generalSearchCoordinator.searchKeys )
                     
-//                    destVC.transitioningDelegate = delegate
-                    destVC.initialSearchKeys( generalSearchCoordinator.searchKeys )
-                    
-                    destVC.saveSearchDictionary = saveSearchKeys
-//                }
+                destVC.saveSearchDictionary = saveSearchKeys
             }
         } else if segueName == "openBookSort" {
             
             if let destVC = segue.destinationViewController as? OLBookSortViewController {
-//                if let delegate = segue as? UIViewControllerTransitioningDelegate {
+
+                destVC.sortFields = generalSearchCoordinator.sortFields
                     
-//                    destVC.transitioningDelegate = delegate
-                    destVC.sortFields = generalSearchCoordinator.sortFields
-                    
-                    destVC.saveSortFields = self.saveSortFields
-//                }
+                destVC.saveSortFields = self.saveSortFields
             }
             
         } else if let indexPath = tableView.indexPathForSelectedRow {
@@ -383,7 +396,7 @@ extension OLSearchResultsTableViewController: UIScrollViewDelegate {
         
         } else if currentOffset <= -10.0 {
             
-            navigationController?.navigationBarHidden = false
+            navigationController?.setNavigationBarHidden( false, animated: true )
         }
         
     }
@@ -421,28 +434,7 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
 
         return height
     }
-    
-    //    func tableView( tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
-    //
-    //        if .searchGeneralExpanding == searchType {
-    //
-    //            let cell = tableView.cellForRowAtIndexPath( indexPath ) as! SegmentedTableViewCell
-    //
-    //            let isOpen = cell.isOpen( tableView, indexPath: indexPath )
-    //
-    //            if isOpen {
-    //
-    //                contractCell( tableView, segmentedCell: cell, indexPath: indexPath )
-    //
-    //            }
-    //
-    //            if !isOpen {
-    //
-    //                expandCell( tableView, segmentedCell: cell, indexPath: indexPath )
-    //            }
-    //        }
-    //    }
-    
+
     func tableView( tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath ) {
         
         if let cell = cell as? GeneralSearchResultSegmentedTableViewCell {

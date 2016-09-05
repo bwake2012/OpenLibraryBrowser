@@ -34,16 +34,8 @@ class OLDeluxeDetailTableViewController: UITableViewController {
         DeluxeDetailHTMLTableViewCell.registerCell( tableView )
         DeluxeDetailBookDownloadTableViewCell.registerCell( tableView )
         
-//        hidesBarsOnSwipe = navigationController?.hidesBarsOnSwipe ?? true
-//        navigationController?.hidesBarsOnSwipe = false
-//        navigationController?.setNavigationBarHidden( false, animated: true )
     }
-    
-//    deinit {
-//        
-//        navigationController?.hidesBarsOnSwipe = hidesBarsOnSwipe
-//    }
-    
+        
     override func didReceiveMemoryWarning() {
         
         super.didReceiveMemoryWarning()

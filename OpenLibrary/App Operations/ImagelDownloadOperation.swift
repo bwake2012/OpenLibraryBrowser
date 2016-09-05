@@ -81,11 +81,16 @@ class ImageDownloadOperation: GroupOperation {
 
             do {
                 
-                try NSFileManager.defaultManager().moveItemAtURL( localURL, toURL: self.imageURL )
+                try NSFileManager.defaultManager().moveItemAtURL( localURL, toURL: imageURL )
+
+                if let error = validateStreamMIMEType( [jpegMIMEType,jpgMIMEType], response: response, url: imageURL ) {
+                    aggregateError( error )
+                }
             }
             catch let error as NSError {
                 aggregateError(error)
             }
+            
             
         }
         else {

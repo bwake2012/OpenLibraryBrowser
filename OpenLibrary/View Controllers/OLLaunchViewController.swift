@@ -9,13 +9,22 @@
 import UIKit
 
 class OLLaunchViewController: UIViewController {
-
+    
+    var enableClose: Bool = false
+    
     private let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
     
     private lazy var navController: UINavigationController = {
         return self.mainStoryboard.instantiateViewControllerWithIdentifier("rootNavigationController")
             as! UINavigationController
     }()
+    
+    @IBOutlet var copyright: UIButton!
+
+    @IBAction func copyrightButtonTapped( sender: UIButton ) {
+        
+        dismissViewControllerAnimated( true, completion: nil )
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +40,8 @@ class OLLaunchViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         
         super.viewDidAppear( animated )
+        
+        copyright.enabled = enableClose
     }
 
     func loadAppRootViewController() {

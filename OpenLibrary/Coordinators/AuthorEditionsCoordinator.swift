@@ -153,7 +153,7 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
             return
         }
         
-        if 0 == operationQueue.operationCount && !authorKey.isEmpty {
+        if 0 == operationQueue.operationCount && !authorKey.isEmpty && highWaterMark < searchResults.numFound {
             
             authorEditionsGetOperation =
                 AuthorEditionsGetOperation(

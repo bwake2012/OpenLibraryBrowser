@@ -30,9 +30,6 @@ class OLPictureViewController: UIViewController {
             
             queryCoordinator.updateUI()
         }
-        
-//        navigationController?.hidesBarsOnSwipe = false
-//        navigationController?.setNavigationBarHidden( false, animated: true )
     }
     
     override func viewWillDisappear(animated: Bool) {

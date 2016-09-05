@@ -60,29 +60,34 @@ class GeneralSearchResultsDownloadOperation: GroupOperation {
     }
     
     func downloadFinished(url: NSURL?, response: NSHTTPURLResponse?, error: NSError?) {
-        if let localURL = url {
-            do {
-                /*
-                    If we already have a file at this location, just delete it.
-                    Also, swallow the error, because we don't really care about it.
-                */
-                try NSFileManager.defaultManager().removeItemAtURL(cacheFile)
-            }
-            catch { }
+        
+        guard let localURL = url else {
             
-            do {
-                try NSFileManager.defaultManager().moveItemAtURL(localURL, toURL: cacheFile)
-            }
-            catch let error as NSError {
-                aggregateError(error)
-            }
+            finishWithError( error )
             
+            return
         }
-        else if let error = error {
+        
+        do {
+            /*
+                If we already have a file at this location, just delete it.
+                Also, swallow the error, because we don't really care about it.
+            */
+            try NSFileManager.defaultManager().removeItemAtURL(cacheFile)
+        }
+        catch { }
+        
+        do {
+            try NSFileManager.defaultManager().moveItemAtURL(localURL, toURL: cacheFile)
+        }
+        catch let error as NSError {
             aggregateError(error)
         }
-        else {
-            // Do nothing, and the operation will automatically finish.
+        
+        if let error = validateStreamMIMEType( [jsonMIMEType,textMIMEType], response: response, url: cacheFile ) {
+        
+            aggregateError( error )
+            
         }
     }
 }

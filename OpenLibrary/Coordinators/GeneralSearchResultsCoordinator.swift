@@ -148,7 +148,6 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         
             self.updateUI()
         }
-        
     }
     
     deinit {
@@ -302,10 +301,11 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
                 coreDataStack: coreDataStack,
                 updateResults: updateResults
             ) {
-                [weak self] in
                 
                 dispatch_async( dispatch_get_main_queue() ) {
                         
+                    [weak self] in
+
                     if let strongSelf = self {
                     
                         strongSelf.coordinatorIsNoLongerBusy()
@@ -360,10 +360,12 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
     // MARK: FetchedResultsControllerDelegate
     func fetchedResultsControllerDidPerformFetch(controller: FetchedResultsController< OLGeneralSearchResult >) {
 
-        self.highWaterMark = fetchedResultsController.count
-        if 0 == self.searchResults.pageSize {
-            self.searchResults = SearchResults( start: 0, numFound: highWaterMark, pageSize: kPageSize )
-        } else {
+        highWaterMark = fetchedResultsController.count
+        if 0 == highWaterMark && searchKeys.isEmpty {
+
+            updateFooter( "Tap Search to Look for Books" )
+
+        } else if nil == generalSearchOperation {
         
             updateFooter()
         }

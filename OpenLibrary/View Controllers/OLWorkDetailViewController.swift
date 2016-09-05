@@ -245,7 +245,7 @@ extension OLWorkDetailViewController: UIScrollViewDelegate {
             
         } else if currentOffset <= -10.0 {
             
-            navigationController?.navigationBarHidden = false
+            navigationController?.setNavigationBarHidden( false, animated: true )
         }
         
     }

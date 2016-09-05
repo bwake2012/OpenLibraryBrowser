@@ -14,8 +14,10 @@ let jsonMIMEType = "application/json"
 let xmlMIMEType  = "application/xml"
 
 let htmlMIMEType = "text/html"
+let textMIMEType = "text/plain"
 
 let pngMIMEType  = "image/png"
+let jpegMIMEType = "image/jpeg"
 let jpgMIMEType  = "image/jpg"
 
 extension NSURLSession {

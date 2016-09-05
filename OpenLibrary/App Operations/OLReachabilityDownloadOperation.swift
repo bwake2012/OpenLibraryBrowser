@@ -42,15 +42,18 @@ class OLReachabilityDownloadOperation: GroupOperation {
     
     func downloadFinished( data: NSData?, response: NSHTTPURLResponse?, error: NSError? ) {
 
-        if let error = error {
+        guard let data = data else {
             
-            aggregateError( error )
+            finishWithError( error )
+            
+            return
+        }
         
-        } else if let error = validateDataMIMEType( htmlMIMEType, response: response, data: data ) {
+        if let error = validateDataMIMEType( [htmlMIMEType,textMIMEType], response: response, data: data ) {
                 
             aggregateError( error )
 
-        } else if let data = data {
+        } else {
             
             let dataString = NSString( data: data, encoding: NSUTF8StringEncoding )
             if let dataString = dataString {
@@ -63,8 +66,6 @@ class OLReachabilityDownloadOperation: GroupOperation {
                 }
             }
 
-        } else {
-            // Do nothing, and the operation will automatically finish.
         }
     }
 

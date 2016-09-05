@@ -41,6 +41,25 @@ class OLAuthorDetailWorksTableViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidLayoutSubviews() {
+        
+        super.viewDidLayoutSubviews()
+        
+        // Dynamic sizing for the header view
+        if let footerView = tableView.tableFooterView {
+            let height = footerView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+            var footerFrame = footerView.frame
+            
+            // If we don't have this check, viewDidLayoutSubviews() will get
+            // repeatedly, causing the app to hang.
+            if height != footerFrame.size.height {
+                footerFrame.size.height = height
+                footerView.frame = footerFrame
+                tableView.tableFooterView = footerView
+            }
+        }
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if "displayWorkDetail" == segue.identifier {
@@ -113,7 +132,7 @@ extension OLAuthorDetailWorksTableViewController: UIScrollViewDelegate {
             
         } else if currentOffset <= -10.0 {
             
-            navigationController?.navigationBarHidden = false
+            navigationController?.setNavigationBarHidden( false, animated: true )
         }
         
     }

@@ -19,11 +19,11 @@ class OLEBookEditionsTableViewController: UITableViewController {
         // Do any additional setup after loading the view, typically from a nib.
         assert( nil != queryCoordinator )
         
-        self.refreshControl?.addTarget(
-                self,
-                action: #selector(OLEBookEditionsTableViewController.testRefresh(_:)),
-                forControlEvents: UIControlEvents.ValueChanged
-            )
+//        refreshControl?.addTarget(
+//                self,
+//                action: #selector(OLEBookEditionsTableViewController.testRefresh(_:)),
+//                forControlEvents: UIControlEvents.ValueChanged
+//            )
 
         self.tableView.estimatedRowHeight = 68.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -93,13 +93,32 @@ class OLEBookEditionsTableViewController: UITableViewController {
         
     }
 
-    // MARK: UIRefreshControl
-    func testRefresh( refreshControl: UIRefreshControl ) {
+    override func viewDidLayoutSubviews() {
         
-        refreshControl.attributedTitle = NSAttributedString( string: "Refreshing data..." )
+        super.viewDidLayoutSubviews()
         
-        queryCoordinator?.refreshQuery( self.refreshControl )
+        // Dynamic sizing for the header view
+        if let footerView = tableView.tableFooterView {
+            let height = footerView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+            var footerFrame = footerView.frame
+            
+            // If we don't have this check, viewDidLayoutSubviews() will get
+            // repeatedly, causing the app to hang.
+            if height != footerFrame.size.height {
+                footerFrame.size.height = height
+                footerView.frame = footerFrame
+                tableView.tableFooterView = footerView
+            }
+        }
     }
+    
+//    // MARK: UIRefreshControl
+//    func testRefresh( refreshControl: UIRefreshControl ) {
+//        
+//        refreshControl.attributedTitle = NSAttributedString( string: "Refreshing data..." )
+//        
+//        queryCoordinator?.refreshQuery( self.refreshControl )
+//    }
 }
 
 extension OLEBookEditionsTableViewController: TransitionSourceCell {

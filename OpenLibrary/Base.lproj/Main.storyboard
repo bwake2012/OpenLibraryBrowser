@@ -58,10 +58,10 @@
             </objects>
             <point key="canvasLocation" x="1102" y="983"/>
         </scene>
-        <!--Server Error Page View Controller-->
+        <!--Error View Controller-->
         <scene sceneID="lt9-oh-dJd">
             <objects>
-                <viewController storyboardIdentifier="htmlServerErrorPage" useStoryboardIdentifierAsRestorationIdentifier="YES" id="txy-MP-0oF" customClass="OLHTMLServerErrorPageViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="htmlServerErrorPage" useStoryboardIdentifierAsRestorationIdentifier="YES" id="txy-MP-0oF" customClass="OLHTMLErrorViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bNG-tT-MSY"/>
                         <viewControllerLayoutGuide type="bottom" id="b03-lt-eqW"/>
@@ -75,28 +75,38 @@
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <state key="normal" title="Close"/>
                                 <connections>
-                                    <action selector="closeButtonTapped:" destination="txy-MP-0oF" eventType="touchUpInside" id="M2Y-XD-XTZ"/>
+                                    <action selector="tappedOK:" destination="txy-MP-0oF" eventType="touchUpInside" id="JiW-zs-6ek"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Now is the time for all good computers to come to the aid of their programmers!" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="tRo-1I-Do4">
-                                <rect key="frame" x="20" y="20" width="560" height="532"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Now is the time for all good computers to come to the aid of their programmers!" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="tRo-1I-Do4">
+                                <rect key="frame" x="20" y="49" width="560" height="503"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PBy-pJ-0EQ">
+                                <rect key="frame" x="20" y="20" width="560" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Oc1-qU-P2y" firstAttribute="centerX" secondItem="ttN-nK-0JR" secondAttribute="centerX" id="DVj-uX-hTv"/>
+                            <constraint firstItem="tRo-1I-Do4" firstAttribute="top" secondItem="PBy-pJ-0EQ" secondAttribute="bottom" constant="8" symbolic="YES" id="Izw-xo-x7s"/>
                             <constraint firstItem="tRo-1I-Do4" firstAttribute="trailing" secondItem="ttN-nK-0JR" secondAttribute="trailingMargin" id="JqK-l5-5gC"/>
-                            <constraint firstItem="tRo-1I-Do4" firstAttribute="top" secondItem="bNG-tT-MSY" secondAttribute="bottom" id="P86-Ui-0IP"/>
+                            <constraint firstItem="PBy-pJ-0EQ" firstAttribute="top" secondItem="bNG-tT-MSY" secondAttribute="bottom" id="VSG-Yp-k4a"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="PBy-pJ-0EQ" secondAttribute="trailing" id="e4r-Aa-Ugw"/>
+                            <constraint firstItem="PBy-pJ-0EQ" firstAttribute="leading" secondItem="ttN-nK-0JR" secondAttribute="leadingMargin" id="hI0-JX-E3M"/>
                             <constraint firstItem="b03-lt-eqW" firstAttribute="top" secondItem="Oc1-qU-P2y" secondAttribute="bottom" constant="8" symbolic="YES" id="iqT-Xb-5U3"/>
                             <constraint firstItem="Oc1-qU-P2y" firstAttribute="top" secondItem="tRo-1I-Do4" secondAttribute="bottom" constant="8" symbolic="YES" id="m2e-x0-tI5"/>
                             <constraint firstItem="tRo-1I-Do4" firstAttribute="leading" secondItem="ttN-nK-0JR" secondAttribute="leadingMargin" id="rSL-L7-ev4"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="errorPageText" destination="tRo-1I-Do4" id="cnG-U4-aq4"/>
+                        <outlet property="htmlView" destination="tRo-1I-Do4" id="bw3-bt-1A4"/>
+                        <outlet property="operationName" destination="PBy-pJ-0EQ" id="2cz-E0-IjX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b5t-rT-1gJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -251,6 +261,9 @@
                                                         <rect key="frame" x="8" y="407" width="584" height="26"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                         <state key="normal" title="OpenLibrary Browser v1.0(109)"/>
+                                                        <connections>
+                                                            <segue destination="K2s-7v-hMb" kind="presentation" identifier="aboutOpenLibraryBrowser" customClass="SegueWithWindowShade" customModule="OpenLibrary" modalPresentationStyle="fullScreen" id="hd5-vP-dnO"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -806,57 +819,59 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OpenLibrary" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="28" translatesAutoresizingMaskIntoConstraints="NO" id="N8Y-Hl-mZn">
-                                <rect key="frame" x="0.0" y="28" width="600" height="86"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="72"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="An iOS client for the database at openlibrary.org." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7eU-nC-dMn">
-                                <rect key="frame" x="20" y="114" width="560" height="20.5"/>
+                                <rect key="frame" x="20" y="60" width="560" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aknowlegements:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rb5-iV-6cX">
-                                <rect key="frame" x="20" y="142" width="136" height="19.5"/>
+                                <rect key="frame" x="20" y="88" width="136" height="19.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="iZj-qn-gJu" userLabel="NSOperation" customClass="HTMLTextDisplayView" customModule="OpenLibrary" customModuleProvider="target">
-                                <rect key="frame" x="20" y="169.5" width="560" height="100"/>
+                                <rect key="frame" x="20" y="115" width="560" height="142"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <string key="text">This application leans very heavily on the NSOperation based classes originally developed by Apple for their WWDC app and published with their WWDC 2015 sample &lt;i&gt;Advanced NSOperations&lt;/i&gt;, as adapted by Pluralsight in their version named &lt;i&gt;PSOperations&lt;/i&gt;.</string>
+                                <string key="text">This application leans very heavily on the NSOperation based classes originally developed by Apple for their WWDC app and published with their WWDC 2015 sample &lt;a href="https://developer.apple.com/sample-code/wwdc/2015/"&gt;Advanced NSOperations&lt;/a&gt;, as adapted by Pluralsight in their version named &lt;a href="https://github.com/pluralsight/PSOperations"&gt;PSOperations&lt;/a&gt;.</string>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                             </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" scrollEnabled="NO" editable="NO" text="This application also uses the Big Nerd Ranch Core Data Stack. " textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vIP-9j-HRO" userLabel="Big Nerd Ranch" customClass="HTMLTextDisplayView" customModule="OpenLibrary" customModuleProvider="target">
-                                <rect key="frame" x="20" y="277.5" width="560" height="37"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
-                            </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="&lt;div&gt;Icons made by &lt;a href=&quot;http://www.glyphish.com&quot; title=&quot;Glyphish&quot;&gt;Glyphish&lt;/a&gt;&lt;/div&gt;" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ArQ-lH-iUS" userLabel="glyphish attribution" customClass="HTMLTextDisplayView" customModule="OpenLibrary" customModuleProvider="target">
-                                <rect key="frame" x="20" y="322.5" width="560" height="58"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" scrollEnabled="NO" editable="NO" text="This application also uses the &lt;a href=&quot;https://github.com/bignerdranch/CoreDataStack&quot;&gt;Big Nerd Ranch Core Data Stack&lt;/a&gt;. " textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vIP-9j-HRO" userLabel="Big Nerd Ranch" customClass="HTMLTextDisplayView" customModule="OpenLibrary" customModuleProvider="target">
+                                <rect key="frame" x="20" y="265" width="560" height="58"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright 2016, Cockleburr Software" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="GBP-gA-sIF">
-                                <rect key="frame" x="20" y="560" width="560" height="19.5"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Icons made by &lt;a href=&quot;http://www.glyphish.com&quot; title=&quot;Glyphish&quot;&gt;Glyphish&lt;/a&gt;" translatesAutoresizingMaskIntoConstraints="NO" id="ArQ-lH-iUS" userLabel="glyphish attribution" customClass="HTMLTextDisplayView" customModule="OpenLibrary" customModuleProvider="target">
+                                <rect key="frame" x="20" y="331" width="560" height="58"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                            </textView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="bKs-qm-dMu">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69e-3h-Wnx">
+                                <rect key="frame" x="159" y="572" width="282" height="20"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <inset key="contentEdgeInsets" minX="8" minY="0.0" maxX="8" maxY="0.0"/>
+                                <state key="normal" title="Copyright 2016 Cockleburr Software"/>
+                                <connections>
+                                    <action selector="copyrightButtonTapped:" destination="K2s-7v-hMb" eventType="touchUpInside" id="peJ-5p-WaC"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OpenLibrary" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="28" translatesAutoresizingMaskIntoConstraints="NO" id="N8Y-Hl-mZn">
+                                <rect key="frame" x="0.0" y="28" width="600" height="32.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="bKs-qm-dMu">
-                                <rect key="frame" x="290" y="114" width="20" height="20"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="vIP-9j-HRO" firstAttribute="top" secondItem="iZj-qn-gJu" secondAttribute="bottom" constant="8" symbolic="YES" id="0ux-IZ-26f"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="GBP-gA-sIF" secondAttribute="trailing" id="2YI-dB-2Te"/>
                             <constraint firstItem="iZj-qn-gJu" firstAttribute="leading" secondItem="el7-qg-pbV" secondAttribute="leadingMargin" id="2aN-X4-EPm"/>
                             <constraint firstItem="vIP-9j-HRO" firstAttribute="leading" secondItem="el7-qg-pbV" secondAttribute="leadingMargin" id="4jJ-wF-D47"/>
                             <constraint firstItem="N8Y-Hl-mZn" firstAttribute="trailing" secondItem="el7-qg-pbV" secondAttribute="trailing" id="7j8-bS-Krh"/>
@@ -864,22 +879,25 @@
                             <constraint firstItem="iZj-qn-gJu" firstAttribute="top" secondItem="rb5-iV-6cX" secondAttribute="bottom" constant="8" symbolic="YES" id="EQX-X8-d76"/>
                             <constraint firstItem="N8Y-Hl-mZn" firstAttribute="leading" secondItem="el7-qg-pbV" secondAttribute="leading" id="Erk-Cj-OFJ"/>
                             <constraint firstItem="N8Y-Hl-mZn" firstAttribute="top" secondItem="9RE-Cd-AON" secondAttribute="bottom" constant="8" id="FVY-hd-Sec"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="GBP-gA-sIF" secondAttribute="leading" id="JRc-Mq-dWd"/>
-                            <constraint firstItem="Taw-dX-Dua" firstAttribute="top" secondItem="GBP-gA-sIF" secondAttribute="bottom" constant="20" id="JtX-jQ-4Di"/>
+                            <constraint firstItem="Taw-dX-Dua" firstAttribute="top" secondItem="69e-3h-Wnx" secondAttribute="bottom" constant="8" id="Lsk-5n-zRq"/>
                             <constraint firstItem="rb5-iV-6cX" firstAttribute="top" secondItem="7eU-nC-dMn" secondAttribute="bottom" constant="8" id="RM4-so-QOq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ArQ-lH-iUS" secondAttribute="trailing" id="Vzd-tG-K8R"/>
+                            <constraint firstItem="69e-3h-Wnx" firstAttribute="centerX" secondItem="el7-qg-pbV" secondAttribute="centerX" id="Z39-3i-1cb"/>
                             <constraint firstItem="ArQ-lH-iUS" firstAttribute="top" secondItem="vIP-9j-HRO" secondAttribute="bottom" constant="8" symbolic="YES" id="Z3d-Jr-2Zv"/>
+                            <constraint firstItem="bKs-qm-dMu" firstAttribute="centerY" secondItem="el7-qg-pbV" secondAttribute="centerY" id="Z7p-wf-PQ3"/>
                             <constraint firstAttribute="trailingMargin" secondItem="7eU-nC-dMn" secondAttribute="trailing" id="aEw-IY-bTn"/>
-                            <constraint firstItem="bKs-qm-dMu" firstAttribute="centerY" secondItem="7eU-nC-dMn" secondAttribute="centerY" id="f4z-HD-OKd"/>
                             <constraint firstItem="7eU-nC-dMn" firstAttribute="top" secondItem="N8Y-Hl-mZn" secondAttribute="bottom" id="gh3-eF-3LM"/>
+                            <constraint firstItem="bKs-qm-dMu" firstAttribute="centerX" secondItem="el7-qg-pbV" secondAttribute="centerX" id="iPJ-GS-O1b"/>
                             <constraint firstAttribute="leadingMargin" secondItem="7eU-nC-dMn" secondAttribute="leading" id="mf4-wa-f1V"/>
                             <constraint firstItem="vIP-9j-HRO" firstAttribute="trailing" secondItem="el7-qg-pbV" secondAttribute="trailingMargin" id="nHs-nf-k8u"/>
                             <constraint firstAttribute="leadingMargin" secondItem="rb5-iV-6cX" secondAttribute="leading" id="nOh-6h-6Dk"/>
                             <constraint firstItem="iZj-qn-gJu" firstAttribute="trailing" secondItem="el7-qg-pbV" secondAttribute="trailingMargin" id="qXT-RR-BPP"/>
-                            <constraint firstItem="bKs-qm-dMu" firstAttribute="centerX" secondItem="7eU-nC-dMn" secondAttribute="centerX" id="uHh-wZ-Avd"/>
                         </constraints>
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <connections>
+                        <outlet property="copyright" destination="69e-3h-Wnx" id="dc4-wu-mhx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WB4-4A-5Hw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -981,9 +999,6 @@
                             <outlet property="delegate" destination="ngT-C6-aPc" id="3lD-04-LJY"/>
                         </connections>
                     </tableView>
-                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="Zam-5k-oEO">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </refreshControl>
                     <connections>
                         <segue destination="QNA-1N-1O1" kind="presentation" identifier="EbookEditionTableViewCell" id="FM2-bP-Kat"/>
                     </connections>
