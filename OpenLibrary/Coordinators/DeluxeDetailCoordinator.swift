@@ -119,10 +119,10 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
                     urlComponents?.host = host
                     urlComponents?.path = path
                 }
-                if let url = urlComponents?.URL {
-                    
-                    showLinkedWebSite( vc, url: url )
-                }
+            }
+            if let url = urlComponents?.URL {
+                
+                showLinkedWebSite( vc, url: url )
             }
         
         } else if .imageAuthor == obj.type || .imageBook == obj.type {
