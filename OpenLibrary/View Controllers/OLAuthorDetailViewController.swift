@@ -88,14 +88,14 @@ class OLAuthorDetailViewController: UIViewController {
     }
     
 
-    // MARK: UIRefreshControl
-    func testRefresh( refreshControl: UIRefreshControl ) {
-        
-        refreshControl.attributedTitle = NSAttributedString( string: "Refreshing data..." )
-        
-        queryCoordinator?.refreshQuery( nil )
-        authorWorksVC?.refreshQuery( refreshControl )
-    }
+//    // MARK: UIRefreshControl
+//    func testRefresh( refreshControl: UIRefreshControl ) {
+//        
+//        refreshControl.attributedTitle = NSAttributedString( string: "Refreshing data..." )
+//        
+//        queryCoordinator?.refreshQuery( nil )
+//        authorWorksVC?.refreshQuery( refreshControl )
+//    }
     
 
     // MARK: Utility

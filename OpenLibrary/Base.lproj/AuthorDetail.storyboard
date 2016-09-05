@@ -146,7 +146,7 @@
                                     <constraint firstItem="Re7-7g-ZgA" firstAttribute="width" secondItem="12p-2U-fA8" secondAttribute="width" id="orW-of-iK1"/>
                                 </constraints>
                             </view>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="8zT-S9-MSn">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="8zT-S9-MSn">
                                 <rect key="frame" x="282" y="281" width="37" height="37"/>
                                 <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
@@ -157,6 +157,8 @@
                             <constraint firstItem="12p-2U-fA8" firstAttribute="top" secondItem="WMK-h2-Oo1" secondAttribute="bottom" id="W2t-Aj-EV7"/>
                             <constraint firstItem="sKH-cd-bo6" firstAttribute="top" secondItem="12p-2U-fA8" secondAttribute="bottom" id="XyA-iT-nT6"/>
                             <constraint firstAttribute="trailing" secondItem="12p-2U-fA8" secondAttribute="trailing" id="b7s-RA-bL7"/>
+                            <constraint firstItem="8zT-S9-MSn" firstAttribute="centerY" secondItem="rhm-ph-9je" secondAttribute="centerY" id="cw5-cQ-9JC"/>
+                            <constraint firstItem="8zT-S9-MSn" firstAttribute="centerX" secondItem="rhm-ph-9je" secondAttribute="centerX" id="k1b-eK-cEp"/>
                         </constraints>
                     </view>
                     <connections>
