@@ -38,6 +38,18 @@ class HTMLTextDisplayView: UITextView {
                                 documentAttributes: nil
                             )
 
+                theAttributedString.enumerateAttribute(
+                    NSFontAttributeName,
+                    inRange: NSRange( location: 0, length: theAttributedString.length ),
+                    options: NSAttributedStringEnumerationOptions(rawValue: 0)
+                ) {
+                    (value, range, stop) -> Void in
+                    
+                    let newFont = UIFont.preferredFontForTextStyle( UIFontTextStyleBody )
+                    
+                    theAttributedString.removeAttribute( NSFontAttributeName, range: range )
+                    theAttributedString.addAttribute( NSFontAttributeName, value: newFont, range: range )
+                }
                 self.attributedText = theAttributedString
             
                 setNeedsLayout()

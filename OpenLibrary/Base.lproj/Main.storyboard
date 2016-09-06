@@ -832,20 +832,20 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="iZj-qn-gJu" userLabel="NSOperation" customClass="HTMLTextDisplayView" customModule="OpenLibrary" customModuleProvider="target">
-                                <rect key="frame" x="20" y="115" width="560" height="142"/>
+                                <rect key="frame" x="20" y="107.5" width="560" height="142"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">This application leans very heavily on the NSOperation based classes originally developed by Apple for their WWDC app and published with their WWDC 2015 sample &lt;a href="https://developer.apple.com/sample-code/wwdc/2015/"&gt;Advanced NSOperations&lt;/a&gt;, as adapted by Pluralsight in their version named &lt;a href="https://github.com/pluralsight/PSOperations"&gt;PSOperations&lt;/a&gt;.</string>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                             </textView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" scrollEnabled="NO" editable="NO" text="This application also uses the &lt;a href=&quot;https://github.com/bignerdranch/CoreDataStack&quot;&gt;Big Nerd Ranch Core Data Stack&lt;/a&gt;. " textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vIP-9j-HRO" userLabel="Big Nerd Ranch" customClass="HTMLTextDisplayView" customModule="OpenLibrary" customModuleProvider="target">
-                                <rect key="frame" x="20" y="265" width="560" height="58"/>
+                                <rect key="frame" x="20" y="257.5" width="560" height="58"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                             </textView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Icons made by &lt;a href=&quot;http://www.glyphish.com&quot; title=&quot;Glyphish&quot;&gt;Glyphish&lt;/a&gt;" translatesAutoresizingMaskIntoConstraints="NO" id="ArQ-lH-iUS" userLabel="glyphish attribution" customClass="HTMLTextDisplayView" customModule="OpenLibrary" customModuleProvider="target">
-                                <rect key="frame" x="20" y="331" width="560" height="58"/>
+                                <rect key="frame" x="20" y="323.5" width="560" height="58"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
@@ -862,7 +862,7 @@
                                     <action selector="copyrightButtonTapped:" destination="K2s-7v-hMb" eventType="touchUpInside" id="peJ-5p-WaC"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OpenLibrary" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N8Y-Hl-mZn">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OpenLibrary Browser" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N8Y-Hl-mZn">
                                 <rect key="frame" x="0.0" y="28" width="600" height="32.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -876,7 +876,7 @@
                             <constraint firstItem="vIP-9j-HRO" firstAttribute="leading" secondItem="el7-qg-pbV" secondAttribute="leadingMargin" id="4jJ-wF-D47"/>
                             <constraint firstItem="N8Y-Hl-mZn" firstAttribute="trailing" secondItem="el7-qg-pbV" secondAttribute="trailing" id="7j8-bS-Krh"/>
                             <constraint firstAttribute="leadingMargin" secondItem="ArQ-lH-iUS" secondAttribute="leading" id="CUH-Ov-Wnm"/>
-                            <constraint firstItem="iZj-qn-gJu" firstAttribute="top" secondItem="rb5-iV-6cX" secondAttribute="bottom" constant="8" symbolic="YES" id="EQX-X8-d76"/>
+                            <constraint firstItem="iZj-qn-gJu" firstAttribute="top" secondItem="rb5-iV-6cX" secondAttribute="bottom" id="EQX-X8-d76"/>
                             <constraint firstItem="N8Y-Hl-mZn" firstAttribute="leading" secondItem="el7-qg-pbV" secondAttribute="leading" id="Erk-Cj-OFJ"/>
                             <constraint firstItem="N8Y-Hl-mZn" firstAttribute="top" secondItem="9RE-Cd-AON" secondAttribute="bottom" constant="8" id="FVY-hd-Sec"/>
                             <constraint firstItem="Taw-dX-Dua" firstAttribute="top" secondItem="69e-3h-Wnx" secondAttribute="bottom" constant="8" id="Lsk-5n-zRq"/>
