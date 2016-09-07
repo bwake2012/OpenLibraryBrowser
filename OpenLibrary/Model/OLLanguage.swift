@@ -88,18 +88,53 @@ class OLLanguage: OLManagedObject, CoreDataModelable {
     
     class func retrieveLanguages( operationQueue: OperationQueue, coreDataStack: CoreDataStack ) {
         
-        let childContext = coreDataStack.newChildContext( name: "findLanguages" )
+        print( "\(OLManagedObject.languageLookup)" )
         
-        childContext.performBlock {
-            
-            let language: OLLanguage? = OLLanguage.findObject( "/languages/eng", entityName: OLLanguage.entityName, moc: childContext )
+        let context = coreDataStack.newChildContext( name: "findLanguages" )
         
-            if nil == language {
-                
-                let operation = LanguagesGetOperation( coreDataStack: coreDataStack ) {}
+        context.performBlock {
+        
+            let languageCount = loadLanguageLookup( context )
+            if 0 == languageCount {
+        
+                let operation = LanguagesGetOperation( coreDataStack: coreDataStack ) {
+                    
+                    context.performBlock {
+                        loadLanguageLookup( context )
+                    }
+                }
                 operationQueue.addOperation( operation )
             }
         }
+    }
+    
+    class func loadLanguageLookup( moc: NSManagedObjectContext ) -> Int {
+        
+        var loadedLanguages = [String: String]()
+
+        let fetchRequest = NSFetchRequest( entityName: OLLanguage.entityName )
+        
+        do {
+            let objects = try moc.executeFetchRequest( fetchRequest )
+
+            for object in objects {
+                
+                if let language = object as? OLLanguage {
+                    
+                    let code = language.code
+                    let name = language.name
+                    
+                    loadedLanguages[code] = name
+                }
+            }
+        }
+        catch {
+            print( "\(error)" )
+        }
+        
+        OLManagedObject.saveLoadedLanguages( loadedLanguages )
+
+        return OLManagedObject.languageLookup.count
     }
 
 }

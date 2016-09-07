@@ -65,19 +65,16 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
     
     private func setLanguageNames() {
         
-        if let moc = self.managedObjectContext {
+        var tempNames = [String]()
+        for code in self.language {
             
-            var tempNames = [String]()
-            for code in self.language {
+            if let name = OLManagedObject.languageLookup[code] {
                 
-                if let language: OLLanguage = OLEditionDetail.findObject( code, entityName: OLLanguage.entityName, keyFieldName: "code", moc: moc ) {
-                    
-                    tempNames.append( language.name )
-                }
+                tempNames.append( name )
             }
-            
-            self.language_names = tempNames
         }
+        
+        self.language_names = tempNames
     }
     
     override var hasImage: Bool { return 0 != cover_i }

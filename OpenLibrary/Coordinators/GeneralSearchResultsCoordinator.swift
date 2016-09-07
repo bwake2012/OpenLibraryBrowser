@@ -136,14 +136,14 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             sequence = searchState.sequence
         }
         
-        reachabilityOperation = OLReachabilityOperation( host: "openlibrary.org" ) {}
-        reachabilityOperation!.userInitiated = true
-        operationQueue.addOperation( reachabilityOperation! )
-        
-        OLLanguage.retrieveLanguages( operationQueue, coreDataStack: coreDataStack )
-
         dispatch_async( dispatch_get_main_queue() ) {
             
+            self.reachabilityOperation = OLReachabilityOperation( host: "openlibrary.org" ) {}
+            self.reachabilityOperation!.userInitiated = true
+            operationQueue.addOperation( self.reachabilityOperation! )
+            
+            OLLanguage.retrieveLanguages( operationQueue, coreDataStack: coreDataStack )
+
             self.updateFooter()
         
             self.updateUI()

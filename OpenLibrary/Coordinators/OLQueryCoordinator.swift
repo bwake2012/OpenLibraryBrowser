@@ -138,6 +138,7 @@ class OLQueryCoordinator: NSObject {
                 }
                 break
             case .ReachableViaWWAN:
+                isReachable = true
                 break
             case .ReachableViaWiFi:
                 isReachable = true

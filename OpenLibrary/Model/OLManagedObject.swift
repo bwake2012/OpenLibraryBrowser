@@ -137,6 +137,8 @@ struct DeluxeData {
 
 class OLManagedObject: NSManagedObject {
     
+    static var languageLookup = [String: String]()
+    
     var heading: String {
         
         return ""
@@ -168,6 +170,11 @@ class OLManagedObject: NSManagedObject {
         
         return 1 < self.deluxeData.count || ( 1 == self.deluxeData.count && 1 < self.deluxeData[0].count )
     }()
+    
+    class func saveLoadedLanguages( loadedLanguages: [String: String] ) {
+        
+        OLManagedObject.languageLookup = loadedLanguages
+    }
     
     class func findObject<T: OLManagedObject>( key: String, entityName: String, keyFieldName: String = "key", moc: NSManagedObjectContext ) -> [T]? {
         

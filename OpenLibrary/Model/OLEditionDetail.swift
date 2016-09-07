@@ -43,14 +43,11 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
     
     private func setLanguageNames() {
         
-        if let moc = self.managedObjectContext {
+        for code in self.languages {
             
-            for code in self.languages {
+            if let name = OLManagedObject.languageLookup[code] {
                 
-                if let language: OLLanguage = OLEditionDetail.findObject( code, entityName: OLLanguage.entityName, keyFieldName: "code", moc: moc ) {
-                    
-                    language_names.append( language.name )
-                }
+                language_names.append( name )
             }
         }
     }
