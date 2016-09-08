@@ -133,7 +133,7 @@ class OLQueryCoordinator: NSObject {
         switch newStatus {
         
             case .NotReachable:
-                if tattle && newStatus != oldStatus {
+                if tattle || ( newStatus != oldStatus ) {
                     showNetworkUnreachableAlert( oldStatus, newStatus: newStatus )
                 }
                 break
