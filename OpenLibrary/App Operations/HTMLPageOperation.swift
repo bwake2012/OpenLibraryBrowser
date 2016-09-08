@@ -86,18 +86,18 @@ class HTMLPageOperation: Operation {
                     )
             }
             
-//            theAttributedString.enumerateAttribute(
-//                NSFontAttributeName,
-//                inRange: NSRange( location: 0, length: theAttributedString.length ),
-//                options: NSAttributedStringEnumerationOptions(rawValue: 0)
-//            ) {
-//                (value, range, stop) -> Void in
-//                
-//                let newFont = UIFont.preferredFontForTextStyle( UIFontTextStyleBody )
-//                
-//                theAttributedString.removeAttribute( NSFontAttributeName, range: range )
-//                theAttributedString.addAttribute( NSFontAttributeName, value: newFont, range: range )
-//            }
+            theAttributedString.enumerateAttribute(
+                NSFontAttributeName,
+                inRange: NSRange( location: 0, length: theAttributedString.length ),
+                options: NSAttributedStringEnumerationOptions(rawValue: 0)
+            ) {
+                (value, range, stop) -> Void in
+                
+                let newFont = UIFont.preferredFontForTextStyle( UIFontTextStyleBody )
+                
+                theAttributedString.removeAttribute( NSFontAttributeName, range: range )
+                theAttributedString.addAttribute( NSFontAttributeName, value: newFont, range: range )
+            }
             
             htmlPageController.htmlString = theAttributedString
             htmlPageController.nameString = operationName
