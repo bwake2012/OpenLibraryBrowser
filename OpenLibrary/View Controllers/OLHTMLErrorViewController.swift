@@ -32,6 +32,7 @@ class OLHTMLErrorViewController: UIViewController {
     override func viewDidLoad() {
         
         operationName.text = nameString
+        url.text = urlString
         htmlView.attributedText = htmlString
     }
 }

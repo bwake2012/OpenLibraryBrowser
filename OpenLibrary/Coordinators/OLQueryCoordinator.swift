@@ -55,80 +55,13 @@ class OLQueryCoordinator: NSObject {
         if nil == OLQueryCoordinator.reachability {
             
             do {
-                OLQueryCoordinator.reachability = try Reachability( hostname: "openlibrary.org" )
+                OLQueryCoordinator.reachability =
+                    try Reachability( hostname: "openlibrary.org" )
                 
                 if let reachability = OLQueryCoordinator.reachability {
                     
-                    reachability.whenReachable = {
-                        
-                        reachability in
-                        
-                        let newStatus = reachability.currentReachabilityStatus
-                        
-                        let oldStatus = OLQueryCoordinator.previousNetStatus
-                        OLQueryCoordinator.previousNetStatus = newStatus
-                        
-                        if oldStatus != newStatus {
-                            
-                            // this is called on a background thread, but UI updates must
-                            // be on the main thread, like this:
-                            dispatch_async(dispatch_get_main_queue()) {
-                                
-                                var reachMessage = ""
-                                if reachability.isReachableViaWiFi() {
-                                    reachMessage = "Reachable via WiFi"
-                                } else if reachability.isReachableViaWWAN() {
-                                    reachMessage = "Reachable via Cellular"
-                                } else {
-                                    reachMessage = "Reachable via unknown method"
-                                }
-                                
-                                if "" != reachMessage {
-                                    
-                                    let banner =
-                                            Banner(
-                                                    title: "Network Access",
-                                                    subtitle: "OpenLibrary " + reachMessage,
-                                                    image: UIImage(named: "777-thumbs-up"),
-                                                    backgroundColor:
-                                                        UIColor(
-                                                                red:48.00/255.0,
-                                                                green:174.0/255.0,
-                                                                blue:51.5/255.0,
-                                                                alpha:1.000
-                                                            )
-                                                )
-                                    banner.dismissesOnTap = true
-                                    banner.show(duration: 3.0)
-                                }
-                            }
-                        }
-                    }
-                    reachability.whenUnreachable = {
-                        
-                        reachability in
-                        
-                        // this is called on a background thread, but UI updates must
-                        // be on the main thread, like this:
-                        dispatch_async(dispatch_get_main_queue()) {
-                            let reachMessage = "Not Reachable"
-                            let banner =
-                                    Banner(
-                                            title: "Network Access",
-                                            subtitle: "OpenLibrary " + reachMessage,
-                                            image: UIImage(named: "778-thumbs-down"),
-                                            backgroundColor:
-                                                UIColor(
-                                                        red:174.00/255.0,
-                                                        green:48.0/255.0,
-                                                        blue:51.5/255.0,
-                                                        alpha:1.000
-                                                    )
-                                        )
-                            banner.dismissesOnTap = true
-                            banner.show(duration: 3.0)
-                        }
-                    }
+                    reachability.whenReachable = reachable
+                    reachability.whenUnreachable = unreachable
                     
                     do {
                         try reachability.startNotifier()
@@ -448,4 +381,55 @@ class OLQueryCoordinator: NSObject {
         
         return true
     }
+    
+    // MARK: Reachability delegates
+
+    private func reachable( reachability: Reachability ) {
+        
+        // this is called on a background thread, but UI updates must
+        // be on the main thread, like this:
+        dispatch_async(dispatch_get_main_queue()) {
+            let reachMessage = "Not Reachable"
+            let banner =
+                Banner(
+                    title: "Network Access",
+                    subtitle: "OpenLibrary " + reachMessage,
+                    image: UIImage(named: "778-thumbs-down-selected-white"),
+                    backgroundColor:
+                    UIColor(
+                        red:174.00/255.0,
+                        green:48.0/255.0,
+                        blue:51.5/255.0,
+                        alpha:1.000
+                    )
+            )
+            banner.dismissesOnTap = true
+            banner.show(duration: 3.0)
+        }
+    }
+    
+    private func unreachable( reachability: Reachability ) {
+        
+        // this is called on a background thread, but UI updates must
+        // be on the main thread, like this:
+        dispatch_async(dispatch_get_main_queue()) {
+            let reachMessage = "Not Reachable"
+            let banner =
+                Banner(
+                    title: "Network Access",
+                    subtitle: "OpenLibrary " + reachMessage,
+                    image: UIImage(named: "778-thumbs-down-selected-white"),
+                    backgroundColor:
+                    UIColor(
+                        red:174.00/255.0,
+                        green:48.0/255.0,
+                        blue:51.5/255.0,
+                        alpha:1.000
+                    )
+            )
+            banner.dismissesOnTap = true
+            banner.show(duration: 3.0)
+        }
+    }
+
 }

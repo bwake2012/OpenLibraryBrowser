@@ -16,6 +16,7 @@ let dataKey   = "hostData"
 let streamKey = "hostStream"
 let mimeTypeDesiredKey  = "MIMETypeDesired"
 let mimeTypeReturnedKey = "MIMETypeReturned"
+let hostURLKey = "hostURL"
 
 extension Operation {
     

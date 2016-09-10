@@ -11,19 +11,18 @@ import Foundation
 import PSOperations
 
 class ImageDownloadOperation: GroupOperation {
+    
     // MARK: Properties
-    let imageURL: NSURL
+    let localImageURL: NSURL
+    let remoteImageURL: NSURL
 
     // MARK: Initialization
     
     /// - parameter cacheFile: The file `NSURL` to which the earthquake feed will be downloaded.
     init( stringID: String, imageKeyName: String, size: String, type: String, imageURL: NSURL ) {
 
-        self.imageURL = imageURL
+        self.localImageURL = imageURL
 
-        super.init(operations: [])
-        name = "Download Image"
-        
         /*
             If this server is out of our control and does not offer a secure
             communication channel, use the http version of the URL and add
@@ -33,17 +32,21 @@ class ImageDownloadOperation: GroupOperation {
             should always prefer to use https.
         */
         let urlString = "https://covers.openlibrary.org/\(type)/\(imageKeyName)/\(stringID)-\(size).jpg?default=false"
-        let url = NSURL( string: urlString )!
-        let task = NSURLSession.sharedSession().jpgDownloadTaskWithURL( url ) {
+        remoteImageURL = NSURL( string: urlString )!
+
+        super.init(operations: [])
+        name = "Download Image"
+        
+        let task = NSURLSession.sharedSession().jpgDownloadTaskWithURL( remoteImageURL ) {
             
             url, response, error in
             
-            self.downloadFinished(url, response: response as? NSHTTPURLResponse, error: error)
+            self.downloadFinished( url, response: response as? NSHTTPURLResponse, error: error)
         }
         
         let taskOperation = URLSessionTaskOperation(task: task)
         
-        let reachabilityCondition = ReachabilityCondition(host: url)
+        let reachabilityCondition = ReachabilityCondition(host: remoteImageURL)
         taskOperation.addCondition(reachabilityCondition)
 
         let networkObserver = NetworkObserver()
@@ -65,11 +68,11 @@ class ImageDownloadOperation: GroupOperation {
                     If we already have a file at this location, just delete it.
                     Also, swallow the error, because we don't really care about it.
                 */
-                try NSFileManager.defaultManager().removeItemAtURL( self.imageURL )
+                try NSFileManager.defaultManager().removeItemAtURL( self.localImageURL )
             }
             catch {}
             
-            if let directoryURL = self.imageURL.URLByDeletingLastPathComponent {
+            if let directoryURL = self.localImageURL.URLByDeletingLastPathComponent {
 
                 do {
                     try NSFileManager.defaultManager().createDirectoryAtURL( directoryURL, withIntermediateDirectories: true, attributes: nil )
@@ -81,10 +84,15 @@ class ImageDownloadOperation: GroupOperation {
 
             do {
                 
-                try NSFileManager.defaultManager().moveItemAtURL( localURL, toURL: imageURL )
+                try NSFileManager.defaultManager().moveItemAtURL( localURL, toURL: localImageURL )
 
-                if let error = validateStreamMIMEType( [jpegMIMEType,jpgMIMEType], response: response, url: imageURL ) {
-                    aggregateError( error )
+                if let error = validateStreamMIMEType( [jpegMIMEType,jpgMIMEType], response: response, url: localImageURL ) {
+                    
+                    var userInfo = error.userInfo
+
+                    userInfo[hostURLKey] = remoteImageURL.absoluteString
+                    
+                    aggregateError( NSError( domain: error.domain, code: error.code, userInfo: userInfo ) )
                 }
             }
             catch let error as NSError {

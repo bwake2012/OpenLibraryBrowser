@@ -79,7 +79,7 @@
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Now is the time for all good computers to come to the aid of their programmers!" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="tRo-1I-Do4">
-                                <rect key="frame" x="20" y="49" width="560" height="503"/>
+                                <rect key="frame" x="20" y="78" width="560" height="474"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -90,16 +90,25 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PJ0-MI-tIL">
+                                <rect key="frame" x="20" y="49" width="560" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Oc1-qU-P2y" firstAttribute="centerX" secondItem="ttN-nK-0JR" secondAttribute="centerX" id="DVj-uX-hTv"/>
-                            <constraint firstItem="tRo-1I-Do4" firstAttribute="top" secondItem="PBy-pJ-0EQ" secondAttribute="bottom" constant="8" symbolic="YES" id="Izw-xo-x7s"/>
                             <constraint firstItem="tRo-1I-Do4" firstAttribute="trailing" secondItem="ttN-nK-0JR" secondAttribute="trailingMargin" id="JqK-l5-5gC"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="PJ0-MI-tIL" secondAttribute="trailing" id="KBw-9G-hWv"/>
                             <constraint firstItem="PBy-pJ-0EQ" firstAttribute="top" secondItem="bNG-tT-MSY" secondAttribute="bottom" id="VSG-Yp-k4a"/>
+                            <constraint firstItem="PJ0-MI-tIL" firstAttribute="leading" secondItem="ttN-nK-0JR" secondAttribute="leadingMargin" id="ZX1-xO-dfs"/>
+                            <constraint firstItem="tRo-1I-Do4" firstAttribute="top" secondItem="PJ0-MI-tIL" secondAttribute="bottom" constant="8" symbolic="YES" id="ae4-n1-NKO"/>
                             <constraint firstAttribute="trailingMargin" secondItem="PBy-pJ-0EQ" secondAttribute="trailing" id="e4r-Aa-Ugw"/>
                             <constraint firstItem="PBy-pJ-0EQ" firstAttribute="leading" secondItem="ttN-nK-0JR" secondAttribute="leadingMargin" id="hI0-JX-E3M"/>
                             <constraint firstItem="b03-lt-eqW" firstAttribute="top" secondItem="Oc1-qU-P2y" secondAttribute="bottom" constant="8" symbolic="YES" id="iqT-Xb-5U3"/>
+                            <constraint firstItem="PJ0-MI-tIL" firstAttribute="top" secondItem="PBy-pJ-0EQ" secondAttribute="bottom" constant="8" symbolic="YES" id="kq9-VB-lB0"/>
                             <constraint firstItem="Oc1-qU-P2y" firstAttribute="top" secondItem="tRo-1I-Do4" secondAttribute="bottom" constant="8" symbolic="YES" id="m2e-x0-tI5"/>
                             <constraint firstItem="tRo-1I-Do4" firstAttribute="leading" secondItem="ttN-nK-0JR" secondAttribute="leadingMargin" id="rSL-L7-ev4"/>
                         </constraints>
@@ -107,6 +116,7 @@
                     <connections>
                         <outlet property="htmlView" destination="tRo-1I-Do4" id="bw3-bt-1A4"/>
                         <outlet property="operationName" destination="PBy-pJ-0EQ" id="2cz-E0-IjX"/>
+                        <outlet property="url" destination="PJ0-MI-tIL" id="cct-uz-tWE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b5t-rT-1gJ" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -26,7 +26,7 @@ class HTMLPageOperation: Operation {
     private let presentationContext: UIViewController?
     
     var operationName = ""
-    
+    var response:NSHTTPURLResponse?
     var operationError: NSError?
     var data: NSData?
     var url: NSURL?
@@ -102,11 +102,25 @@ class HTMLPageOperation: Operation {
             
             htmlPageController.htmlString = theAttributedString
             htmlPageController.nameString = operationName
+            
+            htmlPageController.urlString = operationError?.userInfo[hostURLKey] as? String ?? ""
 
             dispatch_async(dispatch_get_main_queue()) {
                 
                 presentationContext.presentViewController( htmlPageController, animated: true, completion: nil )
                 self.finish()
+            }
+            
+            if let url = url {
+                
+                do {
+                    /*
+                     Delete the file at this URL. It's not the file we were looking for.
+                     Also, swallow any error, because we don't really care about it.
+                     */
+                    try NSFileManager.defaultManager().removeItemAtURL( url )
+                }
+                catch {}
             }
         }
     }

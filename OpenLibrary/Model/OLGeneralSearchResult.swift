@@ -77,7 +77,7 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
         self.language_names = tempNames
     }
     
-    override var hasImage: Bool { return 0 != cover_i }
+    override var hasImage: Bool { return 0 < cover_i }
     override var firstImageID: Int { return Int( cover_i ) }
     
     override var imageType: String { return "b" }
