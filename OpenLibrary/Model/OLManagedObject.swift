@@ -139,6 +139,29 @@ class OLManagedObject: NSManagedObject {
     
     static var languageLookup = [String: String]()
     
+    static var authorCache = NSCache()
+    
+    func cachedAuthor( authorKey: String ) -> String? {
+        
+        if let name = OLManagedObject.authorCache.objectForKey( authorKey ) as? String {
+            
+            return name
+            
+        } else if let moc = managedObjectContext {
+            
+            let author: OLAuthorDetail? = OLManagedObject.findObject( authorKey, entityName: OLAuthorDetail.entityName, moc: moc )
+            
+            if let author = author {
+                
+                OLManagedObject.authorCache.setObject( author.name, forKey: authorKey )
+                return author.name
+            }
+        }
+        
+        return nil
+    }
+
+    
     var heading: String {
         
         return ""

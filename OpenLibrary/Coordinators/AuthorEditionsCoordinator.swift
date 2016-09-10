@@ -115,10 +115,11 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
 
         guard libraryIsReachable() else {
             
-            updateFooter( "library is unreachable" )
+            updateHeader( "library is unreachable" )
             return
         }
         
+        updateHeader( "" )
         if nil == authorEditionsGetOperation {
         
             self.searchResults = SearchResults()
@@ -149,10 +150,11 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
         
         guard libraryIsReachable() else {
             
-            updateFooter( "library is unreachable" )
+            updateHeader( "library is unreachable" )
             return
         }
         
+        updateHeader( "" )
         if 0 == operationQueue.operationCount && !authorKey.isEmpty && highWaterMark < searchResults.numFound {
             
             authorEditionsGetOperation =
@@ -196,6 +198,11 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
                 strongSelf.updateFooter()
             }
         }
+    }
+    
+    private func updateHeader( string: String = "" ) {
+        
+        updateTableHeader( tableVC?.tableView, text: string )
     }
     
     private func updateFooter( text: String = "" ) -> Void {

@@ -8,6 +8,24 @@
 
 import UIKit
 
+class HTMLFooterTextDisplayView: HTMLTextDisplayView {
+    
+    override init( frame: CGRect, textContainer: NSTextContainer? ) {
+        
+        super.init( frame: frame, textContainer: textContainer )
+        
+        displayHTML( self.text, textStyle: UIFontTextStyleFootnote )
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        
+        super.init( coder: aDecoder )
+        
+        displayHTML( self.text, textStyle: UIFontTextStyleFootnote )
+    }
+    
+}
+
 class HTMLTextDisplayView: UITextView {
 
     override init( frame: CGRect, textContainer: NSTextContainer? ) {
@@ -24,7 +42,7 @@ class HTMLTextDisplayView: UITextView {
         displayHTML( self.text )
     }
     
-    func displayHTML( htmlText: String ) {
+    func displayHTML( htmlText: String, textStyle: String = UIFontTextStyleBody ) {
         
         assert( NSThread.isMainThread() )
         
@@ -45,7 +63,7 @@ class HTMLTextDisplayView: UITextView {
                 ) {
                     (value, range, stop) -> Void in
                     
-                    let newFont = UIFont.preferredFontForTextStyle( UIFontTextStyleBody )
+                    let newFont = UIFont.preferredFontForTextStyle( textStyle )
                     
                     theAttributedString.removeAttribute( NSFontAttributeName, range: range )
                     theAttributedString.addAttribute( NSFontAttributeName, value: newFont, range: range )

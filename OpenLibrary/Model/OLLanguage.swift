@@ -88,8 +88,6 @@ class OLLanguage: OLManagedObject, CoreDataModelable {
     
     class func retrieveLanguages( operationQueue: OperationQueue, coreDataStack: CoreDataStack ) {
         
-        print( "\(OLManagedObject.languageLookup)" )
-        
         let context = coreDataStack.newChildContext( name: "findLanguages" )
         
         context.performBlock {

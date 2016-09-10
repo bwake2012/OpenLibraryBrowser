@@ -120,10 +120,11 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
 
         guard libraryIsReachable() else {
             
-            updateFooter( "library is unreachable" )
+            updateHeader( "library is unreachable" )
             return
         }
         
+        updateHeader( "" )
         if nil == authorWorksGetOperation {
             self.searchResults = SearchResults()
             self.highWaterMark = 0
@@ -165,10 +166,11 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         
         guard libraryIsReachable() else {
             
-            updateFooter( "library is unreachable" )
+            updateHeader( "library is unreachable" )
             return
         }
         
+        updateHeader( "" )
         if nil == authorWorksGetOperation && !authorKey.isEmpty {
             
             authorWorksTableVC?.coordinatorIsBusy()
@@ -232,7 +234,12 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         }
     }
     
-    func updateFooter( text: String = "" ) {
+    private func updateHeader( string: String = "" ) {
+        
+        updateTableHeader( authorWorksTableVC?.tableView, text: string )
+    }
+    
+    private func updateFooter( text: String = "" ) {
         
         updateTableFooter( authorWorksTableVC?.tableView, highWaterMark: highWaterMark, numFound: Int( numFound ), text: text )
     }

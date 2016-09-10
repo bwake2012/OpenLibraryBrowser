@@ -27,6 +27,7 @@ class HTMLPageOperation: Operation {
     
     var operationName = ""
     
+    var operationError: NSError?
     var data: NSData?
     var url: NSURL?
 

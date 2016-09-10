@@ -81,8 +81,12 @@ class OLSearchResultsTableViewController: UIViewController {
         self.tableView.estimatedRowHeight = SegmentedTableViewCell.estimatedCellHeight
 //        self.tableView.rowHeight = UITableViewAutomaticDimension
         
-        self.tableView.tableFooterView = OLTableViewHeaderFooterView.createFromNib()
+        if let tableFooterView = OLTableViewHeaderFooterView.createFromNib() as? OLTableViewHeaderFooterView {
 
+            self.tableView.tableFooterView = tableFooterView
+            tableFooterView.footerLabel.text = "Tap the Search Button to Look for Books"
+        }
+        
         generalSearchCoordinator = buildQueryCoordinator()
     }
     

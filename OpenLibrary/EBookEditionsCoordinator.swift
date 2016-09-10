@@ -222,6 +222,11 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         updateFooter()
     }
     
+    private func updateHeader( string: String = "" ) {
+        
+        updateTableHeader( tableVC?.tableView, text: string )
+    }
+    
     private func updateFooter( text: String = "" ) -> Void {
         
         highWaterMark = fetchedResultsController.count

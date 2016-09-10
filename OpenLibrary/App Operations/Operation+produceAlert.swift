@@ -125,6 +125,7 @@ extension GroupOperation {
         
         if let html = html {
             
+            html.operationError = error
             produceOperation( html )
             hasProducedAlert = true
         }

@@ -87,7 +87,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PBy-pJ-0EQ">
                                 <rect key="frame" x="20" y="20" width="560" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -819,45 +819,106 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="An iOS client for the database at openlibrary.org." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7eU-nC-dMn">
-                                <rect key="frame" x="20" y="60" width="560" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aknowlegements:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rb5-iV-6cX">
-                                <rect key="frame" x="20" y="88" width="136" height="19.5"/>
+                                <rect key="frame" x="20" y="85" width="136" height="19.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="iZj-qn-gJu" userLabel="NSOperation" customClass="HTMLTextDisplayView" customModule="OpenLibrary" customModuleProvider="target">
-                                <rect key="frame" x="20" y="107.5" width="560" height="142"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <string key="text">This application leans very heavily on the NSOperation based classes originally developed by Apple for their WWDC app and published with their WWDC 2015 sample &lt;a href="https://developer.apple.com/sample-code/wwdc/2015/"&gt;Advanced NSOperations&lt;/a&gt;, as adapted by Pluralsight in their version named &lt;a href="https://github.com/pluralsight/PSOperations"&gt;PSOperations&lt;/a&gt;.</string>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
-                            </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" scrollEnabled="NO" editable="NO" text="This application also uses the &lt;a href=&quot;https://github.com/bignerdranch/CoreDataStack&quot;&gt;Big Nerd Ranch Core Data Stack&lt;/a&gt;. " textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vIP-9j-HRO" userLabel="Big Nerd Ranch" customClass="HTMLTextDisplayView" customModule="OpenLibrary" customModuleProvider="target">
-                                <rect key="frame" x="20" y="257.5" width="560" height="58"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
-                            </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Icons made by &lt;a href=&quot;http://www.glyphish.com&quot; title=&quot;Glyphish&quot;&gt;Glyphish&lt;/a&gt;" translatesAutoresizingMaskIntoConstraints="NO" id="ArQ-lH-iUS" userLabel="glyphish attribution" customClass="HTMLTextDisplayView" customModule="OpenLibrary" customModuleProvider="target">
-                                <rect key="frame" x="20" y="323.5" width="560" height="58"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
-                            </textView>
+                            <view contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Nr2-cT-ZlN" userLabel="Aknowlegement Contents">
+                                <rect key="frame" x="20" y="112" width="560" height="460"/>
+                                <subviews>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AW5-PW-naU">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="460"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hz7-Y5-Crb" userLabel="Content">
+                                                <rect key="frame" x="0.0" y="0.0" width="560" height="427"/>
+                                                <subviews>
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="iZj-qn-gJu" userLabel="NSOperation" customClass="HTMLTextDisplayView" customModule="OpenLibrary" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="560" height="142"/>
+                                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <string key="text">This application leans heavily on the NSOperation based classes originally developed by Apple for their WWDC app and published with their WWDC 2015 sample &lt;a href="https://developer.apple.com/sample-code/wwdc/2015/"&gt;Advanced NSOperations&lt;/a&gt;, as adapted by Pluralsight in their version named &lt;a href="https://github.com/pluralsight/PSOperations"&gt;PSOperations&lt;/a&gt;.</string>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                                    </textView>
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vIP-9j-HRO" userLabel="Big Nerd Ranch" customClass="HTMLTextDisplayView" customModule="OpenLibrary" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="150" width="560" height="79"/>
+                                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <string key="text">This application builds its Core Data stack with the &lt;a href="https://github.com/bignerdranch/CoreDataStack"&gt;Big Nerd Ranch Core Data Stack&lt;/a&gt;. </string>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                                    </textView>
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" scrollEnabled="NO" editable="NO" text="Network status monitored with &lt;a href=&quot;https://github.com/ashleymills/Reachability.swift&quot;&gt;ReachabilitySwift&lt;/a&gt;." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vmS-5T-sAU" userLabel="ReachabilitySwift" customClass="HTMLTextDisplayView" customModule="OpenLibrary" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="237" width="560" height="58"/>
+                                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                                    </textView>
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" scrollEnabled="NO" editable="NO" text="&lt;a href=&quot;https://github.com/kristopherjohnson/Markingbird&quot;&gt;MarkingBird&lt;/a&gt; converts MarkDown text to HTML for display." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="jh3-H6-WF1" userLabel="MarkingBird" customClass="HTMLTextDisplayView" customModule="OpenLibrary" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="303" width="560" height="79"/>
+                                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                                    </textView>
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Icons by &lt;a href=&quot;http://www.glyphish.com&quot; title=&quot;Glyphish&quot;&gt;Glyphish&lt;/a&gt;" translatesAutoresizingMaskIntoConstraints="NO" id="ArQ-lH-iUS" userLabel="glyphish attribution" customClass="HTMLTextDisplayView" customModule="OpenLibrary" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="390" width="560" height="37"/>
+                                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                                    </textView>
+                                                </subviews>
+                                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstItem="iZj-qn-gJu" firstAttribute="trailing" secondItem="Hz7-Y5-Crb" secondAttribute="trailing" id="08C-d8-Frr"/>
+                                                    <constraint firstItem="vmS-5T-sAU" firstAttribute="trailing" secondItem="Hz7-Y5-Crb" secondAttribute="trailing" id="2Vd-be-K7p"/>
+                                                    <constraint firstItem="vIP-9j-HRO" firstAttribute="trailing" secondItem="Hz7-Y5-Crb" secondAttribute="trailing" id="2wd-Gv-gUD"/>
+                                                    <constraint firstItem="vIP-9j-HRO" firstAttribute="leading" secondItem="Hz7-Y5-Crb" secondAttribute="leading" id="4SY-al-eXU"/>
+                                                    <constraint firstItem="jh3-H6-WF1" firstAttribute="trailing" secondItem="Hz7-Y5-Crb" secondAttribute="trailing" id="GTz-sh-1DW"/>
+                                                    <constraint firstItem="iZj-qn-gJu" firstAttribute="leading" secondItem="Hz7-Y5-Crb" secondAttribute="leading" id="Gz4-vf-d9g"/>
+                                                    <constraint firstItem="iZj-qn-gJu" firstAttribute="top" secondItem="Hz7-Y5-Crb" secondAttribute="top" id="Svt-FT-NfN"/>
+                                                    <constraint firstAttribute="bottom" secondItem="ArQ-lH-iUS" secondAttribute="bottom" id="UDy-oD-vtj"/>
+                                                    <constraint firstItem="ArQ-lH-iUS" firstAttribute="trailing" secondItem="Hz7-Y5-Crb" secondAttribute="trailing" id="WHR-3w-BHq"/>
+                                                    <constraint firstItem="jh3-H6-WF1" firstAttribute="leading" secondItem="Hz7-Y5-Crb" secondAttribute="leading" id="XXl-H9-NFV"/>
+                                                    <constraint firstItem="jh3-H6-WF1" firstAttribute="top" secondItem="vmS-5T-sAU" secondAttribute="bottom" constant="8" symbolic="YES" id="ZWO-m8-ZfE"/>
+                                                    <constraint firstItem="vIP-9j-HRO" firstAttribute="top" secondItem="iZj-qn-gJu" secondAttribute="bottom" constant="8" symbolic="YES" id="aJN-Fb-jF4"/>
+                                                    <constraint firstItem="ArQ-lH-iUS" firstAttribute="leading" secondItem="Hz7-Y5-Crb" secondAttribute="leading" id="c6D-uE-qsK"/>
+                                                    <constraint firstItem="vmS-5T-sAU" firstAttribute="top" secondItem="vIP-9j-HRO" secondAttribute="bottom" constant="8" symbolic="YES" id="pdl-fr-u0L"/>
+                                                    <constraint firstItem="ArQ-lH-iUS" firstAttribute="top" secondItem="jh3-H6-WF1" secondAttribute="bottom" constant="8" symbolic="YES" id="phz-BI-5NE"/>
+                                                    <constraint firstItem="vmS-5T-sAU" firstAttribute="leading" secondItem="Hz7-Y5-Crb" secondAttribute="leading" id="sW8-eT-GRM"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="Hz7-Y5-Crb" firstAttribute="top" secondItem="AW5-PW-naU" secondAttribute="top" id="R2R-ST-faq"/>
+                                            <constraint firstAttribute="bottom" secondItem="Hz7-Y5-Crb" secondAttribute="bottom" id="iCE-eq-hTU"/>
+                                            <constraint firstItem="Hz7-Y5-Crb" firstAttribute="leading" secondItem="AW5-PW-naU" secondAttribute="leading" id="jbl-ZE-rlg"/>
+                                            <constraint firstAttribute="trailing" secondItem="Hz7-Y5-Crb" secondAttribute="trailing" id="zRA-iI-F2O"/>
+                                        </constraints>
+                                    </scrollView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="AW5-PW-naU" firstAttribute="leading" secondItem="Nr2-cT-ZlN" secondAttribute="leading" id="0hC-N0-Pam"/>
+                                    <constraint firstAttribute="bottom" secondItem="AW5-PW-naU" secondAttribute="bottom" id="LUz-DJ-Cbq"/>
+                                    <constraint firstItem="AW5-PW-naU" firstAttribute="trailing" secondItem="Nr2-cT-ZlN" secondAttribute="trailing" id="OYn-QD-2vV"/>
+                                    <constraint firstItem="Hz7-Y5-Crb" firstAttribute="width" secondItem="Nr2-cT-ZlN" secondAttribute="width" id="RMW-Kd-BBE"/>
+                                    <constraint firstItem="AW5-PW-naU" firstAttribute="top" secondItem="Nr2-cT-ZlN" secondAttribute="top" id="wXY-Kd-wvj"/>
+                                </constraints>
+                            </view>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="bKs-qm-dMu">
                                 <rect key="frame" x="290" y="290" width="20" height="20"/>
                             </activityIndicatorView>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69e-3h-Wnx">
-                                <rect key="frame" x="159" y="572" width="282" height="20"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright\u{00a0}2016 Cockleburr\u{00a0}Software" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="425-F1-Eex">
+                                <rect key="frame" x="20" y="580" width="560" height="20"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="69e-3h-Wnx">
+                                <rect key="frame" x="20" y="580" width="560" height="20"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <inset key="contentEdgeInsets" minX="8" minY="0.0" maxX="8" maxY="0.0"/>
-                                <state key="normal" title="Copyright 2016 Cockleburr Software"/>
                                 <connections>
                                     <action selector="copyrightButtonTapped:" destination="K2s-7v-hMb" eventType="touchUpInside" id="peJ-5p-WaC"/>
                                 </connections>
@@ -868,35 +929,42 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="An iOS client for the database at openlibrary.org." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7eU-nC-dMn">
+                                <rect key="frame" x="20" y="60" width="560" height="17"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="vIP-9j-HRO" firstAttribute="top" secondItem="iZj-qn-gJu" secondAttribute="bottom" constant="8" symbolic="YES" id="0ux-IZ-26f"/>
-                            <constraint firstItem="iZj-qn-gJu" firstAttribute="leading" secondItem="el7-qg-pbV" secondAttribute="leadingMargin" id="2aN-X4-EPm"/>
-                            <constraint firstItem="vIP-9j-HRO" firstAttribute="leading" secondItem="el7-qg-pbV" secondAttribute="leadingMargin" id="4jJ-wF-D47"/>
                             <constraint firstItem="N8Y-Hl-mZn" firstAttribute="trailing" secondItem="el7-qg-pbV" secondAttribute="trailing" id="7j8-bS-Krh"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="ArQ-lH-iUS" secondAttribute="leading" id="CUH-Ov-Wnm"/>
-                            <constraint firstItem="iZj-qn-gJu" firstAttribute="top" secondItem="rb5-iV-6cX" secondAttribute="bottom" id="EQX-X8-d76"/>
+                            <constraint firstItem="425-F1-Eex" firstAttribute="top" secondItem="Nr2-cT-ZlN" secondAttribute="bottom" constant="7.5" id="DZg-F1-KGf"/>
                             <constraint firstItem="N8Y-Hl-mZn" firstAttribute="leading" secondItem="el7-qg-pbV" secondAttribute="leading" id="Erk-Cj-OFJ"/>
                             <constraint firstItem="N8Y-Hl-mZn" firstAttribute="top" secondItem="9RE-Cd-AON" secondAttribute="bottom" constant="8" id="FVY-hd-Sec"/>
-                            <constraint firstItem="Taw-dX-Dua" firstAttribute="top" secondItem="69e-3h-Wnx" secondAttribute="bottom" constant="8" id="Lsk-5n-zRq"/>
+                            <constraint firstItem="425-F1-Eex" firstAttribute="leading" secondItem="el7-qg-pbV" secondAttribute="leadingMargin" id="Hbx-0Q-C4J"/>
+                            <constraint firstItem="Nr2-cT-ZlN" firstAttribute="trailing" secondItem="el7-qg-pbV" secondAttribute="trailingMargin" id="KJ8-BI-ozP"/>
+                            <constraint firstItem="69e-3h-Wnx" firstAttribute="height" secondItem="425-F1-Eex" secondAttribute="height" id="Mse-cb-n9y"/>
+                            <constraint firstItem="Nr2-cT-ZlN" firstAttribute="leading" secondItem="el7-qg-pbV" secondAttribute="leadingMargin" id="OTA-9W-6qY"/>
+                            <constraint firstItem="69e-3h-Wnx" firstAttribute="centerX" secondItem="425-F1-Eex" secondAttribute="centerX" id="PqX-GC-FYX"/>
                             <constraint firstItem="rb5-iV-6cX" firstAttribute="top" secondItem="7eU-nC-dMn" secondAttribute="bottom" constant="8" id="RM4-so-QOq"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="ArQ-lH-iUS" secondAttribute="trailing" id="Vzd-tG-K8R"/>
-                            <constraint firstItem="69e-3h-Wnx" firstAttribute="centerX" secondItem="el7-qg-pbV" secondAttribute="centerX" id="Z39-3i-1cb"/>
-                            <constraint firstItem="ArQ-lH-iUS" firstAttribute="top" secondItem="vIP-9j-HRO" secondAttribute="bottom" constant="8" symbolic="YES" id="Z3d-Jr-2Zv"/>
+                            <constraint firstItem="69e-3h-Wnx" firstAttribute="width" secondItem="425-F1-Eex" secondAttribute="width" id="WRU-3a-M6E"/>
+                            <constraint firstItem="69e-3h-Wnx" firstAttribute="centerY" secondItem="425-F1-Eex" secondAttribute="centerY" id="X85-ox-e73"/>
                             <constraint firstItem="bKs-qm-dMu" firstAttribute="centerY" secondItem="el7-qg-pbV" secondAttribute="centerY" id="Z7p-wf-PQ3"/>
                             <constraint firstAttribute="trailingMargin" secondItem="7eU-nC-dMn" secondAttribute="trailing" id="aEw-IY-bTn"/>
+                            <constraint firstItem="Nr2-cT-ZlN" firstAttribute="top" secondItem="rb5-iV-6cX" secondAttribute="bottom" constant="8" symbolic="YES" id="bLO-wC-xfj"/>
                             <constraint firstItem="7eU-nC-dMn" firstAttribute="top" secondItem="N8Y-Hl-mZn" secondAttribute="bottom" id="gh3-eF-3LM"/>
                             <constraint firstItem="bKs-qm-dMu" firstAttribute="centerX" secondItem="el7-qg-pbV" secondAttribute="centerX" id="iPJ-GS-O1b"/>
                             <constraint firstAttribute="leadingMargin" secondItem="7eU-nC-dMn" secondAttribute="leading" id="mf4-wa-f1V"/>
-                            <constraint firstItem="vIP-9j-HRO" firstAttribute="trailing" secondItem="el7-qg-pbV" secondAttribute="trailingMargin" id="nHs-nf-k8u"/>
                             <constraint firstAttribute="leadingMargin" secondItem="rb5-iV-6cX" secondAttribute="leading" id="nOh-6h-6Dk"/>
-                            <constraint firstItem="iZj-qn-gJu" firstAttribute="trailing" secondItem="el7-qg-pbV" secondAttribute="trailingMargin" id="qXT-RR-BPP"/>
+                            <constraint firstItem="425-F1-Eex" firstAttribute="bottom" secondItem="Taw-dX-Dua" secondAttribute="top" id="saZ-a4-2h1"/>
+                            <constraint firstItem="425-F1-Eex" firstAttribute="trailing" secondItem="el7-qg-pbV" secondAttribute="trailingMargin" id="wj7-h3-Yxs"/>
                         </constraints>
                     </view>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
-                        <outlet property="copyright" destination="69e-3h-Wnx" id="dc4-wu-mhx"/>
+                        <outlet property="copyright" destination="69e-3h-Wnx" id="pIp-7F-SpQ"/>
+                        <outlet property="copyrightLabel" destination="425-F1-Eex" id="5Xp-X2-evI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WB4-4A-5Hw" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -7,6 +7,7 @@ target 'OpenLibrary' do
     pod 'BNRCoreDataStack'
     pod 'ReachabilitySwift'
     pod 'PSOperations', '~> 2.3'
+    pod 'BRYXBanner'
 end
 
 

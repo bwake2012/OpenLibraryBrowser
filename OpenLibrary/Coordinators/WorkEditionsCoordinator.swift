@@ -127,10 +127,11 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
 
         guard libraryIsReachable() else {
             
-            updateFooter( "library is unreachable" )
+            updateHeader( "library is unreachable" )
             return
         }
         
+        updateHeader( "" )
         if nil == workEditionsGetOperation {
             self.searchResults = SearchResults()
             self.workKey = workKey
@@ -172,10 +173,11 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         
         guard libraryIsReachable() else {
             
-            updateFooter( "library is unreachable" )
+            updateHeader( "library is unreachable" )
             return
         }
         
+        updateHeader( "" )
         if nil == workEditionsGetOperation && !workKey.isEmpty && highWaterMark < searchResults.numFound {
             
 //            tableVC?.coordinatorIsBusy()
@@ -229,6 +231,11 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         }
         highWaterMark = min( editionsCount, searchResults.start + searchResults.pageSize )
 
+    }
+    
+    private func updateHeader( string: String = "" ) {
+        
+        updateTableHeader( tableVC?.tableView, text: string )
     }
     
     private func updateFooter( text: String = "" ) {

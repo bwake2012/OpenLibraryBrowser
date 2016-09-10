@@ -161,9 +161,8 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             
             for olid in self.authors {
                 
-                if let author: OLAuthorDetail = OLWorkDetail.findObject( olid, entityName: OLAuthorDetail.entityName, moc: moc ) {
-                    
-                    author_name_cache.append( author.name )
+                if let name = cachedAuthor( olid ) {
+                    author_name_cache.append( name )
                 }
             }
 

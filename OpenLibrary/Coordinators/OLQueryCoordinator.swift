@@ -12,6 +12,7 @@ import CoreData
 import BNRCoreDataStack
 import ReachabilitySwift
 import PSOperations
+import BRYXBanner
 
 class OLQueryCoordinator: NSObject {
     
@@ -20,11 +21,12 @@ class OLQueryCoordinator: NSObject {
     private static var thumbnailCache = NSCache()
     private class CacheData {
         
+        var image: UIImage?
+        let date = NSDate()
         var fetchInProgress: Bool {
             
-            return nil == image
+            return nil == image && date.timeIntervalSinceNow < 10.0
         }
-        var image: UIImage?
         
         init( image: UIImage? ) {
             
@@ -61,16 +63,44 @@ class OLQueryCoordinator: NSObject {
                         
                         reachability in
                         
-                        // this is called on a background thread, but UI updates must
-                        // be on the main thread, like this:
-                        dispatch_async(dispatch_get_main_queue()) {
+                        let newStatus = reachability.currentReachabilityStatus
+                        
+                        let oldStatus = OLQueryCoordinator.previousNetStatus
+                        OLQueryCoordinator.previousNetStatus = newStatus
+                        
+                        if oldStatus != newStatus {
                             
-                            if reachability.isReachableViaWiFi() {
-                                print("Reachable via WiFi")
-                            } else if reachability.isReachableViaWWAN() {
-                                print("Reachable via Cellular")
-                            } else {
-                                print("Reachable via unknown method")
+                            // this is called on a background thread, but UI updates must
+                            // be on the main thread, like this:
+                            dispatch_async(dispatch_get_main_queue()) {
+                                
+                                var reachMessage = ""
+                                if reachability.isReachableViaWiFi() {
+                                    reachMessage = "Reachable via WiFi"
+                                } else if reachability.isReachableViaWWAN() {
+                                    reachMessage = "Reachable via Cellular"
+                                } else {
+                                    reachMessage = "Reachable via unknown method"
+                                }
+                                
+                                if "" != reachMessage {
+                                    
+                                    let banner =
+                                            Banner(
+                                                    title: "Network Access",
+                                                    subtitle: "OpenLibrary " + reachMessage,
+                                                    image: UIImage(named: "777-thumbs-up"),
+                                                    backgroundColor:
+                                                        UIColor(
+                                                                red:48.00/255.0,
+                                                                green:174.0/255.0,
+                                                                blue:51.5/255.0,
+                                                                alpha:1.000
+                                                            )
+                                                )
+                                    banner.dismissesOnTap = true
+                                    banner.show(duration: 3.0)
+                                }
                             }
                         }
                     }
@@ -81,7 +111,22 @@ class OLQueryCoordinator: NSObject {
                         // this is called on a background thread, but UI updates must
                         // be on the main thread, like this:
                         dispatch_async(dispatch_get_main_queue()) {
-                            print("Not reachable")
+                            let reachMessage = "Not Reachable"
+                            let banner =
+                                    Banner(
+                                            title: "Network Access",
+                                            subtitle: "OpenLibrary " + reachMessage,
+                                            image: UIImage(named: "778-thumbs-down"),
+                                            backgroundColor:
+                                                UIColor(
+                                                        red:174.00/255.0,
+                                                        green:48.0/255.0,
+                                                        blue:51.5/255.0,
+                                                        alpha:1.000
+                                                    )
+                                        )
+                            banner.dismissesOnTap = true
+                            banner.show(duration: 3.0)
                         }
                     }
                     
@@ -121,7 +166,7 @@ class OLQueryCoordinator: NSObject {
         }
     }
     
-    func libraryIsReachable( tattle tattle: Bool = false ) -> Bool {
+    func libraryIsReachable( tattle tattle: Bool = false, keepQuiet: Bool = false ) -> Bool {
         
         var isReachable = false
         
@@ -133,7 +178,7 @@ class OLQueryCoordinator: NSObject {
         switch newStatus {
         
             case .NotReachable:
-                if tattle || ( newStatus != oldStatus ) {
+                if !keepQuiet && ( tattle || ( newStatus != oldStatus ) ) {
                     showNetworkUnreachableAlert( oldStatus, newStatus: newStatus )
                 }
                 break
@@ -162,8 +207,8 @@ class OLQueryCoordinator: NSObject {
             
             let alertController =
                 UIAlertController(
-                        title: "Sad Face Emoji!",
-                        message: "Cell data permission was not authorized. Please enable it in Settings to continue.",
+                        title: "Could not Reach OpenLibrary",
+                        message: "Either you have not signed on to WiFi or you have not given this app permission to use cell data. Please enable it in Settings to continue.",
                         preferredStyle: .Alert
                     )
             
@@ -206,6 +251,35 @@ class OLQueryCoordinator: NSObject {
                     refreshControl.attributedTitle = NSAttributedString( string: lastUpdate )
                 }
                 refreshControl.endRefreshing()
+            }
+        }
+    }
+    
+    func updateTableHeader( tableView: UITableView?, text: String = "" ) {
+        
+        dispatch_async( dispatch_get_main_queue() ) {
+            
+            if let tableView = tableView {
+                
+                if text.isEmpty {
+                    
+                    tableView.tableHeaderView = nil
+                
+                } else {
+                    
+                    var tableHeaderView: OLTableViewHeaderFooterView? = tableView.tableHeaderView as? OLTableViewHeaderFooterView
+                    if nil == tableHeaderView {
+                        
+                        tableHeaderView = OLTableViewHeaderFooterView.createFromNib() as? OLTableViewHeaderFooterView
+                        tableView.tableHeaderView = tableHeaderView
+
+                    }
+                    
+                    if let tableHeaderView = tableHeaderView {
+                        
+                        tableHeaderView.footerLabel.text = text
+                    }
+                }
             }
         }
     }
@@ -284,12 +358,11 @@ class OLQueryCoordinator: NSObject {
                 cell.displayImage( url, image: image )
             }
         }
-        
     }
     
-    func enqueueImageFetch( url: NSURL, imageID: Int, imageType: String, cell: OLTableViewCell ) {
+    private func enqueueImageFetch( url: NSURL, imageID: Int, imageType: String, cell: OLTableViewCell ) {
         
-        guard libraryIsReachable() else {
+        guard libraryIsReachable( keepQuiet: true ) else {
             return
         }
         
@@ -311,58 +384,68 @@ class OLQueryCoordinator: NSObject {
         operationQueue.addOperation( imageGetOperation )
     }
     
-    func displayThumbnail( object: OLManagedObject, cell: OLTableViewCell? ) {
+    func displayThumbnail( object: OLManagedObject, cell: OLTableViewCell? ) -> Bool {
         
         guard object.hasImage else {
-            return
+            return false
         }
         
         let url = object.localURL( "S" )
         guard let cacheKey = url.lastPathComponent else {
             assert( false )
-            return
+            return false
         }
         
-        let cacheData = cachedData( cacheKey )
-        let image: UIImage? = cacheData?.image
-        if let image = image {
+        // is there an entry in the cache?
+        if let cacheData = cachedData( cacheKey ) {
             
-            if let cell = cell {
-                
-                cell.displayImage( url, image: image )
+            // is there an image on the entry?
+            if let image = cacheData.image {
+            
+                if let cell = cell {
+                    
+                    cell.displayImage( url, image: image )
+                    return true
+                }
+
+            // otherwise, is there an image fetch in progress?
+            } else if cacheData.fetchInProgress {
+
+                return true
             }
-            
-        } else if nil == cacheData {
-            
-            OLQueryCoordinator.thumbnailCache.setObject( CacheData( image: image ), forKey: cacheKey )
-            
-            let imageID = object.firstImageID
-            let imageType = object.imageType
-            dispatch_async( dispatch_queue_create( "preloadThumbnail", nil ) ) {
-                
-                [weak self, weak cell] in
+        }
 
-                if let strongSelf = self, cell = cell {
+        OLQueryCoordinator.thumbnailCache.setObject( CacheData( image: nil ), forKey: cacheKey )
 
-                    if let image = strongSelf.cachedImage( url ) {
-                        
-                        strongSelf.displayThumbnailImage(
-                                url,
-                                image: image,
-                                cell: cell
-                            )
-                        
-                    } else {
-                        
-                        strongSelf.enqueueImageFetch(
-                                url,
-                                imageID: imageID,
-                                imageType: imageType,
-                                cell: cell
-                            )
-                    }
+        // retrieve the thumbnail from openlibrary.org
+        let imageID = object.firstImageID
+        let imageType = object.imageType
+        dispatch_async( dispatch_queue_create( "preloadThumbnail", nil ) ) {
+            
+            [weak self, weak cell] in
+
+            if let strongSelf = self, cell = cell {
+
+                if let image = strongSelf.cachedImage( url ) {
+                    
+                    strongSelf.displayThumbnailImage(
+                            url,
+                            image: image,
+                            cell: cell
+                        )
+                    
+                } else {
+                    
+                    strongSelf.enqueueImageFetch(
+                            url,
+                            imageID: imageID,
+                            imageType: imageType,
+                            cell: cell
+                        )
                 }
             }
         }
+        
+        return true
     }
 }

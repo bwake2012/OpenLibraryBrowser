@@ -19,6 +19,7 @@ class OLLaunchViewController: UIViewController {
             as! UINavigationController
     }()
     
+    @IBOutlet var copyrightLabel: UILabel!
     @IBOutlet var copyright: UIButton!
 
     @IBAction func copyrightButtonTapped( sender: UIButton ) {
@@ -37,11 +38,14 @@ class OLLaunchViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
         
-        super.viewDidAppear( animated )
+        super.viewWillAppear( animated )
         
+        let nonBreakingSpace = "\u{00a0}"
         copyright.enabled = enableClose
+        copyrightLabel.text = "Copyright\(nonBreakingSpace)2016 Cockleburr\(nonBreakingSpace)Software"
+        copyrightLabel.textColor = copyright.currentTitleColor
     }
 
     func loadAppRootViewController() {

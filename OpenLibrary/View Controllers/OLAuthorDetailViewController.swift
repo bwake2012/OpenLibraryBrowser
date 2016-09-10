@@ -54,6 +54,13 @@ class OLAuthorDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(animated: Bool) {
+        
+        super.viewWillAppear( animated )
+        
+        authorName.textColor = displayDeluxeDetail.currentTitleColor
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if segue.identifier == "embedAuthorWorks" {

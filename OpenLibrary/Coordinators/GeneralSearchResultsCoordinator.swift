@@ -195,8 +195,12 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         guard let result = objectAtIndexPath( indexPath ) else { return nil }
 
         if let tableVC = tableVC {
+            
             cell.configure( tableVC.tableView, key: result.key, data: result )
-            displayThumbnail( result, cell: cell )
+            if !displayThumbnail( result, cell: cell ) {
+                
+                result.cover_i = 0
+            }
         }
         
         return result
@@ -220,10 +224,11 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         
         guard libraryIsReachable( tattle: true ) else {
             
-            updateFooter( "library is unreachable" )
+//            updateHeader( "library is unreachable" )
             return
         }
         
+        updateHeader( "" )
         if nil == generalSearchOperation {
             
             updateFooter( "fetching books..." )
@@ -261,10 +266,11 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         
         guard libraryIsReachable( tattle: true ) else {
             
-            updateFooter( "library is unreachable" )
+//            updateHeader( "library is unreachable" )
             return
         }
             
+        updateHeader( "" )
         if nil == self.generalSearchOperation && !searchKeys.isEmpty && highWaterMark < searchResults.numFound {
             
             updateFooter( "fetching more books..." )
@@ -350,6 +356,11 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         self.searchResults = searchResults
         self.highWaterMark = min(searchResults.numFound, searchResults.start + searchResults.pageSize )
  
+    }
+    
+    private func updateHeader( string: String = "" ) {
+        
+        updateTableHeader( tableVC?.tableView, text: string )
     }
     
     private func updateFooter( text: String = "" ) -> Void {

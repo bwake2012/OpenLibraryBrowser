@@ -11,9 +11,11 @@ import UIKit
 class OLHTMLErrorViewController: UIViewController {
 
     @IBOutlet private weak var operationName: UILabel!
+    @IBOutlet private weak var url: UILabel!
     @IBOutlet private weak var htmlView: UITextView!
     
     var nameString = ""
+    var urlString = ""
     var htmlString = NSAttributedString()
     
     @IBAction func tappedOK(sender: UIButton) {

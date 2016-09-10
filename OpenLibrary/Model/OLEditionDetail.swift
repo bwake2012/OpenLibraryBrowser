@@ -19,25 +19,18 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
     var author_names: [String] {
         
         get {
-            var names = author_name_cache
             
-            if names.isEmpty {
+            if author_name_cache.isEmpty {
                 
-                if let moc = self.managedObjectContext {
+                for olid in self.authors {
                     
-                    for olid in self.authors {
-                        
-                        if let author: OLAuthorDetail = OLWorkDetail.findObject( olid, entityName: OLAuthorDetail.entityName, moc: moc ) {
-                            
-                            author_name_cache.append( author.name )
-                        }
+                    if let name = cachedAuthor( olid ) {
+                        author_name_cache.append( name )
                     }
-                    
-                    names = author_name_cache
                 }
             }
             
-            return names
+            return author_name_cache
         }
     }
     

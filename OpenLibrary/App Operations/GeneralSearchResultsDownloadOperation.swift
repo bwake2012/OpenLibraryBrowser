@@ -63,8 +63,9 @@ class GeneralSearchResultsDownloadOperation: GroupOperation {
         
         guard let localURL = url else {
             
-            finishWithError( error )
-            
+            if let error = error {
+                aggregateError( error )
+            }
             return
         }
         

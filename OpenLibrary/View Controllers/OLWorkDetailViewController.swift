@@ -70,6 +70,15 @@ class OLWorkDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(animated: Bool) {
+        
+        super.viewWillAppear( animated )
+        
+        workTitle.textColor = displayDeluxeDetail.currentTitleColor
+        workSubtitle.textColor = displayDeluxeDetail.currentTitleColor
+
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if segue.identifier == "embedWorkEditions" {
