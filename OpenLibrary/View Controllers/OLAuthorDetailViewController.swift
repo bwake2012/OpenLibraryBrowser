@@ -54,13 +54,6 @@ class OLAuthorDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
-        
-        super.viewWillAppear( animated )
-        
-        authorName.textColor = displayDeluxeDetail.currentTitleColor
-    }
-    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if segue.identifier == "embedAuthorWorks" {
@@ -130,8 +123,10 @@ class OLAuthorDetailViewController: UIViewController {
         assert( NSThread.isMainThread() )
 
         self.displayLargePhoto.enabled = authorDetail.hasImage
-        self.displayDeluxeDetail.enabled = authorDetail.hasDeluxeData
-            
+
+        self.displayDeluxeDetail.enabled = authorDetail.hasDeluxeData && nil == authorDetail.provisional_date
+        authorName.textColor = displayDeluxeDetail.currentTitleColor
+        
         self.authorName.text = authorDetail.name
         
         if !authorDetail.hasImage && nil == authorDetail.provisional_date {
@@ -139,8 +134,6 @@ class OLAuthorDetailViewController: UIViewController {
         } else {
             self.authorPhoto.image = UIImage( named: "253-person.png" )
         }
-        
-        self.displayDeluxeDetail.enabled = nil == authorDetail.provisional_date
         
         view.layoutIfNeeded()
         
