@@ -27,10 +27,10 @@ class ImageGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( stringID: String, imageKeyName: String, localURL: NSURL, size: String, type: String, completionHandler: Void -> Void ) {
+    init( stringID: String, imageKeyName: String, localURL: NSURL, size: String, type: String, displaySize: CGSize? = nil, completionHandler: Void -> Void ) {
         
         downloadOperation =
-            ImageDownloadOperation( stringID: stringID, imageKeyName: imageKeyName, size: size, type: type, imageURL: localURL )
+            ImageDownloadOperation( stringID: stringID, imageKeyName: imageKeyName, size: size, type: type, imageURL: localURL, displaySize: displaySize )
         let finishOperation = NSBlockOperation( block: completionHandler )
         
         // These operations must be executed in order
@@ -45,9 +45,9 @@ class ImageGetOperation: GroupOperation {
         name = "Get Image"
     }
 
-    convenience init( numberID: Int, imageKeyName: String, localURL: NSURL, size: String, type: String, completionHandler: Void -> Void ) {
+    convenience init( numberID: Int, imageKeyName: String, localURL: NSURL, size: String, type: String, displaySize: CGSize? = nil, completionHandler: Void -> Void ) {
 
-        self.init( stringID: String( numberID ), imageKeyName: imageKeyName, localURL: localURL, size: size, type: type, completionHandler: completionHandler )
+        self.init( stringID: String( numberID ), imageKeyName: imageKeyName, localURL: localURL, size: size, type: type, displaySize: displaySize, completionHandler: completionHandler )
     }
     
     override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {

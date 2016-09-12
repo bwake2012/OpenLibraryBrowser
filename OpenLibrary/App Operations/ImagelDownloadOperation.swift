@@ -7,6 +7,7 @@
 //  Modified from code in the Apple sample app Earthquakes in the Advanced NSOperations project
 
 import Foundation
+import ImageIO
 
 import PSOperations
 
@@ -15,13 +16,16 @@ class ImageDownloadOperation: GroupOperation {
     // MARK: Properties
     let localImageURL: NSURL
     let remoteImageURL: NSURL
+    
+    let displaySize: CGSize?
 
     // MARK: Initialization
     
     /// - parameter cacheFile: The file `NSURL` to which the earthquake feed will be downloaded.
-    init( stringID: String, imageKeyName: String, size: String, type: String, imageURL: NSURL ) {
+    init( stringID: String, imageKeyName: String, size: String, type: String, imageURL: NSURL, displaySize: CGSize? ) {
 
         self.localImageURL = imageURL
+        self.displaySize = displaySize
 
         /*
             If this server is out of our control and does not offer a secure
@@ -61,7 +65,7 @@ class ImageDownloadOperation: GroupOperation {
 
             aggregateError( error )
 
-        } else if let localURL = url {
+        } else if let downloadURL = url {
             
             do {
                 /*
@@ -82,21 +86,47 @@ class ImageDownloadOperation: GroupOperation {
                 }
             }
 
-            do {
+            if let error = validateStreamMIMEType( [jpegMIMEType,jpgMIMEType], response: response, url: localImageURL ) {
                 
-                try NSFileManager.defaultManager().moveItemAtURL( localURL, toURL: localImageURL )
+                var userInfo = error.userInfo
 
-                if let error = validateStreamMIMEType( [jpegMIMEType,jpgMIMEType], response: response, url: localImageURL ) {
-                    
-                    var userInfo = error.userInfo
+                userInfo[hostURLKey] = remoteImageURL.absoluteString
+                
+                aggregateError( NSError( domain: error.domain, code: error.code, userInfo: userInfo ) )
 
-                    userInfo[hostURLKey] = remoteImageURL.absoluteString
+            } else {
+                
+                if nil == displaySize {
+                
+                    do {
+                        
+                        try NSFileManager.defaultManager().moveItemAtURL( downloadURL, toURL: localImageURL )
+                    }
+                    catch let error as NSError {
+                        aggregateError(error)
+                    }
+
+                } else if let displaySize = displaySize {
                     
-                    aggregateError( NSError( domain: error.domain, code: error.code, userInfo: userInfo ) )
+                    let options: [NSString: NSObject] = [
+                        kCGImageSourceThumbnailMaxPixelSize: max(displaySize.width, displaySize.height),
+                        kCGImageSourceCreateThumbnailFromImageAlways: true,
+                        kCGImageSourceTypeIdentifierHint: "public.jpeg"
+                    ]
+                    if let imageSource = CGImageSourceCreateWithURL( downloadURL, options ) {
+                        
+                        if let scaledImage = CGImageSourceCreateThumbnailAtIndex( imageSource, 0, options ) {
+                        
+                            if let imageDest = CGImageDestinationCreateWithURL( self.localImageURL, "public.jpeg", 1, nil ) {
+                                
+                                let options: [NSString: NSObject] = [kCGImageDestinationLossyCompressionQuality: 1.0]
+                                
+                                CGImageDestinationAddImage( imageDest, scaledImage, options )
+                                CGImageDestinationFinalize( imageDest )
+                            }
+                        }
+                    }
                 }
-            }
-            catch let error as NSError {
-                aggregateError(error)
             }
             
             
@@ -105,4 +135,22 @@ class ImageDownloadOperation: GroupOperation {
             // Do nothing, and the operation will automatically finish.
         }
     }
+    
+//    - (void) writeCGImage: (CGImageRef) image toURL: (NSURL*) url withType: (CFStringRef) imageType andOptions: (CFDictionaryRef) options
+//    {
+//    CGImageDestinationRef myImageDest = CGImageDestinationCreateWithURL((CFURLRef)url, imageType, 1, nil);
+//    CGImageDestinationAddImage(myImageDest, image, options);
+//    CGImageDestinationFinalize(myImageDest);
+//    CFRelease(myImageDest);
+//    }
+    
+    private func writeCGImage( image: CGImageRef, toURL: NSURL, imageType: String, options: [NSString: NSObject] ) -> Void {
+        
+        if let myImageDest = CGImageDestinationCreateWithURL( toURL, imageType, 1, nil ) {
+            
+            CGImageDestinationAddImage( myImageDest, image, options )
+            CGImageDestinationFinalize( myImageDest )
+        }
+    }
+    
 }

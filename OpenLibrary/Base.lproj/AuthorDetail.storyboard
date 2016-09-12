@@ -206,37 +206,37 @@
         <scene sceneID="Ucg-00-1GV">
             <objects>
                 <tableViewController storyboardIdentifier="AuthorDetailWorks" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zwq-ib-FDJ" customClass="OLAuthorDetailWorksTableViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="74" sectionHeaderHeight="28" sectionFooterHeight="28" id="54q-gE-kUZ">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="101" sectionHeaderHeight="28" sectionFooterHeight="28" id="54q-gE-kUZ">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="436"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="authorWorksEntry" rowHeight="74" id="kYx-8i-9Gr" customClass="AuthorWorksTableViewCell" customModule="OpenLibrary" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="600" height="74"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="authorWorksEntry" rowHeight="101" id="kYx-8i-9Gr" customClass="AuthorWorksTableViewCell" customModule="OpenLibrary" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="600" height="101"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kYx-8i-9Gr" id="WT4-wB-rFR">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="73.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="100.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" translatesAutoresizingMaskIntoConstraints="NO" id="C7B-u3-GKW" userLabel="AuthorWorkCover">
-                                            <rect key="frame" x="8" y="8" width="56" height="56"/>
+                                            <rect key="frame" x="8" y="8" width="60" height="84"/>
                                             <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="56" id="JLw-JR-h8A"/>
-                                                <constraint firstAttribute="height" constant="56" id="SA9-6N-5WB"/>
+                                                <constraint firstAttribute="width" constant="60" id="JLw-JR-h8A"/>
+                                                <constraint firstAttribute="height" constant="84" id="SA9-6N-5WB"/>
                                             </constraints>
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xki-9b-wTh" userLabel="Summary View">
-                                            <rect key="frame" x="72" y="8" width="520" height="57.5"/>
+                                            <rect key="frame" x="76" y="8" width="516" height="84"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" text=" " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNg-qS-tdy">
-                                                    <rect key="frame" x="0.0" y="0.0" width="520" height="19.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="516" height="19.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="85c-bq-NUk">
-                                                    <rect key="frame" x="0.0" y="27.5" width="520" height="10"/>
+                                                    <rect key="frame" x="0.0" y="27.5" width="516" height="17"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -249,8 +249,7 @@
                                                 <constraint firstItem="VNg-qS-tdy" firstAttribute="top" secondItem="Xki-9b-wTh" secondAttribute="top" id="Lre-NL-Qpe"/>
                                                 <constraint firstItem="VNg-qS-tdy" firstAttribute="leading" secondItem="Xki-9b-wTh" secondAttribute="leading" id="VpR-nn-i0V"/>
                                                 <constraint firstItem="VNg-qS-tdy" firstAttribute="trailing" secondItem="Xki-9b-wTh" secondAttribute="trailing" id="mTo-IO-ZN7"/>
-                                                <constraint firstItem="85c-bq-NUk" firstAttribute="top" relation="greaterThanOrEqual" secondItem="VNg-qS-tdy" secondAttribute="bottom" constant="8" symbolic="YES" id="oK9-QM-t5Q"/>
-                                                <constraint firstAttribute="bottom" secondItem="85c-bq-NUk" secondAttribute="bottom" constant="20" id="xC5-Z9-iza"/>
+                                                <constraint firstItem="85c-bq-NUk" firstAttribute="top" secondItem="VNg-qS-tdy" secondAttribute="bottom" constant="8" symbolic="YES" id="oK9-QM-t5Q"/>
                                             </constraints>
                                         </view>
                                     </subviews>

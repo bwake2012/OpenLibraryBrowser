@@ -299,8 +299,9 @@ class OLQueryCoordinator: NSObject {
             return
         }
         
+        let size = cell.cellImage.bounds.size
         let imageGetOperation =
-            ImageGetOperation( numberID: imageID, imageKeyName: "id", localURL: url, size: "S", type: imageType ) {
+            ImageGetOperation( numberID: imageID, imageKeyName: "id", localURL: url, size: "M", type: imageType, displaySize: size ) {
                 
                 [weak self, weak cell] in
                 

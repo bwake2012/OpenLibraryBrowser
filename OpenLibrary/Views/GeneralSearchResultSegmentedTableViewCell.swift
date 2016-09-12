@@ -127,12 +127,14 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
 
             if r.hasImage {
                 
+                cellImage.contentMode = .TopLeft
                 cellImage.image = nil
                 let url = data?.localURL( "S" )
                 currentImageFile = url?.lastPathComponent
                 
             } else {
             
+                cellImage.contentMode = .ScaleAspectFit
                 clearCurrentImage()
             }
 

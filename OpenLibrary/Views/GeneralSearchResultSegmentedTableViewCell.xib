@@ -125,7 +125,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hje-ug-82W">
                                 <rect key="frame" x="8" y="8" width="60" height="85"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="261" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="961-book-32" translatesAutoresizingMaskIntoConstraints="NO" id="4Pe-cn-DGq" userLabel="TitleSearchCover">
+                                    <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="261" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="961-book-32" translatesAutoresizingMaskIntoConstraints="NO" id="4Pe-cn-DGq" userLabel="TitleSearchCover">
                                         <rect key="frame" x="0.0" y="0.0" width="60" height="84"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
