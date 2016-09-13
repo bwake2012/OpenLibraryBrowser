@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
+class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell {
 
     @IBOutlet weak private var zoomCover: UIButton!
     
@@ -25,9 +25,10 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
     
     @IBOutlet weak private var eBooksLabel: UILabel!
     @IBOutlet weak private var viewBooks: UIButton!
-
+    
     var tableVC: UIViewController?
 
+    var currentImageFile: String? = ""
     var isZoomEnabled = false
     var haveEditions = false
     var haveEbooks = false
@@ -103,8 +104,18 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
         viewBooks.enabled = selected && haveEbooks
         eBooksLabel.textColor = viewBooks.currentTitleColor
     }
+    
+    func clearCurrentImage() -> Void {
+        
+    }
+    
+    func imageSize() -> CGSize? {
+        
+        return zoomCover.bounds.size
+    }
 
-    override func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
+
+    func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
         
         assert( NSThread.isMainThread() )
         
@@ -127,15 +138,17 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
 
             if r.hasImage {
                 
-                cellImage.contentMode = .TopLeft
-                cellImage.image = nil
+                zoomCover.setImage( nil, forState: .Normal )
+                zoomCover.setImage( nil, forState: .Disabled )
+
                 let url = data?.localURL( "S" )
                 currentImageFile = url?.lastPathComponent
                 
             } else {
             
-                cellImage.contentMode = .ScaleAspectFit
-                clearCurrentImage()
+                let thumbNail = UIImage( named: "thumbnail-book" )
+                zoomCover.setImage( thumbNail, forState: .Normal )
+                zoomCover.setImage( thumbNail, forState: .Disabled )
             }
 
             eBooksLabel.text = "Electronic Editions " + ( haveEbooks ? "found" : "not found" )
@@ -144,5 +157,26 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell {
             saveCellHeights( tableView, key: key, isExpanded: false )
         }
     }
+    
+    func displayImage( localURL: NSURL, image: UIImage ) -> Bool {
+        
+        assert( NSThread.isMainThread() )
+        
+        let newImageFile = localURL.lastPathComponent
+        guard nil == currentImageFile || newImageFile == currentImageFile else { return true }
+        
+        zoomCover.setImage( image, forState: .Normal )
+        zoomCover.setImage( image, forState: .Disabled )
+        currentImageFile = newImageFile
+        
+        return true
+    }
+
+    
+    func transitionSourceRectView() -> UIImageView? {
+        
+        return zoomCover.imageView
+    }
+    
 
 }

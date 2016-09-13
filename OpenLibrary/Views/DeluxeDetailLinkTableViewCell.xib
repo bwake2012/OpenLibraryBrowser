@@ -29,6 +29,7 @@
                     <constraint firstAttribute="bottomMargin" secondItem="g5k-xY-vlh" secondAttribute="bottom" id="ogF-wN-EvQ"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="linkView" destination="g5k-xY-vlh" id="iT4-lF-yQk"/>
             </connections>

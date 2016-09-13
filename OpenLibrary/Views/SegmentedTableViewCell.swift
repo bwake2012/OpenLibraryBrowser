@@ -33,7 +33,7 @@ struct CellInfo {
     }
 }
 
-class SegmentedTableViewCell: OLTableViewCell {
+class SegmentedTableViewCell: UITableViewCell {
     
     struct CellHeights {
         

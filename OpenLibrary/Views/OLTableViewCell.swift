@@ -8,7 +8,15 @@
 
 import UIKit
 
-class OLTableViewCell: UITableViewCell {
+protocol OLCell: class {
+    
+    func displayImage( localURL: NSURL, image: UIImage ) -> Bool
+    func clearCurrentImage() -> Void
+    func configure( tableView: UITableView, key: String, data: OLManagedObject? ) -> Void
+    func imageSize() -> CGSize?
+}
+
+class OLTableViewCell: UITableViewCell, OLCell {
 
     var currentImageFile: String?
     
@@ -17,6 +25,11 @@ class OLTableViewCell: UITableViewCell {
     func transitionSourceRectView() -> UIImageView? {
         
         return cellImage
+    }
+    
+    func imageSize() -> CGSize? {
+        
+        return cellImage.bounds.size
     }
     
     func displayImage( localURL: NSURL, image: UIImage ) -> Bool {

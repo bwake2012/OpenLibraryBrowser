@@ -15,7 +15,7 @@ import PSOperations
 import BRYXBanner
 
 class OLQueryCoordinator: NSObject {
-    
+
     private static var previousNetStatus: Reachability.NetworkStatus = .ReachableViaWiFi
     
     private static var thumbnailCache = NSCache()
@@ -279,7 +279,7 @@ class OLQueryCoordinator: NSObject {
     private func displayThumbnailImage(
                     url: NSURL,
                     image: UIImage,
-                    cell: OLTableViewCell?
+                    cell: OLCell
                 ) {
         
         dispatch_async( dispatch_get_main_queue() ) {
@@ -293,15 +293,15 @@ class OLQueryCoordinator: NSObject {
         }
     }
     
-    private func enqueueImageFetch( url: NSURL, imageID: Int, imageType: String, cell: OLTableViewCell ) {
+    private func enqueueImageFetch( url: NSURL, imageID: Int, imageType: String, cell: OLCell ) {
         
         guard libraryIsReachable( keepQuiet: true ) else {
             return
         }
         
-        let size = cell.cellImage.bounds.size
+        let pointSize = cell.imageSize()
         let imageGetOperation =
-            ImageGetOperation( numberID: imageID, imageKeyName: "id", localURL: url, size: "M", type: imageType, displaySize: size ) {
+            ImageGetOperation( numberID: imageID, imageKeyName: "id", localURL: url, size: "M", type: imageType, displayPointSize: pointSize ) {
                 
                 [weak self, weak cell] in
                 
@@ -318,7 +318,7 @@ class OLQueryCoordinator: NSObject {
         operationQueue.addOperation( imageGetOperation )
     }
     
-    func displayThumbnail( object: OLManagedObject, cell: OLTableViewCell? ) -> Bool {
+    func displayThumbnail( object: OLManagedObject, cell: OLCell? ) -> Bool {
         
         guard object.hasImage else {
             return false

@@ -17,15 +17,15 @@ class ImageDownloadOperation: GroupOperation {
     let localImageURL: NSURL
     let remoteImageURL: NSURL
     
-    let displaySize: CGSize?
+    let displayPointSize: CGSize?
 
     // MARK: Initialization
     
     /// - parameter cacheFile: The file `NSURL` to which the earthquake feed will be downloaded.
-    init( stringID: String, imageKeyName: String, size: String, type: String, imageURL: NSURL, displaySize: CGSize? ) {
+    init( stringID: String, imageKeyName: String, size: String, type: String, imageURL: NSURL, displayPointSize: CGSize? ) {
 
         self.localImageURL = imageURL
-        self.displaySize = displaySize
+        self.displayPointSize = displayPointSize
 
         /*
             If this server is out of our control and does not offer a secure
@@ -96,7 +96,7 @@ class ImageDownloadOperation: GroupOperation {
 
             } else {
                 
-                if nil == displaySize {
+                if nil == displayPointSize {
                 
                     do {
                         
@@ -106,10 +106,10 @@ class ImageDownloadOperation: GroupOperation {
                         aggregateError(error)
                     }
 
-                } else if let displaySize = displaySize {
+                } else if let displayPointSize = displayPointSize {
                     
                     let options: [NSString: NSObject] = [
-                        kCGImageSourceThumbnailMaxPixelSize: max(displaySize.width, displaySize.height),
+                        kCGImageSourceThumbnailMaxPixelSize: max(displayPointSize.width, displayPointSize.height) * 2,
                         kCGImageSourceCreateThumbnailFromImageAlways: true,
                         kCGImageSourceTypeIdentifierHint: "public.jpeg"
                     ]

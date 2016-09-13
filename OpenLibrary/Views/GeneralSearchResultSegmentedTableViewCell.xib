@@ -18,14 +18,16 @@
                     <view clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="YxY-dk-PfV" userLabel="Segment 4">
                         <rect key="frame" x="0.0" y="182" width="600" height="40.5"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="260" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2OK-jG-BJB">
+                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="260" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2OK-jG-BJB">
                                 <rect key="frame" x="8" y="0.0" width="39.5" height="32"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="260" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="O8X-wH-yY8">
+                            <button contentMode="scaleToFill" verticalHuggingPriority="260" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="O8X-wH-yY8">
                                 <rect key="frame" x="8" y="0.0" width="39.5" height="32"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <connections>
                                     <action selector="viewBooksTapped:" destination="n1u-oY-SfK" eventType="touchUpInside" id="q4O-Vc-TDD"/>
@@ -47,14 +49,16 @@
                     <view clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Bk7-dL-34I" userLabel="Segment 3">
                         <rect key="frame" x="0.0" y="162" width="600" height="20"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" text="First Published:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nhp-Wx-y2A">
+                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" text="First Published:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nhp-Wx-y2A">
                                 <rect key="frame" x="8" y="0.0" width="112" height="20"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="8888" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M1c-rE-5dL" userLabel="Publish Date" customClass="MultilineLabelForTableViewCell" customModule="OpenLibrary" customModuleProvider="target">
+                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="8888" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M1c-rE-5dL" userLabel="Publish Date" customClass="MultilineLabelForTableViewCell" customModule="OpenLibrary" customModuleProvider="target">
                                 <rect key="frame" x="128" y="0.0" width="472" height="20"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -103,8 +107,9 @@
                     <view clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="BGe-Lv-tgt" userLabel="Segment 1">
                         <rect key="frame" x="0.0" y="102" width="600" height="32"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="eJe-sN-0NA">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="eJe-sN-0NA">
                                 <rect key="frame" x="8" y="0.0" width="30" height="32"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <connections>
                                     <action selector="viewWorkEditionsTapped:" destination="n1u-oY-SfK" eventType="touchUpInside" id="UCU-J0-bjJ"/>
@@ -119,38 +124,34 @@
                             <constraint firstAttribute="bottom" secondItem="eJe-sN-0NA" secondAttribute="bottom" id="gtT-HN-F5O"/>
                         </constraints>
                     </view>
-                    <view clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="urb-tw-FQ5" userLabel="Segment 0">
+                    <view clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="urb-tw-FQ5" userLabel="Segment 0">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="101"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hje-ug-82W">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hje-ug-82W">
                                 <rect key="frame" x="8" y="8" width="60" height="85"/>
                                 <subviews>
-                                    <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="261" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="961-book-32" translatesAutoresizingMaskIntoConstraints="NO" id="4Pe-cn-DGq" userLabel="TitleSearchCover">
-                                        <rect key="frame" x="0.0" y="0.0" width="60" height="84"/>
+                                    <button contentMode="TopLeft" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vb0-VM-Bhg">
+                                        <rect key="frame" x="0.0" y="0.0" width="60" height="85"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="84" id="WmQ-sp-PCW"/>
-                                            <constraint firstAttribute="width" constant="60" id="cON-pm-BxQ"/>
+                                            <constraint firstAttribute="width" constant="60" id="PbE-Lm-Rmr"/>
+                                            <constraint firstAttribute="height" constant="85" id="k7G-FK-u8l"/>
                                         </constraints>
-                                    </imageView>
+                                        <state key="normal" image="thumbnail-book"/>
+                                        <connections>
+                                            <action selector="zoomCoverTapped:" destination="n1u-oY-SfK" eventType="touchUpInside" id="csa-GR-eRq"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="4Pe-cn-DGq" secondAttribute="trailing" id="4XQ-CL-q37"/>
-                                    <constraint firstItem="4Pe-cn-DGq" firstAttribute="top" secondItem="hje-ug-82W" secondAttribute="top" id="A6g-Ll-H6s"/>
-                                    <constraint firstItem="4Pe-cn-DGq" firstAttribute="leading" secondItem="hje-ug-82W" secondAttribute="leading" id="L83-Vh-Z2u"/>
-                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="4Pe-cn-DGq" secondAttribute="bottom" priority="999" id="V73-VD-Qc2"/>
-                                    <constraint firstAttribute="height" priority="999" constant="84" id="lTv-M6-lS5"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="84" id="7BU-Vc-mZE"/>
+                                    <constraint firstItem="Vb0-VM-Bhg" firstAttribute="leading" secondItem="hje-ug-82W" secondAttribute="leading" id="afi-tE-icq"/>
+                                    <constraint firstItem="Vb0-VM-Bhg" firstAttribute="top" secondItem="hje-ug-82W" secondAttribute="top" id="gTq-Lq-PVy"/>
+                                    <constraint firstAttribute="width" constant="60" id="lTv-M6-lS5"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vb0-VM-Bhg">
-                                <rect key="frame" x="8" y="8" width="60" height="85"/>
-                                <connections>
-                                    <action selector="zoomCoverTapped:" destination="n1u-oY-SfK" eventType="touchUpInside" id="csa-GR-eRq"/>
-                                </connections>
-                            </button>
-                            <view contentMode="scaleToFill" verticalHuggingPriority="750" horizontalCompressionResistancePriority="760" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="4P9-JZ-NDH" userLabel="Summary">
+                            <view contentMode="scaleToFill" verticalHuggingPriority="750" horizontalCompressionResistancePriority="760" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4P9-JZ-NDH" userLabel="Summary">
                                 <rect key="frame" x="76" y="8" width="516" height="85"/>
                                 <subviews>
                                     <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Title" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3iW-fI-Yzj" userLabel="Title" customClass="MultilineLabelForTableViewCell" customModule="OpenLibrary" customModuleProvider="target">
@@ -167,14 +168,14 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="260" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Author Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Za-Sr-Ye5">
+                                    <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="260" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" text="Author Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Za-Sr-Ye5">
                                         <rect key="frame" x="0.0" y="53" width="100" height="32"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="260" verticalCompressionResistancePriority="1000" enabled="NO" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="yIe-k2-ACW">
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="260" verticalCompressionResistancePriority="1000" ambiguous="YES" enabled="NO" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="yIe-k2-ACW">
                                         <rect key="frame" x="0.0" y="53" width="100" height="32"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
@@ -205,14 +206,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottomMargin" secondItem="4P9-JZ-NDH" secondAttribute="bottom" id="3rV-Kh-y5O"/>
-                            <constraint firstItem="Vb0-VM-Bhg" firstAttribute="centerX" secondItem="hje-ug-82W" secondAttribute="centerX" id="5nD-Rq-JF7"/>
-                            <constraint firstItem="Vb0-VM-Bhg" firstAttribute="width" secondItem="hje-ug-82W" secondAttribute="width" id="6zA-KY-Bn1"/>
                             <constraint firstItem="4P9-JZ-NDH" firstAttribute="leading" secondItem="hje-ug-82W" secondAttribute="trailing" constant="8" symbolic="YES" id="7Cx-lZ-F4U"/>
                             <constraint firstItem="hje-ug-82W" firstAttribute="leading" secondItem="urb-tw-FQ5" secondAttribute="leadingMargin" id="8sC-QY-1bR"/>
                             <constraint firstItem="hje-ug-82W" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="urb-tw-FQ5" secondAttribute="bottomMargin" id="C10-ES-2GR"/>
-                            <constraint firstItem="Vb0-VM-Bhg" firstAttribute="height" secondItem="hje-ug-82W" secondAttribute="height" id="NEs-rG-0TC"/>
                             <constraint firstItem="hje-ug-82W" firstAttribute="height" relation="greaterThanOrEqual" secondItem="4P9-JZ-NDH" secondAttribute="height" id="O3y-w0-byc"/>
-                            <constraint firstItem="Vb0-VM-Bhg" firstAttribute="centerY" secondItem="hje-ug-82W" secondAttribute="centerY" id="Wq4-k1-cnE"/>
                             <constraint firstItem="hje-ug-82W" firstAttribute="top" secondItem="urb-tw-FQ5" secondAttribute="topMargin" id="jGB-b6-Dhx"/>
                             <constraint firstItem="4P9-JZ-NDH" firstAttribute="top" secondItem="urb-tw-FQ5" secondAttribute="topMargin" id="rTi-qr-p3D"/>
                             <constraint firstItem="4P9-JZ-NDH" firstAttribute="trailing" secondItem="urb-tw-FQ5" secondAttribute="trailingMargin" id="uO1-Sm-hh3"/>
@@ -241,7 +238,6 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="authorName" destination="8Za-Sr-Ye5" id="q7Z-Hj-7of"/>
-                <outlet property="cellImage" destination="4Pe-cn-DGq" id="zJT-nl-CQe"/>
                 <outlet property="eBooksLabel" destination="2OK-jG-BJB" id="ZLI-f6-zJQ"/>
                 <outlet property="firstPublished" destination="M1c-rE-5dL" id="ebe-Ws-RvA"/>
                 <outlet property="languageNames" destination="Zao-8a-FG1" id="hma-Fm-zH9"/>
@@ -264,6 +260,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="961-book-32" width="20" height="28"/>
+        <image name="thumbnail-book" width="60" height="84"/>
     </resources>
 </document>
