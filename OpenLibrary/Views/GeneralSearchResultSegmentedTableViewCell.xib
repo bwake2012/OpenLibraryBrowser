@@ -105,11 +105,18 @@
                         </constraints>
                     </view>
                     <view clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="BGe-Lv-tgt" userLabel="Segment 1">
-                        <rect key="frame" x="0.0" y="102" width="600" height="32"/>
+                        <rect key="frame" x="0.0" y="102" width="600" height="40"/>
                         <subviews>
-                            <button contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="eJe-sN-0NA">
-                                <rect key="frame" x="8" y="0.0" width="30" height="32"/>
+                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YEh-1l-Jpq">
+                                <rect key="frame" x="8" y="0.0" width="42" height="32"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="eJe-sN-0NA">
+                                <rect key="frame" x="8" y="0.0" width="42" height="32"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <connections>
                                     <action selector="viewWorkEditionsTapped:" destination="n1u-oY-SfK" eventType="touchUpInside" id="UCU-J0-bjJ"/>
@@ -118,16 +125,20 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="eJe-sN-0NA" firstAttribute="leading" secondItem="BGe-Lv-tgt" secondAttribute="leadingMargin" id="AKi-Js-tya"/>
-                            <constraint firstItem="eJe-sN-0NA" firstAttribute="top" secondItem="BGe-Lv-tgt" secondAttribute="top" id="FIl-IZ-cgT"/>
-                            <constraint firstItem="eJe-sN-0NA" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="BGe-Lv-tgt" secondAttribute="trailingMargin" id="Mhq-Zb-XWZ"/>
-                            <constraint firstAttribute="bottom" secondItem="eJe-sN-0NA" secondAttribute="bottom" id="gtT-HN-F5O"/>
+                            <constraint firstItem="eJe-sN-0NA" firstAttribute="width" secondItem="YEh-1l-Jpq" secondAttribute="width" id="3fl-ol-Jva"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="YEh-1l-Jpq" secondAttribute="bottom" id="Bnm-3a-7EN"/>
+                            <constraint firstItem="YEh-1l-Jpq" firstAttribute="leading" secondItem="BGe-Lv-tgt" secondAttribute="leadingMargin" id="SWe-GE-LE9"/>
+                            <constraint firstItem="YEh-1l-Jpq" firstAttribute="top" secondItem="BGe-Lv-tgt" secondAttribute="top" id="Xi7-oI-I12"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="YEh-1l-Jpq" secondAttribute="trailing" id="Xu6-3B-JT3"/>
+                            <constraint firstItem="eJe-sN-0NA" firstAttribute="height" secondItem="YEh-1l-Jpq" secondAttribute="height" id="ehG-sz-c2v"/>
+                            <constraint firstItem="eJe-sN-0NA" firstAttribute="centerY" secondItem="YEh-1l-Jpq" secondAttribute="centerY" id="uPm-58-Mzo"/>
+                            <constraint firstItem="eJe-sN-0NA" firstAttribute="centerX" secondItem="YEh-1l-Jpq" secondAttribute="centerX" id="wYH-21-vIt"/>
                         </constraints>
                     </view>
-                    <view clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="urb-tw-FQ5" userLabel="Segment 0">
+                    <view clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="urb-tw-FQ5" userLabel="Segment 0">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="101"/>
                         <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hje-ug-82W">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hje-ug-82W">
                                 <rect key="frame" x="8" y="8" width="60" height="85"/>
                                 <subviews>
                                     <button contentMode="TopLeft" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vb0-VM-Bhg">
@@ -151,7 +162,7 @@
                                     <constraint firstAttribute="width" constant="60" id="lTv-M6-lS5"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" verticalHuggingPriority="750" horizontalCompressionResistancePriority="760" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4P9-JZ-NDH" userLabel="Summary">
+                            <view contentMode="scaleToFill" verticalHuggingPriority="750" horizontalCompressionResistancePriority="760" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="4P9-JZ-NDH" userLabel="Summary">
                                 <rect key="frame" x="76" y="8" width="516" height="85"/>
                                 <subviews>
                                     <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Title" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3iW-fI-Yzj" userLabel="Title" customClass="MultilineLabelForTableViewCell" customModule="OpenLibrary" customModuleProvider="target">
@@ -168,14 +179,14 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="260" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" text="Author Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Za-Sr-Ye5">
+                                    <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="260" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Author Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Za-Sr-Ye5">
                                         <rect key="frame" x="0.0" y="53" width="100" height="32"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="260" verticalCompressionResistancePriority="1000" ambiguous="YES" enabled="NO" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="yIe-k2-ACW">
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="260" verticalCompressionResistancePriority="1000" enabled="NO" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="yIe-k2-ACW">
                                         <rect key="frame" x="0.0" y="53" width="100" height="32"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
@@ -197,7 +208,7 @@
                                     <constraint firstItem="8Za-Sr-Ye5" firstAttribute="bottom" secondItem="4P9-JZ-NDH" secondAttribute="bottom" id="MHu-ap-awk"/>
                                     <constraint firstItem="8Za-Sr-Ye5" firstAttribute="leading" secondItem="4P9-JZ-NDH" secondAttribute="leading" id="Pzc-VA-Mkf"/>
                                     <constraint firstAttribute="trailing" secondItem="3iW-fI-Yzj" secondAttribute="trailing" id="XBd-eV-5cs"/>
-                                    <constraint firstItem="8Za-Sr-Ye5" firstAttribute="top" relation="greaterThanOrEqual" secondItem="8zj-6u-Xpf" secondAttribute="bottom" constant="8" symbolic="YES" id="cq2-g7-FgZ"/>
+                                    <constraint firstItem="8Za-Sr-Ye5" firstAttribute="top" secondItem="8zj-6u-Xpf" secondAttribute="bottom" constant="8" symbolic="YES" id="cq2-g7-FgZ"/>
                                     <constraint firstItem="yIe-k2-ACW" firstAttribute="centerY" secondItem="8Za-Sr-Ye5" secondAttribute="centerY" id="kFX-N8-KVE"/>
                                     <constraint firstItem="3iW-fI-Yzj" firstAttribute="leading" secondItem="4P9-JZ-NDH" secondAttribute="leading" id="y0p-Nj-lyp"/>
                                 </constraints>
@@ -247,6 +258,7 @@
                 <outlet property="viewAuthorDetail" destination="yIe-k2-ACW" id="CjQ-sa-5O2"/>
                 <outlet property="viewBooks" destination="O8X-wH-yY8" id="olD-9P-ltm"/>
                 <outlet property="viewWorkDetail" destination="eJe-sN-0NA" id="wz8-bM-jSq"/>
+                <outlet property="workDetail" destination="YEh-1l-Jpq" id="wnS-IC-RUO"/>
                 <outlet property="zoomCover" destination="Vb0-VM-Bhg" id="ruo-LD-tzT"/>
                 <outletCollection property="segmentViews" destination="BGe-Lv-tgt" collectionClass="NSMutableArray" id="pDY-cj-ID1"/>
                 <outletCollection property="segmentViews" destination="xsr-YY-uiH" collectionClass="NSMutableArray" id="3nh-y5-VnN"/>

@@ -17,6 +17,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
     @IBOutlet weak private var authorName: UILabel!
     @IBOutlet weak private var viewAuthorDetail: UIButton!
     
+    @IBOutlet weak private var workDetail: UILabel!
     @IBOutlet weak private var viewWorkDetail: UIButton!
 
     @IBOutlet weak private var languageNames: UILabel!
@@ -74,7 +75,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
         subtitleText.text = ""
         authorName.text = ""
         
-        viewWorkDetail.setTitle( "", forState: .Normal )
+        workDetail.text = ""
         languageNames.text = ""
         
         firstPublished.text = ""
@@ -100,6 +101,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
         authorName.textColor = viewAuthorDetail.currentTitleColor
         
         viewWorkDetail.enabled = selected && haveEditions
+        workDetail.textColor = viewWorkDetail.currentTitleColor
         
         viewBooks.enabled = selected && haveEbooks
         eBooksLabel.textColor = viewBooks.currentTitleColor
@@ -127,7 +129,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
             subtitleText.text = r.subtitle
             authorName.text = r.author_name.joinWithSeparator( ", " )
             
-            viewWorkDetail.setTitle( "Editions: " + String( r.edition_count ), forState: .Normal )
+            workDetail.text = "Editions: " + String( r.edition_count )
             languageNames.text = r.language_names.joinWithSeparator( ", " )
             
             firstPublished.text = String( r.first_publish_year )
