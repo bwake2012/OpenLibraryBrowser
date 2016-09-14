@@ -67,7 +67,13 @@ class OLBookSortViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
+    override func viewDidAppear(animated: Bool) {
+        
+        super.viewDidAppear( animated )
+        
+        navigationController?.setNavigationBarHidden( false, animated: true )
+    }
+        
     func displaySortKeys() {
         
         for ( index, sortField ) in sortFields.enumerate() {

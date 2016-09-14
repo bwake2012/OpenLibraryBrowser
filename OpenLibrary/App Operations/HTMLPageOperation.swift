@@ -64,7 +64,7 @@ class HTMLPageOperation: Operation {
         
         if let htmlPageController = storyboard.instantiateViewControllerWithIdentifier( sceneID ) as? OLHTMLErrorViewController {
         
-            let theAttributedString = NSMutableAttributedString()
+            var theAttributedString = NSMutableAttributedString()
             do {
                 
                 let htmlOptions = [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType]
@@ -87,20 +87,15 @@ class HTMLPageOperation: Operation {
                     )
             }
             
-            theAttributedString.enumerateAttribute(
-                NSFontAttributeName,
-                inRange: NSRange( location: 0, length: theAttributedString.length ),
-                options: NSAttributedStringEnumerationOptions(rawValue: 0)
-            ) {
-                (value, range, stop) -> Void in
-                
-                let newFont = UIFont.preferredFontForTextStyle( UIFontTextStyleBody )
-                
-                theAttributedString.removeAttribute( NSFontAttributeName, range: range )
-                theAttributedString.addAttribute( NSFontAttributeName, value: newFont, range: range )
-            }
+            let string: String = theAttributedString.string
+            theAttributedString = NSMutableAttributedString( string: string )
+            
+            let newFont = UIFont.preferredFontForTextStyle( UIFontTextStyleBody )
+            let range = NSRange( location: 0, length: theAttributedString.length )
+            theAttributedString.addAttribute( NSFontAttributeName, value: newFont, range: range )
             
             htmlPageController.htmlString = theAttributedString
+            
             htmlPageController.nameString = operationName
             
             htmlPageController.urlString = operationError?.userInfo[hostURLKey] as? String ?? ""

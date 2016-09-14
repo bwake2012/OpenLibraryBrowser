@@ -148,12 +148,14 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
                 
             } else {
             
-                let thumbNail = UIImage( named: "thumbnail-book" )
+                currentImageFile = "thumbnail-book"
+                let thumbNail = UIImage( named: currentImageFile! )
                 zoomCover.setImage( thumbNail, forState: .Normal )
                 zoomCover.setImage( thumbNail, forState: .Disabled )
             }
 
-            eBooksLabel.text = "Electronic Editions " + ( haveEbooks ? "found" : "not found" )
+            let labelText = "Electronic Editions " + ( haveEbooks ? "found" : "not found" )
+            eBooksLabel.text = labelText
             updateButtons( selected )
             
             saveCellHeights( tableView, key: key, isExpanded: false )

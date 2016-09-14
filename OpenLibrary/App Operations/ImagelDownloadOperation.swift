@@ -108,8 +108,9 @@ class ImageDownloadOperation: GroupOperation {
 
                 } else if let displayPointSize = displayPointSize {
                     
+                    let maxPixels = max(displayPointSize.width, displayPointSize.height) * 2
                     let options: [NSString: NSObject] = [
-                        kCGImageSourceThumbnailMaxPixelSize: max(displayPointSize.width, displayPointSize.height) * 2,
+                        kCGImageSourceThumbnailMaxPixelSize: maxPixels,
                         kCGImageSourceCreateThumbnailFromImageAlways: true,
                         kCGImageSourceTypeIdentifierHint: "public.jpeg"
                     ]

@@ -17,6 +17,7 @@ import BRYXBanner
 class OLQueryCoordinator: NSObject {
 
     private static var previousNetStatus: Reachability.NetworkStatus = .ReachableViaWiFi
+    private static var previousDescription: String = ""
     
     private static var thumbnailCache = NSCache()
     private class CacheData {
@@ -60,6 +61,8 @@ class OLQueryCoordinator: NSObject {
                 
                 if let reachability = OLQueryCoordinator.reachability {
                     
+                    OLQueryCoordinator.previousDescription = reachability.description
+
                     reachability.whenReachable = reachable
                     reachability.whenUnreachable = unreachable
                     
@@ -387,30 +390,38 @@ class OLQueryCoordinator: NSObject {
 
     private func reachable( reachability: Reachability ) {
         
-        // this is called on a background thread, but UI updates must
-        // be on the main thread, like this:
-        dispatch_async(dispatch_get_main_queue()) {
-            let reachMessage = "Not Reachable"
-            let banner =
-                Banner(
-                    title: "Network Access",
-                    subtitle: "OpenLibrary " + reachMessage,
-                    image: UIImage(named: "778-thumbs-down-selected-white"),
-                    backgroundColor:
-                    UIColor(
-                        red:174.00/255.0,
-                        green:48.0/255.0,
-                        blue:51.5/255.0,
-                        alpha:1.000
-                    )
-            )
-            banner.dismissesOnTap = true
-            banner.show(duration: 3.0)
+        let currentDescription = reachability.description
+        if currentDescription != OLQueryCoordinator.previousDescription {
+            
+            OLQueryCoordinator.previousDescription = currentDescription
+        
+            // this is called on a background thread, but UI updates must
+            // be on the main thread, like this:
+            dispatch_async(dispatch_get_main_queue()) {
+                let reachMessage = "Reachable"
+                let banner =
+                    Banner(
+                        title: "Network Access",
+                        subtitle: "OpenLibrary " + reachMessage,
+                        image: UIImage(named: "777-thumbs-up-selected-white"),
+                        backgroundColor:
+                        UIColor(
+                            red:48.00/255.0,
+                            green:174.0/255.0,
+                            blue:51.5/255.0,
+                            alpha:1.000
+                        )
+                )
+                banner.dismissesOnTap = true
+                banner.show(duration: 3.0)
+            }
         }
     }
     
     private func unreachable( reachability: Reachability ) {
         
+        OLQueryCoordinator.previousDescription = reachability.description
+
         // this is called on a background thread, but UI updates must
         // be on the main thread, like this:
         dispatch_async(dispatch_get_main_queue()) {

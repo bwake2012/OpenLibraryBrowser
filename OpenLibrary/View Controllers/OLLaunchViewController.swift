@@ -12,13 +12,14 @@ class OLLaunchViewController: UIViewController {
     
     var enableClose: Bool = false
     
-    private let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+    private lazy var mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
     
     private lazy var navController: UINavigationController = {
         return self.mainStoryboard.instantiateViewControllerWithIdentifier("rootNavigationController")
             as! UINavigationController
     }()
     
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var copyrightLabel: UILabel!
     @IBOutlet var copyright: UIButton!
 
@@ -41,6 +42,10 @@ class OLLaunchViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear( animated )
+        
+        if enableClose {
+            activityIndicator.stopAnimating()
+        }
         
         let nonBreakingSpace = "\u{00a0}"
         copyright.enabled = enableClose

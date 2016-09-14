@@ -117,7 +117,14 @@ class OLBookSearchViewController: UIViewController {
             aboutButton.setTitle( "\(version) (\(build))", forState: .Normal )
         }
     }
-
+    
+    override func viewDidAppear(animated: Bool) {
+        
+        super.viewDidAppear( animated )
+        
+        navigationController?.setNavigationBarHidden( false, animated: true )
+    }
+    
     override func didReceiveMemoryWarning() {
         
         super.didReceiveMemoryWarning()
