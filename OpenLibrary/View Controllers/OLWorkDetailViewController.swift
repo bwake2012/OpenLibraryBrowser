@@ -70,6 +70,13 @@ class OLWorkDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidAppear(animated: Bool) {
+        
+        super.viewDidAppear( animated )
+        
+        navigationController?.setNavigationBarHidden( false, animated: true )
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if segue.identifier == "embedWorkEditions" {

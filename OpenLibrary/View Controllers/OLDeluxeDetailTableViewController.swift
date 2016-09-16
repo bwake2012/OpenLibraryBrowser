@@ -42,6 +42,13 @@ class OLDeluxeDetailTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidAppear(animated: Bool) {
+        
+        super.viewDidAppear( animated )
+        
+        navigationController?.setNavigationBarHidden( false, animated: true )
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         
         queryCoordinator?.cancelOperations()
