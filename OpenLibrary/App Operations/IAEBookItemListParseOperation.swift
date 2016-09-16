@@ -93,12 +93,30 @@ class IAEBookItemListParseOperation: Operation {
                     return
                 }
                 
+                guard let records = result["records"] as? [String: AnyObject] else {
+                    
+                    finishWithError( nil )
+                    return
+                }
+                
+                guard let firstRecord = records.values.first as? [String: AnyObject] else {
+                    
+                    finishWithError( nil )
+                    return
+                }
+                
+                guard let details = firstRecord["details"] as? [String: AnyObject] else {
+                    
+                    finishWithError( nil )
+                    return
+                }
+                
                 context.performBlock {
                     
                     var index = 0
                     for item in items {
                         
-                        let object = OLEBookItem.parseJSON( item, moc: self.context )
+                        let object = OLEBookItem.parseJSON( item, jsonDetail: details, moc: self.context )
                         if nil != object {
                             
 //                            print( "\(index): \(object.workKey) \(object.editionKey) \(object.eBookKey)" )

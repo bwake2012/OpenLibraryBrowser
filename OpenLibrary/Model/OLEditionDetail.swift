@@ -115,6 +115,56 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
 
         return newObject
     }
+    
+    class func saveProvisionalEdition( parsed parsed: OLEBookItem.ParsedFromJSON, moc: NSManagedObjectContext )  -> OLEditionDetail? {
+        
+        var newObject: OLEditionDetail?
+        
+        newObject = findObject( parsed.editionKey, entityName: entityName, moc: moc )
+        if nil == newObject {
+            
+            newObject =
+                NSEntityDescription.insertNewObjectForEntityForName(
+                    OLEditionDetail.entityName, inManagedObjectContext: moc
+                ) as? OLEditionDetail
+            
+            if let newObject = newObject {
+                
+                newObject.retrieval_date = NSDate()
+                newObject.provisional_date = NSDate()
+                
+                newObject.has_fulltext = 1
+                
+                newObject.key = parsed.editionKey
+                newObject.type = "/type/edition"
+                
+                newObject.work_key = parsed.workKey
+                
+                newObject.authors = parsed.author_keys
+                newObject.author_key = parsed.author_keys.first ?? ""
+                newObject.author_name_cache = parsed.author_names
+                
+                newObject.title = parsed.title
+                newObject.subtitle = parsed.subtitle
+                
+                if parsed.cover_id > 0 && 0 != newObject.covers.count {
+                    newObject.covers = [Int( parsed.cover_id )]
+                } else {
+                    newObject.covers = [Int]()
+                }
+                newObject.coversFound = !newObject.covers.isEmpty && 0 < newObject.covers[0]
+                
+                newObject.languages = parsed.languages
+                
+                newObject.publish_date = parsed.publish_date
+                
+                newObject.isbn_10 = parsed.isbn_10
+            }
+        }
+        
+        
+        return newObject
+    }
 
     class func saveProvisionalEdition( editionIndex: Int, parsed: OLGeneralSearchResult.ParsedFromJSON, moc: NSManagedObjectContext ) -> OLEditionDetail? {
         
@@ -139,6 +189,8 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                     
                     newObject.key = parsed.edition_key[editionIndex]
                     newObject.type = "/type/edition"
+                    
+                    newObject.work_key = parsed.key
                     
                     newObject.authors = parsed.author_key
                     newObject.author_key = parsed.author_key.first ?? ""

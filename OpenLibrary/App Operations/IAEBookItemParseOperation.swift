@@ -78,6 +78,24 @@ class IAEBookItemParseOperation: Operation {
             return
         }
         
+        guard let records = resultSet["records"] as? [String: AnyObject] else {
+            
+            finishWithError( nil )
+            return
+        }
+        
+        guard let firstRecord = records.values.first as? [String: AnyObject] else {
+            
+            finishWithError( nil )
+            return
+        }
+        
+        guard let details = firstRecord["details"] as? [String: AnyObject] else {
+            
+            finishWithError( nil )
+            return
+        }
+        
         guard 0 < items.count else {
             
             finishWithError( nil )
@@ -87,9 +105,9 @@ class IAEBookItemParseOperation: Operation {
         context.performBlock {
             
             var index = 0
-            for item in items {
+            for jsonItem in items {
                 
-                if OLEBookItem.parseJSON( item, moc: self.context ) != nil {
+                if OLEBookItem.parseJSON( jsonItem, jsonDetail: details, moc: self.context ) != nil {
                 
                     index += 1
                 }
