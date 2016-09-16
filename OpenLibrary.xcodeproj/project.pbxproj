@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C406E7561D8C75C9008E2379 /* NSBundle+AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C406E7551D8C75C9008E2379 /* NSBundle+AppVersion.swift */; };
 		C40A28631D71121A001ABC20 /* EditionDetailDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40A28601D711219001ABC20 /* EditionDetailDownloadOperation.swift */; };
 		C40A28641D71121A001ABC20 /* EditionDetailGetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40A28611D711219001ABC20 /* EditionDetailGetOperation.swift */; };
 		C40A28651D71121A001ABC20 /* EditionDetailParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40A28621D711219001ABC20 /* EditionDetailParseOperation.swift */; };
@@ -211,6 +212,7 @@
 /* Begin PBXFileReference section */
 		9BFE85C38BA4E6A6270EB33B /* Pods_OpenLibraryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenLibraryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3C677C979511952CF2D2ADC /* Pods-OpenLibrary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenLibrary.release.xcconfig"; path = "Pods/Target Support Files/Pods-OpenLibrary/Pods-OpenLibrary.release.xcconfig"; sourceTree = "<group>"; };
+		C406E7551D8C75C9008E2379 /* NSBundle+AppVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSBundle+AppVersion.swift"; path = "Utility/NSBundle+AppVersion.swift"; sourceTree = "<group>"; };
 		C40A28601D711219001ABC20 /* EditionDetailDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditionDetailDownloadOperation.swift; path = "App Operations/EditionDetailDownloadOperation.swift"; sourceTree = "<group>"; };
 		C40A28611D711219001ABC20 /* EditionDetailGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditionDetailGetOperation.swift; path = "App Operations/EditionDetailGetOperation.swift"; sourceTree = "<group>"; };
 		C40A28621D711219001ABC20 /* EditionDetailParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditionDetailParseOperation.swift; path = "App Operations/EditionDetailParseOperation.swift"; sourceTree = "<group>"; };
@@ -734,6 +736,7 @@
 				C4677E9E1C9CE35A0070CDFD /* UIImageView+DisplayFromURL.swift */,
 				C45EBC061D6E15D000ED1908 /* AssociatedObject.swift */,
 				C4B31B5F1D78A0B1002DA5CD /* UIApplication+topViewController.swift */,
+				C406E7551D8C75C9008E2379 /* NSBundle+AppVersion.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -1075,6 +1078,7 @@
 				C410821B1CBA961500319B83 /* TitleSearchResultsDownloadOperation.swift in Sources */,
 				C4EF99DE1CA3714900BEF2D3 /* WorkEditionsCoordinator.swift in Sources */,
 				C4188A2B1CE511D200D02E19 /* IAEBookItemGetOperation.swift in Sources */,
+				C406E7561D8C75C9008E2379 /* NSBundle+AppVersion.swift in Sources */,
 				C4E863951C99E951002C0E6B /* AuthorEditionsGetOperation.swift in Sources */,
 				C437DEA21CECEE45005CED1A /* GeneralSearchResultsCoordinator.swift in Sources */,
 				C4345E051CFFFC540091D4A0 /* IAEBookItemListDownloadOperation.swift in Sources */,

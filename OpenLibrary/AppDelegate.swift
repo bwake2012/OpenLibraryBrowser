@@ -18,15 +18,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: Properties
     var window: UIWindow?
     
+    private let storeName = "OpenLibraryBrowser"
+    
     private let operationQueue = OperationQueue()
     private var reachabilityOperation: OLReachabilityOperation?
     private var generalSearchResultsCoordinator: GeneralSearchResultsCoordinator?
 
     private var coreDataStack: CoreDataStack?
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func nukeObsoleteStore() -> Void {
+        
+        if let currentVersion = NSBundle.getAppVersionString() {
 
-        CoreDataStack.constructSQLiteStack( withModelName: "OpenLibraryBrowser" ) {
+            let storeFolder = NSFileManager().URLsForDirectory( .DocumentDirectory, inDomains: .UserDomainMask ).first!
+            let versionURL = storeFolder.URLByAppendingPathComponent( storeName + ".version" )
+            let previousVersion = NSKeyedUnarchiver.unarchiveObjectWithFile( versionURL.path! ) as? String
+            
+            if nil == previousVersion || currentVersion != previousVersion {
+                
+                let archiveURL = storeFolder.URLByAppendingPathComponent( storeName + ".sqlite" )
+                
+                do {
+                    /*
+                     If we already have a file at this location, just delete it.
+                     Also, swallow the error, because we don't really care about it.
+                     */
+                    try NSFileManager.defaultManager().removeItemAtURL( archiveURL )
+
+                    let searchStateURL = storeFolder.URLByAppendingPathComponent( "SearchState" )
+                    try NSFileManager.defaultManager().removeItemAtURL( searchStateURL )
+                }
+                catch {}
+
+                NSKeyedArchiver.archiveRootObject( currentVersion, toFile: versionURL.path! )
+            }
+        }
+    }
+    
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        nukeObsoleteStore()
+
+        CoreDataStack.constructSQLiteStack( withModelName: storeName ) {
             
             result in
             

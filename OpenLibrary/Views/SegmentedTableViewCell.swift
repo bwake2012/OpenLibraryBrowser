@@ -85,13 +85,6 @@ class SegmentedTableViewCell: UITableViewCell {
 
         super.awakeFromNib()
         
-        for view in segmentViews {
-            
-            view.removeFromSuperview()
-        }
-        
-        self.segmentViewTops = []
-
         self.segmentViews.sortInPlace{ $0.frame.origin.y < $1.frame.origin.y }
         self.segmentViewTops.sortInPlace{ $0.constant < $1.constant }
         
