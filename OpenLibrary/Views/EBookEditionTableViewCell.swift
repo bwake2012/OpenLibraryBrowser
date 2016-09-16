@@ -83,4 +83,12 @@ class EbookEditionTableViewCell: OLTableViewCell {
         
     }
     
+    override func prepareForReuse() {
+        
+        editionTitle.text = ""
+        editionSubTitle.text = ""
+        authorName.text = ""
+        
+        cellImage.image = nil
+    }
 }

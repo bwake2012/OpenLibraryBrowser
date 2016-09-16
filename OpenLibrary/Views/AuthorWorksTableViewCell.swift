@@ -23,14 +23,20 @@ class AuthorWorksTableViewCell: OLTableViewCell {
             workSubTitle.text = "\(entry.subtitle)"
 //            workSubTitle.text = "\(entry.index) \(entry.key) \(entry.subtitle)"
             
-            
         } else {
 
             workTitle.text = ""
             workSubTitle.text = ""
-
         }
 
         clearCurrentImage()
+    }
+    
+    override func prepareForReuse() {
+        
+        workTitle.text = ""
+        workSubTitle.text = ""
+        
+        cellImage.image = nil
     }
 }

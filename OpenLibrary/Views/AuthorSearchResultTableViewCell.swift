@@ -37,4 +37,12 @@ class AuthorSearchResultTableViewCell: OLTableViewCell {
         currentImageFile = nil
         cellImage.image = UIImage( named: "253-person.png" )
     }
+    
+    override func prepareForReuse() {
+        
+        authorName.text = ""
+        authorInfo.text = ""
+        
+        cellImage.image = nil
+    }
 }

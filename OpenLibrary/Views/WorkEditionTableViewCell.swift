@@ -73,4 +73,12 @@ class WorkEditionTableViewCell: OLTableViewCell {
         
     }
     
+    override func prepareForReuse() {
+        
+        editionTitle.text = ""
+        editionSubTitle.text = ""
+        editionPublishDate.text = ""
+
+        cellImage.image = nil
+    }
 }
