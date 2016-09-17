@@ -13,7 +13,7 @@ class AuthorWorksTableViewCell: OLTableViewCell {
     @IBOutlet weak var workTitle: UILabel!
     @IBOutlet weak var workSubTitle: UILabel!
 
-    override func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
+    override func configure( tableView: UITableView, indexPath: NSIndexPath, key: String, data: OLManagedObject? ) {
         
         assert( NSThread.isMainThread() )
         

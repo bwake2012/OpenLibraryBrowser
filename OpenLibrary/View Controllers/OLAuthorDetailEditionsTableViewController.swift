@@ -58,6 +58,7 @@ class OLAuthorDetailEditionsTableViewController: UITableViewController {
             
             cell.configure(
                     tableView,
+                    indexPath: indexPath, 
                     key: object.key,
                     data: object
                 )

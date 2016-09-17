@@ -12,7 +12,7 @@ protocol OLCell: class {
     
     func displayImage( localURL: NSURL, image: UIImage ) -> Bool
     func clearCurrentImage() -> Void
-    func configure( tableView: UITableView, key: String, data: OLManagedObject? ) -> Void
+    func configure( tableView: UITableView, indexPath: NSIndexPath, key: String, data: OLManagedObject? ) -> Void
     func imageSize() -> CGSize?
 }
 
@@ -51,7 +51,7 @@ class OLTableViewCell: UITableViewCell, OLCell {
         cellImage.image = UIImage( named: "961-book-32.png" )
     }
     
-    func configure( tableView: UITableView, key: String, data: OLManagedObject? ) -> Void {
+    func configure( tableView: UITableView, indexPath: NSIndexPath, key: String, data: OLManagedObject? ) -> Void {
         
     }
 }

@@ -13,7 +13,7 @@ class AuthorSearchResultTableViewCell: OLTableViewCell {
     @IBOutlet weak var authorName: UILabel!
     @IBOutlet weak var authorInfo: UILabel!
     
-    override func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
+    override func configure( tableView: UITableView, indexPath: NSIndexPath, key: String, data: OLManagedObject? ) {
         
         assert( NSThread.isMainThread() )
 

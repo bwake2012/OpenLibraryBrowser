@@ -110,7 +110,7 @@ class AuthorSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedR
         
         guard let result = objectAtIndexPath( indexPath ) else { return nil }
         
-        cell.configure( tableVC!.tableView, key: result.key, data: result )
+        cell.configure( tableVC!.tableView, indexPath: indexPath, key: result.key, data: result )
         
         let localURL = result.localURL( "S" )
         self.coreDataStack.mainQueueContext.saveContext()

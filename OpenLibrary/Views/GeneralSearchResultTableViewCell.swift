@@ -19,7 +19,7 @@ class GeneralSearchResultTableViewCell: OLTableViewCell {
         setSelected( true, animated: true )
     }
     
-    override func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
+    override func configure( tableView: UITableView, indexPath: NSIndexPath, key: String, data: OLManagedObject? ) {
         
         assert( NSThread.isMainThread() )
         

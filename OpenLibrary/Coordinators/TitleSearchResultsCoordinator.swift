@@ -112,7 +112,7 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedRe
         
         if let tableView = tableVC?.tableView {
             
-            cell.configure( tableView, key: object.key, data: object )
+            cell.configure( tableView, indexPath: indexPath, key: object.key, data: object )
             
             displayThumbnail( object, cell: cell )
         }

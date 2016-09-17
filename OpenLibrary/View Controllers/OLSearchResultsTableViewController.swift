@@ -129,7 +129,9 @@ class OLSearchResultsTableViewController: UIViewController {
     }
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        
+       
+        super.viewWillTransitionToSize( size, withTransitionCoordinator: coordinator )
+
         SegmentedTableViewCell.emptyCellHeights( tableView )
     }
     
@@ -281,7 +283,6 @@ class OLSearchResultsTableViewController: UIViewController {
         
         if segue.identifier == "beginBookSort" {
             
-//            SegmentedTableViewCell.emptyCellHeights( tableView )
             savedIndexPath = nil
             tableView.reloadData()
         }
@@ -294,6 +295,8 @@ class OLSearchResultsTableViewController: UIViewController {
         activityView?.startAnimating()
         sortButton?.enabled = false
         searchButton?.enabled = false
+        
+        SegmentedTableViewCell.emptyIndexPathToKeyLookup( tableView )
     }
     
     func coordinatorIsNoLongerBusy() -> Void {
@@ -301,6 +304,11 @@ class OLSearchResultsTableViewController: UIViewController {
         activityView?.stopAnimating()
         sortButton?.enabled = true
         searchButton?.enabled = true
+        
+        if let visibleIndexPaths = tableView.indexPathsForVisibleRows {
+            
+            tableView.reloadRowsAtIndexPaths( visibleIndexPaths, withRowAnimation: .Automatic )
+        }
     }
     
     // MARK: cell expansion and contraction
@@ -422,20 +430,22 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
     
     func tableView( tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath ) -> CGFloat {
         
+        assert( NSThread.isMainThread() )
+
         var height = SegmentedTableViewCell.estimatedCellHeight
 
-        if let cell = tableView.cellForRowAtIndexPath( indexPath ) as? SegmentedTableViewCell {
+        let cell = tableView.cellForRowAtIndexPath( indexPath ) as? SegmentedTableViewCell
+        if let cell = cell {
 
             height = cell.height( tableView )
-
-//            print( "heightForRowAtIndexPath \(indexPath.row) \(cell.key) \(height)" )
 
         } else {
             
             height = SegmentedTableViewCell.cachedHeightForRowAtIndexPath( tableView, indexPath: indexPath )
-//            print( "tableView cell \(indexPath.row) cached height \(height)" )
         }
 
+//        print( "heightForRowAtIndexPath: \(cell?.key ?? "nil") \(indexPath.row) \(height)" )
+        
         return height
     }
 
@@ -445,7 +455,7 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
             
             cell.selectedAnimation( tableView, key: cell.key )
 
-//            print( "willDisplayCell forRowAtIndexPath \(indexPath.row) \(cell.key)" )
+            print( "willDisplayCell forRowAtIndexPath \(indexPath.row) \(cell.key)" )
         }
         
     }
@@ -506,10 +516,8 @@ extension OLSearchResultsTableViewController: UITableViewDataSource {
             if let object = generalSearchCoordinator?.objectAtIndexPath( indexPath ) {
                 
                 expandingCell.tableVC = self
-                expandingCell.configure( tableView, key: object.key, data: object )
+                expandingCell.configure( tableView, indexPath: indexPath, key: object.key, data: object )
                 generalSearchCoordinator?.displayThumbnail( object, cell: expandingCell )
-                
-                SegmentedTableViewCell.keyForIndexPath( tableView, indexPath: indexPath, key: object.key )
             }
             
 //            print( "cellForRowAtIndexPath \(indexPath.row) \(expandingCell.key)" )

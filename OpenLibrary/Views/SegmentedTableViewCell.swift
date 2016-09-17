@@ -47,8 +47,8 @@ class SegmentedTableViewCell: UITableViewCell {
     static private var animating = false
     
     static private var minimumCellHeight: CGFloat = 0.0
-    static private var tableCellHeights = [UITableView: [String: CellHeights]]()
-    static private var tableCellKeys = [UITableView: [NSIndexPath: String]]()
+    static private var tableCellHeightsByKey = [UITableView: [String: CellHeights]]()
+    static private var tableCellKeysByIndexPath = [UITableView: [NSIndexPath: String]]()
 
     @IBOutlet weak private var segmentView0: UIView!
     
@@ -91,6 +91,13 @@ class SegmentedTableViewCell: UITableViewCell {
         self.reversedSegmentViews = self.segmentViews.reverse()
         self.reversedSegmentViewTops = self.segmentViewTops.reverse()
     }
+    
+    override func prepareForReuse() {
+        
+        super.prepareForReuse()
+        
+        key = ""
+    }
         
 //    @IBAction private func expandTapped( sender: UIButton, withEvent event: UIEvent ) {
 //        
@@ -130,7 +137,7 @@ class SegmentedTableViewCell: UITableViewCell {
     
     class func keyForIndexPath( tableView: UITableView, indexPath: NSIndexPath, key: String ) {
         
-        SegmentedTableViewCell.tableCellKeys[tableView]?[indexPath] = key
+        SegmentedTableViewCell.tableCellKeysByIndexPath[tableView]?[indexPath] = key
     }
     
     class func isExpanded( tableView: UITableView, key: String ) -> Bool {
@@ -147,7 +154,7 @@ class SegmentedTableViewCell: UITableViewCell {
         
         var height = SegmentedTableViewCell.estimatedCellHeight
         
-        if let cellHeights = SegmentedTableViewCell.tableCellHeights[tableView]![key] {
+        if let cellHeights = SegmentedTableViewCell.tableCellHeightsByKey[tableView]![key] {
             
             let isExpanded = SegmentedTableViewCell.isExpanded( tableView, key: key )
             
@@ -159,13 +166,18 @@ class SegmentedTableViewCell: UITableViewCell {
     
     class func emptyCellHeights( tableView: UITableView ) -> Void {
         
-        SegmentedTableViewCell.tableCellHeights[tableView] = [:]
-        SegmentedTableViewCell.tableCellKeys[tableView] = [:]
+        SegmentedTableViewCell.tableCellHeightsByKey[tableView] = [:]
+        SegmentedTableViewCell.tableCellKeysByIndexPath[tableView] = [:]
+    }
+    
+    class func emptyIndexPathToKeyLookup( tableView: UITableView ) -> Void {
+        
+        SegmentedTableViewCell.tableCellKeysByIndexPath[tableView] = [:]
     }
     
     class func setOpen( tableView: UITableView, indexPath: NSIndexPath ) {
         
-        if let key = SegmentedTableViewCell.tableCellKeys[tableView]?[indexPath] {
+        if let key = SegmentedTableViewCell.tableCellKeysByIndexPath[tableView]?[indexPath] {
             
             SegmentedTableViewCell.openCells[tableView] = key
         }
@@ -173,7 +185,7 @@ class SegmentedTableViewCell: UITableViewCell {
     
     class func setClosed( tableView: UITableView, indexPath: NSIndexPath ) {
         
-        if let key = SegmentedTableViewCell.tableCellKeys[tableView]?[indexPath] {
+        if let key = SegmentedTableViewCell.tableCellKeysByIndexPath[tableView]?[indexPath] {
             
             if key == SegmentedTableViewCell.openCells[tableView] {
                 
@@ -191,9 +203,9 @@ class SegmentedTableViewCell: UITableViewCell {
         
         var height = SegmentedTableViewCell.estimatedCellHeight
         
-        if let key = SegmentedTableViewCell.tableCellKeys[tableView]?[indexPath] {
+        if let key = SegmentedTableViewCell.tableCellKeysByIndexPath[tableView]?[indexPath] {
             
-            if let cellHeights = SegmentedTableViewCell.tableCellHeights[tableView]?[key] {
+            if let cellHeights = SegmentedTableViewCell.tableCellHeightsByKey[tableView]?[key] {
                 
                 let isExpanded = SegmentedTableViewCell.isExpanded( tableView, key: key )
                 
@@ -236,10 +248,18 @@ class SegmentedTableViewCell: UITableViewCell {
         
         var height = SegmentedTableViewCell.estimatedCellHeight
         
-        assert( nil != SegmentedTableViewCell.tableCellHeights[tableView] )
+        assert( nil != SegmentedTableViewCell.tableCellHeightsByKey[tableView] )
         
         let isExpanded = SegmentedTableViewCell.isExpanded( tableView, key: key )
-        if let cellHeights = SegmentedTableViewCell.tableCellHeights[tableView]?[key] {
+        
+        var cellHeights: CellHeights?
+        
+        if !key.isEmpty {
+
+            cellHeights = SegmentedTableViewCell.tableCellHeightsByKey[tableView]?[key]
+        }
+        
+        if let cellHeights = cellHeights {
             
             height = isExpanded ? cellHeights.open : cellHeights.closed
             
@@ -259,12 +279,20 @@ class SegmentedTableViewCell: UITableViewCell {
         let closedHeight = segmentZeroHeight()
         let openHeight = totalSegmentHeight()
         
-        let cellHeights = CellHeights( closed: closedHeight, open: openHeight )
-        SegmentedTableViewCell.tableCellHeights[tableView]![key] = cellHeights
+        let height = isExpanded ? openHeight : closedHeight
         
-        let height = isExpanded ? cellHeights.open : cellHeights.closed
+        if !key.isEmpty {
+
+            let cellHeights = CellHeights( closed: closedHeight, open: openHeight )
+            SegmentedTableViewCell.tableCellHeightsByKey[tableView]![key] = cellHeights
+        }
         
         return height
+    }
+    
+    func saveIndexPath( indexPath: NSIndexPath, inTableView: UITableView, forKey: String ) {
+        
+        GeneralSearchResultSegmentedTableViewCell.keyForIndexPath( inTableView, indexPath: indexPath, key: key )
     }
     
     func selectedAnimation( tableView: UITableView, key: String ) -> Bool {
@@ -278,7 +306,7 @@ class SegmentedTableViewCell: UITableViewCell {
 
     func selectedAnimation( tableView: UITableView, key: String, expandCell: Bool, animated: Bool, completion: (Void -> Void)? ) -> Bool {
         
-        assert( nil != SegmentedTableViewCell.tableCellHeights[tableView] )
+        assert( nil != SegmentedTableViewCell.tableCellHeightsByKey[tableView] )
 
         if expandCell {
             
@@ -318,7 +346,7 @@ class SegmentedTableViewCell: UITableViewCell {
                 open: totalSegmentHeight()
             )
         
-        SegmentedTableViewCell.tableCellHeights[tableView]![key] = cellHeights
+        SegmentedTableViewCell.tableCellHeightsByKey[tableView]![key] = cellHeights
         
 //        print( "\(indexPath.row) Segment0 top: \(segmentView0.frame.origin.y)")
         

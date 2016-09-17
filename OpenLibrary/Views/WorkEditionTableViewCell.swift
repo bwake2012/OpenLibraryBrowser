@@ -14,7 +14,7 @@ class WorkEditionTableViewCell: OLTableViewCell {
     @IBOutlet weak var editionSubTitle: UILabel!
     @IBOutlet weak var editionPublishDate: UILabel!
 
-    override func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
+    override func configure( tableView: UITableView, indexPath: NSIndexPath, key: String, data: OLManagedObject? ) {
         
         assert( NSThread.isMainThread() )
         

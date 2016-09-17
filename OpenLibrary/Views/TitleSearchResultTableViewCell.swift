@@ -13,7 +13,7 @@ class TitleSearchResultTableViewCell: OLTableViewCell {
     @IBOutlet weak var titleText: UILabel!
     @IBOutlet weak var subtitleText: UILabel!
     
-    override func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
+    override func configure( tableView: UITableView, indexPath: NSIndexPath, key: String, data: OLManagedObject? ) {
         
         assert( NSThread.isMainThread() )
         

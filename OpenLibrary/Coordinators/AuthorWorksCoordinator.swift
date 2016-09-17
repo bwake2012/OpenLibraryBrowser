@@ -96,7 +96,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         
         guard let workDetail = objectAtIndexPath( indexPath ) else { return nil }
         
-        cell.configure( authorWorksTableVC!.tableView, key: workDetail.key, data: workDetail )
+        cell.configure( authorWorksTableVC!.tableView, indexPath: indexPath, key: workDetail.key, data: workDetail )
         
 //        print( "work: \(result.title) has covers: \(!result.covers.isEmpty)" )
         

@@ -196,7 +196,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
 
         if let tableVC = tableVC {
             
-            cell.configure( tableVC.tableView, key: result.key, data: result )
+            cell.configure( tableVC.tableView, indexPath: indexPath, key: result.key, data: result )
             if !displayThumbnail( result, cell: cell ) {
                 
                 result.cover_i = 0

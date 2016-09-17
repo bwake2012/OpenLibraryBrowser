@@ -69,7 +69,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
     
     override func prepareForReuse() {
         
-        key = ""
+        super.prepareForReuse()
         
         titleText.text = ""
         subtitleText.text = ""
@@ -117,7 +117,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
     }
 
 
-    func configure( tableView: UITableView, key: String, data: OLManagedObject? ) {
+    func configure( tableView: UITableView, indexPath: NSIndexPath, key: String, data: OLManagedObject? ) {
         
         assert( NSThread.isMainThread() )
         
@@ -159,6 +159,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
             updateButtons( selected )
             
             saveCellHeights( tableView, key: key, isExpanded: false )
+            saveIndexPath( indexPath, inTableView: tableView, forKey: key )
         }
     }
     
