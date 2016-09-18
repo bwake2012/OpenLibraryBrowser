@@ -38,6 +38,13 @@ class OLEBookEditionsTableViewController: UITableViewController {
         queryCoordinator?.updateUI()
     }
     
+    override func viewDidAppear(animated: Bool) {
+    
+        super.viewDidAppear( animated )
+  
+        navigationController?.setNavigationBarHidden( false, animated: true )
+   }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
