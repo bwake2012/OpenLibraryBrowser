@@ -99,13 +99,22 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         
         let item = section.objects[indexPath.row]
         
-        guard let editionDetail = item.matchingEdition() else {
+        let editionDetail = item.matchingEdition()
+        if editionDetail?.isProvisional ?? true {
             
-            let getOperation = EditionDetailGetOperation( queryText: item.editionKey, coreDataStack: coreDataStack ) {}
+            let getOperation =
+                EditionDetailGetOperation(
+                        queryText: item.editionKey,
+                        coreDataStack: coreDataStack
+                    ) {
+                        
+                        dispatch_async( dispatch_get_main_queue() ) {
+                        
+                            item.matchingEdition()
+                        }
+                    }
             getOperation.userInitiated = false
             operationQueue.addOperation( getOperation )
-            
-            return item
         }
         
         return item
@@ -140,9 +149,14 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         
         guard let result = objectAtIndexPath( indexPath ) else { return nil }
         
-        if let matchingEdition = result.matchingEdition() {
+        if nil != result.editionDetail {
 
-            cell.configure( tableVC!.tableView, key: matchingEdition.key, eBookStatusText: result.status, data: matchingEdition )
+            cell.configure(
+                    tableVC!.tableView,
+                    key: result.editionKey,
+                    eBookStatusText: result.status,
+                    data: result.editionDetail
+                )
         
         } else {
             
