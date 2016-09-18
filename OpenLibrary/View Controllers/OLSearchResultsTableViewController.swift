@@ -304,11 +304,6 @@ class OLSearchResultsTableViewController: UIViewController {
         activityView?.stopAnimating()
         sortButton?.enabled = true
         searchButton?.enabled = true
-        
-        if let visibleIndexPaths = tableView.indexPathsForVisibleRows {
-            
-            tableView.reloadRowsAtIndexPaths( visibleIndexPaths, withRowAnimation: .Automatic )
-        }
     }
     
     // MARK: cell expansion and contraction
