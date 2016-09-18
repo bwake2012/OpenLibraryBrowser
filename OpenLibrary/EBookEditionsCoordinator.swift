@@ -99,7 +99,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         
         let item = section.objects[indexPath.row]
         
-        guard let editionDetail = item.matchingEdition() where !editionDetail.isProvisional else {
+        guard let editionDetail = item.matchingEdition() else {
             
             let getOperation = EditionDetailGetOperation( queryText: item.editionKey, coreDataStack: coreDataStack ) {}
             getOperation.userInitiated = false

@@ -450,7 +450,7 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
             
             cell.selectedAnimation( tableView, key: cell.key )
 
-            print( "willDisplayCell forRowAtIndexPath \(indexPath.row) \(cell.key)" )
+//            print( "willDisplayCell forRowAtIndexPath \(indexPath.row) \(cell.key)" )
         }
         
     }
