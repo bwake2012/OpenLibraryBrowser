@@ -96,7 +96,9 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
                 newObject.author_key = parsed.authors[0]
             }
             
-            newObject.index = Int64( index )
+            if !newObject.isProvisional {
+                newObject.index = Int64( index )
+            }
             newObject.retrieval_date = NSDate()
             newObject.provisional_date = nil
             

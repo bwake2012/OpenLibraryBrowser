@@ -35,9 +35,10 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         
         fetchRequest.predicate = NSPredicate( format: "work_key==%@", "\(self.workKey)" )
         
-        fetchRequest.sortDescriptors =
-            [NSSortDescriptor(key: "coversFound", ascending: false),
-             NSSortDescriptor(key: "index", ascending: true)]
+        fetchRequest.sortDescriptors = [
+//                 NSSortDescriptor(key: "coversFound", ascending: false),
+                 NSSortDescriptor(key: "index", ascending: true)
+            ]
         fetchRequest.fetchBatchSize = 100
         
         let frc = FetchedWorkEditionsController( fetchRequest: fetchRequest,
@@ -89,8 +90,24 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             assertionFailure( "row:\(indexPath.row) out of bounds" )
             return nil
         }
+        
+        let editionDetail = section.objects[indexPath.row]
 
-        return section.objects[indexPath.row]
+        if libraryIsReachable() {
+
+            if editionDetail.isProvisional {
+                
+                let operation =
+                    EditionDetailGetOperation(
+                            queryText: editionDetail.key,
+                            coreDataStack: coreDataStack ) {}
+                
+                    operation.userInitiated = false
+                    operationQueue.addOperation( operation )
+            }
+        }
+
+        return editionDetail
     }
     
     func displayToCell( cell: WorkEditionTableViewCell, indexPath: NSIndexPath ) -> OLEditionDetail? {

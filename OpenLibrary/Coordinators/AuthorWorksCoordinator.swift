@@ -38,7 +38,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         
         fetchRequest.sortDescriptors =
             [
-                NSSortDescriptor(key: "coversFound", ascending: false),
+//                NSSortDescriptor(key: "coversFound", ascending: false),
                 NSSortDescriptor(key: "index", ascending: true)
             ]
         fetchRequest.fetchBatchSize = 100
@@ -84,12 +84,31 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         }
         
         let section = sections[indexPath.section]
-        if indexPath.row >= section.objects.count {
-            return nil
-        } else {
+        
+        guard indexPath.row < section.objects.count else {
             
-            return section.objects[indexPath.row]
+            return nil
         }
+        
+        let object = section.objects[indexPath.row]
+        
+        if libraryIsReachable() {
+            
+            if object.isProvisional {
+                
+                let operation =
+                    WorkDetailGetOperation(
+                            queryText: object.key,
+                            coreDataStack: coreDataStack,
+                            resultHandler: { (objectID) in },
+                            completionHandler: {}
+                        )
+                operation.userInitiated = false
+                operationQueue.addOperation( operation )
+            }
+        }
+
+        return object
     }
     
     func displayToCell( cell: AuthorWorksTableViewCell, indexPath: NSIndexPath ) -> OLWorkDetail? {
@@ -146,14 +165,13 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
                             dispatch_async( dispatch_get_main_queue() ) {
 
                                 refreshControl?.endRefreshing()
-//                                strongSelf.updateUI()
-                            }
                             
-                            strongSelf.authorWorksTableVC?.coordinatorIsNoLongerBusy()
-                            
-                            strongSelf.updateFooter()
+                                strongSelf.authorWorksTableVC?.coordinatorIsNoLongerBusy()
+                                
+                                strongSelf.updateFooter()
 
-                            strongSelf.authorWorksGetOperation = nil
+                                strongSelf.authorWorksGetOperation = nil
+                            }
                         }
                     }
             
@@ -251,23 +269,16 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
             
             newQuery( authorKey, userInitiated: true, refreshControl: nil )
             
-        } else if let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {
-            
-            if detail.isProvisional {
-                
-                newQuery( authorKey, userInitiated: true, refreshControl: nil )
+        } else if nil != objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {
 
+             highWaterMark = controller.count
+            if highWaterMark % kPageSize != 0 {
+                numFound = highWaterMark
             } else {
-                
-                highWaterMark = controller.count
-                if highWaterMark % kPageSize != 0 {
-                    numFound = highWaterMark
-                } else {
-                    numFound = highWaterMark + kPageSize
-                }
-                
-                updateFooter()
+                numFound = highWaterMark + kPageSize
             }
+            
+            updateFooter()
         }
     }
     

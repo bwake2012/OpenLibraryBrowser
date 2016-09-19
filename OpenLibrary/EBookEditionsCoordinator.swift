@@ -102,19 +102,22 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         let editionDetail = item.matchingEdition()
         if editionDetail?.isProvisional ?? true {
             
-            let getOperation =
-                EditionDetailGetOperation(
-                        queryText: item.editionKey,
-                        coreDataStack: coreDataStack
-                    ) {
-                        
-                        dispatch_async( dispatch_get_main_queue() ) {
-                        
-                            item.matchingEdition()
+            if libraryIsReachable( tattle: true ) {
+                
+                let getOperation =
+                    EditionDetailGetOperation(
+                            queryText: item.editionKey,
+                            coreDataStack: coreDataStack
+                        ) {
+                            
+                            dispatch_async( dispatch_get_main_queue() ) {
+                            
+                                item.matchingEdition()
+                            }
                         }
-                    }
-            getOperation.userInitiated = false
-            operationQueue.addOperation( getOperation )
+                getOperation.userInitiated = false
+                operationQueue.addOperation( getOperation )
+            }
         }
         
         return item
@@ -181,6 +184,11 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
     
     
     func newQuery( userInitiated: Bool, refreshControl: UIRefreshControl? ) {
+        
+        guard libraryIsReachable( tattle: false ) else {
+            
+            return
+        }
         
         if nil == ebookItemGetOperation {
             

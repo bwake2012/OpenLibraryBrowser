@@ -231,7 +231,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         updateHeader( "" )
         if nil == generalSearchOperation {
             
-            updateFooter( "fetching books..." )
+            updateFooter( "Searching for Books..." )
 
             self.searchKeys = newSearchKeys
             if numberOfSections() > 0 {
@@ -247,9 +247,6 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             
             saveState()
             
-            cachedFetchedResultsController = nil
-            updateUI()
-
             generalSearchOperation =
                 enqueueSearch(
                         searchKeys,
@@ -259,6 +256,9 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
                         userInitiated: userInitiated,
                         refreshControl: refreshControl
                     )
+            
+            cachedFetchedResultsController = nil
+            updateUI()
         }
     }
     
@@ -273,7 +273,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         updateHeader( "" )
         if nil == self.generalSearchOperation && !searchKeys.isEmpty && highWaterMark < searchResults.numFound {
             
-            updateFooter( "fetching more books..." )
+            updateFooter( "Fetching More Books..." )
 
             nextOffset = highWaterMark + kPageSize
             
