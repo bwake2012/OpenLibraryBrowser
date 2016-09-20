@@ -50,7 +50,6 @@ class OLLaunchViewController: UIViewController {
         let nonBreakingSpace = "\u{00a0}"
         copyright.enabled = enableClose
         copyrightLabel.text = "Copyright\(nonBreakingSpace)2016 Cockleburr\(nonBreakingSpace)Software"
-        copyrightLabel.textColor = copyright.currentTitleColor
     }
 
     func loadAppRootViewController() {

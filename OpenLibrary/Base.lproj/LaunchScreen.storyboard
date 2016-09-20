@@ -32,14 +32,14 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aknowlegements:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jj4-bI-FFk">
+                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="Aknowlegements:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jj4-bI-FFk">
                                 <rect key="frame" x="16" y="109" width="136" height="19.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w0S-dm-8Jf">
+                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w0S-dm-8Jf">
                                 <rect key="frame" x="16" y="128" width="288" height="94.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">This application leans very heavily on the NSOperation based classes originally developed by Apple for their WWDC app and published with their WWDC 2015 sample Advanced NSOperations, as adapted by Pluralsight in their version named PSOperations.</string>
@@ -47,28 +47,35 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This application builds its Core Data Stack with the Big Nerd Ranch Core Data Stack. " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fTG-y6-sfr">
+                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="This application builds its Core Data Stack with the Big Nerd Ranch Core Data Stack. " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fTG-y6-sfr">
                                 <rect key="frame" x="16" y="230" width="288" height="30.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Network status monitored with ReachabilitySwift." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6cN-HD-Xeg">
-                                <rect key="frame" x="16" y="268.5" width="288" height="14.5"/>
+                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="Network status monitored with ReachabilitySwift." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6cN-HD-Xeg">
+                                <rect key="frame" x="16" y="268" width="288" height="14.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Icons by Glyphish from www.glyphish.com" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xFA-Eb-d1J">
-                                <rect key="frame" x="16" y="313.5" width="288" height="14.5"/>
+                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="MarkingBird converts MarkDown text to HTML for display." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0IG-yF-aiE" userLabel="MarkingBird">
+                                <rect key="frame" x="16" y="312.5" width="288" height="30.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="Icons by Glyphish from www.glyphish.com" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xFA-Eb-d1J">
+                                <rect key="frame" x="16" y="351" width="288" height="14.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright 2016 Cockleburr Software" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TtJ-SR-yKp">
+                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="Copyright 2016 Cockleburr Software" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TtJ-SR-yKp">
                                 <rect key="frame" x="16" y="440" width="288" height="19.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -79,8 +86,8 @@
                                 <rect key="frame" x="142" y="221" width="37" height="37"/>
                                 <color key="color" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
-                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MarkingBird converts MarkDown text to HTML for display." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0IG-yF-aiE" userLabel="MarkingBird">
-                                <rect key="frame" x="16" y="291" width="288" height="14.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="Network status changes reported with BRYXBanner." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="58i-bM-3sK">
+                                <rect key="frame" x="16" y="290" width="288" height="14.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -91,7 +98,6 @@
                         <constraints>
                             <constraint firstItem="IUS-Pl-kbh" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="5PO-Lu-Ex7"/>
                             <constraint firstItem="IUS-Pl-kbh" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="6Ia-Cp-4aJ"/>
-                            <constraint firstItem="0IG-yF-aiE" firstAttribute="top" secondItem="6cN-HD-Xeg" secondAttribute="bottom" constant="8" symbolic="YES" id="6ww-T8-72n"/>
                             <constraint firstItem="fTG-y6-sfr" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="88n-Qc-Zsx"/>
                             <constraint firstItem="Jj4-bI-FFk" firstAttribute="top" secondItem="iLc-sG-h4x" secondAttribute="bottom" constant="8" id="BWq-gk-SbY"/>
                             <constraint firstItem="xFA-Eb-d1J" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="CJx-aK-ATZ"/>
@@ -102,17 +108,22 @@
                             <constraint firstItem="0IG-yF-aiE" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="GW3-D9-JaI"/>
                             <constraint firstAttribute="trailingMargin" secondItem="iLc-sG-h4x" secondAttribute="trailing" id="JYs-oA-xXn"/>
                             <constraint firstItem="6cN-HD-Xeg" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="SSs-L6-5ua"/>
+                            <constraint firstItem="58i-bM-3sK" firstAttribute="top" secondItem="6cN-HD-Xeg" secondAttribute="bottom" constant="8" symbolic="YES" id="U9z-U8-sUp"/>
                             <constraint firstItem="0IG-yF-aiE" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="WqT-o8-00K"/>
                             <constraint firstAttribute="trailingMargin" secondItem="6cN-HD-Xeg" secondAttribute="trailing" id="XL5-hT-0ss"/>
+                            <constraint firstItem="xFA-Eb-d1J" firstAttribute="top" secondItem="0IG-yF-aiE" secondAttribute="bottom" constant="8" symbolic="YES" id="b0m-rF-FwD"/>
                             <constraint firstAttribute="leadingMargin" secondItem="Jj4-bI-FFk" secondAttribute="leading" id="eSP-XW-Meb"/>
                             <constraint firstAttribute="leadingMargin" secondItem="iLc-sG-h4x" secondAttribute="leading" id="ehK-PX-HEW"/>
                             <constraint firstItem="fTG-y6-sfr" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="f9r-tr-nuQ"/>
                             <constraint firstItem="k7l-GP-5vN" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="gLd-cv-rIm"/>
                             <constraint firstItem="k7l-GP-5vN" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailing" id="hXY-mv-3Gh"/>
                             <constraint firstAttribute="trailingMargin" secondItem="TtJ-SR-yKp" secondAttribute="trailing" id="ihI-Ic-8Xx"/>
-                            <constraint firstItem="xFA-Eb-d1J" firstAttribute="top" secondItem="0IG-yF-aiE" secondAttribute="bottom" constant="8" symbolic="YES" id="kVK-1d-c8c"/>
+                            <constraint firstItem="58i-bM-3sK" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="j92-Ay-U8U"/>
+                            <constraint firstItem="58i-bM-3sK" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="jrf-8b-MzA"/>
+                            <constraint firstItem="TtJ-SR-yKp" firstAttribute="top" relation="greaterThanOrEqual" secondItem="xFA-Eb-d1J" secondAttribute="bottom" constant="8" symbolic="YES" id="mCE-Ak-AyB"/>
                             <constraint firstItem="k7l-GP-5vN" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="8" id="p2G-P3-dVn"/>
                             <constraint firstItem="iLc-sG-h4x" firstAttribute="top" secondItem="k7l-GP-5vN" secondAttribute="bottom" id="rAB-9C-50c"/>
+                            <constraint firstItem="0IG-yF-aiE" firstAttribute="top" secondItem="58i-bM-3sK" secondAttribute="bottom" constant="8" symbolic="YES" id="sD8-cv-BiK"/>
                             <constraint firstItem="fTG-y6-sfr" firstAttribute="top" secondItem="w0S-dm-8Jf" secondAttribute="bottom" constant="8" id="waj-Y0-vfY"/>
                             <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="TtJ-SR-yKp" secondAttribute="bottom" constant="20" id="xTM-Tx-Wj2"/>
                             <constraint firstItem="6cN-HD-Xeg" firstAttribute="top" secondItem="fTG-y6-sfr" secondAttribute="bottom" constant="8" symbolic="YES" id="yTQ-MS-zoj"/>
