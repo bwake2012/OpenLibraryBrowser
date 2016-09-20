@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C402AA601D9194D30030E35F /* OpenLibraryBrowser.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C402AA5E1D9194D30030E35F /* OpenLibraryBrowser.xcdatamodeld */; };
 		C406E7561D8C75C9008E2379 /* NSBundle+AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C406E7551D8C75C9008E2379 /* NSBundle+AppVersion.swift */; };
 		C40A28631D71121A001ABC20 /* EditionDetailDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40A28601D711219001ABC20 /* EditionDetailDownloadOperation.swift */; };
 		C40A28641D71121A001ABC20 /* EditionDetailGetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40A28611D711219001ABC20 /* EditionDetailGetOperation.swift */; };
@@ -142,7 +143,6 @@
 		C4AB17131CDB83B800D6DF05 /* DeluxeDetailHeadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AB170F1CDB83B800D6DF05 /* DeluxeDetailHeadingTableViewCell.xib */; };
 		C4AB17151CDB83B800D6DF05 /* DeluxeDetailSubheadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AB17111CDB83B800D6DF05 /* DeluxeDetailSubheadingTableViewCell.xib */; };
 		C4AB17171CDB86B200D6DF05 /* DeluxeDetailLinkTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AB17161CDB86B200D6DF05 /* DeluxeDetailLinkTableViewCell.xib */; };
-		C4B2648E1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C4B2648C1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodeld */; };
 		C4B2AC1E1CE0F44F003E3E74 /* OLBookSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B2AC1D1CE0F44F003E3E74 /* OLBookSearchViewController.swift */; };
 		C4B31B5E1D789700002DA5CD /* OLLaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B31B5D1D789700002DA5CD /* OLLaunchViewController.swift */; };
 		C4B31B601D78A0B1002DA5CD /* UIApplication+topViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B31B5F1D78A0B1002DA5CD /* UIApplication+topViewController.swift */; };
@@ -212,6 +212,7 @@
 /* Begin PBXFileReference section */
 		9BFE85C38BA4E6A6270EB33B /* Pods_OpenLibraryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenLibraryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3C677C979511952CF2D2ADC /* Pods-OpenLibrary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenLibrary.release.xcconfig"; path = "Pods/Target Support Files/Pods-OpenLibrary/Pods-OpenLibrary.release.xcconfig"; sourceTree = "<group>"; };
+		C402AA5F1D9194D30030E35F /* OpenLibraryBrowser.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OpenLibraryBrowser.xcdatamodel; sourceTree = "<group>"; };
 		C406E7551D8C75C9008E2379 /* NSBundle+AppVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSBundle+AppVersion.swift"; path = "Utility/NSBundle+AppVersion.swift"; sourceTree = "<group>"; };
 		C40A28601D711219001ABC20 /* EditionDetailDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditionDetailDownloadOperation.swift; path = "App Operations/EditionDetailDownloadOperation.swift"; sourceTree = "<group>"; };
 		C40A28611D711219001ABC20 /* EditionDetailGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditionDetailGetOperation.swift; path = "App Operations/EditionDetailGetOperation.swift"; sourceTree = "<group>"; };
@@ -309,7 +310,6 @@
 		C46E7E581C861EE900D2ED51 /* AuthorNameSearchResultsParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorNameSearchResultsParseOperation.swift; path = "App Operations/AuthorNameSearchResultsParseOperation.swift"; sourceTree = "<group>"; };
 		C46E7E5A1C861EF500D2ED51 /* OLAuthorSearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLAuthorSearchResult.swift; path = Model/OLAuthorSearchResult.swift; sourceTree = "<group>"; };
 		C47B03BF1D5A352B001F323C /* SearchState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchState.swift; path = Coordinators/SearchState.swift; sourceTree = "<group>"; };
-		C47B03C11D5BAC79001F323C /* OpenLibraryBrowser02.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OpenLibraryBrowser02.xcdatamodel; sourceTree = "<group>"; };
 		C4817C1A1CA37DC300BDCD4D /* WorkDetailDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkDetailDownloadOperation.swift; path = "App Operations/WorkDetailDownloadOperation.swift"; sourceTree = "<group>"; };
 		C4817C1B1CA37DC300BDCD4D /* WorkDetailGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkDetailGetOperation.swift; path = "App Operations/WorkDetailGetOperation.swift"; sourceTree = "<group>"; };
 		C4817C201CA3817300BDCD4D /* WorkDetailParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkDetailParseOperation.swift; path = "App Operations/WorkDetailParseOperation.swift"; sourceTree = "<group>"; };
@@ -348,7 +348,6 @@
 		C4AB170F1CDB83B800D6DF05 /* DeluxeDetailHeadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeluxeDetailHeadingTableViewCell.xib; path = Views/DeluxeDetailHeadingTableViewCell.xib; sourceTree = "<group>"; };
 		C4AB17111CDB83B800D6DF05 /* DeluxeDetailSubheadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeluxeDetailSubheadingTableViewCell.xib; path = Views/DeluxeDetailSubheadingTableViewCell.xib; sourceTree = "<group>"; };
 		C4AB17161CDB86B200D6DF05 /* DeluxeDetailLinkTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeluxeDetailLinkTableViewCell.xib; path = Views/DeluxeDetailLinkTableViewCell.xib; sourceTree = "<group>"; };
-		C4B2648D1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OpenLibraryBrowser.xcdatamodel; sourceTree = "<group>"; };
 		C4B2AC1D1CE0F44F003E3E74 /* OLBookSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLBookSearchViewController.swift; path = "View Controllers/OLBookSearchViewController.swift"; sourceTree = "<group>"; };
 		C4B31B5D1D789700002DA5CD /* OLLaunchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLLaunchViewController.swift; path = "View Controllers/OLLaunchViewController.swift"; sourceTree = "<group>"; };
 		C4B31B5F1D78A0B1002DA5CD /* UIApplication+topViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIApplication+topViewController.swift"; path = "Utility/UIApplication+topViewController.swift"; sourceTree = "<group>"; };
@@ -570,6 +569,7 @@
 		C4E35E9E1C7E0C730015D187 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C402AA5E1D9194D30030E35F /* OpenLibraryBrowser.xcdatamodeld */,
 				C46E7E561C861E8500D2ED51 /* OLAuthorDetail.swift */,
 				C412FE581CC3D45A00EDB935 /* OLAuthorDetail+CoreDataProperties.swift */,
 				C46E7E5A1C861EF500D2ED51 /* OLAuthorSearchResult.swift */,
@@ -589,7 +589,6 @@
 				C412FE5F1CC3D47100EDB935 /* OLTitleSearchResult+CoreDataProperties.swift */,
 				C4E8638B1C974303002C0E6B /* OLWorkDetail.swift */,
 				C412FE5E1CC3D47100EDB935 /* OLWorkDetail+CoreDataProperties.swift */,
-				C4B2648C1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodeld */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -993,7 +992,6 @@
 				C468B9471CBD3E2800F3EAC3 /* AspectRatioImageView.swift in Sources */,
 				C48B8A3F1D47E22C00C29D00 /* OLBookSortViewController.swift in Sources */,
 				C46E7E511C861A7000D2ED51 /* AuthorNameSearchOperation.swift in Sources */,
-				C4B2648E1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodeld in Sources */,
 				C430E9C61CD27E1F007E15AD /* OLDataSource.swift in Sources */,
 				C4E35ECB1C80E2780015D187 /* SearchResults.swift in Sources */,
 				C40A28641D71121A001ABC20 /* EditionDetailGetOperation.swift in Sources */,
@@ -1026,6 +1024,7 @@
 				C4EF99D21CA1B04C00BEF2D3 /* AuthorDetailWithThumbGetOperation.swift in Sources */,
 				C4A722111D2DDD0500C4BCED /* SegmentedTableViewCell.swift in Sources */,
 				C4178EF91D67B1E400D274E8 /* SegueWithWindowShade.swift in Sources */,
+				C402AA601D9194D30030E35F /* OpenLibraryBrowser.xcdatamodeld in Sources */,
 				C4DA1F801C8A5AA700DFA4BF /* OLAuthorDetailWorksTableViewController.swift in Sources */,
 				C41082141CB9E13B00319B83 /* OLTitleSearchResult.swift in Sources */,
 				C45EBC031D6DFD2900ED1908 /* AlertOperation.swift in Sources */,
@@ -1403,13 +1402,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		C4B2648C1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodeld */ = {
+		C402AA5E1D9194D30030E35F /* OpenLibraryBrowser.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				C47B03C11D5BAC79001F323C /* OpenLibraryBrowser02.xcdatamodel */,
-				C4B2648D1CA45E4300DCA255 /* OpenLibraryBrowser.xcdatamodel */,
+				C402AA5F1D9194D30030E35F /* OpenLibraryBrowser.xcdatamodel */,
 			);
-			currentVersion = C47B03C11D5BAC79001F323C /* OpenLibraryBrowser02.xcdatamodel */;
+			currentVersion = C402AA5F1D9194D30030E35F /* OpenLibraryBrowser.xcdatamodel */;
 			name = OpenLibraryBrowser.xcdatamodeld;
 			path = Model/OpenLibraryBrowser.xcdatamodeld;
 			sourceTree = "<group>";

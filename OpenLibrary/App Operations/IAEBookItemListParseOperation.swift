@@ -119,7 +119,7 @@ class IAEBookItemListParseOperation: Operation {
                         let object = OLEBookItem.parseJSON( item, jsonDetail: details, moc: self.context )
                         if nil != object {
                             
-//                            print( "\(index): \(object.workKey) \(object.editionKey) \(object.eBookKey)" )
+//                            print( "\(index): \(object!.workKey) \(object!.editionKey) \(object!.eBookKey)" )
                         
                             index += 1
                         }

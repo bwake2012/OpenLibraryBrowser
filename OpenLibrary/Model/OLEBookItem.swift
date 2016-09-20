@@ -26,7 +26,7 @@ class OLEBookItem: OLManagedObject, CoreDataModelable {
         
         guard let parsed = ParsedFromJSON.fromJSON( jsonItem, details: jsonDetail ) else { return nil }
 
-        var newObject: OLEBookItem? = findObject( parsed.eBookKey, entityName: OLEBookItem.entityName, keyFieldName: "eBookKey", moc: moc )
+        var newObject: OLEBookItem? = findObject( parsed.editionKey, entityName: OLEBookItem.entityName, keyFieldName: "editionKey", moc: moc )
         if nil == newObject {
             newObject =
                 NSEntityDescription.insertNewObjectForEntityForName(

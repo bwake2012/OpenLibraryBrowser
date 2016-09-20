@@ -135,6 +135,23 @@ class OLSearchResultsTableViewController: UIViewController {
         SegmentedTableViewCell.emptyCellHeights( tableView )
     }
     
+    override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
+        
+        super.traitCollectionDidChange( previousTraitCollection )
+        
+        guard let visible = tableView.indexPathsForVisibleRows else { return }
+            
+        guard let indexPath = tableView.indexPathForSelectedRow else { return }
+        
+        guard visible.contains( indexPath ) else { return }
+        
+        guard let cell = tableView.cellForRowAtIndexPath( indexPath ) as? SegmentedTableViewCell else { return }
+        
+        guard !cell.key.isEmpty else { return }
+
+        expandCell( tableView, segmentedCell: cell, key: cell.key )
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         guard let generalSearchCoordinator = generalSearchCoordinator else {
@@ -461,7 +478,7 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
         
             expandCell( tableView, segmentedCell: cell, key: cell.key )
             
-            tableView.scrollToNearestSelectedRowAtScrollPosition( .Top, animated: true )
+//            tableView.scrollToNearestSelectedRowAtScrollPosition( .Top, animated: true )
 
 //            print( "didSelectRowAtIndexPath \(indexPath.row) \(cell.key)" )
         }
