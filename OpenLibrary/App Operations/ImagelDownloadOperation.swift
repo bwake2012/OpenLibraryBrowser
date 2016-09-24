@@ -117,40 +117,25 @@ class ImageDownloadOperation: GroupOperation {
                     if let imageSource = CGImageSourceCreateWithURL( downloadURL, options ) {
                         
                         if let scaledImage = CGImageSourceCreateThumbnailAtIndex( imageSource, 0, options ) {
-                        
-                            if let imageDest = CGImageDestinationCreateWithURL( self.localImageURL, "public.jpeg", 1, nil ) {
-                                
-                                let options: [NSString: NSObject] = [kCGImageDestinationLossyCompressionQuality: 1.0]
-                                
-                                CGImageDestinationAddImage( imageDest, scaledImage, options )
-                                CGImageDestinationFinalize( imageDest )
-                            }
+                            
+                            writeCGImage( scaledImage, toURL: self.localImageURL )
                         }
                     }
                 }
             }
-            
-            
         }
         else {
             // Do nothing, and the operation will automatically finish.
         }
     }
     
-//    - (void) writeCGImage: (CGImageRef) image toURL: (NSURL*) url withType: (CFStringRef) imageType andOptions: (CFDictionaryRef) options
-//    {
-//    CGImageDestinationRef myImageDest = CGImageDestinationCreateWithURL((CFURLRef)url, imageType, 1, nil);
-//    CGImageDestinationAddImage(myImageDest, image, options);
-//    CGImageDestinationFinalize(myImageDest);
-//    CFRelease(myImageDest);
-//    }
-    
-    private func writeCGImage( image: CGImageRef, toURL: NSURL, imageType: String, options: [NSString: NSObject] ) -> Void {
+    private func writeCGImage( image: CGImageRef, toURL: NSURL ) -> Void {
         
-        if let myImageDest = CGImageDestinationCreateWithURL( toURL, imageType, 1, nil ) {
+        if let imageDest = CGImageDestinationCreateWithURL( self.localImageURL, "public.jpeg", 1, nil ) {
             
-            CGImageDestinationAddImage( myImageDest, image, options )
-            CGImageDestinationFinalize( myImageDest )
+            let options: [NSString: NSObject] = [kCGImageDestinationLossyCompressionQuality: 1.0]
+            CGImageDestinationAddImage( imageDest, image, options )
+            CGImageDestinationFinalize( imageDest )
         }
     }
     
