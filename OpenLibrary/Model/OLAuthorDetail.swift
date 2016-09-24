@@ -177,12 +177,12 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
             var newData = [DeluxeData]()
             if !self.birth_date.isEmpty {
                 
-                newData.append( DeluxeData( type: .inline, caption: "Born:", value: self.birth_date ) )
+                newData.append( DeluxeData( type: .block, caption: "Born", value: self.birth_date ) )
             }
             
             if !self.death_date.isEmpty {
                 
-                newData.append( DeluxeData( type: .inline, caption: "Died:", value: self.death_date ) )
+                newData.append( DeluxeData( type: .block, caption: "Died", value: self.death_date ) )
             }
             
             deluxeData.append( newData )
@@ -259,7 +259,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
             newData.append(
                 DeluxeData(
                     type: .inline,
-                    caption: "Created:",
+                    caption: "Created",
                     value: dateFormatter.stringFromDate( created )
                 )
             )
@@ -270,32 +270,32 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
             newData.append(
                 DeluxeData(
                     type: .inline,
-                    caption: "Last Modified:",
+                    caption: "Last Modified",
                     value: dateFormatter.stringFromDate( last_modified )
                 )
             )
         }
         
         newData.append(
-            DeluxeData(type: .inline, caption: "Revision:", value: String( revision ) )
+            DeluxeData(type: .inline, caption: "Revision", value: String( revision ) )
         )
         
         newData.append(
-            DeluxeData(type: .inline, caption: "Latest Revision:", value: String( latest_revision ) )
+            DeluxeData(type: .inline, caption: "Latest Revision", value: String( latest_revision ) )
         )
         
         newData.append(
-            DeluxeData( type: .inline, caption: "Type:", value: type )
+            DeluxeData( type: .inline, caption: "Type", value: type )
         )
 
         newData.append(
-            DeluxeData( type: .inline, caption: "OLID:", value: key )
+            DeluxeData( type: .inline, caption: "OLID", value: key )
         )
         
         newData.append(
             DeluxeData(
                 type: .inline,
-                caption: "Retrieved:",
+                caption: "Retrieved",
                 value: dateFormatter.stringFromDate( retrieval_date )
             )
         )

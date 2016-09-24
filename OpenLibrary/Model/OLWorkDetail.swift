@@ -272,7 +272,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         
         deluxeData.append( [DeluxeData( type: .heading, caption: "Title", value: self.title )] )
         if !subtitle.isEmpty {
-            deluxeData[0].append( DeluxeData( type: .subheading, caption: "Subtitle:", value: self.subtitle ) )
+            deluxeData[0].append( DeluxeData( type: .subheading, caption: "Subtitle", value: self.subtitle ) )
         }
         
         if !author_names.isEmpty {
@@ -281,7 +281,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             deluxeData[0].append(
                 DeluxeData(
                         type: .heading,
-                        caption: "Author\(author_names.count > 1 ? "s" : ""):",
+                        caption: "Author\(author_names.count > 1 ? "s" : "")",
                         value: authorNames
                     )
                 )
@@ -312,7 +312,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
                 let deluxeItem =
                     DeluxeData(
                             type: "full access" == item.status ? .downloadBook : .borrowBook,
-                            caption: "eBook:",
+                            caption: "eBook",
                             value: item.status,
                             extraValue: item.itemURL
                         )
@@ -328,7 +328,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         
         if !self.first_publish_date.isEmpty {
             
-            deluxeData.append( [DeluxeData( type: .inline, caption: "First Published:", value: self.first_publish_date )] )
+            deluxeData.append( [DeluxeData( type: .block, caption: "First Published", value: self.first_publish_date )] )
         }
         
         if !self.work_description.isEmpty {
@@ -410,7 +410,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             newData.append(
                     DeluxeData(
                         type: .inline,
-                        caption: "Created:",
+                        caption: "Created",
                         value: dateFormatter.stringFromDate( created )
                     )
                 )
@@ -421,32 +421,32 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             newData.append(
                 DeluxeData(
                     type: .inline,
-                    caption: "Last Modified:",
+                    caption: "Last Modified",
                     value: dateFormatter.stringFromDate( last_modified )
                 )
             )
         }
         
         newData.append(
-            DeluxeData(type: .inline, caption: "Revision:", value: String( revision ) )
+            DeluxeData(type: .inline, caption: "Revision", value: String( revision ) )
         )
         
         newData.append(
-            DeluxeData(type: .inline, caption: "Latest Revision:", value: String( latest_revision ) )
+            DeluxeData(type: .inline, caption: "Latest Revision", value: String( latest_revision ) )
         )
         
         newData.append(
-            DeluxeData( type: .inline, caption: "Type:", value: type )
+            DeluxeData( type: .inline, caption: "Type", value: type )
         )
         
         newData.append(
-            DeluxeData( type: .inline, caption: "OLID:", value: key )
+            DeluxeData( type: .inline, caption: "OLID", value: key )
         )
         
         newData.append(
                 DeluxeData(
                     type: .inline,
-                    caption: "Retrieved:",
+                    caption: "Retrieved",
                     value: dateFormatter.stringFromDate( retrieval_date )
                 )
             )

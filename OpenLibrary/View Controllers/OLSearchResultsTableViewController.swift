@@ -58,16 +58,18 @@ class OLSearchResultsTableViewController: UIViewController {
         SegmentedTableViewCell.emptyCellHeights( tableView )
         
         // Do any additional setup after loading the view, typically from a nib.
-        let editImage   = UIImage(named: "rsw-sort-20x28")!
+        let sortImage   = UIImage(named: "rsw-sort-20x28")!
         let searchImage = UIImage(named: "708-search")!
         
         sortButton =
             UIBarButtonItem(
-                    image: editImage,
+                    image: sortImage,
                     style: .Plain,
                     target: self,
                     action: #selector( OLSearchResultsTableViewController.presentSearchResultsSort( _: ) )
                 )
+        sortButton?.tintColor = UIColor.whiteColor()
+        
         searchButton =
             UIBarButtonItem(
                     image: searchImage,
@@ -75,8 +77,10 @@ class OLSearchResultsTableViewController: UIViewController {
                     target: self,
                     action: #selector(OLSearchResultsTableViewController.presentGeneralSearch( _: ) )
                 )
+        searchButton?.tintColor = UIColor.whiteColor()
         
         navigationItem.rightBarButtonItems = [searchButton!, sortButton!]
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.whiteColor()
         
         self.tableView.estimatedRowHeight = SegmentedTableViewCell.estimatedCellHeight
 //        self.tableView.rowHeight = UITableViewAutomaticDimension

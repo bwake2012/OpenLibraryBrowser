@@ -14,8 +14,8 @@ import BNRCoreDataStack
 
 class OLWorkDetailViewController: UIViewController {
 
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var headerView: UIView!
+//    @IBOutlet weak var scrollView: UIScrollView!
+//    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var workTitle: UILabel!
     @IBOutlet weak var workSubtitle: UILabel!
     @IBOutlet weak var workAuthor: UILabel!
@@ -57,7 +57,7 @@ class OLWorkDetailViewController: UIViewController {
 //        let refreshControl = UIRefreshControl()
 //        refreshControl.addTarget( self, action: #selector( testRefresh ), forControlEvents: .ValueChanged)
 //        scrollView.addSubview( refreshControl )
-        scrollView.delegate = self
+//        scrollView.delegate = self
         
         assert( nil != queryCoordinator )
         
@@ -206,18 +206,18 @@ class OLWorkDetailViewController: UIViewController {
         
         view.layoutIfNeeded()
         
-        let viewHeight = self.view.bounds.height
+//        let viewHeight = self.view.bounds.height
         
-        let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
-        let navBarHeight = self.navigationController?.navigationBar.frame.height ?? 0
-        let minContentHeight = viewHeight - ( statusBarHeight + navBarHeight )
-        
-        let headerViewHeight = headerView.bounds.height
-        
-        if headerViewHeight > minContentHeight / 2 {
-            
-            containerViewHeightConstraint.constant = minContentHeight
-        }
+//        let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
+//        let navBarHeight = self.navigationController?.navigationBar.frame.height ?? 0
+//        let minContentHeight = viewHeight - ( statusBarHeight + navBarHeight )
+//        
+//        let headerViewHeight = headerView.bounds.height
+//        
+//        if headerViewHeight > minContentHeight / 2 {
+//            
+//            containerViewHeightConstraint.constant = minContentHeight
+//        }
         
     }
     

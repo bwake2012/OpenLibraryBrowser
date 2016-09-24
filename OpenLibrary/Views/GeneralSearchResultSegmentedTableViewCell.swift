@@ -58,8 +58,10 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
         
         super.awakeFromNib()
         
-        self.layoutMargins = UIEdgeInsetsZero
-        self.preservesSuperviewLayoutMargins = false
+        layoutMargins = UIEdgeInsetsZero
+        preservesSuperviewLayoutMargins = false
+        
+//        zoomCover.imageView?.tintColor = UIColor( red: 0x00, green: 0x7A, blue: 0xFF, alpha: 1.0 )
     }
     
     override func setSelected(selected: Bool, animated: Bool) {

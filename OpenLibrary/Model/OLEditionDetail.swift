@@ -402,13 +402,13 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         
         deluxeData.append( [DeluxeData( type: .heading, caption: "Title", value: self.title )] )
         if !subtitle.isEmpty {
-            deluxeData[0].append( DeluxeData( type: .subheading, caption: "Subtitle:", value: self.subtitle ) )
+            deluxeData[0].append( DeluxeData( type: .subheading, caption: "Subtitle", value: self.subtitle ) )
         }
         
         if !by_statement.isEmpty {
 
             deluxeData[0].append(
-                    DeluxeData( type: .heading, caption: "By Statement:", value: self.by_statement )
+                    DeluxeData( type: .heading, caption: "By Statement", value: self.by_statement )
                 )
 
         } else {
@@ -419,7 +419,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                 deluxeData[0].append(
                     DeluxeData(
                         type: .heading,
-                        caption: "Author\(author_names.count > 1 ? "s" : ""):",
+                        caption: "Author\(author_names.count > 1 ? "s" : "")",
                         value: authorNames
                     )
                 )
@@ -450,7 +450,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                 let deluxeItem =
                         DeluxeData(
                                 type: "full access" == item.status ? .downloadBook : .borrowBook,
-                                caption: "eBook:",
+                                caption: "eBook",
                                 value: item.status,
                                 extraValue: item.itemURL
                             )
@@ -468,17 +468,17 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         if !self.publishers.isEmpty {
             
             let display = publishers.joinWithSeparator( ", " )
-            newData.append( DeluxeData( type: .body, caption: "Publishers:", value: display ) )
+            newData.append( DeluxeData( type: .body, caption: "Publishers", value: display ) )
         }
         
         if !self.publish_date.isEmpty {
             
-            newData.append( DeluxeData( type: .inline, caption: "Published:", value: self.publish_date ) )
+            newData.append( DeluxeData( type: .block, caption: "Published", value: self.publish_date ) )
         }
         
         if !self.copyright_date.isEmpty {
             
-            newData.append( DeluxeData( type: .inline, caption: "Copyright:", value: self.copyright_date ) )
+            newData.append( DeluxeData( type: .block, caption: "Copyright", value: self.copyright_date ) )
         }
         
         if !language_names.isEmpty {
@@ -486,8 +486,8 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
             let languageNames = language_names.joinWithSeparator( ", " )
             newData.append(
                 DeluxeData(
-                    type: .inline,
-                    caption: "Language\(author_names.count > 1 ? "s" : ""):",
+                    type: .block,
+                    caption: "Language\(author_names.count > 1 ? "s" : "")",
                     value: languageNames
                 )
             )
@@ -500,12 +500,12 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         newData = [DeluxeData]()
         if !self.physical_format.isEmpty {
             
-            newData.append( DeluxeData( type: .inline, caption: "Format:", value: self.physical_format ) )
+            newData.append( DeluxeData( type: .block, caption: "Format", value: self.physical_format ) )
         }
         
         if number_of_pages > 0 {
             
-            newData.append( DeluxeData( type: .inline, caption: "Pages: ", value: "\(number_of_pages)" ) )
+            newData.append( DeluxeData( type: .block, caption: "Pages: ", value: "\(number_of_pages)" ) )
         }
         else if !self.pagination.isEmpty {
             
@@ -514,12 +514,12 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         
         if !self.physical_dimensions.isEmpty {
             
-            newData.append( DeluxeData( type: .inline, caption: "Dimensions:", value: self.physical_dimensions ) )
+            newData.append( DeluxeData( type: .block, caption: "Dimensions", value: self.physical_dimensions ) )
         }
         
         if !self.weight.isEmpty {
             
-            newData.append( DeluxeData( type: .inline, caption: "Weight:", value: self.weight ) )
+            newData.append( DeluxeData( type: .block, caption: "Weight", value: self.weight ) )
         }
         
         if !newData.isEmpty {
@@ -603,7 +603,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
             newData.append(
                 DeluxeData(
                     type: .inline,
-                    caption: "Created:",
+                    caption: "Created",
                     value: dateFormatter.stringFromDate( created )
                 )
             )
@@ -614,32 +614,32 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
             newData.append(
                 DeluxeData(
                     type: .inline,
-                    caption: "Last Modified:",
+                    caption: "Last Modified",
                     value: dateFormatter.stringFromDate( last_modified )
                 )
             )
         }
         
         newData.append(
-            DeluxeData(type: .inline, caption: "Revision:", value: String( revision ) )
+            DeluxeData(type: .inline, caption: "Revision", value: String( revision ) )
         )
         
         newData.append(
-            DeluxeData(type: .inline, caption: "Latest Revision:", value: String( latest_revision ) )
+            DeluxeData(type: .inline, caption: "Latest Revision", value: String( latest_revision ) )
         )
         
         newData.append(
-            DeluxeData( type: .inline, caption: "Type:", value: type )
+            DeluxeData( type: .inline, caption: "Type", value: type )
         )
         
         newData.append(
-            DeluxeData( type: .inline, caption: "OLID:", value: key )
+            DeluxeData( type: .inline, caption: "OLID", value: key )
         )
         
         newData.append(
             DeluxeData(
                 type: .inline,
-                caption: "Retrieved:",
+                caption: "Retrieved",
                 value: dateFormatter.stringFromDate( retrieval_date )
             )
         )

@@ -148,6 +148,7 @@
                                             <constraint firstAttribute="width" constant="60" id="PbE-Lm-Rmr"/>
                                             <constraint firstAttribute="height" constant="84" id="k7G-FK-u8l" userLabel="height = 84"/>
                                         </constraints>
+                                        <color key="tintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="thumbnail-book"/>
                                         <connections>
                                             <action selector="zoomCoverTapped:" destination="n1u-oY-SfK" eventType="touchUpInside" id="csa-GR-eRq"/>

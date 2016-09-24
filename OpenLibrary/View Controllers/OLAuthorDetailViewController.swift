@@ -18,6 +18,8 @@ class OLAuthorDetailViewController: UIViewController {
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var authorName: UILabel!
+    @IBOutlet weak var birthDate: UILabel!
+    @IBOutlet weak var deathDate: UILabel!
     @IBOutlet weak var authorPhoto: AspectRatioImageView!
     @IBOutlet weak var displayLargePhoto: UIButton!
     @IBOutlet weak var displayDeluxeDetail: UIButton!
@@ -135,6 +137,11 @@ class OLAuthorDetailViewController: UIViewController {
         authorName.textColor = displayDeluxeDetail.currentTitleColor
         
         self.authorName.text = authorDetail.name
+        
+        self.birthDate.text =
+            authorDetail.birth_date.isEmpty ? "" : "Born: " + authorDetail.birth_date.stringWithNonBreakingSpaces()
+        self.deathDate.text =
+            authorDetail.death_date.isEmpty ? "" : "Died: " + authorDetail.death_date.stringWithNonBreakingSpaces()
         
         if !authorDetail.hasImage && nil == authorDetail.provisional_date {
             self.authorPhoto.image = nil
