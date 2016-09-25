@@ -124,30 +124,32 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     
     func updateUI( authorDetail: OLAuthorDetail ) {
         
-        assert( NSThread.isMainThread() )
         if let authorDetailVC = authorDetailVC {
-            
-            authorDetailVC.updateUI( authorDetail )
-            
-            if authorDetail.hasImage {
                 
-                let mediumURL = authorDetail.localURL( "M" )
-                if !(authorDetailVC.displayImage( mediumURL )) {
+            dispatch_async( dispatch_get_main_queue() ) {
+            
+                authorDetailVC.updateUI( authorDetail )
+                
+                if authorDetail.hasImage {
+                    
+                    let mediumURL = authorDetail.localURL( "M" )
+                    if !(authorDetailVC.displayImage( mediumURL )) {
 
-                    let url = mediumURL
-                    let imageGetOperation =
-                        ImageGetOperation( numberID: authorDetail.firstImageID, imageKeyName: "ID", localURL: url, size: "M", type: authorDetail.imageType ) {
-                            
-                                dispatch_async( dispatch_get_main_queue() ) {
-                                    
-                                    authorDetailVC.displayImage( url )
+                        let url = mediumURL
+                        let imageGetOperation =
+                            ImageGetOperation( numberID: authorDetail.firstImageID, imageKeyName: "ID", localURL: url, size: "M", type: authorDetail.imageType ) {
+                                
+                                    dispatch_async( dispatch_get_main_queue() ) {
+                                        
+                                        authorDetailVC.displayImage( url )
+                                    }
                                 }
-                            }
-                    
-                    imageGetOperation.userInitiated = true
-                    operationQueue.addOperation( imageGetOperation )
-                    
-                    authorDetailVC.displayImage( authorDetail.localURL( "S" ) )
+                        
+                        imageGetOperation.userInitiated = true
+                        self.operationQueue.addOperation( imageGetOperation )
+                        
+                        authorDetailVC.displayImage( authorDetail.localURL( "S" ) )
+                    }
                 }
             }
         }

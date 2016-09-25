@@ -14,9 +14,6 @@ import BNRCoreDataStack
 
 class OLAuthorDetailViewController: UIViewController {
 
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var authorName: UILabel!
     @IBOutlet weak var birthDate: UILabel!
     @IBOutlet weak var deathDate: UILabel!
@@ -24,7 +21,6 @@ class OLAuthorDetailViewController: UIViewController {
     @IBOutlet weak var displayLargePhoto: UIButton!
     @IBOutlet weak var displayDeluxeDetail: UIButton!
     @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var containerViewHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var activityView: UIActivityIndicatorView!
 
@@ -38,20 +34,14 @@ class OLAuthorDetailViewController: UIViewController {
     override func viewDidLoad() {
 
         super.viewDidLoad()
-        
-//        let refreshControl = UIRefreshControl()
-//        refreshControl.addTarget( self, action: #selector( testRefresh ), forControlEvents: .ValueChanged)
-//        scrollView.addSubview( refreshControl )
 
-        scrollView.delegate = self
-        
         assert( nil != queryCoordinator )
-        
+
         queryCoordinator?.updateUI()
     }
     
     override func didReceiveMemoryWarning() {
-        
+
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
@@ -95,17 +85,6 @@ class OLAuthorDetailViewController: UIViewController {
             }
         }
     }
-    
-
-//    // MARK: UIRefreshControl
-//    func testRefresh( refreshControl: UIRefreshControl ) {
-//        
-//        refreshControl.attributedTitle = NSAttributedString( string: "Refreshing data..." )
-//        
-//        queryCoordinator?.refreshQuery( nil )
-//        authorWorksVC?.refreshQuery( refreshControl )
-//    }
-    
 
     // MARK: Utility
     func displayImage( localURL: NSURL ) -> Bool {
@@ -118,7 +97,7 @@ class OLAuthorDetailViewController: UIViewController {
                 
                 authorPhoto.image = image
                 
-                headerView.layoutIfNeeded()
+                authorPhoto.superview?.layoutIfNeeded()
                 return true
             }
         }
@@ -156,13 +135,6 @@ class OLAuthorDetailViewController: UIViewController {
         var minContentHeight = viewHeight - UIApplication.sharedApplication().statusBarFrame.height
         
         minContentHeight -= navigationController?.navigationBar.frame.height ?? 0
-        
-        let headerViewHeight = headerView.bounds.height
-        
-        if headerViewHeight > minContentHeight / 2 {
-            
-            containerViewHeightConstraint.constant = minContentHeight
-        }
      }
     
     // MARK: query in progress
