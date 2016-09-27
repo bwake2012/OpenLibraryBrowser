@@ -14,18 +14,19 @@ import BNRCoreDataStack
 
 class OLWorkDetailViewController: UIViewController {
 
-//    @IBOutlet weak var scrollView: UIScrollView!
-//    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var summaryView: UIView!
+    @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var workTitle: UILabel!
     @IBOutlet weak var workSubtitle: UILabel!
     @IBOutlet weak var workAuthor: UILabel!
     @IBOutlet weak var workCover: UIImageView!
     @IBOutlet weak var displayLargeCover: UIButton!
     @IBOutlet weak var displayDeluxeDetail: UIButton!
-    @IBOutlet weak var displayAuthorDetail: UIButton!
+    @IBOutlet weak var coverSummarySpacing: NSLayoutConstraint!
 
     @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var containerViewHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var activityView: UIActivityIndicatorView!
     
@@ -188,37 +189,24 @@ class OLWorkDetailViewController: UIViewController {
         
         assert( NSThread.isMainThread() )
 
-        self.workTitle.text = workDetail.title
-        self.workSubtitle.text = workDetail.subtitle
-        self.workAuthor.text = workDetail.author_names.joinWithSeparator( ", " )
-        self.displayLargeCover.enabled = workDetail.coversFound
+        workTitle.text = workDetail.title
+        workSubtitle.text = workDetail.subtitle
+        workAuthor.text = workDetail.author_names.joinWithSeparator( ", " )
+        displayLargeCover.enabled = workDetail.coversFound
         if !workDetail.coversFound {
-            self.workCover.image = nil
+            workCover.image = nil
+            coverSummarySpacing.constant = 0
         } else {
-            self.workCover.image = UIImage( named: workDetail.defaultImageName )
+            workCover.image = UIImage( named: workDetail.defaultImageName )
         }
 
-        self.displayDeluxeDetail.enabled = nil == workDetail.provisional_date
+        displayDeluxeDetail.enabled = nil == workDetail.provisional_date
         workTitle.textColor = displayDeluxeDetail.currentTitleColor
         workSubtitle.textColor = displayDeluxeDetail.currentTitleColor
 
-        self.displayAuthorDetail.enabled = !workDetail.author_names.isEmpty
-        
         view.layoutIfNeeded()
         
-//        let viewHeight = self.view.bounds.height
-        
-//        let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.height
-//        let navBarHeight = self.navigationController?.navigationBar.frame.height ?? 0
-//        let minContentHeight = viewHeight - ( statusBarHeight + navBarHeight )
-//        
-//        let headerViewHeight = headerView.bounds.height
-//        
-//        if headerViewHeight > minContentHeight / 2 {
-//            
-//            containerViewHeightConstraint.constant = minContentHeight
-//        }
-        
+        print( "header:\(headerView.frame) summary:\(summaryView.frame) scroll: \(scrollView.frame) stack:\(stackView.frame) cover:\(workCover.frame)" )
     }
     
     // MARK: Utility

@@ -140,6 +140,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
                 newObject.author_name_cache = parsed.author_name
                 
                 newObject.title = parsed.title
+                newObject.subtitle = parsed.subtitle
                 if parsed.cover_i != 0 {
                     newObject.covers = [Int( parsed.cover_i )]
                 } else {
