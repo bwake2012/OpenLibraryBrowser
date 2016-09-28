@@ -214,7 +214,7 @@ class OLWorkDetailViewController: UIViewController {
 
         view.layoutIfNeeded()
         
-        print( "header:\(headerView.frame) summary:\(summaryView.frame) scroll: \(scrollView.frame) stack:\(stackView.frame) cover:\(workCover.frame)" )
+//        print( "header:\(headerView.frame) summary:\(summaryView.frame) scroll: \(scrollView.frame) stack:\(stackView.frame) cover:\(workCover.frame)" )
     }
     
     // MARK: Utility
