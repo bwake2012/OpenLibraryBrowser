@@ -209,11 +209,11 @@ class OLSearchResultsTableViewController: UIViewController {
                     generalSearchCoordinator.installCoverPictureViewCoordinator( destVC, indexPath: indexPath )
                 }
  
-            case "displayEBookTableView":
+            case "displayWorkEBooks":
 
-                if let destVC = segue.destinationViewController as? OLEBookEditionsTableViewController {
+                if let destVC = segue.destinationViewController as? OLWorkDetailViewController {
                     
-                    generalSearchCoordinator.installEBookEditionsCoordinator( destVC, indexPath: indexPath )
+                    generalSearchCoordinator.installWorkDetailCoordinator( destVC, indexPath: indexPath )
                 }
                 
             case "displayAuthorDetail":

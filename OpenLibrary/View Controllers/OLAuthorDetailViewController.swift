@@ -21,6 +21,7 @@ class OLAuthorDetailViewController: UIViewController {
     @IBOutlet weak var displayLargePhoto: UIButton!
     @IBOutlet weak var displayDeluxeDetail: UIButton!
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var coverSummarySpacing: NSLayoutConstraint!
     
     @IBOutlet weak var activityView: UIActivityIndicatorView!
 
@@ -124,6 +125,7 @@ class OLAuthorDetailViewController: UIViewController {
         
         if !authorDetail.hasImage && nil == authorDetail.provisional_date {
             self.authorPhoto.image = nil
+            coverSummarySpacing.constant = 0
         } else {
             self.authorPhoto.image = UIImage( named: "253-person.png" )
         }

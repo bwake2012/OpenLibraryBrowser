@@ -88,6 +88,14 @@ class OLWorkDetailViewController: UIViewController {
                 
                 queryCoordinator!.installWorkDetailEditionsQueryCoordinator( destVC )
             }
+            
+        } else if segue.identifier == "embedWorkEBooks" {
+            
+            if let destVC = segue.destinationViewController as? OLEBookEditionsTableViewController {
+                
+                queryCoordinator!.installEBookEditionsCoordinator( destVC  )
+            }
+        
         } else if segue.identifier == "largeCoverImage" {
             
             if let destVC = segue.destinationViewController as? OLPictureViewController {

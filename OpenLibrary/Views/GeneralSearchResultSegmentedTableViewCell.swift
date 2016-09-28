@@ -46,7 +46,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
     
     @IBAction private func viewBooksTapped( sender: UIButton ) {
 
-        tableVC?.performSegueWithIdentifier( "displayEBookTableView", sender: self )
+        tableVC?.performSegueWithIdentifier( "displayWorkEBooks", sender: self )
      }
     
     @IBAction private func viewWorkEditionsTapped(sender: UIButton) {

@@ -33,7 +33,7 @@
                                     <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="E8T-tu-1p5" userLabel="Summary">
                                         <rect key="frame" x="144" y="8" width="448" height="128"/>
                                         <subviews>
-                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="750" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gS2-WO-F8d" userLabel="Scroll Summary">
+                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="750" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gS2-WO-F8d" userLabel="Scroll Summary">
                                                 <rect key="frame" x="0.0" y="0.0" width="448" height="128"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="eZU-v9-6hs">
@@ -63,7 +63,7 @@
                                                             </label>
                                                         </subviews>
                                                     </stackView>
-                                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" misplaced="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgh-7c-zzn" userLabel="Display Deluxe Detail">
+                                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgh-7c-zzn" userLabel="Display Deluxe Detail">
                                                         <rect key="frame" x="0.0" y="0.0" width="448" height="260.5"/>
                                                         <connections>
                                                             <segue destination="4xQ-04-bzr" kind="show" identifier="displayDeluxeWorkDetail" customClass="SegueWithUnfold" customModule="OpenLibrary" id="bwO-V9-rF3"/>
@@ -94,8 +94,8 @@
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" secondItem="eZU-v9-6hs" secondAttribute="height" id="leL-vI-0Fb"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9cz-hg-htV">
-                                        <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9cz-hg-htV">
+                                        <rect key="frame" x="8" y="8" width="128" height="128"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <state key="normal">
                                             <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -107,10 +107,14 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="9cz-hg-htV" firstAttribute="width" secondItem="Mkn-nJ-YcS" secondAttribute="width" id="74A-L4-1oD"/>
+                                    <constraint firstItem="9cz-hg-htV" firstAttribute="height" secondItem="Mkn-nJ-YcS" secondAttribute="height" id="Bpq-bl-rWr"/>
                                     <constraint firstItem="Mkn-nJ-YcS" firstAttribute="top" secondItem="79a-aY-mSm" secondAttribute="topMargin" id="Oei-wo-RqW"/>
                                     <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="Mkn-nJ-YcS" secondAttribute="bottom" id="RnN-F3-Vwf"/>
                                     <constraint firstAttribute="trailingMargin" secondItem="E8T-tu-1p5" secondAttribute="trailing" id="cpa-NA-xsi"/>
+                                    <constraint firstItem="9cz-hg-htV" firstAttribute="centerY" secondItem="Mkn-nJ-YcS" secondAttribute="centerY" id="drD-S5-8eA"/>
                                     <constraint firstAttribute="bottomMargin" secondItem="E8T-tu-1p5" secondAttribute="bottom" id="g81-Kq-vMI"/>
+                                    <constraint firstItem="9cz-hg-htV" firstAttribute="centerX" secondItem="Mkn-nJ-YcS" secondAttribute="centerX" id="kpi-79-l9X"/>
                                     <constraint firstItem="E8T-tu-1p5" firstAttribute="top" secondItem="79a-aY-mSm" secondAttribute="topMargin" id="li6-1U-NTW"/>
                                     <constraint firstItem="E8T-tu-1p5" firstAttribute="leading" secondItem="Mkn-nJ-YcS" secondAttribute="trailing" constant="8" symbolic="YES" id="pdV-RF-TW5"/>
                                     <constraint firstItem="Mkn-nJ-YcS" firstAttribute="leading" secondItem="79a-aY-mSm" secondAttribute="leadingMargin" id="t2s-N3-YJu"/>

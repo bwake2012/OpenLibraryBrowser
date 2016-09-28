@@ -522,6 +522,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
                     operationQueue: operationQueue,
                     coreDataStack: coreDataStack,
                     workKey: searchResult.key,
+                    editionKeys: searchResult.edition_key,
                     workDetailVC: destVC
             )
             
@@ -546,19 +547,4 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         
     }
 
-    func installEBookEditionsCoordinator( destVC: OLEBookEditionsTableViewController, indexPath: NSIndexPath ) {
-        
-        guard let searchResult = objectAtIndexPath( indexPath ) else {
-            fatalError( "General Search Result object not retrieved." )
-        }
-        
-        destVC.queryCoordinator =
-            EBookEditionsCoordinator(
-                    operationQueue: operationQueue,
-                    coreDataStack: coreDataStack,
-                    workKey: searchResult.key,
-                    editionKeys: searchResult.edition_key,
-                    tableVC: destVC
-                )
-    }
 }

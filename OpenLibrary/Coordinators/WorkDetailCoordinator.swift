@@ -20,6 +20,7 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
 
     var workDetail: OLWorkDetail?
     var workKey: String
+    var editionKeys: [String] = []
     
     var workDetailGetOperation: Operation?
     var authorDetailGetOperation: Operation?
@@ -66,6 +67,7 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
         
         self.workDetail = searchInfo
         self.workKey = searchInfo.key
+        self.editionKeys = []
         self.workDetailVC = workDetailVC
 
         super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: workDetailVC )
@@ -75,6 +77,7 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
         operationQueue: OperationQueue,
         coreDataStack: CoreDataStack,
         workKey: String,
+        editionKeys: [String],
         workDetailVC: OLWorkDetailViewController
         ) {
         
@@ -82,6 +85,7 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
         
         self.workDetail = nil
         self.workKey = workKey
+        self.editionKeys = editionKeys
         self.workDetailVC = workDetailVC
         
         super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: workDetailVC )
@@ -415,6 +419,20 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
         )
      }
     
+    func installEBookEditionsCoordinator( destVC: OLEBookEditionsTableViewController ) {
+        
+        assert( !editionKeys.isEmpty )
+        
+        destVC.queryCoordinator =
+            EBookEditionsCoordinator(
+                operationQueue: operationQueue,
+                coreDataStack: coreDataStack,
+                workKey: workKey,
+                editionKeys: editionKeys,
+                tableVC: destVC
+        )
+    }
+
     func installWorkDeluxeDetailCoordinator( destVC: OLDeluxeDetailTableViewController ) {
         
         guard let workDetail = workDetail else {
@@ -464,4 +482,5 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
                 authorDetailVC: destVC
             )
     }
+    
 }

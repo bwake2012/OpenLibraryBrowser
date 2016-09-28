@@ -20,7 +20,6 @@ class OLLaunchViewController: UIViewController {
     }()
     
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet var copyrightLabel: UILabel!
     @IBOutlet var copyright: UIButton!
 
     @IBAction func copyrightButtonTapped( sender: UIButton ) {
@@ -47,9 +46,7 @@ class OLLaunchViewController: UIViewController {
             activityIndicator.stopAnimating()
         }
         
-        let nonBreakingSpace = "\u{00a0}"
         copyright.enabled = enableClose
-        copyrightLabel.text = "Copyright\(nonBreakingSpace)2016 Cockleburr\(nonBreakingSpace)Software"
     }
 
     func loadAppRootViewController() {

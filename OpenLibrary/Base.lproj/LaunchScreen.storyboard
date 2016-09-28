@@ -62,17 +62,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="MarkingBird converts MarkDown text to HTML for display." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0IG-yF-aiE" userLabel="MarkingBird">
-                                <rect key="frame" x="16" y="312.5" width="288" height="30.5"/>
+                                <rect key="frame" x="16" y="312" width="288" height="30.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="Icons by Glyphish from www.glyphish.com" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xFA-Eb-d1J">
-                                <rect key="frame" x="16" y="351" width="288" height="14.5"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="Copyright 2016 Cockleburr Software" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TtJ-SR-yKp">
@@ -93,6 +86,19 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Special thanks to Jim Clark for his useful advice." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lAD-al-yod">
+                                <rect key="frame" x="16" y="373.5" width="288" height="14.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="Icons by Glyphish from www.glyphish.com" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xFA-Eb-d1J">
+                                <rect key="frame" x="16" y="351" width="288" height="14.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -107,11 +113,13 @@
                             <constraint firstAttribute="trailingMargin" secondItem="xFA-Eb-d1J" secondAttribute="trailing" id="FJ5-kb-O49"/>
                             <constraint firstItem="0IG-yF-aiE" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="GW3-D9-JaI"/>
                             <constraint firstAttribute="trailingMargin" secondItem="iLc-sG-h4x" secondAttribute="trailing" id="JYs-oA-xXn"/>
+                            <constraint firstItem="TtJ-SR-yKp" firstAttribute="top" relation="greaterThanOrEqual" secondItem="lAD-al-yod" secondAttribute="bottom" constant="46" id="M8Q-Di-PH6"/>
                             <constraint firstItem="6cN-HD-Xeg" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="SSs-L6-5ua"/>
                             <constraint firstItem="58i-bM-3sK" firstAttribute="top" secondItem="6cN-HD-Xeg" secondAttribute="bottom" constant="8" symbolic="YES" id="U9z-U8-sUp"/>
                             <constraint firstItem="0IG-yF-aiE" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="WqT-o8-00K"/>
                             <constraint firstAttribute="trailingMargin" secondItem="6cN-HD-Xeg" secondAttribute="trailing" id="XL5-hT-0ss"/>
                             <constraint firstItem="xFA-Eb-d1J" firstAttribute="top" secondItem="0IG-yF-aiE" secondAttribute="bottom" constant="8" symbolic="YES" id="b0m-rF-FwD"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="lAD-al-yod" secondAttribute="trailing" id="bzg-d8-VRM"/>
                             <constraint firstAttribute="leadingMargin" secondItem="Jj4-bI-FFk" secondAttribute="leading" id="eSP-XW-Meb"/>
                             <constraint firstAttribute="leadingMargin" secondItem="iLc-sG-h4x" secondAttribute="leading" id="ehK-PX-HEW"/>
                             <constraint firstItem="fTG-y6-sfr" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="f9r-tr-nuQ"/>
@@ -120,7 +128,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="TtJ-SR-yKp" secondAttribute="trailing" id="ihI-Ic-8Xx"/>
                             <constraint firstItem="58i-bM-3sK" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="j92-Ay-U8U"/>
                             <constraint firstItem="58i-bM-3sK" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" id="jrf-8b-MzA"/>
-                            <constraint firstItem="TtJ-SR-yKp" firstAttribute="top" relation="greaterThanOrEqual" secondItem="xFA-Eb-d1J" secondAttribute="bottom" constant="8" symbolic="YES" id="mCE-Ak-AyB"/>
+                            <constraint firstItem="lAD-al-yod" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="mVV-hv-bnx"/>
                             <constraint firstItem="k7l-GP-5vN" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="8" id="p2G-P3-dVn"/>
                             <constraint firstItem="iLc-sG-h4x" firstAttribute="top" secondItem="k7l-GP-5vN" secondAttribute="bottom" id="rAB-9C-50c"/>
                             <constraint firstItem="0IG-yF-aiE" firstAttribute="top" secondItem="58i-bM-3sK" secondAttribute="bottom" constant="8" symbolic="YES" id="sD8-cv-BiK"/>
@@ -128,6 +136,7 @@
                             <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="TtJ-SR-yKp" secondAttribute="bottom" constant="20" id="xTM-Tx-Wj2"/>
                             <constraint firstItem="6cN-HD-Xeg" firstAttribute="top" secondItem="fTG-y6-sfr" secondAttribute="bottom" constant="8" symbolic="YES" id="yTQ-MS-zoj"/>
                             <constraint firstAttribute="leadingMargin" secondItem="TtJ-SR-yKp" secondAttribute="leading" id="yvk-v2-eTQ"/>
+                            <constraint firstItem="lAD-al-yod" firstAttribute="top" secondItem="xFA-Eb-d1J" secondAttribute="bottom" constant="8" symbolic="YES" id="zbb-cs-h7V"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>

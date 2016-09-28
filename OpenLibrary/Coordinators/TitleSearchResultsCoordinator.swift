@@ -318,6 +318,7 @@ class TitleSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedRe
                         operationQueue: operationQueue,
                         coreDataStack: coreDataStack,
                         workKey: searchResult.key,
+                        editionKeys: [],
                         workDetailVC: destVC
                     )
             
