@@ -73,7 +73,17 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
                     newObject.type = "/type/author"
                     
                     newObject.name = parsed.author_name[authorIndex]
-                    newObject.photos = [Int]()
+                    newObject.photos = []
+                    
+                    newObject.links = [[:]]
+                    
+                    newObject.bio = ""
+                    newObject.alternate_names = []
+                    
+                    newObject.wikipedia = ""
+                    
+                    newObject.revision = 0
+                    newObject.latest_revision = 0
                 }
             }
         }
@@ -139,6 +149,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
             self.links = parsed.links
             self.bio = parsed.bio
             self.alternate_names = parsed.alternate_names
+            self.wikipedia = parsed.wikipedia
             
             self.revision = parsed.revision
             self.latest_revision = parsed.latest_revision

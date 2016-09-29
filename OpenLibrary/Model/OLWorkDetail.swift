@@ -144,12 +144,28 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
                 if parsed.cover_i != 0 {
                     newObject.covers = [Int( parsed.cover_i )]
                 } else {
-                    newObject.covers = [Int]()
+                    newObject.covers = []
                 }
                 newObject.coversFound = !newObject.covers.isEmpty && 0 < newObject.covers[0]
                 
-                newObject.first_publish_date = String( parsed.first_publish_year )
+                newObject.first_publish_date = ""
                 newObject.subjects = parsed.subject
+                
+                newObject.dewey_number = []
+                newObject.ebook_count_i = parsed.ebook_count_i
+
+                newObject.first_sentence = ""
+                newObject.lc_classifications = []
+                newObject.links = [[:]]
+                newObject.notes = ""
+                newObject.original_languages = []
+                newObject.other_titles = []
+                newObject.subject_people = []
+                newObject.subject_places = []
+                newObject.subject_times = []
+                
+                newObject.translated_titles = []
+                newObject.work_description = ""
             }
         }
         

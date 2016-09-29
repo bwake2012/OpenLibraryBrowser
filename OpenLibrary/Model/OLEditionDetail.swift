@@ -141,6 +141,8 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
             newObject.has_fulltext = 1
             
             newObject.key = parsed.editionKey
+            newObject.revision = 0
+            newObject.latest_revision = 0
             newObject.type = "/type/edition"
             
             newObject.work_key = parsed.workKey
@@ -164,6 +166,54 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
             newObject.publish_date = parsed.publish_date
             
             newObject.isbn_10 = parsed.isbn_10
+            
+            newObject.accompanying_material = ""
+
+            newObject.by_statement = ""
+            newObject.collections = []
+            newObject.contributions = []
+            newObject.copyright_date = ""
+
+            newObject.dewey_decimal_class = []
+            newObject.distributors = []
+            newObject.edition_description = ""
+            newObject.edition_name = ""
+            newObject.first_sentence = ""
+            newObject.genres = []
+
+            newObject.isbn_13 = []
+
+            newObject.lc_classifications = []
+            newObject.lccn = []
+            newObject.location = []
+            newObject.notes = ""
+            newObject.number_of_pages = 0
+            newObject.ocaid = ""
+            newObject.oclc_numbers = []
+            newObject.other_titles = []
+            newObject.pagination = ""
+            newObject.physical_dimensions = ""
+            newObject.physical_format = ""
+            newObject.publish_country = ""
+            newObject.publish_date = ""
+            newObject.publish_places = []
+            newObject.publishers = []
+            newObject.scan_on_demand = false
+            newObject.series = []
+            newObject.source_records = []
+            newObject.subjects = []
+
+            newObject.table_of_contents = [[:]]
+            newObject.title_prefix = ""
+
+            newObject.translated_from = []
+            newObject.translation_of = ""
+            newObject.uri_descriptions = []
+            newObject.uris = []
+            newObject.weight = ""
+            newObject.work_titles = []
+            newObject.works = []
+
         }
         
         return newObject
@@ -219,7 +269,51 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                     }
                     newObject.subjects = parsed.subject
                     
+                    newObject.accompanying_material = ""
                     
+                    newObject.by_statement = ""
+                    newObject.collections = []
+                    newObject.contributions = []
+                    newObject.copyright_date = ""
+                    
+                    newObject.dewey_decimal_class = []
+                    newObject.distributors = []
+                    newObject.edition_description = ""
+                    newObject.edition_name = ""
+                    newObject.first_sentence = ""
+                    newObject.genres = []
+                    newObject.isbn_10 = []
+                    newObject.isbn_13 = []
+                    
+                    newObject.lc_classifications = []
+                    newObject.lccn = []
+                    newObject.location = []
+                    newObject.notes = ""
+                    newObject.number_of_pages = 0
+                    newObject.ocaid = ""
+                    newObject.oclc_numbers = []
+                    newObject.other_titles = []
+                    newObject.pagination = ""
+                    newObject.physical_dimensions = ""
+                    newObject.physical_format = ""
+                    newObject.publish_country = ""
+
+                    newObject.publish_places = []
+                    newObject.publishers = []
+                    newObject.scan_on_demand = false
+                    newObject.series = []
+                    newObject.source_records = []
+                    
+                    newObject.table_of_contents = [[:]]
+                    newObject.title_prefix = ""
+                    
+                    newObject.translated_from = []
+                    newObject.translation_of = ""
+                    newObject.uri_descriptions = []
+                    newObject.uris = []
+                    newObject.weight = ""
+                    newObject.work_titles = []
+                    newObject.works = []
                 }
             }
         }
