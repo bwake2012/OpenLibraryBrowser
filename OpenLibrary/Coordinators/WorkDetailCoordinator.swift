@@ -14,7 +14,7 @@ import PSOperations
 
 private let kWorkDetailCache = "workDetailSearch"
 
-class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate {
+class WorkDetailCoordinator: OLQueryCoordinator {
     
     weak var workDetailVC: OLWorkDetailViewController?
 
@@ -25,38 +25,6 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
     var workDetailGetOperation: Operation?
     var authorDetailGetOperation: Operation?
     var ebookItemGetOperation: Operation?
-    
-    typealias FetchedWorkDetailController    = FetchedResultsController< OLWorkDetail >
-    typealias FetchedWorkDetailChange        = FetchedResultsObjectChange< OLWorkDetail >
-    typealias FetchedWorkDetailSectionChange = FetchedResultsSectionChange< OLWorkDetail >
-    
-    private lazy var fetchedWorkDetailController: FetchedWorkDetailController = {
-        
-        let fetchRequest = NSFetchRequest( entityName: OLWorkDetail.entityName )
-        
-        let key = self.workKey
-        
-        let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
-        let today = NSDate()
-        let lastWeek = today.dateByAddingTimeInterval( -7 * secondsPerDay )
-        
-        fetchRequest.predicate = NSPredicate( format: "key==%@ && retrieval_date > %@", "\(key)", lastWeek )
-        
-        fetchRequest.sortDescriptors =
-            [
-                NSSortDescriptor(key: "title", ascending: true)
-            ]
-        fetchRequest.fetchBatchSize = 100
-        
-        let frc = FetchedWorkDetailController(
-            fetchRequest: fetchRequest,
-            managedObjectContext: self.coreDataStack.mainQueueContext,
-            sectionNameKeyPath: nil,
-            cacheName: kWorkDetailCache )
-        
-        frc.setDelegate( self )
-        return frc
-    }()
     
     init(
             operationQueue: OperationQueue,
@@ -134,6 +102,7 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
     func getSearchInfo( objectID: NSManagedObjectID ) {
         
         dispatch_async( dispatch_get_main_queue() ) {
+
             if let workDetail = self.coreDataStack.mainQueueContext.objectWithID( objectID ) as? OLWorkDetail {
                 
                 self.workDetail = workDetail
@@ -143,12 +112,22 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
     
     func updateUI() {
         
-        do {
-            NSFetchedResultsController.deleteCacheWithName( kWorkDetailCache )
-            try fetchedWorkDetailController.performFetch()
+        let detail: OLWorkDetail? =
+            OLWorkDetail.findObject(
+                    workKey,
+                    entityName: OLWorkDetail.entityName,
+                    moc: self.coreDataStack.mainQueueContext
+                )
+        
+        if let detail = detail {
+            
+            workDetail = detail
+            updateUI( detail )
         }
-        catch let fetchError as NSError {
-            print("Error in the fetched results controller: \(fetchError).")
+        
+        if nil == detail || nil != detail?.provisional_date {
+            
+            newQuery( workKey, userInitiated: true, refreshControl: nil )
         }
     }
     
@@ -166,10 +145,20 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
                     if let strongSelf = self {
                         dispatch_async( dispatch_get_main_queue() ) {
                             
-                            refreshControl?.endRefreshing()
+                            if nil == strongSelf.workDetail {
+
+                                strongSelf.workDetail =
+                                    OLWorkDetail.findObject(
+                                        workKey,
+                                        entityName: OLWorkDetail.entityName,
+                                        moc: strongSelf.coreDataStack.mainQueueContext
+                                )
+                            }
                             if let detail = strongSelf.workDetail {
                                 
                                 strongSelf.updateUI( detail )
+                                
+                                strongSelf.refreshComplete( refreshControl )
                             }
                         }
                     }
@@ -278,20 +267,20 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
         }
     }
     
-    func objectAtIndexPath( indexPath: NSIndexPath ) -> OLWorkDetail? {
-        
-        guard let sections = fetchedWorkDetailController.sections else {
-            assertionFailure("Sections missing")
-            return nil
-        }
-        
-        let section = sections[indexPath.section]
-        if indexPath.row >= section.objects.count {
-            return nil
-        } else {
-            return section.objects[indexPath.row]
-        }
-    }
+//    func objectAtIndexPath( indexPath: NSIndexPath ) -> OLWorkDetail? {
+//        
+//        guard let sections = fetchedWorkDetailController.sections else {
+//            assertionFailure("Sections missing")
+//            return nil
+//        }
+//        
+//        let section = sections[indexPath.section]
+//        if indexPath.row >= section.objects.count {
+//            return nil
+//        } else {
+//            return section.objects[indexPath.row]
+//        }
+//    }
     
     func refreshQuery( refreshControl: UIRefreshControl? ) {
         
@@ -303,78 +292,6 @@ class WorkDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegat
             
             workDetail.resetFulltext()
             newEbookItemQuery( workDetail )
-        }
-    }
-    
-    
-    // MARK: FetchedResultsControllerDelegate
-    
-    func fetchedResultsControllerDidPerformFetch(controller: FetchedWorkDetailController) {
-        
-        let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) )
-        if nil == detail {
-            
-            newQuery( workKey, userInitiated: true, refreshControl: nil )
-
-        } else if let detail = detail {
-            
-            if nil != detail.provisional_date {
-                
-                newQuery( workKey, userInitiated: true, refreshControl: nil )
-            }
- 
-            workDetail = detail
-            updateUI( detail )
-        }
-    }
-    
-    func fetchedResultsControllerWillChangeContent( controller: FetchedWorkDetailController ) {
-        //        tableView?.beginUpdates()
-    }
-    
-    func fetchedResultsControllerDidChangeContent( controller: FetchedWorkDetailController ) {
-        //        tableView?.endUpdates()
-    }
-    
-    func fetchedResultsController( controller: FetchedWorkDetailController,
-                                   didChangeObject change: FetchedWorkDetailChange ) {
-        switch change {
-        case .Insert(_, _):
-            if let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {
-                
-                updateUI( detail )
-                workDetail = detail
-            }
-            break
-            
-        case .Delete(_, _):
-            // tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-            break
-            
-        case .Move(_, _, _):
-            // tableVC.tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
-            break
-            
-        case .Update(_, _):
-            if let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {
-                
-                updateUI( detail )
-                workDetail = detail
-            }
-            break
-        }
-    }
-    
-    func fetchedResultsController( controller: FetchedWorkDetailController,
-                                   didChangeSection change: FetchedWorkDetailSectionChange ) {
-        switch change {
-        case .Insert(_, _):
-            // tableVC.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
-            break
-            
-        case .Delete(_, _):
-            // tableVC.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
-            break
         }
     }
     
