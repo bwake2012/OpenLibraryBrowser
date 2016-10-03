@@ -35,4 +35,5 @@ extension OLAuthorDetail {
     @NSManaged var provisional_date: NSDate?
     
     @NSManaged var toSearchResults: OLAuthorSearchResult?
+    @NSManaged var work_detail: NSSet?
 }

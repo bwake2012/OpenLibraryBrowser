@@ -161,6 +161,10 @@ class OLManagedObject: NSManagedObject {
         return nil
     }
 
+    func addToAuthorCache( authorKey: String, authorName: String ) -> Void {
+        
+        OLManagedObject.authorCache.setObject( authorName, forKey: authorKey )
+    }
     
     var heading: String {
         

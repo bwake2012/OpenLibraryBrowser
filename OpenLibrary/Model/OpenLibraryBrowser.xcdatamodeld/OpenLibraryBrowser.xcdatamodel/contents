@@ -19,6 +19,17 @@
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="wikipedia" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="toSearchResults" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AuthorSearchResult" inverseName="toDetail" inverseEntity="AuthorSearchResult" syncable="YES"/>
+        <relationship name="work_detail" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WorkDetail" inverseName="author_detail" inverseEntity="WorkDetail" syncable="YES"/>
+        <compoundIndexes>
+            <compoundIndex>
+                <index value="key"/>
+            </compoundIndex>
+        </compoundIndexes>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="key"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="AuthorSearchResult" representedClassName=".OLAuthorSearchResult" syncable="YES">
         <attribute name="birth_date" optional="YES" attributeType="String" syncable="YES"/>
@@ -150,6 +161,7 @@
         <attribute name="work_key" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="work_titles" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="works" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <relationship name="work_detail" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WorkDetail" inverseName="edition_detail" inverseEntity="WorkDetail" syncable="YES"/>
         <compoundIndexes>
             <compoundIndex>
                 <index value="author_key"/>
@@ -159,7 +171,15 @@
                 <index value="work_key"/>
                 <index value="index"/>
             </compoundIndex>
+            <compoundIndex>
+                <index value="key"/>
+            </compoundIndex>
         </compoundIndexes>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="key"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="GeneralSearchResult" representedClassName=".OLGeneralSearchResult" syncable="YES">
         <attribute name="author_key" optional="YES" attributeType="Transformable" syncable="YES"/>
@@ -200,6 +220,7 @@
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title_suggest" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="work_detail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkDetail" inverseName="general_search_result" inverseEntity="WorkDetail" syncable="YES"/>
         <compoundIndexes>
             <compoundIndex>
                 <index value="key"/>
@@ -263,6 +284,7 @@
         <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="dewey_number" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="ebook_count_i" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="edition_count" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="first_publish_date" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="first_sentence" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="has_fulltext" attributeType="Integer 16" minValueString="-1" maxValueString="1" defaultValueString="-1" syncable="YES"/>
@@ -287,22 +309,33 @@
         <attribute name="translated_titles" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="work_description" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="author_detail" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AuthorDetail" inverseName="work_detail" inverseEntity="AuthorDetail" syncable="YES"/>
+        <relationship name="edition_detail" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EditionDetail" inverseName="work_detail" inverseEntity="EditionDetail" syncable="YES"/>
+        <relationship name="general_search_result" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GeneralSearchResult" inverseName="work_detail" inverseEntity="GeneralSearchResult" syncable="YES"/>
         <compoundIndexes>
             <compoundIndex>
                 <index value="author_key"/>
                 <index value="index"/>
             </compoundIndex>
+            <compoundIndex>
+                <index value="key"/>
+            </compoundIndex>
         </compoundIndexes>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="key"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="AuthorDetail" positionX="-63" positionY="-18" width="128" height="315"/>
+        <element name="AuthorDetail" positionX="-63" positionY="-18" width="128" height="330"/>
         <element name="AuthorSearchResult" positionX="-54" positionY="81" width="128" height="210"/>
         <element name="EBookFile" positionX="-63" positionY="135" width="128" height="300"/>
         <element name="EBookItem" positionX="-63" positionY="135" width="128" height="225"/>
-        <element name="EditionDetail" positionX="-45" positionY="144" width="128" height="945"/>
-        <element name="GeneralSearchResult" positionX="-63" positionY="135" width="128" height="615"/>
+        <element name="EditionDetail" positionX="-45" positionY="144" width="128" height="960"/>
+        <element name="GeneralSearchResult" positionX="-63" positionY="135" width="128" height="630"/>
         <element name="Language" positionX="-63" positionY="135" width="128" height="135"/>
         <element name="TitleSearchResult" positionX="-63" positionY="135" width="128" height="225"/>
-        <element name="WorkDetail" positionX="-54" positionY="99" width="128" height="510"/>
+        <element name="WorkDetail" positionX="-54" positionY="99" width="128" height="570"/>
     </elements>
 </model>

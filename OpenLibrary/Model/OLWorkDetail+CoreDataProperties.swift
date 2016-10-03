@@ -47,4 +47,9 @@ extension OLWorkDetail {
     @NSManaged var work_description: String
 
     // cover_edition of type /type/edition
+    
+    @NSManaged var general_search_result: OLGeneralSearchResult?
+    
+    @NSManaged var author_detail: NSSet?
+    @NSManaged var edition_detail: NSSet?
 }

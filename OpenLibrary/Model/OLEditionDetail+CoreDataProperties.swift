@@ -79,4 +79,5 @@ extension OLEditionDetail {
     //    scan_records[]: [String]
     //    volumes[]: [String]
     
+    @NSManaged var work_detail: NSSet?
 }

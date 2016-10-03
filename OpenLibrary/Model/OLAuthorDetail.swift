@@ -30,14 +30,10 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
         
         var newObject: OLAuthorDetail?
         
-        newObject = findObject( parsed.key, entityName: entityName, moc: moc )
-        if nil == newObject {
-            
-            newObject =
-                NSEntityDescription.insertNewObjectForEntityForName(
-                    OLAuthorDetail.entityName, inManagedObjectContext: moc
-                ) as? OLAuthorDetail
-        }
+        newObject =
+            NSEntityDescription.insertNewObjectForEntityForName(
+                OLAuthorDetail.entityName, inManagedObjectContext: moc
+            ) as? OLAuthorDetail
         
         if let newObject = newObject {
             
@@ -311,6 +307,10 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
             )
         )
         
+        newData.append(
+            DeluxeData(type: .inline, caption: "", value: isProvisional ? "Provisional" : "Actual" )
+        )
+        
         deluxeData.append( newData )
         
         return deluxeData
@@ -452,5 +452,50 @@ extension OLAuthorDetail {
             self.type = type
         }
     }
+}
+
+extension OLAuthorDetail {
+    
+    class func saveProvisionalAuthor( authorIndex: Int, parsed: OLGeneralSearchResult, moc: NSManagedObjectContext ) -> OLAuthorDetail? {
+        
+        var newObject: OLAuthorDetail?
+        
+        if authorIndex < parsed.author_key.count {
+            
+            newObject = findObject( parsed.author_key[authorIndex], entityName: entityName, moc: moc )
+            if nil == newObject {
+                
+                newObject =
+                    NSEntityDescription.insertNewObjectForEntityForName(
+                        OLAuthorDetail.entityName, inManagedObjectContext: moc
+                    ) as? OLAuthorDetail
+                
+                if let newObject = newObject {
+                    
+                    newObject.retrieval_date = NSDate()
+                    newObject.provisional_date = NSDate()
+                    
+                    newObject.key = parsed.author_key[authorIndex]
+                    newObject.type = "/type/author"
+                    
+                    newObject.name = parsed.author_name[authorIndex]
+                    newObject.photos = []
+                    
+                    newObject.links = [[:]]
+                    
+                    newObject.bio = ""
+                    newObject.alternate_names = []
+                    
+                    newObject.wikipedia = ""
+                    
+                    newObject.revision = 0
+                    newObject.latest_revision = 0
+                }
+            }
+        }
+        
+        return newObject
+    }
+    
 }
 

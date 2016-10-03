@@ -77,15 +77,10 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             
         var newObject: OLWorkDetail?
         
-        newObject = findObject( parsed.key, entityName: entityName, moc: moc )
-        if nil == newObject {
-            
-            newObject =
-                NSEntityDescription.insertNewObjectForEntityForName(
-                    OLWorkDetail.entityName, inManagedObjectContext: moc
-                ) as? OLWorkDetail
-            
-        }
+        newObject =
+            NSEntityDescription.insertNewObjectForEntityForName(
+                OLWorkDetail.entityName, inManagedObjectContext: moc
+            ) as? OLWorkDetail
         
         if let newObject = newObject {
         
@@ -468,6 +463,10 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
                 )
             )
         
+        newData.append(
+            DeluxeData(type: .inline, caption: "", value: isProvisional ? "Provisional" : "Actual" )
+        )
+        
         deluxeData.append( newData )
 
         return deluxeData
@@ -628,4 +627,72 @@ extension OLWorkDetail {
             self.covers = covers
         }
     }
+}
+
+extension OLWorkDetail {
+    
+    class func saveProvisionalWork( parsed: OLGeneralSearchResult, moc: NSManagedObjectContext ) -> OLWorkDetail? {
+        
+        var newObject: OLWorkDetail?
+        
+        newObject = findObject( parsed.key, entityName: entityName, moc: moc )
+        if nil == newObject {
+            
+            newObject =
+                NSEntityDescription.insertNewObjectForEntityForName(
+                    OLWorkDetail.entityName, inManagedObjectContext: moc
+                ) as? OLWorkDetail
+            
+            if let newObject = newObject {
+                
+                newObject.retrieval_date = NSDate()
+                newObject.provisional_date = NSDate()
+                
+                newObject.has_fulltext = parsed.has_fulltext ? 1 : 0
+                newObject.ebook_count_i = parsed.ebook_count_i
+                
+                if parsed.key.hasPrefix( kWorksPrefix ) {
+                    newObject.key = parsed.key
+                } else {
+                    newObject.key = kWorksPrefix + parsed.key
+                }
+                newObject.type = kWorkType
+                
+                newObject.authors = parsed.author_key
+                newObject.author_key = parsed.author_key.first ?? ""
+                newObject.author_name_cache = parsed.author_name
+                
+                newObject.title = parsed.title
+                newObject.subtitle = parsed.subtitle
+                if parsed.cover_i != 0 {
+                    newObject.covers = [Int( parsed.cover_i )]
+                } else {
+                    newObject.covers = []
+                }
+                newObject.coversFound = !newObject.covers.isEmpty && 0 < newObject.covers[0]
+                
+                newObject.first_publish_date = ""
+                newObject.subjects = parsed.subject
+                
+                newObject.dewey_number = []
+                newObject.ebook_count_i = parsed.ebook_count_i
+                
+                newObject.first_sentence = ""
+                newObject.lc_classifications = []
+                newObject.links = [[:]]
+                newObject.notes = ""
+                newObject.original_languages = []
+                newObject.other_titles = []
+                newObject.subject_people = []
+                newObject.subject_places = []
+                newObject.subject_times = []
+                
+                newObject.translated_titles = []
+                newObject.work_description = ""
+            }
+        }
+        
+        return newObject
+    }
+
 }
