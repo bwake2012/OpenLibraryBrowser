@@ -16,6 +16,7 @@ import PSOperations
 class AuthorWorksParseOperation: Operation {
     
     let authorKey: String
+    let parentObjectID: NSManagedObjectID
     let offset: Int
     let limit: Int
     let cacheFile: NSURL
@@ -32,7 +33,7 @@ class AuthorWorksParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( authorKey: String, offset: Int, limit: Int, cacheFile: NSURL, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater ) {
+    init( authorKey: String, parentObjectID: NSManagedObjectID, offset: Int, limit: Int, cacheFile: NSURL, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -41,10 +42,11 @@ class AuthorWorksParseOperation: Operation {
         
         self.cacheFile = cacheFile
         self.context = coreDataStack.newChildContext()
-        self.context.mergePolicy = NSOverwriteMergePolicy
+        self.context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         self.updateResults = updateResults
         self.offset = offset
         self.limit = limit
+        self.parentObjectID = parentObjectID
         self.authorKey = authorKey
         
         super.init()
@@ -113,22 +115,28 @@ class AuthorWorksParseOperation: Operation {
         context.performBlock {
             
             var index = self.offset
-            for entry in entries {
-                
-                if nil != OLWorkDetail.parseJSON( self.authorKey, index: index, json: entry, moc: self.context ) {
-                
-                    index += 1
+            
+            if let authorDetail = self.context.objectWithID( self.parentObjectID ) as? OLAuthorDetail {
+            
+                for entry in entries {
                     
-//                    print( "\(newObject.author_key) \(newObject.key) \(newObject.title)" )
+                    if let workDetail = OLWorkDetail.parseJSON( self.authorKey, index: index, json: entry, moc: self.context ) {
+                    
+                        authorDetail.work_detail = authorDetail.work_detail?.setByAddingObject( workDetail )
+                        
+                        index += 1
+                        
+    //                    print( "\(newObject.author_key) \(newObject.key) \(newObject.title)" )
+                    }
                 }
-            }
-
+           }
+        
             let error = self.saveContext()
 
             if nil == error {
                 self.updateResults( SearchResults( start: self.offset, numFound: numFound, pageSize: entries.count ) )
             }
-        
+
             self.finishWithError( error )
         }
     }

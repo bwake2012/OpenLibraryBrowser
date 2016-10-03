@@ -42,7 +42,7 @@ class TitleSearchResultsParseOperation: Operation {
         
         self.cacheFile = cacheFile
         self.context = coreDataStack.newChildContext()
-        self.context.mergePolicy = NSOverwriteMergePolicy
+        self.context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         self.updateResults = updateResults
         
         super.init()
