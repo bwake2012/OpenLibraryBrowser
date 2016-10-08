@@ -27,7 +27,6 @@ class OLAuthorDetailViewController: UIViewController {
 
     var queryCoordinator: AuthorDetailCoordinator?
     var authorWorksVC: OLAuthorDetailWorksTableViewController?
-    var authorEditionsVC: OLAuthorDetailEditionsTableViewController?
     
     var currentImageURL: NSURL?
     
@@ -37,8 +36,6 @@ class OLAuthorDetailViewController: UIViewController {
         super.viewDidLoad()
 
         assert( nil != queryCoordinator )
-
-        queryCoordinator?.updateUI()
     }
     
     override func didReceiveMemoryWarning() {
@@ -52,6 +49,8 @@ class OLAuthorDetailViewController: UIViewController {
         super.viewDidAppear( animated )
         
         navigationController?.setNavigationBarHidden( false, animated: true )
+
+        queryCoordinator?.updateUI()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -63,14 +62,7 @@ class OLAuthorDetailViewController: UIViewController {
                 self.authorWorksVC = destVC
                 queryCoordinator!.installAuthorWorksCoordinator( destVC )
             }
-        } else if segue.identifier == "embedAuthorEditions" {
-            
-            if let destVC = segue.destinationViewController as? OLAuthorDetailEditionsTableViewController {
-                
-                self.authorEditionsVC = destVC
-                queryCoordinator!.installAuthorEditionsCoordinator( destVC )
 
-            }
         } else if segue.identifier == "displayAuthorDeluxeDetail" {
             
             if let destVC = segue.destinationViewController as? OLDeluxeDetailTableViewController {
@@ -113,7 +105,7 @@ class OLAuthorDetailViewController: UIViewController {
 
         self.displayLargePhoto.enabled = authorDetail.hasImage
 
-        self.displayDeluxeDetail.enabled = authorDetail.hasDeluxeData && nil == authorDetail.provisional_date
+        self.displayDeluxeDetail.enabled = !authorDetail.isProvisional
         authorName.textColor = displayDeluxeDetail.currentTitleColor
         
         self.authorName.text = authorDetail.name
@@ -123,7 +115,7 @@ class OLAuthorDetailViewController: UIViewController {
         self.deathDate.text =
             authorDetail.death_date.isEmpty ? "" : "Died: " + authorDetail.death_date.stringWithNonBreakingSpaces()
         
-        if !authorDetail.hasImage && nil == authorDetail.provisional_date {
+        if !authorDetail.hasImage && !authorDetail.isProvisional {
             self.authorPhoto.image = nil
             coverSummarySpacing.constant = 0
         } else {
@@ -131,13 +123,7 @@ class OLAuthorDetailViewController: UIViewController {
         }
         
         view.layoutIfNeeded()
-        
-        let viewHeight = self.view.bounds.height
-        
-        var minContentHeight = viewHeight - UIApplication.sharedApplication().statusBarFrame.height
-        
-        minContentHeight -= navigationController?.navigationBar.frame.height ?? 0
-     }
+    }
     
     // MARK: query in progress
     
