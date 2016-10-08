@@ -16,7 +16,7 @@ import PSOperations
 class WorkEditionsParseOperation: Operation {
     
     let parentKey: String
-    let parentObjectID: NSManagedObjectID
+    let parentObjectID: NSManagedObjectID?
     let offset: Int
     let limit: Int
     let cacheFile: NSURL
@@ -33,7 +33,7 @@ class WorkEditionsParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( parentKey: String, parentObjectID: NSManagedObjectID, offset: Int, limit: Int, cacheFile: NSURL, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater ) {
+    init( parentKey: String, parentObjectID: NSManagedObjectID?, offset: Int, limit: Int, cacheFile: NSURL, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -41,8 +41,8 @@ class WorkEditionsParseOperation: Operation {
         */
         
         self.cacheFile = cacheFile
-        self.context = coreDataStack.newChildContext()
-        self.context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        self.context = coreDataStack.newChildContext( name: "WorkEditions child context" )
+        self.context.mergePolicy = NSOverwriteMergePolicy
         self.updateResults = updateResults
         self.limit = limit
         self.offset = offset
@@ -113,21 +113,25 @@ class WorkEditionsParseOperation: Operation {
         context.performBlock {
             
             var index = self.offset
+            var newEditions: [OLEditionDetail] = []
 
-            if let workDetail = self.context.objectWithID( self.parentObjectID ) as? OLWorkDetail {
- 
-                for entry in entries {
-                    
-                    if let editionDetail = OLEditionDetail.parseJSON( "", workKey: self.parentKey, index: index, json: entry, moc: self.context ) {
-                    
-                        workDetail.edition_detail = workDetail.edition_detail?.setByAddingObject( editionDetail )
+            if nil != self.parentObjectID {
+                
+                index = -1
+            }
+            
+            for entry in entries {
+                
+                if let editionDetail = OLEditionDetail.parseJSON( "", workKey: self.parentKey, index: index, json: entry, moc: self.context ) {
+                
+                    newEditions.append( editionDetail )
+
+                    if -1 != index {
                         index += 1
-     
-    //                    print( "\(self.parentKey) \(newEdition.key) \(newEdition.title)" )
                     }
                 }
             }
- 
+            
             let error = self.saveContext()
 
             if nil == error {

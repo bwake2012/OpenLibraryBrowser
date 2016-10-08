@@ -36,26 +36,25 @@
                                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="750" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gS2-WO-F8d" userLabel="Scroll Summary">
                                                 <rect key="frame" x="0.0" y="0.0" width="448" height="128"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="eZU-v9-6hs">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" axis="vertical" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="eZU-v9-6hs">
                                                         <rect key="frame" x="0.0" y="0.0" width="448" height="128"/>
                                                         <subviews>
-                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" misplaced="YES" text="The Horror Story Shorter by One Letter Than the Shortest Horror Story Ever Written" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EN2-0g-HD8">
+                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" misplaced="YES" text="Title" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EN2-0g-HD8">
                                                                 <rect key="frame" x="0.0" y="0.0" width="448" height="41"/>
                                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" misplaced="YES" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Sq-mI-aQN">
+                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" misplaced="YES" text="Subtitle" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Sq-mI-aQN">
                                                                 <rect key="frame" x="0.0" y="45" width="448" height="36"/>
                                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <string key="text">This is a very long subtitle to test word wrap in Work Detail Header. It doesn't seem to be long enough to wrap without this extra sentence. </string>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" misplaced="YES" text="John Jacob Jingleheimer Schmidt" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iRV-Xe-mwp" userLabel="Work Author">
-                                                                <rect key="frame" x="0.0" y="85" width="448" height="44"/>
+                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" misplaced="YES" text="Author Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iRV-Xe-mwp" userLabel="Work Author">
+                                                                <rect key="frame" x="0.0" y="84" width="448" height="44"/>
                                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -63,7 +62,7 @@
                                                             </label>
                                                         </subviews>
                                                     </stackView>
-                                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgh-7c-zzn" userLabel="Display Deluxe Detail">
+                                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" misplaced="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgh-7c-zzn" userLabel="Display Deluxe Detail">
                                                         <rect key="frame" x="0.0" y="0.0" width="448" height="260.5"/>
                                                         <connections>
                                                             <segue destination="4xQ-04-bzr" kind="show" identifier="displayDeluxeWorkDetail" customClass="SegueWithUnfold" customModule="OpenLibrary" id="bwO-V9-rF3"/>
@@ -215,60 +214,56 @@
                                                 <constraint firstAttribute="width" constant="60" id="mFx-ju-Xoc"/>
                                             </constraints>
                                         </imageView>
-                                        <view contentMode="scaleToFill" verticalHuggingPriority="260" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="hgS-ir-yJF" userLabel="Summary">
-                                            <rect key="frame" x="76" y="8" width="516" height="85.5"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="2Jq-gd-rqS">
+                                            <rect key="frame" x="76" y="8" width="516" height="86"/>
                                             <subviews>
-                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="260" verticalCompressionResistancePriority="760" text=" " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TfL-nA-0i1">
-                                                    <rect key="frame" x="0.0" y="0.0" width="516" height="20"/>
+                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="260" verticalCompressionResistancePriority="760" misplaced="YES" text=" Title" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TfL-nA-0i1">
+                                                    <rect key="frame" x="0.0" y="0.0" width="516" height="24"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="260" verticalCompressionResistancePriority="760" text=" " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W5t-0C-FXW">
-                                                    <rect key="frame" x="0.0" y="28" width="516" height="17"/>
+                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="260" verticalCompressionResistancePriority="760" misplaced="YES" text=" Subtitle" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W5t-0C-FXW">
+                                                    <rect key="frame" x="0.0" y="24" width="516" height="21"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2g0-tJ-LdK">
-                                                    <rect key="frame" x="0.0" y="53" width="516" height="32.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Edition Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VdD-Y9-DUh" userLabel="Edition Name">
+                                                    <rect key="frame" x="0.0" y="45" width="516" height="21"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="760" misplaced="YES" text="Date Published" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2g0-tJ-LdK">
+                                                    <rect key="frame" x="0.0" y="66" width="516" height="21"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="2g0-tJ-LdK" secondAttribute="bottom" id="02q-Jf-2Pf"/>
-                                                <constraint firstItem="W5t-0C-FXW" firstAttribute="leading" secondItem="hgS-ir-yJF" secondAttribute="leading" id="0Xd-mp-feO"/>
-                                                <constraint firstItem="W5t-0C-FXW" firstAttribute="trailing" secondItem="hgS-ir-yJF" secondAttribute="trailing" id="0k7-eX-jOw"/>
-                                                <constraint firstItem="2g0-tJ-LdK" firstAttribute="trailing" secondItem="hgS-ir-yJF" secondAttribute="trailing" id="4aw-cp-ayb"/>
-                                                <constraint firstItem="TfL-nA-0i1" firstAttribute="leading" secondItem="hgS-ir-yJF" secondAttribute="leading" id="5BR-4O-R4E"/>
-                                                <constraint firstItem="2g0-tJ-LdK" firstAttribute="top" secondItem="W5t-0C-FXW" secondAttribute="bottom" constant="8" symbolic="YES" id="5qp-jQ-Lem"/>
-                                                <constraint firstItem="TfL-nA-0i1" firstAttribute="trailing" secondItem="hgS-ir-yJF" secondAttribute="trailing" id="AM5-Na-YgI"/>
-                                                <constraint firstItem="W5t-0C-FXW" firstAttribute="top" secondItem="TfL-nA-0i1" secondAttribute="bottom" constant="8" symbolic="YES" id="Q8s-mG-h9e"/>
-                                                <constraint firstItem="2g0-tJ-LdK" firstAttribute="leading" secondItem="hgS-ir-yJF" secondAttribute="leading" id="Ufo-82-rGL"/>
-                                                <constraint firstItem="TfL-nA-0i1" firstAttribute="top" secondItem="hgS-ir-yJF" secondAttribute="top" id="xvt-N7-n4D"/>
-                                            </constraints>
-                                        </view>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </stackView>
                                     </subviews>
                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
-                                        <constraint firstItem="hgS-ir-yJF" firstAttribute="height" relation="greaterThanOrEqual" secondItem="GZj-Wc-MzS" secondAttribute="height" id="1a5-FG-svV"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="hgS-ir-yJF" secondAttribute="bottom" id="B0o-8a-9uW"/>
+                                        <constraint firstItem="2Jq-gd-rqS" firstAttribute="height" relation="greaterThanOrEqual" secondItem="GZj-Wc-MzS" secondAttribute="height" id="4e7-5i-aUe"/>
                                         <constraint firstItem="GZj-Wc-MzS" firstAttribute="top" secondItem="hGs-dQ-WQ7" secondAttribute="topMargin" id="Py3-cR-cNY"/>
-                                        <constraint firstItem="hgS-ir-yJF" firstAttribute="trailing" secondItem="hGs-dQ-WQ7" secondAttribute="trailingMargin" id="V06-B9-zmA"/>
-                                        <constraint firstItem="hgS-ir-yJF" firstAttribute="leading" secondItem="GZj-Wc-MzS" secondAttribute="trailing" constant="8" symbolic="YES" id="gQk-yc-uzt"/>
+                                        <constraint firstItem="2Jq-gd-rqS" firstAttribute="trailing" secondItem="hGs-dQ-WQ7" secondAttribute="trailingMargin" id="e3Z-1J-bt5"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="2Jq-gd-rqS" secondAttribute="bottom" priority="750" id="ho4-lL-a3P"/>
                                         <constraint firstItem="GZj-Wc-MzS" firstAttribute="leading" secondItem="hGs-dQ-WQ7" secondAttribute="leadingMargin" id="mWc-wk-auQ"/>
-                                        <constraint firstItem="hgS-ir-yJF" firstAttribute="top" secondItem="hGs-dQ-WQ7" secondAttribute="topMargin" id="nQz-7b-F0h"/>
+                                        <constraint firstItem="2Jq-gd-rqS" firstAttribute="top" secondItem="hGs-dQ-WQ7" secondAttribute="topMargin" id="nZh-rE-gPM"/>
+                                        <constraint firstItem="2Jq-gd-rqS" firstAttribute="leading" secondItem="GZj-Wc-MzS" secondAttribute="trailing" constant="8" symbolic="YES" id="nai-q8-qVq"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="cellImage" destination="GZj-Wc-MzS" id="SRx-zz-L2J"/>
+                                    <outlet property="editionName" destination="VdD-Y9-DUh" id="5gS-Vv-w3f"/>
                                     <outlet property="editionPublishDate" destination="2g0-tJ-LdK" id="qMd-iO-FCh"/>
                                     <outlet property="editionSubTitle" destination="W5t-0C-FXW" id="Kj6-og-YV7"/>
                                     <outlet property="editionTitle" destination="TfL-nA-0i1" id="pSw-c5-eVX"/>

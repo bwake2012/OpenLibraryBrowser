@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:OpenLibrary/Model/OLWorkDetail+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:OpenLibrary.xcodeproj">
    </FileRef>
    <FileRef

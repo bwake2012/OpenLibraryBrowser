@@ -16,10 +16,39 @@ private let kWorkDetailCache = "workDetailSearch"
 
 class WorkDetailCoordinator: OLQueryCoordinator {
     
+    typealias FetchedOLWorkDetailController = FetchedResultsController< OLWorkDetail >
+    
+    lazy var fetchedResultsController: FetchedOLWorkDetailController = self.BuildFetchedResultsController()
+    
     weak var workDetailVC: OLWorkDetailViewController?
 
-    var workDetail: OLWorkDetail?
     var workKey: String
+    
+    weak var cachedWorkDetail: OLWorkDetail?
+    var workDetail: OLWorkDetail {
+        
+        get {
+            
+            guard nil == cachedWorkDetail else {
+                
+                return cachedWorkDetail!
+            }
+            
+            guard let workDetail = fetchedResultsController.fetchedObjects?.first else {
+                
+                fatalError( "work detail invalidated before fetch" )
+            }
+            
+            cachedWorkDetail = workDetail
+            
+            return cachedWorkDetail!
+        }
+        
+        set {
+            
+            cachedWorkDetail = newValue
+        }
+    }
     var editionKeys: [String] = []
     
     var workDetailGetOperation: Operation?
@@ -27,32 +56,17 @@ class WorkDetailCoordinator: OLQueryCoordinator {
     var ebookItemGetOperation: Operation?
     
     init(
-            operationQueue: OperationQueue,
-            coreDataStack: CoreDataStack,
-            searchInfo: OLWorkDetail,
-            workDetailVC: OLWorkDetailViewController
-        ) {
-        
-        self.workDetail = searchInfo
-        self.workKey = searchInfo.key
-        self.editionKeys = []
-        self.workDetailVC = workDetailVC
-
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: workDetailVC )
-    }
-    
-    init(
         operationQueue: OperationQueue,
         coreDataStack: CoreDataStack,
-        workKey: String,
+        workDetail: OLWorkDetail,
         editionKeys: [String],
         workDetailVC: OLWorkDetailViewController
         ) {
         
-        assert( !workKey.isEmpty )
+        assert( !workDetail.key.isEmpty )
         
-        self.workDetail = nil
-        self.workKey = workKey
+        self.workKey = workDetail.key
+        self.cachedWorkDetail = workDetail
         self.editionKeys = editionKeys
         self.workDetailVC = workDetailVC
         
@@ -62,13 +76,14 @@ class WorkDetailCoordinator: OLQueryCoordinator {
     func updateUI( workDetail: OLWorkDetail ) {
         
         assert( NSThread.isMainThread() )
+        assert( !workDetail.key.isEmpty )
 
         if let workDetailVC = workDetailVC {
             
+            workDetailVC.updateUI( workDetail )
+            
             retrieveAuthors( workDetail )
             retrieveEBookItems( workDetail )
-            
-            workDetailVC.updateUI( workDetail )
             
             if workDetail.hasImage {
                 
@@ -99,35 +114,26 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         }
     }
     
-    func getSearchInfo( objectID: NSManagedObjectID ) {
-        
-        dispatch_async( dispatch_get_main_queue() ) {
-
-            if let workDetail = self.coreDataStack.mainQueueContext.objectWithID( objectID ) as? OLWorkDetail {
-                
-                self.workDetail = workDetail
-            }
-        }
-    }
+//    func updateWorkDetail( objectID: NSManagedObjectID ) {
+//        
+//        dispatch_async( dispatch_get_main_queue() ) {
+//
+//            if let workDetail = self.coreDataStack.mainQueueContext.objectWithID( objectID ) as? OLWorkDetail {
+//                
+//                self.workDetail = workDetail
+//            }
+//        }
+//    }
     
     func updateUI() {
         
-        let detail: OLWorkDetail? =
-            OLWorkDetail.findObject(
-                    workKey,
-                    entityName: OLWorkDetail.entityName,
-                    moc: self.coreDataStack.mainQueueContext
-                )
-        
-        if let detail = detail {
-            
-            workDetail = detail
-            updateUI( detail )
+        do {
+            NSFetchedResultsController.deleteCacheWithName( kWorkDetailCache )
+            try fetchedResultsController.performFetch()
         }
-        
-        if nil == detail || nil != detail?.provisional_date {
+        catch {
             
-            newQuery( workKey, userInitiated: true, refreshControl: nil )
+            print("Error in the work detail fetched results controller: \(error).")
         }
     }
     
@@ -138,28 +144,17 @@ class WorkDetailCoordinator: OLQueryCoordinator {
                 WorkDetailGetOperation(
                     queryText: workKey,
                     coreDataStack: coreDataStack,
-                    resultHandler: getSearchInfo
+                    resultHandler: nil
                 ) {
                     [weak self] in
                     
-                    if let strongSelf = self {
-                        dispatch_async( dispatch_get_main_queue() ) {
+                    dispatch_async( dispatch_get_main_queue() ) {
+                    
+                        if let strongSelf = self {
                             
-                            if nil == strongSelf.workDetail {
-
-                                strongSelf.workDetail =
-                                    OLWorkDetail.findObject(
-                                        workKey,
-                                        entityName: OLWorkDetail.entityName,
-                                        moc: strongSelf.coreDataStack.mainQueueContext
-                                )
-                            }
-                            if let detail = strongSelf.workDetail {
-                                
-                                strongSelf.updateUI( detail )
-                                
-                                strongSelf.refreshComplete( refreshControl )
-                            }
+//                            strongSelf.updateUI( strongSelf.workDetail )
+                            
+                            strongSelf.refreshComplete( refreshControl )
                         }
                     }
             }
@@ -213,7 +208,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
                             
                             dispatch_async( dispatch_get_main_queue() ) {
                                 
-                                strongSelf.updateUI( workDetail )
+//                                strongSelf.updateUI( strongSelfworkDetail )
                                 
                                 strongSelf.authorDetailGetOperation = nil
                             }
@@ -249,15 +244,14 @@ class WorkDetailCoordinator: OLQueryCoordinator {
                     
                     [weak self] in
                     
-                    if let strongSelf = self {
-                        
-                        dispatch_async( dispatch_get_main_queue() ) {
+                    dispatch_async( dispatch_get_main_queue() ) {
+                            
+                        if let strongSelf = self {
                             
                             if workDetail.ebook_items.isEmpty {
                                 
                                 workDetail.has_fulltext = 0
                             }
-                            strongSelf.updateUI( workDetail )
                             
                             strongSelf.ebookItemGetOperation = nil
                         }
@@ -267,69 +261,50 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         }
     }
     
-//    func objectAtIndexPath( indexPath: NSIndexPath ) -> OLWorkDetail? {
-//        
-//        guard let sections = fetchedWorkDetailController.sections else {
-//            assertionFailure("Sections missing")
-//            return nil
-//        }
-//        
-//        let section = sections[indexPath.section]
-//        if indexPath.row >= section.objects.count {
-//            return nil
-//        } else {
-//            return section.objects[indexPath.row]
-//        }
-//    }
-    
     func refreshQuery( refreshControl: UIRefreshControl? ) {
         
-        newQuery( self.workKey, userInitiated: true, refreshControl: refreshControl )
-        if let workDetail = workDetail {
-            
-            workDetail.resetAuthors()
-            newAuthorQueries( workDetail )
-            
-            workDetail.resetFulltext()
-            newEbookItemQuery( workDetail )
-        }
+        newQuery( workKey, userInitiated: true, refreshControl: refreshControl )
+
     }
     
     // MARK: Utility
-    
-    func findAuthorDetailInStack( navigationController: UINavigationController ) -> OLAuthorDetailViewController? {
+    func BuildFetchedResultsController() -> FetchedOLWorkDetailController {
         
-        var index = navigationController.viewControllers.count - 1
-        repeat {
-            
-            let vc = navigationController.viewControllers[index]
-            
-            if let authorDetailVC = vc as? OLAuthorDetailViewController {
-                
-                if authorDetailVC.queryCoordinator?.authorKey == workDetail?.author_key {
-                    
-                    return authorDetailVC
-                }
-            }
-            
-            index -= 1
-            
-        } while index > 0
+        let fetchRequest = NSFetchRequest( entityName: OLWorkDetail.entityName )
+        let key = workKey
         
-        return nil
+        let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
+        let today = NSDate()
+        let lastWeek = today.dateByAddingTimeInterval( -7 * secondsPerDay )
+        
+        fetchRequest.predicate = NSPredicate( format: "key==%@ && retrieval_date > %@", "\(key)", lastWeek )
+        
+        fetchRequest.sortDescriptors =
+            [
+                //                NSSortDescriptor(key: "coversFound", ascending: false),
+                NSSortDescriptor(key: "index", ascending: true)
+            ]
+        fetchRequest.fetchBatchSize = 100
+        
+        let frc =
+            FetchedOLWorkDetailController(
+                    fetchRequest: fetchRequest,
+                    managedObjectContext: self.coreDataStack.mainQueueContext,
+                    sectionNameKeyPath: nil,
+                    cacheName: kWorkDetailCache
+                )
+        
+        frc.setDelegate( self )
+        return frc
     }
-
+    
     // MARK: install query coordinators
     
     func installWorkDetailEditionsQueryCoordinator( destVC: OLWorkDetailEditionsTableViewController ) {
         
-        let workKey = self.workKey
-        assert( !workKey.isEmpty )
-        
         destVC.queryCoordinator =
             WorkEditionsCoordinator(
-                workKey: workKey,
-                withCoversOnly: true,
+                workDetail: workDetail,
                 tableVC: destVC,
                 coreDataStack: self.coreDataStack,
                 operationQueue: self.operationQueue
@@ -344,17 +319,13 @@ class WorkDetailCoordinator: OLQueryCoordinator {
             EBookEditionsCoordinator(
                 operationQueue: operationQueue,
                 coreDataStack: coreDataStack,
-                workKey: workKey,
+                workDetail: workDetail,
                 editionKeys: editionKeys,
                 tableVC: destVC
         )
     }
 
     func installWorkDeluxeDetailCoordinator( destVC: OLDeluxeDetailTableViewController ) {
-        
-        guard let workDetail = workDetail else {
-            fatalError( "Work Detail object not retrieved.")
-        }
         
         destVC.queryCoordinator =
             DeluxeDetailCoordinator(
@@ -369,10 +340,6 @@ class WorkDetailCoordinator: OLQueryCoordinator {
     
     func installCoverPictureViewCoordinator( destVC: OLPictureViewController ) {
     
-        guard let workDetail = workDetail else {
-            fatalError( "Work Detail object not retrieved.")
-        }
-        
         destVC.queryCoordinator =
             PictureViewCoordinator(
                     operationQueue: operationQueue,
@@ -387,17 +354,95 @@ class WorkDetailCoordinator: OLQueryCoordinator {
     
     func installAuthorDetailCoordinator( destVC: OLAuthorDetailViewController ) {
         
-        guard let workDetail = workDetail else {
-            fatalError( "Work Detail object not retrieved.")
+        guard !workDetail.author_key.isEmpty else {
+            
+            fatalError( "work has no author keys!" )
+        }
+        
+        guard let moc = workDetail.managedObjectContext else {
+            
+            fatalError( "work detail has no managed object!" )
+        }
+
+        guard let firstAuthor: OLAuthorDetail = OLAuthorDetail.findObject( workDetail.author_key, entityName: OLAuthorDetail.entityName, moc: moc ) else {
+            
+            fatalError( "work has no authors!" )
         }
         
         destVC.queryCoordinator =
             AuthorDetailCoordinator(
                 operationQueue: operationQueue,
                 coreDataStack: coreDataStack,
-                authorKey: workDetail.author_key,
+                authorDetail: firstAuthor,
                 authorDetailVC: destVC
             )
+    }
+    
+}
+
+extension WorkDetailCoordinator: FetchedResultsControllerDelegate {
+    
+    func fetchedResultsControllerDidPerformFetch( controller: FetchedOLWorkDetailController ) {
+        
+        guard let workDetail = controller.fetchedObjects?.first else {
+            
+            newQuery( workKey, userInitiated: true, refreshControl: nil )
+            return
+        }
+        
+        self.workDetail = workDetail
+
+        if workDetail.isProvisional {
+            
+            newQuery( workDetail.key, userInitiated: true, refreshControl: nil )
+        }
+
+        updateUI( workDetail )
+    }
+    
+    func fetchedResultsControllerWillChangeContent( controller: FetchedOLWorkDetailController ) {
+        //        authorWorksTableVC?.tableView.beginUpdates()
+    }
+    
+    func fetchedResultsControllerDidChangeContent( controller: FetchedOLWorkDetailController ) {
+        
+        guard let workDetail = controller.fetchedObjects?.first else {
+            
+            newQuery( self.workKey, userInitiated: true, refreshControl: nil )
+            return
+        }
+        
+        self.workDetail = workDetail
+        updateUI( workDetail )
+    }
+    
+    func fetchedResultsController( controller: FetchedOLWorkDetailController,
+                                   didChangeObject change: FetchedResultsObjectChange< OLWorkDetail > ) {
+        
+        switch change {
+        case let .Insert( object, indexPath):
+            break
+            
+        case let .Delete(_, indexPath):
+            break
+            
+        case let .Move(_, fromIndexPath, toIndexPath):
+            break
+            
+        case let .Update( object, indexPath):
+            break
+        }
+    }
+    
+    func fetchedResultsController(controller: FetchedOLWorkDetailController,
+                                  didChangeSection change: FetchedResultsSectionChange< OLWorkDetail >) {
+        
+        switch change {
+        case let .Insert(_, index):
+            break
+        case let .Delete(_, index):
+            break
+        }
     }
     
 }

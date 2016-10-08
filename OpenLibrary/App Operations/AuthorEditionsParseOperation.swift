@@ -40,7 +40,7 @@ class AuthorEditionsParseOperation: Operation {
         
         self.cacheFile = cacheFile
         self.context = coreDataStack.newChildContext()
-        self.context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        self.context.mergePolicy = NSOverwriteMergePolicy
         self.updateResults = updateResults
         self.offset = offset
         self.authorKey = authorKey

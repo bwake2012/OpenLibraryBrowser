@@ -32,13 +32,11 @@ class EditionDetailDownloadOperation: GroupOperation {
             or when the services you use offer secure communication options, you
             should always prefer to use https.
         */
-        var query = queryText
-        if queryText.hasPrefix( "/books/" ) {
-            
-            query = queryText.substringFromIndex( queryText.startIndex.advancedBy( 7 ) )
-        }
-        query = query.stringByAddingPercentEncodingForRFC3986()!
-        let urlString = "https://openlibrary.org/books/\(query).json"
+        
+        assert( queryText.hasPrefix( "/books/" ) )
+        
+        let query = queryText.stringByAddingPercentEncodingForRFC3986()!
+        let urlString = "https://openlibrary.org\(query).json"
         let url = NSURL( string: urlString )!
         let task = NSURLSession.sharedSession().jsonDownloadTaskWithURL( url ) {
             

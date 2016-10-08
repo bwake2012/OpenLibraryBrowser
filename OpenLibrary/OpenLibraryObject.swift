@@ -187,6 +187,9 @@ class OpenLibraryObject {
             if let type = match["type"] as? String where type == "/type/text" {
                 text = match["value"] as? String ?? ""
             }
+        } else if let match = match as? String {
+            
+            text = match
         }
 
         return text

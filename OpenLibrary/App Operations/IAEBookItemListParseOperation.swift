@@ -40,7 +40,7 @@ class IAEBookItemListParseOperation: Operation {
         self.urlString = urlString
         self.cacheFile = cacheFile
         self.context = coreDataStack.newChildContext()
-        self.context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        self.context.mergePolicy = NSOverwriteMergePolicy
         
         super.init()
 

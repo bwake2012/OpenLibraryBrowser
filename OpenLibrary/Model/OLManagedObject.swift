@@ -183,9 +183,10 @@ class OLManagedObject: NSManagedObject {
 
     var deluxeData: [[DeluxeData]] {
         
-        let data = self.buildDeluxeData()
-        
-        return data
+        get {
+
+            return self.buildDeluxeData()
+        }
     }
     
     var isProvisional: Bool {
@@ -193,10 +194,10 @@ class OLManagedObject: NSManagedObject {
         return false
     }
     
-    lazy var hasDeluxeData: Bool = {
+    var hasDeluxeData: Bool {
         
-        return 1 < self.deluxeData.count || ( 1 == self.deluxeData.count && 1 < self.deluxeData[0].count )
-    }()
+        return true
+    }
     
     class func saveLoadedLanguages( loadedLanguages: [String: String] ) {
         
@@ -270,23 +271,17 @@ class OLManagedObject: NSManagedObject {
         }
     }
     
-    func localURL( key:String, size: String, index: Int = 0 ) -> NSURL {
+    func localURL( imageID:Int, size: String ) -> NSURL {
         
         let docFolder = try! NSFileManager.defaultManager().URLForDirectory( .CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false )
         
         let imagesFolder = docFolder.URLByAppendingPathComponent( "images" )
         
-        let parts = key.componentsSeparatedByString( "/" )
-        let goodParts = parts.filter { (x) -> Bool in !x.isEmpty }
-        
-        let imagesSubFolder = imagesFolder.URLByAppendingPathComponent( goodParts[0] )
-        
-        var fileName = "\(goodParts[1])-\(size)"
-        if 0 < index {
-            fileName += "\(index)"
-        }
+        let imageIDString = String( imageID )
+       
+        var fileName = "\(imageIDString)-\(size)"
         fileName += ".jpg"
-        let url = imagesSubFolder.URLByAppendingPathComponent( fileName )
+        let url = imagesFolder.URLByAppendingPathComponent( fileName )
         
         return url
     }

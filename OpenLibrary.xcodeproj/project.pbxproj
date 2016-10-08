@@ -25,8 +25,6 @@
 		C410821B1CBA961500319B83 /* TitleSearchResultsDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41082171CBA961500319B83 /* TitleSearchResultsDownloadOperation.swift */; };
 		C410821C1CBA961500319B83 /* TitleSearchResultsParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41082181CBA961500319B83 /* TitleSearchResultsParseOperation.swift */; };
 		C410821E1CBAB26000319B83 /* TitleSearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C410821D1CBAB26000319B83 /* TitleSearchResultTableViewCell.swift */; };
-		C41082201CBAB27700319B83 /* TitleSearchResultsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C410821F1CBAB27700319B83 /* TitleSearchResultsCoordinator.swift */; };
-		C41082221CBAE2AC00319B83 /* AuthorSearchResultsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41082211CBAE2AC00319B83 /* AuthorSearchResultsCoordinator.swift */; };
 		C412FE511CC29D2400EDB935 /* LanguagesParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412FE4E1CC29D2400EDB935 /* LanguagesParseOperation.swift */; };
 		C412FE521CC29D2400EDB935 /* LanguagesGetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412FE4F1CC29D2400EDB935 /* LanguagesGetOperation.swift */; };
 		C412FE531CC29D2400EDB935 /* LanguagesDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412FE501CC29D2400EDB935 /* LanguagesDownloadOperation.swift */; };
@@ -99,6 +97,7 @@
 		C4677EA51CA0351B0070CDFD /* AuthorEditionsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4677EA41CA0351B0070CDFD /* AuthorEditionsCoordinator.swift */; };
 		C4677EA91CA035280070CDFD /* AuthorWorksCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4677EA71CA035280070CDFD /* AuthorWorksCoordinator.swift */; };
 		C468B9471CBD3E2800F3EAC3 /* AspectRatioImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C468B9461CBD3E2800F3EAC3 /* AspectRatioImageView.swift */; };
+		C46DB45F1DA2D28A00E3896E /* SaveProvisionalObjectsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46DB45E1DA2D28A00E3896E /* SaveProvisionalObjectsOperation.swift */; };
 		C46E7E4D1C8619C300D2ED51 /* OLAuthorDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E7E4C1C8619C300D2ED51 /* OLAuthorDetailViewController.swift */; };
 		C46E7E511C861A7000D2ED51 /* AuthorNameSearchOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E7E4E1C861A7000D2ED51 /* AuthorNameSearchOperation.swift */; };
 		C46E7E521C861A7000D2ED51 /* AuthorSearchResultsDeleteOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46E7E4F1C861A7000D2ED51 /* AuthorSearchResultsDeleteOperation.swift */; };
@@ -152,6 +151,7 @@
 		C4B34D841D400ADF00BC85E8 /* EBookEditionsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B34D831D400ADF00BC85E8 /* EBookEditionsCoordinator.swift */; };
 		C4B34D861D4057DD00BC85E8 /* WorkEditionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B34D851D4057DD00BC85E8 /* WorkEditionTableViewCell.swift */; };
 		C4D0A9571CEF4DD20032E429 /* DeluxeDetailImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4D0A9561CEF4DD20032E429 /* DeluxeDetailImageTableViewCell.xib */; };
+		C4D53E281DA2B560009961AC /* SaveObjectsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D53E271DA2B560009961AC /* SaveObjectsOperation.swift */; };
 		C4DA1F7B1C8A329B00DFA4BF /* AuthorWorksGetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DA1F771C8A329B00DFA4BF /* AuthorWorksGetOperation.swift */; };
 		C4DA1F7D1C8A329B00DFA4BF /* AuthorWorksDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DA1F791C8A329B00DFA4BF /* AuthorWorksDownloadOperation.swift */; };
 		C4DA1F7E1C8A329B00DFA4BF /* AuthorWorksParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DA1F7A1C8A329B00DFA4BF /* AuthorWorksParseOperation.swift */; };
@@ -175,7 +175,6 @@
 		C4E863941C99E951002C0E6B /* AuthorEditionsDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E863911C99E951002C0E6B /* AuthorEditionsDownloadOperation.swift */; };
 		C4E863951C99E951002C0E6B /* AuthorEditionsGetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E863921C99E951002C0E6B /* AuthorEditionsGetOperation.swift */; };
 		C4E863961C99E951002C0E6B /* AuthorEditionsParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E863931C99E951002C0E6B /* AuthorEditionsParseOperation.swift */; };
-		C4E863981C9A32FB002C0E6B /* OLAuthorDetailEditionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E863971C9A32FB002C0E6B /* OLAuthorDetailEditionsTableViewController.swift */; };
 		C4E8639A1C9A3897002C0E6B /* EBookEditionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E863991C9A3897002C0E6B /* EBookEditionTableViewCell.swift */; };
 		C4EF72F51D46818E0056D8E4 /* GeneralSearchResultSegmentedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4EF72F41D46818E0056D8E4 /* GeneralSearchResultSegmentedTableViewCell.xib */; };
 		C4EF99D21CA1B04C00BEF2D3 /* AuthorDetailWithThumbGetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EF99D11CA1B04C00BEF2D3 /* AuthorDetailWithThumbGetOperation.swift */; };
@@ -232,8 +231,6 @@
 		C41082171CBA961500319B83 /* TitleSearchResultsDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TitleSearchResultsDownloadOperation.swift; path = "App Operations/TitleSearchResultsDownloadOperation.swift"; sourceTree = "<group>"; };
 		C41082181CBA961500319B83 /* TitleSearchResultsParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TitleSearchResultsParseOperation.swift; path = "App Operations/TitleSearchResultsParseOperation.swift"; sourceTree = "<group>"; };
 		C410821D1CBAB26000319B83 /* TitleSearchResultTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TitleSearchResultTableViewCell.swift; path = Views/TitleSearchResultTableViewCell.swift; sourceTree = "<group>"; };
-		C410821F1CBAB27700319B83 /* TitleSearchResultsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TitleSearchResultsCoordinator.swift; path = Coordinators/TitleSearchResultsCoordinator.swift; sourceTree = "<group>"; };
-		C41082211CBAE2AC00319B83 /* AuthorSearchResultsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorSearchResultsCoordinator.swift; sourceTree = "<group>"; };
 		C412FE4E1CC29D2400EDB935 /* LanguagesParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguagesParseOperation.swift; path = "App Operations/LanguagesParseOperation.swift"; sourceTree = "<group>"; };
 		C412FE4F1CC29D2400EDB935 /* LanguagesGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguagesGetOperation.swift; path = "App Operations/LanguagesGetOperation.swift"; sourceTree = "<group>"; };
 		C412FE501CC29D2400EDB935 /* LanguagesDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguagesDownloadOperation.swift; path = "App Operations/LanguagesDownloadOperation.swift"; sourceTree = "<group>"; };
@@ -306,6 +303,7 @@
 		C4677EA41CA0351B0070CDFD /* AuthorEditionsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorEditionsCoordinator.swift; path = Coordinators/AuthorEditionsCoordinator.swift; sourceTree = "<group>"; };
 		C4677EA71CA035280070CDFD /* AuthorWorksCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorWorksCoordinator.swift; path = Coordinators/AuthorWorksCoordinator.swift; sourceTree = "<group>"; };
 		C468B9461CBD3E2800F3EAC3 /* AspectRatioImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AspectRatioImageView.swift; sourceTree = "<group>"; };
+		C46DB45E1DA2D28A00E3896E /* SaveProvisionalObjectsOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SaveProvisionalObjectsOperation.swift; path = "App Operations/SaveProvisionalObjectsOperation.swift"; sourceTree = "<group>"; };
 		C46E7E4C1C8619C300D2ED51 /* OLAuthorDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLAuthorDetailViewController.swift; path = "View Controllers/OLAuthorDetailViewController.swift"; sourceTree = "<group>"; };
 		C46E7E4E1C861A7000D2ED51 /* AuthorNameSearchOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorNameSearchOperation.swift; path = "App Operations/AuthorNameSearchOperation.swift"; sourceTree = "<group>"; };
 		C46E7E4F1C861A7000D2ED51 /* AuthorSearchResultsDeleteOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorSearchResultsDeleteOperation.swift; path = "App Operations/AuthorSearchResultsDeleteOperation.swift"; sourceTree = "<group>"; };
@@ -359,6 +357,7 @@
 		C4B34D831D400ADF00BC85E8 /* EBookEditionsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EBookEditionsCoordinator.swift; sourceTree = "<group>"; };
 		C4B34D851D4057DD00BC85E8 /* WorkEditionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkEditionTableViewCell.swift; path = Views/WorkEditionTableViewCell.swift; sourceTree = "<group>"; };
 		C4D0A9561CEF4DD20032E429 /* DeluxeDetailImageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeluxeDetailImageTableViewCell.xib; path = Views/DeluxeDetailImageTableViewCell.xib; sourceTree = "<group>"; };
+		C4D53E271DA2B560009961AC /* SaveObjectsOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SaveObjectsOperation.swift; path = "App Operations/SaveObjectsOperation.swift"; sourceTree = "<group>"; };
 		C4DA1F771C8A329B00DFA4BF /* AuthorWorksGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorWorksGetOperation.swift; path = "App Operations/AuthorWorksGetOperation.swift"; sourceTree = "<group>"; };
 		C4DA1F791C8A329B00DFA4BF /* AuthorWorksDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorWorksDownloadOperation.swift; path = "App Operations/AuthorWorksDownloadOperation.swift"; sourceTree = "<group>"; };
 		C4DA1F7A1C8A329B00DFA4BF /* AuthorWorksParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorWorksParseOperation.swift; path = "App Operations/AuthorWorksParseOperation.swift"; sourceTree = "<group>"; };
@@ -388,7 +387,6 @@
 		C4E863911C99E951002C0E6B /* AuthorEditionsDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorEditionsDownloadOperation.swift; path = "App Operations/AuthorEditionsDownloadOperation.swift"; sourceTree = "<group>"; };
 		C4E863921C99E951002C0E6B /* AuthorEditionsGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorEditionsGetOperation.swift; path = "App Operations/AuthorEditionsGetOperation.swift"; sourceTree = "<group>"; };
 		C4E863931C99E951002C0E6B /* AuthorEditionsParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorEditionsParseOperation.swift; path = "App Operations/AuthorEditionsParseOperation.swift"; sourceTree = "<group>"; };
-		C4E863971C9A32FB002C0E6B /* OLAuthorDetailEditionsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLAuthorDetailEditionsTableViewController.swift; path = "View Controllers/OLAuthorDetailEditionsTableViewController.swift"; sourceTree = "<group>"; };
 		C4E863991C9A3897002C0E6B /* EBookEditionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EBookEditionTableViewCell.swift; path = Views/EBookEditionTableViewCell.swift; sourceTree = "<group>"; };
 		C4EF72F41D46818E0056D8E4 /* GeneralSearchResultSegmentedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GeneralSearchResultSegmentedTableViewCell.xib; path = Views/GeneralSearchResultSegmentedTableViewCell.xib; sourceTree = "<group>"; };
 		C4EF99D11CA1B04C00BEF2D3 /* AuthorDetailWithThumbGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorDetailWithThumbGetOperation.swift; path = "App Operations/AuthorDetailWithThumbGetOperation.swift"; sourceTree = "<group>"; };
@@ -479,7 +477,6 @@
 			children = (
 				C4EF99DF1CA3792700BEF2D3 /* AuthorDetailCoordinator.swift */,
 				C4677EA41CA0351B0070CDFD /* AuthorEditionsCoordinator.swift */,
-				C41082211CBAE2AC00319B83 /* AuthorSearchResultsCoordinator.swift */,
 				C4677EA71CA035280070CDFD /* AuthorWorksCoordinator.swift */,
 				C4A0F0921D15FF3A00D0F604 /* BookDownloadCoordinator.swift */,
 				C422A49C1CCAD08800A6B4A7 /* DeluxeDetailCoordinator.swift */,
@@ -491,7 +488,6 @@
 				C4F00C581CD96D4E002D7E14 /* OLDeluxeDetailCoordinator.swift */,
 				C49BDD191CB6E75E00A2EEEF /* OLQueryCoordinator.swift */,
 				C49BDD131CB59DAF00A2EEEF /* PictureViewCoordinator.swift */,
-				C410821F1CBAB27700319B83 /* TitleSearchResultsCoordinator.swift */,
 				C4EF99E01CA3792700BEF2D3 /* WorkDetailCoordinator.swift */,
 				C4EF99DD1CA3714900BEF2D3 /* WorkEditionsCoordinator.swift */,
 				C47B03BF1D5A352B001F323C /* SearchState.swift */,
@@ -648,6 +644,8 @@
 				C40BE8EE1D7C8C7700D650E8 /* Operation+produceAlert.swift */,
 				C45EBC081D6F4A3D00ED1908 /* Operation+ValidateMIMEType.swift */,
 				C451837B1D3E8662006681B0 /* OperationErrors.swift */,
+				C4D53E271DA2B560009961AC /* SaveObjectsOperation.swift */,
+				C46DB45E1DA2D28A00E3896E /* SaveProvisionalObjectsOperation.swift */,
 				C4E35ECA1C80E2780015D187 /* SearchResults.swift */,
 				C41082151CBA961500319B83 /* TitleSearchOperation.swift */,
 				C41082161CBA961500319B83 /* TitleSearchResultsDeleteOperation.swift */,
@@ -670,7 +668,6 @@
 			isa = PBXGroup;
 			children = (
 				C48A6CF91D7C918800B65821 /* OLHTMLErrorViewController.swift */,
-				C4E863971C9A32FB002C0E6B /* OLAuthorDetailEditionsTableViewController.swift */,
 				C46E7E4C1C8619C300D2ED51 /* OLAuthorDetailViewController.swift */,
 				C4DA1F7F1C8A5AA700DFA4BF /* OLAuthorDetailWorksTableViewController.swift */,
 				C4A0F08E1D14B90F00D0F604 /* OLBookDownloadViewController.swift */,
@@ -1021,9 +1018,9 @@
 				C42DBE6C1CBD68740048788E /* SegueWithTableViewCellZoom.swift in Sources */,
 				C4B34D821D400A5600BC85E8 /* OLEBookEditionsTableViewController.swift in Sources */,
 				C412FE5B1CC3D45A00EDB935 /* OLAuthorDetail+CoreDataProperties.swift in Sources */,
-				C41082221CBAE2AC00319B83 /* AuthorSearchResultsCoordinator.swift in Sources */,
 				C4345E001CFFCCDF0091D4A0 /* WorkEditionEbooksGetOperation.swift in Sources */,
 				C4817C211CA3817300BDCD4D /* WorkDetailParseOperation.swift in Sources */,
+				C4D53E281DA2B560009961AC /* SaveObjectsOperation.swift in Sources */,
 				C48A6CF81D7C908700B65821 /* HTMLPageOperation.swift in Sources */,
 				C46E7E521C861A7000D2ED51 /* AuthorSearchResultsDeleteOperation.swift in Sources */,
 				C4A0F0851D1468C500D0F604 /* BookGetOperation.swift in Sources */,
@@ -1041,7 +1038,6 @@
 				C412FE521CC29D2400EDB935 /* LanguagesGetOperation.swift in Sources */,
 				C4178EF51D67A50B00D274E8 /* NavigationControllerDelegate.swift in Sources */,
 				C42DBE711CBD68B20048788E /* ImageViewTransitionSource.swift in Sources */,
-				C4E863981C9A32FB002C0E6B /* OLAuthorDetailEditionsTableViewController.swift in Sources */,
 				C42DBE6E1CBD68740048788E /* TableviewCellZoomTransition.swift in Sources */,
 				C430E9CA1CD2B294007E15AD /* DeluxeDetailInlineTableViewCell.swift in Sources */,
 				C4178EF81D67B1E400D274E8 /* WindowShadeTransition.swift in Sources */,
@@ -1050,7 +1046,6 @@
 				C488D61C1D09C0460025B61D /* DeluxeDetailHTMLTableViewCell.swift in Sources */,
 				C4EF99E21CA3792700BEF2D3 /* WorkDetailCoordinator.swift in Sources */,
 				C42D61DA1C87D63800909D43 /* ImagelDownloadOperation.swift in Sources */,
-				C41082201CBAB27700319B83 /* TitleSearchResultsCoordinator.swift in Sources */,
 				C422A49F1CCD22AC00A6B4A7 /* SegueWithUnfold.swift in Sources */,
 				C48AE6021D4FFE7800F2B1E6 /* SearchDismissalAnimator.swift in Sources */,
 				C4EF99D61CA3707900BEF2D3 /* OLWorkDetailViewController.swift in Sources */,
@@ -1084,6 +1079,7 @@
 				C410821B1CBA961500319B83 /* TitleSearchResultsDownloadOperation.swift in Sources */,
 				C4EF99DE1CA3714900BEF2D3 /* WorkEditionsCoordinator.swift in Sources */,
 				C4188A2B1CE511D200D02E19 /* IAEBookItemGetOperation.swift in Sources */,
+				C46DB45F1DA2D28A00E3896E /* SaveProvisionalObjectsOperation.swift in Sources */,
 				C406E7561D8C75C9008E2379 /* NSBundle+AppVersion.swift in Sources */,
 				C4E863951C99E951002C0E6B /* AuthorEditionsGetOperation.swift in Sources */,
 				C437DEA21CECEE45005CED1A /* GeneralSearchResultsCoordinator.swift in Sources */,

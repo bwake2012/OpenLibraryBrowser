@@ -35,7 +35,7 @@ class SaveObjectsOperation: Operation {
         
         self.objectID = objectID
         self.context = coreDataStack.newChildContext( name: "saveObjects" )
-        self.context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        self.context.mergePolicy = NSOverwriteMergePolicy
         
         super.init()
 

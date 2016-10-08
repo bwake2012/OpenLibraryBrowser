@@ -140,7 +140,6 @@ class OLTitleSearchResult: OLManagedObject, CoreDataModelable {
     
     override func localURL( size: String, index: Int = 0 ) -> NSURL {
         
-        let key = self.key
-        return super.localURL( key, size: size, index: index )
+        return super.localURL( firstImageID, size: size )
     }
 }

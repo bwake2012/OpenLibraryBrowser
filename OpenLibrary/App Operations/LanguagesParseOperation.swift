@@ -35,7 +35,7 @@ class LanguagesParseOperation: Operation {
         
         self.cacheFile = cacheFile
         self.context = coreDataStack.newChildContext( name: "saveLanguages" )
-        self.context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        self.context.mergePolicy = NSOverwriteMergePolicy
         
         super.init()
 

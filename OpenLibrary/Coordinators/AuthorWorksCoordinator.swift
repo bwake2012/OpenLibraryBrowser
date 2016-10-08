@@ -25,41 +25,17 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
 
     var authorWorksGetOperation: Operation?
     
-    private lazy var fetchedResultsController: FetchedOLWorkDetailController = {
-        
-        let fetchRequest = NSFetchRequest( entityName: OLWorkDetail.entityName )
-        let key = self.authorKey
-
-        let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
-        let today = NSDate()
-        let lastWeek = today.dateByAddingTimeInterval( -7 * secondsPerDay )
-        
-        fetchRequest.predicate = NSPredicate( format: "author_key==%@ && retrieval_date > %@", "\(key)", lastWeek )
-        
-        fetchRequest.sortDescriptors =
-            [
-//                NSSortDescriptor(key: "coversFound", ascending: false),
-                NSSortDescriptor(key: "index", ascending: true)
-            ]
-        fetchRequest.fetchBatchSize = 100
-        
-        let frc = FetchedOLWorkDetailController( fetchRequest: fetchRequest,
-            managedObjectContext: self.coreDataStack.mainQueueContext,
-            sectionNameKeyPath: nil )
-        
-        frc.setDelegate( self )
-        return frc
-    }()
+    lazy var fetchedResultsController: FetchedOLWorkDetailController = self.BuildFetchedResultsController()
     
-    var authorKey: String
-    var numFound = kPageSize * 2
-    var searchResults = SearchResults()
+    var authorDetail: OLAuthorDetail
+    var searchResults = SearchResults( start: 0, numFound: -1, pageSize: kPageSize )
 
     var highWaterMark = 0
+    var setRetrievals = Set< Int >()
     
-    init( authorKey: String, authorWorksTableVC: OLAuthorDetailWorksTableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
+    init( authorDetail: OLAuthorDetail, authorWorksTableVC: OLAuthorDetailWorksTableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         
-        self.authorKey = authorKey
+        self.authorDetail = authorDetail
 
         self.authorWorksTableVC = authorWorksTableVC
         
@@ -90,25 +66,14 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
             return nil
         }
         
-        let object = section.objects[indexPath.row]
-        
-        if libraryIsReachable() {
+        let index = indexPath.row
+        let workDetail = section.objects[index]
+        if workDetail.isProvisional && needAnotherPage( index ) {
             
-            if object.isProvisional {
-                
-                let operation =
-                    WorkDetailGetOperation(
-                            queryText: object.key,
-                            coreDataStack: coreDataStack,
-                            resultHandler: { (objectID) in },
-                            completionHandler: {}
-                        )
-                operation.userInitiated = false
-                operationQueue.addOperation( operation )
-            }
+            nextQueryPage()
         }
-
-        return object
+        
+        return workDetail
     }
     
     func displayToCell( cell: AuthorWorksTableViewCell, indexPath: NSIndexPath ) -> OLWorkDetail? {
@@ -148,35 +113,14 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
             self.searchResults = SearchResults()
             self.highWaterMark = 0
             
-            authorWorksTableVC?.coordinatorIsBusy()
             updateFooter( "fetching author works..." )
-            
             authorWorksGetOperation =
-                AuthorWorksGetOperation(
-                        queryText: authorKey,
-                        offset: 0, limit: kPageSize,
-                        coreDataStack: coreDataStack,
-                        updateResults: self.updateResults
-                    ) {
-                        [weak self] in
-                        
-                        if let strongSelf = self {
-
-                            dispatch_async( dispatch_get_main_queue() ) {
-
-                                refreshControl?.endRefreshing()
-                            
-                                strongSelf.authorWorksTableVC?.coordinatorIsNoLongerBusy()
-                                
-                                strongSelf.updateFooter()
-
-                                strongSelf.authorWorksGetOperation = nil
-                            }
-                        }
-                    }
-            
-            authorWorksGetOperation!.userInitiated = userInitiated
-            operationQueue.addOperation( authorWorksGetOperation! )
+                enqueueQuery(
+                        authorDetail,
+                        offset: highWaterMark, 
+                        userInitiated: false,
+                        refreshControl: nil
+                    )
         }
     }
     
@@ -189,50 +133,69 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         }
         
         updateHeader( "" )
-        if nil == authorWorksGetOperation && !authorKey.isEmpty {
+        if nil == authorWorksGetOperation  {
             
-            authorWorksTableVC?.coordinatorIsBusy()
             updateFooter( "fetching more author works..." )
             
             authorWorksGetOperation =
-                AuthorWorksGetOperation(
-                        queryText: self.authorKey,
-                        offset: highWaterMark, limit: kPageSize,
-                        coreDataStack: coreDataStack,
-                        updateResults: self.updateResults
-                    ) {
+                enqueueQuery(
+                        authorDetail,
+                        offset: highWaterMark,
+                        userInitiated: false,
+                        refreshControl: nil
+                    )
+         }
+    }
+    
+    func enqueueQuery( authorDetail: OLAuthorDetail, offset: Int, userInitiated: Bool, refreshControl: UIRefreshControl? ) -> Operation {
+        
+        authorWorksTableVC?.coordinatorIsBusy()
+        
+        let page = offset / kPageSize
+        setRetrievals.insert( page )
+        
+        let authorWorksGetOperation =
+            AuthorWorksGetOperation(
+                queryText: authorDetail.key,
+                parentObjectID: authorDetail.objectID,
+                offset: page * kPageSize, limit: kPageSize,
+                coreDataStack: coreDataStack,
+                updateResults: self.updateResults
+            ) {
                 [weak self] in
+                
+                dispatch_async( dispatch_get_main_queue() ) {
                         
-                if let strongSelf = self {
-                    dispatch_async( dispatch_get_main_queue() ) {
-        //                refreshControl?.endRefreshing()
-    //                    self.updateUI()
+                    if let strongSelf = self {
+                        
+                        refreshControl?.endRefreshing()
+                        
+                        strongSelf.authorWorksTableVC?.coordinatorIsNoLongerBusy()
+                        
+                        strongSelf.updateFooter()
+                        
+                        strongSelf.authorWorksGetOperation = nil
                     }
-                    
-                    strongSelf.authorWorksTableVC?.coordinatorIsNoLongerBusy()
-
-                    strongSelf.updateFooter()
-                    strongSelf.authorWorksGetOperation = nil
                 }
-            }
-            
-            authorWorksGetOperation!.userInitiated = false
-            operationQueue.addOperation( authorWorksGetOperation! )
         }
+        
+        authorWorksGetOperation.userInitiated = userInitiated
+        operationQueue.addOperation( authorWorksGetOperation )
+        
+        return authorWorksGetOperation
     }
     
     func refreshQuery( refreshControl: UIRefreshControl? ) {
         
-        newQuery( authorKey, userInitiated: true, refreshControl: refreshControl )
+        newQuery( authorDetail.key, userInitiated: true, refreshControl: refreshControl )
     }
     
     private func needAnotherPage( index: Int ) -> Bool {
         
         return
             nil == authorWorksGetOperation &&
-            !self.authorKey.isEmpty &&
-            highWaterMark < Int( self.numFound ) &&
-            index >= ( highWaterMark - 1 )
+            !setRetrievals.contains( index / kPageSize ) &&
+            ( -1 == self.searchResults.numFound || highWaterMark < self.searchResults.numFound )
     }
     
     // MARK: SearchResultsUpdater
@@ -242,12 +205,17 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
             [weak self] in
             
             if let strongSelf = self {
-                strongSelf.searchResults = searchResults
-                strongSelf.highWaterMark = searchResults.start + searchResults.pageSize
-                if strongSelf.numFound != searchResults.numFound {
-                    strongSelf.numFound = searchResults.numFound
-                }
                 
+                strongSelf.searchResults = searchResults
+                if searchResults.numFound == strongSelf.fetchedResultsController.count {
+                    
+                    strongSelf.highWaterMark = searchResults.numFound
+
+                } else {
+
+                    strongSelf.highWaterMark =
+                        max( strongSelf.fetchedResultsController.count, searchResults.start + searchResults.pageSize )
+                }
             }
         }
     }
@@ -259,27 +227,52 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
     
     private func updateFooter( text: String = "" ) {
         
-        updateTableFooter( authorWorksTableVC?.tableView, highWaterMark: highWaterMark, numFound: Int( numFound ), text: text )
+        updateTableFooter( authorWorksTableVC?.tableView, highWaterMark: highWaterMark, numFound: searchResults.numFound, text: text )
     }
+    
+    // MARK: Utility
+    func BuildFetchedResultsController() -> FetchedOLWorkDetailController {
+        
+        let fetchRequest = NSFetchRequest( entityName: OLWorkDetail.entityName )
+        let key = authorDetail.key
+        
+        let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
+        let today = NSDate()
+        let lastWeek = today.dateByAddingTimeInterval( -7 * secondsPerDay )
+        
+        fetchRequest.predicate = NSPredicate( format: "author_key==%@ && retrieval_date > %@", "\(key)", lastWeek )
+        
+        fetchRequest.sortDescriptors =
+            [
+                //                NSSortDescriptor(key: "coversFound", ascending: false),
+                NSSortDescriptor(key: "index", ascending: true)
+            ]
+        fetchRequest.fetchBatchSize = 100
+        
+        let frc = FetchedOLWorkDetailController( fetchRequest: fetchRequest,
+                                                 managedObjectContext: self.coreDataStack.mainQueueContext,
+                                                 sectionNameKeyPath: nil )
+        
+        frc.setDelegate( self )
+        return frc
+    }
+
     
     // MARK: FetchedResultsControllerDelegate
     func fetchedResultsControllerDidPerformFetch( controller: FetchedOLWorkDetailController ) {
         
-        if 0 == controller.count {
+        guard let workDetail = controller.fetchedObjects?.first else {
             
-            newQuery( authorKey, userInitiated: true, refreshControl: nil )
-            
-        } else if nil != objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {
-
-             highWaterMark = controller.count
-            if highWaterMark % kPageSize != 0 {
-                numFound = highWaterMark
-            } else {
-                numFound = highWaterMark + kPageSize
-            }
-            
-            updateFooter()
+            newQuery( authorDetail.key, userInitiated: true, refreshControl: nil )
+            return
         }
+
+        if workDetail.isProvisional {
+                    
+            newQuery( authorDetail.key, userInitiated: true, refreshControl: nil )
+        }
+        
+        updateFooter()
     }
     
     func fetchedResultsControllerWillChangeContent( controller: FetchedOLWorkDetailController ) {
@@ -367,7 +360,8 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
             WorkDetailCoordinator(
                     operationQueue: self.operationQueue,
                     coreDataStack: self.coreDataStack,
-                    searchInfo: workDetail,
+                    workDetail: workDetail,
+                    editionKeys: [],
                     workDetailVC: destVC
                 )
 

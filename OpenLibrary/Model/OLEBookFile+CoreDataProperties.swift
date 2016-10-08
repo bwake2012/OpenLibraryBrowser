@@ -16,6 +16,7 @@ extension OLEBookFile {
     
     @NSManaged var retrieval_date: NSDate
     @NSManaged var provisional_date: NSDate?
+    @NSManaged var is_provisional: Bool
 
     @NSManaged var workKey: String
     @NSManaged var editionKey: String

@@ -30,7 +30,7 @@ class WorkEditionsGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, objectID: NSManagedObjectID, offset: Int, limit: Int, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater, completionHandler: Void -> Void ) {
+    init( queryText: String, objectID: NSManagedObjectID?, offset: Int, limit: Int, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater, completionHandler: Void -> Void ) {
 
         let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
 

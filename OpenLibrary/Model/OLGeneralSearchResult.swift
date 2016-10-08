@@ -83,7 +83,7 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
     
     override func localURL( size: String, index: Int = 0 ) -> NSURL {
 
-        return super.localURL( self.key, size: size, index: index )
+        return super.localURL( firstImageID, size: size )
     }
     
     func populateObject( parsed: OLGeneralSearchResult.ParsedFromJSON ) {
@@ -346,111 +346,6 @@ extension OLGeneralSearchResult {
 
 extension OLGeneralSearchResult {
     
-    func saveProvisionalEdition( editionIndex: Int, parsed: OLGeneralSearchResult, moc: NSManagedObjectContext ) -> OLEditionDetail? {
-        
-        var newObject: OLEditionDetail?
-        
-        if editionIndex < parsed.edition_key.count {
-            
-            newObject = OLGeneralSearchResult.findObject( parsed.edition_key[editionIndex], entityName: OLGeneralSearchResult.entityName, moc: moc )
-            if nil == newObject {
-                
-                newObject =
-                    NSEntityDescription.insertNewObjectForEntityForName(
-                        OLEditionDetail.entityName, inManagedObjectContext: moc
-                    ) as? OLEditionDetail
-                
-                if let newObject = newObject {
-                    
-                    newObject.retrieval_date = NSDate()
-                    newObject.provisional_date = NSDate()
-                    
-                    newObject.has_fulltext = parsed.has_fulltext ? 1 : 0
-                    
-                    newObject.key = parsed.edition_key[editionIndex]
-                    newObject.type = "/type/edition"
-                    
-                    newObject.work_key = parsed.key
-                    
-                    newObject.authors = parsed.author_key
-                    newObject.author_key = parsed.author_key.first ?? ""
-//                    newObject.author_name_cache = parsed.author_name
-                    
-                    newObject.title = parsed.title
-                    if parsed.cover_i > 0 && newObject.key == parsed.cover_edition_key {
-                        newObject.covers = [Int( parsed.cover_i )]
-                    } else {
-                        newObject.covers = [Int]()
-                    }
-                    newObject.coversFound = !newObject.covers.isEmpty && 0 < newObject.covers[0]
-                    
-                    newObject.languages = [String]()
-                    
-                    if editionIndex < parsed.publish_date.count {
-                        
-                        newObject.publish_date = parsed.publish_date[editionIndex]
-                        
-                    } else {
-                        
-                        newObject.publish_date = ""
-                    }
-                    newObject.subjects = parsed.subject
-                    
-                    newObject.accompanying_material = ""
-                    
-                    newObject.by_statement = ""
-                    newObject.collections = []
-                    newObject.contributions = []
-                    newObject.copyright_date = ""
-                    
-                    newObject.dewey_decimal_class = []
-                    newObject.distributors = []
-                    newObject.edition_description = ""
-                    newObject.edition_name = ""
-                    newObject.first_sentence = ""
-                    newObject.genres = []
-                    newObject.isbn_10 = []
-                    newObject.isbn_13 = []
-                    
-                    newObject.lc_classifications = []
-                    newObject.lccn = []
-                    newObject.location = []
-                    newObject.notes = ""
-                    newObject.number_of_pages = 0
-                    newObject.ocaid = ""
-                    newObject.oclc_numbers = []
-                    newObject.other_titles = []
-                    newObject.pagination = ""
-                    newObject.physical_dimensions = ""
-                    newObject.physical_format = ""
-                    newObject.publish_country = ""
-                    
-                    newObject.publish_places = []
-                    newObject.publishers = []
-                    newObject.scan_on_demand = false
-                    newObject.series = []
-                    newObject.source_records = []
-                    
-                    newObject.table_of_contents = [[:]]
-                    newObject.title_prefix = ""
-                    
-                    newObject.translated_from = []
-                    newObject.translation_of = ""
-                    newObject.uri_descriptions = []
-                    newObject.uris = []
-                    newObject.weight = ""
-                    newObject.work_titles = []
-                    newObject.works = []
-                }
-            }
-        }
-        
-        return newObject
-    }
-}
-
-extension OLGeneralSearchResult {
-    
     func saveProvisionalObjects() -> OLWorkDetail? {
         
         guard nil == self.work_detail else { return self.work_detail }
@@ -461,43 +356,10 @@ extension OLGeneralSearchResult {
         if let workDetail = workDetail {
             
             self.work_detail = workDetail
-            
-            for authorIndex in 0..<self.author_key.count {
-                
-                if let authorDetail = OLAuthorDetail.saveProvisionalAuthor( authorIndex, parsed: self, moc: moc ) {
-                    
-                    workDetail.author_detail = workDetail.author_detail?.setByAddingObject( authorDetail )
-                }
-            }
-            
-            var edition_keys: Set< String > = []
-            if let editions = workDetail.edition_detail where 0 != editions.count {
-                
-                for edition in editions {
-                    
-                    edition_keys.insert( edition.key )
-                }
-                
-            } else {
-            
-                let editions: [OLEditionDetail]? = OLEditionDetail.findObject( "work_key", entityName: OLEditionDetail.entityName, moc: moc )
-                if let editions = editions {
-                    
-                    for edition in editions {
-                        edition_keys.insert( edition.key )
-                    }
-                }
-            }
-            
+
             for editionIndex in 0..<self.edition_key.count {
                 
-                if !edition_keys.contains( self.edition_key[editionIndex] ) {
-                    
-                    if let editionDetail = OLEditionDetail.saveProvisionalEdition( editionIndex, parsed: self, moc: moc ) {
-                        
-                        workDetail.edition_detail = workDetail.edition_detail?.setByAddingObject( editionDetail )
-                    }
-                }
+                _ = OLEditionDetail.saveProvisionalEdition( editionIndex, parsed: self, moc: moc )
             }
             
         }

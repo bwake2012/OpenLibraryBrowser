@@ -45,11 +45,25 @@ class OLAuthorSearchResult: OLManagedObject, CoreDataModelable {
     
     override func localURL( size: String, index: Int = 0 ) -> NSURL {
         
-        let key = self.key
-        return super.localURL( key, size: size, index: index )
+        let docFolder = try! NSFileManager.defaultManager().URLForDirectory( .CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false )
+        
+        let imagesFolder = docFolder.URLByAppendingPathComponent( "images" )
+        
+        let parts = self.key.componentsSeparatedByString( "/" )
+        let goodParts = parts.filter { (x) -> Bool in !x.isEmpty }
+        
+        let imagesSubFolder = imagesFolder.URLByAppendingPathComponent( goodParts[0] )
+        
+        var fileName = "\(goodParts[1])-\(size)"
+        if 0 < index {
+            fileName += "\(index)"
+        }
+        fileName += ".jpg"
+        let url = imagesSubFolder.URLByAppendingPathComponent( fileName )
+        
+        return url
     }
 
-    
     func displayThumbnail( imageView: UIImageView ) -> HasPhoto {
         
         var bDisplayed = false

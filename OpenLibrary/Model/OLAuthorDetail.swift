@@ -28,17 +28,17 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
         
         guard let parsed = ParsedFromJSON.fromJSON( json ) else { return nil }
         
-        var newObject: OLAuthorDetail?
-        
-        newObject =
-            NSEntityDescription.insertNewObjectForEntityForName(
-                OLAuthorDetail.entityName, inManagedObjectContext: moc
-            ) as? OLAuthorDetail
+        moc.mergePolicy = NSOverwriteMergePolicy
+        let newObject: OLAuthorDetail? =
+                NSEntityDescription.insertNewObjectForEntityForName(
+                    OLAuthorDetail.entityName, inManagedObjectContext: moc
+                ) as? OLAuthorDetail
         
         if let newObject = newObject {
             
             newObject.retrieval_date = NSDate()
             newObject.provisional_date = nil
+            newObject.is_provisional = false
 
             newObject.populateObject( parsed )
         }
@@ -64,6 +64,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
                     
                     newObject.retrieval_date = NSDate()
                     newObject.provisional_date = NSDate()
+                    newObject.is_provisional = true
                     
                     newObject.key = parsed.author_key[authorIndex]
                     newObject.type = "/type/author"
@@ -104,7 +105,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
     
     override var isProvisional: Bool {
         
-        return nil != self.provisional_date
+        return is_provisional
     }
     
     override var hasImage: Bool {
@@ -126,7 +127,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
     
     override func localURL( size: String, index: Int = 0 ) -> NSURL {
         
-        return super.localURL( self.key, size: size, index: index )
+        return super.localURL( self.photos[index], size: size )
     }
     
     override func populateObject( parsed: OpenLibraryObject ) {
@@ -474,6 +475,7 @@ extension OLAuthorDetail {
                     
                     newObject.retrieval_date = NSDate()
                     newObject.provisional_date = NSDate()
+                    newObject.is_provisional = true
                     
                     newObject.key = parsed.author_key[authorIndex]
                     newObject.type = "/type/author"

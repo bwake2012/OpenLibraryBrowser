@@ -60,6 +60,8 @@ class OLLanguage: OLManagedObject, CoreDataModelable {
         
         guard let parsed = ParsedSearchResult( json: json ) else { return nil }
         
+        moc.mergePolicy = NSOverwriteMergePolicy
+        
         var newObject: OLLanguage?
         
         newObject = findObject( parsed.key, entityName: entityName, moc: moc )

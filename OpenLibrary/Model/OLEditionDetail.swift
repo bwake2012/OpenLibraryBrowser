@@ -79,12 +79,12 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
 
         guard let parsed = ParsedFromJSON.fromJSON( json ) else { return nil }
         
-        var newObject: OLEditionDetail?
-        
-        newObject =
-            NSEntityDescription.insertNewObjectForEntityForName(
-                OLEditionDetail.entityName, inManagedObjectContext: moc
-                ) as? OLEditionDetail
+        moc.mergePolicy = NSOverwriteMergePolicy
+
+        let newObject: OLEditionDetail? =
+                NSEntityDescription.insertNewObjectForEntityForName(
+                    OLEditionDetail.entityName, inManagedObjectContext: moc
+                    ) as? OLEditionDetail
         
         if let newObject = newObject {
         
@@ -99,11 +99,10 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                 newObject.author_key = parsed.authors.isEmpty ? "" : parsed.authors[0]
             }
 
-            if !newObject.isProvisional {
+            if 0 <= index {
                 newObject.index = Int64( index )
             }
             newObject.retrieval_date = NSDate()
-            newObject.provisional_date = nil
             
             newObject.populateObject( parsed )
             
@@ -126,91 +125,92 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                 NSEntityDescription.insertNewObjectForEntityForName(
                     OLEditionDetail.entityName, inManagedObjectContext: moc
                 ) as? OLEditionDetail
-        }
 
-        if let newObject = newObject {
-            
-            newObject.retrieval_date = NSDate()
-            newObject.provisional_date = NSDate()
-            
-            newObject.has_fulltext = 1
-            
-            newObject.key = parsed.editionKey
-            newObject.revision = 0
-            newObject.latest_revision = 0
-            newObject.type = "/type/edition"
-            
-            newObject.work_key = parsed.workKey
-            
-            newObject.authors = parsed.author_keys
-            newObject.author_key = parsed.author_keys.first ?? ""
-            newObject.author_name_cache = parsed.author_names
-            
-            newObject.title = parsed.title
-            newObject.subtitle = parsed.subtitle
-            
-            if parsed.cover_id > 0 && 0 == newObject.covers.count {
-                newObject.covers = [Int( parsed.cover_id )]
-            } else {
-                newObject.covers = [Int]()
+            if let newObject = newObject {
+                
+                newObject.retrieval_date = NSDate()
+                newObject.provisional_date = NSDate()
+                newObject.is_provisional = true
+                
+                newObject.has_fulltext = 1
+                
+                newObject.key = parsed.editionKey
+                newObject.revision = 0
+                newObject.latest_revision = 0
+                newObject.type = "/type/edition"
+                
+                newObject.work_key = parsed.workKey
+                
+                newObject.authors = parsed.author_keys
+                newObject.author_key = parsed.author_keys.first ?? ""
+                newObject.author_name_cache = parsed.author_names
+                
+                newObject.title = parsed.title
+                newObject.subtitle = parsed.subtitle
+                
+                if parsed.cover_id > 0 && 0 == newObject.covers.count {
+                    newObject.covers = [Int( parsed.cover_id )]
+                } else {
+                    newObject.covers = [Int]()
+                }
+                newObject.coversFound = !newObject.covers.isEmpty && 0 < newObject.covers[0]
+                
+                newObject.languages = parsed.languages
+                
+                newObject.publish_date = parsed.publish_date
+                
+                newObject.isbn_10 = parsed.isbn_10
+                
+                newObject.accompanying_material = ""
+
+                newObject.by_statement = ""
+                newObject.collections = []
+                newObject.contributions = []
+                newObject.copyright_date = ""
+
+                newObject.dewey_decimal_class = []
+                newObject.distributors = []
+                newObject.edition_description = ""
+                newObject.edition_name = ""
+                newObject.first_sentence = ""
+                newObject.genres = []
+
+                newObject.isbn_13 = []
+
+                newObject.lc_classifications = []
+                newObject.lccn = []
+                newObject.location = []
+                newObject.notes = ""
+                newObject.number_of_pages = 0
+                newObject.ocaid = ""
+                newObject.oclc_numbers = []
+                newObject.other_titles = []
+                newObject.pagination = ""
+                newObject.physical_dimensions = ""
+                newObject.physical_format = ""
+                newObject.publish_country = ""
+                newObject.publish_date = ""
+                newObject.publish_places = []
+                newObject.publishers = []
+                newObject.scan_on_demand = false
+                newObject.series = []
+                newObject.source_records = []
+                newObject.subjects = []
+
+                newObject.table_of_contents = [[:]]
+                newObject.title_prefix = ""
+
+                newObject.translated_from = []
+                newObject.translation_of = ""
+                newObject.uri_descriptions = []
+                newObject.uris = []
+                newObject.weight = ""
+                newObject.work_titles = []
+                newObject.works = []
+
             }
-            newObject.coversFound = !newObject.covers.isEmpty && 0 < newObject.covers[0]
-            
-            newObject.languages = parsed.languages
-            
-            newObject.publish_date = parsed.publish_date
-            
-            newObject.isbn_10 = parsed.isbn_10
-            
-            newObject.accompanying_material = ""
-
-            newObject.by_statement = ""
-            newObject.collections = []
-            newObject.contributions = []
-            newObject.copyright_date = ""
-
-            newObject.dewey_decimal_class = []
-            newObject.distributors = []
-            newObject.edition_description = ""
-            newObject.edition_name = ""
-            newObject.first_sentence = ""
-            newObject.genres = []
-
-            newObject.isbn_13 = []
-
-            newObject.lc_classifications = []
-            newObject.lccn = []
-            newObject.location = []
-            newObject.notes = ""
-            newObject.number_of_pages = 0
-            newObject.ocaid = ""
-            newObject.oclc_numbers = []
-            newObject.other_titles = []
-            newObject.pagination = ""
-            newObject.physical_dimensions = ""
-            newObject.physical_format = ""
-            newObject.publish_country = ""
-            newObject.publish_date = ""
-            newObject.publish_places = []
-            newObject.publishers = []
-            newObject.scan_on_demand = false
-            newObject.series = []
-            newObject.source_records = []
-            newObject.subjects = []
-
-            newObject.table_of_contents = [[:]]
-            newObject.title_prefix = ""
-
-            newObject.translated_from = []
-            newObject.translation_of = ""
-            newObject.uri_descriptions = []
-            newObject.uris = []
-            newObject.weight = ""
-            newObject.work_titles = []
-            newObject.works = []
-
         }
-        
+
         return newObject
     }
 
@@ -220,8 +220,8 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         
         if editionIndex < parsed.edition_key.count {
  
-//            newObject = findObject( parsed.edition_key[editionIndex], entityName: entityName, moc: moc )
-//            if nil == newObject {
+            newObject = findObject( parsed.edition_key[editionIndex], entityName: entityName, moc: moc )
+            if nil == newObject {
             
                 newObject =
                     NSEntityDescription.insertNewObjectForEntityForName(
@@ -232,6 +232,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                     
                     newObject.retrieval_date = NSDate()
                     newObject.provisional_date = NSDate()
+                    newObject.is_provisional = true
                     
                     newObject.has_fulltext = parsed.has_fulltext ? 1 : 0
                     
@@ -310,7 +311,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                     newObject.work_titles = []
                     newObject.works = []
                 }
-//            }
+            }
         }
         
         return newObject
@@ -350,7 +351,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
     
     override var isProvisional: Bool {
         
-        return nil != self.provisional_date
+        return is_provisional
     }
     
     override var hasImage: Bool {
@@ -372,7 +373,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
     
     override func localURL( size: String, index: Int = 0 ) -> NSURL {
         
-        return super.localURL( self.key, size: size, index: index )
+        return super.localURL( self.covers[index], size: size )
     }
 
     override func populateObject( parsed: OpenLibraryObject ) {
@@ -380,6 +381,9 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         self.retrieval_date = NSDate()
         
         if let parsed = parsed as? ParsedFromJSON {
+            
+            self.is_provisional = false
+            self.provisional_date = nil
             
             self.key = parsed.key
             self.created = parsed.created
@@ -394,7 +398,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
             self.collections = parsed.collections
             self.contributions = parsed.contributions
             self.copyright_date = parsed.copyright_date
-            self.covers = parsed.covers
+            self.covers = parsed.covers ?? []
             self.coversFound = parsed.covers.count > 0 && 0 < parsed.covers[0]
             self.dewey_decimal_class = parsed.dewey_decimal_class
             self.distributors = parsed.distributors
@@ -469,6 +473,10 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         deluxeData.append( [DeluxeData( type: .heading, caption: "Title", value: self.title )] )
         if !subtitle.isEmpty {
             deluxeData[0].append( DeluxeData( type: .subheading, caption: "Subtitle", value: self.subtitle ) )
+        }
+        
+        if !edition_name.isEmpty {
+            deluxeData[0].append( DeluxeData( type: .subheading, caption: "Edition", value: self.edition_name ) )
         }
         
         if !by_statement.isEmpty {
@@ -1088,6 +1096,7 @@ extension OLEditionDetail {
                     
                     newObject.retrieval_date = NSDate()
                     newObject.provisional_date = NSDate()
+                    newObject.is_provisional = true
                     
                     newObject.has_fulltext = parsed.has_fulltext ? 1 : 0
                     

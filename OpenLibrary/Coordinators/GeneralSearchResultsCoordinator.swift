@@ -206,6 +206,38 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         return result
     }
     
+    func didSelectRowAtIndexPath( indexPath: NSIndexPath ) {
+        
+        if let object = objectAtIndexPath( indexPath ) where nil == object.work_detail {
+            
+            coordinatorIsBusy()
+            
+            let operation =
+                SaveProvisionalObjectsOperation(
+                    searchResult: object,
+                    coreDataStack: coreDataStack
+                ) {
+                    
+                    [weak self] in
+                    
+                    dispatch_async( dispatch_get_main_queue() ) {
+                        
+                        if let strongSelf = self {
+                            
+                            strongSelf.coordinatorIsNoLongerBusy()
+                            
+                            strongSelf.tableVC?.tableView.selectRowAtIndexPath(
+                                indexPath, animated: true, scrollPosition: .None
+                            )
+                        }
+                    }
+            }
+            
+            operation.userInitiated = true
+            operationQueue.addOperation( operation )
+        }
+    }
+
     func updateUI() {
 
         do {
@@ -216,7 +248,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
 
             print("Error in the fetched results controller: \(error).")
         }
-        
+
         tableVC?.tableView.reloadData()
     }
 
@@ -501,32 +533,58 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
     
     func installAuthorDetailCoordinator( destVC: OLAuthorDetailViewController, indexPath: NSIndexPath ) {
         
-        if let indexedObject = objectAtIndexPath( indexPath ) where 0 < indexedObject.author_key.count
-        {
-            destVC.queryCoordinator =
-                AuthorDetailCoordinator(
+        guard let searchResult = objectAtIndexPath( indexPath ) else {
+            fatalError( "General Search Result object not retrieved." )
+        }
+        
+        guard let workDetail = searchResult.work_detail else {
+            
+            fatalError( "General Search work detail missing." )
+        }
+        
+        guard !workDetail.author_key.isEmpty else {
+            
+            fatalError( "work has no author keys!" )
+        }
+        
+        guard let moc = workDetail.managedObjectContext else {
+            
+            fatalError( "work detail has no managed object!" )
+        }
+        
+        guard let firstAuthor: OLAuthorDetail = OLAuthorDetail.findObject( workDetail.author_key, entityName: OLAuthorDetail.entityName, moc: moc ) else {
+            
+            fatalError( "work has no authors!" )
+        }
+        
+        destVC.queryCoordinator =
+            AuthorDetailCoordinator(
                     operationQueue: operationQueue,
                     coreDataStack: coreDataStack,
-                    authorKey: indexedObject.author_key[0],
+                    authorDetail: firstAuthor,
                     authorDetailVC: destVC
-            )
-        }
+                )
     }
     
     func installWorkDetailCoordinator( destVC: OLWorkDetailViewController, indexPath: NSIndexPath ) {
         
-        if let searchResult = objectAtIndexPath( indexPath ) {
+        guard let searchResult = objectAtIndexPath( indexPath ) else {
+            fatalError( "General Search Result object not retrieved." )
+        }
+        
+        guard let workDetail = searchResult.work_detail else {
             
-            destVC.queryCoordinator =
-                WorkDetailCoordinator(
+            fatalError( "General Search work detail missing." )
+        }
+        
+        destVC.queryCoordinator =
+            WorkDetailCoordinator(
                     operationQueue: operationQueue,
                     coreDataStack: coreDataStack,
-                    workKey: searchResult.key,
+                    workDetail: workDetail,
                     editionKeys: searchResult.edition_key,
                     workDetailVC: destVC
-            )
-            
-        }
+                )
     }
     
     func installCoverPictureViewCoordinator( destVC: OLPictureViewController, indexPath: NSIndexPath ) {
