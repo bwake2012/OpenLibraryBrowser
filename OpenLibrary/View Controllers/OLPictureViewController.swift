@@ -24,12 +24,6 @@ class OLPictureViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        assert( nil != queryCoordinator )
-        
-        if let queryCoordinator = queryCoordinator {
-            
-            queryCoordinator.updateUI()
-        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -37,6 +31,13 @@ class OLPictureViewController: UIViewController {
         super.viewDidAppear( animated )
         
         navigationController?.setNavigationBarHidden( false, animated: true )
+
+        assert( nil != queryCoordinator )
+        
+        if let queryCoordinator = queryCoordinator {
+            
+            queryCoordinator.updateUI()
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {

@@ -101,7 +101,7 @@
                                             <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="gIu-3o-oRC" kind="show" id="HbS-g8-1YI"/>
+                                            <segue destination="gIu-3o-oRC" kind="show" identifier="largeAuthorPhoto" customClass="SegueWithImageZoom" customModule="OpenLibrary" customModuleProvider="target" id="HbS-g8-1YI"/>
                                         </connections>
                                     </button>
                                 </subviews>
