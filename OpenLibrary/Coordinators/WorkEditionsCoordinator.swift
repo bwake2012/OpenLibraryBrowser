@@ -78,7 +78,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     }
     
     func objectAtIndexPath( indexPath: NSIndexPath ) -> OLEditionDetail? {
-        
+
         guard let sections = fetchedResultsController.sections else {
             assertionFailure("Sections missing")
             return nil
@@ -98,14 +98,6 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             workEditionsGetOperation =
                 enqueueQuery( workDetail, offset: index, userInitiated: false, refreshControl: nil )
 
-//        } else if editionDetail.isProvisional {
-//            
-//            let operation = EditionDetailGetOperation( queryText: editionDetail.key, parentObjectID: nil, coreDataStack: coreDataStack ) {
-//                
-//            }
-//            
-//            operation.userInitiated = false
-//            operationQueue.addOperation( operation )
         }
 
         return editionDetail
@@ -291,6 +283,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             return
         }
         
+        highWaterMark = controller.count
         updateFooter()
     }
     

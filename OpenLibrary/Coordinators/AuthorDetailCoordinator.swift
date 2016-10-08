@@ -22,7 +22,8 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
     
     weak var authorDetailVC: OLAuthorDetailViewController?
 
-    var authorDetail: OLAuthorDetail
+    let authorKey: String
+    var authorDetail: OLAuthorDetail?
     var parentObjectID: NSManagedObjectID?
     
     var deluxeData = [[DeluxeData]]()
@@ -32,11 +33,11 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
     init(
         operationQueue: OperationQueue,
         coreDataStack: CoreDataStack,
-        authorDetail: OLAuthorDetail,
+        authorKey: String,
         authorDetailVC: OLAuthorDetailViewController
         ) {
         
-        self.authorDetail = authorDetail
+        self.authorKey = authorKey
 
         self.authorDetailVC = authorDetailVC
         
@@ -111,7 +112,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
                         
                         dispatch_async( dispatch_get_main_queue() ) {
 
-                            strongSelf.updateUI( strongSelf.authorDetail )
+//                            strongSelf.updateUI( strongSelf.authorDetail )
 
                             strongSelf.refreshComplete( refreshControl )
                         }
@@ -125,14 +126,14 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
     
     func refreshQuery( refreshControl: UIRefreshControl? ) {
         
-        newQuery( authorDetail.key, userInitiated: true, refreshControl: refreshControl )
+        newQuery( authorKey, userInitiated: true, refreshControl: refreshControl )
     }
     
     // MARK: Utility
     func BuildFetchedResultsController() -> FetchedOLAuthorDetailController {
         
         let fetchRequest = NSFetchRequest( entityName: OLAuthorDetail.entityName )
-        let key = authorDetail.key
+        let key = authorKey
         
         let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
         let today = NSDate()
@@ -164,7 +165,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
 
         destVC.queryCoordinator =
             AuthorWorksCoordinator(
-                    authorDetail: authorDetail,
+                    authorKey: authorKey,
                     authorWorksTableVC: destVC,
                     coreDataStack: coreDataStack,
                     operationQueue: operationQueue
@@ -173,28 +174,33 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
 
     func installAuthorDeluxeDetailCoordinator( destVC: OLDeluxeDetailTableViewController ) {
     
-        destVC.queryCoordinator =
-            DeluxeDetailCoordinator(
-                    operationQueue: operationQueue,
-                    coreDataStack: coreDataStack,
-                    heading: authorDetail.name,
-                    deluxeData: authorDetail.deluxeData,
-                    imageType: authorDetail.imageType,
-                    deluxeDetailVC: destVC
-                )
+        if let authorDetail = authorDetail {
+            
+            destVC.queryCoordinator =
+                DeluxeDetailCoordinator(
+                        operationQueue: operationQueue,
+                        coreDataStack: coreDataStack,
+                        heading: authorDetail.name,
+                        deluxeData: authorDetail.deluxeData,
+                        imageType: authorDetail.imageType,
+                        deluxeDetailVC: destVC
+                    )
+        }
     }
     
     func installAuthorPictureCoordinator( destVC: OLPictureViewController ) {
         
-        destVC.queryCoordinator =
-            PictureViewCoordinator(
-                    operationQueue: operationQueue,
-                    coreDataStack: coreDataStack,
-                    localURL: authorDetail.localURL( "L", index: 0 ),
-                    imageID: authorDetail.firstImageID,
-                    pictureType: authorDetail.imageType,
-                    pictureVC: destVC
-                )
+        if let authorDetail = authorDetail {
+            destVC.queryCoordinator =
+                PictureViewCoordinator(
+                        operationQueue: operationQueue,
+                        coreDataStack: coreDataStack,
+                        localURL: authorDetail.localURL( "L", index: 0 ),
+                        imageID: authorDetail.firstImageID,
+                        pictureType: authorDetail.imageType,
+                        pictureVC: destVC
+                    )
+        }
     }
 }
 
@@ -204,7 +210,7 @@ extension AuthorDetailCoordinator: FetchedResultsControllerDelegate {
         
         guard let authorDetail = controller.fetchedObjects?.first else {
 
-            newQuery( self.authorDetail.key, userInitiated: true, refreshControl: nil )
+            newQuery( self.authorKey, userInitiated: true, refreshControl: nil )
             return
         }
         
@@ -227,7 +233,7 @@ extension AuthorDetailCoordinator: FetchedResultsControllerDelegate {
         
         guard let authorDetail = controller.fetchedObjects?.first else {
             
-            newQuery( self.authorDetail.key, userInitiated: true, refreshControl: nil )
+            newQuery( self.authorKey, userInitiated: true, refreshControl: nil )
             return
         }
         

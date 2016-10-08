@@ -33,8 +33,8 @@
                                     <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3VE-I1-5L3" userLabel="Summary">
                                         <rect key="frame" x="144" y="8" width="448" height="128"/>
                                         <subviews>
-                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="750" ambiguous="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RLG-CI-drZ" userLabel="Scroll Summary">
-                                                <rect key="frame" x="0.0" y="0.0" width="448" height="0.0"/>
+                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="750" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RLG-CI-drZ" userLabel="Scroll Summary">
+                                                <rect key="frame" x="0.0" y="0.0" width="448" height="128"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ayZ-Aq-xYt">
                                                         <rect key="frame" x="0.0" y="0.0" width="448" height="128"/>
@@ -46,14 +46,14 @@
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" misplaced="YES" text="Birth Date:" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cnV-cA-Bc1">
+                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="740" misplaced="YES" text="Birth Date:" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cnV-cA-Bc1">
                                                                 <rect key="frame" x="0.0" y="30" width="448" height="84"/>
                                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" misplaced="YES" text="Death Date" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BIm-fa-YeT" userLabel="Death Date">
+                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="740" misplaced="YES" text="Death Date" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BIm-fa-YeT" userLabel="Death Date">
                                                                 <rect key="frame" x="0.0" y="114" width="448" height="15"/>
                                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
@@ -87,7 +87,7 @@
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstItem="RLG-CI-drZ" firstAttribute="leading" secondItem="3VE-I1-5L3" secondAttribute="leading" id="Hmt-bU-cZy"/>
-                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="RLG-CI-drZ" secondAttribute="bottom" id="NhG-LC-h5m"/>
+                                            <constraint firstAttribute="bottom" secondItem="RLG-CI-drZ" secondAttribute="bottom" id="NhG-LC-h5m"/>
                                             <constraint firstItem="RLG-CI-drZ" firstAttribute="trailing" secondItem="3VE-I1-5L3" secondAttribute="trailing" id="RaF-2E-Mkb"/>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" secondItem="ayZ-Aq-xYt" secondAttribute="height" id="TEd-Ab-lZC"/>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="128" id="qu5-yR-EgH"/>

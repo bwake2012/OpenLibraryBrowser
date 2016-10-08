@@ -547,12 +547,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             fatalError( "work has no author keys!" )
         }
         
-        guard let moc = workDetail.managedObjectContext else {
-            
-            fatalError( "work detail has no managed object!" )
-        }
-        
-        guard let firstAuthor: OLAuthorDetail = OLAuthorDetail.findObject( workDetail.author_key, entityName: OLAuthorDetail.entityName, moc: moc ) else {
+        guard let firstAuthorKey: String = workDetail.author_key where !workDetail.author_key.isEmpty else {
             
             fatalError( "work has no authors!" )
         }
@@ -561,7 +556,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             AuthorDetailCoordinator(
                     operationQueue: operationQueue,
                     coreDataStack: coreDataStack,
-                    authorDetail: firstAuthor,
+                    authorKey: firstAuthorKey,
                     authorDetailVC: destVC
                 )
     }

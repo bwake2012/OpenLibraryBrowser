@@ -27,15 +27,16 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
     
     lazy var fetchedResultsController: FetchedOLWorkDetailController = self.BuildFetchedResultsController()
     
-    var authorDetail: OLAuthorDetail
+    var authorKey: String
+    var authorDetail: OLAuthorDetail?
     var searchResults = SearchResults( start: 0, numFound: -1, pageSize: kPageSize )
 
     var highWaterMark = 0
     var setRetrievals = Set< Int >()
     
-    init( authorDetail: OLAuthorDetail, authorWorksTableVC: OLAuthorDetailWorksTableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
+    init( authorKey: String, authorWorksTableVC: OLAuthorDetailWorksTableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         
-        self.authorDetail = authorDetail
+        self.authorKey = authorKey
 
         self.authorWorksTableVC = authorWorksTableVC
         
@@ -68,9 +69,10 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         
         let index = indexPath.row
         let workDetail = section.objects[index]
-        if workDetail.isProvisional && needAnotherPage( index ) {
+        if workDetail.isProvisional || needAnotherPage( index ) {
             
-            nextQueryPage()
+            authorWorksGetOperation =
+                enqueueQuery( authorKey, offset: index, userInitiated: false, refreshControl: nil )
         }
         
         return workDetail
@@ -116,7 +118,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
             updateFooter( "fetching author works..." )
             authorWorksGetOperation =
                 enqueueQuery(
-                        authorDetail,
+                        authorKey,
                         offset: highWaterMark, 
                         userInitiated: false,
                         refreshControl: nil
@@ -139,7 +141,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
             
             authorWorksGetOperation =
                 enqueueQuery(
-                        authorDetail,
+                        authorKey,
                         offset: highWaterMark,
                         userInitiated: false,
                         refreshControl: nil
@@ -147,7 +149,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
          }
     }
     
-    func enqueueQuery( authorDetail: OLAuthorDetail, offset: Int, userInitiated: Bool, refreshControl: UIRefreshControl? ) -> Operation {
+    func enqueueQuery( authorKey: String, offset: Int, userInitiated: Bool, refreshControl: UIRefreshControl? ) -> Operation {
         
         authorWorksTableVC?.coordinatorIsBusy()
         
@@ -156,8 +158,8 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         
         let authorWorksGetOperation =
             AuthorWorksGetOperation(
-                queryText: authorDetail.key,
-                parentObjectID: authorDetail.objectID,
+                queryText: authorKey,
+                parentObjectID: nil,
                 offset: page * kPageSize, limit: kPageSize,
                 coreDataStack: coreDataStack,
                 updateResults: self.updateResults
@@ -187,15 +189,15 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
     
     func refreshQuery( refreshControl: UIRefreshControl? ) {
         
-        newQuery( authorDetail.key, userInitiated: true, refreshControl: refreshControl )
+        newQuery( authorKey, userInitiated: true, refreshControl: refreshControl )
     }
     
     private func needAnotherPage( index: Int ) -> Bool {
         
         return
-            nil == authorWorksGetOperation &&
             !setRetrievals.contains( index / kPageSize ) &&
-            ( -1 == self.searchResults.numFound || highWaterMark < self.searchResults.numFound )
+            index <= highWaterMark - kPageSize / 5 &&
+            highWaterMark < searchResults.numFound
     }
     
     // MARK: SearchResultsUpdater
@@ -234,7 +236,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
     func BuildFetchedResultsController() -> FetchedOLWorkDetailController {
         
         let fetchRequest = NSFetchRequest( entityName: OLWorkDetail.entityName )
-        let key = authorDetail.key
+        let key = authorKey
         
         let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
         let today = NSDate()
@@ -263,15 +265,16 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         
         guard let workDetail = controller.fetchedObjects?.first else {
             
-            newQuery( authorDetail.key, userInitiated: true, refreshControl: nil )
+            newQuery( authorKey, userInitiated: true, refreshControl: nil )
             return
         }
 
         if workDetail.isProvisional {
                     
-            newQuery( authorDetail.key, userInitiated: true, refreshControl: nil )
+            newQuery( authorKey, userInitiated: true, refreshControl: nil )
         }
         
+        highWaterMark = controller.count
         updateFooter()
     }
     

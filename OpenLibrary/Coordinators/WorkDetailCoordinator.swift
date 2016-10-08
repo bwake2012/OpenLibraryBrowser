@@ -359,12 +359,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
             fatalError( "work has no author keys!" )
         }
         
-        guard let moc = workDetail.managedObjectContext else {
-            
-            fatalError( "work detail has no managed object!" )
-        }
-
-        guard let firstAuthor: OLAuthorDetail = OLAuthorDetail.findObject( workDetail.author_key, entityName: OLAuthorDetail.entityName, moc: moc ) else {
+        guard !workDetail.author_key.isEmpty else {
             
             fatalError( "work has no authors!" )
         }
@@ -373,7 +368,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
             AuthorDetailCoordinator(
                 operationQueue: operationQueue,
                 coreDataStack: coreDataStack,
-                authorDetail: firstAuthor,
+                authorKey: workDetail.author_key,
                 authorDetailVC: destVC
             )
     }
