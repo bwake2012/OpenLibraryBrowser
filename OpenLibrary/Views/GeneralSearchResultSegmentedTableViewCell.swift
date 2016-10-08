@@ -34,6 +34,8 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
     var haveEditions = false
     var haveEbooks = false
     
+    var haveWorkDetail = false
+    
     @IBAction private func zoomCoverTapped(sender: UIButton) {
         
         tableVC?.performSegueWithIdentifier( "largeCoverImage", sender: self )
@@ -66,7 +68,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
     
     override func setSelected(selected: Bool, animated: Bool) {
         
-        updateButtons( selected )
+        updateButtons( selected && haveWorkDetail )
     }
     
     override func prepareForReuse() {
@@ -123,9 +125,12 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
         
         assert( NSThread.isMainThread() )
         
+        haveWorkDetail = false
+        
         if let r = data as? OLGeneralSearchResult {
             
             self.key = key
+            haveWorkDetail = nil != r.work_detail
 
             titleText.text = r.title
             subtitleText.text = r.subtitle
@@ -158,7 +163,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
 
             let labelText = "Electronic Editions " + ( haveEbooks ? "found" : "not found" )
             eBooksLabel.text = labelText
-            updateButtons( selected )
+            updateButtons( selected && haveWorkDetail )
             
             saveCellHeights( tableView, key: key, isExpanded: false )
             saveIndexPath( indexPath, inTableView: tableView, forKey: key )

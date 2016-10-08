@@ -37,7 +37,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
 //        let lastWeek = today.dateByAddingTimeInterval( -7 * secondsPerDay )
         
         fetchRequest.predicate =
-            NSPredicate( format: "workKey==%@", "\(self.workKey)" )
+            NSPredicate( format: "workKey==%@", "\(self.workDetail.key)" )
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "publish_date", ascending: false)]
         fetchRequest.fetchBatchSize = 100
@@ -52,7 +52,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         return frc
     }()
     
-    var workKey = ""
+    var workDetail: OLWorkDetail
     var editionKeys = [String]()
     var editionsCount = 0
     var searchResults = SearchResults()
@@ -62,12 +62,12 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
     init(
         operationQueue: OperationQueue,
         coreDataStack: CoreDataStack,
-        workKey: String,
+        workDetail: OLWorkDetail,
         editionKeys: [String],
         tableVC: UITableViewController
         ) {
         
-        self.workKey = workKey
+        self.workDetail = workDetail
         self.editionKeys = editionKeys
         self.tableVC = tableVC
         
@@ -107,6 +107,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
                 let getOperation =
                     EditionDetailGetOperation(
                             queryText: item.editionKey,
+                            parentObjectID: workDetail.objectID,
                             coreDataStack: coreDataStack
                         ) {
                             

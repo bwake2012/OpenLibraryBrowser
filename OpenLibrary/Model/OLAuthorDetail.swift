@@ -28,21 +28,17 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
         
         guard let parsed = ParsedFromJSON.fromJSON( json ) else { return nil }
         
-        var newObject: OLAuthorDetail?
-        
-        newObject = findObject( parsed.key, entityName: entityName, moc: moc )
-        if nil == newObject {
-            
-            newObject =
+        moc.mergePolicy = NSOverwriteMergePolicy
+        let newObject: OLAuthorDetail? =
                 NSEntityDescription.insertNewObjectForEntityForName(
                     OLAuthorDetail.entityName, inManagedObjectContext: moc
                 ) as? OLAuthorDetail
-        }
         
         if let newObject = newObject {
             
             newObject.retrieval_date = NSDate()
             newObject.provisional_date = nil
+            newObject.is_provisional = false
 
             newObject.populateObject( parsed )
         }
@@ -68,12 +64,23 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
                     
                     newObject.retrieval_date = NSDate()
                     newObject.provisional_date = NSDate()
+                    newObject.is_provisional = true
                     
                     newObject.key = parsed.author_key[authorIndex]
                     newObject.type = "/type/author"
                     
                     newObject.name = parsed.author_name[authorIndex]
-                    newObject.photos = [Int]()
+                    newObject.photos = []
+                    
+                    newObject.links = [[:]]
+                    
+                    newObject.bio = ""
+                    newObject.alternate_names = []
+                    
+                    newObject.wikipedia = ""
+                    
+                    newObject.revision = 0
+                    newObject.latest_revision = 0
                 }
             }
         }
@@ -98,7 +105,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
     
     override var isProvisional: Bool {
         
-        return nil != self.provisional_date
+        return is_provisional
     }
     
     override var hasImage: Bool {
@@ -120,7 +127,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
     
     override func localURL( size: String, index: Int = 0 ) -> NSURL {
         
-        return super.localURL( self.key, size: size, index: index )
+        return super.localURL( self.photos[index], size: size )
     }
     
     override func populateObject( parsed: OpenLibraryObject ) {
@@ -139,6 +146,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
             self.links = parsed.links
             self.bio = parsed.bio
             self.alternate_names = parsed.alternate_names
+            self.wikipedia = parsed.wikipedia
             
             self.revision = parsed.revision
             self.latest_revision = parsed.latest_revision
@@ -300,6 +308,10 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
             )
         )
         
+        newData.append(
+            DeluxeData(type: .inline, caption: "", value: isProvisional ? "Provisional" : "Actual" )
+        )
+        
         deluxeData.append( newData )
         
         return deluxeData
@@ -441,5 +453,51 @@ extension OLAuthorDetail {
             self.type = type
         }
     }
+}
+
+extension OLAuthorDetail {
+    
+    class func saveProvisionalAuthor( authorIndex: Int, parsed: OLGeneralSearchResult, moc: NSManagedObjectContext ) -> OLAuthorDetail? {
+        
+        var newObject: OLAuthorDetail?
+        
+        if authorIndex < parsed.author_key.count {
+            
+            newObject = findObject( parsed.author_key[authorIndex], entityName: entityName, moc: moc )
+            if nil == newObject {
+                
+                newObject =
+                    NSEntityDescription.insertNewObjectForEntityForName(
+                        OLAuthorDetail.entityName, inManagedObjectContext: moc
+                    ) as? OLAuthorDetail
+                
+                if let newObject = newObject {
+                    
+                    newObject.retrieval_date = NSDate()
+                    newObject.provisional_date = NSDate()
+                    newObject.is_provisional = true
+                    
+                    newObject.key = parsed.author_key[authorIndex]
+                    newObject.type = "/type/author"
+                    
+                    newObject.name = parsed.author_name[authorIndex]
+                    newObject.photos = []
+                    
+                    newObject.links = [[:]]
+                    
+                    newObject.bio = ""
+                    newObject.alternate_names = []
+                    
+                    newObject.wikipedia = ""
+                    
+                    newObject.revision = 0
+                    newObject.latest_revision = 0
+                }
+            }
+        }
+        
+        return newObject
+    }
+    
 }
 

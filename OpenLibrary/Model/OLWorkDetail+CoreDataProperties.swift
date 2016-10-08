@@ -15,6 +15,7 @@ extension OLWorkDetail {
     
     @NSManaged var retrieval_date: NSDate
     @NSManaged var provisional_date: NSDate?
+    @NSManaged var is_provisional: Bool
     
     @NSManaged var has_fulltext: Int16
 
@@ -30,6 +31,7 @@ extension OLWorkDetail {
     @NSManaged var coversFound: Bool
     @NSManaged var dewey_number: [String]
     @NSManaged var ebook_count_i: Int64
+    @NSManaged var edition_count: Int64
     @NSManaged var first_publish_date: String
     @NSManaged var first_sentence: String
     @NSManaged var lc_classifications: [String]
@@ -47,4 +49,6 @@ extension OLWorkDetail {
     @NSManaged var work_description: String
 
     // cover_edition of type /type/edition
+    
+    @NSManaged var general_search_result: OLGeneralSearchResult?
 }

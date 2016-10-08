@@ -35,6 +35,8 @@ class WorkEditionEbooksGetOperation: GroupOperation {
     */
     init( workKey: String, coreDataStack: CoreDataStack, completionHandler: Void -> Void ) {
 
+        assert( !workKey.isEmpty )
+        
         self.coreDataStack = coreDataStack
         
         let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)

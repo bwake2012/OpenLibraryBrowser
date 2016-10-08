@@ -234,7 +234,8 @@ class OLQueryCoordinator: NSObject {
                     } else if 0 == highWaterMark && 0 == numFound {
                         footer.footerLabel.text = "No results found."
                     } else {
-                        footer.footerLabel.text = "\(highWaterMark) of \(numFound)"
+                        footer.footerLabel.text =
+                            "\(highWaterMark) of \(-1 == numFound ? "Unknown" : String(numFound))"
                     }
                 }
             }

@@ -33,7 +33,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
 //        let today = NSDate()
 //        let lastWeek = today.dateByAddingTimeInterval( -7 * secondsPerDay )
         
-        fetchRequest.predicate = NSPredicate( format: "work_key==%@", "\(self.workKey)" )
+        fetchRequest.predicate = NSPredicate( format: "work_key==%@", "\(self.workDetail.key)" )
         
         fetchRequest.sortDescriptors = [
 //                 NSSortDescriptor(key: "coversFound", ascending: false),
@@ -50,18 +50,17 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         return frc
     }()
     
-    let withCoversOnly: Bool
-    
-    var workKey = ""
+    var workDetail: OLWorkDetail
     var editionsCount = Int( kPageSize * 2 )
-    var searchResults = SearchResults()
+    var searchResults = SearchResults( start: 0, numFound: -1, pageSize: kPageSize )
     
     var highWaterMark = 0
     
-    init( workKey: String, withCoversOnly: Bool, tableVC: OLWorkDetailEditionsTableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
+    var setRetrievals = Set< Int >()
+    
+    init( workDetail: OLWorkDetail, tableVC: OLWorkDetailEditionsTableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         
-        self.workKey = workKey
-        self.withCoversOnly = withCoversOnly
+        self.workDetail = workDetail
 //        self.worksCount = searchInfo.work_count
         self.tableVC = tableVC
         
@@ -91,20 +90,22 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             return nil
         }
         
-        let editionDetail = section.objects[indexPath.row]
+        let index = indexPath.row
+        let editionDetail = section.objects[index]
+        
+        if editionDetail.isProvisional || needAnotherPage( index, highWaterMark: highWaterMark ) {
+            
+            workEditionsGetOperation =
+                enqueueQuery( workDetail, offset: index, userInitiated: false, refreshControl: nil )
 
-        if libraryIsReachable() {
-
-            if editionDetail.isProvisional {
-                
-                let operation =
-                    EditionDetailGetOperation(
-                            queryText: editionDetail.key,
-                            coreDataStack: coreDataStack ) {}
-                
-                    operation.userInitiated = false
-                    operationQueue.addOperation( operation )
-            }
+//        } else if editionDetail.isProvisional {
+//            
+//            let operation = EditionDetailGetOperation( queryText: editionDetail.key, parentObjectID: nil, coreDataStack: coreDataStack ) {
+//                
+//            }
+//            
+//            operation.userInitiated = false
+//            operationQueue.addOperation( operation )
         }
 
         return editionDetail
@@ -112,11 +113,6 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     
     func displayToCell( cell: WorkEditionTableViewCell, indexPath: NSIndexPath ) -> OLEditionDetail? {
         
-//        if needAnotherPage( indexPath.row, highWaterMark: highWaterMark ) {
-//            
-//            nextQueryPage( highWaterMark )
-//        }
-
         guard let object = objectAtIndexPath( indexPath ) else { return nil }
         
         if let tableView = tableVC?.tableView {
@@ -150,39 +146,21 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         
         updateHeader( "" )
         if nil == workEditionsGetOperation {
+
             self.searchResults = SearchResults()
-            self.workKey = workKey
             self.highWaterMark = 0
             
-            tableVC?.coordinatorIsBusy()
             updateFooter( "fetching editions..." )
-            
+            tableVC?.coordinatorIsBusy()
+           
             workEditionsGetOperation =
-                WorkEditionsGetOperation(
-                        queryText: workKey,
-                        offset: 0, limit: kPageSize,
-                        withCoversOnly: withCoversOnly,
-                        coreDataStack: coreDataStack,
-                        updateResults: self.updateResults
-                    ) {
-
-                        [weak self] in
-                        if let strongSelf = self {
-                            dispatch_async( dispatch_get_main_queue() ) {
-                                
-                                    refreshControl?.endRefreshing()
-                                
-                                    strongSelf.updateFooter()
-                                
-                                    strongSelf.tableVC?.coordinatorIsNoLongerBusy()
-                                
-                                    strongSelf.workEditionsGetOperation = nil
-                                }
-                        }
-                    }
-            
-            workEditionsGetOperation!.userInitiated = userInitiated
-            operationQueue.addOperation( workEditionsGetOperation! )
+                enqueueQuery(
+                        workDetail,
+                        offset: highWaterMark,
+                        userInitiated: userInitiated,
+                        refreshControl: refreshControl
+                    )
+                
         }
     }
     
@@ -195,59 +173,103 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         }
         
         updateHeader( "" )
-        if nil == workEditionsGetOperation && !workKey.isEmpty && highWaterMark < searchResults.numFound {
+        if nil == workEditionsGetOperation && highWaterMark < searchResults.numFound {
             
 //            tableVC?.coordinatorIsBusy()
             updateFooter( "fetching more editions..." )
             
             workEditionsGetOperation =
-                WorkEditionsGetOperation(
-                        queryText: self.workKey,
-                        offset: highWaterMark, limit: kPageSize,
-                        withCoversOnly: withCoversOnly,
-                        coreDataStack: coreDataStack,
-                        updateResults: self.updateResults
-                    ) {
-                
-                        [weak self] in
-                        if let strongSelf = self {
-                            
-                            strongSelf.updateFooter()
-                            
-                            strongSelf.tableVC?.coordinatorIsNoLongerBusy()
-                            
-                            strongSelf.workEditionsGetOperation = nil
-                        }
-                    }
+                enqueueQuery(
+                        workDetail,
+                        offset: highWaterMark,
+                        userInitiated: false,
+                        refreshControl: nil
+                    )
             
-            workEditionsGetOperation!.userInitiated = false
-            operationQueue.addOperation( workEditionsGetOperation! )
         }
+    }
+    
+    func enqueueQuery( workDetail: OLWorkDetail, offset: Int, userInitiated: Bool, refreshControl: UIRefreshControl? ) -> Operation? {
+        
+        let page = offset / kPageSize
+        guard !setRetrievals.contains( page ) else {
+            
+            return nil
+        }
+        setRetrievals.insert( page )
+        
+        tableVC?.coordinatorIsBusy()
+        
+        let workEditionsGetOperation =
+            WorkEditionsGetOperation(
+                    queryText: workDetail.key,
+                    objectID: workDetail.objectID,
+                    offset: page * kPageSize, limit: kPageSize,
+                    coreDataStack: coreDataStack,
+                    updateResults: self.updateResults
+                ) {
+                
+                [weak self] in
+                if let strongSelf = self {
+                    dispatch_async( dispatch_get_main_queue() ) {
+                        
+                        refreshControl?.endRefreshing()
+                        
+                        strongSelf.updateFooter()
+                        
+                        strongSelf.tableVC?.coordinatorIsNoLongerBusy()
+                        
+                        strongSelf.workEditionsGetOperation = nil
+                        
+                        
+                    }
+                }
+        }
+    
+        workEditionsGetOperation.userInitiated = userInitiated
+        operationQueue.addOperation( workEditionsGetOperation )
+        
+        return workEditionsGetOperation
     }
     
     func refreshQuery( refreshControl: UIRefreshControl? ) {
         
-        newQuery( self.workKey, userInitiated: true, refreshControl: refreshControl )
+        newQuery( workDetail.key, userInitiated: true, refreshControl: refreshControl )
     }
     
     private func needAnotherPage( index: Int, highWaterMark: Int ) -> Bool {
-        
+
         return
-            nil == workEditionsGetOperation &&
-            !workKey.isEmpty &&
-            highWaterMark < searchResults.numFound &&
-            index >= ( highWaterMark - ( searchResults.pageSize / 4 ) )
+            !setRetrievals.contains( index / kPageSize ) &&
+            index <= highWaterMark - kPageSize / 5 &&
+            highWaterMark < searchResults.numFound
     }
     
     // MARK: SearchResultsUpdater
     func updateResults(searchResults: SearchResults) -> Void {
         
-        self.searchResults = searchResults
-        if editionsCount != searchResults.numFound {
-            editionsCount = max( searchResults.numFound, fetchedResultsController.count )
-        }
-        highWaterMark = min( editionsCount, searchResults.start + searchResults.pageSize )
+        dispatch_async( dispatch_get_main_queue() ) {
+            
+            [weak self] in
+            
+            if let strongSelf = self {
 
+                strongSelf.searchResults = searchResults
+                if searchResults.numFound == strongSelf.fetchedResultsController.count {
+                    
+                    strongSelf.highWaterMark = searchResults.numFound
+                    
+                } else {
+                    
+                    strongSelf.highWaterMark =
+                        max( strongSelf.fetchedResultsController.count, searchResults.start + searchResults.pageSize )
+                    
+                }
+                if strongSelf.editionsCount != searchResults.numFound {
+                    strongSelf.editionsCount = max( searchResults.numFound, Int( strongSelf.workDetail.edition_count ) )
+                }
+            }
+        }
     }
     
     private func updateHeader( string: String = "" ) {
@@ -263,31 +285,13 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     // MARK: FetchedResultsControllerDelegate
     func fetchedResultsControllerDidPerformFetch(controller: FetchedWorkEditionsController) {
         
-        if 0 == controller.count {
+        guard nil != controller.fetchedObjects?.first else {
             
-            newQuery( workKey, userInitiated: true, refreshControl: nil )
-            
-        } else if let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {
-            
-            if detail.isProvisional {
-                
-                newQuery( workKey, userInitiated: true, refreshControl: nil )
-                
-            } else {
-                
-                highWaterMark = controller.count
-                if highWaterMark % kPageSize != 0 {
-                    editionsCount = highWaterMark
-                } else {
-                    editionsCount = highWaterMark + kPageSize
-                }
-                if 0 == searchResults.numFound {
-                    searchResults = SearchResults( start: 0, numFound: editionsCount + 1, pageSize: kPageSize )
-                }
-            }
-
-            updateFooter()
+            newQuery( workDetail.key, userInitiated: true, refreshControl: nil )
+            return
         }
+        
+        updateFooter()
     }
     
     func fetchedResultsControllerWillChangeContent( controller: FetchedWorkEditionsController ) {
@@ -317,7 +321,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             self.insertedRowIndexPaths = []
             self.updatedRowIndexPaths = []
             
-            highWaterMark = max( highWaterMark, controller.count )
+//            highWaterMark = max( highWaterMark, controller.count )
             updateFooter()
         }
     }

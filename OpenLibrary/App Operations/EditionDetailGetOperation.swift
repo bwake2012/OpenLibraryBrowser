@@ -13,9 +13,8 @@ import PSOperations
 
 /// A composite `Operation` to both download and parse Work search result data.
 class EditionDetailGetOperation: GroupOperation {
+
     // MARK: Properties
-    var objectID: NSManagedObjectID?
-    
     let downloadOperation: EditionDetailDownloadOperation
     let parseOperation: EditionDetailParseOperation
    
@@ -29,7 +28,7 @@ class EditionDetailGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, coreDataStack: CoreDataStack, completionHandler: Void -> Void ) {
+    init( queryText: String, parentObjectID: NSManagedObjectID?, coreDataStack: CoreDataStack, completionHandler: Void -> Void ) {
 
         let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
 
@@ -48,7 +47,7 @@ class EditionDetailGetOperation: GroupOperation {
             There is an optional operation 0 to delete the existing contents of the Core Data store
         */
         downloadOperation = EditionDetailDownloadOperation( queryText: queryText, cacheFile: cacheFile )
-        parseOperation = EditionDetailParseOperation( cacheFile: cacheFile, coreDataStack: coreDataStack )
+        parseOperation = EditionDetailParseOperation( parentObjectID: parentObjectID, cacheFile: cacheFile, coreDataStack: coreDataStack )
         
         let finishOperation = NSBlockOperation( block: completionHandler )
         
@@ -66,10 +65,7 @@ class EditionDetailGetOperation: GroupOperation {
     override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
         if let firstError = errors.first where (operation === downloadOperation || operation === parseOperation) {
             produceAlert(firstError)
-        } else if operation === parseOperation {
-            
-            objectID = parseOperation.objectID
-        }
+       }
     }
     
 }

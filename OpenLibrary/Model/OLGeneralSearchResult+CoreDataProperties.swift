@@ -54,4 +54,6 @@ extension OLGeneralSearchResult {
     @NSManaged var 	    type: String
     
     @NSManaged var      sort_author_name: String
+
+    @NSManaged var      work_detail: OLWorkDetail?
 }

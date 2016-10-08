@@ -480,11 +480,14 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
         
         if let cell = tableView.cellForRowAtIndexPath( indexPath ) as? SegmentedTableViewCell {
         
+            generalSearchCoordinator?.didSelectRowAtIndexPath( indexPath )
+
             expandCell( tableView, segmentedCell: cell, key: cell.key )
             
 //            tableView.scrollToNearestSelectedRowAtScrollPosition( .Top, animated: true )
 
 //            print( "didSelectRowAtIndexPath \(indexPath.row) \(cell.key)" )
+
         }
     }
     

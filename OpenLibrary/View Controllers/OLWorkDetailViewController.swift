@@ -40,14 +40,7 @@ class OLWorkDetailViewController: UIViewController {
     
     @IBAction func displayAuthorDetail(sender: UIButton) {
         
-        if let authorDetailVC = findAuthorDetailInStack( ) {
-            
-            self.navigationController?.popToViewController( authorDetailVC, animated: true )
-            
-        } else {
-            
-            performSegueWithIdentifier( "displayAuthorDetail", sender: self )
-        }
+        performSegueWithIdentifier( "displayAuthorDetail", sender: self )
     }
     
     // MARK: UIViewController
@@ -62,7 +55,6 @@ class OLWorkDetailViewController: UIViewController {
         
         assert( nil != queryCoordinator )
         
-        queryCoordinator!.updateUI()
     }
     
     override func didReceiveMemoryWarning() {
@@ -76,6 +68,8 @@ class OLWorkDetailViewController: UIViewController {
         super.viewDidAppear( animated )
         
         navigationController?.setNavigationBarHidden( false, animated: true )
+
+        queryCoordinator?.updateUI()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -88,7 +82,7 @@ class OLWorkDetailViewController: UIViewController {
                 
                 queryCoordinator!.installWorkDetailEditionsQueryCoordinator( destVC )
             }
-            
+
         } else if segue.identifier == "embedWorkEBooks" {
             
             if let destVC = segue.destinationViewController as? OLEBookEditionsTableViewController {
@@ -129,16 +123,7 @@ class OLWorkDetailViewController: UIViewController {
     }
     
     // MARK: Utility
-    func findAuthorDetailInStack() -> OLAuthorDetailViewController? {
-        
-        if let qc = queryCoordinator, navController = self.navigationController {
 
-            return qc.findAuthorDetailInStack( navController )
-        }
-        
-        return nil
-    }
-    
     // MARK: query in progress
     
     func coordinatorIsBusy() -> Void {
@@ -208,7 +193,7 @@ class OLWorkDetailViewController: UIViewController {
             workCover.image = UIImage( named: workDetail.defaultImageName )
         }
 
-        displayDeluxeDetail.enabled = nil == workDetail.provisional_date
+        displayDeluxeDetail.enabled = !workDetail.isProvisional
         workTitle.textColor = displayDeluxeDetail.currentTitleColor
         workSubtitle.textColor = displayDeluxeDetail.currentTitleColor
 

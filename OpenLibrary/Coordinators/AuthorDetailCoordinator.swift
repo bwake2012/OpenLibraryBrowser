@@ -14,113 +14,35 @@ import PSOperations
 
 let kAuthorDetailCache = "authorDetailSearch"
 
-class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate {
+class AuthorDetailCoordinator: OLQueryCoordinator {
+    
+    typealias FetchedOLAuthorDetailController = FetchedResultsController< OLAuthorDetail >
+    
+    lazy var fetchedResultsController: FetchedOLAuthorDetailController = self.BuildFetchedResultsController()
     
     weak var authorDetailVC: OLAuthorDetailViewController?
 
-    var authorDetail: OLAuthorDetail?
-    var authorKey: String
+    var authorDetail: OLAuthorDetail
     var parentObjectID: NSManagedObjectID?
     
     var deluxeData = [[DeluxeData]]()
     
     var authorDetailGetOperation: Operation?
     
-    typealias FetchedAuthorDetailController = FetchedResultsController< OLAuthorDetail >
-    typealias FetchedAuthorDetailChange = FetchedResultsObjectChange< OLAuthorDetail >
-    typealias FetchedAuthorDetailSectionChange = FetchedResultsSectionChange< OLAuthorDetail >
-    
-    private lazy var fetchedResultsController: FetchedAuthorDetailController = {
-        
-        let fetchRequest = NSFetchRequest( entityName: OLAuthorDetail.entityName )
-
-        let key = self.authorKey
-        
-        let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
-        let today = NSDate()
-        let lastWeek = today.dateByAddingTimeInterval( -7 * secondsPerDay )
-        
-        fetchRequest.predicate = NSPredicate( format: "key==%@ && retrieval_date > %@", "\(key)", lastWeek )
-        
-        fetchRequest.sortDescriptors =
-            [
-                NSSortDescriptor(key: "name", ascending: true)
-            ]
-        fetchRequest.fetchBatchSize = 100
-        
-        let frc = FetchedAuthorDetailController(
-            fetchRequest: fetchRequest,
-            managedObjectContext: self.coreDataStack.mainQueueContext,
-            sectionNameKeyPath: nil,
-            cacheName: kAuthorDetailCache )
-        
-        frc.setDelegate( self )
-        return frc
-    }()
-    
-    init(
-            operationQueue: OperationQueue,
-            coreDataStack: CoreDataStack,
-            searchInfo: OLAuthorSearchResult,
-            authorDetailVC: OLAuthorDetailViewController
-        ) {
-        
-        self.authorDetail = searchInfo.toDetail
-        if searchInfo.key.hasPrefix( kAuthorsPrefix ) {
-            self.authorKey = searchInfo.key
-        } else {
-            self.authorKey = kAuthorsPrefix + searchInfo.key
-        }
-        self.parentObjectID = searchInfo.objectID
-
-        self.authorDetailVC = authorDetailVC
-
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: authorDetailVC )
-    }
-    
     init(
         operationQueue: OperationQueue,
         coreDataStack: CoreDataStack,
-        authorKey: String,
+        authorDetail: OLAuthorDetail,
         authorDetailVC: OLAuthorDetailViewController
         ) {
         
-        self.authorDetail = nil
+        self.authorDetail = authorDetail
 
-        self.authorKey = authorKey
-        if !self.authorKey.hasPrefix( kAuthorsPrefix ) {
-            
-            self.authorKey = kAuthorsPrefix + self.authorKey
-        }
-        
         self.authorDetailVC = authorDetailVC
         
         super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: authorDetailVC )
-
-        assert( !authorKey.isEmpty )
     }
     
-    init(
-        operationQueue: OperationQueue,
-        coreDataStack: CoreDataStack,
-        searchInfo: OLGeneralSearchResult,
-        authorDetailVC: OLAuthorDetailViewController
-        ) {
-        
-        self.authorDetail = nil
-        
-        self.authorKey = searchInfo.author_key[0]
-        if !self.authorKey.hasPrefix( kAuthorsPrefix ) {
-            
-            self.authorKey = kAuthorsPrefix + self.authorKey
-        }
-        
-        self.authorDetailVC = authorDetailVC
-        
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: authorDetailVC )
-        
-        assert( !authorKey.isEmpty )
-    }
     
     func updateUI( authorDetail: OLAuthorDetail ) {
         
@@ -161,8 +83,9 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             NSFetchedResultsController.deleteCacheWithName( kAuthorDetailCache )
             try fetchedResultsController.performFetch()
         }
-        catch let fetchError as NSError {
-            print("Error in the fetched results controller: \(fetchError).")
+        catch {
+            
+            print("Error in the author detail fetched results controller: \(error).")
         }
     }
     
@@ -185,14 +108,12 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
                     [weak self] in
                     
                     if let strongSelf = self {
+                        
                         dispatch_async( dispatch_get_main_queue() ) {
-                            
-                            if let detail = strongSelf.authorDetail {
-                                
-                                strongSelf.updateUI( detail )
 
-                                strongSelf.refreshComplete( refreshControl )
-                            }
+                            strongSelf.updateUI( strongSelf.authorDetail )
+
+                            strongSelf.refreshComplete( refreshControl )
                         }
                     }
             }
@@ -204,95 +125,38 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     
     func refreshQuery( refreshControl: UIRefreshControl? ) {
         
-        newQuery( self.authorKey, userInitiated: true, refreshControl: refreshControl )
+        newQuery( authorDetail.key, userInitiated: true, refreshControl: refreshControl )
     }
     
-    func objectAtIndexPath( indexPath: NSIndexPath ) -> OLAuthorDetail? {
+    // MARK: Utility
+    func BuildFetchedResultsController() -> FetchedOLAuthorDetailController {
         
-        guard let sections = fetchedResultsController.sections else {
-            assertionFailure("Sections missing")
-            return nil
-        }
+        let fetchRequest = NSFetchRequest( entityName: OLAuthorDetail.entityName )
+        let key = authorDetail.key
         
-        let section = sections[indexPath.section]
-        if indexPath.row >= section.objects.count {
-            return nil
-        } else {
-            return section.objects[indexPath.row]
-        }
-    }
-
-    // MARK: FetchedResultsControllerDelegate
-    
-    func fetchedResultsControllerDidPerformFetch(controller: FetchedAuthorDetailController) {
+        let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
+        let today = NSDate()
+        let lastWeek = today.dateByAddingTimeInterval( -7 * secondsPerDay )
         
-        let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) )
-        if nil == detail {
-            
-            newQuery( authorKey, userInitiated: true, refreshControl: nil )
-            
-        } else if let detail = detail {
-            
-            if nil != detail.provisional_date {
-                
-                newQuery( authorKey, userInitiated: true, refreshControl: nil )
-            }
-            
-            authorDetail = detail
-            updateUI( detail )
-        }
+        fetchRequest.predicate = NSPredicate( format: "key==%@ && retrieval_date > %@", "\(key)", lastWeek )
+        
+        fetchRequest.sortDescriptors =
+            [
+                NSSortDescriptor(key: "name", ascending: true)
+            ]
+        fetchRequest.fetchBatchSize = 100
+        
+        let frc =
+            FetchedOLAuthorDetailController(
+                fetchRequest: fetchRequest,
+                managedObjectContext: self.coreDataStack.mainQueueContext,
+                sectionNameKeyPath: nil,
+                cacheName: kAuthorDetailCache
+        )
+        
+        frc.setDelegate( self )
+        return frc
     }
-    
-    func fetchedResultsControllerWillChangeContent( controller: FetchedAuthorDetailController ) {
-        //        tableView?.beginUpdates()
-    }
-    
-    func fetchedResultsControllerDidChangeContent( controller: FetchedAuthorDetailController ) {
-        //        tableView?.endUpdates()
-    }
-    
-    func fetchedResultsController( controller: FetchedAuthorDetailController,
-                                   didChangeObject change: FetchedAuthorDetailChange ) {
-        switch change {
-        case .Insert(_, _):
-            if let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {
-                
-                updateUI( detail )
-                authorDetail = detail
-            }
-            break
-            
-        case .Delete(_, _):
-            // tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-            break
-            
-        case .Move(_, _, _):
-            // tableVC.tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
-            break
-            
-        case .Update(_, _):
-            if let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) ) {
-                
-                updateUI( detail )
-                authorDetail = detail
-            }
-            break
-        }
-    }
-    
-    func fetchedResultsController( controller: FetchedAuthorDetailController,
-                                   didChangeSection change: FetchedAuthorDetailSectionChange ) {
-        switch change {
-        case .Insert(_, _):
-            // tableVC.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
-            break
-            
-        case .Delete(_, _):
-            // tableVC.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
-            break
-        }
-    }
-
     
     // MARK: install query coordinators
     
@@ -300,53 +164,105 @@ class AuthorDetailCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
 
         destVC.queryCoordinator =
             AuthorWorksCoordinator(
-                    authorKey: authorKey,
+                    authorDetail: authorDetail,
                     authorWorksTableVC: destVC,
                     coreDataStack: coreDataStack,
                     operationQueue: operationQueue
                 )
     }
 
-    func installAuthorEditionsCoordinator( destVC: OLAuthorDetailEditionsTableViewController ) {
-        
-        destVC.queryCoordinator =
-            AuthorEditionsCoordinator(
-                    authorKey: authorKey,
-                    tableVC: destVC,
-                    coreDataStack: coreDataStack,
-                    operationQueue: operationQueue
-                )
-    }
-    
     func installAuthorDeluxeDetailCoordinator( destVC: OLDeluxeDetailTableViewController ) {
-        
-        if let authorDetail = authorDetail {
-            
-            destVC.queryCoordinator =
-                DeluxeDetailCoordinator(
-                        operationQueue: operationQueue,
-                        coreDataStack: coreDataStack,
-                        heading: authorDetail.name,
-                        deluxeData: authorDetail.deluxeData,
-                        imageType: authorDetail.imageType,
-                        deluxeDetailVC: destVC
-                    )
-        }
+    
+        destVC.queryCoordinator =
+            DeluxeDetailCoordinator(
+                    operationQueue: operationQueue,
+                    coreDataStack: coreDataStack,
+                    heading: authorDetail.name,
+                    deluxeData: authorDetail.deluxeData,
+                    imageType: authorDetail.imageType,
+                    deluxeDetailVC: destVC
+                )
     }
     
     func installAuthorPictureCoordinator( destVC: OLPictureViewController ) {
         
-        if let authorDetail = authorDetail {
-            
-            destVC.queryCoordinator =
-                PictureViewCoordinator(
-                        operationQueue: operationQueue,
-                        coreDataStack: coreDataStack,
-                        localURL: authorDetail.localURL( "L", index: 0 ),
-                        imageID: authorDetail.firstImageID,
-                        pictureType: authorDetail.imageType,
-                        pictureVC: destVC
-                    )
-        }
+        destVC.queryCoordinator =
+            PictureViewCoordinator(
+                    operationQueue: operationQueue,
+                    coreDataStack: coreDataStack,
+                    localURL: authorDetail.localURL( "L", index: 0 ),
+                    imageID: authorDetail.firstImageID,
+                    pictureType: authorDetail.imageType,
+                    pictureVC: destVC
+                )
     }
 }
+
+extension AuthorDetailCoordinator: FetchedResultsControllerDelegate {
+    
+    func fetchedResultsControllerDidPerformFetch( controller: FetchedOLAuthorDetailController ) {
+        
+        guard let authorDetail = controller.fetchedObjects?.first else {
+
+            newQuery( self.authorDetail.key, userInitiated: true, refreshControl: nil )
+            return
+        }
+        
+        self.authorDetail = authorDetail
+        if authorDetail.isProvisional {
+            
+            newQuery( authorDetail.key, userInitiated: true, refreshControl: nil )
+
+        } else {
+            
+            updateUI( authorDetail )
+        }
+    }
+    
+    func fetchedResultsControllerWillChangeContent( controller: FetchedOLAuthorDetailController ) {
+        //        authorAuthorsTableVC?.tableView.beginUpdates()
+    }
+    
+    func fetchedResultsControllerDidChangeContent( controller: FetchedOLAuthorDetailController ) {
+        
+        guard let authorDetail = controller.fetchedObjects?.first else {
+            
+            newQuery( self.authorDetail.key, userInitiated: true, refreshControl: nil )
+            return
+        }
+        
+        self.authorDetail = authorDetail
+        updateUI( authorDetail )
+    }
+    
+    func fetchedResultsController( controller: FetchedOLAuthorDetailController,
+                                   didChangeObject change: FetchedResultsObjectChange< OLAuthorDetail > ) {
+        
+        switch change {
+        case let .Insert( object, indexPath):
+            break
+            
+        case let .Delete(_, indexPath):
+            break
+            
+        case let .Move(_, fromIndexPath, toIndexPath):
+            break
+            
+        case let .Update( object, indexPath):
+            break
+        }
+    }
+    
+    func fetchedResultsController(controller: FetchedOLAuthorDetailController,
+                                  didChangeSection change: FetchedResultsSectionChange< OLAuthorDetail >) {
+        
+        switch change {
+        case let .Insert(_, index):
+            break
+        case let .Delete(_, index):
+            break
+        }
+    }
+    
+}
+

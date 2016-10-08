@@ -68,6 +68,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             case .Success(let stack):
                 
                 self.coreDataStack = stack
+                
+                self.coreDataStack?.privateQueueContext.performBlockAndWait {
+                    self.coreDataStack?.privateQueueContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+                }
+                self.coreDataStack?.mainQueueContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
 
                 let delayTime = dispatch_time( DISPATCH_TIME_NOW, Int64( 0.5 * Double( NSEC_PER_SEC ) ) )
                 

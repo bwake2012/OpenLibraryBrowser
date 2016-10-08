@@ -44,20 +44,19 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
             
             newObject.setLanguageNames()              // fill the array of language names
             
-            // let workDetail =
-            OLWorkDetail.saveProvisionalWork( parsed, moc: moc )
-
-            for authorIndex in 0..<parsed.author_key.count {
+            for index in 0..<parsed.author_key.count {
                 
-                // let authorDetail = 
-                OLAuthorDetail.saveProvisionalAuthor( authorIndex, parsed: parsed, moc: moc )
-            }
-
-            for editionIndex in 0..<parsed.edition_key.count {
+                assert( index < parsed.author_name.count )
                 
-                // let editionDetail = 
-                OLEditionDetail.saveProvisionalEdition( editionIndex, parsed: parsed, moc: moc )
+                OLManagedObject.authorCache.setObject(
+                        parsed.author_name[index], forKey: parsed.author_key[index]
+                    )
             }
+            
+//            if let workDetail = OLGeneralSearchResult.saveProvisionalObjects( parsed, moc: moc ) {
+//                
+//                newObject.work_detail = workDetail
+//            }
         }
 
         return newObject
@@ -84,7 +83,7 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
     
     override func localURL( size: String, index: Int = 0 ) -> NSURL {
 
-        return super.localURL( self.key, size: size, index: index )
+        return super.localURL( firstImageID, size: size )
     }
     
     func populateObject( parsed: OLGeneralSearchResult.ParsedFromJSON ) {
@@ -264,7 +263,7 @@ extension OLGeneralSearchResult {
             let cover_i            = json["cover_i"] as? Int ?? 0
             let ebook_count_i      = json["ebook_count_i"] as? Int ?? 0
             let edition_count      = json["edition_count"] as? Int ?? 0
-//            let edition_key        = json["edition_key"] as? [String] ?? [String]()
+
             let tempEditionKey     = json["edition_key"] as? [String] ?? [String]()
             var edition_key = [String]()
             for editionKey in tempEditionKey {
@@ -343,4 +342,29 @@ extension OLGeneralSearchResult {
             
         }
     }
+}
+
+extension OLGeneralSearchResult {
+    
+    func saveProvisionalObjects() -> OLWorkDetail? {
+        
+        guard nil == self.work_detail else { return self.work_detail }
+        
+        guard let moc = self.managedObjectContext else { return nil }
+        
+        let workDetail = OLWorkDetail.saveProvisionalWork( self, moc: moc )
+        if let workDetail = workDetail {
+            
+            self.work_detail = workDetail
+
+            for editionIndex in 0..<self.edition_key.count {
+                
+                _ = OLEditionDetail.saveProvisionalEdition( editionIndex, parsed: self, moc: moc )
+            }
+            
+        }
+        
+        return workDetail
+    }
+
 }

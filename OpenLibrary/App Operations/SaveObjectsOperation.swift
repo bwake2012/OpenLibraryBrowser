@@ -1,7 +1,7 @@
-//  EditionDetailParseOperation.swift
+//  SaveObjectsOperation.swift
 //  OpenLibrary
 //
-//  Created by Bob Wakefield on 3/2/16.
+//  Created by Bob Wakefield on 4/16/16.
 //  Copyright © 2016 Bob Wakefield. All rights reserved.
 //
 //  Modified from code in the Apple sample app Earthquakes in the Advanced NSOperations project
@@ -12,81 +12,52 @@ import CoreData
 import BNRCoreDataStack
 import PSOperations
 
-
-
-/// An `Operation` to parse earthquakes out of a downloaded feed from the USGS.
-class EditionDetailParseOperation: Operation {
+/// An `Operation` to parse works out of a query from OpenLibrary.
+class SaveObjectsOperation: Operation {
     
-    let cacheFile: NSURL
+    let objectID: NSManagedObjectID
     let context: NSManagedObjectContext
-
-    var searchResults = SearchResults()
-    
-    var parentObjectID: NSManagedObjectID?
     
     /**
-        - parameter cacheFile: The file `NSURL` from which to load Work query data.
+        - parameter cacheFile: The file `NSURL` from which to load author query data.
         - parameter context: The `NSManagedObjectContext` that will be used as the
                              basis for importing data. The operation will internally
                              construct a new `NSManagedObjectContext` that points
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( parentObjectID: NSManagedObjectID?, cacheFile: NSURL, coreDataStack: CoreDataStack ) {
+    init( objectID: NSManagedObjectID, coreDataStack: CoreDataStack ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
             to replace the ones in the store.
         */
         
-        self.parentObjectID = parentObjectID
-        self.cacheFile = cacheFile
-        self.context = coreDataStack.newChildContext()
+        self.objectID = objectID
+        self.context = coreDataStack.newChildContext( name: "saveObjects" )
         self.context.mergePolicy = NSOverwriteMergePolicy
         
         super.init()
 
-        name = "Parse Edition Detail Results"
+        name = "Parse Language Codes"
     }
     
     override func execute() {
-        
-        guard let stream = NSInputStream(URL: cacheFile) else {
-            finish()
-            return
-        }
-        
-        stream.open()
-        
-        defer {
-            stream.close()
-        }
-        
-        do {
-            if let json = try NSJSONSerialization.JSONObjectWithStream(stream, options: []) as? [String: AnyObject] {
+
+        let objectID = self.objectID
+        context.performBlock {
             
-                parse( json )
+            if let object = self.context.objectWithID( objectID ) as? OLGeneralSearchResult {
+                
+                object.saveProvisionalObjects()
+
+                let error = self.saveContext()
+                
+                self.finishWithError( error )
             }
-            else {
-                finish()
-            }
-        }
-        catch let jsonError as NSError {
-            finishWithError(jsonError)
         }
     }
     
-    private func parse( resultSet: [String: AnyObject] ) {
-
-        context.performBlock {
-            
-            _ = OLEditionDetail.parseJSON( "", workKey: "", index: -1, json: resultSet, moc: self.context )
-                
-            let error = self.saveContext()
-            
-            self.finishWithError( error )
-        }
-    }
     
     /**
         Save the context, if there are any changes.
@@ -110,8 +81,4 @@ class EditionDetailParseOperation: Operation {
         return error
     }
     
-    func Update( searchResults: SearchResults ) {
-        
-        self.searchResults = searchResults
-    }
 }

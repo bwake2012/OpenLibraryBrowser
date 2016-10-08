@@ -75,17 +75,14 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         
         guard let parsed = ParsedFromJSON.fromJSON( json ) else { return nil }
             
+        moc.mergePolicy = NSOverwriteMergePolicy
+        
         var newObject: OLWorkDetail?
         
-        newObject = findObject( parsed.key, entityName: entityName, moc: moc )
-        if nil == newObject {
-            
-            newObject =
-                NSEntityDescription.insertNewObjectForEntityForName(
-                    OLWorkDetail.entityName, inManagedObjectContext: moc
-                ) as? OLWorkDetail
-            
-        }
+        newObject =
+            NSEntityDescription.insertNewObjectForEntityForName(
+                OLWorkDetail.entityName, inManagedObjectContext: moc
+            ) as? OLWorkDetail
         
         if let newObject = newObject {
         
@@ -96,61 +93,12 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
                 newObject.author_key = parsed.authors[0]
             }
             
-            if !newObject.isProvisional {
+            if 0 <= index {
                 newObject.index = Int64( index )
             }
             newObject.retrieval_date = NSDate()
-            newObject.provisional_date = nil
             
             newObject.populateObject( parsed )
-        }
-        
-        return newObject
-    }
-    
-    class func saveProvisionalWork( parsed: OLGeneralSearchResult.ParsedFromJSON, moc: NSManagedObjectContext ) -> OLWorkDetail? {
-        
-        var newObject: OLWorkDetail?
-
-        newObject = findObject( parsed.key, entityName: entityName, moc: moc )
-        if nil == newObject {
-            
-            newObject =
-                NSEntityDescription.insertNewObjectForEntityForName(
-                    OLWorkDetail.entityName, inManagedObjectContext: moc
-                ) as? OLWorkDetail
-            
-            if let newObject = newObject {
-
-                newObject.retrieval_date = NSDate()
-                newObject.provisional_date = NSDate()
-                
-                newObject.has_fulltext = parsed.has_fulltext ? 1 : 0
-                newObject.ebook_count_i = parsed.ebook_count_i
-                
-                if parsed.key.hasPrefix( kWorksPrefix ) {
-                    newObject.key = parsed.key
-                } else {
-                    newObject.key = kWorksPrefix + parsed.key
-                }
-                newObject.type = kWorkType
-                
-                newObject.authors = parsed.author_key
-                newObject.author_key = parsed.author_key.first ?? ""
-                newObject.author_name_cache = parsed.author_name
-                
-                newObject.title = parsed.title
-                newObject.subtitle = parsed.subtitle
-                if parsed.cover_i != 0 {
-                    newObject.covers = [Int( parsed.cover_i )]
-                } else {
-                    newObject.covers = [Int]()
-                }
-                newObject.coversFound = !newObject.covers.isEmpty && 0 < newObject.covers[0]
-                
-                newObject.first_publish_date = String( parsed.first_publish_year )
-                newObject.subjects = parsed.subject
-            }
         }
         
         return newObject
@@ -207,7 +155,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
     
     override var isProvisional: Bool {
         
-        return nil != self.provisional_date
+        return self.is_provisional
     }
     
     override var hasImage: Bool {
@@ -229,13 +177,16 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
     
     override func localURL( size: String, index: Int = 0 ) -> NSURL {
         
-        return super.localURL( self.key, size: size, index: index )
+        return super.localURL( self.covers[index], size: size )
     }
     
     override func populateObject(parsed: OpenLibraryObject) {
         
         if let parsed = parsed as? ParsedFromJSON {
             
+            self.is_provisional = false
+            self.provisional_date = nil
+
             self.key = parsed.key
             self.created = parsed.created
             self.last_modified = parsed.last_modified
@@ -452,6 +403,10 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
                 )
             )
         
+        newData.append(
+            DeluxeData(type: .inline, caption: "", value: isProvisional ? "Provisional" : "Actual" )
+        )
+        
         deluxeData.append( newData )
 
         return deluxeData
@@ -612,4 +567,149 @@ extension OLWorkDetail {
             self.covers = covers
         }
     }
+}
+
+extension OLWorkDetail {
+    
+    class func saveProvisionalWork( parsed: OLGeneralSearchResult, moc: NSManagedObjectContext ) -> OLWorkDetail? {
+        
+        var newObject: OLWorkDetail?
+        
+        newObject = findObject( parsed.key, entityName: entityName, moc: moc )
+        if nil == newObject {
+            
+            newObject =
+                NSEntityDescription.insertNewObjectForEntityForName(
+                    OLWorkDetail.entityName, inManagedObjectContext: moc
+                ) as? OLWorkDetail
+            
+            if let newObject = newObject {
+             
+                newObject.populateProvisional( parsed )
+            }
+        }
+        
+        return newObject
+    }
+    
+    func populateProvisional( parsed: OLGeneralSearchResult ) {
+        
+        self.retrieval_date = NSDate()
+        self.provisional_date = NSDate()
+        self.is_provisional = true
+        
+        self.has_fulltext = parsed.has_fulltext ? 1 : 0
+        self.ebook_count_i = parsed.ebook_count_i
+        
+        if parsed.key.hasPrefix( kWorksPrefix ) {
+            self.key = parsed.key
+        } else {
+            self.key = kWorksPrefix + parsed.key
+        }
+        self.type = kWorkType
+        
+        self.authors = parsed.author_key
+        self.author_key = parsed.author_key.first ?? ""
+        self.author_name_cache = parsed.author_name
+        
+        self.title = parsed.title
+        self.subtitle = parsed.subtitle
+        if parsed.cover_i != 0 {
+            self.covers = [Int( parsed.cover_i )]
+        } else {
+            self.covers = []
+        }
+        self.coversFound = !self.covers.isEmpty && 0 < self.covers[0]
+        
+        self.first_publish_date = ""
+        self.subjects = parsed.subject
+        
+        self.dewey_number = []
+        self.ebook_count_i = parsed.ebook_count_i
+        
+        self.first_sentence = ""
+        self.lc_classifications = []
+        self.links = [[:]]
+        self.notes = ""
+        self.original_languages = []
+        self.other_titles = []
+        self.subject_people = []
+        self.subject_places = []
+        self.subject_times = []
+        
+        self.translated_titles = []
+        self.work_description = ""
+    }
+
+    class func saveProvisionalWork( parsed: OLGeneralSearchResult.ParsedFromJSON, moc: NSManagedObjectContext ) -> OLWorkDetail? {
+        
+        var newObject: OLWorkDetail?
+        
+        newObject = findObject( parsed.key, entityName: entityName, moc: moc )
+        if nil == newObject {
+            
+            newObject =
+                NSEntityDescription.insertNewObjectForEntityForName(
+                    OLWorkDetail.entityName, inManagedObjectContext: moc
+                ) as? OLWorkDetail
+            
+            if let newObject = newObject {
+                
+                newObject.populateProvisional( parsed )
+            }
+        }
+        
+        return newObject
+    }
+    
+    func populateProvisional( parsed: OLGeneralSearchResult.ParsedFromJSON ) {
+        
+        self.retrieval_date = NSDate()
+        self.provisional_date = NSDate()
+        self.is_provisional = true
+        
+        self.has_fulltext = parsed.has_fulltext ? 1 : 0
+        self.ebook_count_i = parsed.ebook_count_i
+        
+        if parsed.key.hasPrefix( kWorksPrefix ) {
+            self.key = parsed.key
+        } else {
+            self.key = kWorksPrefix + parsed.key
+        }
+        self.type = kWorkType
+        
+        self.authors = parsed.author_key
+        self.author_key = parsed.author_key.first ?? ""
+        self.author_name_cache = parsed.author_name
+        
+        self.title = parsed.title
+        self.subtitle = parsed.subtitle
+        if parsed.cover_i != 0 {
+            self.covers = [Int( parsed.cover_i )]
+        } else {
+            self.covers = []
+        }
+        self.coversFound = !self.covers.isEmpty && 0 < self.covers[0]
+        
+        self.first_publish_date = ""
+        self.subjects = parsed.subject
+        
+        self.dewey_number = []
+        self.ebook_count_i = parsed.ebook_count_i
+        self.edition_count = Int64( parsed.edition_key.count )
+        
+        self.first_sentence = ""
+        self.lc_classifications = []
+        self.links = [[:]]
+        self.notes = ""
+        self.original_languages = []
+        self.other_titles = []
+        self.subject_people = []
+        self.subject_places = []
+        self.subject_times = []
+        
+        self.translated_titles = []
+        self.work_description = ""
+    }
+    
 }

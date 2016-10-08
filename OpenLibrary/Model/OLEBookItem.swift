@@ -75,7 +75,7 @@ class OLEBookItem: OLManagedObject, CoreDataModelable {
     
     override func localURL( size: String, index: Int = 0 ) -> NSURL {
         
-        return super.localURL( self.editionKey, size: size, index: index )
+        return super.localURL( firstImageID, size: size )
     }
     
     var editionDetail: OLEditionDetail?
