@@ -996,62 +996,45 @@ MarkDown text to HTML for display.
                                                 <constraint firstAttribute="width" constant="60" id="WvH-Q7-rgg"/>
                                             </constraints>
                                         </imageView>
-                                        <view contentMode="scaleToFill" verticalCompressionResistancePriority="760" translatesAutoresizingMaskIntoConstraints="NO" id="dYY-vM-OXZ" userLabel="Summary">
-                                            <rect key="frame" x="72" y="8" width="520" height="84.5"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="d0i-Q2-w2J">
+                                            <rect key="frame" x="76" y="8" width="516" height="85"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" text=" " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oud-ZT-Tod">
-                                                    <rect key="frame" x="0.0" y="0.0" width="520" height="19.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" ambiguous="YES" misplaced="YES" text=" Title" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oud-ZT-Tod">
+                                                    <rect key="frame" x="0.0" y="0.0" width="516" height="20"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" text=" " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="94D-nn-H2C">
-                                                    <rect key="frame" x="0.0" y="23" width="520" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" ambiguous="YES" misplaced="YES" text=" Subtitle" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="94D-nn-H2C">
+                                                    <rect key="frame" x="0.0" y="20" width="516" height="17"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" text="" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="37q-q8-Dny">
-                                                    <rect key="frame" x="0.0" y="57" width="520" height="0.0"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" ambiguous="YES" misplaced="YES" text="Author Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="37q-q8-Dny">
+                                                    <rect key="frame" x="0.0" y="37" width="516" height="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7E8-RR-p1T" userLabel="eBook Status">
-                                                    <rect key="frame" x="0.0" y="65" width="520" height="19.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalCompressionResistancePriority="1000" ambiguous="YES" misplaced="YES" text="eBook Status" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7E8-RR-p1T" userLabel="eBook Status">
+                                                    <rect key="frame" x="0.0" y="54" width="516" height="32"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <constraints>
-                                                <constraint firstItem="94D-nn-H2C" firstAttribute="trailing" secondItem="dYY-vM-OXZ" secondAttribute="trailing" id="80j-on-AsO"/>
-                                                <constraint firstItem="7E8-RR-p1T" firstAttribute="trailing" secondItem="dYY-vM-OXZ" secondAttribute="trailing" id="AF6-Nj-F57"/>
-                                                <constraint firstAttribute="trailing" secondItem="37q-q8-Dny" secondAttribute="trailing" id="UPb-nJ-2Ek"/>
-                                                <constraint firstItem="7E8-RR-p1T" firstAttribute="leading" secondItem="dYY-vM-OXZ" secondAttribute="leading" id="Y3s-bb-Bhm"/>
-                                                <constraint firstItem="94D-nn-H2C" firstAttribute="top" secondItem="Oud-ZT-Tod" secondAttribute="bottom" constant="4" id="YyR-Mz-alz"/>
-                                                <constraint firstItem="37q-q8-Dny" firstAttribute="top" relation="greaterThanOrEqual" secondItem="94D-nn-H2C" secondAttribute="bottom" id="YzQ-Pj-duX"/>
-                                                <constraint firstItem="Oud-ZT-Tod" firstAttribute="top" secondItem="dYY-vM-OXZ" secondAttribute="top" id="oCf-aS-qaN"/>
-                                                <constraint firstItem="37q-q8-Dny" firstAttribute="leading" secondItem="dYY-vM-OXZ" secondAttribute="leading" id="qOf-fT-cAY"/>
-                                                <constraint firstItem="94D-nn-H2C" firstAttribute="leading" secondItem="dYY-vM-OXZ" secondAttribute="leading" id="xzW-Fe-sST"/>
-                                                <constraint firstItem="7E8-RR-p1T" firstAttribute="top" secondItem="37q-q8-Dny" secondAttribute="bottom" constant="8" symbolic="YES" id="yDC-qX-8rz"/>
-                                                <constraint firstItem="Oud-ZT-Tod" firstAttribute="leading" secondItem="dYY-vM-OXZ" secondAttribute="leading" id="ygE-TC-1Su"/>
-                                                <constraint firstAttribute="bottom" secondItem="7E8-RR-p1T" secondAttribute="bottom" id="zRu-NG-aEW"/>
-                                                <constraint firstItem="Oud-ZT-Tod" firstAttribute="trailing" secondItem="dYY-vM-OXZ" secondAttribute="trailing" id="zcL-sH-CsD"/>
-                                            </constraints>
-                                        </view>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="dYY-vM-OXZ" firstAttribute="height" relation="greaterThanOrEqual" secondItem="WNJ-dU-1y0" secondAttribute="height" id="CCH-1c-D1E"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="dYY-vM-OXZ" secondAttribute="trailing" id="Frd-yU-7LK"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="dYY-vM-OXZ" secondAttribute="bottom" id="R9z-RZ-HrO"/>
-                                        <constraint firstItem="dYY-vM-OXZ" firstAttribute="top" secondItem="h4q-bs-TUQ" secondAttribute="topMargin" id="e8a-iy-V98"/>
                                         <constraint firstItem="WNJ-dU-1y0" firstAttribute="leading" secondItem="h4q-bs-TUQ" secondAttribute="leadingMargin" id="lns-WE-PEP"/>
+                                        <constraint firstItem="d0i-Q2-w2J" firstAttribute="top" secondItem="h4q-bs-TUQ" secondAttribute="topMargin" id="oEr-8U-31h"/>
                                         <constraint firstItem="WNJ-dU-1y0" firstAttribute="top" secondItem="h4q-bs-TUQ" secondAttribute="topMargin" id="pha-YA-HCq"/>
-                                        <constraint firstItem="dYY-vM-OXZ" firstAttribute="leading" secondItem="WNJ-dU-1y0" secondAttribute="trailing" constant="4" id="xQI-dq-DCk"/>
+                                        <constraint firstItem="d0i-Q2-w2J" firstAttribute="trailing" secondItem="h4q-bs-TUQ" secondAttribute="trailingMargin" id="prU-k7-yVI"/>
+                                        <constraint firstItem="d0i-Q2-w2J" firstAttribute="leading" secondItem="WNJ-dU-1y0" secondAttribute="trailing" constant="8" symbolic="YES" id="u5n-ZG-itN"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="d0i-Q2-w2J" secondAttribute="bottom" id="zMo-97-H1J"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -1109,23 +1092,22 @@ MarkDown text to HTML for display.
                                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="r9x-fH-erk">
                                                         <rect key="frame" x="0.0" y="0.0" width="448" height="128"/>
                                                         <subviews>
-                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" misplaced="YES" text="The Horror Story Shorter by One Letter Than the Shortest Horror Story Ever Written" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hw2-t8-xO1">
-                                                                <rect key="frame" x="0.0" y="0.0" width="448" height="41"/>
+                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" misplaced="YES" text="edition title" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hw2-t8-xO1">
+                                                                <rect key="frame" x="0.0" y="0.0" width="448" height="20"/>
                                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" misplaced="YES" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0dE-u2-iMJ">
-                                                                <rect key="frame" x="0.0" y="45" width="448" height="36"/>
+                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" misplaced="YES" text="edition subtitle" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0dE-u2-iMJ">
+                                                                <rect key="frame" x="0.0" y="24" width="448" height="17"/>
                                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <string key="text">This is a very long subtitle to test word wrap in Work Detail Header. It doesn't seem to be long enough to wrap without this extra sentence. </string>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" misplaced="YES" text="John Jacob Jingleheimer Schmidt" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BCj-VO-gb0" userLabel="Work Author">
-                                                                <rect key="frame" x="0.0" y="85" width="448" height="44"/>
+                                                            <label userInteractionEnabled="NO" contentMode="TopLeft" verticalCompressionResistancePriority="1000" misplaced="YES" text="edition author" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BCj-VO-gb0" userLabel="Work Author">
+                                                                <rect key="frame" x="0.0" y="45" width="448" height="84"/>
                                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1133,7 +1115,7 @@ MarkDown text to HTML for display.
                                                             </label>
                                                         </subviews>
                                                     </stackView>
-                                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Daa-Wu-hPc" userLabel="Display Deluxe Detail">
+                                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" misplaced="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Daa-Wu-hPc" userLabel="Display Deluxe Detail">
                                                         <rect key="frame" x="0.0" y="0.0" width="448" height="260.5"/>
                                                         <connections>
                                                             <segue destination="jwx-Vz-ory" kind="show" identifier="displayDeluxeWorkDetail" customClass="SegueWithUnfold" customModule="OpenLibrary" customModuleProvider="target" id="e97-o9-TlG"/>
@@ -1264,7 +1246,7 @@ MarkDown text to HTML for display.
         <image name="rsw-notsorted-28x26" width="28" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="MSI-XC-TWv"/>
+        <segue reference="Bqz-gA-wL1"/>
         <segue reference="DGw-06-isa"/>
     </inferredMetricsTieBreakers>
 </document>

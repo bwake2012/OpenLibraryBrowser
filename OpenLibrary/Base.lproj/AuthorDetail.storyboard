@@ -36,32 +36,32 @@
                                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="750" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RLG-CI-drZ" userLabel="Scroll Summary">
                                                 <rect key="frame" x="0.0" y="0.0" width="448" height="128"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ayZ-Aq-xYt">
+                                                    <stackView contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ayZ-Aq-xYt">
                                                         <rect key="frame" x="0.0" y="0.0" width="448" height="128"/>
                                                         <subviews>
-                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" text="Author Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ll5-B3-x9U">
+                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" text="Author Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ll5-B3-x9U">
                                                                 <rect key="frame" x="0.0" y="0.0" width="448" height="30"/>
                                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="740" misplaced="YES" text="Birth Date:" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cnV-cA-Bc1">
-                                                                <rect key="frame" x="0.0" y="30" width="448" height="84"/>
+                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" misplaced="YES" text="Birth Date:" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cnV-cA-Bc1">
+                                                                <rect key="frame" x="0.0" y="30" width="448" height="15"/>
                                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="740" misplaced="YES" text="Death Date" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BIm-fa-YeT" userLabel="Death Date">
-                                                                <rect key="frame" x="0.0" y="114" width="448" height="15"/>
+                                                            <label userInteractionEnabled="NO" contentMode="TopLeft" verticalCompressionResistancePriority="1000" misplaced="YES" text="Death Date" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BIm-fa-YeT" userLabel="Death Date">
+                                                                <rect key="frame" x="0.0" y="45" width="448" height="84"/>
                                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QCZ-iR-dm7" userLabel="Display Deluxe Detail">
                                                         <rect key="frame" x="0.0" y="0.0" width="448" height="30"/>
@@ -211,18 +211,18 @@
                                                 <constraint firstAttribute="height" constant="84" id="SA9-6N-5WB"/>
                                             </constraints>
                                         </imageView>
-                                        <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="qc1-UY-hBv">
+                                        <stackView contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="qc1-UY-hBv">
                                             <rect key="frame" x="76" y="8" width="516" height="84"/>
                                             <subviews>
-                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" text=" " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNg-qS-tdy">
-                                                    <rect key="frame" x="0.0" y="0.0" width="516" height="67"/>
+                                                <label userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" misplaced="YES" text=" " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNg-qS-tdy">
+                                                    <rect key="frame" x="0.0" y="0.0" width="516" height="20"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" text=" " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="85c-bq-NUk">
-                                                    <rect key="frame" x="0.0" y="67" width="516" height="17"/>
+                                                <label userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalCompressionResistancePriority="1000" misplaced="YES" text=" " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="85c-bq-NUk">
+                                                    <rect key="frame" x="0.0" y="20" width="516" height="65"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
