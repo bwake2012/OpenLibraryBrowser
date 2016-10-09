@@ -102,7 +102,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         let editionDetail = item.matchingEdition()
         if editionDetail?.isProvisional ?? true {
             
-            if libraryIsReachable( tattle: true ) {
+            if libraryIsReachable( tattle: false ) {
                 
                 let getOperation =
                     EditionDetailGetOperation(
