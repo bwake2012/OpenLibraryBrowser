@@ -71,22 +71,28 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         let workDetail = section.objects[index]
         if workDetail.isProvisional || needAnotherPage( index ) {
             
-            if !setRetrievals.contains( index / kPageSize ) {
+            if nil == authorWorksGetOperation {
+
+                if !setRetrievals.contains( index / kPageSize ) {
                 
-                authorWorksGetOperation =
-                    enqueueQuery( authorKey, offset: index, userInitiated: false, refreshControl: nil )
-                
-            } else {
-                
-                authorWorksGetOperation =
-                    WorkDetailGetOperation(
-                        queryText: workDetail.key,
-                        coreDataStack: coreDataStack,
-                        resultHandler: nil
-                    ) {}
-                
-                authorWorksGetOperation?.userInitiated = false
-                operationQueue.addOperation( authorWorksGetOperation! )
+                    authorWorksGetOperation =
+                        enqueueQuery( authorKey, offset: index, userInitiated: false, refreshControl: nil )
+                    
+                } else {
+                    
+                    authorWorksGetOperation =
+                        WorkDetailGetOperation(
+                            queryText: workDetail.key,
+                            coreDataStack: coreDataStack,
+                            resultHandler: nil
+                        ) {
+                            
+                            self.authorWorksGetOperation = nil
+                        }
+                    
+                    authorWorksGetOperation?.userInitiated = false
+                    operationQueue.addOperation( authorWorksGetOperation! )
+                }
             }
         }
         
@@ -210,7 +216,6 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
     private func needAnotherPage( index: Int ) -> Bool {
         
         return
-            nil == authorWorksGetOperation &&
             !setRetrievals.contains( index / kPageSize ) &&
             index <= highWaterMark - kPageSize / 5 &&
             highWaterMark < searchResults.numFound

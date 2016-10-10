@@ -95,9 +95,25 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         
         if editionDetail.isProvisional || needAnotherPage( index, highWaterMark: highWaterMark ) {
             
-            workEditionsGetOperation =
-                enqueueQuery( workDetail, offset: index, userInitiated: false, refreshControl: nil )
+            if nil == workEditionsGetOperation {
+                
+                if !setRetrievals.contains( index / kPageSize ) {
 
+                    workEditionsGetOperation =
+                        enqueueQuery( workDetail, offset: index, userInitiated: false, refreshControl: nil )
+
+                } else {
+                    
+                    workEditionsGetOperation =
+                        EditionDetailGetOperation( queryText: editionDetail.key, parentObjectID: nil, coreDataStack: coreDataStack ) {
+                    
+                        self.workEditionsGetOperation = nil
+                    }
+                    
+                    workEditionsGetOperation?.userInitiated = false
+                    operationQueue.addOperation( workEditionsGetOperation! )
+                }
+            }
         }
 
         return editionDetail
@@ -271,7 +287,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     
     private func updateFooter( text: String = "" ) {
         
-        updateTableFooter( tableVC?.tableView, highWaterMark: highWaterMark, numFound: editionsCount, text: text )
+        updateTableFooter( tableVC?.tableView, highWaterMark: highWaterMark, numFound: searchResults.numFound, text: text )
     }
     
     // MARK: FetchedResultsControllerDelegate
