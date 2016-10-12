@@ -282,6 +282,61 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             deluxeData.append( [DeluxeData( type: .html, caption: "Notes", value: fancyOutput )] )
         }
         
+        if !self.subjects.isEmpty || !self.subject_people.isEmpty || !self.subject_places.isEmpty || !self.subject_times.isEmpty {
+            
+            var newData = [DeluxeData]()
+            
+            if !self.subjects.isEmpty {
+                
+                let subjects = self.subjects.joinWithSeparator( ", " )
+                newData.append(
+                    DeluxeData(
+                        type: .block,
+                        caption: "Subject\(self.subjects.count > 1 ? "s" : "")",
+                        value: subjects
+                    )
+                )
+            }
+            if !self.subject_people.isEmpty {
+                
+                let subjects = self.subject_people.joinWithSeparator( ", " )
+                newData.append(
+                    DeluxeData(
+                        type: .block,
+                        caption: "Subject People",
+                        value: subjects
+                    )
+                )
+            }
+            if !self.subject_places.isEmpty {
+                
+                let subjects = self.subject_places.joinWithSeparator( ", " )
+                newData.append(
+                    DeluxeData(
+                        type: .block,
+                        caption: "Subject Place\(self.subjects.count > 1 ? "s" : "")",
+                        value: subjects
+                    )
+                )
+            }
+            if !subject_times.isEmpty {
+                
+                let subjects = self.subject_times.joinWithSeparator( ", " )
+                newData.append(
+                    DeluxeData(
+                        type: .block,
+                        caption: "Subject Time\(self.subjects.count > 1 ? "s" : "")",
+                        value: subjects
+                    )
+                )
+            }
+            
+            if 0 < newData.count {
+                
+                deluxeData.append( newData )
+            }
+        }
+        
         if !self.links.isEmpty {
             
             var newData = [DeluxeData]()
