@@ -115,20 +115,13 @@ class WorkEditionsParseOperation: Operation {
             var index = self.offset
             var newEditions: [OLEditionDetail] = []
 
-            if nil != self.parentObjectID {
-                
-                index = -1
-            }
-            
             for entry in entries {
                 
                 if let editionDetail = OLEditionDetail.parseJSON( "", workKey: self.parentKey, index: index, json: entry, moc: self.context ) {
                 
                     newEditions.append( editionDetail )
 
-                    if -1 != index {
-                        index += 1
-                    }
+                    index += 1
                 }
             }
             

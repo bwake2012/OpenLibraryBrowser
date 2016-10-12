@@ -108,7 +108,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
                 if !setRetrievals.contains( index / kPageSize ) {
 
                     workEditionsGetOperation =
-                        enqueueQuery( workDetail, offset: index, userInitiated: false, refreshControl: nil )
+                        enqueueQuery( workDetail, offset: highWaterMark, userInitiated: false, refreshControl: nil )
 
                 } else if !objectRetrievalsInProgress.contains( editionObjectID ) {
                     
@@ -222,7 +222,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             WorkEditionsGetOperation(
                     queryText: workDetail.key,
                     objectID: workDetail.objectID,
-                    offset: page * kPageSize, limit: kPageSize,
+                    offset: offset, limit: kPageSize,
                     coreDataStack: coreDataStack,
                     updateResults: self.updateResults
                 ) {
