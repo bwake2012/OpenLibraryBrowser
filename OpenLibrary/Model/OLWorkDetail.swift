@@ -24,28 +24,18 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
     
     static let entityName = "WorkDetail"
     
-    private var author_name_cache = [String]()
     var author_names: [String] {
         
          get {
-            var names = author_name_cache
+            var names = [String]()
             
-            if names.isEmpty {
-            
-                if let moc = self.managedObjectContext {
-
-                    for olid in self.authors {
-                        
-                        if let author: OLAuthorDetail = OLWorkDetail.findObject( olid, entityName: OLAuthorDetail.entityName, moc: moc ) {
-                            
-                            author_name_cache.append( author.name )
-                        }
-                    }
+            for olid in self.authors {
+                
+                if let name = cachedAuthor( olid ) {
                     
-                    names = author_name_cache
+                    names.append( name )
                 }
             }
-            
             return names
         }
     }
@@ -110,13 +100,6 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         
         if let moc = self.managedObjectContext {
             
-            for olid in self.authors {
-                
-                if let name = cachedAuthor( olid ) {
-                    author_name_cache.append( name )
-                }
-            }
-
             let items: [OLEBookItem]? = OLEBookItem.findObject( key, entityName: OLEBookItem.entityName, keyFieldName: "workKey", moc: moc )
             if let items = items where !items.isEmpty {
                 
@@ -143,11 +126,6 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         
     }
     
-    func resetAuthors() -> Void {
-        
-        author_name_cache = [String]()
-    }
-    
     override var heading: String {
         
         return self.title
@@ -160,7 +138,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
     
     override var hasImage: Bool {
         
-        return self.coversFound
+        return 0 < self.covers.count && 0 < self.covers[0]
     }
     
     override var firstImageID: Int {
@@ -610,7 +588,6 @@ extension OLWorkDetail {
         
         self.authors = parsed.author_key
         self.author_key = parsed.author_key.first ?? ""
-        self.author_name_cache = parsed.author_name
         
         self.title = parsed.title
         self.subtitle = parsed.subtitle
@@ -680,7 +657,6 @@ extension OLWorkDetail {
         
         self.authors = parsed.author_key
         self.author_key = parsed.author_key.first ?? ""
-        self.author_name_cache = parsed.author_name
         
         self.title = parsed.title
         self.subtitle = parsed.subtitle

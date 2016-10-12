@@ -339,7 +339,6 @@ extension OLGeneralSearchResult {
                 title: title,
                 type: type
             )
-            
         }
     }
 }
@@ -356,11 +355,21 @@ extension OLGeneralSearchResult {
         if let workDetail = workDetail {
             
             self.work_detail = workDetail
-
-            for editionIndex in 0..<self.edition_key.count {
+            
+            // save provisional authors
+            for authorIndex in 0..<self.author_key.count {
                 
-                _ = OLEditionDetail.saveProvisionalEdition( editionIndex, parsed: self, moc: moc )
+                if authorIndex >= self.author_name.count {
+                    
+                    break
+                    
+                } else {
+                    
+                    OLAuthorDetail.saveProvisionalAuthor( authorIndex, parsed: self, moc: moc )
+                }
             }
+
+            // do not save provisional editions
             
         }
         

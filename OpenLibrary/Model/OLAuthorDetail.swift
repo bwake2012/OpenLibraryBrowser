@@ -41,6 +41,8 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
             newObject.is_provisional = false
 
             newObject.populateObject( parsed )
+            
+            newObject.addToAuthorCache( newObject.key, authorName: newObject.name )
         }
        
         return newObject
@@ -81,6 +83,8 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
                     
                     newObject.revision = 0
                     newObject.latest_revision = 0
+
+                    newObject.addToAuthorCache( newObject.key, authorName: newObject.name )
                 }
             }
         }

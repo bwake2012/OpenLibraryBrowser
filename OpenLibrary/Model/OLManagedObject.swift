@@ -230,10 +230,13 @@ class OLManagedObject: NSManagedObject {
         
         let results: [T]? = findObject( key, entityName: entityName, keyFieldName: keyFieldName, moc: moc )
         
-        if "key" == keyFieldName {
-            
-            let count = results?.count
-            assert( 1 >= count )
+        if let results = results {
+
+            if "key" == keyFieldName {
+                
+                let count = results.count
+                assert( 1 >= count )
+            }
         }
         
         return results?.first

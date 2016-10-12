@@ -57,12 +57,18 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     var highWaterMark = 0
     
     var setRetrievals = Set< Int >()
+    var objectRetrievalsInProgress = Set< NSManagedObjectID >()
     
     init( workDetail: OLWorkDetail, tableVC: OLWorkDetailEditionsTableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         
         self.workDetail = workDetail
-//        self.worksCount = searchInfo.work_count
         self.tableVC = tableVC
+        
+        if let general_search_result = workDetail.general_search_result {
+            
+            editionsCount = general_search_result.edition_key.count
+            searchResults = SearchResults( start: 0, numFound: editionsCount, pageSize: kPageSize )
+        }
         
         super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: tableVC )
     }
@@ -89,7 +95,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             assertionFailure( "row:\(indexPath.row) out of bounds" )
             return nil
         }
-        
+
         let index = indexPath.row
         let editionDetail = section.objects[index]
         
@@ -97,12 +103,16 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             
             if nil == workEditionsGetOperation {
                 
+                let editionObjectID = editionDetail.objectID
+                
                 if !setRetrievals.contains( index / kPageSize ) {
 
                     workEditionsGetOperation =
                         enqueueQuery( workDetail, offset: index, userInitiated: false, refreshControl: nil )
 
-                } else {
+                } else if !objectRetrievalsInProgress.contains( editionObjectID ) {
+                    
+                    objectRetrievalsInProgress.insert( editionObjectID )
                     
                     workEditionsGetOperation =
                         EditionDetailGetOperation( queryText: editionDetail.key, parentObjectID: nil, coreDataStack: coreDataStack ) {
@@ -272,9 +282,6 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
                     strongSelf.highWaterMark =
                         max( strongSelf.fetchedResultsController.count, searchResults.start + searchResults.pageSize )
                     
-                }
-                if strongSelf.editionsCount != searchResults.numFound {
-                    strongSelf.editionsCount = max( searchResults.numFound, Int( strongSelf.workDetail.edition_count ) )
                 }
             }
         }

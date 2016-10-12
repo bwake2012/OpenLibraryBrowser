@@ -14,34 +14,21 @@ let kEditionsPrefix = "/books/"
 let kEditionType = "/type/edition"
 
 class OLEditionDetail: OLManagedObject, CoreDataModelable {
-
-    private var author_name_cache = [String]()
+    
     var author_names: [String] {
         
         get {
             
-            if author_name_cache.isEmpty {
+            var names = [String]()
                 
-                for olid in self.authors {
-                    
-                    if let name = cachedAuthor( olid ) {
-                        author_name_cache.append( name )
-                    }
+            for olid in self.authors {
+                
+                if let name = cachedAuthor( olid ) {
+                    names.append( name )
                 }
             }
             
-            return author_name_cache
-        }
-    }
-    
-    private func setLanguageNames() {
-        
-        for code in self.languages {
-            
-            if let name = OLManagedObject.languageLookup[code] {
-                
-                language_names.append( name )
-            }
+            return names
         }
     }
     
@@ -105,8 +92,6 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
             newObject.retrieval_date = NSDate()
             
             newObject.populateObject( parsed )
-            
-            newObject.setLanguageNames()
         }
 
         return newObject
@@ -143,7 +128,6 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                 
                 newObject.authors = parsed.author_keys
                 newObject.author_key = parsed.author_keys.first ?? ""
-                newObject.author_name_cache = parsed.author_names
                 
                 newObject.title = parsed.title
                 newObject.subtitle = parsed.subtitle
@@ -243,7 +227,6 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                     
                     newObject.authors = parsed.author_key
                     newObject.author_key = parsed.author_key.first ?? ""
-                    newObject.author_name_cache = parsed.author_name
                     
                     newObject.title = parsed.title
                     if parsed.cover_i > 0 && newObject.key == parsed.cover_edition_key {
@@ -356,7 +339,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
     
     override var hasImage: Bool {
         
-        return self.coversFound
+        return 0 < self.covers.count && 0 < self.covers[0]
     }
     
     override var firstImageID: Int {
@@ -555,14 +538,22 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
             newData.append( DeluxeData( type: .block, caption: "Copyright", value: self.copyright_date ) )
         }
         
-        if !language_names.isEmpty {
+        if !languages.isEmpty {
             
-            let languageNames = language_names.joinWithSeparator( ", " )
+            var languageNames: [String] = []
+            for key in languages {
+                
+                if let name = OLManagedObject.languageLookup[key] {
+                    
+                    languageNames.append( name )
+                }
+            }
+            
             newData.append(
                 DeluxeData(
                     type: .block,
-                    caption: "Language\(author_names.count > 1 ? "s" : "")",
-                    value: languageNames
+                    caption: "Language\(languageNames.count > 1 ? "s" : "")",
+                    value: languageNames.joinWithSeparator( "," )
                 )
             )
         }
@@ -1107,7 +1098,6 @@ extension OLEditionDetail {
                     
                     newObject.authors = parsed.author_key
                     newObject.author_key = parsed.author_key.first ?? ""
-                    newObject.author_name_cache = parsed.author_name
                     
                     newObject.title = parsed.title
                     newObject.subtitle = parsed.subtitle

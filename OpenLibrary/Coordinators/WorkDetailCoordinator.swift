@@ -80,10 +80,10 @@ class WorkDetailCoordinator: OLQueryCoordinator {
 
         if let workDetailVC = workDetailVC {
             
-            workDetailVC.updateUI( workDetail )
-            
             retrieveAuthors( workDetail )
             retrieveEBookItems( workDetail )
+            
+            workDetailVC.updateUI( workDetail )
             
             if workDetail.hasImage {
                 
@@ -182,7 +182,8 @@ class WorkDetailCoordinator: OLQueryCoordinator {
             
             for olid in authors {
                 
-                if !olid.isEmpty {
+                if !olid.isEmpty && nil == workDetail.cachedAuthor( olid ) {
+                    
                     let operation =
                         AuthorDetailGetOperation(
                             queryText: olid,
@@ -414,30 +415,30 @@ extension WorkDetailCoordinator: FetchedResultsControllerDelegate {
     func fetchedResultsController( controller: FetchedOLWorkDetailController,
                                    didChangeObject change: FetchedResultsObjectChange< OLWorkDetail > ) {
         
-        switch change {
-        case let .Insert( object, indexPath):
-            break
-            
-        case let .Delete(_, indexPath):
-            break
-            
-        case let .Move(_, fromIndexPath, toIndexPath):
-            break
-            
-        case let .Update( object, indexPath):
-            break
-        }
+//        switch change {
+//        case let .Insert( object, indexPath):
+//            break
+//            
+//        case let .Delete(_, indexPath):
+//            break
+//            
+//        case let .Move(_, fromIndexPath, toIndexPath):
+//            break
+//            
+//        case let .Update( object, indexPath):
+//            break
+//        }
     }
     
     func fetchedResultsController(controller: FetchedOLWorkDetailController,
                                   didChangeSection change: FetchedResultsSectionChange< OLWorkDetail >) {
         
-        switch change {
-        case let .Insert(_, index):
-            break
-        case let .Delete(_, index):
-            break
-        }
+//        switch change {
+//        case let .Insert(_, index):
+//            break
+//        case let .Delete(_, index):
+//            break
+//        }
     }
     
 }

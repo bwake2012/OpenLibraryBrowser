@@ -46,7 +46,6 @@ extension OLEditionDetail {
     @NSManaged var isbn_10: [String]
     @NSManaged var isbn_13: [String]
     @NSManaged var languages: [String]
-    @NSManaged var language_names: [String]
     @NSManaged var lc_classifications: [String]
     @NSManaged var lccn: [String]
     @NSManaged var location: [String]

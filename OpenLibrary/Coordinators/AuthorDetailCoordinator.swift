@@ -244,30 +244,30 @@ extension AuthorDetailCoordinator: FetchedResultsControllerDelegate {
     func fetchedResultsController( controller: FetchedOLAuthorDetailController,
                                    didChangeObject change: FetchedResultsObjectChange< OLAuthorDetail > ) {
         
-        switch change {
-        case let .Insert( object, indexPath):
-            break
-            
-        case let .Delete(_, indexPath):
-            break
-            
-        case let .Move(_, fromIndexPath, toIndexPath):
-            break
-            
-        case let .Update( object, indexPath):
-            break
-        }
+//        switch change {
+//        case let .Insert( object, indexPath):
+//            break
+//            
+//        case let .Delete(_, indexPath):
+//            break
+//            
+//        case let .Move(_, fromIndexPath, toIndexPath):
+//            break
+//            
+//        case let .Update( object, indexPath):
+//            break
+//        }
     }
     
     func fetchedResultsController(controller: FetchedOLAuthorDetailController,
                                   didChangeSection change: FetchedResultsSectionChange< OLAuthorDetail >) {
         
-        switch change {
-        case let .Insert(_, index):
-            break
-        case let .Delete(_, index):
-            break
-        }
+//        switch change {
+//        case let .Insert(_, index):
+//            break
+//        case let .Delete(_, index):
+//            break
+//        }
     }
     
 }

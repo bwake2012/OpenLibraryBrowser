@@ -121,10 +121,10 @@ class OLLanguage: OLManagedObject, CoreDataModelable {
                 
                 if let language = object as? OLLanguage {
                     
-                    let code = language.code
+                    let key = language.key
                     let name = language.name
                     
-                    loadedLanguages[code] = name
+                    loadedLanguages[key] = name
                 }
             }
         }
