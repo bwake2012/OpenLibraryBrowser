@@ -22,7 +22,7 @@ class AuthorDetailDownloadOperation: GroupOperation {
 
         self.cacheFile = cacheFile
         super.init(operations: [])
-        name = "Download Image"
+        name = "Download author detail"
         
         /*
             If this server is out of our control and does not offer a secure
