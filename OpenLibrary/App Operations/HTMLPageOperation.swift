@@ -25,7 +25,7 @@ class HTMLPageOperation: Operation {
 
     private let presentationContext: UIViewController?
     
-    var operationName = ""
+    var operationName = "HTML page presentation"
     var response:NSHTTPURLResponse?
     var operationError: NSError?
     var data: NSData?

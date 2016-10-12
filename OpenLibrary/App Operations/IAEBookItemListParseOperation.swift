@@ -44,7 +44,7 @@ class IAEBookItemListParseOperation: Operation {
         
         super.init()
 
-        name = "Parse IAEBookItem"
+        name = "Parse IAEBookItem list"
     }
     
     override func execute() {

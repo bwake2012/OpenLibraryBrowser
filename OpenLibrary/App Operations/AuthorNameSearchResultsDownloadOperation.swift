@@ -22,7 +22,7 @@ class AuthorNameSearchResultsDownloadOperation: GroupOperation {
 
         self.cacheFile = cacheFile
         super.init(operations: [])
-        name = "Query Author"
+        name = "Author Name Search Download"
         
         /*
             If this server is out of our control and does not offer a secure

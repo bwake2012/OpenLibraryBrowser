@@ -22,7 +22,7 @@ class GeneralSearchResultsDownloadOperation: GroupOperation {
 
         self.cacheFile = cacheFile
         super.init(operations: [])
-        name = "Query General"
+        name = "Download General Search Results"
         
         /*
             If this server is out of our control and does not offer a secure

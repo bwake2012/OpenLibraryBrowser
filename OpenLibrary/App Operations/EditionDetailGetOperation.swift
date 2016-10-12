@@ -59,7 +59,7 @@ class EditionDetailGetOperation: GroupOperation {
 
         addCondition( MutuallyExclusive<EditionDetailGetOperation>() )
         
-        name = "Get Work Detail"
+        name = "Get Edition Detail"
     }
     
     override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
