@@ -17,7 +17,7 @@ private let kWorksByAuthorCache = "worksByAuthor"
 
 private let kPageSize = 100
     
-class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate {
+class AuthorWorksCoordinator: OLQueryCoordinator {
     
     typealias FetchedOLWorkDetailController = FetchedResultsController< OLWorkDetail >
     
@@ -280,6 +280,28 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
         return frc
     }
 
+    // MARK: install Query Coordinators
+    
+    func installWorkDetailCoordinator( destVC: OLWorkDetailViewController, indexPath: NSIndexPath ){
+    
+        guard let workDetail = objectAtIndexPath( indexPath ) else {
+            
+            fatalError( "work detail not found at: \(indexPath)" )
+        }
+
+        destVC.queryCoordinator =
+            WorkDetailCoordinator(
+                    operationQueue: self.operationQueue,
+                    coreDataStack: self.coreDataStack,
+                    workDetail: workDetail,
+                    editionKeys: [],
+                    workDetailVC: destVC
+                )
+
+    }
+}
+
+extension AuthorWorksCoordinator: FetchedResultsControllerDelegate {
     
     // MARK: FetchedResultsControllerDelegate
     func fetchedResultsControllerDidPerformFetch( controller: FetchedOLWorkDetailController ) {
@@ -289,9 +311,9 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
             newQuery( authorKey, userInitiated: true, refreshControl: nil )
             return
         }
-
+        
         if workDetail.isProvisional {
-                    
+            
             newQuery( authorKey, userInitiated: true, refreshControl: nil )
         }
         
@@ -300,7 +322,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
     }
     
     func fetchedResultsControllerWillChangeContent( controller: FetchedOLWorkDetailController ) {
-//        authorWorksTableVC?.tableView.beginUpdates()
+        //        authorWorksTableVC?.tableView.beginUpdates()
     }
     
     func fetchedResultsControllerDidChangeContent( controller: FetchedOLWorkDetailController ) {
@@ -332,62 +354,44 @@ class AuthorWorksCoordinator: OLQueryCoordinator, FetchedResultsControllerDelega
     }
     
     func fetchedResultsController( controller: FetchedOLWorkDetailController,
-        didChangeObject change: FetchedResultsObjectChange< OLWorkDetail > ) {
+                                   didChangeObject change: FetchedResultsObjectChange< OLWorkDetail > ) {
         
-            switch change {
-            case let .Insert(_, indexPath):
-                if !insertedSectionIndexes.containsIndex( indexPath.section ) {
-                    insertedRowIndexPaths.append( indexPath )
-                }
-                break
-                
-            case let .Delete(_, indexPath):
-                if !deletedSectionIndexes.containsIndex( indexPath.section ) {
-                    deletedRowIndexPaths.append( indexPath )
-                }
-                break
-                
-            case let .Move(_, fromIndexPath, toIndexPath):
-                if !insertedSectionIndexes.containsIndex( toIndexPath.section ) {
-                    insertedRowIndexPaths.append( toIndexPath )
-                }
-                if !deletedSectionIndexes.containsIndex( fromIndexPath.section ) {
-                    deletedRowIndexPaths.append( fromIndexPath )
-                }
-                
-            case let .Update(_, indexPath):
-                updatedRowIndexPaths.append( indexPath )
+        switch change {
+        case let .Insert(_, indexPath):
+            if !insertedSectionIndexes.containsIndex( indexPath.section ) {
+                insertedRowIndexPaths.append( indexPath )
             }
+            break
+            
+        case let .Delete(_, indexPath):
+            if !deletedSectionIndexes.containsIndex( indexPath.section ) {
+                deletedRowIndexPaths.append( indexPath )
+            }
+            break
+            
+        case let .Move(_, fromIndexPath, toIndexPath):
+            if !insertedSectionIndexes.containsIndex( toIndexPath.section ) {
+                insertedRowIndexPaths.append( toIndexPath )
+            }
+            if !deletedSectionIndexes.containsIndex( fromIndexPath.section ) {
+                deletedRowIndexPaths.append( fromIndexPath )
+            }
+            
+        case let .Update(_, indexPath):
+            updatedRowIndexPaths.append( indexPath )
+        }
     }
     
     func fetchedResultsController(controller: FetchedOLWorkDetailController,
-        didChangeSection change: FetchedResultsSectionChange< OLWorkDetail >) {
+                                  didChangeSection change: FetchedResultsSectionChange< OLWorkDetail >) {
         
-            switch change {
-            case let .Insert(_, index):
-                insertedSectionIndexes.addIndex( index )
-            case let .Delete(_, index):
-                deletedSectionIndexes.addIndex( index )
-            }
-    }
-    
-    // MARK: install Query Coordinators
-    
-    func installWorkDetailCoordinator( destVC: OLWorkDetailViewController, indexPath: NSIndexPath ){
-    
-        guard let workDetail = objectAtIndexPath( indexPath ) else {
-            
-            fatalError( "work detail not found at: \(indexPath)" )
+        switch change {
+        case let .Insert(_, index):
+            insertedSectionIndexes.addIndex( index )
+        case let .Delete(_, index):
+            deletedSectionIndexes.addIndex( index )
         }
-
-        destVC.queryCoordinator =
-            WorkDetailCoordinator(
-                    operationQueue: self.operationQueue,
-                    coreDataStack: self.coreDataStack,
-                    workDetail: workDetail,
-                    editionKeys: [],
-                    workDetailVC: destVC
-                )
-
     }
+    
+
 }

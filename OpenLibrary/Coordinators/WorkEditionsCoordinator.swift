@@ -17,7 +17,7 @@ private let kWorkEditonsCache = "workEditionsCache"
 
 private let kPageSize = 50
 
-class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate {
+class WorkEditionsCoordinator: OLQueryCoordinator {
     
     typealias FetchedWorkEditionsController = FetchedResultsController< OLEditionDetail >
     
@@ -297,90 +297,6 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         updateTableFooter( tableVC?.tableView, highWaterMark: highWaterMark, numFound: searchResults.numFound, text: text )
     }
     
-    // MARK: FetchedResultsControllerDelegate
-    func fetchedResultsControllerDidPerformFetch(controller: FetchedWorkEditionsController) {
-        
-        guard nil != controller.fetchedObjects?.first else {
-            
-            newQuery( workDetail.key, userInitiated: true, refreshControl: nil )
-            return
-        }
-        
-        highWaterMark = controller.count
-        updateFooter()
-    }
-    
-    func fetchedResultsControllerWillChangeContent( controller: FetchedWorkEditionsController ) {
-//        tableVC?.tableView.beginUpdates()
-    }
-    
-    func fetchedResultsControllerDidChangeContent( controller: FetchedWorkEditionsController ) {
-
-        if let tableView = tableVC?.tableView {
-            
-            tableView.beginUpdates()
-            
-            tableView.deleteSections( deletedSectionIndexes, withRowAnimation: .Automatic )
-            tableView.insertSections( insertedSectionIndexes, withRowAnimation: .Automatic )
-            
-            tableView.deleteRowsAtIndexPaths( deletedRowIndexPaths, withRowAnimation: .Left )
-            tableView.insertRowsAtIndexPaths( insertedRowIndexPaths, withRowAnimation: .Right )
-            tableView.reloadRowsAtIndexPaths( updatedRowIndexPaths, withRowAnimation: .Automatic )
-            
-            tableView.endUpdates()
-            
-            // nil out the collections so they are ready for their next use.
-            self.insertedSectionIndexes = NSMutableIndexSet()
-            self.deletedSectionIndexes = NSMutableIndexSet()
-            
-            self.deletedRowIndexPaths = []
-            self.insertedRowIndexPaths = []
-            self.updatedRowIndexPaths = []
-            
-//            highWaterMark = max( highWaterMark, controller.count )
-            updateFooter()
-        }
-    }
-    
-    func fetchedResultsController( controller: FetchedWorkEditionsController,
-        didChangeObject change: FetchedResultsObjectChange< OLEditionDetail > ) {
-
-        switch change {
-        case let .Insert(_, indexPath):
-            if !insertedSectionIndexes.containsIndex( indexPath.section ) {
-                insertedRowIndexPaths.append( indexPath )
-            }
-            break
-            
-        case let .Delete(_, indexPath):
-            if !deletedSectionIndexes.containsIndex( indexPath.section ) {
-                deletedRowIndexPaths.append( indexPath )
-            }
-            break
-            
-        case let .Move(_, fromIndexPath, toIndexPath):
-            if !insertedSectionIndexes.containsIndex( toIndexPath.section ) {
-                insertedRowIndexPaths.append( toIndexPath )
-            }
-            if !deletedSectionIndexes.containsIndex( fromIndexPath.section ) {
-                deletedRowIndexPaths.append( fromIndexPath )
-            }
-            
-        case let .Update(_, indexPath):
-            updatedRowIndexPaths.append( indexPath )
-        }
-    }
-    
-    func fetchedResultsController(controller: FetchedWorkEditionsController,
-        didChangeSection change: FetchedResultsSectionChange< OLEditionDetail >) {
-
-        switch change {
-        case let .Insert(_, index):
-            insertedSectionIndexes.addIndex( index )
-        case let .Delete(_, index):
-            deletedSectionIndexes.addIndex( index )
-        }
-    }
 
     // MARK: install query coordinators
 
@@ -411,4 +327,93 @@ class WorkEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
                     deluxeDetailVC: deluxeDetailVC
                 )
     }
+}
+
+extension WorkEditionsCoordinator: FetchedResultsControllerDelegate {
+    
+    // MARK: FetchedResultsControllerDelegate
+    func fetchedResultsControllerDidPerformFetch(controller: FetchedWorkEditionsController) {
+        
+        guard nil != controller.fetchedObjects?.first else {
+            
+            newQuery( workDetail.key, userInitiated: true, refreshControl: nil )
+            return
+        }
+        
+        highWaterMark = controller.count
+        updateFooter()
+    }
+    
+    func fetchedResultsControllerWillChangeContent( controller: FetchedWorkEditionsController ) {
+        //        tableVC?.tableView.beginUpdates()
+    }
+    
+    func fetchedResultsControllerDidChangeContent( controller: FetchedWorkEditionsController ) {
+        
+        if let tableView = tableVC?.tableView {
+            
+            tableView.beginUpdates()
+            
+            tableView.deleteSections( deletedSectionIndexes, withRowAnimation: .Automatic )
+            tableView.insertSections( insertedSectionIndexes, withRowAnimation: .Automatic )
+            
+            tableView.deleteRowsAtIndexPaths( deletedRowIndexPaths, withRowAnimation: .Left )
+            tableView.insertRowsAtIndexPaths( insertedRowIndexPaths, withRowAnimation: .Right )
+            tableView.reloadRowsAtIndexPaths( updatedRowIndexPaths, withRowAnimation: .Automatic )
+            
+            tableView.endUpdates()
+            
+            // nil out the collections so they are ready for their next use.
+            self.insertedSectionIndexes = NSMutableIndexSet()
+            self.deletedSectionIndexes = NSMutableIndexSet()
+            
+            self.deletedRowIndexPaths = []
+            self.insertedRowIndexPaths = []
+            self.updatedRowIndexPaths = []
+            
+            //            highWaterMark = max( highWaterMark, controller.count )
+            updateFooter()
+        }
+    }
+    
+    func fetchedResultsController( controller: FetchedWorkEditionsController,
+                                   didChangeObject change: FetchedResultsObjectChange< OLEditionDetail > ) {
+        
+        switch change {
+        case let .Insert(_, indexPath):
+            if !insertedSectionIndexes.containsIndex( indexPath.section ) {
+                insertedRowIndexPaths.append( indexPath )
+            }
+            break
+            
+        case let .Delete(_, indexPath):
+            if !deletedSectionIndexes.containsIndex( indexPath.section ) {
+                deletedRowIndexPaths.append( indexPath )
+            }
+            break
+            
+        case let .Move(_, fromIndexPath, toIndexPath):
+            if !insertedSectionIndexes.containsIndex( toIndexPath.section ) {
+                insertedRowIndexPaths.append( toIndexPath )
+            }
+            if !deletedSectionIndexes.containsIndex( fromIndexPath.section ) {
+                deletedRowIndexPaths.append( fromIndexPath )
+            }
+            
+        case let .Update(_, indexPath):
+            updatedRowIndexPaths.append( indexPath )
+        }
+    }
+    
+    func fetchedResultsController(controller: FetchedWorkEditionsController,
+                                  didChangeSection change: FetchedResultsSectionChange< OLEditionDetail >) {
+        
+        switch change {
+        case let .Insert(_, index):
+            insertedSectionIndexes.addIndex( index )
+        case let .Delete(_, index):
+            deletedSectionIndexes.addIndex( index )
+        }
+    }
+
 }
