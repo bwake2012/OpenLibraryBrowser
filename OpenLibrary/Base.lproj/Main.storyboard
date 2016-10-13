@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="K2s-7v-hMb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -883,7 +883,7 @@ as adapted by Pluralsight in their version named
 &lt;p&gt;&lt;a href="https://github.com/kristopherjohnson/Markingbird"&gt;MarkingBird&lt;/a&gt; converts 
 MarkDown text to HTML for display.
 &lt;p&gt;Icons by &lt;a href="http://www.glyphish.com" title="Glyphish"&gt;Glyphish&lt;/a&gt;
-&lt;p align="center"&gt;Copyright&amp;nbsp;2016 Cockleburr&amp;nbsp;Software&lt;p&gt;Special thanks to &lt;a href="https://twitter.com/jwclark"&gt;Jim Clark&lt;/a&gt; for very useful advice.</string>
+&lt;p align="center"&gt;Copyright&amp;nbsp;2016 Cockleburr&amp;nbsp;Software&lt;p&gt;Special thanks to &lt;a href="https://twitter.com/jwclark"&gt;Jim Clark&lt;/a&gt; for his advice and encouragement.</string>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                                     </textView>
@@ -1239,7 +1239,7 @@ MarkDown text to HTML for display.
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Fp-Yv-UWh" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="1xm-5p-w2k" customClass="NavigationControllerDelegate" customModule="OpenLibrary" customModuleProvider="target"/>
             </objects>
-            <point key="canvasLocation" x="302" y="983"/>
+            <point key="canvasLocation" x="300" y="994"/>
         </scene>
     </scenes>
     <resources>

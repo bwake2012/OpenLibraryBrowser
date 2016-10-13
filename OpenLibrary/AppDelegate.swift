@@ -18,6 +18,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: Properties
     var window: UIWindow?
     
+    private lazy var launchStoryboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
+    
+    private lazy var launchController: UIViewController = {
+        
+        return self.launchStoryboard.instantiateViewControllerWithIdentifier( "launchVC" )
+    }()
+
+    private lazy var mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+    
+    private lazy var navController: UINavigationController = {
+        return self.mainStoryboard.instantiateViewControllerWithIdentifier("rootNavigationController")
+            as! UINavigationController
+    }()
+    
     private let storeName = "OpenLibraryBrowser"
     
     private let operationQueue = OperationQueue()
@@ -57,6 +71,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+        window = UIWindow( frame: UIScreen.mainScreen().bounds )
+        window?.rootViewController = launchController
+
         nukeObsoleteStore()
 
         CoreDataStack.constructSQLiteStack( withModelName: storeName ) {
@@ -78,10 +95,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 dispatch_after( delayTime, dispatch_get_main_queue() ) {
                     
-                    if let topViewController = UIApplication.topViewController() as? OLLaunchViewController {
+                    dispatch_async( dispatch_get_main_queue() ) {
                         
-                        topViewController.loadAppRootViewController()
-                    }
+                        self.window?.rootViewController = self.navController                   }
                 }
 
             case .Failure(let error):
