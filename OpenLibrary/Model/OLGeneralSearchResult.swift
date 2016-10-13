@@ -27,7 +27,7 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
             }
         }
         
-        return names
+        return names.sort()
     }()
     
     class func parseJSON(sequence: Int64, index: Int64, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLGeneralSearchResult? {

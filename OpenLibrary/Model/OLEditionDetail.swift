@@ -28,7 +28,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                 }
             }
             
-            return names
+            return names.sort()
         }
     }
     
