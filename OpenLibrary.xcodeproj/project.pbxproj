@@ -117,6 +117,7 @@
 		C48A6CFA1D7C918800B65821 /* OLHTMLErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48A6CF91D7C918800B65821 /* OLHTMLErrorViewController.swift */; };
 		C48AE6021D4FFE7800F2B1E6 /* SearchDismissalAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48AE6011D4FFE7800F2B1E6 /* SearchDismissalAnimator.swift */; };
 		C48B8A3F1D47E22C00C29D00 /* OLBookSortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48B8A3E1D47E22C00C29D00 /* OLBookSortViewController.swift */; };
+		C48F06721DAF0E4F000563D5 /* LaunchIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = C48F06711DAF0E4F000563D5 /* LaunchIcon.png */; };
 		C4973EC31D56A2450062170E /* GeneralSearchResultsDeleteGroupOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4973EC21D56A2450062170E /* GeneralSearchResultsDeleteGroupOperation.swift */; };
 		C49787411CB58A3700A0AEB1 /* OLPictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49787401CB58A3700A0AEB1 /* OLPictureViewController.swift */; };
 		C49BDD141CB59DAF00A2EEEF /* PictureViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49BDD131CB59DAF00A2EEEF /* PictureViewCoordinator.swift */; };
@@ -323,6 +324,7 @@
 		C48A6CF91D7C918800B65821 /* OLHTMLErrorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLHTMLErrorViewController.swift; path = "View Controllers/OLHTMLErrorViewController.swift"; sourceTree = "<group>"; };
 		C48AE6011D4FFE7800F2B1E6 /* SearchDismissalAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchDismissalAnimator.swift; path = Transitions/SearchDismissalAnimator.swift; sourceTree = "<group>"; };
 		C48B8A3E1D47E22C00C29D00 /* OLBookSortViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLBookSortViewController.swift; path = "View Controllers/OLBookSortViewController.swift"; sourceTree = "<group>"; };
+		C48F06711DAF0E4F000563D5 /* LaunchIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LaunchIcon.png; path = Graphics/LaunchIcon.png; sourceTree = "<group>"; };
 		C4973EC21D56A2450062170E /* GeneralSearchResultsDeleteGroupOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneralSearchResultsDeleteGroupOperation.swift; path = "App Operations/GeneralSearchResultsDeleteGroupOperation.swift"; sourceTree = "<group>"; };
 		C49787401CB58A3700A0AEB1 /* OLPictureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLPictureViewController.swift; path = "View Controllers/OLPictureViewController.swift"; sourceTree = "<group>"; };
 		C49BDD131CB59DAF00A2EEEF /* PictureViewCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureViewCoordinator.swift; sourceTree = "<group>"; };
@@ -467,6 +469,7 @@
 		C444C4F31CBF16A100CFD0E1 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				C48F06711DAF0E4F000563D5 /* LaunchIcon.png */,
 				C4A4F96E1D1D6CF200B7C9FD /* Graphics.xcassets */,
 			);
 			name = Graphics;
@@ -864,6 +867,7 @@
 			files = (
 				C4A4F96F1D1D6CF200B7C9FD /* Graphics.xcassets in Resources */,
 				C488D6201D09ED130025B61D /* DeluxeDetailHTMLTableViewCell.xib in Resources */,
+				C48F06721DAF0E4F000563D5 /* LaunchIcon.png in Resources */,
 				C4E35E2D1C7E07950015D187 /* LaunchScreen.storyboard in Resources */,
 				C4AA89441CF3986C0082B654 /* AuthorDetail.storyboard in Resources */,
 				C4AB17131CDB83B800D6DF05 /* DeluxeDetailHeadingTableViewCell.xib in Resources */,
