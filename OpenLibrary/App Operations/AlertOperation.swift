@@ -78,7 +78,14 @@ class AlertOperation: Operation {
                 self.addAction("OK")
             }
             
-            presentationContext.presentViewController(self.alertController, animated: true, completion: nil)
+            presentationContext.presentViewController(
+                    self.alertController, animated: true, completion: self.presentationComplete
+                )
         }
+    }
+    
+    func presentationComplete() -> Void {
+        
+        finish()
     }
 }

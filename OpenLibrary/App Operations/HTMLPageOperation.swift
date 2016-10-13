@@ -102,8 +102,9 @@ class HTMLPageOperation: Operation {
 
             dispatch_async(dispatch_get_main_queue()) {
                 
-                presentationContext.presentViewController( htmlPageController, animated: true, completion: nil )
-                self.finish()
+                presentationContext.presentViewController(
+                        htmlPageController, animated: true, completion: self.presentationComplete
+                    )
             }
             
             if let url = url {
@@ -118,5 +119,10 @@ class HTMLPageOperation: Operation {
                 catch {}
             }
         }
+    }
+
+    func presentationComplete() -> Void {
+        
+        finish()
     }
 }
