@@ -16,6 +16,19 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
     static let entityName = "GeneralSearchResult"
 
     // Insert code here to add functionality to your managed object subclass
+    lazy var language_names: [String] = {
+        
+        var names = [String]()
+        for code in self.language {
+            
+            if let name = OLManagedObject.languageLookup["/languages/" + code] {
+                
+                names.append( name )
+            }
+        }
+        
+        return names
+    }()
     
     class func parseJSON(sequence: Int64, index: Int64, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLGeneralSearchResult? {
         
@@ -42,9 +55,8 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
             
             newObject.populateObject( parsed )
             
-            newObject.setLanguageNames()              // fill the array of language names
-            
-            for index in 0..<parsed.author_key.count {
+            assert( parsed.author_key.count == parsed.author_name.count )
+            for index in 0..<min( parsed.author_key.count, parsed.author_name.count ) {
                 
                 assert( index < parsed.author_name.count )
                 
@@ -60,20 +72,6 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
         }
 
         return newObject
-    }
-    
-    private func setLanguageNames() {
-        
-        var tempNames = [String]()
-        for code in self.language {
-            
-            if let name = OLManagedObject.languageLookup[code] {
-                
-                tempNames.append( name )
-            }
-        }
-        
-        self.language_names = tempNames
     }
     
     override var hasImage: Bool { return 0 < cover_i }

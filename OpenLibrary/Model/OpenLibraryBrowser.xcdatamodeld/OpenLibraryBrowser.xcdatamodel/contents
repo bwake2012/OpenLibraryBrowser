@@ -200,7 +200,6 @@
         <attribute name="isbn" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="language" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="language_names" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="last_modified_i" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="lccn" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="person" optional="YES" attributeType="Transformable" syncable="YES"/>
@@ -332,7 +331,7 @@
         <element name="EBookFile" positionX="-63" positionY="135" width="128" height="315"/>
         <element name="EBookItem" positionX="-63" positionY="135" width="128" height="225"/>
         <element name="EditionDetail" positionX="-45" positionY="144" width="128" height="945"/>
-        <element name="GeneralSearchResult" positionX="-63" positionY="135" width="128" height="630"/>
+        <element name="GeneralSearchResult" positionX="-63" positionY="135" width="128" height="615"/>
         <element name="Language" positionX="-63" positionY="135" width="128" height="135"/>
         <element name="TitleSearchResult" positionX="-63" positionY="135" width="128" height="225"/>
         <element name="WorkDetail" positionX="-54" positionY="99" width="128" height="555"/>

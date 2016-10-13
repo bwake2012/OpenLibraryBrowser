@@ -91,6 +91,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
                 self.coreDataStack?.mainQueueContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
 
+                OLLanguage.retrieveLanguages( self.operationQueue, coreDataStack: stack )
+                
                 let delayTime = dispatch_time( DISPATCH_TIME_NOW, Int64( 0.5 * Double( NSEC_PER_SEC ) ) )
                 
                 dispatch_after( delayTime, dispatch_get_main_queue() ) {

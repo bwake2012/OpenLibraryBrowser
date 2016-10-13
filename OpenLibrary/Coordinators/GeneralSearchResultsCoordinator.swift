@@ -142,8 +142,6 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             self.reachabilityOperation!.userInitiated = true
             operationQueue.addOperation( self.reachabilityOperation! )
             
-            OLLanguage.retrieveLanguages( operationQueue, coreDataStack: coreDataStack )
-
             self.updateFooter()
         
             self.updateUI()
