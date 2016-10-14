@@ -37,16 +37,16 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="448" height="128"/>
                                                 <subviews>
                                                     <stackView contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ayZ-Aq-xYt">
-                                                        <rect key="frame" x="0.0" y="0.0" width="448" height="128"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="448" height="59"/>
                                                         <subviews>
-                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" text="Author Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ll5-B3-x9U">
+                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Author Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ll5-B3-x9U">
                                                                 <rect key="frame" x="0.0" y="0.0" width="448" height="30"/>
                                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" misplaced="YES" text="Birth Date:" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cnV-cA-Bc1">
+                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" text="Birth Date:" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cnV-cA-Bc1">
                                                                 <rect key="frame" x="0.0" y="30" width="448" height="15"/>
                                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
@@ -54,7 +54,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label userInteractionEnabled="NO" contentMode="TopLeft" verticalCompressionResistancePriority="1000" misplaced="YES" text="Death Date" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BIm-fa-YeT" userLabel="Death Date">
-                                                                <rect key="frame" x="0.0" y="45" width="448" height="84"/>
+                                                                <rect key="frame" x="0.0" y="45" width="448" height="15"/>
                                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -88,9 +88,8 @@
                                         <constraints>
                                             <constraint firstItem="RLG-CI-drZ" firstAttribute="leading" secondItem="3VE-I1-5L3" secondAttribute="leading" id="Hmt-bU-cZy"/>
                                             <constraint firstAttribute="bottom" secondItem="RLG-CI-drZ" secondAttribute="bottom" id="NhG-LC-h5m"/>
+                                            <constraint firstAttribute="height" constant="128" id="Nqe-IS-3XT"/>
                                             <constraint firstItem="RLG-CI-drZ" firstAttribute="trailing" secondItem="3VE-I1-5L3" secondAttribute="trailing" id="RaF-2E-Mkb"/>
-                                            <constraint firstAttribute="height" relation="lessThanOrEqual" secondItem="ayZ-Aq-xYt" secondAttribute="height" id="TEd-Ab-lZC"/>
-                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="128" id="qu5-yR-EgH"/>
                                             <constraint firstItem="RLG-CI-drZ" firstAttribute="top" secondItem="3VE-I1-5L3" secondAttribute="top" id="tCT-xj-WKk"/>
                                         </constraints>
                                     </view>
@@ -156,6 +155,9 @@
                         <outlet property="deathDate" destination="BIm-fa-YeT" id="rbz-XP-uj7"/>
                         <outlet property="displayDeluxeDetail" destination="QCZ-iR-dm7" id="JTt-zK-3ra"/>
                         <outlet property="displayLargePhoto" destination="8zl-Zh-cND" id="XQR-fs-9n4"/>
+                        <outlet property="headerView" destination="ZCm-QX-3Jp" id="Szs-qc-EjC"/>
+                        <outlet property="stackView" destination="ayZ-Aq-xYt" id="hFV-PA-1nm"/>
+                        <outlet property="summaryHeight" destination="Nqe-IS-3XT" id="jbK-FH-cJX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cDB-bJ-tLH" userLabel="First Responder" sceneMemberID="firstResponder"/>
