@@ -869,7 +869,7 @@
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" misplaced="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="iZj-qn-gJu" userLabel="NSOperation" customClass="HTMLTextDisplayView" customModule="OpenLibrary" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="560" height="354"/>
                                                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <mutableString key="text">This application leans heavily on the NSOperation based classes originally developed by Apple 
+                                                        <string key="text">This application leans heavily on the NSOperation based classes originally developed by Apple 
 for their WWDC app and published with their WWDC 2015 sample 
 &lt;a href="https://developer.apple.com/sample-code/wwdc/2015/"&gt;Advanced NSOperations&lt;/a&gt;, 
 as adapted by Pluralsight in their version named 
@@ -883,7 +883,7 @@ as adapted by Pluralsight in their version named
 &lt;p&gt;&lt;a href="https://github.com/kristopherjohnson/Markingbird"&gt;MarkingBird&lt;/a&gt; converts 
 MarkDown text to HTML for display.
 &lt;p&gt;Icons by &lt;a href="http://www.glyphish.com" title="Glyphish"&gt;Glyphish&lt;/a&gt;
-&lt;p align="center"&gt;Copyright&amp;nbsp;2016 Cockleburr&amp;nbsp;Software&lt;p&gt;Special thanks to &lt;a href="https://twitter.com/jwclark"&gt;Jim Clark&lt;/a&gt; for his advice and encouragement.</mutableString>
+&lt;p align="center"&gt;Copyright&amp;nbsp;2016 Cockleburr&amp;nbsp;Software&lt;p&gt;Special thanks to &lt;a href="https://twitter.com/jwclark"&gt;Jim Clark&lt;/a&gt; for his advice and encouragement.</string>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                                     </textView>
