@@ -70,8 +70,10 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             saveState()
             cachedFetchedResultsController = nil
             dispatch_async( dispatch_get_main_queue() ) {
+                
+                [weak self] in
 
-                self.updateUI()
+                self?.updateUI()
             }
         }
     }
@@ -138,13 +140,19 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         
         dispatch_async( dispatch_get_main_queue() ) {
             
-            self.reachabilityOperation = OLReachabilityOperation( host: "openlibrary.org" ) {}
-            self.reachabilityOperation!.userInitiated = true
-            operationQueue.addOperation( self.reachabilityOperation! )
+            [weak self] in
             
-            self.updateFooter()
+            guard let strongSelf = self else {
+                return
+            }
+            
+            strongSelf.reachabilityOperation = OLReachabilityOperation( host: "openlibrary.org" ) {}
+            strongSelf.reachabilityOperation!.userInitiated = true
+            operationQueue.addOperation( strongSelf.reachabilityOperation! )
+            
+            strongSelf.updateFooter()
         
-            self.updateUI()
+            strongSelf.updateUI()
         }
     }
     
@@ -487,9 +495,10 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             ImageGetOperation( numberID: id, imageKeyName: "id", localURL: url, size: "S", type: "a" ) {
                 [weak self] in
                 
-                if let strongSelf = self {
-                    dispatch_async( dispatch_get_main_queue() ) {
+                dispatch_async( dispatch_get_main_queue() ) {
                         
+                    if let strongSelf = self {
+
                         strongSelf.tableVC?.tableView.reloadRowsAtIndexPaths( [indexPath], withRowAnimation: .Automatic )
                     }
                 }
