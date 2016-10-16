@@ -29,6 +29,12 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         
         get {
             
+            objc_sync_enter( self )
+            defer {
+                
+                objc_sync_exit( self)
+            }
+
             guard nil == cachedWorkDetail else {
                 
                 return cachedWorkDetail!

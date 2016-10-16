@@ -4,10 +4,10 @@ platform :ios, '9.0'
 use_frameworks!
 
 target 'OpenLibrary' do
-    pod 'BNRCoreDataStack'
-    pod 'ReachabilitySwift'
-    pod 'PSOperations'
-    pod 'BRYXBanner'
+    pod 'BNRCoreDataStack', '1.2.5'
+    pod 'ReachabilitySwift', '2.3.3'
+    pod 'PSOperations', '2.3.0'
+    pod 'BRYXBanner', '0.5.2'
 end
 
 
