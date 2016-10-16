@@ -23,6 +23,7 @@ class OLSearchResultsTableViewController: UIViewController {
     
     var savedSearchKeys = [String: String]()
     var savedIndexPath: NSIndexPath?
+    var savedAuthorKey: String?
     
     var beginningOffset: CGFloat = 0.0
 
@@ -102,6 +103,7 @@ class OLSearchResultsTableViewController: UIViewController {
             
             tableView.selectRowAtIndexPath( indexPath, animated: true, scrollPosition: .None )
             savedIndexPath = nil
+        
         }
     }
     
@@ -192,7 +194,23 @@ class OLSearchResultsTableViewController: UIViewController {
 
                 if let destVC = segue.destinationViewController as? OLAuthorDetailViewController {
                     
-                    generalSearchCoordinator.installAuthorDetailCoordinator( destVC, indexPath: indexPath )
+                    if let key = savedAuthorKey {
+                        
+                        generalSearchCoordinator.installAuthorDetailCoordinator( destVC, authorKey: key )
+                        savedAuthorKey = nil
+                        
+                    } else {
+
+                        generalSearchCoordinator.installAuthorDetailCoordinator( destVC, indexPath: indexPath )
+                    }
+                }
+                
+            case "displayGeneralSearchAuthorList":
+                
+                if let destVC = segue.destinationViewController as? OLAuthorsTableViewController {
+                    
+                    generalSearchCoordinator.installAuthorsTableViewCoordinator( destVC, indexPath: indexPath )
+                    destVC.saveAuthorKey = self.saveAuthorKey
                 }
 
             case "displayGeneralSearchWorkDetail":
@@ -306,6 +324,32 @@ class OLSearchResultsTableViewController: UIViewController {
             
             savedIndexPath = nil
             tableView.reloadData()
+        }
+    }
+    
+    // MARK: Authors Table View Controller
+    
+    func presentAuthors() -> Void {
+        
+        performSegueWithIdentifier( "displayGeneralSearchAuthorList", sender: self )
+    }
+    
+    func saveAuthorKey( authorKey: String ) -> Void {
+        
+        savedAuthorKey = authorKey
+    }
+    
+    @IBAction func dismissAuthors(segue: UIStoryboardSegue) {
+        
+        if segue.identifier == "beginAuthorDetail" {
+            
+            if nil != savedAuthorKey {
+                
+                dispatch_async( dispatch_get_main_queue() ) {
+                    
+                    self.performSegueWithIdentifier( "displayGeneralSearchAuthorDetail", sender: self )
+                }
+            }
         }
     }
     
@@ -427,6 +471,14 @@ extension OLSearchResultsTableViewController: UIScrollViewDelegate {
             navigationController?.setNavigationBarHidden( false, animated: true )
         }
         
+    }
+
+    func scrollViewWillEndDragging( scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint> ) {
+        
+        // up
+        if velocity.y < -1.5 {
+            navigationController?.setNavigationBarHidden( false, animated: true )
+        }
     }
 }
 

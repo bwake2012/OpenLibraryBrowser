@@ -538,6 +538,17 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
     
     // MARK: set coordinator for view controller
     
+    func installAuthorDetailCoordinator( destVC: OLAuthorDetailViewController, authorKey: String ) {
+        
+        destVC.queryCoordinator =
+            AuthorDetailCoordinator(
+                operationQueue: operationQueue,
+                coreDataStack: coreDataStack,
+                authorKey: authorKey,
+                authorDetailVC: destVC
+        )
+    }
+    
     func installAuthorDetailCoordinator( destVC: OLAuthorDetailViewController, indexPath: NSIndexPath ) {
         
         guard let searchResult = objectAtIndexPath( indexPath ) else {
@@ -565,6 +576,21 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
                     coreDataStack: coreDataStack,
                     authorKey: firstAuthorKey,
                     authorDetailVC: destVC
+                )
+    }
+    
+    func installAuthorsTableViewCoordinator( destVC: OLAuthorsTableViewController, indexPath: NSIndexPath ) {
+        
+        guard let searchResult = objectAtIndexPath( indexPath ) else {
+            fatalError( "General Search Result object not retrieved." )
+        }
+        
+        destVC.queryCoordinator =
+            AuthorsCoordinator(
+                    keys: searchResult.author_key,
+                    viewController: destVC,
+                    operationQueue: operationQueue,
+                    coreDataStack: coreDataStack
                 )
     }
     

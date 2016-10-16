@@ -9,14 +9,15 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OLTableViewHeaderFooterView" customModule="OpenLibrary" customModuleProvider="target"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" verticalHuggingPriority="1000" id="Lyb-O0-c8G" customClass="OLTableViewHeaderFooterView" customModule="OpenLibrary" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="298" height="64"/>
+            <rect key="frame" x="0.0" y="0.0" width="298" height="46"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="d0h-eU-9P6" userLabel="Content View">
-                    <rect key="frame" x="0.0" y="0.0" width="298" height="64"/>
+                    <rect key="frame" x="0.0" y="0.0" width="298" height="46"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="1000" verticalCompressionResistancePriority="760" text="" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9rs-DC-4MD" userLabel="Footer Text" customClass="MultilineLabelForTableViewCell" customModule="OpenLibrary" customModuleProvider="target">
-                            <rect key="frame" x="8" y="8" width="282" height="48"/>
+                        <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="1000" verticalCompressionResistancePriority="760" text="Header Footer" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9rs-DC-4MD" userLabel="Footer Text" customClass="MultilineLabelForTableViewCell" customModule="OpenLibrary" customModuleProvider="target">
+                            <rect key="frame" x="8" y="8" width="282" height="30"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -44,7 +45,7 @@
             <connections>
                 <outlet property="footerLabel" destination="9rs-DC-4MD" id="NJh-T9-hdf"/>
             </connections>
-            <point key="canvasLocation" x="91" y="892"/>
+            <point key="canvasLocation" x="91" y="883"/>
         </view>
     </objects>
 </document>

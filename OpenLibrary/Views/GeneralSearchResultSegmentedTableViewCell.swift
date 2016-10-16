@@ -34,6 +34,8 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
     var haveEditions = false
     var haveEbooks = false
     
+    var authorCount = 0
+    
     var haveWorkDetail = false
     
     @IBAction private func zoomCoverTapped(sender: UIButton) {
@@ -43,7 +45,14 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
     
     @IBAction private func viewAuthorDetailTapped(sender: UIButton) {
         
-        tableVC?.performSegueWithIdentifier( "displayGeneralSearchAuthorDetail", sender: self )
+        if 1 == authorCount {
+
+            tableVC?.performSegueWithIdentifier( "displayGeneralSearchAuthorDetail", sender: self )
+            
+        } else if 1 < authorCount {
+            
+            tableVC?.performSegueWithIdentifier( "displayGeneralSearchAuthorList", sender: self )
+        }
     }
     
     @IBAction private func viewBooksTapped( sender: UIButton ) {
@@ -92,6 +101,8 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
         haveEbooks = false
         haveEditions = false
         
+        authorCount = 0
+        
         updateButtons( false )
     }
 
@@ -101,7 +112,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
         
         zoomCover.enabled = selected && isZoomEnabled
         
-        viewAuthorDetail.enabled = selected
+        viewAuthorDetail.enabled = selected && authorCount > 0
         authorName.textColor = viewAuthorDetail.currentTitleColor
         
         viewWorkDetail.enabled = selected && haveEditions
@@ -144,6 +155,8 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
             isZoomEnabled = r.hasImage
             haveEbooks = 0 < r.ebook_count_i
             haveEditions = 0 < r.edition_count
+            
+            authorCount = r.author_key.count
 
             if r.hasImage {
                 

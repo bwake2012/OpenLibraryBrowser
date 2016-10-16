@@ -36,6 +36,9 @@
 		C412FE601CC3D47100EDB935 /* OLWorkDetail+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412FE5E1CC3D47100EDB935 /* OLWorkDetail+CoreDataProperties.swift */; };
 		C412FE611CC3D47100EDB935 /* OLTitleSearchResult+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412FE5F1CC3D47100EDB935 /* OLTitleSearchResult+CoreDataProperties.swift */; };
 		C412FE631CC3DFA200EDB935 /* LanguagesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412FE621CC3DFA200EDB935 /* LanguagesCoordinator.swift */; };
+		C415E2EA1DB167F200E1350B /* OLAuthorsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415E2E91DB167F200E1350B /* OLAuthorsTableViewController.swift */; };
+		C415E2EC1DB16D0300E1350B /* AuthorsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415E2EB1DB16D0300E1350B /* AuthorsTableViewCell.swift */; };
+		C415E2EE1DB1740D00E1350B /* AuthorsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C415E2ED1DB1740D00E1350B /* AuthorsCoordinator.swift */; };
 		C4178EF51D67A50B00D274E8 /* NavigationControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4178EF41D67A50B00D274E8 /* NavigationControllerDelegate.swift */; };
 		C4178EF81D67B1E400D274E8 /* WindowShadeTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4178EF61D67B1E400D274E8 /* WindowShadeTransition.swift */; };
 		C4178EF91D67B1E400D274E8 /* SegueWithWindowShade.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4178EF71D67B1E400D274E8 /* SegueWithWindowShade.swift */; };
@@ -243,6 +246,9 @@
 		C412FE5E1CC3D47100EDB935 /* OLWorkDetail+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "OLWorkDetail+CoreDataProperties.swift"; path = "Model/OLWorkDetail+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C412FE5F1CC3D47100EDB935 /* OLTitleSearchResult+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "OLTitleSearchResult+CoreDataProperties.swift"; path = "Model/OLTitleSearchResult+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C412FE621CC3DFA200EDB935 /* LanguagesCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguagesCoordinator.swift; path = Coordinators/LanguagesCoordinator.swift; sourceTree = "<group>"; };
+		C415E2E91DB167F200E1350B /* OLAuthorsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLAuthorsTableViewController.swift; path = "View Controllers/OLAuthorsTableViewController.swift"; sourceTree = "<group>"; };
+		C415E2EB1DB16D0300E1350B /* AuthorsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorsTableViewCell.swift; path = Views/AuthorsTableViewCell.swift; sourceTree = "<group>"; };
+		C415E2ED1DB1740D00E1350B /* AuthorsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorsCoordinator.swift; path = Coordinators/AuthorsCoordinator.swift; sourceTree = "<group>"; };
 		C4178EF41D67A50B00D274E8 /* NavigationControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavigationControllerDelegate.swift; path = Transitions/NavigationControllerDelegate.swift; sourceTree = "<group>"; };
 		C4178EF61D67B1E400D274E8 /* WindowShadeTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WindowShadeTransition.swift; path = Transitions/WindowShadeTransition.swift; sourceTree = "<group>"; };
 		C4178EF71D67B1E400D274E8 /* SegueWithWindowShade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegueWithWindowShade.swift; path = Transitions/SegueWithWindowShade.swift; sourceTree = "<group>"; };
@@ -494,6 +500,7 @@
 				C4EF99E01CA3792700BEF2D3 /* WorkDetailCoordinator.swift */,
 				C4EF99DD1CA3714900BEF2D3 /* WorkEditionsCoordinator.swift */,
 				C47B03BF1D5A352B001F323C /* SearchState.swift */,
+				C415E2ED1DB1740D00E1350B /* AuthorsCoordinator.swift */,
 			);
 			name = Coordinators;
 			sourceTree = "<group>";
@@ -684,6 +691,7 @@
 				C4EF99D31CA3707900BEF2D3 /* OLWorkDetailEditionsTableViewController.swift */,
 				C4EF99D41CA3707900BEF2D3 /* OLWorkDetailViewController.swift */,
 				C4B31B5D1D789700002DA5CD /* OLLaunchViewController.swift */,
+				C415E2E91DB167F200E1350B /* OLAuthorsTableViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -728,6 +736,7 @@
 				C453C3811D5E1985003EAA45 /* OLTableViewHeaderFooterView.swift */,
 				C453C3831D5E2030003EAA45 /* OLTableViewHeaderFooterView.xib */,
 				C45EA5641D71E26F00C007A2 /* MultilineLabelForTableViewCell.swift */,
+				C415E2EB1DB16D0300E1350B /* AuthorsTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1072,6 +1081,7 @@
 				C4B31B601D78A0B1002DA5CD /* UIApplication+topViewController.swift in Sources */,
 				C4E8638A1C9121A3002C0E6B /* OpenLibraryObject.swift in Sources */,
 				C47B03C01D5A352B001F323C /* SearchState.swift in Sources */,
+				C415E2EE1DB1740D00E1350B /* AuthorsCoordinator.swift in Sources */,
 				C4F00C531CD929AD002D7E14 /* DeluxeDetailHeadingTableViewCell.swift in Sources */,
 				C412FE561CC2C99800EDB935 /* OLLanguage+CoreDataProperties.swift in Sources */,
 				C4A722161D2DE25100C4BCED /* GeneralSearchResultSegmentedTableViewCell.swift in Sources */,
@@ -1101,7 +1111,9 @@
 				C4F00C591CD96D4E002D7E14 /* OLDeluxeDetailCoordinator.swift in Sources */,
 				C4188A2C1CE511D200D02E19 /* IAEBookItemParseOperation.swift in Sources */,
 				C45E81B91CE42C6D00307BAC /* OLEBookFile.swift in Sources */,
+				C415E2EA1DB167F200E1350B /* OLAuthorsTableViewController.swift in Sources */,
 				C410821C1CBA961500319B83 /* TitleSearchResultsParseOperation.swift in Sources */,
+				C415E2EC1DB16D0300E1350B /* AuthorsTableViewCell.swift in Sources */,
 				C4AB16E41CDA801100D6DF05 /* DeluxeDetailTableViewCell.swift in Sources */,
 				C42DBE6F1CBD68740048788E /* ZoomTransition.swift in Sources */,
 				C410821A1CBA961500319B83 /* TitleSearchResultsDeleteOperation.swift in Sources */,
