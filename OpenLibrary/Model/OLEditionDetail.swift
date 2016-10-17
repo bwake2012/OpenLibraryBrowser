@@ -435,11 +435,11 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
             deluxeData.append( [DeluxeData( type: .html, caption: "Notes", value: fancyOutput )] )
         }
         
-        if !self.uris.isEmpty && self.uris.count == self.uri_descriptions.count {
+        if !self.uris.isEmpty && !uri_descriptions.isEmpty {
             
             var newData = [DeluxeData]()
             
-            for link in 0 ..< uris.count {
+            for link in 0 ..< min( uris.count, uri_descriptions.count ) {
                 
                 newData.append( DeluxeData( type: .link, caption: uri_descriptions[link], value: uris[link] ) )
             }
@@ -454,9 +454,9 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
 
             newData = [DeluxeData]()
             
-            for index in 1..<self.covers.count {
+            for index in 1 ..< self.covers.count {
                 
-                if -1 != covers[index] {
+                if 0 < covers[index] {
                     
                     let value = localURL( "M", index: index ).absoluteString
                     let extraValue = localURL( "L", index: index ).absoluteString

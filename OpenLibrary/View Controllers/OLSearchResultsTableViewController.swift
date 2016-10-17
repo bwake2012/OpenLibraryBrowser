@@ -24,6 +24,7 @@ class OLSearchResultsTableViewController: UIViewController {
     var savedSearchKeys = [String: String]()
     var savedIndexPath: NSIndexPath?
     var savedAuthorKey: String?
+    var immediateSegueName: String?
     
     var beginningOffset: CGFloat = 0.0
 
@@ -98,6 +99,12 @@ class OLSearchResultsTableViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         
         // navigationController?.hidesBarsOnSwipe = true
+        
+        if let segueName = immediateSegueName {
+            
+            performSegueWithIdentifier( segueName, sender: self )
+            immediateSegueName = nil
+        }
 
         if let indexPath = savedIndexPath {
             
@@ -345,10 +352,8 @@ class OLSearchResultsTableViewController: UIViewController {
             
             if nil != savedAuthorKey {
                 
-                dispatch_async( dispatch_get_main_queue() ) {
-                    
-                    self.performSegueWithIdentifier( "displayGeneralSearchAuthorDetail", sender: self )
-                }
+                // start the next segue AFTER the current segue finishes
+                immediateSegueName = "displayGeneralSearchAuthorDetail"
             }
         }
     }

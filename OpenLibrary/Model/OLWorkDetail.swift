@@ -359,9 +359,9 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             
             let newData = [DeluxeData]()
             
-            for index in 1..<self.covers.count {
+            for index in 1 ..< self.covers.count {
                 
-                if -1 != covers[index] {
+                if 0 < covers[index] {
                     
                     let value = localURL( "M", index: index ).absoluteString
                     let extraValue = localURL( "L", index: index ).absoluteString
