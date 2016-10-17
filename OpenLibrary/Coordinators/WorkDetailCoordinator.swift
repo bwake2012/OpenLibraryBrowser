@@ -29,6 +29,12 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         
         get {
             
+            objc_sync_enter( self )
+            defer {
+                
+                objc_sync_exit( self)
+            }
+
             guard nil == cachedWorkDetail else {
                 
                 return cachedWorkDetail!
@@ -96,10 +102,10 @@ class WorkDetailCoordinator: OLQueryCoordinator {
                             
                             [weak self] in
                             
-                            if nil != self {
-
-                                dispatch_async( dispatch_get_main_queue() ) {
+                            dispatch_async( dispatch_get_main_queue() ) {
                                     
+                                if nil != self {
+
                                     workDetailVC.displayImage( url )
                                 }
                             }
@@ -113,18 +119,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
             }
         }
     }
-    
-//    func updateWorkDetail( objectID: NSManagedObjectID ) {
-//        
-//        dispatch_async( dispatch_get_main_queue() ) {
-//
-//            if let workDetail = self.coreDataStack.mainQueueContext.objectWithID( objectID ) as? OLWorkDetail {
-//                
-//                self.workDetail = workDetail
-//            }
-//        }
-//    }
-    
+
     func updateUI() {
         
         do {
@@ -205,9 +200,9 @@ class WorkDetailCoordinator: OLQueryCoordinator {
                         
                         [weak self] in
                         
-                        if let strongSelf = self {
-                            
-                            dispatch_async( dispatch_get_main_queue() ) {
+                        dispatch_async( dispatch_get_main_queue() ) {
+                                
+                            if let strongSelf = self {
                                 
 //                                strongSelf.updateUI( strongSelfworkDetail )
                                 

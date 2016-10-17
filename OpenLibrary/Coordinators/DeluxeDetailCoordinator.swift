@@ -177,17 +177,17 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
                                         
                                         [weak self] in
                                         
-                                        guard let strongSelf = self else { return }
-                                        guard let vc = strongSelf.deluxeDetailVC else { return }
-                                        
                                         dispatch_async( dispatch_get_main_queue() ) {
+                                            
+                                            guard let strongSelf = self else { return }
+                                            guard let vc = strongSelf.deluxeDetailVC else { return }
                                             
                                             vc.tableView.reloadRowsAtIndexPaths(
                                                 [indexPath], withRowAnimation: .Automatic
                                             )
                                         }
                                         
-                                        strongSelf.imageGetOperation = nil
+                                        self?.imageGetOperation = nil
                                 }
                                 
                                 imageGetOperation!.userInitiated = true

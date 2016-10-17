@@ -134,7 +134,14 @@ extension OLAuthorDetailWorksTableViewController: UIScrollViewDelegate {
             
             navigationController?.setNavigationBarHidden( false, animated: true )
         }
+    }
+
+    func scrollViewWillEndDragging( scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint> ) {
         
+        // up
+        if velocity.y < -1.5 {
+            navigationController?.setNavigationBarHidden( false, animated: true )
+        }
     }
 }
 

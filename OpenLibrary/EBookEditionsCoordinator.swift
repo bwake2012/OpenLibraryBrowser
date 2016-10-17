@@ -203,10 +203,10 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
                     
                     [weak self] in
                     
-                    if let strongSelf = self {
-                        
-                        dispatch_async( dispatch_get_main_queue() ) {
+                    dispatch_async( dispatch_get_main_queue() ) {
                             
+                        if let strongSelf = self {
+                        
                             strongSelf.refreshComplete( refreshControl )
                             
                             strongSelf.updateFooter()

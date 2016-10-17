@@ -107,7 +107,7 @@
         <attribute name="authors" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="by_statement" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="collections" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="contributions" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="contributors" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="copyright_date" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="covers" attributeType="Transformable" syncable="YES"/>
         <attribute name="coversFound" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>

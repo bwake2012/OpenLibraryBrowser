@@ -48,15 +48,6 @@ class OLLaunchViewController: UIViewController {
         
         copyright.enabled = enableClose
     }
-
-    func loadAppRootViewController() {
-        
-        dispatch_async( dispatch_get_main_queue() ) {
-            
-            let navController = self.navController
-            self.presentViewController( navController, animated: true, completion: nil )
-        }
-    }
     
     /*
     // MARK: - Navigation
