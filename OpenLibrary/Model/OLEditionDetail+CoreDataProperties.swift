@@ -33,7 +33,7 @@ extension OLEditionDetail {
     @NSManaged var authors: [String]
     @NSManaged var by_statement: String
     @NSManaged var collections: [String]
-    @NSManaged var contributions: [String]
+    @NSManaged var contributors: [[String: String]]
     @NSManaged var copyright_date: String
     @NSManaged var covers: [Int]
     @NSManaged var coversFound: Bool

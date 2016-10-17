@@ -97,209 +97,6 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         return newObject
     }
     
-    // create or update an editionDetail object with information from the ebook data
-
-    class func saveProvisionalEdition( parsed parsed: OLEBookItem.ParsedFromJSON, moc: NSManagedObjectContext )  -> OLEditionDetail? {
-
-        var newObject: OLEditionDetail?
-
-        newObject = findObject( parsed.editionKey, entityName: entityName, moc: moc )
-        if nil == newObject {
-
-            newObject =
-                NSEntityDescription.insertNewObjectForEntityForName(
-                    OLEditionDetail.entityName, inManagedObjectContext: moc
-                ) as? OLEditionDetail
-
-            if let newObject = newObject {
-                
-                newObject.retrieval_date = NSDate()
-                newObject.provisional_date = NSDate()
-                newObject.is_provisional = true
-                
-                newObject.has_fulltext = 1
-                
-                newObject.key = parsed.editionKey
-                newObject.revision = 0
-                newObject.latest_revision = 0
-                newObject.type = "/type/edition"
-                
-                newObject.work_key = parsed.workKey
-                
-                newObject.authors = parsed.author_keys
-                newObject.author_key = parsed.author_keys.first ?? ""
-                
-                newObject.title = parsed.title
-                newObject.subtitle = parsed.subtitle
-                
-                if parsed.cover_id > 0 && 0 == newObject.covers.count {
-                    newObject.covers = [Int( parsed.cover_id )]
-                } else {
-                    newObject.covers = [Int]()
-                }
-                newObject.coversFound = !newObject.covers.isEmpty && 0 < newObject.covers[0]
-                
-                newObject.languages = parsed.languages
-                
-                newObject.publish_date = parsed.publish_date
-                
-                newObject.isbn_10 = parsed.isbn_10
-                
-                newObject.accompanying_material = ""
-
-                newObject.by_statement = ""
-                newObject.collections = []
-                newObject.contributions = []
-                newObject.copyright_date = ""
-
-                newObject.dewey_decimal_class = []
-                newObject.distributors = []
-                newObject.edition_description = ""
-                newObject.edition_name = ""
-                newObject.first_sentence = ""
-                newObject.genres = []
-
-                newObject.isbn_13 = []
-
-                newObject.lc_classifications = []
-                newObject.lccn = []
-                newObject.location = []
-                newObject.notes = ""
-                newObject.number_of_pages = 0
-                newObject.ocaid = ""
-                newObject.oclc_numbers = []
-                newObject.other_titles = []
-                newObject.pagination = ""
-                newObject.physical_dimensions = ""
-                newObject.physical_format = ""
-                newObject.publish_country = ""
-                newObject.publish_date = ""
-                newObject.publish_places = []
-                newObject.publishers = []
-                newObject.scan_on_demand = false
-                newObject.series = []
-                newObject.source_records = []
-                newObject.subjects = []
-
-                newObject.table_of_contents = [[:]]
-                newObject.title_prefix = ""
-
-                newObject.translated_from = []
-                newObject.translation_of = ""
-                newObject.uri_descriptions = []
-                newObject.uris = []
-                newObject.weight = ""
-                newObject.work_titles = []
-                newObject.works = []
-
-            }
-        }
-
-        return newObject
-    }
-
-    class func saveProvisionalEdition( editionIndex: Int, parsed: OLGeneralSearchResult.ParsedFromJSON, moc: NSManagedObjectContext ) -> OLEditionDetail? {
-        
-        var newObject: OLEditionDetail?
-        
-        if editionIndex < parsed.edition_key.count {
- 
-            newObject = findObject( parsed.edition_key[editionIndex], entityName: entityName, moc: moc )
-            if nil == newObject {
-            
-                newObject =
-                    NSEntityDescription.insertNewObjectForEntityForName(
-                        OLEditionDetail.entityName, inManagedObjectContext: moc
-                    ) as? OLEditionDetail
-                
-                if let newObject = newObject {
-                    
-                    newObject.retrieval_date = NSDate()
-                    newObject.provisional_date = NSDate()
-                    newObject.is_provisional = true
-                    
-                    newObject.has_fulltext = parsed.has_fulltext ? 1 : 0
-                    
-                    newObject.key = parsed.edition_key[editionIndex]
-                    newObject.type = "/type/edition"
-                    
-                    newObject.work_key = parsed.key
-                    
-                    newObject.authors = parsed.author_key
-                    newObject.author_key = parsed.author_key.first ?? ""
-                    
-                    newObject.title = parsed.title
-                    if parsed.cover_i > 0 && newObject.key == parsed.cover_edition_key {
-                        newObject.covers = [Int( parsed.cover_i )]
-                    } else {
-                        newObject.covers = [Int]()
-                    }
-                    newObject.coversFound = !newObject.covers.isEmpty && 0 < newObject.covers[0]
-                    
-                    newObject.languages = [String]()
-                    
-                    if editionIndex < parsed.publish_date.count {
-
-                        newObject.publish_date = parsed.publish_date[editionIndex]
-
-                    } else {
-                        
-                        newObject.publish_date = ""
-                    }
-                    newObject.subjects = parsed.subject
-                    
-                    newObject.accompanying_material = ""
-                    
-                    newObject.by_statement = ""
-                    newObject.collections = []
-                    newObject.contributions = []
-                    newObject.copyright_date = ""
-                    
-                    newObject.dewey_decimal_class = []
-                    newObject.distributors = []
-                    newObject.edition_description = ""
-                    newObject.edition_name = ""
-                    newObject.first_sentence = ""
-                    newObject.genres = []
-                    newObject.isbn_10 = []
-                    newObject.isbn_13 = []
-                    
-                    newObject.lc_classifications = []
-                    newObject.lccn = []
-                    newObject.location = []
-                    newObject.notes = ""
-                    newObject.number_of_pages = 0
-                    newObject.ocaid = ""
-                    newObject.oclc_numbers = []
-                    newObject.other_titles = []
-                    newObject.pagination = ""
-                    newObject.physical_dimensions = ""
-                    newObject.physical_format = ""
-                    newObject.publish_country = ""
-
-                    newObject.publish_places = []
-                    newObject.publishers = []
-                    newObject.scan_on_demand = false
-                    newObject.series = []
-                    newObject.source_records = []
-                    
-                    newObject.table_of_contents = [[:]]
-                    newObject.title_prefix = ""
-                    
-                    newObject.translated_from = []
-                    newObject.translation_of = ""
-                    newObject.uri_descriptions = []
-                    newObject.uris = []
-                    newObject.weight = ""
-                    newObject.work_titles = []
-                    newObject.works = []
-                }
-            }
-        }
-        
-        return newObject
-    }
-    
     var mayHaveFullText: Bool {
         
         return 0 != self.has_fulltext
@@ -379,7 +176,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
             self.authors = parsed.authors
             self.by_statement = parsed.by_statement
             self.collections = parsed.collections
-            self.contributions = parsed.contributions
+            self.contributors = parsed.contributors
             self.copyright_date = parsed.copyright_date
             self.covers = parsed.covers ?? []
             self.coversFound = parsed.covers.count > 0 && 0 < parsed.covers[0]
@@ -465,22 +262,41 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         if !by_statement.isEmpty {
 
             deluxeData[0].append(
-                    DeluxeData( type: .heading, caption: "By Statement", value: self.by_statement )
+                    DeluxeData( type: .block, caption: "By Statement", value: self.by_statement )
                 )
 
-        } else {
+        }
+        
+        if !author_names.isEmpty {
 
-            if !author_names.isEmpty {
-
-                let authorNames = author_names.joinWithSeparator( ", " )
-                deluxeData[0].append(
-                    DeluxeData(
-                        type: .heading,
-                        caption: "Author\(author_names.count > 1 ? "s" : "")",
-                        value: authorNames
-                    )
+            let authorNames = author_names.joinWithSeparator( ", " )
+            deluxeData[0].append(
+                DeluxeData(
+                    type: .block,
+                    caption: "Author\(author_names.count > 1 ? "s" : "")",
+                    value: authorNames
                 )
+            )
+        }
+        
+        if !contributors.isEmpty {
+            
+            var list = [String]()
+            for contributor in contributors {
+                
+                if let role = contributor["role"], name = contributor["name"] {
+                    
+                    list.append( role + ": " + name )
+                }
             }
+            
+            deluxeData[0].append(
+                DeluxeData(
+                    type: .block,
+                    caption: "Contributor\(list.count > 1 ? "s" : "")",
+                    value: list.joinWithSeparator( ", " )
+                )
+            )
         }
         
         if hasImage {
@@ -525,7 +341,13 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         if !self.publishers.isEmpty {
             
             let display = publishers.joinWithSeparator( ", " )
-            newData.append( DeluxeData( type: .body, caption: "Publishers", value: display ) )
+            newData.append(
+                DeluxeData(
+                        type: .block,
+                        caption: "Publisher\(publishers.count > 1 ? "s" : "")",
+                        value: display
+                    )
+                )
         }
         
         if !self.publish_date.isEmpty {
@@ -613,11 +435,11 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
             deluxeData.append( [DeluxeData( type: .html, caption: "Notes", value: fancyOutput )] )
         }
         
-        if !self.uris.isEmpty && self.uris.count == self.uri_descriptions.count {
+        if !self.uris.isEmpty && !uri_descriptions.isEmpty {
             
             var newData = [DeluxeData]()
             
-            for link in 0 ..< uris.count {
+            for link in 0 ..< min( uris.count, uri_descriptions.count ) {
                 
                 newData.append( DeluxeData( type: .link, caption: uri_descriptions[link], value: uris[link] ) )
             }
@@ -632,9 +454,9 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
 
             newData = [DeluxeData]()
             
-            for index in 1..<self.covers.count {
+            for index in 1 ..< self.covers.count {
                 
-                if -1 != covers[index] {
+                if 0 < covers[index] {
                     
                     let value = localURL( "M", index: index ).absoluteString
                     let extraValue = localURL( "L", index: index ).absoluteString
@@ -760,7 +582,7 @@ extension OLEditionDetail {
         let isbn_13: [String]                    // of type /type/string
         let dewey_decimal_class: [String]        // of type /type/string
         let lc_classifications: [String]         // of type /type/string
-        let contributions: [String]              // of type /type/string
+        let contributors: [[String: String]]     // of type /type/string
         let publish_places: [String]             // of type /type/string
         let publish_country: String              // of type /type/string
         let publishers: [String]                 // of type /type/string
@@ -854,7 +676,7 @@ extension OLEditionDetail {
             
             let lc_classifications = OpenLibraryObject.OLStringArray( json["lc_classifications"] )
             
-            let contributions = OpenLibraryObject.OLStringArray( json["contributions"] )
+            let contributors = OpenLibraryObject.OLStringDictionaryArray( json["contributors"] )
             
             let publish_places = OpenLibraryObject.OLStringArray( json["publish_places"] )
             
@@ -927,7 +749,7 @@ extension OLEditionDetail {
                 isbn_13: isbn_13,
                 dewey_decimal_class: dewey_decimal_class,
                 lc_classifications: lc_classifications,
-                contributions: contributions,
+                contributors: contributors,
                 publish_places: publish_places,
                 publish_country: publish_country,
                 publishers: publishers,
@@ -986,7 +808,7 @@ extension OLEditionDetail {
             isbn_13: [String],
             dewey_decimal_class: [String],
             lc_classifications: [String],
-            contributions: [String],
+            contributors: [[String: String]],
             publish_places: [String],
             publish_country: String,
             publishers: [String],
@@ -1043,7 +865,7 @@ extension OLEditionDetail {
             self.isbn_13 = isbn_13
             self.dewey_decimal_class = dewey_decimal_class
             self.lc_classifications = lc_classifications
-            self.contributions = contributions
+            self.contributors = contributors
             self.publish_places = publish_places
             self.publish_country = publish_country
             self.publishers = publishers
@@ -1125,7 +947,7 @@ extension OLEditionDetail {
                     
                     newObject.by_statement = ""
                     newObject.collections = []
-                    newObject.contributions = []
+                    newObject.contributors = []
                     newObject.copyright_date = ""
                     
                     newObject.dewey_decimal_class = []
@@ -1172,5 +994,212 @@ extension OLEditionDetail {
 
         return newObject
     }
+}
+
+extension OLEditionDetail {
+
+    // create or update an editionDetail object with information from the ebook data
+    
+    class func saveProvisionalEdition( parsed parsed: OLEBookItem.ParsedFromJSON, moc: NSManagedObjectContext )  -> OLEditionDetail? {
+        
+        var newObject: OLEditionDetail?
+        
+        newObject = findObject( parsed.editionKey, entityName: entityName, moc: moc )
+        if nil == newObject {
+            
+            newObject =
+                NSEntityDescription.insertNewObjectForEntityForName(
+                    OLEditionDetail.entityName, inManagedObjectContext: moc
+                ) as? OLEditionDetail
+            
+            if let newObject = newObject {
+                
+                newObject.retrieval_date = NSDate()
+                newObject.provisional_date = NSDate()
+                newObject.is_provisional = true
+                
+                newObject.has_fulltext = 1
+                
+                newObject.key = parsed.editionKey
+                newObject.revision = 0
+                newObject.latest_revision = 0
+                newObject.type = "/type/edition"
+                
+                newObject.work_key = parsed.workKey
+                
+                newObject.authors = parsed.author_keys
+                newObject.author_key = parsed.author_keys.first ?? ""
+                
+                newObject.title = parsed.title
+                newObject.subtitle = parsed.subtitle
+                
+                if parsed.cover_id > 0 && 0 == newObject.covers.count {
+                    newObject.covers = [Int( parsed.cover_id )]
+                } else {
+                    newObject.covers = [Int]()
+                }
+                newObject.coversFound = !newObject.covers.isEmpty && 0 < newObject.covers[0]
+                
+                newObject.languages = parsed.languages
+                
+                newObject.publish_date = parsed.publish_date
+                
+                newObject.isbn_10 = parsed.isbn_10
+                
+                newObject.accompanying_material = ""
+                
+                newObject.by_statement = ""
+                newObject.collections = []
+                newObject.contributors = []
+                newObject.copyright_date = ""
+                
+                newObject.dewey_decimal_class = []
+                newObject.distributors = []
+                newObject.edition_description = ""
+                newObject.edition_name = ""
+                newObject.first_sentence = ""
+                newObject.genres = []
+                
+                newObject.isbn_13 = []
+                
+                newObject.lc_classifications = []
+                newObject.lccn = []
+                newObject.location = []
+                newObject.notes = ""
+                newObject.number_of_pages = 0
+                newObject.ocaid = ""
+                newObject.oclc_numbers = []
+                newObject.other_titles = []
+                newObject.pagination = ""
+                newObject.physical_dimensions = ""
+                newObject.physical_format = ""
+                newObject.publish_country = ""
+                newObject.publish_date = ""
+                newObject.publish_places = []
+                newObject.publishers = []
+                newObject.scan_on_demand = false
+                newObject.series = []
+                newObject.source_records = []
+                newObject.subjects = []
+                
+                newObject.table_of_contents = [[:]]
+                newObject.title_prefix = ""
+                
+                newObject.translated_from = []
+                newObject.translation_of = ""
+                newObject.uri_descriptions = []
+                newObject.uris = []
+                newObject.weight = ""
+                newObject.work_titles = []
+                newObject.works = []
+                
+            }
+        }
+        
+        return newObject
+    }
+    
+    class func saveProvisionalEdition( editionIndex: Int, parsed: OLGeneralSearchResult.ParsedFromJSON, moc: NSManagedObjectContext ) -> OLEditionDetail? {
+        
+        var newObject: OLEditionDetail?
+        
+        if editionIndex < parsed.edition_key.count {
+            
+            newObject = findObject( parsed.edition_key[editionIndex], entityName: entityName, moc: moc )
+            if nil == newObject {
+                
+                newObject =
+                    NSEntityDescription.insertNewObjectForEntityForName(
+                        OLEditionDetail.entityName, inManagedObjectContext: moc
+                    ) as? OLEditionDetail
+                
+                if let newObject = newObject {
+                    
+                    newObject.retrieval_date = NSDate()
+                    newObject.provisional_date = NSDate()
+                    newObject.is_provisional = true
+                    
+                    newObject.has_fulltext = parsed.has_fulltext ? 1 : 0
+                    
+                    newObject.key = parsed.edition_key[editionIndex]
+                    newObject.type = "/type/edition"
+                    
+                    newObject.work_key = parsed.key
+                    
+                    newObject.authors = parsed.author_key
+                    newObject.author_key = parsed.author_key.first ?? ""
+                    
+                    newObject.title = parsed.title
+                    if parsed.cover_i > 0 && newObject.key == parsed.cover_edition_key {
+                        newObject.covers = [Int( parsed.cover_i )]
+                    } else {
+                        newObject.covers = [Int]()
+                    }
+                    newObject.coversFound = !newObject.covers.isEmpty && 0 < newObject.covers[0]
+                    
+                    newObject.languages = [String]()
+                    
+                    if editionIndex < parsed.publish_date.count {
+                        
+                        newObject.publish_date = parsed.publish_date[editionIndex]
+                        
+                    } else {
+                        
+                        newObject.publish_date = ""
+                    }
+                    newObject.subjects = parsed.subject
+                    
+                    newObject.accompanying_material = ""
+                    
+                    newObject.by_statement = ""
+                    newObject.collections = []
+                    newObject.contributors = []
+                    newObject.copyright_date = ""
+                    
+                    newObject.dewey_decimal_class = []
+                    newObject.distributors = []
+                    newObject.edition_description = ""
+                    newObject.edition_name = ""
+                    newObject.first_sentence = ""
+                    newObject.genres = []
+                    newObject.isbn_10 = []
+                    newObject.isbn_13 = []
+                    
+                    newObject.lc_classifications = []
+                    newObject.lccn = []
+                    newObject.location = []
+                    newObject.notes = ""
+                    newObject.number_of_pages = 0
+                    newObject.ocaid = ""
+                    newObject.oclc_numbers = []
+                    newObject.other_titles = []
+                    newObject.pagination = ""
+                    newObject.physical_dimensions = ""
+                    newObject.physical_format = ""
+                    newObject.publish_country = ""
+                    
+                    newObject.publish_places = []
+                    newObject.publishers = []
+                    newObject.scan_on_demand = false
+                    newObject.series = []
+                    newObject.source_records = []
+                    
+                    newObject.table_of_contents = [[:]]
+                    newObject.title_prefix = ""
+                    
+                    newObject.translated_from = []
+                    newObject.translation_of = ""
+                    newObject.uri_descriptions = []
+                    newObject.uris = []
+                    newObject.weight = ""
+                    newObject.work_titles = []
+                    newObject.works = []
+                }
+            }
+        }
+        
+        return newObject
+    }
     
 }
+

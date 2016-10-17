@@ -23,8 +23,39 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
     weak var authorDetailVC: OLAuthorDetailViewController?
 
     let authorKey: String
-    var authorDetail: OLAuthorDetail?
     var parentObjectID: NSManagedObjectID?
+    weak var cachedAuthorDetail: OLAuthorDetail?
+    var authorDetail: OLAuthorDetail {
+        
+        get {
+            
+            objc_sync_enter( self )
+            defer {
+                
+                objc_sync_exit( self)
+            }
+
+            // manipulate the array
+            guard nil == cachedAuthorDetail else {
+                
+                return cachedAuthorDetail!
+            }
+            
+            guard let authorDetail = fetchedResultsController.fetchedObjects?.first else {
+                
+                fatalError( "author detail invalidated before fetch" )
+            }
+            
+            cachedAuthorDetail = authorDetail
+            
+            return cachedAuthorDetail!
+        }
+        
+        set {
+            
+            cachedAuthorDetail = newValue
+        }
+    }
     
     var deluxeData = [[DeluxeData]]()
     
@@ -108,10 +139,10 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
                 ) {
                     [weak self] in
                     
-                    if let strongSelf = self {
-                        
-                        dispatch_async( dispatch_get_main_queue() ) {
+                    dispatch_async( dispatch_get_main_queue() ) {
 
+                        if let strongSelf = self {
+                            
 //                            strongSelf.updateUI( strongSelf.authorDetail )
 
                             strongSelf.refreshComplete( refreshControl )
@@ -173,34 +204,29 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
     }
 
     func installAuthorDeluxeDetailCoordinator( destVC: OLDeluxeDetailTableViewController ) {
-    
-        if let authorDetail = authorDetail {
-            
-            destVC.queryCoordinator =
-                DeluxeDetailCoordinator(
-                        operationQueue: operationQueue,
-                        coreDataStack: coreDataStack,
-                        heading: authorDetail.name,
-                        deluxeData: authorDetail.deluxeData,
-                        imageType: authorDetail.imageType,
-                        deluxeDetailVC: destVC
-                    )
-        }
+
+        destVC.queryCoordinator =
+            DeluxeDetailCoordinator(
+                    operationQueue: operationQueue,
+                    coreDataStack: coreDataStack,
+                    heading: authorDetail.name,
+                    deluxeData: authorDetail.deluxeData,
+                    imageType: authorDetail.imageType,
+                    deluxeDetailVC: destVC
+                )
     }
     
     func installAuthorPictureCoordinator( destVC: OLPictureViewController ) {
         
-        if let authorDetail = authorDetail {
-            destVC.queryCoordinator =
-                PictureViewCoordinator(
-                        operationQueue: operationQueue,
-                        coreDataStack: coreDataStack,
-                        localURL: authorDetail.localURL( "L", index: 0 ),
-                        imageID: authorDetail.firstImageID,
-                        pictureType: authorDetail.imageType,
-                        pictureVC: destVC
-                    )
-        }
+        destVC.queryCoordinator =
+            PictureViewCoordinator(
+                    operationQueue: operationQueue,
+                    coreDataStack: coreDataStack,
+                    localURL: authorDetail.localURL( "L", index: 0 ),
+                    imageID: authorDetail.firstImageID,
+                    pictureType: authorDetail.imageType,
+                    pictureVC: destVC
+                )
     }
 }
 

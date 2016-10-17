@@ -50,7 +50,7 @@ class IAEBookItemListGetOperation: GroupOperation {
         let subsetSize = 256
         while index < editionKeys.count {
             
-            let subset = Array( editionKeys[index..<min( editionKeys.count, index + subsetSize )] )
+            let subset = Array( editionKeys[index ..< min( editionKeys.count, index + subsetSize )] )
             
             var olid = ""
             if let editionKey = subset.first {

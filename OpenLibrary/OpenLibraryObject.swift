@@ -265,4 +265,24 @@ class OpenLibraryObject {
         
         return intArray
     }
+    
+    static func OLStringDictionaryArray( match: AnyObject? ) -> [[String: String]] {
+        
+        var stringDictArray = [[String:String]]()
+        if let elements = match as? [AnyObject] {
+            
+            for element in elements {
+                
+                if let element = element as? [String: String] {
+                    
+                    stringDictArray.append( element )
+                }
+                
+            }
+        }
+        
+        return stringDictArray
+    }
+    
+
 }

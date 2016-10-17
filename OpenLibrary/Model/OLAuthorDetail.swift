@@ -208,7 +208,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
             deluxeData.append( [DeluxeData( type: .html, caption: "Biography", value: fancyOutput )] )
         }
         
-        if !self.links.isEmpty {
+        if !self.links.isEmpty || !self.wikipedia.isEmpty {
             
             var newData = [DeluxeData]()
             
@@ -220,24 +220,24 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
                 }
             }
             
+            if !self.wikipedia.isEmpty {
+                
+                newData.append( DeluxeData( type: .link, caption: "Wikipedia", value: wikipedia ) )
+            }
+            
             if 0 < newData.count {
                 
                 deluxeData.append( newData )
             }
         }
 
-        if !self.wikipedia.isEmpty {
-            
-            deluxeData[0].append( DeluxeData( type: .link, caption: "Wikipedia", value: wikipedia ) )
-        }
-        
         if 1 < self.photos.count {
             
             let newData = [DeluxeData]()
             
-            for index in 1..<self.photos.count {
+            for index in 1 ..< self.photos.count {
                 
-                if -1 != photos[index] {
+                if 0 < photos[index] {
 
                     let value = localURL( "M", index: index ).absoluteString
                     let extraValue = localURL( "L", index: index ).absoluteString

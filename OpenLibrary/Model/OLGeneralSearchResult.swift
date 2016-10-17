@@ -56,9 +56,7 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
             newObject.populateObject( parsed )
             
             assert( parsed.author_key.count == parsed.author_name.count )
-            for index in 0..<min( parsed.author_key.count, parsed.author_name.count ) {
-                
-                assert( index < parsed.author_name.count )
+            for index in 0 ..< min( parsed.author_key.count, parsed.author_name.count ) {
                 
                 OLManagedObject.authorCache.setObject(
                         parsed.author_name[index], forKey: parsed.author_key[index]
@@ -355,16 +353,9 @@ extension OLGeneralSearchResult {
             self.work_detail = workDetail
             
             // save provisional authors
-            for authorIndex in 0..<self.author_key.count {
+            for authorIndex in 0 ..< min( self.author_key.count, self.author_name.count ) {
                 
-                if authorIndex >= self.author_name.count {
-                    
-                    break
-                    
-                } else {
-                    
-                    OLAuthorDetail.saveProvisionalAuthor( authorIndex, parsed: self, moc: moc )
-                }
+                OLAuthorDetail.saveProvisionalAuthor( authorIndex, parsed: self, moc: moc )
             }
 
             // do not save provisional editions

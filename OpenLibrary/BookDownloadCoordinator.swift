@@ -185,9 +185,9 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
                     
                         [weak self] in
                         
-                        if let strongSelf = self {
-                            
-                            dispatch_async( dispatch_get_main_queue() ) {
+                        dispatch_async( dispatch_get_main_queue() ) {
+                                
+                            if let strongSelf = self {
                                 
                                 strongSelf.openBook( sourceView, url: localURL, fileFormat: fileFormat )
                             }

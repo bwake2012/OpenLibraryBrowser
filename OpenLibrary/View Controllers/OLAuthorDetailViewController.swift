@@ -14,6 +14,10 @@ import BNRCoreDataStack
 
 class OLAuthorDetailViewController: UIViewController {
 
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var summaryHeight: NSLayoutConstraint!
+    
     @IBOutlet weak var authorName: UILabel!
     @IBOutlet weak var birthDate: UILabel!
     @IBOutlet weak var deathDate: UILabel!
@@ -111,13 +115,19 @@ class OLAuthorDetailViewController: UIViewController {
         self.authorName.text = authorDetail.name
         
         self.birthDate.text =
-            authorDetail.birth_date.isEmpty ? "" : "Born: " + authorDetail.birth_date.stringWithNonBreakingSpaces()
+            authorDetail.birth_date.isEmpty ? nil : "Born: " + authorDetail.birth_date.stringWithNonBreakingSpaces()
         self.deathDate.text =
-            authorDetail.death_date.isEmpty ? "" : "Died: " + authorDetail.death_date.stringWithNonBreakingSpaces()
+            authorDetail.death_date.isEmpty ? nil : "Died: " + authorDetail.death_date.stringWithNonBreakingSpaces()
         
         if !authorDetail.hasImage && !authorDetail.isProvisional {
+            
+            var totalTextHeight = authorName.bounds.height
+            totalTextHeight += nil == birthDate.text ? 0 : birthDate.bounds.height
+            totalTextHeight += nil == deathDate.text ? 0 : deathDate.bounds.height
+            
             self.authorPhoto.image = nil
             coverSummarySpacing.constant = 0
+            summaryHeight.constant = min( 128, totalTextHeight )
         } else {
             self.authorPhoto.image = UIImage( named: "253-person.png" )
         }
@@ -172,6 +182,14 @@ extension OLAuthorDetailViewController: UIScrollViewDelegate {
             
         } else if currentOffset <= -10.0 {
             
+            navigationController?.setNavigationBarHidden( false, animated: true )
+        }
+    }
+
+    func scrollViewWillEndDragging( scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint> ) {
+        
+        // up
+        if velocity.y < -1.5 {
             navigationController?.setNavigationBarHidden( false, animated: true )
         }
     }
