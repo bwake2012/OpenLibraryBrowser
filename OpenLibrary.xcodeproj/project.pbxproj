@@ -154,6 +154,8 @@
 		C4B34D821D400A5600BC85E8 /* OLEBookEditionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B34D811D400A5600BC85E8 /* OLEBookEditionsTableViewController.swift */; };
 		C4B34D841D400ADF00BC85E8 /* EBookEditionsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B34D831D400ADF00BC85E8 /* EBookEditionsCoordinator.swift */; };
 		C4B34D861D4057DD00BC85E8 /* WorkEditionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B34D851D4057DD00BC85E8 /* WorkEditionTableViewCell.swift */; };
+		C4CBCC4D1DB7C81E00BA2F4C /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = C4CBCC4C1DB7C81E00BA2F4C /* countries.json */; };
+		C4CBCC4F1DB7CE4700BA2F4C /* OLCountryLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CBCC4E1DB7CE4700BA2F4C /* OLCountryLookup.swift */; };
 		C4D0A9571CEF4DD20032E429 /* DeluxeDetailImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4D0A9561CEF4DD20032E429 /* DeluxeDetailImageTableViewCell.xib */; };
 		C4D53E281DA2B560009961AC /* SaveObjectsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D53E271DA2B560009961AC /* SaveObjectsOperation.swift */; };
 		C4DA1F7B1C8A329B00DFA4BF /* AuthorWorksGetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DA1F771C8A329B00DFA4BF /* AuthorWorksGetOperation.swift */; };
@@ -364,6 +366,8 @@
 		C4B34D811D400A5600BC85E8 /* OLEBookEditionsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLEBookEditionsTableViewController.swift; path = "View Controllers/OLEBookEditionsTableViewController.swift"; sourceTree = "<group>"; };
 		C4B34D831D400ADF00BC85E8 /* EBookEditionsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EBookEditionsCoordinator.swift; sourceTree = "<group>"; };
 		C4B34D851D4057DD00BC85E8 /* WorkEditionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkEditionTableViewCell.swift; path = Views/WorkEditionTableViewCell.swift; sourceTree = "<group>"; };
+		C4CBCC4C1DB7C81E00BA2F4C /* countries.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = countries.json; path = Model/countries.json; sourceTree = "<group>"; };
+		C4CBCC4E1DB7CE4700BA2F4C /* OLCountryLookup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLCountryLookup.swift; path = Model/OLCountryLookup.swift; sourceTree = "<group>"; };
 		C4D0A9561CEF4DD20032E429 /* DeluxeDetailImageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeluxeDetailImageTableViewCell.xib; path = Views/DeluxeDetailImageTableViewCell.xib; sourceTree = "<group>"; };
 		C4D53E271DA2B560009961AC /* SaveObjectsOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SaveObjectsOperation.swift; path = "App Operations/SaveObjectsOperation.swift"; sourceTree = "<group>"; };
 		C4DA1F771C8A329B00DFA4BF /* AuthorWorksGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorWorksGetOperation.swift; path = "App Operations/AuthorWorksGetOperation.swift"; sourceTree = "<group>"; };
@@ -580,6 +584,8 @@
 			isa = PBXGroup;
 			children = (
 				C402AA5E1D9194D30030E35F /* OpenLibraryBrowser.xcdatamodeld */,
+				C4CBCC4C1DB7C81E00BA2F4C /* countries.json */,
+				C4CBCC4E1DB7CE4700BA2F4C /* OLCountryLookup.swift */,
 				C46E7E561C861E8500D2ED51 /* OLAuthorDetail.swift */,
 				C412FE581CC3D45A00EDB935 /* OLAuthorDetail+CoreDataProperties.swift */,
 				C46E7E5A1C861EF500D2ED51 /* OLAuthorSearchResult.swift */,
@@ -874,6 +880,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4CBCC4D1DB7C81E00BA2F4C /* countries.json in Resources */,
 				C4A4F96F1D1D6CF200B7C9FD /* Graphics.xcassets in Resources */,
 				C488D6201D09ED130025B61D /* DeluxeDetailHTMLTableViewCell.xib in Resources */,
 				C48F06721DAF0E4F000563D5 /* LaunchIcon.png in Resources */,
@@ -1005,6 +1012,7 @@
 				C4A0F0931D15FF3A00D0F604 /* BookDownloadCoordinator.swift in Sources */,
 				C4E863901C99D9F0002C0E6B /* OLEditionDetail.swift in Sources */,
 				C437DEA41CECF8D9005CED1A /* GeneralSearchResultTableViewCell.swift in Sources */,
+				C4CBCC4F1DB7CE4700BA2F4C /* OLCountryLookup.swift in Sources */,
 				C468B9471CBD3E2800F3EAC3 /* AspectRatioImageView.swift in Sources */,
 				C48B8A3F1D47E22C00C29D00 /* OLBookSortViewController.swift in Sources */,
 				C46E7E511C861A7000D2ED51 /* AuthorNameSearchOperation.swift in Sources */,

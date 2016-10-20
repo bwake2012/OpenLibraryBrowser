@@ -33,17 +33,12 @@ class OLEBookEditionsTableViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         
+        navigationController?.setNavigationBarHidden( false, animated: animated )
+        
         super.viewWillAppear( animated )
         
         queryCoordinator?.updateUI()
     }
-    
-    override func viewDidAppear(animated: Bool) {
-    
-        super.viewDidAppear( animated )
-  
-        navigationController?.setNavigationBarHidden( false, animated: true )
-   }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

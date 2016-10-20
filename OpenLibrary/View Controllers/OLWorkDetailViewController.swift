@@ -63,12 +63,17 @@ class OLWorkDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(animated: Bool) {
+        
+        navigationController?.setNavigationBarHidden( false, animated: animated )
+        
+        super.viewWillAppear( animated )
+    }
+    
     override func viewDidAppear(animated: Bool) {
         
         super.viewDidAppear( animated )
         
-        navigationController?.setNavigationBarHidden( false, animated: true )
-
         queryCoordinator?.updateUI()
     }
     

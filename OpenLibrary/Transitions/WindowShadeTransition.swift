@@ -124,12 +124,12 @@ class WindowShadeTransition: ZoomTransition {
         let detailVC = self.operation == .Push ? toVC   : fromVC
         let masterView = masterVC.view
         let detailView = detailVC.view
-        
-        var finalFrame = CGRectZero
+                
+        let finalFrame = transitionContext.finalFrameForViewController( toVC )
         if self.operation == .Push {
-            finalFrame = transitionContext.finalFrameForViewController( toVC )
+            detailView!.frame = finalFrame
         } else {
-            finalFrame = transitionContext.finalFrameForViewController( toVC )
+            masterView.frame = finalFrame
         }
         
         let initialAlpha = CGFloat( self.operation == .Push ? 0.0 : 1.0 )

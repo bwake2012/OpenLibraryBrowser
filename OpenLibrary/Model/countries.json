@@ -1,0 +1,7287 @@
+{
+  "countries": {
+    "country": [
+      {
+        "uri": "info:lc/vocabulary/countries/af",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Afghanistan"
+        },
+        "code": "af",
+        "region": "Asia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/alu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Alabama"
+        },
+        "code": "alu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/aku",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Alaska"
+        },
+        "code": "aku",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/aa",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Albania"
+        },
+        "code": "aa",
+        "region": "Europe"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/abc",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Alberta"
+        },
+        "code": "abc",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ae",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Algeria"
+        },
+        "code": "ae",
+        "region": "Africa"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/as",
+        "name": {
+          "_authorized": "yes",
+          "__text": "American Samoa"
+        },
+        "code": "as",
+        "region": "Pacific Ocean",
+        "uf": [
+          {
+            "name": "Eastern Samoa"
+          },
+          {
+            "name": "Samoa, American"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/an",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Andorra"
+        },
+        "code": "an",
+        "region": "Europe"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ao",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Angola"
+        },
+        "code": "ao",
+        "region": "Africa",
+        "uf": {
+          "name": "Cabinda"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/am",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Anguilla"
+        },
+        "code": [
+          "am",
+          {
+            "_status": "obsolete",
+            "_date": "198803",
+            "__text": "ai"
+          }
+        ],
+        "region": "West Indies",
+        "note": {
+          "name": "Saint Kitts-Nevis-Anguilla",
+          "code": {
+            "_status": "obsolete",
+            "__text": "xi"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "19850101"
+          }
+        },
+        "uf": [
+          {
+            "name": "Saint Kitts-Nevis-Anguilla",
+            "note": {
+              "name": "Saint Kitts-Nevis-Anguilla",
+              "code": {
+                "_status": "obsolete",
+                "__text": "xi"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "198501"
+              }
+            }
+          },
+          {
+            "name": "Sombrero Island"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ay",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Antarctica"
+        },
+        "code": "ay",
+        "region": "Other"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/aq",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Antigua and Barbuda"
+        },
+        "code": "aq",
+        "region": "West Indies",
+        "uf": [
+          {
+            "name": "Antigua"
+          },
+          {
+            "name": "Barbuda"
+          },
+          {
+            "name": "Redonda"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ag",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Argentina"
+        },
+        "code": "ag",
+        "region": "South America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/azu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Arizona"
+        },
+        "code": "azu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/aru",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Arkansas"
+        },
+        "code": "aru",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ai",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Armenia (Republic)"
+        },
+        "code": "ai",
+        "region": "Asia",
+        "note": {
+          "name": "Armenian S.S.R.",
+          "code": {
+            "_status": "obsolete",
+            "__text": "air"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "199206"
+          }
+        },
+        "uf": [
+          {
+            "name": "Armenian S.S.R.",
+            "note": {
+              "name": "Armenian S.S.R.",
+              "code": {
+                "_status": "obsolete",
+                "__text": "air"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199206"
+              }
+            }
+          },
+          {
+            "name": "Soviet Union",
+            "note": [
+              {
+                "name": "Soviet Union",
+                "code": {
+                  "_status": "obsolete",
+                  "__text": "xxr"
+                },
+                "date": {
+                  "_type": "before",
+                  "__text": "199206"
+                }
+              },
+              {
+                "name": "Soviet Union",
+                "code": {
+                  "_status": "obsolete",
+                  "__text": "ur"
+                },
+                "date": {
+                  "_type": "before",
+                  "__text": "198803"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/aw",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Aruba"
+        },
+        "code": "aw",
+        "region": "West Indies",
+        "note": {
+          "name": "Netherlands Antilles",
+          "code": {
+            "_status": "obsolete",
+            "__text": "na"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "198803"
+          }
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/at",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Australia"
+        },
+        "code": "at",
+        "region": "Australasia",
+        "uf": [
+          {
+            "name": "Ashmore and Cartier Islands",
+            "note": {
+              "name": "Ashmore and Cartier Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ac"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          },
+          {
+            "name": "Macquarie Island"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/aca",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Australian Capital Territory"
+        },
+        "code": "aca",
+        "note": {
+          "text": "Coded [at] (Australia) before Sept. 2005"
+        },
+        "region": "Australasia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/au",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Austria"
+        },
+        "code": "au",
+        "region": "Europe"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/aj",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Azerbaijan"
+        },
+        "code": "aj",
+        "region": "Asia",
+        "note": {
+          "name": "Azerbaijan S.S.R.",
+          "code": {
+            "_status": "obsolete",
+            "__text": "ajr"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "199206"
+          }
+        },
+        "uf": [
+          {
+            "name": "Azerbaijan S.S.R.",
+            "note": {
+              "name": "Azerbaijan S.S.R.",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ajr"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199206"
+              }
+            }
+          },
+          {
+            "name": "Soviet Union",
+            "note": [
+              {
+                "name": "Soviet Union",
+                "code": {
+                  "_status": "obsolete",
+                  "__text": "xxr"
+                },
+                "date": {
+                  "_type": "before",
+                  "__text": "199206"
+                }
+              },
+              {
+                "name": "Soviet Union",
+                "code": {
+                  "_status": "obsolete",
+                  "__text": "ur"
+                },
+                "date": {
+                  "_type": "before",
+                  "__text": "198803"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/bf",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Bahamas"
+        },
+        "code": "bf",
+        "region": "West Indies"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ba",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Bahrain"
+        },
+        "code": "ba",
+        "region": "Asia",
+        "uf": {
+          "name": "Bahrein"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/bg",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Bangladesh"
+        },
+        "code": "bg",
+        "region": "Asia",
+        "uf": {
+          "name": "East Pakistan"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/bb",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Barbados"
+        },
+        "code": "bb",
+        "region": "West Indies"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/bw",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Belarus"
+        },
+        "code": "bw",
+        "region": "Europe",
+        "note": {
+          "name": "Byelorussian S.S.R",
+          "code": {
+            "_status": "obsolete",
+            "__text": "bwr"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "199206"
+          }
+        },
+        "uf": [
+          {
+            "name": "Byelarus"
+          },
+          {
+            "name": "Belorussian S.S.R."
+          },
+          {
+            "name": "Byeolorussian S.S.R.",
+            "note": {
+              "name": "Byelorussian S.S.R.",
+              "code": {
+                "_status": "obsolete",
+                "__text": "bwr"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199206"
+              }
+            }
+          },
+          {
+            "name": "Soviet Union",
+            "note": [
+              {
+                "name": "Soviet Union",
+                "code": {
+                  "_status": "obsolete",
+                  "__text": "xxr"
+                },
+                "date": {
+                  "_type": "before",
+                  "__text": "199206"
+                }
+              },
+              {
+                "name": "Soviet Union",
+                "code": {
+                  "_status": "obsolete",
+                  "__text": "ur"
+                },
+                "date": {
+                  "_type": "before",
+                  "__text": "198803"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/be",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Belgium"
+        },
+        "code": "be",
+        "region": "Europe"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/bh",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Belize"
+        },
+        "code": "bh",
+        "region": "Central America",
+        "uf": {
+          "name": "British Honduras"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/dm",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Benin"
+        },
+        "code": "dm",
+        "region": "Africa",
+        "uf": {
+          "name": "Dahomey"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/bm",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Bermuda Islands"
+        },
+        "code": "bm",
+        "region": "Atlantic Ocean"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/bt",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Bhutan"
+        },
+        "code": "bt",
+        "region": "Asia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/bo",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Bolivia"
+        },
+        "code": "bo",
+        "region": "South America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/bn",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Bosnia and Herzegovina"
+        },
+        "code": "bn",
+        "region": "Europe",
+        "note": {
+          "name": "Yugoslavia",
+          "code": {
+            "_status": "obsolete",
+            "__text": "yu"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "199210"
+          }
+        },
+        "uf": [
+          {
+            "name": "Bosnia and Hercegovina"
+          },
+          {
+            "name": "Hercegovina"
+          },
+          {
+            "name": "Herzegovina"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/bs",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Botswana"
+        },
+        "code": "bs",
+        "region": "Africa",
+        "uf": {
+          "name": "Bechuanaland"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/bv",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Bouvet Island"
+        },
+        "code": "bv",
+        "region": "Atlantic Ocean"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/bl",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Brazil"
+        },
+        "code": "bl",
+        "region": "South America",
+        "uf": [
+          {
+            "name": "Fernando de Noronha"
+          },
+          {
+            "name": "Ilha da Trindade"
+          },
+          {
+            "name": "Ilhas Martim Vaz"
+          },
+          {
+            "name": "Martim Vaz, Ilhas"
+          },
+          {
+            "name": "Penedos de São Pedro e São Paulo"
+          },
+          {
+            "name": "Rocas"
+          },
+          {
+            "name": "Trindade, Ilha da"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/bcc",
+        "name": {
+          "_authorized": "yes",
+          "__text": "British Columbia"
+        },
+        "code": "bcc",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/bi",
+        "name": {
+          "_authorized": "yes",
+          "__text": "British Indian Ocean Territory"
+        },
+        "code": "bi",
+        "region": "Indian Ocean",
+        "uf": [
+          {
+            "name": "Chagos Archipelago"
+          },
+          {
+            "name": "Diego Garcia Island"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/vb",
+        "name": {
+          "_authorized": "yes",
+          "__text": "British Virgin Islands"
+        },
+        "code": "vb",
+        "region": "West Indies",
+        "uf": [
+          {
+            "name": "Anegada"
+          },
+          {
+            "name": "Colony of the Virgin Islands"
+          },
+          {
+            "name": "Jost Van Dyke"
+          },
+          {
+            "name": "Tortola"
+          },
+          {
+            "name": "Virgin Gorda"
+          },
+          {
+            "name": "Virgin Islands (British)"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/bx",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Brunei"
+        },
+        "code": "bx",
+        "region": "Asia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/bu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Bulgaria"
+        },
+        "code": "bu",
+        "region": "Europe"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/uv",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Burkina Faso"
+        },
+        "code": "uv",
+        "region": "Africa",
+        "uf": {
+          "name": "Upper Volta"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/br",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Burma"
+        },
+        "code": "br",
+        "region": "Asia",
+        "uf": {
+          "name": "Myanmar"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/bd",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Burundi"
+        },
+        "code": "bd",
+        "region": "Africa"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/cau",
+        "name": {
+          "_authorized": "yes",
+          "__text": "California"
+        },
+        "code": "cau",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/cb",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Cambodia"
+        },
+        "code": "cb",
+        "region": "Asia",
+        "uf": [
+          {
+            "name": "Democratic Kampuchea"
+          },
+          {
+            "name": "Kampuchea"
+          },
+          {
+            "name": "Khmer Republic"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/cm",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Cameroon"
+        },
+        "code": "cm",
+        "region": "Africa",
+        "uf": [
+          {
+            "name": "British Cameroons"
+          },
+          {
+            "name": "East Cameroon"
+          },
+          {
+            "name": "French Cameroons"
+          },
+          {
+            "name": "German Cameroons"
+          },
+          {
+            "name": "Southern Cameroons"
+          },
+          {
+            "name": "West Cameroon"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xxc",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Canada"
+        },
+        "code": "xxc",
+        "region": "North America",
+        "note": {
+          "name": "Canada",
+          "code": {
+            "_status": "obsolete",
+            "__text": "cn"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "198803"
+          }
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/cv",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Cabo Verde"
+        },
+        "code": "cv",
+        "region": "Atlantic Ocean",
+        "uf": [
+          {
+            "name": "Boa Vista"
+          },
+          {
+            "name": "Brava"
+          },
+          {
+            "name": "Cape Verde"
+          },
+          {
+            "name": "Fogo"
+          },
+          {
+            "name": "Maio"
+          },
+          {
+            "name": "Sal"
+          },
+          {
+            "name": "Santo Antao"
+          },
+          {
+            "name": "São Nicolau"
+          },
+          {
+            "name": "São Tiago"
+          },
+          {
+            "name": "São Vicente"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ca",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Caribbean Netherlands"
+        },
+        "code": "ca",
+        "region": "West Indies",
+        "note": {
+          "name": "Netherlands Antilles",
+          "code": {
+            "_status": "obsolete",
+            "__text": "na"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "201112"
+          }
+        },
+        "uf": [
+          {
+            "name": "BES Islands"
+          },
+          {
+            "name": "Bonaire",
+            "note": {
+              "name": "Netherlands Antilles",
+              "code": {
+                "_status": "obsolete",
+                "__text": "na"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "201112"
+              }
+            }
+          },
+          {
+            "name": "Bonaire (Netherlands Antilles)"
+          },
+          {
+            "name": "Bonaire, Saint Eustatius, and Saba"
+          },
+          {
+            "name": "Dutch Caribbean"
+          },
+          {
+            "name": "Netherlands Antilles",
+            "note": {
+              "name": "Netherlands Antilles",
+              "code": {
+                "_status": "obsolete",
+                "__text": "na"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "201112"
+              }
+            }
+          },
+          {
+            "name": "Saba",
+            "note": {
+              "name": "Netherlands Antilles",
+              "code": {
+                "_status": "obsolete",
+                "__text": "na"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "201112"
+              }
+            }
+          },
+          {
+            "name": "Saba (Netherlands Antilles)"
+          },
+          {
+            "name": "Saint Eustatius"
+          },
+          {
+            "name": "Sint Eustatius",
+            "note": {
+              "name": "Netherlands Antilles",
+              "code": {
+                "_status": "obsolete",
+                "__text": "na"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "201112"
+              }
+            }
+          },
+          {
+            "name": "Sint Eustatius (Netherlands Antilles)"
+          },
+          {
+            "name": "Statia (Netherlands Antilles)"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/cj",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Cayman Islands"
+        },
+        "code": "cj",
+        "region": "West Indies",
+        "uf": [
+          {
+            "name": "Cayman Brac Island"
+          },
+          {
+            "name": "Grand Cayman Island"
+          },
+          {
+            "name": "Little Cayman Island"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/cx",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Central African Republic"
+        },
+        "code": "cx",
+        "region": "Africa",
+        "uf": [
+          {
+            "name": "Central African Empire"
+          },
+          {
+            "name": "Ubangi-Shari"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/cd",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Chad"
+        },
+        "code": "cd",
+        "region": "Africa"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/cl",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Chile"
+        },
+        "code": "cl",
+        "region": "South America",
+        "uf": [
+          {
+            "name": "Easter Island"
+          },
+          {
+            "name": "Isla de Pasqua"
+          },
+          {
+            "name": "Isla Sala y Gómez"
+          },
+          {
+            "name": "Islas Juan Fernández"
+          },
+          {
+            "name": "Juan Fernández, Islas"
+          },
+          {
+            "name": "Pasqua, Isla de"
+          },
+          {
+            "name": "Sala y Gómez, Isla"
+          },
+          {
+            "name": "San Félix"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/cc",
+        "name": {
+          "_authorized": "yes",
+          "__text": "China"
+        },
+        "code": "cc",
+        "region": "Asia",
+        "uf": [
+          {
+            "name": "Hainan Island"
+          },
+          {
+            "name": "Hong Kong",
+            "note": {
+              "name": "Hong Kong",
+              "code": {
+                "_status": "obsolete",
+                "__text": "hk"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199710"
+              }
+            }
+          },
+          {
+            "name": "Inner Mongolia"
+          },
+          {
+            "name": "Kowloon"
+          },
+          {
+            "name": "Macao"
+          },
+          {
+            "name": "Macau",
+            "note": {
+              "name": "Macao",
+              "code": {
+                "_status": "obsolete",
+                "__text": "mh"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "200005"
+              }
+            }
+          },
+          {
+            "name": "Manchuria"
+          },
+          {
+            "name": "Sinkiang"
+          },
+          {
+            "name": "New Territories"
+          },
+          {
+            "name": "Taipa",
+            "note": {
+              "name": "Macao",
+              "code": {
+                "_status": "obsolete",
+                "__text": "mh"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "200005"
+              }
+            }
+          },
+          {
+            "name": "Tibet"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ch",
+        "name": {
+          "_authorized": "yes",
+          "__text": "China (Republic : 1949- )"
+        },
+        "code": "ch",
+        "region": "Asia",
+        "uf": [
+          {
+            "name": "Formosa Island"
+          },
+          {
+            "name": "Nationalist China"
+          },
+          {
+            "name": "P'eng-hu Island"
+          },
+          {
+            "name": "Pescadores Islands"
+          },
+          {
+            "name": "Taiwan Island"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xa",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Christmas Island (Indian Ocean)"
+        },
+        "code": "xa",
+        "region": "Indian Ocean"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xb",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Cocos (Keeling) Islands"
+        },
+        "code": "xb",
+        "region": "Indian Ocean",
+        "uf": {
+          "name": "Keeling Islands"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ck",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Colombia"
+        },
+        "code": "ck",
+        "region": "South America",
+        "uf": [
+          {
+            "name": "Isla de Malpelo"
+          },
+          {
+            "name": "Malpelo, Isla de"
+          },
+          {
+            "name": "San Andrés y Providencia"
+          },
+          {
+            "name": "Serrana Bank",
+            "note": {
+              "name": "United States Misc. Caribbean Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "uc"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          },
+          {
+            "name": "Serranilla Bank",
+            "note": {
+              "name": "United States Misc. Caribbean Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "uc"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/cou",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Colorado"
+        },
+        "code": "cou",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/cq",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Comoros"
+        },
+        "code": "cq",
+        "region": "Indian Ocean",
+        "uf": [
+          {
+            "name": "Anjouan Island"
+          },
+          {
+            "name": "Comores"
+          },
+          {
+            "name": "Grande Comore Island"
+          },
+          {
+            "name": "Moheli Island"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/cf",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Congo (Brazzaville)"
+        },
+        "code": "cf",
+        "region": "Africa",
+        "uf": {
+          "name": "Middle Congo"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/cg",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Congo (Democratic Republic)"
+        },
+        "code": "cg",
+        "region": "Africa",
+        "uf": [
+          {
+            "name": "Belgian Congo"
+          },
+          {
+            "name": "Congo (Kinshasa)"
+          },
+          {
+            "name": "Democratic Republic of the Congo"
+          },
+          {
+            "name": "Zaire"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ctu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Connecticut"
+        },
+        "code": "ctu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/cw",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Cook Islands"
+        },
+        "code": "cw",
+        "region": "Pacific Ocean",
+        "uf": [
+          {
+            "name": "Danger Atoll"
+          },
+          {
+            "name": "Manihiki Atoll"
+          },
+          {
+            "name": "Penrhyn Atoll"
+          },
+          {
+            "name": "Rakahanga Atoll"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xga",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Coral Sea Islands Territory"
+        },
+        "code": "xga",
+        "note": {
+          "text": "Coded [at] (Australia) before Sept. 2005"
+        },
+        "region": "Australasia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/cr",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Costa Rica"
+        },
+        "code": "cr",
+        "region": "Central America",
+        "uf": {
+          "name": "Cocos Island"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/iv",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Côte d'Ivoire"
+        },
+        "code": "iv",
+        "region": "Africa",
+        "uf": {
+          "name": "Ivory Coast"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ci",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Croatia"
+        },
+        "code": "ci",
+        "region": "Europe",
+        "note": {
+          "name": "Yugoslavia",
+          "code": {
+            "_status": "obsolete",
+            "__text": "yu"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "199210"
+          }
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/cu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Cuba"
+        },
+        "code": "cu",
+        "region": "West Indies",
+        "uf": [
+          {
+            "name": "Isle of Pines (Caribbean)"
+          },
+          {
+            "name": "Pines, Isle of (Caribbean)"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/co",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Curaçao"
+        },
+        "code": "co",
+        "region": "West Indies",
+        "note": {
+          "name": "Netherlands Antilles",
+          "code": {
+            "_status": "obsolete",
+            "__text": "na"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "201112"
+          }
+        },
+        "uf": [
+          {
+            "name": "Curaçao (Netherlands Antilles)"
+          },
+          {
+            "name": "Netherlands Antilles",
+            "note": {
+              "name": "Netherlands Antilles",
+              "code": {
+                "_status": "obsolete",
+                "__text": "na"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "201112"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/cy",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Cyprus"
+        },
+        "code": "cy",
+        "region": "Asia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xr",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Czech Republic"
+        },
+        "code": "xr",
+        "region": "Europe",
+        "note": {
+          "name": "Czechoslovakia",
+          "code": {
+            "_status": "obsolete",
+            "__text": "cs"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "199305"
+          }
+        },
+        "uf": {
+          "name": "Czechoslovakia",
+          "note": {
+            "name": "Czechoslovakia",
+            "code": {
+              "_status": "obsolete",
+              "__text": "cs"
+            },
+            "date": {
+              "_type": "before",
+              "__text": "199305"
+            }
+          }
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/deu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Delaware"
+        },
+        "code": "deu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/dk",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Denmark"
+        },
+        "code": "dk",
+        "region": "Europe",
+        "uf": {
+          "name": "Bornholm Island"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/dcu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "District of Columbia"
+        },
+        "code": "dcu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ft",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Djibouti"
+        },
+        "code": "ft",
+        "region": "Africa",
+        "uf": [
+          {
+            "name": "Afars"
+          },
+          {
+            "name": "French Somaliland"
+          },
+          {
+            "name": "French Territory of the Afars and Issas"
+          },
+          {
+            "name": "Issas"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/dq",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Dominica"
+        },
+        "code": "dq",
+        "region": "West Indies"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/dr",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Dominican Republic"
+        },
+        "code": "dr",
+        "region": "West Indies"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ec",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Ecuador"
+        },
+        "code": "ec",
+        "region": "South America",
+        "uf": [
+          {
+            "name": "Archipiélago de Colón"
+          },
+          {
+            "name": "Colón, Archipiélago de"
+          },
+          {
+            "name": "Galapagos Islands"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ua",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Egypt"
+        },
+        "code": "ua",
+        "region": "Africa",
+        "uf": [
+          {
+            "name": "Arab Republic of Egypt"
+          },
+          {
+            "name": "United Arab Republic"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/es",
+        "name": {
+          "_authorized": "yes",
+          "__text": "El Salvador"
+        },
+        "code": "es",
+        "region": "Central America",
+        "uf": {
+          "name": "Salvador"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/enk",
+        "name": {
+          "_authorized": "yes",
+          "__text": "England"
+        },
+        "code": "enk",
+        "region": "Europe"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/eg",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Equatorial Guinea"
+        },
+        "code": "eg",
+        "region": "Africa",
+        "uf": [
+          {
+            "name": "Annobón"
+          },
+          {
+            "name": "Bioko"
+          },
+          {
+            "name": "Corisco Island"
+          },
+          {
+            "name": "Elobey, Great"
+          },
+          {
+            "name": "Elobey, Small"
+          },
+          {
+            "name": "Fernando Po Island"
+          },
+          {
+            "name": "Macias Nguema Biyogo"
+          },
+          {
+            "name": "Pagalu"
+          },
+          {
+            "name": "Rio Muni"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ea",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Eritrea"
+        },
+        "code": "ea",
+        "region": "Africa",
+        "note": {
+          "name": "Ethiopia",
+          "code": {
+            "_status": "obsolete",
+            "__text": "et"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "199311"
+          }
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/er",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Estonia"
+        },
+        "code": "er",
+        "region": "Europe",
+        "note": {
+          "name": "Estonia",
+          "code": {
+            "_status": "obsolete",
+            "__text": "err"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "199210"
+          }
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/et",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Ethiopia"
+        },
+        "code": "et",
+        "region": "Africa"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/fk",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Falkland Islands"
+        },
+        "code": "fk",
+        "region": "Atlantic Ocean",
+        "uf": [
+          {
+            "name": "East Falkland Island"
+          },
+          {
+            "name": "Islas Malvinas"
+          },
+          {
+            "name": "Malvinas, Islas"
+          },
+          {
+            "name": "West Falkland Island"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/fa",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Faroe Islands"
+        },
+        "code": "fa",
+        "region": "Atlantic Ocean",
+        "uf": {
+          "name": "Færoe Islands"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/fj",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Fiji"
+        },
+        "code": "fj",
+        "region": "Pacific Ocean",
+        "uf": [
+          {
+            "name": "Rotuma Island"
+          },
+          {
+            "name": "Vanua Levu Island"
+          },
+          {
+            "name": "Viti Levu Island"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/fi",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Finland"
+        },
+        "code": "fi",
+        "region": "Europe",
+        "uf": [
+          {
+            "name": "Ahvenanmaa"
+          },
+          {
+            "name": "Åland Islands"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/flu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Florida"
+        },
+        "code": "flu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/fr",
+        "name": {
+          "_authorized": "yes",
+          "__text": "France"
+        },
+        "code": "fr",
+        "region": "Europe",
+        "uf": {
+          "name": "Corsica"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/fg",
+        "name": {
+          "_authorized": "yes",
+          "__text": "French Guiana"
+        },
+        "code": "fg",
+        "region": "South America",
+        "uf": {
+          "name": "Guiana, French"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/fp",
+        "name": {
+          "_authorized": "yes",
+          "__text": "French Polynesia"
+        },
+        "code": "fp",
+        "region": "Pacific Ocean",
+        "uf": [
+          {
+            "name": "Austral Islands"
+          },
+          {
+            "name": "Clipperton Island"
+          },
+          {
+            "name": "Gambier Islands"
+          },
+          {
+            "name": "Iles Australes"
+          },
+          {
+            "name": "Iles du Vent"
+          },
+          {
+            "name": "Iles Sous le Vent"
+          },
+          {
+            "name": "Marquesas Islands"
+          },
+          {
+            "name": "Polynesia, French"
+          },
+          {
+            "name": "Society Islands"
+          },
+          {
+            "name": "Sous le Vent, Iles"
+          },
+          {
+            "name": "Tahiti"
+          },
+          {
+            "name": "Tuamotu Archipelago"
+          },
+          {
+            "name": "Vent, Iles du"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/go",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Gabon"
+        },
+        "code": "go",
+        "region": "Africa"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/gm",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Gambia"
+        },
+        "code": "gm",
+        "region": "Africa"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/gz",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Gaza Strip"
+        },
+        "code": "gz",
+        "region": "Asia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/gau",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Georgia"
+        },
+        "code": "gau",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/gs",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Georgia (Republic)"
+        },
+        "code": "gs",
+        "region": "Asia",
+        "note": {
+          "name": "Georgian S.S.R.",
+          "code": {
+            "_status": "obsolete",
+            "__text": "gsr"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "199206"
+          }
+        },
+        "uf": [
+          {
+            "name": "Georgian S.S.R.",
+            "note": {
+              "name": "Georgian S.S.R.",
+              "code": {
+                "_status": "obsolete",
+                "__text": "gsr"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199206"
+              }
+            }
+          },
+          {
+            "name": "Soviet Union",
+            "note": [
+              {
+                "name": "Soviet Union",
+                "code": {
+                  "_status": "obsolete",
+                  "__text": "xxr"
+                },
+                "date": {
+                  "_type": "before",
+                  "__text": "199206"
+                }
+              },
+              {
+                "name": "Soviet Union",
+                "code": {
+                  "_status": "obsolete",
+                  "__text": "ur"
+                },
+                "date": {
+                  "_type": "before",
+                  "__text": "198803"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/gw",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Germany"
+        },
+        "code": "gw",
+        "region": "Europe",
+        "uf": [
+          {
+            "name": "Berlin, East",
+            "note": {
+              "name": "Germany (East)",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ge"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199101"
+              }
+            }
+          },
+          {
+            "name": "Berlin, West",
+            "note": {
+              "name": "West Berlin",
+              "code": {
+                "_status": "obsolete",
+                "__text": "wb"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199001"
+              }
+            }
+          },
+          {
+            "name": "East Berlin",
+            "note": {
+              "name": "Germany (East)",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ge"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199101"
+              }
+            }
+          },
+          {
+            "name": "Germany (East)",
+            "note": {
+              "name": "Germany (East)",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ge"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199101"
+              }
+            }
+          },
+          {
+            "name": "Germany (West)"
+          },
+          {
+            "name": "Germany, Democratic Republic of",
+            "note": {
+              "name": "Germany (East)",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ge"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199101"
+              }
+            }
+          },
+          {
+            "name": "Germany, Federal Republic of"
+          },
+          {
+            "name": "West Berlin",
+            "note": {
+              "name": "West Berlin",
+              "code": {
+                "_status": "obsolete",
+                "__text": "wb"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199001"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/gh",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Ghana"
+        },
+        "code": "gh",
+        "region": "Africa",
+        "uf": [
+          {
+            "name": "Ashanti"
+          },
+          {
+            "name": "Gold Coast"
+          },
+          {
+            "name": "Northern Territories"
+          },
+          {
+            "name": "Togoland"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/gi",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Gibraltar"
+        },
+        "code": "gi",
+        "region": "Europe"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/gr",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Greece"
+        },
+        "code": "gr",
+        "region": "Europe",
+        "uf": [
+          {
+            "name": "Aegean Islands"
+          },
+          {
+            "name": "Crete"
+          },
+          {
+            "name": "Dodecanese"
+          },
+          {
+            "name": "Ionian Islands"
+          },
+          {
+            "name": "Mount Athos"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/gl",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Greenland"
+        },
+        "code": "gl",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/gd",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Grenada"
+        },
+        "code": "gd",
+        "region": "West Indies",
+        "uf": {
+          "name": "Grenadine Islands, Southern"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/gp",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Guadeloupe"
+        },
+        "code": "gp",
+        "region": "West Indies",
+        "uf": [
+          {
+            "name": "Basse-Terre"
+          },
+          {
+            "name": "Grande-Terre"
+          },
+          {
+            "name": "Iles de la Petite Terre"
+          },
+          {
+            "name": "Iles des Saintes"
+          },
+          {
+            "name": "La Désirade"
+          },
+          {
+            "name": "Marie-Galante"
+          },
+          {
+            "name": "Petite Terre, Iles de"
+          },
+          {
+            "name": "Saintes, Iles des"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/gu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Guam"
+        },
+        "code": "gu",
+        "region": "Pacific Ocean"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/gt",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Guatemala"
+        },
+        "code": "gt",
+        "region": "Central America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/gv",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Guinea"
+        },
+        "code": "gv",
+        "region": "Africa",
+        "uf": {
+          "name": "French Guinea"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/pg",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Guinea-Bissau"
+        },
+        "code": "pg",
+        "region": "Africa",
+        "uf": [
+          {
+            "name": "Arquipélago dos Bijagós"
+          },
+          {
+            "name": "Bijagós, Arquipélago dos"
+          },
+          {
+            "name": "Bissagos Islands"
+          },
+          {
+            "name": "Guinea, Portuguese"
+          },
+          {
+            "name": "Portuguese Guinea"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/gy",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Guyana"
+        },
+        "code": "gy",
+        "region": "South America",
+        "uf": [
+          {
+            "name": "British Guiana"
+          },
+          {
+            "name": "Guiana, British"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ht",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Haiti"
+        },
+        "code": "ht",
+        "region": "West Indies"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/hiu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Hawaii"
+        },
+        "code": "hiu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/hm",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Heard and McDonald Islands"
+        },
+        "code": "hm",
+        "region": "Indian Ocean"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ho",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Honduras"
+        },
+        "code": "ho",
+        "region": "Central America",
+        "uf": {
+          "name": "Swan Islands",
+          "note": {
+            "name": "Swan Islands",
+            "code": {
+              "_status": "obsolete",
+              "__text": "sv"
+            },
+            "date": {
+              "_type": "before",
+              "__text": "197801"
+            }
+          }
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/hu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Hungary"
+        },
+        "code": "hu",
+        "region": "Europe"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ic",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Iceland"
+        },
+        "code": "ic",
+        "region": "Europe"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/idu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Idaho"
+        },
+        "code": "idu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ilu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Illinois"
+        },
+        "code": "ilu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ii",
+        "name": {
+          "_authorized": "yes",
+          "__text": "India"
+        },
+        "code": "ii",
+        "region": "Asia",
+        "uf": [
+          {
+            "name": "Amindivi Islands"
+          },
+          {
+            "name": "Andaman Islands"
+          },
+          {
+            "name": "Daman"
+          },
+          {
+            "name": "Diu"
+          },
+          {
+            "name": "Goa"
+          },
+          {
+            "name": "Laccadive Island"
+          },
+          {
+            "name": "Minicoy Island"
+          },
+          {
+            "name": "Nicobar Islands"
+          },
+          {
+            "name": "Sikkim",
+            "note": {
+              "name": "Sikkim",
+              "code": {
+                "_status": "obsolete",
+                "__text": "sk"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/inu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Indiana"
+        },
+        "code": "inu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/io",
+        "name": [
+          {
+            "_authorized": "yes",
+            "__text": "Indonesia"
+          },
+          "Indonesia"
+        ],
+        "code": "io",
+        "region": "Asia",
+        "uf": [
+          {
+            "name": "Irian Barat"
+          },
+          {
+            "name": "Netherlands New Guinea"
+          },
+          {
+            "name": "West New Guinea"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/iau",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Iowa"
+        },
+        "code": "iau",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ir",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Iran"
+        },
+        "code": "ir",
+        "region": "Asia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/iq",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Iraq"
+        },
+        "code": "iq",
+        "region": "Asia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/iy",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Iraq-Saudi Arabia Neutral Zone"
+        },
+        "code": "iy",
+        "region": "Asia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ie",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Ireland"
+        },
+        "code": "ie",
+        "region": "Europe",
+        "uf": {
+          "name": "Eire"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/is",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Israel"
+        },
+        "code": "is",
+        "region": "Asia",
+        "uf": [
+          {
+            "name": "Israel-Jordan Demilitarized Zones",
+            "note": {
+              "name": "Israel-Jordan Demilitarized Zones",
+              "code": {
+                "_status": "obsolete",
+                "__text": "iw"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          },
+          {
+            "name": "Israel-Syria Demilitarized Zones",
+            "note": {
+              "name": "Israel-Syria Demilitarized Zones",
+              "code": {
+                "_status": "obsolete",
+                "__text": "iu"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/it",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Italy"
+        },
+        "code": "it",
+        "region": "Europe",
+        "uf": [
+          {
+            "name": "Pantelleria"
+          },
+          {
+            "name": "Sardinia"
+          },
+          {
+            "name": "Sicily"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/jm",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Jamaica"
+        },
+        "code": "jm",
+        "region": "West Indies",
+        "uf": [
+          {
+            "name": "Morant Cays"
+          },
+          {
+            "name": "Pedro Cays"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ja",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Japan"
+        },
+        "code": "ja",
+        "region": "Asia",
+        "uf": [
+          {
+            "name": "Bonin Islands"
+          },
+          {
+            "name": "Daitojima",
+            "note": {
+              "name": "Ryukyu Islands, Southern",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ry"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          },
+          {
+            "name": "Marcus Island"
+          },
+          {
+            "name": "Namposhoto (Northern)"
+          },
+          {
+            "name": "Namposhoto (Southern)"
+          },
+          {
+            "name": "Nishinoshima Island"
+          },
+          {
+            "name": "Okinawa",
+            "note": {
+              "name": "Ryukyu Islands, Southern",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ry"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          },
+          {
+            "name": "Parece Vela Island"
+          },
+          {
+            "name": "Ryukyu Islands, Northern"
+          },
+          {
+            "name": "Ryukyu Islands, Southern",
+            "note": {
+              "name": "Ryukyu Islands, Southern",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ry"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          },
+          {
+            "name": "Torishima",
+            "note": {
+              "name": "Ryukyu Islands, Southern",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ry"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          },
+          {
+            "name": "Volcano Islands"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ji",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Johnston Atoll"
+        },
+        "code": "ji",
+        "region": "Pacific Ocean",
+        "uf": {
+          "name": "Sand Island"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/jo",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Jordan"
+        },
+        "code": "jo",
+        "region": "Asia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ksu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Kansas"
+        },
+        "code": "ksu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/kz",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Kazakhstan"
+        },
+        "code": "kz",
+        "region": "Asia",
+        "note": {
+          "name": "Kazakh S.S.R.",
+          "code": {
+            "_status": "obsolete",
+            "__text": "kzr"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "199206"
+          }
+        },
+        "uf": [
+          {
+            "name": "Kazakh S.S.R.",
+            "note": {
+              "name": "Kazakh S.S.R.",
+              "code": {
+                "_status": "obsolete",
+                "__text": "kzr"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199206"
+              }
+            }
+          },
+          {
+            "name": "Soviet Union",
+            "note": [
+              {
+                "name": "Soviet Union",
+                "code": {
+                  "_status": "obsolete",
+                  "__text": "xxr"
+                },
+                "date": {
+                  "_type": "before",
+                  "__text": "199206"
+                }
+              },
+              {
+                "name": "Soviet Union",
+                "code": {
+                  "_status": "obsolete",
+                  "__text": "ur"
+                },
+                "date": {
+                  "_type": "before",
+                  "__text": "198803"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/kyu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Kentucky"
+        },
+        "code": "kyu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ke",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Kenya"
+        },
+        "code": "ke",
+        "region": "Africa"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/gb",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Kiribati"
+        },
+        "code": "gb",
+        "region": "Pacific Ocean",
+        "note": [
+          {
+            "name": "Gilbert and Ellice Islands",
+            "code": {
+              "_status": "obsolete",
+              "__text": "gn"
+            },
+            "date": {
+              "_type": "before",
+              "__text": "197810"
+            }
+          },
+          {
+            "name": "Central and Southern Line Islands",
+            "code": {
+              "_status": "obsolete",
+              "__text": "ln"
+            },
+            "date": {
+              "_type": "before",
+              "__text": "197810"
+            }
+          }
+        ],
+        "uf": [
+          {
+            "name": "Banaba",
+            "note": {
+              "name": "Gilbert and Ellice Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "gn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Birnie Island",
+            "note": {
+              "name": "Gilbert and Ellice Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "gn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Canton Island",
+            "note": {
+              "name": "Canton and Enderbury Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "cp"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199301"
+              }
+            }
+          },
+          {
+            "name": "Caroline Island",
+            "note": {
+              "name": "Central and Southern Line Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ln"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Central and Southern Line Islands",
+            "note": {
+              "name": "Central and Southern Line Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ln"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Christmas Atoll",
+            "note": {
+              "name": "Gilbert and Ellice Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "gn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Enderbury Island",
+            "note": {
+              "name": "Canton and Enderbury Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "cp"
+              },
+              "date": {
+                "_type": "after",
+                "__text": "199312"
+              }
+            }
+          },
+          {
+            "name": "Fanning Atoll",
+            "note": {
+              "name": "Gilbert and Ellice Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "gn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Flint Island",
+            "note": {
+              "name": "Central and Southern Line Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ln"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Gardner Atoll",
+            "note": {
+              "name": "Gilbert and Ellice Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "gn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Gilbert and Ellice Islands",
+            "note": {
+              "name": "Gilbert and Ellice Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "gn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Gilbert Islands",
+            "note": {
+              "name": "Gilbert and Ellice Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "gn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Hull Atoll",
+            "note": {
+              "name": "Gilbert and Ellice Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "gn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Kiritimati",
+            "note": {
+              "name": "Gilbert and Ellice Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "gn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Line Islands (Southern)",
+            "note": {
+              "name": "Central and Southern Line Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ln"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Malden Island",
+            "note": {
+              "name": "Central and Southern Line Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ln"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Manra Atoll",
+            "note": {
+              "name": "Gilbert and Ellice Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "gn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "McKean Atoll",
+            "note": {
+              "name": "Gilbert and Ellice Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "gn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Nikomaroro Atoll",
+            "note": {
+              "name": "Gilbert and Ellice Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "gn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Ocean Island",
+            "note": {
+              "name": "Gilbert and Ellice Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "gn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Orona Atoll",
+            "note": {
+              "name": "Gilbert and Ellice Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "gn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Phoenix Atoll",
+            "note": {
+              "name": "Gilbert and Ellice Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "gn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Phoenix Islands",
+            "note": {
+              "name": "Gilbert and Ellice Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "gn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Rawaki",
+            "note": {
+              "name": "Gilbert and Ellice Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "gn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Starbuck Island",
+            "note": {
+              "name": "Central and Southern Line Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ln"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Sydney Atoll",
+            "note": {
+              "name": "Gilbert and Ellice Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "gn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Tabuarean Island",
+            "note": {
+              "name": "Gilbert and Ellice Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "gn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Vostok Island",
+            "note": {
+              "name": "Central and Southern Line Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ln"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Washington Island",
+            "note": {
+              "name": "Gilbert and Ellice Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "gn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/kn",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Korea (North)"
+        },
+        "code": "kn",
+        "region": "Asia",
+        "uf": [
+          {
+            "name": "Democratic People's Republic of Korea"
+          },
+          {
+            "name": "North Korea"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ko",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Korea (South)"
+        },
+        "code": "ko",
+        "region": "Asia",
+        "uf": [
+          {
+            "name": "Korea, Republic of"
+          },
+          {
+            "name": "South Korea"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/kv",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Kosovo"
+        },
+        "code": "kv",
+        "region": "Europe",
+        "note": {
+          "text": "Coded [rb] for Serbia from February 2007-May 2008. From 1992-April 2007 it was coded [yu] for Serbia and Montenegro"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ku",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Kuwait"
+        },
+        "code": "ku",
+        "region": "Asia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/kg",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Kyrgyzstan"
+        },
+        "code": "kg",
+        "region": "Asia",
+        "note": {
+          "name": "Kirghiz S.S.R.",
+          "code": {
+            "_status": "obsolete",
+            "__text": "kgr"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "199206"
+          }
+        },
+        "uf": [
+          {
+            "name": "Kirghiz S.S.R.",
+            "note": {
+              "name": "Kirghiz S.S.R.",
+              "code": {
+                "_status": "obsolete",
+                "__text": "kgr"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199206"
+              }
+            }
+          },
+          {
+            "name": "Soviet Union",
+            "note": [
+              {
+                "name": "Soviet Union",
+                "code": {
+                  "_status": "obsolete",
+                  "__text": "xxr"
+                },
+                "date": {
+                  "_type": "before",
+                  "__text": "199206"
+                }
+              },
+              {
+                "name": "Soviet Union",
+                "code": {
+                  "_status": "obsolete",
+                  "__text": "ur"
+                },
+                "date": {
+                  "_type": "before",
+                  "__text": "198803"
+                }
+              }
+            ]
+          },
+          {
+            "name": "Kirghizia",
+            "note": {
+              "name": "Kirghiz S.S.R.",
+              "code": {
+                "_status": "obsolete",
+                "__text": "kgr"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199206"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ls",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Laos"
+        },
+        "code": "ls",
+        "region": "Asia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/lv",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Latvia"
+        },
+        "code": "lv",
+        "region": "Europe",
+        "note": {
+          "name": "Latvia",
+          "code": {
+            "_status": "obsolete",
+            "__text": "lvr"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "199206"
+          }
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/le",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Lebanon"
+        },
+        "code": "le",
+        "region": "Asia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/lo",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Lesotho"
+        },
+        "code": "lo",
+        "region": "Africa",
+        "uf": {
+          "name": "Basutoland"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/lb",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Liberia"
+        },
+        "code": "lb",
+        "region": "Africa"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ly",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Libya"
+        },
+        "code": "ly",
+        "region": "Africa"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/lh",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Liechtenstein"
+        },
+        "code": "lh",
+        "region": "Europe"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/li",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Lithuania"
+        },
+        "code": "li",
+        "region": "Europe",
+        "note": {
+          "name": "Lithuania",
+          "code": {
+            "_status": "obsolete",
+            "__text": "lir"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "199206"
+          }
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/lau",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Louisiana"
+        },
+        "code": "lau",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/lu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Luxembourg"
+        },
+        "code": "lu",
+        "region": "Europe"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xn",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Macedonia"
+        },
+        "code": "xn",
+        "region": "Europe",
+        "note": {
+          "name": "Yugoslavia",
+          "code": {
+            "_status": "obsolete",
+            "__text": "yu"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "199210"
+          }
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/mg",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Madagascar"
+        },
+        "code": "mg",
+        "region": "Africa",
+        "uf": {
+          "name": "Malagasy Republic"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/meu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Maine"
+        },
+        "code": "meu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/mw",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Malawi"
+        },
+        "code": "mw",
+        "region": "Africa",
+        "uf": {
+          "name": "Nyasaland"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/my",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Malaysia"
+        },
+        "code": "my",
+        "region": "Asia",
+        "uf": [
+          {
+            "name": "Borneo, North"
+          },
+          {
+            "name": "Malaya"
+          },
+          {
+            "name": "North Borneo"
+          },
+          {
+            "name": "Sabah"
+          },
+          {
+            "name": "Sarawak"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xc",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Maldives"
+        },
+        "code": "xc",
+        "region": "Indian Ocean",
+        "uf": {
+          "name": "Maldive Islands"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ml",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Mali"
+        },
+        "code": "ml",
+        "region": "Africa",
+        "uf": [
+          {
+            "name": "French Sudan"
+          },
+          {
+            "name": "Soudan"
+          },
+          {
+            "name": "Sudan, French"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/mm",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Malta"
+        },
+        "code": "mm",
+        "region": "Europe",
+        "uf": [
+          {
+            "name": "Comino Island"
+          },
+          {
+            "name": "Gozo Island"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/mbc",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Manitoba"
+        },
+        "code": "mbc",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xe",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Marshall Islands"
+        },
+        "code": "xe",
+        "region": "Pacific Ocean",
+        "note": {
+          "name": "Trust Territory of the Pacific Islands",
+          "code": {
+            "_status": "obsolete",
+            "__text": "tt"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "198803"
+          }
+        },
+        "uf": [
+          {
+            "name": "Ailinglapalap Atoll"
+          },
+          {
+            "name": "Arno (Atoll)"
+          },
+          {
+            "name": "Bikini (Atoll)"
+          },
+          {
+            "name": "Ebon Atoll"
+          },
+          {
+            "name": "Eniwetok Atoll"
+          },
+          {
+            "name": "Jaluit Atoll"
+          },
+          {
+            "name": "Kili Island"
+          },
+          {
+            "name": "Kwajalein Atoll"
+          },
+          {
+            "name": "Majuro Atoll"
+          },
+          {
+            "name": "Maloelap Atoll"
+          },
+          {
+            "name": "Mili Atoll"
+          },
+          {
+            "name": "Namorik Atoll"
+          },
+          {
+            "name": "Pacific Islands (Trust Territory)",
+            "note": {
+              "name": "Trust Territory of the Pacific Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "tt"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "198803"
+              }
+            }
+          },
+          {
+            "name": "Ralik Chain"
+          },
+          {
+            "name": "Ratak Chains"
+          },
+          {
+            "name": "Rongelap Atoll"
+          },
+          {
+            "name": "Taongi Atoll"
+          },
+          {
+            "name": "Trust Territory of the Pacific Islands",
+            "note": {
+              "name": "Trust Territory of the Pacific Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "tt"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "198803"
+              }
+            }
+          },
+          {
+            "name": "Ujelang Atoll"
+          },
+          {
+            "name": "Utirik Atoll"
+          },
+          {
+            "name": "Wotje Atoll"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/mq",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Martinique"
+        },
+        "code": "mq",
+        "region": "West Indies"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/mdu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Maryland"
+        },
+        "code": "mdu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/mau",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Massachusetts"
+        },
+        "code": "mau",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/mu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Mauritania"
+        },
+        "code": "mu",
+        "region": "Africa"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/mf",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Mauritius"
+        },
+        "code": "mf",
+        "region": "Indian Ocean",
+        "uf": [
+          {
+            "name": "Agalega Islands"
+          },
+          {
+            "name": "Cargados Carajos Shoals"
+          },
+          {
+            "name": "Rodrigues Island"
+          },
+          {
+            "name": "Saint Brandon"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ot",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Mayotte"
+        },
+        "code": "ot",
+        "region": "Indian Ocean",
+        "note": {
+          "name": "Comoros",
+          "code": {
+            "_status": "obsolete",
+            "__text": "cq"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "198707"
+          }
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/mx",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Mexico"
+        },
+        "code": "mx",
+        "region": "North America",
+        "uf": [
+          {
+            "name": "Islas de Revillagigedo"
+          },
+          {
+            "name": "Revillagigedo, Islas de"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/miu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Michigan"
+        },
+        "code": "miu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/fm",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Micronesia (Federated States)"
+        },
+        "code": "fm",
+        "region": "Pacific Ocean",
+        "note": {
+          "name": "Trust Territory of the Pacific Islands",
+          "code": {
+            "_status": "obsolete",
+            "__text": "tt"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "198803"
+          }
+        },
+        "uf": [
+          {
+            "name": "Ascension Island (Micronesia)"
+          },
+          {
+            "name": "Eauripik Atoll"
+          },
+          {
+            "name": "Fais Island"
+          },
+          {
+            "name": "Faraulep Atoll"
+          },
+          {
+            "name": "Federated States of Micronesia"
+          },
+          {
+            "name": "Gaferut Island"
+          },
+          {
+            "name": "Hall Islands"
+          },
+          {
+            "name": "Ifalik Atoll"
+          },
+          {
+            "name": "Kapingamarangi Atoll"
+          },
+          {
+            "name": "Kosrae (Micronesia)"
+          },
+          {
+            "name": "Kusaie (Micronesia)"
+          },
+          {
+            "name": "Mortlock Islands"
+          },
+          {
+            "name": "Namonuito Atoll"
+          },
+          {
+            "name": "Ngatik Atoll"
+          },
+          {
+            "name": "Ngulu Atoll"
+          },
+          {
+            "name": "Nukuoru Atoll"
+          },
+          {
+            "name": "Oroluk Atoll"
+          },
+          {
+            "name": "Pacific Islands (Trust Territory)",
+            "note": {
+              "name": "Trust Territory of the Pacific Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "tt"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "198803"
+              }
+            }
+          },
+          {
+            "name": "Pingelap Atoll"
+          },
+          {
+            "name": "Pohnpei"
+          },
+          {
+            "name": "Ponape (Micronesia)"
+          },
+          {
+            "name": "Pulap Atoll"
+          },
+          {
+            "name": "Pulusak Island"
+          },
+          {
+            "name": "Puluwat Atoll"
+          },
+          {
+            "name": "Satawal Island"
+          },
+          {
+            "name": "Senyavin Islands"
+          },
+          {
+            "name": "Truk (Micronesia)"
+          },
+          {
+            "name": "Trust Territory of the Pacific Islands",
+            "note": {
+              "name": "Trust Territory of the Pacific Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "tt"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "198803"
+              }
+            }
+          },
+          {
+            "name": "Ulithi Islands"
+          },
+          {
+            "name": "West Fayu Atoll"
+          },
+          {
+            "name": "Woleai Atolls"
+          },
+          {
+            "name": "Yap (Micronesia)"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xf",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Midway Islands"
+        },
+        "code": "xf",
+        "region": "Pacific Ocean"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/mnu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Minnesota"
+        },
+        "code": "mnu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/msu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Mississippi"
+        },
+        "code": "msu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/mou",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Missouri"
+        },
+        "code": "mou",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/mv",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Moldova"
+        },
+        "code": "mv",
+        "region": "Europe",
+        "note": {
+          "name": "Moldavian S.S.R.",
+          "code": {
+            "_status": "obsolete",
+            "__text": "mvr"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "199206"
+          }
+        },
+        "uf": [
+          {
+            "name": "Moldavian S.S.R.",
+            "note": {
+              "name": "Moldavian S.S.R.",
+              "code": {
+                "_status": "obsolete",
+                "__text": "mvr"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199206"
+              }
+            }
+          },
+          {
+            "name": "Soviet Union",
+            "note": [
+              {
+                "name": "Soviet Union",
+                "code": {
+                  "_status": "obsolete",
+                  "__text": "xxr"
+                },
+                "date": {
+                  "_type": "before",
+                  "__text": "199206"
+                }
+              },
+              {
+                "name": "Soviet Union",
+                "code": {
+                  "_status": "obsolete",
+                  "__text": "ur"
+                },
+                "date": {
+                  "_type": "before",
+                  "__text": "198803"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/mc",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Monaco"
+        },
+        "code": "mc",
+        "region": "Europe"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/mp",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Mongolia"
+        },
+        "code": "mp",
+        "region": "Asia",
+        "uf": [
+          {
+            "name": "Mongolian People's Republic"
+          },
+          {
+            "name": "Outer Mongolia"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/mtu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Montana"
+        },
+        "code": "mtu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/mo",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Montenegro"
+        },
+        "code": "mo",
+        "region": "Europe",
+        "note": {
+          "text": "Coded [yu] for Serbia and Montenegro from 1992-April 2007"
+        },
+        "uf": {
+          "name": "Yugoslavia",
+          "note": {
+            "name": "Yugoslavia",
+            "code": {
+              "_status": "obsolete",
+              "__text": "yu"
+            },
+            "date": {
+              "_type": "before",
+              "__text": "199201"
+            }
+          }
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/mj",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Montserrat"
+        },
+        "code": "mj",
+        "region": "West Indies"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/mr",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Morocco"
+        },
+        "code": "mr",
+        "region": "Africa",
+        "uf": [
+          {
+            "name": "French Morocco"
+          },
+          {
+            "name": "Ifni"
+          },
+          {
+            "name": "Spanish Morocco"
+          },
+          {
+            "name": "Tangier Zone"
+          },
+          {
+            "name": "Zona Sur del Protectorado de Marruecos"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/mz",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Mozambique"
+        },
+        "code": "mz",
+        "region": "Africa"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/sx",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Namibia"
+        },
+        "code": "sx",
+        "region": "Africa",
+        "uf": {
+          "name": "South-West Africa"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/nu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Nauru"
+        },
+        "code": "nu",
+        "region": "Pacific Ocean"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/nbu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Nebraska"
+        },
+        "code": "nbu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/np",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Nepal"
+        },
+        "code": "np",
+        "region": "Asia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ne",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Netherlands"
+        },
+        "code": "ne",
+        "region": "Europe",
+        "uf": {
+          "name": "Holland"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/nvu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Nevada"
+        },
+        "code": "nvu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/nkc",
+        "name": {
+          "_authorized": "yes",
+          "__text": "New Brunswick"
+        },
+        "code": "nkc",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/nl",
+        "name": {
+          "_authorized": "yes",
+          "__text": "New Caledonia"
+        },
+        "code": "nl",
+        "region": "Pacific Ocean",
+        "uf": [
+          {
+            "name": "Belep Islands"
+          },
+          {
+            "name": "Chesterfield, Iles"
+          },
+          {
+            "name": "Huon, Ile"
+          },
+          {
+            "name": "Ile des Pins"
+          },
+          {
+            "name": "Ile Huon"
+          },
+          {
+            "name": "Ile Uvea (New Caledonia)"
+          },
+          {
+            "name": "Ile Walpole"
+          },
+          {
+            "name": "Iles Belep"
+          },
+          {
+            "name": "Iles Chesterfield"
+          },
+          {
+            "name": "Isle of Pines (Pacific Ocean)"
+          },
+          {
+            "name": "Loyalty Islands"
+          },
+          {
+            "name": "Pines, Isle of (Pacific Ocean)"
+          },
+          {
+            "name": "Pins, Ile des"
+          },
+          {
+            "name": "Uvea (New Caledonia)"
+          },
+          {
+            "name": "Walpole, Ile"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/nhu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "New Hampshire"
+        },
+        "code": "nhu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/nju",
+        "name": {
+          "_authorized": "yes",
+          "__text": "New Jersey"
+        },
+        "code": "nju",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/nmu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "New Mexico"
+        },
+        "code": "nmu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xna",
+        "name": {
+          "_authorized": "yes",
+          "__text": "New South Wales"
+        },
+        "code": "xna",
+        "note": {
+          "text": "Coded [at] (Australia) before Sept. 2005"
+        },
+        "region": "Australasia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/nyu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "New York (State)"
+        },
+        "code": "nyu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/nz",
+        "name": {
+          "_authorized": "yes",
+          "__text": "New Zealand"
+        },
+        "code": "nz",
+        "region": "Australasia",
+        "uf": [
+          {
+            "name": "Chatham Islands"
+          },
+          {
+            "name": "Kermadec Islands"
+          },
+          {
+            "name": "North Island"
+          },
+          {
+            "name": "South Island"
+          },
+          {
+            "name": "Stewart Island"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/nfc",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Newfoundland and Labrador"
+        },
+        "code": "nfc",
+        "region": "North America",
+        "uf": [
+          {
+            "name": "Labrador"
+          },
+          {
+            "name": "Newfoundland"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/nq",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Nicaragua"
+        },
+        "code": "nq",
+        "region": "Central America",
+        "uf": {
+          "name": "Corn Islands"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ng",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Niger"
+        },
+        "code": "ng",
+        "region": "Africa"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/nr",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Nigeria"
+        },
+        "code": "nr",
+        "region": "Africa",
+        "uf": {
+          "name": "British Cameroons, Northern"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xh",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Niue"
+        },
+        "code": "xh",
+        "region": "Pacific Ocean"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xx",
+        "name": {
+          "_authorized": "yes",
+          "__text": "No place, unknown, or undetermined"
+        },
+        "code": "xx",
+        "region": "Other"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/nx",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Norfolk Island"
+        },
+        "code": "nx",
+        "region": "Australasia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ncu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "North Carolina"
+        },
+        "code": "ncu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ndu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "North Dakota"
+        },
+        "code": "ndu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/nik",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Northern Ireland"
+        },
+        "code": "nik",
+        "region": "Europe",
+        "uf": {
+          "name": "Ireland, Northern"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/nw",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Northern Mariana Islands"
+        },
+        "code": "nw",
+        "region": "Pacific Ocean",
+        "note": [
+          {
+            "name": "Trust Territory of the Pacific Islands",
+            "code": {
+              "_status": "obsolete",
+              "__text": "tt"
+            },
+            "date": {
+              "_type": "before",
+              "__text": "198501"
+            }
+          },
+          {
+            "name": "Northern Mariana Islands",
+            "code": {
+              "_status": "obsolete",
+              "__text": "nm"
+            },
+            "date": {
+              "_type": "before",
+              "__text": "198707"
+            }
+          }
+        ],
+        "uf": [
+          {
+            "name": "Agrihan Island"
+          },
+          {
+            "name": "Aguijan Island"
+          },
+          {
+            "name": "Alamagan Island"
+          },
+          {
+            "name": "Anatahan Island"
+          },
+          {
+            "name": "Asuncion Island"
+          },
+          {
+            "name": "Farallon de Medinilla Island"
+          },
+          {
+            "name": "Farallon de Pajaros Island"
+          },
+          {
+            "name": "Guguan Island"
+          },
+          {
+            "name": "Mariana Islands"
+          },
+          {
+            "name": "Maug Islands"
+          },
+          {
+            "name": "Pacific Islands (Trust Territory)",
+            "note": {
+              "name": "Trust Territory of the Pacific Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "tt"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "198803"
+              }
+            }
+          },
+          {
+            "name": "Pagan Island"
+          },
+          {
+            "name": "Rota Island"
+          },
+          {
+            "name": "Saipan Island"
+          },
+          {
+            "name": "Sarigan Island"
+          },
+          {
+            "name": "Tinian Island"
+          },
+          {
+            "name": "Trust Territory of the Pacific Islands",
+            "note": {
+              "name": "Trust Territory of the Pacific Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "tt"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "198803"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xoa",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Northern Territory"
+        },
+        "code": "xoa",
+        "note": {
+          "text": "Coded [at] (Australia) before Sept. 2005"
+        },
+        "region": "Australasia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ntc",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Northwest Territories"
+        },
+        "code": "ntc",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/no",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Norway"
+        },
+        "code": "no",
+        "region": "Europe",
+        "uf": [
+          {
+            "name": "Bear Island"
+          },
+          {
+            "name": "Jan Mayen",
+            "note": {
+              "name": "Jan Mayen",
+              "code": {
+                "_status": "obsolete",
+                "__text": "jn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "198803"
+              }
+            }
+          },
+          {
+            "name": "Spitsbergen"
+          },
+          {
+            "name": "Svalbard (Norway)",
+            "note": {
+              "name": "Svalbard",
+              "code": {
+                "_status": "obsolete",
+                "__text": "sb"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "198803"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/nsc",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Nova Scotia"
+        },
+        "code": "nsc",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/nuc",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Nunavut"
+        },
+        "code": "nuc",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ohu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Ohio"
+        },
+        "code": "ohu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/oku",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Oklahoma"
+        },
+        "code": "oku",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/mk",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Oman"
+        },
+        "code": "mk",
+        "region": "Asia",
+        "uf": [
+          {
+            "name": "Kuria Muria Islands"
+          },
+          {
+            "name": "Muscat and Oman"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/onc",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Ontario"
+        },
+        "code": "onc",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/oru",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Oregon"
+        },
+        "code": "oru",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/pk",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Pakistan"
+        },
+        "code": "pk",
+        "region": "Asia",
+        "uf": [
+          {
+            "name": "Gwadar"
+          },
+          {
+            "name": "West Pakistan"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/pw",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Palau"
+        },
+        "code": "pw",
+        "region": "Pacific Ocean",
+        "note": {
+          "name": "Trust Territory of the Pacific Islands",
+          "code": {
+            "_status": "obsolete",
+            "__text": "tt"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "198803"
+          }
+        },
+        "uf": [
+          {
+            "name": "Angaur Island"
+          },
+          {
+            "name": "Babelthuap Island"
+          },
+          {
+            "name": "Belau"
+          },
+          {
+            "name": "Helen Island"
+          },
+          {
+            "name": "Merir Island"
+          },
+          {
+            "name": "Pacific Islands (Trust Territory)",
+            "note": {
+              "name": "Trust Territory of the Pacific Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "tt"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "198803"
+              }
+            }
+          },
+          {
+            "name": "Peleliu Island"
+          },
+          {
+            "name": "Pelew"
+          },
+          {
+            "name": "Pulo Anna Island"
+          },
+          {
+            "name": "Sonsoral Islands"
+          },
+          {
+            "name": "Tobi Island"
+          },
+          {
+            "name": "Trust Territory of the Pacific Islands",
+            "note": {
+              "name": "Trust Territory of the Pacific Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "tt"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "198803"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/pn",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Panama"
+        },
+        "code": "pn",
+        "region": "Central America",
+        "uf": {
+          "name": "Canal Zone",
+          "note": {
+            "name": "Canal Zone",
+            "code": {
+              "_status": "obsolete",
+              "__text": "cz"
+            },
+            "date": {
+              "_type": "before",
+              "__text": "198501"
+            }
+          }
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/pp",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Papua New Guinea"
+        },
+        "code": "pp",
+        "region": "Asia",
+        "uf": [
+          {
+            "name": "Admiralty Islands"
+          },
+          {
+            "name": "Bismarck Archipelago"
+          },
+          {
+            "name": "D'Entrecasteaux Islands"
+          },
+          {
+            "name": "Louisiada Archipelago"
+          },
+          {
+            "name": "New Britain Island"
+          },
+          {
+            "name": "New Guinea"
+          },
+          {
+            "name": "New Ireland Island"
+          },
+          {
+            "name": "North East New Guinea"
+          },
+          {
+            "name": "Solomon Islands, Northern"
+          },
+          {
+            "name": "Trobriand Islands"
+          },
+          {
+            "name": "Woodlark Island"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/pf",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Paracel Islands]"
+        },
+        "code": "pf",
+        "region": "Asia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/py",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Paraguay"
+        },
+        "code": "py",
+        "region": "South America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/pau",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Pennsylvania"
+        },
+        "code": "pau",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/pe",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Peru"
+        },
+        "code": "pe",
+        "region": "South America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ph",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Philippines"
+        },
+        "code": "ph",
+        "region": "Asia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/pc",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Pitcairn Island"
+        },
+        "code": "pc",
+        "region": "Pacific Ocean",
+        "uf": [
+          {
+            "name": "Ducie Atoll"
+          },
+          {
+            "name": "Henderson Island"
+          },
+          {
+            "name": "Oeno Atoll"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/pl",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Poland"
+        },
+        "code": "pl",
+        "region": "Europe"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/po",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Portugal"
+        },
+        "code": "po",
+        "region": "Europe",
+        "uf": [
+          {
+            "name": "Azores"
+          },
+          {
+            "name": "Madeira Island"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/pic",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Prince Edward Island"
+        },
+        "code": "pic",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/pr",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Puerto Rico"
+        },
+        "code": "pr",
+        "region": "West Indies"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/qa",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Qatar"
+        },
+        "code": "qa",
+        "region": "Asia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/quc",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Québec (Province)"
+        },
+        "code": "quc",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/qea",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Queensland"
+        },
+        "code": "qea",
+        "note": {
+          "text": "Coded [at] (Australia) before Sept. 2005"
+        },
+        "region": "Australasia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/re",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Réunion"
+        },
+        "code": "re",
+        "region": "Indian Ocean",
+        "uf": [
+          {
+            "name": "Bassas da India"
+          },
+          {
+            "name": "Europa, Ile"
+          },
+          {
+            "name": "Glorieuses, Iles"
+          },
+          {
+            "name": "Ile Europa"
+          },
+          {
+            "name": "Ile Juan de Nova"
+          },
+          {
+            "name": "Ile Tromelin"
+          },
+          {
+            "name": "Iles Glorieuses"
+          },
+          {
+            "name": "Juan de Nova, Ile"
+          },
+          {
+            "name": "Tromelin, Ile"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/riu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Rhode Island"
+        },
+        "code": "riu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/rm",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Romania"
+        },
+        "code": "rm",
+        "region": "Europe",
+        "uf": {
+          "name": "Rumania"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ru",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Russia (Federation)"
+        },
+        "code": "ru",
+        "region": "Europe",
+        "note": {
+          "name": "Russian S.F.S.R.",
+          "code": {
+            "_status": "obsolete",
+            "__text": "rur"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "199206"
+          }
+        },
+        "uf": [
+          {
+            "name": "Franz Josef Land"
+          },
+          {
+            "name": "Habomai Islands"
+          },
+          {
+            "name": "Kuril Islands (Southern)"
+          },
+          {
+            "name": "New Siberian Islands"
+          },
+          {
+            "name": "Novaya Zemlya"
+          },
+          {
+            "name": "Russian S.F.S.R.",
+            "note": {
+              "name": "Russian S.F.S.R.",
+              "code": {
+                "_status": "obsolete",
+                "__text": "rur"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199206"
+              }
+            }
+          },
+          {
+            "name": "Sakhalin (Southern)"
+          },
+          {
+            "name": "Severnaya Zemlya"
+          },
+          {
+            "name": "Soviet Union",
+            "note": [
+              {
+                "name": "Soviet Union",
+                "code": {
+                  "_status": "obsolete",
+                  "__text": "xxr"
+                },
+                "date": {
+                  "_type": "before",
+                  "__text": "199206"
+                }
+              },
+              {
+                "name": "Soviet Union",
+                "code": {
+                  "_status": "obsolete",
+                  "__text": "ur"
+                },
+                "date": {
+                  "_type": "before",
+                  "__text": "198803"
+                }
+              }
+            ]
+          },
+          {
+            "name": "Wrangel Island"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/rw",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Rwanda"
+        },
+        "code": "rw",
+        "region": "Africa"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/sc",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Saint-Barthélemy"
+        },
+        "code": "sc",
+        "note": {
+          "text": "Coded [gp] (Guadeloupe) before Dec. 2011"
+        },
+        "region": "West Indies",
+        "uf": [
+          {
+            "name": "Ile Saint-Barthélemy"
+          },
+          {
+            "name": "Saint Bartholomew"
+          },
+          {
+            "name": "Saint Barts"
+          },
+          {
+            "name": "St. Barthélemy"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xj",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Saint Helena"
+        },
+        "code": "xj",
+        "region": "Atlantic Ocean",
+        "uf": [
+          {
+            "name": "Ascension Island (Atlantic Ocean)"
+          },
+          {
+            "name": "Gough Island"
+          },
+          {
+            "name": "Inaccessible Island"
+          },
+          {
+            "name": "Nightingale Island"
+          },
+          {
+            "name": "Tristan da Cunha Island"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xd",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Saint Kitts-Nevis"
+        },
+        "code": "xd",
+        "region": "West Indies",
+        "note": {
+          "name": "Saint Kitts-Nevis-Anguilla",
+          "code": {
+            "_status": "obsolete",
+            "__text": "xi"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "198501"
+          }
+        },
+        "uf": [
+          {
+            "name": "Saint Christopher"
+          },
+          {
+            "name": "Saint Kitts-Nevis-Anguilla",
+            "note": {
+              "name": "Saint Kitts-Nevis-Anguilla",
+              "code": {
+                "_status": "obsolete",
+                "__text": "xi"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "19850101"
+              }
+            }
+          },
+          {
+            "name": "St. Christopher"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xk",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Saint Lucia"
+        },
+        "code": "xk",
+        "region": "West Indies"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/st",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Saint-Martin"
+        },
+        "code": "st",
+        "region": "West Indies",
+        "uf": [
+          {
+            "name": "Collectivity of Saint Martin"
+          },
+          {
+            "name": "Saint-Martin (Collectivity)"
+          },
+          {
+            "name": "Saint-Martin (France: Collectivity)"
+          },
+          {
+            "name": "Saint Martin, Northern",
+            "note": {
+              "text": "Coded [gp] (Guadeloupe) before Dec. 2011"
+            }
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xl",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Saint Pierre and Miquelon"
+        },
+        "code": "xl",
+        "region": "North America",
+        "uf": {
+          "name": "Miquelon"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xm",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Saint Vincent and the Grenadines"
+        },
+        "code": "xm",
+        "region": "West Indies",
+        "uf": [
+          {
+            "name": "Grenadine Islands, Northern"
+          },
+          {
+            "name": "Saint Vincent"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ws",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Samoa"
+        },
+        "code": "ws",
+        "region": "Pacific Ocean",
+        "uf": [
+          {
+            "name": "Samoa i Sisifo"
+          },
+          {
+            "name": "Samoa, Western"
+          },
+          {
+            "name": "Savai'i"
+          },
+          {
+            "name": "Upolu"
+          },
+          {
+            "name": "Western Samoa"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/sm",
+        "name": {
+          "_authorized": "yes",
+          "__text": "San Marino"
+        },
+        "code": "sm",
+        "region": "Europe"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/sf",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Sao Tome and Principe"
+        },
+        "code": "sf",
+        "region": "Africa"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/snc",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Saskatchewan"
+        },
+        "code": "snc",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/su",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Saudi Arabia"
+        },
+        "code": "su",
+        "region": "Asia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/stk",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Scotland"
+        },
+        "code": "stk",
+        "region": "Europe"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/sg",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Senegal"
+        },
+        "code": "sg",
+        "region": "Africa"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/rb",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Serbia"
+        },
+        "code": "rb",
+        "region": "Europe",
+        "note": {
+          "text": "Coded [yu] for Serbia and Montenegro from 1992-April 2007"
+        },
+        "uf": {
+          "name": "Yugoslavia",
+          "note": {
+            "name": "Yugoslavia",
+            "code": {
+              "_status": "obsolete",
+              "__text": "yu"
+            },
+            "date": {
+              "_type": "before",
+              "__text": "199201"
+            }
+          }
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/se",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Seychelles"
+        },
+        "code": "se",
+        "region": "Indian Ocean",
+        "uf": [
+          {
+            "name": "Aldabra Islands",
+            "note": {
+              "name": "British Indian Ocean Territory",
+              "code": {
+                "_status": "obsolete",
+                "__text": "bi"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          },
+          {
+            "name": "Alphonse Island"
+          },
+          {
+            "name": "Amirante Isles"
+          },
+          {
+            "name": "Bijoutier Island"
+          },
+          {
+            "name": "Cosmoledo Islands"
+          },
+          {
+            "name": "Desroches, Ile",
+            "note": {
+              "name": "British Indian Ocean Territory",
+              "code": {
+                "_status": "obsolete",
+                "__text": "bi"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          },
+          {
+            "name": "Farquhar Atoll",
+            "note": {
+              "name": "British Indian Ocean Territory",
+              "code": {
+                "_status": "obsolete",
+                "__text": "bi"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          },
+          {
+            "name": "François Island"
+          },
+          {
+            "name": "Ile Desroches",
+            "note": {
+              "name": "British Indian Ocean Territory",
+              "code": {
+                "_status": "obsolete",
+                "__text": "bi"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          },
+          {
+            "name": "Saint Francois Island"
+          },
+          {
+            "name": "Saint Pierre Islet"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/sl",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Sierra Leone"
+        },
+        "code": "sl",
+        "region": "Africa"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/si",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Singapore"
+        },
+        "code": "si",
+        "region": "Asia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/sn",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Sint Maarten"
+        },
+        "code": "sn",
+        "region": "West Indies",
+        "note": {
+          "name": "Netherlands Antilles",
+          "code": {
+            "_status": "obsolete",
+            "__text": "na"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "201112"
+          }
+        },
+        "uf": [
+          {
+            "name": "Netherlands Antilles",
+            "note": {
+              "name": "Netherlands Antilles",
+              "code": {
+                "_status": "obsolete",
+                "__text": "na"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "201112"
+              }
+            }
+          },
+          {
+            "name": "Saint Martin, Southern",
+            "note": {
+              "name": "Netherlands Antilles",
+              "code": {
+                "_status": "obsolete",
+                "__text": "na"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "201112"
+              }
+            }
+          },
+          {
+            "name": "Sint Maarten (Netherlands Antilles)"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xo",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Slovakia"
+        },
+        "code": "xo",
+        "region": "Europe",
+        "note": {
+          "name": "Czechoslovakia",
+          "code": {
+            "_status": "obsolete",
+            "__text": "cs"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "199306"
+          }
+        },
+        "uf": [
+          {
+            "name": "Czechoslovakia",
+            "note": {
+              "name": "Czechoslovakia",
+              "code": {
+                "_status": "obsolete",
+                "__text": "cs"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199305"
+              }
+            }
+          },
+          {
+            "name": "Slovak Socialist Republic"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xv",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Slovenia"
+        },
+        "code": "xv",
+        "region": "Europe",
+        "note": {
+          "name": "Yugoslavia",
+          "code": {
+            "_status": "obsolete",
+            "__text": "yu"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "199210"
+          }
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/bp",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Solomon Islands"
+        },
+        "code": "bp",
+        "region": "Pacific Ocean",
+        "uf": [
+          {
+            "name": "British Solomon Islands"
+          },
+          {
+            "name": "Choiseul"
+          },
+          {
+            "name": "Guadalcanal"
+          },
+          {
+            "name": "Malaita"
+          },
+          {
+            "name": "San Cristóbal"
+          },
+          {
+            "name": "Santa Isabel"
+          },
+          {
+            "name": "Solomon Islands Protectorate"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/so",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Somalia"
+        },
+        "code": "so",
+        "region": "Africa",
+        "uf": {
+          "name": "Somali Republic"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/sa",
+        "name": {
+          "_authorized": "yes",
+          "__text": "South Africa"
+        },
+        "code": "sa",
+        "region": "Africa",
+        "uf": [
+          {
+            "name": "Bophuthatswana"
+          },
+          {
+            "name": "Ciskei"
+          },
+          {
+            "name": "Lebowa"
+          },
+          {
+            "name": "Machangana"
+          },
+          {
+            "name": "Marion Island"
+          },
+          {
+            "name": "Prince Edward Islands"
+          },
+          {
+            "name": "South Sotho"
+          },
+          {
+            "name": "Transkei"
+          },
+          {
+            "name": "Tswana"
+          },
+          {
+            "name": "Venda"
+          },
+          {
+            "name": "Walvis Bay Enclave"
+          },
+          {
+            "name": "Zulu"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xra",
+        "name": {
+          "_authorized": "yes",
+          "__text": "South Australia"
+        },
+        "code": "xra",
+        "note": {
+          "text": "Coded [at] (Australia) before Sept. 2005"
+        },
+        "region": "Australasia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/scu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "South Carolina"
+        },
+        "code": "scu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/sdu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "South Dakota"
+        },
+        "code": "sdu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xs",
+        "name": {
+          "_authorized": "yes",
+          "__text": "South Georgia and the South Sandwich Islands"
+        },
+        "code": "xs",
+        "region": "Atlantic Ocean",
+        "note": {
+          "name": "Falkland Islands",
+          "code": {
+            "_status": "obsolete",
+            "__text": "fk"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "199101"
+          }
+        },
+        "uf": [
+          {
+            "name": "South Georgia Island",
+            "note": {
+              "name": "Falkland Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "fk"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199101"
+              }
+            }
+          },
+          {
+            "name": "South Sandwich Islands",
+            "note": {
+              "name": "Falkland Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "fk"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199101"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/sd",
+        "name": {
+          "_authorized": "yes",
+          "__text": "South Sudan"
+        },
+        "code": "sd",
+        "note": {
+          "text": "Coded [sj] (Sudan) before Aug. 2011"
+        },
+        "region": "Africa",
+        "uf": {
+          "name": "Sudan, South"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/sp",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Spain"
+        },
+        "code": "sp",
+        "region": "Europe",
+        "uf": [
+          {
+            "name": "Balearic Islands"
+          },
+          {
+            "name": "Canary Islands"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/sh",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Spanish North Africa"
+        },
+        "code": "sh",
+        "region": "Africa",
+        "uf": [
+          {
+            "name": "Ceuta"
+          },
+          {
+            "name": "Chafarinas, Islas"
+          },
+          {
+            "name": "Islas Chafarinas"
+          },
+          {
+            "name": "Melilla"
+          },
+          {
+            "name": "Peñón de Alhucemas"
+          },
+          {
+            "name": "Peñón de Vélez de la Gomera"
+          },
+          {
+            "name": "Plazas de Soberania"
+          },
+          {
+            "name": "Spanish Territories in Northern Morocco"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xp",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Spratly Island"
+        },
+        "code": "xp",
+        "region": "Asia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ce",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Sri Lanka"
+        },
+        "code": "ce",
+        "region": "Asia",
+        "uf": {
+          "name": "Ceylon"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/sj",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Sudan"
+        },
+        "code": "sj",
+        "region": "Africa"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/sr",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Surinam"
+        },
+        "code": "sr",
+        "region": "South America",
+        "uf": [
+          {
+            "name": "Dutch Guiana"
+          },
+          {
+            "name": "Guiana, Dutch"
+          },
+          {
+            "name": "Netherlands Guiana"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/sq",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Swaziland"
+        },
+        "code": "sq",
+        "region": "Africa"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/sw",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Sweden"
+        },
+        "code": "sw",
+        "region": "Europe"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/sz",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Switzerland"
+        },
+        "code": "sz",
+        "region": "Europe"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/sy",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Syria"
+        },
+        "code": "sy",
+        "region": "Asia",
+        "uf": {
+          "name": "Syrian Arab Republic"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ta",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Tajikistan"
+        },
+        "code": "ta",
+        "region": "Asia",
+        "note": {
+          "name": "Tajik S.S.R.",
+          "code": {
+            "_status": "obsolete",
+            "__text": "tar"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "199206"
+          }
+        },
+        "uf": [
+          {
+            "name": "Soviet Union",
+            "note": [
+              {
+                "name": "Soviet Union",
+                "code": {
+                  "_status": "obsolete",
+                  "__text": "xxr"
+                },
+                "date": {
+                  "_type": "before",
+                  "__text": "199206"
+                }
+              },
+              {
+                "name": "Soviet Union",
+                "code": {
+                  "_status": "obsolete",
+                  "__text": "ur"
+                },
+                "date": {
+                  "_type": "before",
+                  "__text": "198803"
+                }
+              }
+            ]
+          },
+          {
+            "name": "Tadzhik S.S.R.",
+            "note": {
+              "name": "Tajik S.S.R.",
+              "code": {
+                "_status": "obsolete",
+                "__text": "tar"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199206"
+              }
+            }
+          },
+          {
+            "name": "Tajik S.S.R.",
+            "note": {
+              "name": "Tajik S.S.R.",
+              "code": {
+                "_status": "obsolete",
+                "__text": "tar"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199206"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/tz",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Tanzania"
+        },
+        "code": "tz",
+        "region": "Africa",
+        "uf": [
+          {
+            "name": "Pemba"
+          },
+          {
+            "name": "Tanganyika"
+          },
+          {
+            "name": "Zanzibar"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/tma",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Tasmania"
+        },
+        "code": "tma",
+        "note": {
+          "text": "Coded [at] (Australia) before Sept. 2005"
+        },
+        "region": "Australasia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/tnu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Tennessee"
+        },
+        "code": "tnu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/fs",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Terres australes et antarctiques françaises"
+        },
+        "code": "fs",
+        "region": "Indian Ocean",
+        "uf": [
+          {
+            "name": "Amsterdam Island"
+          },
+          {
+            "name": "Crozet Island"
+          },
+          {
+            "name": "French Southern and Antarctic Lands"
+          },
+          {
+            "name": "Kerguelen Island"
+          },
+          {
+            "name": "Saint Paul Island"
+          },
+          {
+            "name": "T.A.A.F."
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/txu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Texas"
+        },
+        "code": "txu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/th",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Thailand"
+        },
+        "code": "th",
+        "region": "Asia",
+        "uf": {
+          "name": "Siam"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/em",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Timor-Leste"
+        },
+        "code": "em",
+        "region": "Asia",
+        "uf": [
+          {
+            "name": "Atauro, Ilha de",
+            "note": {
+              "name": "Portuguese Timor",
+              "code": {
+                "_status": "obsolete",
+                "__text": "pt"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          },
+          {
+            "name": "East Timor"
+          },
+          {
+            "name": "Ilha de Atauro",
+            "note": {
+              "name": "Portuguese Timor",
+              "code": {
+                "_status": "obsolete",
+                "__text": "pt"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          },
+          {
+            "name": "Ilheu de Jaco",
+            "note": {
+              "name": "Portuguese Timor",
+              "code": {
+                "_status": "obsolete",
+                "__text": "pt"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          },
+          {
+            "name": "Jaco, Ilheu de",
+            "note": {
+              "name": "Portuguese Timor",
+              "code": {
+                "_status": "obsolete",
+                "__text": "pt"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          },
+          {
+            "name": "Oe-Cussi",
+            "note": {
+              "name": "Portuguese Timor",
+              "code": {
+                "_status": "obsolete",
+                "__text": "pt"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          },
+          {
+            "name": "Portuguese Timor",
+            "note": {
+              "name": "Portuguese Timor",
+              "code": {
+                "_status": "obsolete",
+                "__text": "pt"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          },
+          {
+            "name": "Timor, East"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/tg",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Togo"
+        },
+        "code": "tg",
+        "region": "Africa"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/tl",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Tokelau"
+        },
+        "code": "tl",
+        "region": "Pacific Ocean",
+        "uf": [
+          {
+            "name": "Atafu Atoll"
+          },
+          {
+            "name": "Fakaofu Atoll"
+          },
+          {
+            "name": "Nukunono Atoll"
+          },
+          {
+            "name": "Union Islands"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/to",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Tonga"
+        },
+        "code": "to",
+        "region": "Pacific Ocean",
+        "uf": [
+          {
+            "name": "Friendly Islands"
+          },
+          {
+            "name": "Haapai"
+          },
+          {
+            "name": "Lulunga"
+          },
+          {
+            "name": "Nomuka"
+          },
+          {
+            "name": "Otu Tolu"
+          },
+          {
+            "name": "Tongatapu"
+          },
+          {
+            "name": "Vavau"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/tr",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Trinidad and Tobago"
+        },
+        "code": "tr",
+        "region": "West Indies",
+        "uf": {
+          "name": "Tobago"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ti",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Tunisia"
+        },
+        "code": "ti",
+        "region": "Africa"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/tu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Turkey"
+        },
+        "code": "tu",
+        "region": "Asia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/tk",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Turkmenistan"
+        },
+        "code": "tk",
+        "region": "Asia",
+        "note": {
+          "name": "Turkmen S.S.R.",
+          "code": {
+            "_status": "obsolete",
+            "__text": "tkr"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "199206"
+          }
+        },
+        "uf": [
+          {
+            "name": "Soviet Union",
+            "note": [
+              {
+                "name": "Soviet Union",
+                "code": {
+                  "_status": "obsolete",
+                  "__text": "xxr"
+                },
+                "date": {
+                  "_type": "before",
+                  "__text": "199206"
+                }
+              },
+              {
+                "name": "Soviet Union",
+                "code": {
+                  "_status": "obsolete",
+                  "__text": "ur"
+                },
+                "date": {
+                  "_type": "before",
+                  "__text": "198803"
+                }
+              }
+            ]
+          },
+          {
+            "name": "Turkmen S.S.R.",
+            "note": {
+              "name": "Turkmen S.S.R.",
+              "code": {
+                "_status": "obsolete",
+                "__text": "tkr"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199206"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/tc",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Turks and Caicos Islands"
+        },
+        "code": "tc",
+        "region": "West Indies",
+        "uf": {
+          "name": "Caicos Islands"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/tv",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Tuvalu"
+        },
+        "code": "tv",
+        "region": "Pacific Ocean",
+        "note": {
+          "name": "Gilbert and Ellice Islands",
+          "code": {
+            "_status": "obsolete",
+            "__text": "gn"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "197810"
+          }
+        },
+        "uf": [
+          {
+            "name": "Ellice Islands"
+          },
+          {
+            "name": "Funafuti Atoll"
+          },
+          {
+            "name": "Gilbert and Ellice Islands",
+            "note": {
+              "name": "Gilbert and Ellice Islands",
+              "code": {
+                "_status": "obsolete",
+                "__text": "gn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197810"
+              }
+            }
+          },
+          {
+            "name": "Niulakita Island"
+          },
+          {
+            "name": "Nukufetau Atoll"
+          },
+          {
+            "name": "Nukulaelae Atoll"
+          },
+          {
+            "name": "Nukulailai Atoll"
+          },
+          {
+            "name": "Nurakita Island"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ug",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Uganda"
+        },
+        "code": "ug",
+        "region": "Africa"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/un",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Ukraine"
+        },
+        "code": "un",
+        "region": "Europe",
+        "note": {
+          "name": "Ukraine",
+          "code": {
+            "_status": "obsolete",
+            "__text": "unr"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "199206"
+          }
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ts",
+        "name": {
+          "_authorized": "yes",
+          "__text": "United Arab Emirates"
+        },
+        "code": "ts",
+        "region": "Asia",
+        "uf": [
+          {
+            "name": "Abu Dhabi"
+          },
+          {
+            "name": "Abu Zaby"
+          },
+          {
+            "name": "`Ajman"
+          },
+          {
+            "name": "Dubai"
+          },
+          {
+            "name": "Dubayy"
+          },
+          {
+            "name": "Fujairah"
+          },
+          {
+            "name": "Fujayrah"
+          },
+          {
+            "name": "Kalba"
+          },
+          {
+            "name": "Oman, Trucial"
+          },
+          {
+            "name": "Ras al Khaimah"
+          },
+          {
+            "name": "Ra's al-Khaymah"
+          },
+          {
+            "name": "Shariqah"
+          },
+          {
+            "name": "Sharjah"
+          },
+          {
+            "name": "Trucial Coast"
+          },
+          {
+            "name": "Trucial Oman"
+          },
+          {
+            "name": "Trucial Sheikdoms"
+          },
+          {
+            "name": "Trucial States"
+          },
+          {
+            "name": "Umm al Qaiwain"
+          },
+          {
+            "name": "Umm al-Qaywayn"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xxk",
+        "name": {
+          "_authorized": "yes",
+          "__text": "United Kingdom"
+        },
+        "code": "xxk",
+        "region": "Europe",
+        "note": {
+          "name": "United Kingdom",
+          "code": {
+            "_status": "obsolete",
+            "__text": "uk"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "198803"
+          }
+        },
+        "uf": {
+          "name": "Great Britain"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/uik",
+        "name": {
+          "_authorized": "yes",
+          "__text": "United Kingdom Misc. Islands"
+        },
+        "code": "uik",
+        "region": "Europe",
+        "note": {
+          "name": "United Kingdom Misc. Islands",
+          "code": {
+            "_status": "obsolete",
+            "__text": "ui"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "198803"
+          }
+        },
+        "uf": [
+          {
+            "name": "Alderney"
+          },
+          {
+            "name": "Brechou"
+          },
+          {
+            "name": "Channel Islands"
+          },
+          {
+            "name": "Guernsey Island"
+          },
+          {
+            "name": "Herm Island"
+          },
+          {
+            "name": "Isle of Man"
+          },
+          {
+            "name": "Jersey (Island)"
+          },
+          {
+            "name": "Jethou"
+          },
+          {
+            "name": "Lihou"
+          },
+          {
+            "name": "Orkney Islands"
+          },
+          {
+            "name": "Sark Island"
+          },
+          {
+            "name": "Shetland Islands"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/xxu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "United States"
+        },
+        "code": "xxu",
+        "region": "North America",
+        "note": {
+          "name": "United States",
+          "code": {
+            "_status": "obsolete",
+            "__text": "us"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "198803"
+          }
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/uc",
+        "name": {
+          "_authorized": "yes",
+          "__text": "United States Misc. Caribbean Islands"
+        },
+        "code": "uc",
+        "region": "West Indies",
+        "uf": [
+          {
+            "name": "Navassa Island"
+          },
+          {
+            "name": "Quita Sueno Bank"
+          },
+          {
+            "name": "Roncador Cay"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/up",
+        "name": {
+          "_authorized": "yes",
+          "__text": "United States Misc. Pacific Islands"
+        },
+        "code": "up",
+        "region": "Pacific Ocean",
+        "uf": [
+          {
+            "name": "Baker Island"
+          },
+          {
+            "name": "Howland Island"
+          },
+          {
+            "name": "Jarvis Island"
+          },
+          {
+            "name": "Kingman Reef"
+          },
+          {
+            "name": "Palmyra Atoll"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/uy",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Uruguay"
+        },
+        "code": "uy",
+        "region": "South America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/utu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Utah"
+        },
+        "code": "utu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/uz",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Uzbekistan"
+        },
+        "code": "uz",
+        "region": "Asia",
+        "note": {
+          "name": "Uzbek S.S.R.",
+          "code": {
+            "_status": "obsolete",
+            "__text": "uzr"
+          },
+          "date": {
+            "_type": "before",
+            "__text": "199206"
+          }
+        },
+        "uf": [
+          {
+            "name": "Soviet Union",
+            "note": [
+              {
+                "name": "Soviet Union",
+                "code": {
+                  "_status": "obsolete",
+                  "__text": "xxr"
+                },
+                "date": {
+                  "_type": "before",
+                  "__text": "199206"
+                }
+              },
+              {
+                "name": "Soviet Union",
+                "code": {
+                  "_status": "obsolete",
+                  "__text": "ur"
+                },
+                "date": {
+                  "_type": "before",
+                  "__text": "198803"
+                }
+              }
+            ]
+          },
+          {
+            "name": "Uzbek S.S.R.",
+            "note": {
+              "name": "Uzbek S.S.R.",
+              "code": {
+                "_status": "obsolete",
+                "__text": "uzr"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199206"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/nn",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Vanuatu"
+        },
+        "code": "nn",
+        "region": "Pacific Ocean",
+        "uf": [
+          {
+            "name": "Banks Islands"
+          },
+          {
+            "name": "New Hebrides"
+          },
+          {
+            "name": "Torres Islands"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/vp",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Various places"
+        },
+        "code": "vp",
+        "region": "Other"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/vc",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Vatican City"
+        },
+        "code": "vc",
+        "region": "Europe",
+        "uf": {
+          "name": "Holy See"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ve",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Venezuela"
+        },
+        "code": "ve",
+        "region": "South America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/vtu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Vermont"
+        },
+        "code": "vtu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/vra",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Victoria"
+        },
+        "code": "vra",
+        "note": {
+          "text": "Coded [at] (Australia) before Sept. 2005"
+        },
+        "region": "Australasia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/vm",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Vietnam"
+        },
+        "code": "vm",
+        "region": "Asia",
+        "note": [
+          {
+            "name": "Vietnam, North",
+            "code": {
+              "_status": "obsolete",
+              "__text": "vn"
+            },
+            "date": {
+              "_type": "before",
+              "__text": "197801"
+            }
+          },
+          {
+            "name": "Vietnam, South",
+            "code": {
+              "_status": "obsolete",
+              "__text": "vs"
+            },
+            "date": {
+              "_type": "before",
+              "__text": "197801"
+            }
+          }
+        ],
+        "uf": [
+          {
+            "name": "Democratic People's Republic of Vietnam",
+            "note": {
+              "name": "Vietnam, North",
+              "code": {
+                "_status": "obsolete",
+                "__text": "vn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          },
+          {
+            "name": "North Vietnam",
+            "note": {
+              "name": "Vietnam, North",
+              "code": {
+                "_status": "obsolete",
+                "__text": "vn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          },
+          {
+            "name": "South Vietnam",
+            "note": {
+              "name": "Vietnam, South",
+              "code": {
+                "_status": "obsolete",
+                "__text": "vs"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          },
+          {
+            "name": "Vietnam, North",
+            "note": {
+              "name": "Vietnam, North",
+              "code": {
+                "_status": "obsolete",
+                "__text": "vn"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          },
+          {
+            "name": "Vietnam, Republic of",
+            "note": {
+              "name": "Vietnam, South",
+              "code": {
+                "_status": "obsolete",
+                "__text": "vs"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          },
+          {
+            "name": "Vietnam, South",
+            "note": {
+              "name": "Vietnam, South",
+              "code": {
+                "_status": "obsolete",
+                "__text": "vs"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "197801"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/vi",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Virgin Islands of the United States"
+        },
+        "code": "vi",
+        "region": "West Indies"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/vau",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Virginia"
+        },
+        "code": "vau",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/wk",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Wake Island"
+        },
+        "code": "wk",
+        "region": "Pacific Ocean"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/wlk",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Wales"
+        },
+        "code": "wlk",
+        "region": "Europe"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/wf",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Wallis and Futuna"
+        },
+        "code": "wf",
+        "region": "Pacific Ocean",
+        "uf": [
+          {
+            "name": "Alofi"
+          },
+          {
+            "name": "Futuna"
+          },
+          {
+            "name": "Horne, Iles de"
+          },
+          {
+            "name": "Ile Uvea (Wallis and Futuna)"
+          },
+          {
+            "name": "Iles de Horne"
+          },
+          {
+            "name": "Uvea (Wallis and Futuna)"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/wau",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Washington (State)"
+        },
+        "code": "wau",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/wj",
+        "name": {
+          "_authorized": "yes",
+          "__text": "West Bank of the Jordan River"
+        },
+        "code": "wj",
+        "region": "Asia",
+        "uf": {
+          "name": "Jordan (Territory under Israeli occupation, 1967- )"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/wvu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "West Virginia"
+        },
+        "code": "wvu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/wea",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Western Australia"
+        },
+        "code": "wea",
+        "note": {
+          "text": "Coded [at] (Australia) before Sept. 2005"
+        },
+        "region": "Australasia"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ss",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Western Sahara"
+        },
+        "code": "ss",
+        "region": "Africa",
+        "uf": [
+          {
+            "name": "Río de Oro"
+          },
+          {
+            "name": "Saguia el Hamra"
+          },
+          {
+            "name": "Spanish Sahara"
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/wiu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Wisconsin"
+        },
+        "code": "wiu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/wyu",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Wyoming"
+        },
+        "code": "wyu",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ye",
+        "name": [
+          {
+            "_authorized": "yes",
+            "__text": "Yemen"
+          },
+          "Yemen"
+        ],
+        "code": "ye",
+        "region": "Asia",
+        "uf": [
+          {
+            "name": "Aden",
+            "note": {
+              "name": "Yemen (People's Democratic Republic)",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ys"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199101"
+              }
+            }
+          },
+          {
+            "name": "Aden (Protectorate)",
+            "note": {
+              "name": "Yemen (People's Democratic Republic)",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ys"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199101"
+              }
+            }
+          },
+          {
+            "name": "Arab Republic of Yemen"
+          },
+          {
+            "name": "Federation of South Arabia",
+            "note": {
+              "name": "Yemen (People's Democratic Republic)",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ys"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199101"
+              }
+            }
+          },
+          {
+            "name": "Kamaran",
+            "note": {
+              "name": "Yemen (People's Democratic Republic)",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ys"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199101"
+              }
+            }
+          },
+          {
+            "name": "Perim",
+            "note": {
+              "name": "Yemen (People's Democratic Republic",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ys"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199101"
+              }
+            }
+          },
+          {
+            "name": "Protectorate of South Arabia",
+            "note": {
+              "name": "Yemen (People's Democratic Republic",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ys"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199101"
+              }
+            }
+          },
+          {
+            "name": "Socotra",
+            "note": {
+              "name": "Yemen (People's Democratic Republic)",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ys"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199101"
+              }
+            }
+          },
+          {
+            "name": "South Arabia",
+            "note": {
+              "name": "Yemen (People's Democratic Republic)",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ys"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199101"
+              }
+            }
+          },
+          {
+            "name": "Southern Yemen",
+            "note": {
+              "name": "Yemen (People's Democratic Republic)",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ys"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199101"
+              }
+            }
+          },
+          {
+            "name": "Yemen (People's Democratic Republic)",
+            "note": {
+              "name": "Yemen (People's Democratic Republic)",
+              "code": {
+                "_status": "obsolete",
+                "__text": "ys"
+              },
+              "date": {
+                "_type": "before",
+                "__text": "199101"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/ykc",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Yukon Territory"
+        },
+        "code": "ykc",
+        "region": "North America"
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/za",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Zambia"
+        },
+        "code": "za",
+        "region": "Africa",
+        "uf": {
+          "name": "Northern Rhodesia"
+        }
+      },
+      {
+        "uri": "info:lc/vocabulary/countries/rh",
+        "name": {
+          "_authorized": "yes",
+          "__text": "Zimbabwe"
+        },
+        "code": "rh",
+        "region": "Africa",
+        "uf": [
+          {
+            "name": "Rhodesia"
+          },
+          {
+            "name": "Southern Rhodesia"
+          },
+          {
+            "name": "Zimbabwe Rhodesia"
+          }
+        ]
+      }
+    ]
+  }
+}
