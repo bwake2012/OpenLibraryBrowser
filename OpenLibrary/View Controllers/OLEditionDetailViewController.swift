@@ -37,11 +37,11 @@ class OLEditionDetailViewController: UIViewController {
         queryCoordinator?.updateUI()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
         
-        super.viewDidAppear( animated )
+        navigationController?.setNavigationBarHidden( false, animated: animated )
         
-        navigationController?.setNavigationBarHidden( false, animated: true )
+        super.viewWillAppear( animated )
     }
     
     override func didReceiveMemoryWarning() {

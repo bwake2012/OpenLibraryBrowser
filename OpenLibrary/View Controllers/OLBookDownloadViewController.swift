@@ -80,11 +80,16 @@ class OLBookDownloadViewController: UIViewController, UIDocumentInteractionContr
         queryCoordinator?.updateUI()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        
+        navigationController?.setNavigationBarHidden( false, animated: animated )
+        
+        super.viewWillAppear( animated )
+    }
+    
     override func viewDidAppear(animated: Bool) {
         
         super.viewDidAppear( animated )
-        
-        navigationController?.setNavigationBarHidden( false, animated: true )
     }
     
     // MARK: Utility

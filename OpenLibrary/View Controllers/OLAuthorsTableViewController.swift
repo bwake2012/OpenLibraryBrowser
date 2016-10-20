@@ -12,8 +12,8 @@ typealias SaveAuthorKey = ( authorKey: String ) -> Void
 
 class OLAuthorsTableViewController: UIViewController {
 
-    @IBOutlet var tableView: UITableView!
-    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var saveAuthorKey: SaveAuthorKey?
 
@@ -27,14 +27,26 @@ class OLAuthorsTableViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         assert( nil != queryCoordinator )
         
+        self.edgesForExtendedLayout = .None
+        navigationController?.navigationBar.translucent = false
+        
         self.tableView.estimatedRowHeight = 102.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
         
         self.tableView.tableFooterView = OLTableViewHeaderFooterView.createFromNib()
-        
-        queryCoordinator?.updateUI()
-    }
 
+        queryCoordinator?.updateUI()
+        
+        print( "\(self.topLayoutGuide.debugDescription)" )
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        navigationController?.setNavigationBarHidden( false, animated: animated )
+        
+        super.viewWillAppear( animated )
+    }
+    
     // MARK: Query in Progress
     func coordinatorIsBusy() -> Void {
         

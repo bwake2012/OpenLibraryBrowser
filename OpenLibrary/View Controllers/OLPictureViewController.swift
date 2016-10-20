@@ -26,18 +26,20 @@ class OLPictureViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(animated: Bool) {
+        
+        navigationController?.setNavigationBarHidden( false, animated: animated )
+        
+        super.viewWillAppear( animated )
+    }
+    
     override func viewDidAppear(animated: Bool) {
         
         super.viewDidAppear( animated )
         
-        navigationController?.setNavigationBarHidden( false, animated: true )
-
         assert( nil != queryCoordinator )
         
-        if let queryCoordinator = queryCoordinator {
-            
-            queryCoordinator.updateUI()
-        }
+        queryCoordinator?.updateUI()
     }
     
     override func viewWillDisappear(animated: Bool) {
