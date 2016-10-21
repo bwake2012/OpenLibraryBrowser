@@ -338,17 +338,6 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         }
         
         var newData = [DeluxeData]()
-        if !self.publishers.isEmpty {
-            
-            let display = publishers.joinWithSeparator( ", " )
-            newData.append(
-                DeluxeData(
-                        type: .block,
-                        caption: "Publisher\(publishers.count > 1 ? "s" : "")",
-                        value: display
-                    )
-                )
-        }
         
         if !self.publish_date.isEmpty {
             
@@ -358,6 +347,35 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         if !self.copyright_date.isEmpty {
             
             newData.append( DeluxeData( type: .block, caption: "Copyright", value: self.copyright_date ) )
+        }
+        
+        if !self.publishers.isEmpty {
+            
+            let display = publishers.joinWithSeparator( ", " )
+            newData.append(
+                DeluxeData(
+                    type: .block,
+                    caption: "Publisher\(publishers.count > 1 ? "s" : "")",
+                    value: display
+                )
+            )
+        }
+        
+        if !self.publish_places.isEmpty {
+            
+            let display = publish_places.joinWithSeparator( ", " )
+            newData.append(
+                DeluxeData(
+                    type: .block,
+                    caption: "Published Place\(publish_places.count > 1 ? "s" : "")",
+                    value: display
+                )
+            )
+        }
+
+        if !self.publish_country.isEmpty {
+            
+            newData.append( DeluxeData( type: .block, caption: "Published Country", value: findCountryName( forCode: publish_country ) ) )
         }
         
         if !languages.isEmpty {

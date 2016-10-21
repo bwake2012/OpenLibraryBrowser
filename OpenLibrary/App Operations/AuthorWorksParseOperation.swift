@@ -96,9 +96,11 @@ class AuthorWorksParseOperation: Operation {
             return
         }
 
+        let pageSizeReturned = entries.count
+        
         if 0 == numFound {
             
-            numFound = offset + entries.count
+            numFound = offset + pageSizeReturned
         }
             
         if 0 == numFound {
@@ -116,21 +118,12 @@ class AuthorWorksParseOperation: Operation {
             
             var index = self.offset
             
-//            var authorDetail: OLAuthorDetail?
-//            if let parentObjectID = self.parentObjectID {
-//                
-//                authorDetail = self.context.objectWithID( parentObjectID ) as? OLAuthorDetail
-//            }
-            
-                for entry in entries {
-                    
-                    if nil != OLWorkDetail.parseJSON( self.authorKey, index: index, json: entry, moc: self.context ) {
-                    
-                        index += 1
-                        
-//                        print( "\(newObject.author_key) \(newObject.key) \(newObject.title)" )
-                    }
-
+            for entry in entries {
+                
+                if nil != OLWorkDetail.parseJSON( self.authorKey, index: index, json: entry, moc: self.context ) {
+                
+                    index += 1
+                }
             }
         
             let error = self.saveContext()

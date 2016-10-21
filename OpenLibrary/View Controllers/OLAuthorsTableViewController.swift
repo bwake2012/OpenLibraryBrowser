@@ -36,8 +36,6 @@ class OLAuthorsTableViewController: UIViewController {
         self.tableView.tableFooterView = OLTableViewHeaderFooterView.createFromNib()
 
         queryCoordinator?.updateUI()
-        
-        print( "\(self.topLayoutGuide.debugDescription)" )
     }
     
     override func viewWillAppear(animated: Bool) {

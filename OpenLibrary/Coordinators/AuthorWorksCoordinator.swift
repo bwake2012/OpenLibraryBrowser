@@ -33,6 +33,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
 
     var highWaterMark = 0
     var setRetrievals = Set< Int >()
+    var objectRetrievalsInProgress = Set< NSManagedObjectID >()
     
     init( authorKey: String, authorWorksTableVC: OLAuthorDetailWorksTableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
         
@@ -73,12 +74,16 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
             
             if nil == authorWorksGetOperation {
 
+                let workObjectID = workDetail.objectID
+
                 if !setRetrievals.contains( index / kPageSize ) {
                 
                     authorWorksGetOperation =
                         enqueueQuery( authorKey, offset: index, userInitiated: false, refreshControl: nil )
                     
-                } else {
+                } else if !objectRetrievalsInProgress.contains( workObjectID ) {
+                    
+                    objectRetrievalsInProgress.insert( workObjectID )
                     
                     authorWorksGetOperation =
                         WorkDetailGetOperation(
@@ -156,7 +161,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
         }
         
         updateHeader( "" )
-        if nil == authorWorksGetOperation  {
+        if nil == authorWorksGetOperation && ( -1 == searchResults.numFound || highWaterMark < searchResults.numFound ) {
             
             updateFooter( "fetching more author works..." )
             
@@ -229,16 +234,11 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
             
             if let strongSelf = self {
                 
-                strongSelf.searchResults = searchResults
-                if searchResults.numFound == strongSelf.fetchedResultsController.count {
-                    
-                    strongSelf.highWaterMark = searchResults.numFound
-
-                } else {
-
-                    strongSelf.highWaterMark =
-                        max( strongSelf.fetchedResultsController.count, searchResults.start + searchResults.pageSize )
-                }
+                let numFound = max( searchResults.numFound, strongSelf.fetchedResultsController.count )
+                strongSelf.searchResults =
+                    SearchResults( start: searchResults.start, numFound: searchResults.pageSize, pageSize: numFound )
+                strongSelf.highWaterMark =
+                    max( strongSelf.fetchedResultsController.count, numFound )
             }
         }
     }
@@ -310,11 +310,6 @@ extension AuthorWorksCoordinator: FetchedResultsControllerDelegate {
             
             newQuery( authorKey, userInitiated: true, refreshControl: nil )
             return
-        }
-        
-        if workDetail.isProvisional {
-            
-            newQuery( authorKey, userInitiated: true, refreshControl: nil )
         }
         
         highWaterMark = controller.count

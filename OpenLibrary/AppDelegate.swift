@@ -74,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow( frame: UIScreen.mainScreen().bounds )
         window?.rootViewController = launchController
 
-        nukeObsoleteStore()
+//        nukeObsoleteStore()
 
         CoreDataStack.constructSQLiteStack( withModelName: storeName ) {
             

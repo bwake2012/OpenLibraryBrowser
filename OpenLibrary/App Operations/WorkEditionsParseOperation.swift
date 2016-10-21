@@ -110,6 +110,10 @@ class WorkEditionsParseOperation: Operation {
             return
         }
         
+        if entries.count < limit {
+            numFound = min( numFound, offset + entries.count )
+        }
+        
         context.performBlock {
             
             var index = self.offset

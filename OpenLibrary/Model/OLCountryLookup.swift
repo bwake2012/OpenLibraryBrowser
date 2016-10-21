@@ -27,11 +27,20 @@ class OLCountryLookup {
         
         for entry in country {
             
-            if let code = entry["code"] as? String {
+            var nameText = ""
+            if let name = entry["name"] as? [String: String] {
                 
-                if let name = entry["name"] as? [String: String] {
+                nameText = name["__text"] ?? ""
+            }
+            if !nameText.isEmpty {
+                
+                if let code = entry["code"] as? String {
                     
-                    if let nameText = name["__text"] {
+                    countryLookup[code] = nameText
+
+                } else if let codeArray = entry["code"] as? [AnyObject] {
+                        
+                    if let code = codeArray[0] as? String {
                         
                         countryLookup[code] = nameText
                     }
@@ -42,31 +51,18 @@ class OLCountryLookup {
         return countryLookup.isEmpty ? nil : countryLookup
     }
     
-    init?() {
+    init() {
 
-        var scratchURL: NSURL?
-        do {
-
-            let dataFolder =
-                try NSFileManager.defaultManager().URLForDirectory(
-                            .ApplicationSupportDirectory,
-                            inDomain: .UserDomainMask,
-                            appropriateForURL: nil,
-                            create: true
-                        )
-            scratchURL = dataFolder.URLByAppendingPathComponent( "countries.json", isDirectory: false )
-        }
-        catch let urlError as NSError {
+        let mainBundle = NSBundle.mainBundle()
+        guard let countriesPath = mainBundle.pathForResource( "countries", ofType: "json" ) else {
             
-            print( "\(urlError.debugDescription)" )
-            return nil
+            fatalError( "OLCountryLookup could not retrieve countries.json" )
         }
         
-        guard let url = scratchURL else {
-            return nil
-        }
+        let url = NSURL.fileURLWithPath( countriesPath )
         guard let stream = NSInputStream( URL: url ) else {
-            return nil
+
+            fatalError( "OLCountryLookup could not open \(url.absoluteString)" )
         }
         
         stream.open()
@@ -81,17 +77,59 @@ class OLCountryLookup {
                 countryLookup = parse( json )
                 if nil == countryLookup {
                     
-                    return nil
+                    fatalError( "Could not parse countries.json")
                 }
             }
             else {
-                return nil
+                
+                fatalError( "Could not serialize countries.json" )
             }
         }
         catch let jsonError as NSError {
             
-            print( "\(jsonError.debugDescription)" )
-            return nil
+            fatalError( "\(jsonError.debugDescription)" )
+        }
+    }
+    
+    func findName( forCode code: String ) -> String {
+        
+        guard let countryLookup = countryLookup else {
+            
+            assert( false )
+            return "***** Country Lookup not initialized. *****"
+        }
+        
+        if var name = countryLookup[code] {
+            
+            if 3 == code.characters.count {
+                
+                if let lastChar = code.characters.last {
+
+                    switch String( lastChar ) {
+                        
+                        case "a":
+                            name += ", Australia"
+                        case "u":
+                            name += ", USA"
+                        case "k":
+                            name += ", United Kingdom"
+                        case "c":
+                            name += ", Canada"
+                        default:
+                            break
+                    }
+                }
+            }
+            
+            return name
+        
+        } else if let name = countryLookup[ "-" + code ] {
+            
+            return name
+            
+        } else {
+            
+            return "Name for code \"\(code)\" not found."
         }
     }
 }
