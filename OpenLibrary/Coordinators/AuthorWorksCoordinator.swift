@@ -236,9 +236,8 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
                 
                 let numFound = max( searchResults.numFound, strongSelf.fetchedResultsController.count )
                 strongSelf.searchResults =
-                    SearchResults( start: searchResults.start, numFound: searchResults.pageSize, pageSize: numFound )
-                strongSelf.highWaterMark =
-                    max( strongSelf.fetchedResultsController.count, numFound )
+                    SearchResults( start: searchResults.start, numFound: numFound, pageSize: searchResults.pageSize )
+                strongSelf.highWaterMark = strongSelf.fetchedResultsController.count
             }
         }
     }
