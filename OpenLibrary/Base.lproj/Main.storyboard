@@ -15,10 +15,10 @@
                         <viewControllerLayoutGuide type="bottom" id="9hu-f5-1ns"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="44F-Fc-dXV">
-                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="102" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hw0-1g-Jjf">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="102" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hw0-1g-Jjf">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -28,7 +28,7 @@
                                 </connections>
                             </tableView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="m4X-Sy-Yyr">
-                                <rect key="frame" x="282" y="249" width="37" height="37"/>
+                                <rect key="frame" x="282" y="281" width="37" height="37"/>
                                 <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
                         </subviews>
@@ -133,10 +133,10 @@
                         <viewControllerLayoutGuide type="bottom" id="I7o-uz-BMJ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="E9i-lD-K5G" userLabel="Main View">
-                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X5l-DS-s9F">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X5l-DS-s9F">
                                 <rect key="frame" x="0.0" y="64" width="600" height="492"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" delaysContentTouches="NO" translatesAutoresizingMaskIntoConstraints="NO" id="40d-Cf-gTX">
@@ -425,10 +425,10 @@
                         <viewControllerLayoutGuide type="bottom" id="JCJ-nm-GHM"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" restorationIdentifier="sortFields" id="ahF-N3-LY1">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" restorationIdentifier="sortByAuthor" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CVG-r0-Hpg" userLabel="sortByAuthor">
+                            <button contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" restorationIdentifier="sortByAuthor" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CVG-r0-Hpg" userLabel="sortByAuthor">
                                 <rect key="frame" x="16" y="75" width="28" height="26"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="rsw-notsorted-28x26"/>
@@ -436,7 +436,7 @@
                                     <action selector="sortByIcon:" destination="Xmm-OC-cfc" eventType="touchUpInside" id="UkU-aD-UBB"/>
                                 </connections>
                             </button>
-                            <button contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" restorationIdentifier="sortByTitle" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sEw-iL-ZCH" userLabel="sortByTitle">
+                            <button contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" restorationIdentifier="sortByTitle" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sEw-iL-ZCH" userLabel="sortByTitle">
                                 <rect key="frame" x="16" y="115" width="28" height="26"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="rsw-notsorted-28x26"/>
@@ -444,7 +444,7 @@
                                     <action selector="sortByIcon:" destination="Xmm-OC-cfc" eventType="touchUpInside" id="Gkk-co-gu0"/>
                                 </connections>
                             </button>
-                            <button contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" restorationIdentifier="sortByEditionCount" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xsL-af-loo" userLabel="sortByEditionCount">
+                            <button contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" restorationIdentifier="sortByEditionCount" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xsL-af-loo" userLabel="sortByEditionCount">
                                 <rect key="frame" x="16" y="155" width="28" height="26"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="rsw-notsorted-28x26"/>
@@ -452,7 +452,7 @@
                                     <action selector="sortByIcon:" destination="Xmm-OC-cfc" eventType="touchUpInside" id="Ilv-lB-ng5"/>
                                 </connections>
                             </button>
-                            <button contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" restorationIdentifier="sortByEBookCount" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QEb-uE-3N7" userLabel="sortByElectronicEditions">
+                            <button contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" restorationIdentifier="sortByEBookCount" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QEb-uE-3N7" userLabel="sortByElectronicEditions">
                                 <rect key="frame" x="16" y="195" width="28" height="26"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="rsw-notsorted-28x26"/>
@@ -460,7 +460,7 @@
                                     <action selector="sortByIcon:" destination="Xmm-OC-cfc" eventType="touchUpInside" id="mXr-4X-1sh"/>
                                 </connections>
                             </button>
-                            <button contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" restorationIdentifier="sortByFirstPublishYear" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VWn-eX-ZCZ" userLabel="sortByFirstPublishYear">
+                            <button contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" restorationIdentifier="sortByFirstPublishYear" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VWn-eX-ZCZ" userLabel="sortByFirstPublishYear">
                                 <rect key="frame" x="16" y="235" width="28" height="26"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="rsw-notsorted-28x26"/>
@@ -468,7 +468,7 @@
                                     <action selector="sortByIcon:" destination="Xmm-OC-cfc" eventType="touchUpInside" id="pTe-7R-DyI"/>
                                 </connections>
                             </button>
-                            <button contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="EhG-1g-qly">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="EhG-1g-qly">
                                 <rect key="frame" x="52" y="72" width="252" height="32"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -477,7 +477,7 @@
                                     <action selector="sortByLabel:" destination="Xmm-OC-cfc" eventType="touchUpInside" id="zly-zM-MtS"/>
                                 </connections>
                             </button>
-                            <button contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="zhw-we-xGc">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="zhw-we-xGc">
                                 <rect key="frame" x="52" y="112" width="252" height="32"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -486,7 +486,7 @@
                                     <action selector="sortByLabel:" destination="Xmm-OC-cfc" eventType="touchUpInside" id="KCd-oK-QNx"/>
                                 </connections>
                             </button>
-                            <button contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="QxR-sZ-ZKg">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="QxR-sZ-ZKg">
                                 <rect key="frame" x="52" y="152" width="252" height="32"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -495,7 +495,7 @@
                                     <action selector="sortByLabel:" destination="Xmm-OC-cfc" eventType="touchUpInside" id="XdU-4O-r4T"/>
                                 </connections>
                             </button>
-                            <button contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="SUC-X3-2RT">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="SUC-X3-2RT">
                                 <rect key="frame" x="52" y="192" width="252" height="32"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -504,7 +504,7 @@
                                     <action selector="sortByLabel:" destination="Xmm-OC-cfc" eventType="touchUpInside" id="BjF-ZP-HpV"/>
                                 </connections>
                             </button>
-                            <button contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="a9G-S7-6D9">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="a9G-S7-6D9">
                                 <rect key="frame" x="52" y="232" width="252" height="32"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -576,7 +576,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="authorDeluxeDetailTableView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jwx-Vz-ory" customClass="OLDeluxeDetailTableViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="147" sectionHeaderHeight="28" sectionFooterHeight="28" id="fG2-4v-rgU">
-                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <connections>
@@ -602,13 +602,13 @@
                         <viewControllerLayoutGuide type="bottom" id="9Xr-WN-f05"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="hqx-Qe-DDf">
-                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p7T-mp-Z6E">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p7T-mp-Z6E">
                                 <rect key="frame" x="20" y="64" width="560" height="536"/>
                             </imageView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="s8r-Ab-8re">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="s8r-Ab-8re">
                                 <rect key="frame" x="282" y="313.5" width="37" height="37"/>
                                 <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
@@ -1071,10 +1071,10 @@ MarkDown text to HTML for display.
                         <viewControllerLayoutGuide type="bottom" id="8Qy-49-bqy"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="SLx-w6-l5i">
-                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="crf-cB-pWP" userLabel="Header View">
+                            <view contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="crf-cB-pWP" userLabel="Header View">
                                 <rect key="frame" x="0.0" y="64" width="600" height="144"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="760" verticalCompressionResistancePriority="760" restorationIdentifier="AuthorMedium" translatesAutoresizingMaskIntoConstraints="NO" id="Mbp-JV-VXv" customClass="AspectRatioImageView" customModule="OpenLibrary" customModuleProvider="target">
@@ -1092,7 +1092,7 @@ MarkDown text to HTML for display.
                                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="750" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yQR-hM-ckY" userLabel="Scroll Summary">
                                                 <rect key="frame" x="0.0" y="0.0" width="448" height="128"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="r9x-fH-erk">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="r9x-fH-erk">
                                                         <rect key="frame" x="0.0" y="0.0" width="448" height="128"/>
                                                         <subviews>
                                                             <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" misplaced="YES" text="edition title" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hw2-t8-xO1">
@@ -1102,14 +1102,14 @@ MarkDown text to HTML for display.
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" misplaced="YES" text="edition subtitle" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0dE-u2-iMJ">
+                                                            <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="edition subtitle" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0dE-u2-iMJ">
                                                                 <rect key="frame" x="0.0" y="24" width="448" height="17"/>
                                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label userInteractionEnabled="NO" contentMode="TopLeft" verticalCompressionResistancePriority="1000" misplaced="YES" text="edition author" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BCj-VO-gb0" userLabel="Work Author">
+                                                            <label userInteractionEnabled="NO" contentMode="TopLeft" verticalCompressionResistancePriority="1000" text="edition author" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BCj-VO-gb0" userLabel="Work Author">
                                                                 <rect key="frame" x="0.0" y="45" width="448" height="84"/>
                                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
@@ -1119,7 +1119,7 @@ MarkDown text to HTML for display.
                                                         </subviews>
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" misplaced="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Daa-Wu-hPc" userLabel="Display Deluxe Detail">
-                                                        <rect key="frame" x="0.0" y="0.0" width="448" height="260.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="448" height="220.5"/>
                                                         <connections>
                                                             <segue destination="jwx-Vz-ory" kind="show" identifier="displayDeluxeWorkDetail" customClass="SegueWithUnfold" customModule="OpenLibrary" customModuleProvider="target" id="e97-o9-TlG"/>
                                                         </connections>
@@ -1175,14 +1175,14 @@ MarkDown text to HTML for display.
                                     <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="Mbp-JV-VXv" secondAttribute="bottom" id="tca-kS-VoX"/>
                                 </constraints>
                             </view>
-                            <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k3K-Yk-1Gr">
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k3K-Yk-1Gr">
                                 <rect key="frame" x="0.0" y="208" width="600" height="392"/>
                                 <connections>
                                     <segue destination="ngT-C6-aPc" kind="embed" identifier="embedWorkEBooks" id="Afh-8e-9Xv"/>
                                 </connections>
                             </containerView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="NI8-mo-MUe">
-                                <rect key="frame" x="282" y="249" width="37" height="37"/>
+                                <rect key="frame" x="282" y="281" width="37" height="37"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1347,7 +1347,7 @@ MarkDown text to HTML for display.
             <objects>
                 <navigationController storyboardIdentifier="rootNavigationController" automaticallyAdjustsScrollViewInsets="NO" definesPresentationContext="YES" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" hidesBarsOnSwipe="YES" id="NJ0-nM-swT" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="3G7-NY-hHa">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="3G7-NY-hHa">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1373,7 +1373,7 @@ MarkDown text to HTML for display.
         <image name="rsw-notsorted-28x26" width="28" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="dvZ-I4-SaB"/>
+        <segue reference="Bqz-gA-wL1"/>
         <segue reference="FM2-bP-Kat"/>
     </inferredMetricsTieBreakers>
 </document>
