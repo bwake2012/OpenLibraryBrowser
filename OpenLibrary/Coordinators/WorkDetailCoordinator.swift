@@ -219,11 +219,11 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         
         if workDetail.mayHaveFullText && workDetail.ebook_items.isEmpty  {
             
-            newEbookItemQuery( workDetail )
+            newEbookItemQuery()
         }
     }
     
-    func newEbookItemQuery( workDetail: OLWorkDetail ) {
+    func newEbookItemQuery() {
     
         guard libraryIsReachable() else {
             
@@ -234,7 +234,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
             
             ebookItemGetOperation =
                 WorkEditionEbooksGetOperation(
-                    workKey: workDetail.key,
+                    workKey: self.workDetail.key,
                     coreDataStack: coreDataStack
                 ) {
                     
@@ -244,9 +244,9 @@ class WorkDetailCoordinator: OLQueryCoordinator {
                             
                         if let strongSelf = self {
                             
-                            if workDetail.ebook_items.isEmpty {
+                            if strongSelf.workDetail.ebook_items.isEmpty {
                                 
-                                workDetail.has_fulltext = 0
+                                strongSelf.workDetail.has_fulltext = 0
                             }
                             
                             strongSelf.ebookItemGetOperation = nil
