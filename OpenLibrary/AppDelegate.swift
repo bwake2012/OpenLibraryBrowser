@@ -81,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             result in
             
             switch result {
-                
+
             case .Success(let stack):
                 
                 self.coreDataStack = stack
@@ -99,7 +99,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     
                     dispatch_async( dispatch_get_main_queue() ) {
                         
-                        self.window?.rootViewController = self.navController                   }
+                        let navController = self.navController
+                        navController.navigationBar.barStyle = .Black
+                        self.window?.rootViewController = navController                   }
                 }
 
             case .Failure(let error):
