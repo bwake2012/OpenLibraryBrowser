@@ -137,9 +137,16 @@ struct DeluxeData {
 
 class OLManagedObject: NSManagedObject {
     
+    private static var countryLookup = OLCountryLookup()
+    
     static var languageLookup = [String: String]()
     
     static var authorCache = NSCache()
+    
+    func findCountryName( forCode code: String ) -> String {
+        
+        return OLManagedObject.countryLookup.findName( forCode: code )
+    }
     
     func cachedAuthor( authorKey: String ) -> String? {
         
