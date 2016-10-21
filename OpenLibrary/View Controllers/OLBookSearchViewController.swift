@@ -110,9 +110,9 @@ class OLBookSearchViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         
-        navigationController?.setNavigationBarHidden( false, animated: animated )
-        
         super.viewWillAppear( animated )
+        
+        navigationController?.setNavigationBarHidden( false, animated: animated )
     }
     
     override func didReceiveMemoryWarning() {

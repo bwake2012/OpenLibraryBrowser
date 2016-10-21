@@ -33,10 +33,10 @@ class OLEBookEditionsTableViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         
-        navigationController?.setNavigationBarHidden( false, animated: animated )
-        
         super.viewWillAppear( animated )
         
+        navigationController?.setNavigationBarHidden( false, animated: animated )
+
         queryCoordinator?.updateUI()
     }
     

@@ -306,7 +306,7 @@ extension AuthorWorksCoordinator: FetchedResultsControllerDelegate {
     // MARK: FetchedResultsControllerDelegate
     func fetchedResultsControllerDidPerformFetch( controller: FetchedOLWorkDetailController ) {
         
-        guard let workDetail = controller.fetchedObjects?.first else {
+        guard nil != controller.fetchedObjects?.first else {
             
             newQuery( authorKey, userInitiated: true, refreshControl: nil )
             return

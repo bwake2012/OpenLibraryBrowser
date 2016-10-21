@@ -49,10 +49,10 @@ class OLAuthorDetailViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
+
+        super.viewWillAppear( animated )
         
         navigationController?.setNavigationBarHidden( false, animated: animated )
-        
-        super.viewWillAppear( animated )
     }
     
     override func viewDidAppear(animated: Bool) {
