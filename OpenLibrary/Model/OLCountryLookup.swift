@@ -34,16 +34,22 @@ class OLCountryLookup {
             }
             if !nameText.isEmpty {
                 
-                if let code = entry["code"] as? String {
+                var code = entry["code"] as? String
+                
+                if nil == code {
+                
+                    if let codeArray = entry["code"] as? [AnyObject] {
+                        
+                        code = codeArray[0] as? String
+                    }
+                }
+                
+                if var code = code {
+                    
+                    code = code.stringByTrimmingCharactersInSet( NSCharacterSet.whitespaceAndNewlineCharacterSet() )
+                    code = code.lowercaseString
                     
                     countryLookup[code] = nameText
-
-                } else if let codeArray = entry["code"] as? [AnyObject] {
-                        
-                    if let code = codeArray[0] as? String {
-                        
-                        countryLookup[code] = nameText
-                    }
                 }
             }
         }
@@ -99,24 +105,33 @@ class OLCountryLookup {
             return "***** Country Lookup not initialized. *****"
         }
         
+        var code = code.stringByTrimmingCharactersInSet( NSCharacterSet.whitespaceAndNewlineCharacterSet() )
+        code = code.lowercaseString
+        
         if var name = countryLookup[code] {
             
             if 3 == code.characters.count {
                 
                 if let lastChar = code.characters.last {
 
+                    var countryName: String?
                     switch String( lastChar ) {
                         
                         case "a":
-                            name += ", Australia"
+                            countryName = "Australia"
                         case "u":
-                            name += ", USA"
+                            countryName = "United States"
                         case "k":
-                            name += ", United Kingdom"
+                            countryName = "United Kingdom"
                         case "c":
-                            name += ", Canada"
+                            countryName = "Canada"
                         default:
                             break
+                    }
+                    
+                    if let countryName = countryName where countryName != name {
+                        
+                        name += ", " + countryName
                     }
                 }
             }
