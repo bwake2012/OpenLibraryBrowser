@@ -123,7 +123,9 @@ class WindowShadeTransition: ZoomTransition {
         let masterVC = self.operation == .Push ? fromVC : toVC
         let detailVC = self.operation == .Push ? toVC   : fromVC
         let masterView = masterVC.view
+        let masterFrame = masterView.frame
         let detailView = detailVC.view
+        let detailFrame = detailView.frame
                 
         let finalFrame = transitionContext.finalFrameForViewController( toVC )
         if self.operation == .Push {
@@ -172,22 +174,22 @@ class WindowShadeTransition: ZoomTransition {
         
         let topBarsFrame =
                 CGRect(
-                        origin: masterView.frame.origin,
-                        size: CGSize( width: masterView.frame.width, height: topBarsHeight )
+                        origin: masterFrame.origin,
+                        size: CGSize( width: masterFrame.width, height: topBarsHeight )
                     )
         var animaTopBars =
             animaViews( topBarsFrame, viewSnapshot: .Push == self.operation ? masterSnapshot : detailSnapshot )
         
         var animaMaster =
-            animaViews( masterView.frame, viewSnapshot: masterSnapshot )
+            animaViews( masterFrame, viewSnapshot: masterSnapshot )
         
-        var animaDetail = animaViews( detailView.frame, viewSnapshot: detailSnapshot )
+        var animaDetail = animaViews( detailFrame, viewSnapshot: detailSnapshot )
         let frameUp =
             CGRect(
                     origin: CGPoint( x: 0, y: topBarsHeight - finalFrame.height ),
-                    size: detailView.frame.size
+                    size: finalFrame.size
                 )
-        let frameDown = CGRect( origin: CGPoint( x: 0, y: 0 ), size: finalFrame.size )
+        let frameDown = CGRect( origin: CGPoint( x: 0, y: topBarsHeight ), size: finalFrame.size )
         
         let frameStart = .Push == self.operation ? frameUp   : frameDown
         let frameEnd   = .Push == self.operation ? frameDown : frameUp
@@ -204,9 +206,8 @@ class WindowShadeTransition: ZoomTransition {
         inView.addSubview( backgroundView )
         inView.addSubview( detailSmokeScreenView )
         
-        let inViewFrame = inView.frame
         animaMaster?.setParentView( inView )
-        animaMaster?.frame = inViewFrame
+        animaMaster?.frame = finalFrame
         animaDetail?.setParentView( inView )
         animaDetail?.frame = frameStart
         animaTopBars?.setParentView( inView )
