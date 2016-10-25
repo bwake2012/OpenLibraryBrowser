@@ -128,12 +128,16 @@ class WindowShadeTransition: ZoomTransition {
         let detailFrame = detailView.frame
                 
         let finalFrame = transitionContext.finalFrameForViewController( toVC )
+        
         if self.operation == .Push {
             detailView!.frame = finalFrame
         } else {
             masterView.frame = finalFrame
         }
         
+        let isNavBarVisible =
+            ( .Push == self.operation ) ? ( 0 != masterFrame.origin.y ) : ( 0 != detailFrame.origin.y )
+
         let initialAlpha = CGFloat( self.operation == .Push ? 0.0 : 1.0 )
         let finalAlpha   = CGFloat( self.operation == .Push ? 1.0 : 0.0 )
         
@@ -171,7 +175,6 @@ class WindowShadeTransition: ZoomTransition {
         let masterSnapshot = masterView.dt_takeSnapshot( 0, yOffset: masterContentOffset.y )
         
         let topBarsHeight = masterVC.topLayoutGuide.length
-        
         let topBarsFrame =
                 CGRect(
                         origin: masterFrame.origin,
@@ -180,16 +183,18 @@ class WindowShadeTransition: ZoomTransition {
         var animaTopBars =
             animaViews( topBarsFrame, viewSnapshot: .Push == self.operation ? masterSnapshot : detailSnapshot )
         
-        var animaMaster =
-            animaViews( masterFrame, viewSnapshot: masterSnapshot )
+        let movingFrame = CGRect( origin: CGPointZero, size: finalFrame.size )
         
-        var animaDetail = animaViews( detailFrame, viewSnapshot: detailSnapshot )
+        var animaMaster =
+            animaViews( isNavBarVisible ? movingFrame : masterFrame, viewSnapshot: masterSnapshot )
+        
+        var animaDetail = animaViews( isNavBarVisible ? movingFrame : detailFrame, viewSnapshot: detailSnapshot )
         let frameUp =
             CGRect(
                     origin: CGPoint( x: 0, y: topBarsHeight - finalFrame.height ),
                     size: finalFrame.size
                 )
-        let frameDown = CGRect( origin: CGPoint( x: 0, y: topBarsHeight ), size: finalFrame.size )
+        let frameDown = finalFrame
         
         let frameStart = .Push == self.operation ? frameUp   : frameDown
         let frameEnd   = .Push == self.operation ? frameDown : frameUp
