@@ -21,7 +21,7 @@ class AuthorsTableViewCell: OLTableViewCell {
         cellImage.image = nil
     }
 
-    override func configure(tableView: UITableView, indexPath: NSIndexPath, key: String, data: OLManagedObject?) {
+    override func configure(_ tableView: UITableView, indexPath: IndexPath, key: String, data: OLManagedObject?) {
         
         if let data = data as? OLAuthorDetail {
             

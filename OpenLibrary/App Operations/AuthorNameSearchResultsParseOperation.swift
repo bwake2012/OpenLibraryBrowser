@@ -71,9 +71,9 @@ private class ParsedSearchResult: OpenLibraryObject {
 }
 
 /// An `Operation` to parse author name search results out of a downloaded feed from OpenLibrary.org.
-class AuthorNameSearchResultsParseOperation: Operation {
+class AuthorNameSearchResultsParseOperation: PSOperation {
     
-    let cacheFile: NSURL
+    let cacheFile: URL
     let context: NSManagedObjectContext
     let detailContext: NSManagedObjectContext
     let updateResults: SearchResultsUpdater
@@ -90,7 +90,7 @@ class AuthorNameSearchResultsParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( cacheFile: NSURL, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater ) {
+    init( cacheFile: URL, coreDataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -98,8 +98,8 @@ class AuthorNameSearchResultsParseOperation: Operation {
         */
         
         self.cacheFile = cacheFile
-        self.context = coreDataStack.newChildContext()
-        self.detailContext = coreDataStack.newChildContext()
+        self.context = coreDataStack.newChildContext( name: "" )
+        self.detailContext = coreDataStack.newChildContext( name: "" )
         self.context.mergePolicy = NSOverwriteMergePolicy
         self.updateResults = updateResults
         
@@ -109,7 +109,7 @@ class AuthorNameSearchResultsParseOperation: Operation {
     }
     
     override func execute() {
-        guard let stream = NSInputStream(URL: cacheFile) else {
+        guard let stream = InputStream(url: cacheFile) else {
             finish()
             return
         }
@@ -121,7 +121,7 @@ class AuthorNameSearchResultsParseOperation: Operation {
         }
         
         do {
-            if let json = try NSJSONSerialization.JSONObjectWithStream(stream, options: []) as? [String: AnyObject] {
+            if let json = try JSONSerialization.jsonObject(with: stream, options: []) as? [String: AnyObject] {
             
                 parse( json )
             }
@@ -134,7 +134,7 @@ class AuthorNameSearchResultsParseOperation: Operation {
         }
     }
     
-    private func parse( resultSet: [String: AnyObject] ) {
+    fileprivate func parse( _ resultSet: [String: AnyObject] ) {
 
         guard let start = resultSet["start"] as? Int else {
             finishWithError( nil )
@@ -151,7 +151,7 @@ class AuthorNameSearchResultsParseOperation: Operation {
             return
         }
 
-        context.performBlock {
+        context.perform {
             
             var index = Int64( start )
             for result in results {
@@ -179,9 +179,9 @@ class AuthorNameSearchResultsParseOperation: Operation {
         }
     }
     
-    private func insert( parsed: ParsedSearchResult ) {
+    fileprivate func insert( _ parsed: ParsedSearchResult ) {
 
-        let newObject = NSEntityDescription.insertNewObjectForEntityForName( OLAuthorSearchResult.entityName, inManagedObjectContext: context) as! OLAuthorSearchResult
+        let newObject = NSEntityDescription.insertNewObject( forEntityName: OLAuthorSearchResult.entityName, into: context) as! OLAuthorSearchResult
         
         newObject.sequence = parsed.sequence
         newObject.index = parsed.index
@@ -211,7 +211,7 @@ class AuthorNameSearchResultsParseOperation: Operation {
         - note: This method returns an `NSError?` because it will be immediately
             passed to the `finishWithError()` method, which accepts an `NSError?`.
     */
-    private func saveContext() -> NSError? {
+    fileprivate func saveContext() -> NSError? {
         var error: NSError?
 
         do {
@@ -224,7 +224,7 @@ class AuthorNameSearchResultsParseOperation: Operation {
         return error
     }
     
-    func Update( searchResults: SearchResults ) {
+    func Update( _ searchResults: SearchResults ) {
         
         self.searchResults = searchResults
     }

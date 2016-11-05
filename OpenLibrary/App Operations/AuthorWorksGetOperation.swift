@@ -30,14 +30,14 @@ class AuthorWorksGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, parentObjectID: NSManagedObjectID?, offset: Int, limit: Int, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater, completionHandler: Void -> Void ) {
+    init( queryText: String, parentObjectID: NSManagedObjectID?, offset: Int, limit: Int, coreDataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater, completionHandler: @escaping (Void) -> Void ) {
 
-        let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+        let cachesFolder = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
-        let parts = queryText.componentsSeparatedByString( "/" )
+        let parts = queryText.components( separatedBy: "/" )
         let goodParts = parts.filter { (x) -> Bool in !x.isEmpty }
         let authorKey = goodParts.last!
-        let cacheFile = cachesFolder.URLByAppendingPathComponent("\(authorKey)authorWorks.json")
+        let cacheFile = cachesFolder.appendingPathComponent("\(authorKey)authorWorks.json")
 //        print( "cache: \(cacheFile.absoluteString)" )
         
         /*
@@ -51,13 +51,13 @@ class AuthorWorksGetOperation: GroupOperation {
         downloadOperation = AuthorWorksDownloadOperation( queryText: queryText, offset: offset, limit: limit, cacheFile: cacheFile )
         parseOperation = AuthorWorksParseOperation( authorKey: queryText, parentObjectID: parentObjectID, offset: offset, limit: limit, cacheFile: cacheFile, coreDataStack: coreDataStack, updateResults: updateResults )
         
-        let finishOperation = NSBlockOperation( block: completionHandler )
+        let finishOperation = PSBlockOperation { completionHandler() }
         
         // These operations must be executed in order
         parseOperation.addDependency(downloadOperation)
         finishOperation.addDependency(parseOperation)
         
-        let operations = [downloadOperation, parseOperation, finishOperation]
+        let operations = [downloadOperation, parseOperation, finishOperation] as [Foundation.Operation]
         super.init( operations: operations )
 
         addCondition( MutuallyExclusive<AuthorWorksGetOperation>() )
@@ -65,8 +65,8 @@ class AuthorWorksGetOperation: GroupOperation {
         name = "Get Author Works " + queryText
     }
     
-    override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
-        if let firstError = errors.first where (operation === downloadOperation || operation === parseOperation) {
+    override func operationDidFinish(_ operation: Foundation.Operation, withErrors errors: [NSError]) {
+        if let firstError = errors.first , (operation === downloadOperation || operation === parseOperation) {
             produceAlert(firstError)
         }
     }

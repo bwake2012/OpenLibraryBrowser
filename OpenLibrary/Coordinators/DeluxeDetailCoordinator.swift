@@ -26,8 +26,8 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
     var imageGetOperation: ImageGetOperation?
     
     init(
-            operationQueue: OperationQueue,
-            coreDataStack: CoreDataStack,
+            operationQueue: PSOperationQueue,
+            coreDataStack: OLDataStack,
             heading: String,
             deluxeData: [[DeluxeData]],
             imageType: String,
@@ -50,46 +50,46 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
         return deluxeData.count
     }
     
-    func numberOfRowsInSection( section: Int ) -> Int {
+    func numberOfRowsInSection( _ section: Int ) -> Int {
         
 //        print( "section:\(section) rows:\(deluxeData[section].count)" )
         return section < 0 || section >= deluxeData.count ? 0 : deluxeData[section].count
     }
     
-    func objectAtIndexPath( indexPath: NSIndexPath ) -> DeluxeData? {
+    func objectAtIndexPath( _ indexPath: IndexPath ) -> DeluxeData? {
         
-        guard indexPath.section >= 0 else { return nil }
-        guard indexPath.section < deluxeData.count else { return nil }
-        guard indexPath.row >= 0 else { return nil }
-        guard indexPath.row < deluxeData[indexPath.section].count else { return nil }
+        guard (indexPath as NSIndexPath).section >= 0 else { return nil }
+        guard (indexPath as NSIndexPath).section < deluxeData.count else { return nil }
+        guard (indexPath as NSIndexPath).row >= 0 else { return nil }
+        guard (indexPath as NSIndexPath).row < deluxeData[(indexPath as NSIndexPath).section].count else { return nil }
         
-        return deluxeData[indexPath.section][indexPath.row]
+        return deluxeData[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row]
     }
     
-    func didSelectRowAtIndexPath( indexPath: NSIndexPath ) {
+    func didSelectRowAtIndexPath( _ indexPath: IndexPath ) {
     
         guard let vc = deluxeDetailVC else { return }
         guard let obj = objectAtIndexPath( indexPath ) else { return }
         
         if .link == obj.type {
             
-            var urlComponents = NSURLComponents( string: obj.value )
+            var urlComponents = URLComponents( string: obj.value )
             
             if nil == urlComponents {
                 
-                urlComponents = NSURLComponents()
+                urlComponents = URLComponents()
 
                 var hostPlusPath = obj.value
 
                 var scheme = ""
                 if hostPlusPath.hasPrefix( "http://" ) {
                     
-                    hostPlusPath = hostPlusPath.substringFromIndex( hostPlusPath.startIndex.advancedBy( 7 ) )
+                    hostPlusPath = hostPlusPath.substring( from: hostPlusPath.characters.index(hostPlusPath.startIndex, offsetBy: 7) )
                     scheme = "http"
                     
                 } else if hostPlusPath.hasPrefix( "https://" ) {
                     
-                    hostPlusPath = hostPlusPath.substringFromIndex( hostPlusPath.startIndex.advancedBy( 8 ) )
+                    hostPlusPath = hostPlusPath.substring( from: hostPlusPath.characters.index(hostPlusPath.startIndex, offsetBy: 8) )
                     scheme = "https"
                     
                 } else {
@@ -105,8 +105,8 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
                         
                         if "/" == hostPlusPath[index] {
                             
-                            host = hostPlusPath.substringToIndex( index )
-                            path = hostPlusPath.substringFromIndex( index )
+                            host = hostPlusPath.substring( to: index )
+                            path = hostPlusPath.substring( from: index )
                             break
                         }
                     }
@@ -120,23 +120,23 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
                     urlComponents?.path = path
                 }
             }
-            if let url = urlComponents?.URL {
+            if let url = urlComponents?.url {
                 
                 showLinkedWebSite( vc, url: url )
             }
         
         } else if .imageAuthor == obj.type || .imageBook == obj.type {
             
-            vc.performSegueWithIdentifier( "zoomDeluxeDetailImage", sender: self )
+            vc.performSegue( withIdentifier: "zoomDeluxeDetailImage", sender: self )
             
         } else if .downloadBook == obj.type {
             
-            vc.performSegueWithIdentifier( obj.type.reuseIdentifier, sender: self )
+            vc.performSegue( withIdentifier: obj.type.reuseIdentifier, sender: self )
             
         }
     }
     
-    func displayToTableViewCell( tableView: UITableView, indexPath: NSIndexPath ) -> UITableViewCell {
+    func displayToTableViewCell( _ tableView: UITableView, indexPath: IndexPath ) -> UITableViewCell {
         
         var cell: UITableViewCell?
         if let object = objectAtIndexPath( indexPath ) {
@@ -155,7 +155,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
                  .block,
                  .link,
                  .html:
-                if let headerCell = tableView.dequeueReusableCellWithIdentifier( object.type.reuseIdentifier ) as? DeluxeDetailTableViewCell {
+                if let headerCell = tableView.dequeueReusableCell( withIdentifier: object.type.reuseIdentifier ) as? DeluxeDetailTableViewCell {
                     
                     headerCell.configure( object )
                     cell = headerCell
@@ -163,9 +163,9 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
                 break
                 
             case .imageAuthor, .imageBook:
-                if let imageCell = tableView.dequeueReusableCellWithIdentifier( object.type.reuseIdentifier ) as? DeluxeDetailImageTableViewCell {
+                if let imageCell = tableView.dequeueReusableCell( withIdentifier: object.type.reuseIdentifier ) as? DeluxeDetailImageTableViewCell {
                     
-                    if let url = NSURL( string: object.value ) {
+                    if let url = URL( string: object.value ) {
                         if !imageCell.displayFromURL( url ) {
                             
                             if nil == imageGetOperation {
@@ -177,13 +177,13 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
                                         
                                         [weak self] in
                                         
-                                        dispatch_async( dispatch_get_main_queue() ) {
+                                        DispatchQueue.main.async {
                                             
                                             guard let strongSelf = self else { return }
                                             guard let vc = strongSelf.deluxeDetailVC else { return }
                                             
-                                            vc.tableView.reloadRowsAtIndexPaths(
-                                                [indexPath], withRowAnimation: .Automatic
+                                            vc.tableView.reloadRows(
+                                                at: [indexPath], with: .automatic
                                             )
                                         }
                                         
@@ -198,7 +198,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
                     cell = imageCell
                 }
             case .downloadBook, .borrowBook, .buyBook:
-                if let headerCell = tableView.dequeueReusableCellWithIdentifier( object.type.reuseIdentifier ) as? DeluxeDetailTableViewCell {
+                if let headerCell = tableView.dequeueReusableCell( withIdentifier: object.type.reuseIdentifier ) as? DeluxeDetailTableViewCell {
                     
                     headerCell.configure( object )
                     cell = headerCell
@@ -220,7 +220,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
 
     // MARK: query coordinator installation
     
-    func installPictureCoordinator( destVC: OLPictureViewController ) -> Void {
+    func installPictureCoordinator( _ destVC: OLPictureViewController ) -> Void {
         
         guard let deluxeVC = deluxeDetailVC else { return }
         
@@ -228,7 +228,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
         
         guard let object = objectAtIndexPath( indexPath ) else { return }
         
-        guard let largeImageURL = NSURL( string: object.extraValue ) else { return }
+        guard let largeImageURL = URL( string: object.extraValue ) else { return }
         
         destVC.queryCoordinator =
             PictureViewCoordinator(
@@ -241,7 +241,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
                 )
     }
     
-    func installBookDownloadCoordinator( destVC: OLBookDownloadViewController ) -> Void {
+    func installBookDownloadCoordinator( _ destVC: OLBookDownloadViewController ) -> Void {
         
         guard let deluxeVC = deluxeDetailVC else { return }
         
@@ -249,7 +249,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
         
         guard let object = objectAtIndexPath( indexPath ) else { return }
         
-        guard let bookURL = NSURL( string: object.extraValue ) else { return }
+        guard let bookURL = URL( string: object.extraValue ) else { return }
 
         destVC.queryCoordinator =
             BookDownloadCoordinator(
@@ -267,19 +267,19 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
 
 extension DeluxeDetailCoordinator: SFSafariViewControllerDelegate {
     
-    func showLinkedWebSite( vc: UIViewController, url: NSURL? ) {
+    func showLinkedWebSite( _ vc: UIViewController, url: URL? ) {
         
         if let url = url {
-            let webVC = SFSafariViewController( URL: url )
+            let webVC = SFSafariViewController( url: url )
             webVC.delegate = self
-            vc.presentViewController( webVC, animated: true, completion: nil )
+            vc.present( webVC, animated: true, completion: nil )
         }
     }
     
     // MARK: SFSafariViewControllerDelegate
-    func safariViewControllerDidFinish(controller: SFSafariViewController) {
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         
-        controller.dismissViewControllerAnimated( true, completion: nil )
+        controller.dismiss( animated: true, completion: nil )
     }
 
 }

@@ -13,9 +13,9 @@ import BNRCoreDataStack
 import PSOperations
 
 // An `Operation` to parse earthquakes out of a downloaded feed from the USGS.
-class WorkDetailParseOperation: Operation {
+class WorkDetailParseOperation: PSOperation {
     
-    let cacheFile: NSURL
+    let cacheFile: URL
     let context: NSManagedObjectContext
     let resultHandler: ObjectResultClosure?
 
@@ -31,7 +31,7 @@ class WorkDetailParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( cacheFile: NSURL, coreDataStack: CoreDataStack, resultHandler: ObjectResultClosure? ) {
+    init( cacheFile: URL, coreDataStack: OLDataStack, resultHandler: ObjectResultClosure? ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -49,7 +49,7 @@ class WorkDetailParseOperation: Operation {
     }
     
     override func execute() {
-        guard let stream = NSInputStream(URL: cacheFile) else {
+        guard let stream = InputStream(url: cacheFile) else {
             finish()
             return
         }
@@ -61,7 +61,7 @@ class WorkDetailParseOperation: Operation {
         }
         
         do {
-            if let json = try NSJSONSerialization.JSONObjectWithStream(stream, options: []) as? [String: AnyObject] {
+            if let json = try JSONSerialization.jsonObject(with: stream, options: []) as? [String: AnyObject] {
             
                 parse( json )
             }
@@ -74,9 +74,9 @@ class WorkDetailParseOperation: Operation {
         }
     }
     
-    private func parse( resultSet: [String: AnyObject] ) {
+    fileprivate func parse( _ resultSet: [String: AnyObject] ) {
 
-        context.performBlock {
+        context.perform {
             
             if let newObject = OLWorkDetail.parseJSON( "", index: -1, json: resultSet, moc: self.context ) {
             
@@ -90,7 +90,7 @@ class WorkDetailParseOperation: Operation {
 
                 if nil == error && nil != self.resultHandler {
 
-                    self.resultHandler!( objectID: newObject.objectID )
+                    self.resultHandler!( newObject.objectID )
                 }
 
                 self.finishWithError( error )
@@ -107,7 +107,7 @@ class WorkDetailParseOperation: Operation {
         - note: This method returns an `NSError?` because it will be immediately
             passed to the `finishWithError()` method, which accepts an `NSError?`.
     */
-    private func saveContext() -> NSError? {
+    fileprivate func saveContext() -> NSError? {
         var error: NSError?
 
         do {
@@ -120,7 +120,7 @@ class WorkDetailParseOperation: Operation {
         return error
     }
     
-    func Update( searchResults: SearchResults ) {
+    func Update( _ searchResults: SearchResults ) {
         
         self.searchResults = searchResults
     }

@@ -13,11 +13,11 @@ import BNRCoreDataStack
 import PSOperations
 
 /// An `Operation` to parse works out of a query from OpenLibrary.
-class InternetArchiveEbookInfoParseOperation: Operation {
+class InternetArchiveEbookInfoParseOperation: PSOperation {
     
     let eBookKey:   String
     
-    let cacheFile: NSURL
+    let cacheFile: URL
     let context: NSManagedObjectContext
     
     /**
@@ -28,7 +28,7 @@ class InternetArchiveEbookInfoParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( eBookKey: String, cacheFile: NSURL, coreDataStack: CoreDataStack ) {
+    init( eBookKey: String, cacheFile: URL, coreDataStack: OLDataStack ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -38,7 +38,7 @@ class InternetArchiveEbookInfoParseOperation: Operation {
         self.eBookKey   = eBookKey
        
         self.cacheFile = cacheFile
-        self.context = coreDataStack.newChildContext()
+        self.context = coreDataStack.newChildContext( name: "InternetArchiveEbookInfoParse Context" )
         self.context.mergePolicy = NSOverwriteMergePolicy
 
         super.init()
@@ -48,7 +48,7 @@ class InternetArchiveEbookInfoParseOperation: Operation {
 
     override func execute() {
         
-        context.performBlock {
+        context.perform {
 
             let count = OLEBookFile.parseXML( self.eBookKey, localURL: self.cacheFile, moc: self.context )
  
@@ -71,7 +71,7 @@ class InternetArchiveEbookInfoParseOperation: Operation {
         - note: This method returns an `NSError?` because it will be immediately
             passed to the `finishWithError()` method, which accepts an `NSError?`.
     */
-    private func saveContext() -> NSError? {
+    fileprivate func saveContext() -> NSError? {
         var error: NSError?
 
         do {

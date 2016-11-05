@@ -10,11 +10,11 @@ import UIKit
 
 extension UIImageView {
     
-    func displayFromURL( localURL: NSURL ) -> Bool {
+    @discardableResult func displayFromURL( _ localURL: URL ) -> Bool {
         
-        if localURL.fileURL {
+        if localURL.isFileURL {
 
-            if let data = NSData( contentsOfURL: localURL ) {
+            if let data = try? Data( contentsOf: localURL ) {
 
                 if let image = UIImage( data: data ) {
                     

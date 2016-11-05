@@ -26,14 +26,14 @@ class OLPictureViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear( animated )
         
         navigationController?.setNavigationBarHidden( false, animated: animated )
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear( animated )
         
@@ -42,7 +42,7 @@ class OLPictureViewController: UIViewController {
         queryCoordinator?.updateUI()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
 
         if let queryCoordinator = queryCoordinator {
             
@@ -69,11 +69,11 @@ class OLPictureViewController: UIViewController {
     */
 
     // MARK: Utility
-    func displayImage( localURL: NSURL ) -> Bool {
+    func displayImage( _ localURL: URL ) -> Bool {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
 
-        if let data = NSData( contentsOfURL: localURL ) {
+        if let data = try? Data( contentsOf: localURL ) {
             if let image = UIImage( data: data ) {
                 
                 pictureView.image = image

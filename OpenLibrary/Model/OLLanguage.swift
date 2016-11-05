@@ -51,12 +51,12 @@ private class ParsedSearchResult: OpenLibraryObject {
     }
 }
 
-class OLLanguage: OLManagedObject, CoreDataModelable {
+class OLLanguage: OLManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
     static let entityName = "Language"
     
-    class func parseJSON(sequence: Int64, index: Int64, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLLanguage? {
+    class func parseJSON(_ sequence: Int64, index: Int64, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLLanguage? {
         
         guard let parsed = ParsedSearchResult( json: json ) else { return nil }
         
@@ -67,8 +67,8 @@ class OLLanguage: OLManagedObject, CoreDataModelable {
         newObject = findObject( parsed.key, entityName: entityName, moc: moc )
         if nil == newObject {
             newObject =
-                NSEntityDescription.insertNewObjectForEntityForName(
-                        OLLanguage.entityName, inManagedObjectContext: moc
+                NSEntityDescription.insertNewObject(
+                        forEntityName: OLLanguage.entityName, into: moc
                     ) as? OLLanguage
         }
         
@@ -77,7 +77,7 @@ class OLLanguage: OLManagedObject, CoreDataModelable {
             newObject.sequence = sequence
             newObject.index = index
             
-            newObject.retrieval_date = NSDate()
+            newObject.retrieval_date = Date()
         
             newObject.key = parsed.key
         
@@ -87,20 +87,23 @@ class OLLanguage: OLManagedObject, CoreDataModelable {
         
         return newObject
     }
-    
-    class func retrieveLanguages( operationQueue: OperationQueue, coreDataStack: CoreDataStack ) {
+}
+
+extension OLLanguage {
+
+    class func retrieveLanguages( _ operationQueue: PSOperationQueue, coreDataStack: OLDataStack ) {
         
         let context = coreDataStack.newChildContext( name: "findLanguages" )
         
-        context.performBlock {
+        context.perform {
         
             let languageCount = loadLanguageLookup( context )
             if 0 == languageCount {
         
                 let operation = LanguagesGetOperation( coreDataStack: coreDataStack ) {
                     
-                    context.performBlock {
-                        loadLanguageLookup( context )
+                    context.perform {
+                        _ = loadLanguageLookup( context )
                     }
                 }
                 operationQueue.addOperation( operation )
@@ -108,24 +111,21 @@ class OLLanguage: OLManagedObject, CoreDataModelable {
         }
     }
     
-    class func loadLanguageLookup( moc: NSManagedObjectContext ) -> Int {
+    class func loadLanguageLookup( _ moc: NSManagedObjectContext ) -> Int {
         
         var loadedLanguages = [String: String]()
 
-        let fetchRequest = NSFetchRequest( entityName: OLLanguage.entityName )
+        let fetchRequest: NSFetchRequest<OLLanguage> = OLLanguage.buildFetchRequest()
         
         do {
-            let objects = try moc.executeFetchRequest( fetchRequest )
+            let languages = try moc.fetch( fetchRequest )
 
-            for object in objects {
+            for language in languages {
                 
-                if let language = object as? OLLanguage {
-                    
-                    let key = language.key
-                    let name = language.name
-                    
-                    loadedLanguages[key] = name
-                }
+                let key = language.key
+                let name = language.name
+                
+                loadedLanguages[key] = name
             }
         }
         catch {
@@ -134,7 +134,15 @@ class OLLanguage: OLManagedObject, CoreDataModelable {
         
         OLManagedObject.saveLoadedLanguages( loadedLanguages )
 
-        return OLManagedObject.languageLookup.count
+        return loadedLanguages.count
     }
 
+}
+
+extension OLLanguage {
+
+    class func buildFetchRequest() -> NSFetchRequest< OLLanguage > {
+        
+        return NSFetchRequest( entityName: OLLanguage.entityName )
+    }
 }

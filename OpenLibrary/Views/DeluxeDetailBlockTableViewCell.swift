@@ -13,9 +13,9 @@ class DeluxeDetailBlockTableViewCell: DeluxeDetailTableViewCell {
     @IBOutlet weak var captionView: UILabel!
     @IBOutlet weak var blockTextView: UILabel!
     
-    override func configure( data: DeluxeData ) {
+    override func configure( _ data: DeluxeData ) {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
         
         captionView.text = data.caption
         blockTextView.text = data.value

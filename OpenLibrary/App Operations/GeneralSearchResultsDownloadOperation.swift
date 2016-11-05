@@ -13,12 +13,12 @@ import PSOperations
 class GeneralSearchResultsDownloadOperation: GroupOperation {
     // MARK: Properties
 
-    let cacheFile: NSURL
+    let cacheFile: URL
     
     // MARK: Initialization
     
     /// - parameter cacheFile: The file `NSURL` to which the general search results feed will be downloaded.
-    init( queryParms: [String: String], offset: Int, limit: Int, cacheFile: NSURL) {
+    init( queryParms: [String: String], offset: Int, limit: Int, cacheFile: URL) {
 
         self.cacheFile = cacheFile
         super.init(operations: [])
@@ -35,17 +35,17 @@ class GeneralSearchResultsDownloadOperation: GroupOperation {
         var queryString = ""
         for parm in queryParms {
             
-            let value = parm.1.stringByReplacingOccurrencesOfString( " ", withString: "+" )
+            let value = parm.1.replacingOccurrences( of: " ", with: "+" )
             
             queryString += "&" + parm.0 + "=" + value
         }
         let urlString = "https://openlibrary.org/search.json?offset=\(offset)&limit=\(limit)"
-        let url = NSURL( string: urlString + queryString )!
-        let task = NSURLSession.sharedSession().jsonDownloadTaskWithURL( url ) {
+        let url = URL( string: urlString + queryString )!
+        let task = URLSession.shared.jsonDownloadTaskWithURL( url ) {
             
             url, response, error in
             
-            self.downloadFinished(url, response: response as? NSHTTPURLResponse, error: error)
+            self.downloadFinished(url, response: response as? HTTPURLResponse, error: error)
         }
         
         let taskOperation = URLSessionTaskOperation(task: task)
@@ -59,12 +59,12 @@ class GeneralSearchResultsDownloadOperation: GroupOperation {
         addOperation(taskOperation)
     }
     
-    func downloadFinished(url: NSURL?, response: NSHTTPURLResponse?, error: NSError?) {
+    func downloadFinished(_ url: URL?, response: HTTPURLResponse?, error: Error?) {
         
         guard let localURL = url else {
             
             if let error = error {
-                aggregateError( error )
+                aggregateError( error as NSError )
             }
             return
         }
@@ -74,15 +74,15 @@ class GeneralSearchResultsDownloadOperation: GroupOperation {
                 If we already have a file at this location, just delete it.
                 Also, swallow the error, because we don't really care about it.
             */
-            try NSFileManager.defaultManager().removeItemAtURL(cacheFile)
+            try FileManager.default.removeItem(at: cacheFile)
         }
         catch { }
         
         do {
-            try NSFileManager.defaultManager().moveItemAtURL(localURL, toURL: cacheFile)
+            try FileManager.default.moveItem(at: localURL, to: cacheFile)
         }
         catch let error as NSError {
-            aggregateError(error)
+            aggregateError( error )
         }
         
         if let error = validateStreamMIMEType( [jsonMIMEType,textMIMEType], response: response, url: cacheFile ) {

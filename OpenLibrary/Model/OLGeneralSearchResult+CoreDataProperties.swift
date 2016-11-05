@@ -14,9 +14,13 @@ import CoreData
 
 extension OLGeneralSearchResult {
 
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<OLGeneralSearchResult> {
+        return NSFetchRequest<OLGeneralSearchResult>( entityName: OLGeneralSearchResult.entityName )
+    }
+    
     @NSManaged var      sequence: Int64
     @NSManaged var      index: Int64
-    @NSManaged var      retrieval_date: NSDate?
+    @NSManaged var      retrieval_date: Date?
     
     @NSManaged var 	    author_key: [String]
     @NSManaged var 	    author_name: [String]

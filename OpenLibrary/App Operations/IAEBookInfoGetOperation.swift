@@ -30,11 +30,11 @@ class InternetArchiveEbookInfoGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( eBookKey: String, coreDataStack: CoreDataStack, completionHandler: Void -> Void ) {
+    init( eBookKey: String, coreDataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
 
-        let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+        let cachesFolder = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
-        let cacheFile = cachesFolder.URLByAppendingPathComponent("\(eBookKey)IAEBookInfo.xml")
+        let cacheFile = cachesFolder.appendingPathComponent("\(eBookKey)IAEBookInfo.xml")
 //        print( "cache: \(cacheFile.absoluteString)" )
         
         /*
@@ -51,13 +51,13 @@ class InternetArchiveEbookInfoGetOperation: GroupOperation {
                     coreDataStack: coreDataStack
                 )
         
-        let finishOperation = NSBlockOperation( block: completionHandler )
+        let finishOperation = PSBlockOperation { completionHandler() }
         
         // These operations must be executed in order
         parseOperation.addDependency(downloadOperation)
         finishOperation.addDependency(parseOperation)
         
-        let operations = [downloadOperation, parseOperation, finishOperation]
+        let operations = [downloadOperation, parseOperation, finishOperation] as [Foundation.Operation]
         super.init( operations: operations )
 
         addCondition( MutuallyExclusive<InternetArchiveEbookInfoGetOperation>() )
@@ -65,8 +65,8 @@ class InternetArchiveEbookInfoGetOperation: GroupOperation {
         name = "Get IAEBookInfo"
     }
     
-    override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
-        if let firstError = errors.first where (operation === downloadOperation || operation === parseOperation) {
+    override func operationDidFinish(_ operation: Foundation.Operation, withErrors errors: [NSError]) {
+        if let firstError = errors.first , (operation === downloadOperation || operation === parseOperation) {
             produceAlert(firstError)
         }
     }

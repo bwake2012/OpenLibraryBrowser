@@ -12,26 +12,28 @@ import CoreData
 import BNRCoreDataStack
 import PSOperations
 
-class GeneralSearchResultsDeleteOperation: Operation {
+class GeneralSearchResultsDeleteOperation: PSOperation {
+    
+    typealias OLGeneralSearchResultFetchRequest = NSFetchRequest< OLGeneralSearchResult >
     
     let deleteContext: NSManagedObjectContext
     
-    init( coreDataStack: CoreDataStack ) {
+    init( coreDataStack: OLDataStack ) {
         
-        self.deleteContext = coreDataStack.newChildContext()
+        self.deleteContext = coreDataStack.newChildContext( name: "GeneralSearchResultsDelete Context" )
     }
     
     override func execute() {
         
-        let entityName = OLGeneralSearchResult.entityName
-        let fetchRequest = NSFetchRequest( entityName: entityName )
-        let deleteRequest = NSBatchDeleteRequest( fetchRequest: fetchRequest )
-        deleteRequest.resultType = .ResultTypeObjectIDs
+        let fetchRequest: NSFetchRequest< OLGeneralSearchResult > = OLGeneralSearchResult.buildFetchRequest()
+
+        let deleteRequest = NSBatchDeleteRequest( fetchRequest: fetchRequest as! NSFetchRequest<NSFetchRequestResult> )
+        deleteRequest.resultType = .resultTypeObjectIDs
         
         do {
 
-            try deleteContext.persistentStoreCoordinator?.executeRequest(
-                        deleteRequest, withContext: self.deleteContext
+            try deleteContext.persistentStoreCoordinator?.execute(
+                        deleteRequest, with: self.deleteContext
                     )
             
             try deleteContext.saveContextAndWait()

@@ -12,9 +12,9 @@ class DeluxeDetailSubheadingTableViewCell: DeluxeDetailTableViewCell {
 
     @IBOutlet weak var label: UILabel!
     
-    override func configure( data: DeluxeData ) {
+    override func configure( _ data: DeluxeData ) {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
         
         label.text = data.value
     }

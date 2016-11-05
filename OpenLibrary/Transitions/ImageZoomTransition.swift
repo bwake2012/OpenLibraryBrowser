@@ -10,38 +10,34 @@ import UIKit
 
 class ImageZoomTransition: ZoomTransition {
 
-    var transitionAnimationOptions = UIViewKeyframeAnimationOptions.CalculationModeCubic
+    var transitionAnimationOptions = UIViewKeyframeAnimationOptions.calculationModeCubic
     
     // MARK: Overrides
-    override func animateTransition( transitionContext: UIViewControllerContextTransitioning ) -> Void {
+    override func animateTransition( using transitionContext: UIViewControllerContextTransitioning ) -> Void {
         
-        guard let fromVC = transitionContext.viewControllerForKey( UITransitionContextFromViewControllerKey ) else {
+        guard let fromVC = transitionContext.viewController( forKey: UITransitionContextViewControllerKey.from ) else {
             
             print( "transitionContext to VC is missing!" )
             return
         }
-        guard let toVC = transitionContext.viewControllerForKey( UITransitionContextToViewControllerKey ) else {
+        guard let toVC = transitionContext.viewController( forKey: UITransitionContextViewControllerKey.to ) else {
             
             print( "transitionContext from VC is missing!" )
             return
         }
         
-        guard let containerView = transitionContext.containerView() else {
-            
-            print( "transitionContext containerView is missing!" )
-            return
-        }
-        
+        let containerView = transitionContext.containerView
+
         guard let sourceView = self.sourceView else {
             print( "source view not set" )
             return
         }
         
-        if let fromView = transitionContext.viewForKey( UITransitionContextFromViewKey ),
-            toView = transitionContext.viewForKey( UITransitionContextToViewKey ) {
+        if let fromView = transitionContext.view( forKey: UITransitionContextViewKey.from ),
+            let toView = transitionContext.view( forKey: UITransitionContextViewKey.to ) {
         
             // fix for rotation bug in iOS 9
-            let toFinalFrame = transitionContext.finalFrameForViewController( toVC )
+            let toFinalFrame = transitionContext.finalFrame( for: toVC )
             toVC.view.frame = toFinalFrame
             
             containerView.addSubview( toView )
@@ -51,19 +47,19 @@ class ImageZoomTransition: ZoomTransition {
                 detailVC = fromVC as? OLPictureViewController
             }
             
-            if let dvc = detailVC {
-                let zoomFromView = .Push == self.operation ? sourceView : dvc.pictureView
-                let zoomToView   = .Push == self.operation ? dvc.pictureView : sourceView
+            if let dvc = detailVC,
+               let zoomFromView = .push == self.operation ? sourceView : dvc.pictureView,
+               let zoomToView   = .push == self.operation ? dvc.pictureView : sourceView {
 
-                var zoomFromViewRect = containerView.convertRect( zoomFromView.frame, fromView: zoomFromView.superview )
-                var zoomToViewRect   = containerView.convertRect( zoomToView.frame, fromView: zoomToView.superview )
-                var fullscreenPictureRect = containerView.convertRect( dvc.pictureView.frame, fromView: dvc.view )
+                var zoomFromViewRect = containerView.convert( zoomFromView.frame, from: zoomFromView.superview )
+                var zoomToViewRect = containerView.convert( zoomToView.frame, from: zoomToView.superview )
+                var fullscreenPictureRect = containerView.convert( dvc.pictureView.frame, from: dvc.view )
                 
                 // if we're pushing, the frame of the large size UIImageView is wildly wrong. We have to calculate it.
-                if .Push == self.operation {
+                if .push == self.operation {
                 
                     var layoutMargins = toView.layoutMargins
-                    layoutMargins.top += UIApplication.sharedApplication().statusBarFrame.height
+                    layoutMargins.top += UIApplication.shared.statusBarFrame.height
                     layoutMargins.top += dvc.navigationController?.navigationBar.frame.height ?? 0
                     fullscreenPictureRect =
                         CGRect(
@@ -93,7 +89,7 @@ class ImageZoomTransition: ZoomTransition {
                     zoomRect = animatingImage.aspectFitRect( zoomRect )
                 }
 
-                if .Push == self.operation {
+                if .push == self.operation {
                     zoomToViewRect = zoomRect
                 } else {
                     zoomFromViewRect = zoomRect
@@ -109,10 +105,10 @@ class ImageZoomTransition: ZoomTransition {
 
                 containerView.addSubview( animatingImageView )
                 animatingImageView.frame = zoomFromViewRect
-                let endingContentMode: UIViewContentMode = .ScaleAspectFit
+                let endingContentMode: UIViewContentMode = .scaleAspectFit
                 
-                UIView.animateKeyframesWithDuration(
-                        self.transitionDuration,
+                UIView.animateKeyframes(
+                        withDuration: self.transitionDuration,
                         delay: 0,
                         options: self.transitionAnimationOptions,
                         animations: {
@@ -125,7 +121,7 @@ class ImageZoomTransition: ZoomTransition {
                         },
                         completion: {
                             ( finished: Bool ) -> Void in
-                            if transitionContext.transitionWasCancelled() {
+                            if transitionContext.transitionWasCancelled {
                                 toView.removeFromSuperview()
                                 transitionContext.completeTransition( false )
                                 zoomFromView.alpha = 1;

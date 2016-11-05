@@ -10,17 +10,17 @@ import UIKit
 
 class OLHTMLErrorViewController: UIViewController {
 
-    @IBOutlet private weak var operationName: UILabel!
-    @IBOutlet private weak var url: UILabel!
-    @IBOutlet private weak var htmlView: UITextView!
+    @IBOutlet fileprivate weak var operationName: UILabel!
+    @IBOutlet fileprivate weak var url: UILabel!
+    @IBOutlet fileprivate weak var htmlView: UITextView!
     
     var nameString = ""
     var urlString = ""
     var htmlString = NSAttributedString()
     
-    @IBAction func tappedOK(sender: UIButton) {
+    @IBAction func tappedOK(_ sender: UIButton) {
         
-        dismissViewControllerAnimated( true, completion: nil )
+        dismiss( animated: true, completion: nil )
     }
     
     

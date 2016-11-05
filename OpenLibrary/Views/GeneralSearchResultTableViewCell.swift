@@ -14,20 +14,20 @@ class GeneralSearchResultTableViewCell: OLTableViewCell {
     @IBOutlet weak var authorName: UILabel!
     @IBOutlet weak var displayAuthorDetail: UIButton!
     
-    @IBAction func touchedAuthorName(sender: AnyObject) {
+    @IBAction func touchedAuthorName(_ sender: AnyObject) {
 
         setSelected( true, animated: true )
     }
     
-    override func configure( tableView: UITableView, indexPath: NSIndexPath, key: String, data: OLManagedObject? ) {
+    override func configure( _ tableView: UITableView, indexPath: IndexPath, key: String, data: OLManagedObject? ) {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
         
         if let r = data as? OLGeneralSearchResult {
             titleText.text = "\(r.title)"
-            authorName.text = r.author_name.joinWithSeparator( ", " )
+            authorName.text = r.author_name.joined( separator: ", " )
             
-            displayAuthorDetail.enabled = !r.author_name.isEmpty
+            displayAuthorDetail.isEnabled = !r.author_name.isEmpty
             
 //            titleText.text = "\(r.sequence).\(r.index) \(r.title)"
 //            authorName.text = "\(r.key) \(r.author_name.joinWithSeparator( ", " )"
@@ -41,7 +41,7 @@ class GeneralSearchResultTableViewCell: OLTableViewCell {
     
     override func clearCurrentImage() -> Void {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
         
         currentImageFile = nil
         cellImage.image = UIImage( named: "961-book-32.png" )

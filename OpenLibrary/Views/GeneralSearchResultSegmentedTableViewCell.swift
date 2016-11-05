@@ -10,22 +10,22 @@ import UIKit
 
 class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell {
 
-    @IBOutlet weak private var zoomCover: UIButton!
+    @IBOutlet weak fileprivate var zoomCover: UIButton!
     
-    @IBOutlet weak private var titleText: UILabel!
-    @IBOutlet weak private var subtitleText: UILabel!
-    @IBOutlet weak private var authorName: UILabel!
-    @IBOutlet weak private var viewAuthorDetail: UIButton!
+    @IBOutlet weak fileprivate var titleText: UILabel!
+    @IBOutlet weak fileprivate var subtitleText: UILabel!
+    @IBOutlet weak fileprivate var authorName: UILabel!
+    @IBOutlet weak fileprivate var viewAuthorDetail: UIButton!
     
-    @IBOutlet weak private var workDetail: UILabel!
-    @IBOutlet weak private var viewWorkDetail: UIButton!
+    @IBOutlet weak fileprivate var workDetail: UILabel!
+    @IBOutlet weak fileprivate var viewWorkDetail: UIButton!
 
-    @IBOutlet weak private var languageNames: UILabel!
+    @IBOutlet weak fileprivate var languageNames: UILabel!
     
-    @IBOutlet weak private var firstPublished: UILabel!
+    @IBOutlet weak fileprivate var firstPublished: UILabel!
     
-    @IBOutlet weak private var eBooksLabel: UILabel!
-    @IBOutlet weak private var viewBooks: UIButton!
+    @IBOutlet weak fileprivate var eBooksLabel: UILabel!
+    @IBOutlet weak fileprivate var viewBooks: UIButton!
     
     var tableVC: UIViewController?
 
@@ -38,44 +38,44 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
     
     var haveWorkDetail = false
     
-    @IBAction private func zoomCoverTapped(sender: UIButton) {
+    @IBAction fileprivate func zoomCoverTapped(_ sender: UIButton) {
         
-        tableVC?.performSegueWithIdentifier( "largeCoverImage", sender: self )
+        tableVC?.performSegue( withIdentifier: "largeCoverImage", sender: self )
     }
     
-    @IBAction private func viewAuthorDetailTapped(sender: UIButton) {
+    @IBAction fileprivate func viewAuthorDetailTapped(_ sender: UIButton) {
         
         if 1 == authorCount {
 
-            tableVC?.performSegueWithIdentifier( "displayGeneralSearchAuthorDetail", sender: self )
+            tableVC?.performSegue( withIdentifier: "displayGeneralSearchAuthorDetail", sender: self )
             
         } else if 1 < authorCount {
             
-            tableVC?.performSegueWithIdentifier( "displayGeneralSearchAuthorList", sender: self )
+            tableVC?.performSegue( withIdentifier: "displayGeneralSearchAuthorList", sender: self )
         }
     }
     
-    @IBAction private func viewBooksTapped( sender: UIButton ) {
+    @IBAction fileprivate func viewBooksTapped( _ sender: UIButton ) {
 
-        tableVC?.performSegueWithIdentifier( "displayWorkEBooks", sender: self )
+        tableVC?.performSegue( withIdentifier: "displayWorkEBooks", sender: self )
      }
     
-    @IBAction private func viewWorkEditionsTapped(sender: UIButton) {
+    @IBAction fileprivate func viewWorkEditionsTapped(_ sender: UIButton) {
 
-        tableVC?.performSegueWithIdentifier( "displayGeneralSearchWorkDetail", sender: self )
+        tableVC?.performSegue( withIdentifier: "displayGeneralSearchWorkDetail", sender: self )
     }
     
     override func awakeFromNib() {
         
         super.awakeFromNib()
         
-        layoutMargins = UIEdgeInsetsZero
+        layoutMargins = UIEdgeInsets.zero
         preservesSuperviewLayoutMargins = false
         
 //        zoomCover.imageView?.tintColor = UIColor( red: 0x00, green: 0x7A, blue: 0xFF, alpha: 1.0 )
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         
         updateButtons( selected && haveWorkDetail )
     }
@@ -106,19 +106,19 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
         updateButtons( false )
     }
 
-    private func updateButtons( selected: Bool ) {
+    fileprivate func updateButtons( _ selected: Bool ) {
 
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
         
-        zoomCover.enabled = selected && isZoomEnabled
+        zoomCover.isEnabled = selected && isZoomEnabled
         
-        viewAuthorDetail.enabled = selected && authorCount > 0
+        viewAuthorDetail.isEnabled = selected && authorCount > 0
         authorName.textColor = viewAuthorDetail.currentTitleColor
         
-        viewWorkDetail.enabled = selected && haveEditions
+        viewWorkDetail.isEnabled = selected && haveEditions
         workDetail.textColor = viewWorkDetail.currentTitleColor
         
-        viewBooks.enabled = selected && haveEbooks
+        viewBooks.isEnabled = selected && haveEbooks
         eBooksLabel.textColor = viewBooks.currentTitleColor
     }
     
@@ -132,9 +132,9 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
     }
 
 
-    func configure( tableView: UITableView, indexPath: NSIndexPath, key: String, data: OLManagedObject? ) {
+    func configure( _ tableView: UITableView, indexPath: IndexPath, key: String, data: OLManagedObject? ) {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
         
         haveWorkDetail = false
         
@@ -145,10 +145,10 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
 
             titleText.text = r.title
             subtitleText.text = r.subtitle
-            authorName.text = r.author_name.joinWithSeparator( ", " )
+            authorName.text = r.author_name.joined( separator: ", " )
             
             workDetail.text = "Editions: " + String( r.edition_count )
-            languageNames.text = r.language_names.joinWithSeparator( ", " )
+            languageNames.text = r.language_names.joined( separator: ", " )
             
             firstPublished.text = String( r.first_publish_year )
             
@@ -160,8 +160,8 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
 
             if r.hasImage {
                 
-                zoomCover.setImage( nil, forState: .Normal )
-                zoomCover.setImage( nil, forState: .Disabled )
+                zoomCover.setImage( nil, for: UIControlState() )
+                zoomCover.setImage( nil, for: .disabled )
 
                 let url = data?.localURL( "S" )
                 currentImageFile = url?.lastPathComponent
@@ -170,28 +170,28 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
             
                 currentImageFile = "thumbnail-book"
                 let thumbNail = UIImage( named: currentImageFile! )
-                zoomCover.setImage( thumbNail, forState: .Normal )
-                zoomCover.setImage( thumbNail, forState: .Disabled )
+                zoomCover.setImage( thumbNail, for: UIControlState() )
+                zoomCover.setImage( thumbNail, for: .disabled )
             }
 
             let labelText = "Electronic Editions " + ( haveEbooks ? "found" : "not found" )
             eBooksLabel.text = labelText
-            updateButtons( selected && haveWorkDetail )
+            updateButtons( isSelected && haveWorkDetail )
             
-            saveCellHeights( tableView, key: key, isExpanded: false )
+            _ = saveCellHeights( tableView, key: key, isExpanded: false )
             saveIndexPath( indexPath, inTableView: tableView, forKey: key )
         }
     }
     
-    func displayImage( localURL: NSURL, image: UIImage ) -> Bool {
+    func displayImage( _ localURL: URL, image: UIImage ) -> Bool {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
         
         let newImageFile = localURL.lastPathComponent
         guard nil == currentImageFile || newImageFile == currentImageFile else { return true }
         
-        zoomCover.setImage( image, forState: .Normal )
-        zoomCover.setImage( image, forState: .Disabled )
+        zoomCover.setImage( image, for: UIControlState() )
+        zoomCover.setImage( image, for: .disabled )
         currentImageFile = newImageFile
         
         return true

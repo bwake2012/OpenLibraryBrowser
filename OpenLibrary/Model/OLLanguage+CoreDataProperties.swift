@@ -13,12 +13,16 @@ import Foundation
 import CoreData
 
 extension OLLanguage {
-
+    
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<OLLanguage> {
+        return NSFetchRequest<OLLanguage>( entityName: OLLanguage.entityName )
+    }
+    
     @NSManaged var sequence: Int64
     @NSManaged var index: Int64
     @NSManaged var key: String
     @NSManaged var code: String
     @NSManaged var name: String
-    @NSManaged var retrieval_date: NSDate
+    @NSManaged var retrieval_date: Date
 
 }

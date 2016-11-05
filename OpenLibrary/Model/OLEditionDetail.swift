@@ -13,7 +13,7 @@ import BNRCoreDataStack
 let kEditionsPrefix = "/books/"
 let kEditionType = "/type/edition"
 
-class OLEditionDetail: OLManagedObject, CoreDataModelable {
+class OLEditionDetail: OLManagedObject {
     
     var author_names: [String] {
         
@@ -28,11 +28,11 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                 }
             }
             
-            return names.sort()
+            return names.sorted()
         }
     }
     
-    private var ebook_item_cache = [OLEBookItem]()
+    fileprivate var ebook_item_cache = [OLEBookItem]()
     var ebook_items: [OLEBookItem] {
         
         get {
@@ -41,7 +41,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                 if let moc = self.managedObjectContext {
                     
                     let items: [OLEBookItem]? = OLEBookItem.findObject( work_key, entityName: OLEBookItem.entityName, keyFieldName: "workKey", moc: moc )
-                    if let items = items where !items.isEmpty {
+                    if let items = items , !items.isEmpty {
                         
                         ebook_item_cache = items
                         has_fulltext = 1
@@ -62,15 +62,15 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
     
     static let entityName = "EditionDetail"
     
-    class func parseJSON( authorKey: String, workKey: String, index: Int, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLEditionDetail? {
+    class func parseJSON( _ authorKey: String, workKey: String, index: Int, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLEditionDetail? {
 
         guard let parsed = ParsedFromJSON.fromJSON( json ) else { return nil }
         
         moc.mergePolicy = NSOverwriteMergePolicy
 
         let newObject: OLEditionDetail? =
-                NSEntityDescription.insertNewObjectForEntityForName(
-                    OLEditionDetail.entityName, inManagedObjectContext: moc
+                NSEntityDescription.insertNewObject(
+                    forEntityName: OLEditionDetail.entityName, into: moc
                     ) as? OLEditionDetail
         
         if let newObject = newObject {
@@ -89,7 +89,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
             if 0 <= index {
                 newObject.index = Int64( index )
             }
-            newObject.retrieval_date = NSDate()
+            newObject.retrieval_date = Date()
             
             newObject.populateObject( parsed )
         }
@@ -146,19 +146,19 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
     
     override var imageType: String { return "b" }
     
-    override func imageID( index: Int ) -> Int {
+    override func imageID( _ index: Int ) -> Int {
         
         return index >= self.covers.count ? 0 : self.covers[index]
     }
     
-    override func localURL( size: String, index: Int = 0 ) -> NSURL {
+    override func localURL( _ size: String, index: Int = 0 ) -> URL {
         
         return super.localURL( self.covers[index], size: size )
     }
 
-    override func populateObject( parsed: OpenLibraryObject ) {
+    override func populateObject( _ parsed: OpenLibraryObject ) {
         
-        self.retrieval_date = NSDate()
+        self.retrieval_date = Date()
         
         if let parsed = parsed as? ParsedFromJSON {
             
@@ -178,7 +178,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
             self.collections = parsed.collections
             self.contributors = parsed.contributors
             self.copyright_date = parsed.copyright_date
-            self.covers = parsed.covers ?? []
+            self.covers = parsed.covers
             self.coversFound = parsed.covers.count > 0 && 0 < parsed.covers[0]
             self.dewey_decimal_class = parsed.dewey_decimal_class
             self.distributors = parsed.distributors
@@ -269,7 +269,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         
         if !author_names.isEmpty {
 
-            let authorNames = author_names.joinWithSeparator( ", " )
+            let authorNames = author_names.joined( separator: ", " )
             deluxeData[0].append(
                 DeluxeData(
                     type: .block,
@@ -284,7 +284,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
             var list = [String]()
             for contributor in contributors {
                 
-                if let role = contributor["role"], name = contributor["name"] {
+                if let role = contributor["role"], let name = contributor["name"] {
                     
                     list.append( role + ": " + name )
                 }
@@ -294,21 +294,19 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                 DeluxeData(
                     type: .block,
                     caption: "Contributor\(list.count > 1 ? "s" : "")",
-                    value: list.joinWithSeparator( ", " )
+                    value: list.joined( separator: ", " )
                 )
             )
         }
         
         if hasImage {
             
-            let value = localURL( "M" ).absoluteString
-            let extraValue = localURL( "L", index: 0 ).absoluteString
             let deluxeItem =
                 DeluxeData(
                     type: .imageBook,
                     caption: String( firstImageID ),
-                    value: value,
-                    extraValue: extraValue
+                    value: localURL( "M" ).absoluteString,
+                    extraValue: localURL( "L", index: 0 ).absoluteString
             )
             
             deluxeData.append( [deluxeItem] )
@@ -351,7 +349,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         
         if !self.publishers.isEmpty {
             
-            let display = publishers.joinWithSeparator( ", " )
+            let display = publishers.joined( separator: ", " )
             newData.append(
                 DeluxeData(
                     type: .block,
@@ -363,7 +361,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
         
         if !self.publish_places.isEmpty {
             
-            let display = publish_places.joinWithSeparator( ", " )
+            let display = publish_places.joined( separator: ", " )
             newData.append(
                 DeluxeData(
                     type: .block,
@@ -383,7 +381,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
             var languageNames: [String] = []
             for key in languages {
                 
-                if let name = OLManagedObject.languageLookup[key] {
+                if let name = findLanguage( forKey: key ) {
                     
                     languageNames.append( name )
                 }
@@ -393,7 +391,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                 DeluxeData(
                     type: .block,
                     caption: "Language\(languageNames.count > 1 ? "s" : "")",
-                    value: languageNames.joinWithSeparator( "," )
+                    value: languageNames.joined( separator: "," )
                 )
             )
         }
@@ -434,21 +432,21 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
 
         if !self.edition_description.isEmpty {
             
-            let fancyOutput = fancyMarkdown.transform( self.edition_description )
+            let fancyOutput = convertMarkdownToHTML( markdown: self.edition_description )
             
             deluxeData.append( [DeluxeData( type: .html, caption: "Description", value: fancyOutput )] )
         }
 
         if !self.first_sentence.isEmpty {
             
-            let fancyOutput = fancyMarkdown.transform( self.first_sentence )
+            let fancyOutput = convertMarkdownToHTML( markdown: self.first_sentence )
             
             deluxeData.append( [DeluxeData( type: .html, caption: "First Sentence", value: fancyOutput )] )
         }
         
         if !self.notes.isEmpty {
             
-            let fancyOutput = fancyMarkdown.transform( self.notes )
+            let fancyOutput = convertMarkdownToHTML( markdown: self.notes )
             
             deluxeData.append( [DeluxeData( type: .html, caption: "Notes", value: fancyOutput )] )
         }
@@ -476,14 +474,12 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                 
                 if 0 < covers[index] {
                     
-                    let value = localURL( "M", index: index ).absoluteString
-                    let extraValue = localURL( "L", index: index ).absoluteString
                     let deluxeItem =
                         DeluxeData(
                             type: .imageBook,
                             caption: String( covers[index] ),
-                            value: value,
-                            extraValue: extraValue
+                            value: localURL( "M", index: index ).absoluteString,
+                            extraValue: localURL( "L", index: index ).absoluteString
                     )
                     
                     deluxeData.append( [deluxeItem] )
@@ -496,10 +492,10 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
             }
         }
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         
-        dateFormatter.dateStyle = .MediumStyle
-        dateFormatter.timeStyle = .MediumStyle
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .medium
         
         newData = [DeluxeData]()
         
@@ -509,7 +505,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                 DeluxeData(
                     type: .inline,
                     caption: "Created",
-                    value: dateFormatter.stringFromDate( created )
+                    value: dateFormatter.string( from: created as Date )
                 )
             )
         }
@@ -520,7 +516,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
                 DeluxeData(
                     type: .inline,
                     caption: "Last Modified",
-                    value: dateFormatter.stringFromDate( last_modified )
+                    value: dateFormatter.string( from: last_modified as Date )
                 )
             )
         }
@@ -545,7 +541,7 @@ class OLEditionDetail: OLManagedObject, CoreDataModelable {
             DeluxeData(
                 type: .inline,
                 caption: "Retrieved",
-                value: dateFormatter.stringFromDate( retrieval_date )
+                value: dateFormatter.string( from: retrieval_date as Date )
             )
         )
         
@@ -566,8 +562,8 @@ extension OLEditionDetail {
         
         // MARK: Properties.
         let key: String
-        let created: NSDate?
-        let last_modified: NSDate?
+        let created: Date?
+        let last_modified: Date?
         let revision: Int64
         let latest_revision: Int64
         let type: String
@@ -623,7 +619,7 @@ extension OLEditionDetail {
         
         // MARK: Initialization
         
-        class func fromJSON( json: [String: AnyObject] ) -> ParsedFromJSON? {
+        class func fromJSON( _ json: [String: AnyObject] ) -> ParsedFromJSON? {
             
             guard let revision = json["revision"] as? Int else { return nil }
             
@@ -635,9 +631,9 @@ extension OLEditionDetail {
             
             let type = OpenLibraryObject.OLKeyedValue( json["type"], key: "key" )
             
-            guard let key = json["key"] as? String where !key.isEmpty else { return nil }
+            guard let key = json["key"] as? String , !key.isEmpty else { return nil }
             
-            guard let title = json["title"] as? String where !title.isEmpty else { return nil }
+            guard let title = json["title"] as? String , !title.isEmpty else { return nil }
             
             let title_prefix = OpenLibraryObject.OLString( json["title_prefix"] )
             
@@ -792,8 +788,8 @@ extension OLEditionDetail {
         
         init(
             key: String,
-            created: NSDate?,
-            last_modified: NSDate?,
+            created: Date?,
+            last_modified: Date?,
             revision: Int64,
             latest_revision: Int64,
             type: String,
@@ -909,7 +905,7 @@ extension OLEditionDetail {
 
 extension OLEditionDetail {
     
-    class func saveProvisionalEdition( editionIndex: Int, parsed: OLGeneralSearchResult, moc: NSManagedObjectContext ) -> OLEditionDetail? {
+    class func saveProvisionalEdition( _ editionIndex: Int, parsed: OLGeneralSearchResult, moc: NSManagedObjectContext ) -> OLEditionDetail? {
         
         var newObject: OLEditionDetail?
         
@@ -919,14 +915,14 @@ extension OLEditionDetail {
             if nil == newObject {
             
                 newObject =
-                    NSEntityDescription.insertNewObjectForEntityForName(
-                        OLEditionDetail.entityName, inManagedObjectContext: moc
+                    NSEntityDescription.insertNewObject(
+                        forEntityName: OLEditionDetail.entityName, into: moc
                     ) as? OLEditionDetail
                 
                 if let newObject = newObject {
                     
-                    newObject.retrieval_date = NSDate()
-                    newObject.provisional_date = NSDate()
+                    newObject.retrieval_date = Date()
+                    newObject.provisional_date = Date()
                     newObject.is_provisional = true
                     
                     newObject.has_fulltext = parsed.has_fulltext ? 1 : 0
@@ -1018,7 +1014,7 @@ extension OLEditionDetail {
 
     // create or update an editionDetail object with information from the ebook data
     
-    class func saveProvisionalEdition( parsed parsed: OLEBookItem.ParsedFromJSON, moc: NSManagedObjectContext )  -> OLEditionDetail? {
+    class func saveProvisionalEdition( _ parsed: OLEBookItem.ParsedFromJSON, moc: NSManagedObjectContext )  -> OLEditionDetail? {
         
         var newObject: OLEditionDetail?
         
@@ -1026,14 +1022,14 @@ extension OLEditionDetail {
         if nil == newObject {
             
             newObject =
-                NSEntityDescription.insertNewObjectForEntityForName(
-                    OLEditionDetail.entityName, inManagedObjectContext: moc
+                NSEntityDescription.insertNewObject(
+                    forEntityName: OLEditionDetail.entityName, into: moc
                 ) as? OLEditionDetail
             
             if let newObject = newObject {
                 
-                newObject.retrieval_date = NSDate()
-                newObject.provisional_date = NSDate()
+                newObject.retrieval_date = Date()
+                newObject.provisional_date = Date()
                 newObject.is_provisional = true
                 
                 newObject.has_fulltext = 1
@@ -1117,7 +1113,7 @@ extension OLEditionDetail {
         return newObject
     }
     
-    class func saveProvisionalEdition( editionIndex: Int, parsed: OLGeneralSearchResult.ParsedFromJSON, moc: NSManagedObjectContext ) -> OLEditionDetail? {
+    class func saveProvisionalEdition( _ editionIndex: Int, parsed: OLGeneralSearchResult.ParsedFromJSON, moc: NSManagedObjectContext ) -> OLEditionDetail? {
         
         var newObject: OLEditionDetail?
         
@@ -1127,14 +1123,14 @@ extension OLEditionDetail {
             if nil == newObject {
                 
                 newObject =
-                    NSEntityDescription.insertNewObjectForEntityForName(
-                        OLEditionDetail.entityName, inManagedObjectContext: moc
+                    NSEntityDescription.insertNewObject(
+                        forEntityName: OLEditionDetail.entityName, into: moc
                     ) as? OLEditionDetail
                 
                 if let newObject = newObject {
                     
-                    newObject.retrieval_date = NSDate()
-                    newObject.provisional_date = NSDate()
+                    newObject.retrieval_date = Date()
+                    newObject.provisional_date = Date()
                     newObject.is_provisional = true
                     
                     newObject.has_fulltext = parsed.has_fulltext ? 1 : 0
@@ -1218,6 +1214,13 @@ extension OLEditionDetail {
         
         return newObject
     }
+}
+
+extension OLEditionDetail {
     
+    class func buildFetchRequest() -> NSFetchRequest< OLEditionDetail > {
+        
+        return NSFetchRequest( entityName: OLEditionDetail.entityName )
+    }
 }
 

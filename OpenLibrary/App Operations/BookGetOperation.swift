@@ -12,7 +12,7 @@ import BNRCoreDataStack
 import PSOperations
 
 /// A composite `Operation` to both download and parse author search result data.
-class BookGetOperation: GroupOperation {
+class BookGetOperation: PSOperations.GroupOperation {
     // MARK: Properties
     
     let downloadOperation: BookDownloadOperation
@@ -28,11 +28,11 @@ class BookGetOperation: GroupOperation {
                                        invoked on an arbitrary queue.
     */
 
-    init( cacheBookURL: NSURL, remoteBookURL: NSURL, completionHandler: Void -> Void ) {
+    init( cacheBookURL: URL, remoteBookURL: URL, completionHandler: @escaping (Void) -> Void ) {
         
         downloadOperation =
             BookDownloadOperation( cacheBookURL: cacheBookURL, remoteBookURL: remoteBookURL )
-        let finishOperation = NSBlockOperation( block: completionHandler )
+        let finishOperation = PSBlockOperation { completionHandler() }
         
         // These operations must be executed in order
         finishOperation.addDependency(downloadOperation)
@@ -46,8 +46,8 @@ class BookGetOperation: GroupOperation {
         name = "Get book"
     }
 
-    override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
-        if let firstError = errors.first where (operation === downloadOperation) {
+    override func operationDidFinish(_ operation: Foundation.Operation, withErrors errors: [NSError]) {
+        if let firstError = errors.first , (operation === downloadOperation) {
             produceAlert(firstError)
         }
     }

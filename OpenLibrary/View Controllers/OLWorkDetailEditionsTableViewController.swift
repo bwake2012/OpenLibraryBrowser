@@ -45,7 +45,7 @@ class OLWorkDetailEditionsTableViewController: UIViewController {
         
         // Dynamic sizing for the header view
         if let footerView = tableView.tableFooterView {
-            let height = footerView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+            let height = footerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
             var footerFrame = footerView.frame
             
             // If we don't have this check, viewDidLayoutSubviews() will get
@@ -58,11 +58,11 @@ class OLWorkDetailEditionsTableViewController: UIViewController {
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "displayEditionDetail" {
             
-            if let destVC = segue.destinationViewController as? OLEditionDetailViewController {
+            if let destVC = segue.destination as? OLEditionDetailViewController {
                 
                 if let indexPath = self.tableView.indexPathForSelectedRow {
                     queryCoordinator!.installEditionCoordinator( destVC, indexPath: indexPath )
@@ -71,7 +71,7 @@ class OLWorkDetailEditionsTableViewController: UIViewController {
             }
         } else if segue.identifier == "displayEditionDeluxeDetail" {
             
-            if let destVC = segue.destinationViewController as? OLDeluxeDetailTableViewController {
+            if let destVC = segue.destination as? OLDeluxeDetailTableViewController {
                 if let indexPath = self.tableView.indexPathForSelectedRow {
                     
                     queryCoordinator!.installEditionDeluxeCoordinator( destVC, indexPath: indexPath )
@@ -83,7 +83,7 @@ class OLWorkDetailEditionsTableViewController: UIViewController {
     // MARK: Query in Progress
     func coordinatorIsBusy() -> Void {
         
-        if let parentVC = parentViewController as? OLWorkDetailViewController {
+        if let parentVC = parent as? OLWorkDetailViewController {
 
             parentVC.coordinatorIsBusy()
         }
@@ -91,7 +91,7 @@ class OLWorkDetailEditionsTableViewController: UIViewController {
     
     func coordinatorIsNoLongerBusy() -> Void {
         
-        if let parentVC = parentViewController as? OLWorkDetailViewController {
+        if let parentVC = parent as? OLWorkDetailViewController {
             
             parentVC.coordinatorIsNoLongerBusy()
         }
@@ -99,7 +99,7 @@ class OLWorkDetailEditionsTableViewController: UIViewController {
     
     
     
-    func refreshQuery( refreshControl: UIRefreshControl? ) {
+    func refreshQuery( _ refreshControl: UIRefreshControl? ) {
         
         queryCoordinator?.refreshQuery( refreshControl )
     }
@@ -113,7 +113,7 @@ extension OLWorkDetailEditionsTableViewController: TransitionSourceCell {
         
         if let indexPath = tableView.indexPathForSelectedRow {
             
-            sourceRectView = tableView.cellForRowAtIndexPath( indexPath )
+            sourceRectView = tableView.cellForRow( at: indexPath )
         }
         
         return sourceRectView
@@ -125,7 +125,7 @@ extension OLWorkDetailEditionsTableViewController: TransitionSourceCell {
 
 extension OLWorkDetailEditionsTableViewController: UIScrollViewDelegate {
     
-    func scrollViewDidEndDragging( scrollView: UIScrollView, willDecelerate decelerate: Bool ) {
+    func scrollViewDidEndDragging( _ scrollView: UIScrollView, willDecelerate decelerate: Bool ) {
         
         // UITableView only moves in one direction, y axis
         let currentOffset = scrollView.contentOffset.y
@@ -142,7 +142,7 @@ extension OLWorkDetailEditionsTableViewController: UIScrollViewDelegate {
         }
     }
 
-    func scrollViewWillEndDragging( scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint> ) {
+    func scrollViewWillEndDragging( _ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint> ) {
         
         // up
         if velocity.y < -1.5 {
@@ -159,22 +159,22 @@ extension OLWorkDetailEditionsTableViewController: UITableViewDelegate {
 // MARK: UITableviewDataSource
 extension OLWorkDetailEditionsTableViewController: UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         
         return queryCoordinator!.numberOfSections()
     }
     
-    func tableView( tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
+    func tableView( _ tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
         
         return queryCoordinator!.numberOfRowsInSection( section )
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCellWithIdentifier("workEditionEntry", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "workEditionEntry", for: indexPath)
         if let cell = cell as? WorkEditionTableViewCell {
             
-            queryCoordinator!.displayToCell( cell, indexPath: indexPath )
+            _ = queryCoordinator!.displayToCell( cell, indexPath: indexPath )
             
         }
         

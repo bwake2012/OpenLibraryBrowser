@@ -32,7 +32,7 @@ class OLAuthorDetailViewController: UIViewController {
     var queryCoordinator: AuthorDetailCoordinator?
     var authorWorksVC: OLAuthorDetailWorksTableViewController?
     
-    var currentImageURL: NSURL?
+    var currentImageURL: URL?
     
     // MARK: UIViewController
     override func viewDidLoad() {
@@ -48,25 +48,25 @@ class OLAuthorDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
 
         super.viewWillAppear( animated )
         
         navigationController?.setNavigationBarHidden( false, animated: animated )
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear( animated )
         
         queryCoordinator?.updateUI()
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "embedAuthorWorks" {
             
-            if let destVC = segue.destinationViewController as? OLAuthorDetailWorksTableViewController {
+            if let destVC = segue.destination as? OLAuthorDetailWorksTableViewController {
                 
                 self.authorWorksVC = destVC
                 queryCoordinator!.installAuthorWorksCoordinator( destVC )
@@ -74,14 +74,14 @@ class OLAuthorDetailViewController: UIViewController {
 
         } else if segue.identifier == "displayAuthorDeluxeDetail" {
             
-            if let destVC = segue.destinationViewController as? OLDeluxeDetailTableViewController {
+            if let destVC = segue.destination as? OLDeluxeDetailTableViewController {
                 
                 queryCoordinator!.installAuthorDeluxeDetailCoordinator( destVC )
             }
             
         } else if segue.identifier == "largeAuthorPhoto" {
             
-            if let destVC = segue.destinationViewController as? OLPictureViewController {
+            if let destVC = segue.destination as? OLPictureViewController {
 
                 queryCoordinator!.installAuthorPictureCoordinator( destVC )
             }
@@ -89,12 +89,12 @@ class OLAuthorDetailViewController: UIViewController {
     }
 
     // MARK: Utility
-    func displayImage( localURL: NSURL ) -> Bool {
+    @discardableResult func displayImage( _ localURL: URL ) -> Bool {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
 
         currentImageURL = localURL
-        if let data = NSData( contentsOfURL: localURL ) {
+        if let data = try? Data( contentsOf: localURL ) {
             if let image = UIImage( data: data ) {
                 
                 authorPhoto.image = image
@@ -108,13 +108,13 @@ class OLAuthorDetailViewController: UIViewController {
     }
 
     
-    func updateUI( authorDetail: OLAuthorDetail ) {
+    func updateUI( _ authorDetail: OLAuthorDetail ) {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
 
-        self.displayLargePhoto.enabled = authorDetail.hasImage
+        self.displayLargePhoto.isEnabled = authorDetail.hasImage
 
-        self.displayDeluxeDetail.enabled = !authorDetail.isProvisional
+        self.displayDeluxeDetail.isEnabled = !authorDetail.isProvisional
         authorName.textColor = displayDeluxeDetail.currentTitleColor
         
         self.authorName.text = authorDetail.name
@@ -174,7 +174,7 @@ extension OLAuthorDetailViewController: UncoverBottomTransitionSource {
 
 extension OLAuthorDetailViewController: UIScrollViewDelegate {
     
-    func scrollViewDidEndDragging( scrollView: UIScrollView, willDecelerate decelerate: Bool ) {
+    func scrollViewDidEndDragging( _ scrollView: UIScrollView, willDecelerate decelerate: Bool ) {
         
         // UITableView only moves in one direction, y axis
         let currentOffset = scrollView.contentOffset.y
@@ -191,7 +191,7 @@ extension OLAuthorDetailViewController: UIScrollViewDelegate {
         }
     }
 
-    func scrollViewWillEndDragging( scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint> ) {
+    func scrollViewWillEndDragging( _ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint> ) {
         
         // up
         if velocity.y < -1.5 {

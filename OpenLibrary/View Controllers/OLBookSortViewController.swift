@@ -8,7 +8,7 @@
 
 import UIKit
    
-typealias SaveSortFields = ( sortFields: [SortField] ) -> Void
+typealias SaveSortFields = ( _ sortFields: [SortField] ) -> Void
 
 class OLBookSortViewController: UIViewController {
     
@@ -18,31 +18,31 @@ class OLBookSortViewController: UIViewController {
     
     var sortFields = [SortField]()
     
-    @IBOutlet private var sortLabels:  Array< UIButton >!
-    @IBOutlet private var sortButtons: Array< UIButton >!
+    @IBOutlet fileprivate var sortLabels:  Array< UIButton >!
+    @IBOutlet fileprivate var sortButtons: Array< UIButton >!
     
-    @IBAction func sortButtonTapped( sender: UIButton ) {
+    @IBAction func sortButtonTapped( _ sender: UIButton ) {
         
         if let saveSortFields = saveSortFields {
             
-            saveSortFields( sortFields: sortFields )
+            saveSortFields( sortFields )
             
-            performSegueWithIdentifier( "beginBookSort", sender: self )
+            performSegue( withIdentifier: "beginBookSort", sender: self )
         }
     }
     
-    @IBAction func sortByIcon( sender: UIButton ) {
+    @IBAction func sortByIcon( _ sender: UIButton ) {
 
         updateButtonIcons( sender, buttonArray: sortButtons )
     }
     
-    @IBAction func sortByLabel( sender: UIButton ) {
+    @IBAction func sortByLabel( _ sender: UIButton ) {
         
         updateButtonIcons( sender, buttonArray: sortLabels )
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver( self )
+        NotificationCenter.default.removeObserver( self )
     }
     
     // MARK: UIViewController
@@ -53,8 +53,8 @@ class OLBookSortViewController: UIViewController {
                 
         assert( sortLabels.count == sortButtons.count && sortLabels.count == sortFields.count )
 
-        self.sortLabels.sortInPlace{ $0.frame.origin.y < $1.frame.origin.y }
-        self.sortButtons.sortInPlace{ $0.frame.origin.y < $1.frame.origin.y }
+        self.sortLabels.sort{ $0.frame.origin.y < $1.frame.origin.y }
+        self.sortButtons.sort{ $0.frame.origin.y < $1.frame.origin.y }
         
         displaySortKeys()
         
@@ -67,7 +67,7 @@ class OLBookSortViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear( animated )
         
@@ -76,16 +76,16 @@ class OLBookSortViewController: UIViewController {
     
     func displaySortKeys() {
         
-        for ( index, sortField ) in sortFields.enumerate() {
+        for ( index, sortField ) in sortFields.enumerated() {
             
-            sortButtons[index].setImage( sortField.image(), forState: .Normal )
-            sortLabels[index].setTitle( sortField.label, forState: .Normal )
+            sortButtons[index].setImage( sortField.image(), for: UIControlState() )
+            sortLabels[index].setTitle( sortField.label, for: UIControlState() )
         }
     }
     
-    func updateButtonIcons( sender: UIButton, buttonArray: [UIButton] ) {
+    func updateButtonIcons( _ sender: UIButton, buttonArray: [UIButton] ) {
         
-        for (index, button) in buttonArray.enumerate() {
+        for (index, button) in buttonArray.enumerated() {
             
             if sender === button {
                 
@@ -99,9 +99,9 @@ class OLBookSortViewController: UIViewController {
             }
         }
 
-        for ( index, button ) in sortButtons.enumerate() {
+        for ( index, button ) in sortButtons.enumerated() {
             
-            button.setImage( sortFields[index].image(), forState: .Normal )
+            button.setImage( sortFields[index].image(), for: UIControlState() )
         }
     }
 }

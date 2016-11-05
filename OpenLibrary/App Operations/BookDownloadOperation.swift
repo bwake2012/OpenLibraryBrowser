@@ -12,12 +12,12 @@ import PSOperations
 
 class BookDownloadOperation: GroupOperation {
     // MARK: Properties
-    let cacheBookURL: NSURL
+    let cacheBookURL: URL
 
     // MARK: Initialization
     
     /// - parameter cacheFile: The file `NSURL` to which the eBook will be downloaded.
-    init( cacheBookURL: NSURL, remoteBookURL: NSURL ) {
+    init( cacheBookURL: URL, remoteBookURL: URL ) {
 
         self.cacheBookURL = cacheBookURL
 
@@ -32,12 +32,7 @@ class BookDownloadOperation: GroupOperation {
             or when the services you use offer secure communication options, you
             should always prefer to use https.
         */
-        let task = NSURLSession.sharedSession().downloadTaskWithURL( remoteBookURL ) {
-            
-            url, response, error in
-            
-            self.downloadFinished(url, response: response as? NSHTTPURLResponse, error: error)
-        }
+        let task = URLSession.shared.downloadTask( with: remoteBookURL, completionHandler: downloadFinished )
         
         let taskOperation = URLSessionTaskOperation(task: task)
         
@@ -50,11 +45,11 @@ class BookDownloadOperation: GroupOperation {
         addOperation(taskOperation)
     }
     
-    func downloadFinished( url: NSURL?, response: NSHTTPURLResponse?, error: NSError? ) {
+    func downloadFinished( _ url: URL?, response: URLResponse?, error: Error? ) -> Void {
         
         if let error = error {
 
-            aggregateError( error )
+            aggregateError( error as NSError )
 
         } else if let tempURL = url {
             
@@ -63,13 +58,13 @@ class BookDownloadOperation: GroupOperation {
                     If we already have a file at this location, just delete it.
                     Also, swallow the error, because we don't really care about it.
                 */
-                try NSFileManager.defaultManager().removeItemAtURL( self.cacheBookURL )
+                try FileManager.default.removeItem( at: self.cacheBookURL )
             }
             catch {}
             
             do {
                 
-                try NSFileManager.defaultManager().moveItemAtURL( tempURL, toURL: self.cacheBookURL )
+                try FileManager.default.moveItem( at: tempURL, to: self.cacheBookURL )
             }
             catch let error as NSError {
                 aggregateError(error)

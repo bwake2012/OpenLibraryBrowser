@@ -13,21 +13,21 @@ import PSOperations
 class OLReachabilityOperation: GroupOperation {
 
     static let hostKey = "Host"
-    static let name = "Reachability"
+    static var name = "Reachability"
 
 //    private var hasProducedAlert = false
     
-    private let downloadOperation: OLReachabilityDownloadOperation
-    private let finishOperation: NSBlockOperation
+    fileprivate let downloadOperation: OLReachabilityDownloadOperation
+    fileprivate let finishOperation: PSBlockOperation
     
-    private let host: String
+    fileprivate let host: String
 
-    init( host: String, completionHandler: Void -> Void ) {
+    init( host: String, completionHandler: @escaping (Void) -> Void ) {
         
         self.host = host
         
         downloadOperation = OLReachabilityDownloadOperation( host: host )
-        finishOperation = NSBlockOperation( block: completionHandler )
+        finishOperation = PSBlockOperation { completionHandler() }
 
         // These operations must be executed in order
         finishOperation.addDependency(downloadOperation)
@@ -36,16 +36,16 @@ class OLReachabilityOperation: GroupOperation {
         
         addCondition( MutuallyExclusive<OLReachabilityOperation>() )
         
-        queuePriority = .High
+        queuePriority = .high
         
-        name = "OpenLibrary Reachability Operation"
+        OLReachabilityOperation.name = "OpenLibrary Reachability Operation"
     }
     
     deinit {
     
     }
     
-    override func operationDidFinish( operation: NSOperation, withErrors errors: [NSError] ) {
+    override func operationDidFinish( _ operation: Foundation.Operation, withErrors errors: [NSError] ) {
 
         if operation === downloadOperation {
             
@@ -53,14 +53,14 @@ class OLReachabilityOperation: GroupOperation {
             
                 produceAlert(firstError)
             
-            } else if operation.cancelled {
+            } else if operation.isCancelled {
 
                 produceAlert(
                     NSError(
-                        code: OperationErrorCode.ConditionFailed,
+                        code: OperationErrorCode.conditionFailed,
                         userInfo: [
-                                OperationConditionKey: self.dynamicType.name,
-                                self.dynamicType.hostKey: self.host
+                                OperationConditionKey: type(of: self).name,
+                                type(of: self).hostKey: self.host
                             ]
                         )
                     )

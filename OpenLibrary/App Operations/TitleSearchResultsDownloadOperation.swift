@@ -12,12 +12,12 @@ import PSOperations
 class TitleSearchResultsDownloadOperation: GroupOperation {
     // MARK: Properties
 
-    let cacheFile: NSURL
+    let cacheFile: URL
     
     // MARK: Initialization
     
     /// - parameter cacheFile: The file `NSURL` to which the title search results feed will be downloaded.
-    init( queryText: String, offset: Int, limit: Int, cacheFile: NSURL) {
+    init( queryText: String, offset: Int, limit: Int, cacheFile: URL) {
 
         self.cacheFile = cacheFile
         super.init(operations: [])
@@ -33,12 +33,12 @@ class TitleSearchResultsDownloadOperation: GroupOperation {
         */
         let query = queryText.stringByAddingPercentEncodingForRFC3986()!
         let urlString = "https://openlibrary.org/search.json?offset=\(offset)&limit=\(limit)&title=\(query)"
-        let url = NSURL( string: urlString )!
-        let task = NSURLSession.sharedSession().jsonDownloadTaskWithURL( url ) {
+        let url = URL( string: urlString )!
+        let task = URLSession.shared.jsonDownloadTaskWithURL( url ) {
             
             url, response, error in
             
-            self.downloadFinished(url, response: response as? NSHTTPURLResponse, error: error)
+            self.downloadFinished(url, response: response as? HTTPURLResponse, error: error)
         }
         
         let taskOperation = URLSessionTaskOperation(task: task)
@@ -52,19 +52,19 @@ class TitleSearchResultsDownloadOperation: GroupOperation {
         addOperation(taskOperation)
     }
     
-    func downloadFinished(url: NSURL?, response: NSHTTPURLResponse?, error: NSError?) {
+    func downloadFinished(_ url: URL?, response: HTTPURLResponse?, error: Error?) {
         if let localURL = url {
             do {
                 /*
                     If we already have a file at this location, just delete it.
                     Also, swallow the error, because we don't really care about it.
                 */
-                try NSFileManager.defaultManager().removeItemAtURL(cacheFile)
+                try FileManager.default.removeItem(at: cacheFile)
             }
             catch { }
             
             do {
-                try NSFileManager.defaultManager().moveItemAtURL(localURL, toURL: cacheFile)
+                try FileManager.default.moveItem(at: localURL, to: cacheFile)
             }
             catch let error as NSError {
                 aggregateError(error)
@@ -72,7 +72,7 @@ class TitleSearchResultsDownloadOperation: GroupOperation {
             
         }
         else if let error = error {
-            aggregateError(error)
+            aggregateError( error as NSError )
         }
         else {
             // Do nothing, and the operation will automatically finish.

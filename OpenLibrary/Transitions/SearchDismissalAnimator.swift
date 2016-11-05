@@ -14,15 +14,15 @@ class SearchDismissalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     let velocity: CGFloat = 10.0
     
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         
         return 1.0
         
     }
     
-    func animateTransition( transitionContext: UIViewControllerContextTransitioning ) {
+    func animateTransition( using transitionContext: UIViewControllerContextTransitioning ) {
         
-        guard let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey) else {
+        guard let fromView = transitionContext.view(forKey: UITransitionContextViewKey.from) else {
             print( "missing animateTransition fromView" )
             assert( false )
             return
@@ -34,51 +34,48 @@ class SearchDismissalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         // B) manually add the 'toView' to the container's
         // superview (eg the root window) after the completeTransition
         // call, as automatically happens on iOS7 where things work properly.
-        var toView = transitionContext.viewForKey( UITransitionContextToViewKey )
+        var toView = transitionContext.view( forKey: UITransitionContextViewKey.to )
         let toViewNilBug = nil == toView
         if toViewNilBug {
             
-            if let toVC = transitionContext.viewControllerForKey( UITransitionContextToViewControllerKey ) {
+            if let toVC = transitionContext.viewController( forKey: UITransitionContextViewControllerKey.to ) {
                 toView = toVC.view
                 assert( nil != toView )
             }
         }
         
-        guard let containerView = transitionContext.containerView() else {
-            print( "missing animateTransition containerView" )
-            assert( false )
-            return
-        }
+        let containerView = transitionContext.containerView
+        
         let containerSuperView = containerView.superview
         
-        let duration = transitionDuration( transitionContext )
+        let duration = transitionDuration( using: transitionContext )
         let halfDuration = duration / 2.0
         
         containerView.insertSubview(toView!, belowSubview: fromView )
         
-        toView!.transform = CGAffineTransformMakeScale(0.9, 0.9)
+        toView!.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         
-        UIView.animateWithDuration(
-            halfDuration,
+        UIView.animate(
+            withDuration: halfDuration,
             delay: 0.0,
             usingSpringWithDamping: damping,
             initialSpringVelocity: velocity,
-            options: UIViewAnimationOptions.CurveLinear,
+            options: UIViewAnimationOptions.curveLinear,
             animations: {
                 () -> Void in
                 fromView.frame = CGRect(x: fromView.frame.width, y: fromView.frame.origin.y, width: fromView.frame.width, height: fromView.frame.height);
             },
             completion: { (finished: Bool) -> Void in
                 if finished {
-                    UIView.animateWithDuration(
-                        halfDuration,
+                    UIView.animate(
+                        withDuration: halfDuration,
                         delay: 0.0,
                         usingSpringWithDamping: self.damping,
                         initialSpringVelocity: self.velocity,
-                        options: UIViewAnimationOptions.CurveLinear,
+                        options: UIViewAnimationOptions.curveLinear,
                         animations: {
                             () -> Void in
-                            toView!.transform = CGAffineTransformIdentity
+                            toView!.transform = CGAffineTransform.identity
                         }, completion: { (finished: Bool) -> Void in
                             if finished {
                                 transitionContext.completeTransition( true )

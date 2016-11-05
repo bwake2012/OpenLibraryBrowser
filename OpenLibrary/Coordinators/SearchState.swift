@@ -15,7 +15,7 @@ private let kSearchSequence = "SearchSequence"
 
 class SortField: NSObject {
     
-    static private let fields: [( name: String, label: String )] = [
+    static fileprivate let fields: [( name: String, label: String )] = [
         ( name: "sort_author_name", label: "Author" ),
         ( name: "title", label: "Title" ),
         ( name: "edition_count", label: "Edition Count" ),
@@ -28,7 +28,7 @@ class SortField: NSObject {
         var sortFields: [SortField] = []
         for field in SortField.fields {
         
-            let rawSort = aDecoder.decodeIntForKey( field.name ) ?? 0
+            let rawSort = aDecoder.decodeCInt( forKey: field.name ) 
             sortFields.append(
                 SortField(
                         name: field.name,
@@ -41,7 +41,7 @@ class SortField: NSObject {
         return sortFields
     }
     
-    class func encode( aCoder: NSCoder, sortFields: [SortField] ) {
+    class func encode( _ aCoder: NSCoder, sortFields: [SortField] ) {
         
         for field in sortFields {
             
@@ -60,9 +60,9 @@ class SortField: NSObject {
         self.sort = sort
     }
     
-    func encodeWithCoder( aCoder: NSCoder ) {
+    func encodeWithCoder( _ aCoder: NSCoder ) {
         
-        aCoder.encodeInt( Int32( sort.rawValue ), forKey: name )
+        aCoder.encodeCInt( Int32( sort.rawValue ), forKey: name )
     }
     
     func image() -> UIImage {
@@ -78,11 +78,11 @@ enum SortOptions: Int {
     var imageName: String {
         
         switch self {
-        case sortNone: return "rsw-notsorted-28x26"
-        case sortUp:   return "763-arrow-up"
-        case sortDown: return "764-arrow-down"
-        case sortMax:
-            assert( self != sortMax )
+        case .sortNone: return "rsw-notsorted-28x26"
+        case .sortUp:   return "763-arrow-up"
+        case .sortDown: return "764-arrow-down"
+        case .sortMax:
+            assert( self != SortOptions.sortMax )
             return ""
         }
     }
@@ -90,7 +90,7 @@ enum SortOptions: Int {
     func nextSort() -> SortOptions {
         
         let rawNext = self.rawValue + 1
-        let rawMax  = sortMax.rawValue
+        let rawMax  = SortOptions.sortMax.rawValue
         
         let rawNew = rawNext % rawMax
         
@@ -105,12 +105,13 @@ enum SortOptions: Int {
 
 class SearchState: NSObject, NSCoding {
     
-    static let DocumentsDirectory = NSFileManager().URLsForDirectory( .DocumentDirectory, inDomains: .UserDomainMask ).first!
-    static let ArchiveURL = DocumentsDirectory.URLByAppendingPathComponent( "SearchState" )
+    static let DocumentsDirectory = FileManager().urls( for: .documentDirectory, in: .userDomainMask ).first!
+    static let ArchiveURL = DocumentsDirectory.appendingPathComponent( "SearchState" )
     
     class func loadState() -> SearchState? {
         
-        return NSKeyedUnarchiver.unarchiveObjectWithFile( SearchState.ArchiveURL.path! ) as? SearchState
+        let path = SearchState.ArchiveURL.path
+        return NSKeyedUnarchiver.unarchiveObject( withFile: path ) as? SearchState
     }
     
     var searchFields: [String: String] = [:]
@@ -128,23 +129,24 @@ class SearchState: NSObject, NSCoding {
     
     required init( coder aDecoder: NSCoder ) {
         
-        searchFields = aDecoder.decodeObjectForKey( kSearchFields ) as? [String: String] ?? [:]
+        searchFields = aDecoder.decodeObject( forKey: kSearchFields ) as? [String: String] ?? [:]
         sortFields = SortField.decode( coder: aDecoder )
-        searchResults = aDecoder.decodeObjectForKey( kSearchResults ) as? SearchResults ?? SearchResults()
-        sequence = Int( aDecoder.decodeInt64ForKey( kSearchSequence ) ?? 1 )
+        searchResults = aDecoder.decodeObject( forKey: kSearchResults ) as? SearchResults ?? SearchResults()
+        sequence = Int( aDecoder.decodeInt64( forKey: kSearchSequence ) )
     }
 
-    func encodeWithCoder( aCoder: NSCoder ) {
+    func encode( with aCoder: NSCoder ) {
         
-        aCoder.encodeObject( searchFields, forKey: kSearchFields )
+        aCoder.encode( searchFields, forKey: kSearchFields )
         SortField.encode( aCoder, sortFields: sortFields )
-        aCoder.encodeObject( searchResults, forKey: kSearchResults )
-        aCoder.encodeInt64( Int64( sequence ), forKey: kSearchSequence )
+        aCoder.encode( searchResults, forKey: kSearchResults )
+        aCoder.encode( Int64( sequence ), forKey: kSearchSequence )
     }
     
     func saveState() {
         
-        let saveSuccess = NSKeyedArchiver.archiveRootObject( self, toFile: SearchState.ArchiveURL.path! )
+        let path = SearchState.ArchiveURL.path
+        let saveSuccess = NSKeyedArchiver.archiveRootObject( self, toFile: path )
         if !saveSuccess {
             
             print( "SearchState.saveState failed" )

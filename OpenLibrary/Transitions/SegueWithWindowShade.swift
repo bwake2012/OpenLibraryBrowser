@@ -12,17 +12,17 @@ class SegueWithWindowShade: UIStoryboardSegue {
 
     override func perform() {
 
-        assert( nil != self.sourceViewController.navigationController )
-        assert( self.sourceViewController.navigationController!.delegate is NavigationControllerDelegate )
+        assert( nil != self.source.navigationController )
+        assert( self.source.navigationController!.delegate is NavigationControllerDelegate )
 
-        if let navController = self.sourceViewController.navigationController {
+        if let navController = self.source.navigationController {
             
             if let ncd = navController.delegate as? NavigationControllerDelegate {
 
                 ncd.pushZoomTransition(
                     WindowShadeTransition(
                                 navigationController: navController,
-                                operation: .Push,
+                                operation: .push,
                                 sourceRectView: nil
                             )
                         )

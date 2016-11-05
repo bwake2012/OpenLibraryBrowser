@@ -14,7 +14,11 @@ import CoreData
 
 extension OLEBookItem {
     
-    @NSManaged var retrieval_date: NSDate
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<OLEBookItem> {
+        return NSFetchRequest<OLEBookItem>( entityName: OLEBookItem.entityName )
+    }
+    
+    @NSManaged var retrieval_date: Date
 
     @NSManaged var status: String
     @NSManaged var workKey: String

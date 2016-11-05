@@ -57,13 +57,13 @@ class WorkDetailCoordinator: OLQueryCoordinator {
     }
     var editionKeys: [String] = []
     
-    var workDetailGetOperation: Operation?
-    var authorDetailGetOperation: Operation?
-    var ebookItemGetOperation: Operation?
+    var workDetailGetOperation: PSOperation?
+    var authorDetailGetOperation: PSOperation?
+    var ebookItemGetOperation: PSOperation?
     
     init(
-        operationQueue: OperationQueue,
-        coreDataStack: CoreDataStack,
+        operationQueue: PSOperationQueue,
+        coreDataStack: OLDataStack,
         workDetail: OLWorkDetail,
         editionKeys: [String],
         workDetailVC: OLWorkDetailViewController
@@ -79,9 +79,9 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: workDetailVC )
     }
     
-    func updateUI( workDetail: OLWorkDetail ) {
+    func updateUI( _ workDetail: OLWorkDetail ) {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
         assert( !workDetail.key.isEmpty )
 
         if let workDetailVC = workDetailVC {
@@ -102,11 +102,11 @@ class WorkDetailCoordinator: OLQueryCoordinator {
                             
                             [weak self] in
                             
-                            dispatch_async( dispatch_get_main_queue() ) {
+                            DispatchQueue.main.async {
                                     
                                 if nil != self {
 
-                                    workDetailVC.displayImage( url )
+                                    _ = workDetailVC.displayImage( url )
                                 }
                             }
                     }
@@ -114,7 +114,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
                     imageGetOperation.userInitiated = true
                     operationQueue.addOperation( imageGetOperation )
                     
-                    workDetailVC.displayImage( workDetail.localURL( "S" ) )
+                    _ = workDetailVC.displayImage( workDetail.localURL( "S" ) )
                 }
             }
         }
@@ -123,7 +123,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
     func updateUI() {
         
         do {
-            NSFetchedResultsController.deleteCacheWithName( kWorkDetailCache )
+//            NSFetchedResultsController< OLWorkDetail >.deleteCache( withName: kWorkDetailCache )
             try fetchedResultsController.performFetch()
         }
         catch {
@@ -132,7 +132,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         }
     }
     
-    func newQuery( workKey: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
+    func newQuery( _ workKey: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
         
         if nil == workDetailGetOperation {
             workDetailGetOperation =
@@ -143,7 +143,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
                 ) {
                     [weak self] in
                     
-                    dispatch_async( dispatch_get_main_queue() ) {
+                    DispatchQueue.main.async {
                     
                         if let strongSelf = self {
                             
@@ -159,7 +159,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         }
     }
     
-    func retrieveAuthors ( workDetail: OLWorkDetail ) {
+    func retrieveAuthors ( _ workDetail: OLWorkDetail ) {
         
         if workDetail.author_names.count < workDetail.authors.count {
 
@@ -167,7 +167,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         }
     }
     
-    func newAuthorQueries( workDetail: OLWorkDetail ) {
+    func newAuthorQueries( _ workDetail: OLWorkDetail ) {
         
         if nil == authorDetailGetOperation {
             
@@ -200,7 +200,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
                         
                         [weak self] in
                         
-                        dispatch_async( dispatch_get_main_queue() ) {
+                        DispatchQueue.main.async {
                                 
                             if let strongSelf = self {
                                 
@@ -215,7 +215,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         }
     }
     
-    func retrieveEBookItems ( workDetail: OLWorkDetail ) {
+    func retrieveEBookItems ( _ workDetail: OLWorkDetail ) {
         
         if workDetail.mayHaveFullText && workDetail.ebook_items.isEmpty  {
             
@@ -240,7 +240,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
                     
                     [weak self] in
                     
-                    dispatch_async( dispatch_get_main_queue() ) {
+                    DispatchQueue.main.async {
                             
                         if let strongSelf = self {
                             
@@ -257,7 +257,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         }
     }
     
-    func refreshQuery( refreshControl: UIRefreshControl? ) {
+    func refreshQuery( _ refreshControl: UIRefreshControl? ) {
         
         newQuery( workKey, userInitiated: true, refreshControl: refreshControl )
 
@@ -266,14 +266,14 @@ class WorkDetailCoordinator: OLQueryCoordinator {
     // MARK: Utility
     func BuildFetchedResultsController() -> FetchedOLWorkDetailController {
         
-        let fetchRequest = NSFetchRequest( entityName: OLWorkDetail.entityName )
+        let fetchRequest = OLWorkDetail.buildFetchRequest()
         let key = workKey
         
-        let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
-        let today = NSDate()
-        let lastWeek = today.dateByAddingTimeInterval( -7 * secondsPerDay )
+        let secondsPerDay = TimeInterval( 24 * 60 * 60 )
+        let today = Date()
+        let lastWeek = today.addingTimeInterval( -7 * secondsPerDay )
         
-        fetchRequest.predicate = NSPredicate( format: "key==%@ && retrieval_date > %@", "\(key)", lastWeek )
+        fetchRequest.predicate = NSPredicate( format: "key==%@ && retrieval_date > %@", key, lastWeek as NSDate )
         
         fetchRequest.sortDescriptors =
             [
@@ -287,7 +287,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
                     fetchRequest: fetchRequest,
                     managedObjectContext: self.coreDataStack.mainQueueContext,
                     sectionNameKeyPath: nil,
-                    cacheName: kWorkDetailCache
+                    cacheName: nil // kWorkDetailCache
                 )
         
         frc.setDelegate( self )
@@ -296,7 +296,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
     
     // MARK: install query coordinators
     
-    func installWorkDetailEditionsQueryCoordinator( destVC: OLWorkDetailEditionsTableViewController ) {
+    func installWorkDetailEditionsQueryCoordinator( _ destVC: OLWorkDetailEditionsTableViewController ) {
         
         destVC.queryCoordinator =
             WorkEditionsCoordinator(
@@ -307,7 +307,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         )
      }
     
-    func installEBookEditionsCoordinator( destVC: OLEBookEditionsTableViewController ) {
+    func installEBookEditionsCoordinator( _ destVC: OLEBookEditionsTableViewController ) {
         
         assert( !editionKeys.isEmpty )
         
@@ -321,7 +321,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         )
     }
 
-    func installWorkDeluxeDetailCoordinator( destVC: OLDeluxeDetailTableViewController ) {
+    func installWorkDeluxeDetailCoordinator( _ destVC: OLDeluxeDetailTableViewController ) {
         
         destVC.queryCoordinator =
             DeluxeDetailCoordinator(
@@ -334,7 +334,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
                 )
     }
     
-    func installCoverPictureViewCoordinator( destVC: OLPictureViewController ) {
+    func installCoverPictureViewCoordinator( _ destVC: OLPictureViewController ) {
     
         destVC.queryCoordinator =
             PictureViewCoordinator(
@@ -348,7 +348,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
 
     }
     
-    func installAuthorDetailCoordinator( destVC: OLAuthorDetailViewController ) {
+    func installAuthorDetailCoordinator( _ destVC: OLAuthorDetailViewController ) {
         
         guard !workDetail.author_key.isEmpty else {
             
@@ -373,7 +373,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
 
 extension WorkDetailCoordinator: FetchedResultsControllerDelegate {
     
-    func fetchedResultsControllerDidPerformFetch( controller: FetchedOLWorkDetailController ) {
+    func fetchedResultsControllerDidPerformFetch( _ controller: FetchedOLWorkDetailController ) {
         
         guard let workDetail = controller.fetchedObjects?.first else {
             
@@ -391,11 +391,11 @@ extension WorkDetailCoordinator: FetchedResultsControllerDelegate {
         updateUI( workDetail )
     }
     
-    func fetchedResultsControllerWillChangeContent( controller: FetchedOLWorkDetailController ) {
+    func fetchedResultsControllerWillChangeContent( _ controller: FetchedOLWorkDetailController ) {
         //        authorWorksTableVC?.tableView.beginUpdates()
     }
     
-    func fetchedResultsControllerDidChangeContent( controller: FetchedOLWorkDetailController ) {
+    func fetchedResultsControllerDidChangeContent( _ controller: FetchedOLWorkDetailController ) {
         
         guard let workDetail = controller.fetchedObjects?.first else {
             
@@ -407,7 +407,7 @@ extension WorkDetailCoordinator: FetchedResultsControllerDelegate {
         updateUI( workDetail )
     }
     
-    func fetchedResultsController( controller: FetchedOLWorkDetailController,
+    func fetchedResultsController( _ controller: FetchedOLWorkDetailController,
                                    didChangeObject change: FetchedResultsObjectChange< OLWorkDetail > ) {
         
 //        switch change {
@@ -425,7 +425,7 @@ extension WorkDetailCoordinator: FetchedResultsControllerDelegate {
 //        }
     }
     
-    func fetchedResultsController(controller: FetchedOLWorkDetailController,
+    func fetchedResultsController(_ controller: FetchedOLWorkDetailController,
                                   didChangeSection change: FetchedResultsSectionChange< OLWorkDetail >) {
         
 //        switch change {

@@ -11,10 +11,10 @@ import Foundation
 protocol OLDataSource {
 
     func numberOfSections() -> Int
-    func numberOfRowsInSection( section: Int ) -> Int
+    func numberOfRowsInSection( _ section: Int ) -> Int
 //    func objectAtIndexPath( indexPath: NSIndexPath ) -> OLManagedObject?
 
-    func displayToCell( cell: OLTableViewCell, indexPath: NSIndexPath ) -> OLManagedObject?
+    @discardableResult func displayToCell( _ cell: OLTableViewCell, indexPath: IndexPath ) -> OLManagedObject?
     func updateUI() -> Void
 
     func clearQuery() -> Void

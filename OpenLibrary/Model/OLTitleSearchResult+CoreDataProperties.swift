@@ -10,6 +10,10 @@ import CoreData
 
 extension OLTitleSearchResult {
     
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<OLTitleSearchResult> {
+        return NSFetchRequest<OLTitleSearchResult>( entityName: OLTitleSearchResult.entityName )
+    }
+    
     @NSManaged var sequence: Int64
     @NSManaged var index: Int64
     @NSManaged var key: String

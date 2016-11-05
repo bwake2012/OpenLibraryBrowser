@@ -21,7 +21,7 @@ class AuthorNameSearchOperation: GroupOperation {
    
 //    private var hasProducedAlert = false
     
-    private let coreDataStack: CoreDataStack
+    fileprivate let coreDataStack: OLDataStack
     
     /**
         - parameter context: The `NSManagedObjectContext` into which the parsed
@@ -31,13 +31,13 @@ class AuthorNameSearchOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, offset: Int, limit: Int, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater, completionHandler: Void -> Void ) {
+    init( queryText: String, offset: Int, limit: Int, coreDataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater, completionHandler: @escaping (Void) -> Void ) {
 
         self.coreDataStack = coreDataStack
         
-        let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+        let cachesFolder = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
-        let cacheFile = cachesFolder.URLByAppendingPathComponent("authorSearchResults.json")
+        let cacheFile = cachesFolder.appendingPathComponent("authorSearchResults.json")
 //        print( "cache: \(cacheFile.absoluteString)" )
         
         /*
@@ -51,13 +51,13 @@ class AuthorNameSearchOperation: GroupOperation {
         downloadOperation = AuthorNameSearchResultsDownloadOperation( queryText: queryText, offset: offset, limit: limit, cacheFile: cacheFile )
         parseOperation = AuthorNameSearchResultsParseOperation( cacheFile: cacheFile, coreDataStack: coreDataStack, updateResults: updateResults )
         
-        let finishOperation = NSBlockOperation( block: completionHandler )
+        let finishOperation = PSBlockOperation { completionHandler() }
         
         // These operations must be executed in order
         parseOperation.addDependency(downloadOperation)
         finishOperation.addDependency(parseOperation)
         
-        var operations = [NSOperation]()
+        var operations: [PSOperation] = []
         if 0 == offset {
             deleteOperation = AuthorSearchResultsDeleteOperation( coreDataStack: coreDataStack )
             if let dO = deleteOperation {
@@ -74,7 +74,7 @@ class AuthorNameSearchOperation: GroupOperation {
         name = "Author Name Search " + queryText
     }
     
-    override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
+    override func operationDidFinish(_ operation: Foundation.Operation, withErrors errors: [NSError]) {
         if let firstError = errors.first {
 
             if operation === downloadOperation || operation === parseOperation {

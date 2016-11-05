@@ -16,16 +16,16 @@ class PictureViewCoordinator: OLQueryCoordinator {
     
     weak var pictureVC: OLPictureViewController?
     
-    private var localURL: NSURL
-    private var imageID: Int = 0
-    private var pictureType = "a"
+    fileprivate var localURL: URL
+    fileprivate var imageID: Int = 0
+    fileprivate var pictureType = "a"
 
     var imageGetOperation: ImageGetOperation?
     
     init(
-        operationQueue: OperationQueue,
-        coreDataStack: CoreDataStack,
-        localURL: NSURL,
+        operationQueue: PSOperationQueue,
+        coreDataStack: OLDataStack,
+        localURL: URL,
         imageID: Int,
         pictureType: String,
         pictureVC: OLPictureViewController
@@ -62,11 +62,11 @@ class PictureViewCoordinator: OLQueryCoordinator {
                         ) {
                             [weak self] in
                             
-                            dispatch_async( dispatch_get_main_queue() ) {
+                            DispatchQueue.main.async {
                                     
                                 if let strongSelf = self {
 
-                                    strongSelf.pictureVC?.displayImage( strongSelf.localURL )
+                                    _ = strongSelf.pictureVC?.displayImage( strongSelf.localURL )
                                     strongSelf.imageGetOperation = nil
                                 }
                                 

@@ -12,6 +12,10 @@ import BNRCoreDataStack
 
 extension OLAuthorSearchResult {
     
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<OLAuthorSearchResult> {
+        return NSFetchRequest<OLAuthorSearchResult>( entityName: OLAuthorSearchResult.entityName )
+    }
+    
     @NSManaged var sequence: Int64
     @NSManaged var index: Int64
     @NSManaged var key: String

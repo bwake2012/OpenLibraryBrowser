@@ -16,18 +16,17 @@ private let kLanguagesCache = "languagesCache"
 
 class LanguagesCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate {
     
-    private let kPageSize = 1000
+    fileprivate let kPageSize = 1000
     
     typealias FetchedOLLanguageController = FetchedResultsController< OLLanguage >
     
     var searchResults = SearchResults()
     
-    var languagesGetOperation: Operation?
+    var languagesGetOperation: PSOperation?
 
-    private lazy var fetchedResultsController: FetchedOLLanguageController = {
+    fileprivate lazy var fetchedResultsController: FetchedOLLanguageController = {
         
-        let fetchRequest = NSFetchRequest( entityName: OLLanguage.entityName )
-//        fetchRequest.predicate = NSPredicate( format: "author_key==%@", "\(key)" )
+        let fetchRequest = OLLanguage.buildFetchRequest()
         
         fetchRequest.sortDescriptors =
             [
@@ -39,20 +38,20 @@ class LanguagesCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate
                         fetchRequest: fetchRequest,
                         managedObjectContext: self.coreDataStack.mainQueueContext,
                         sectionNameKeyPath: nil,
-                        cacheName: kLanguagesCache )
+                        cacheName: nil ) // kLanguagesCache )
         
         frc.setDelegate( self )
         return frc
     }()
     
-    override init( operationQueue: OperationQueue, coreDataStack: CoreDataStack, viewController: UIViewController ) {
+    override init( operationQueue: PSOperationQueue, coreDataStack: OLDataStack, viewController: UIViewController ) {
         
         super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: viewController )
         
         updateUI()
     }
     
-    func newQuery( userInitiated: Bool, refreshControl: UIRefreshControl? ) {
+    func newQuery( _ userInitiated: Bool, refreshControl: UIRefreshControl? ) {
         
         self.searchResults = SearchResults()
         
@@ -61,7 +60,7 @@ class LanguagesCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate
                 coreDataStack: coreDataStack
             ) {
                 
-                dispatch_async( dispatch_get_main_queue() ) {
+                DispatchQueue.main.async {
                     
                     refreshControl?.endRefreshing()
                     self.languagesGetOperation = nil
@@ -74,7 +73,7 @@ class LanguagesCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate
     }
     
     // MARK: SearchResultsUpdater
-    func updateResults(searchResults: SearchResults) -> Void {
+    func updateResults(_ searchResults: SearchResults) -> Void {
         
         self.searchResults = searchResults
     }
@@ -82,7 +81,7 @@ class LanguagesCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate
     func updateUI() {
         
         do {
-            NSFetchedResultsController.deleteCacheWithName( kLanguagesCache )
+//            NSFetchedResultsController< OLLanguage >.deleteCache( withName: kLanguagesCache )
             try fetchedResultsController.performFetch()
         }
         catch {
@@ -91,7 +90,7 @@ class LanguagesCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate
     }
     
     // MARK: FetchedResultsControllerDelegate
-    func fetchedResultsControllerDidPerformFetch(controller: FetchedOLLanguageController) {
+    func fetchedResultsControllerDidPerformFetch(_ controller: FetchedOLLanguageController) {
         
         if 0 == controller.count {
             
@@ -99,13 +98,13 @@ class LanguagesCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate
         }
     }
     
-    func fetchedResultsControllerWillChangeContent( controller: FetchedOLLanguageController ) {
+    func fetchedResultsControllerWillChangeContent( _ controller: FetchedOLLanguageController ) {
     }
     
-    func fetchedResultsControllerDidChangeContent( controller: FetchedOLLanguageController ) {
+    func fetchedResultsControllerDidChangeContent( _ controller: FetchedOLLanguageController ) {
     }
     
-    func fetchedResultsController( controller: FetchedOLLanguageController,
+    func fetchedResultsController( _ controller: FetchedOLLanguageController,
                                    didChangeObject change: FetchedResultsObjectChange< OLLanguage > ) {
 //        switch change {
 //        case let .Insert(_, indexPath):
@@ -122,7 +121,7 @@ class LanguagesCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate
 //        }
     }
     
-    func fetchedResultsController(controller: FetchedOLLanguageController,
+    func fetchedResultsController(_ controller: FetchedOLLanguageController,
                                   didChangeSection change: FetchedResultsSectionChange< OLLanguage >) {
 //        switch change {
 //        case let .Insert(_, index):

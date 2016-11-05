@@ -36,19 +36,19 @@ class SearchResults: NSObject, NSCoding {
     
     required init( coder aDecoder: NSCoder ) {
     
-        start = Int( aDecoder.decodeIntForKey( kResultsStart ) ?? 0 )
-        numFound = Int( aDecoder.decodeIntForKey( kResultsNumFound ) ?? 0 )
-        pageSize = Int( aDecoder.decodeIntForKey( kResultsPageSize ) ?? 0 )
+        start = Int( aDecoder.decodeCInt( forKey: kResultsStart ) )
+        numFound = Int( aDecoder.decodeCInt( forKey: kResultsNumFound ) )
+        pageSize = Int( aDecoder.decodeCInt( forKey: kResultsPageSize ) )
     }
     
-    func encodeWithCoder(aCoder: NSCoder) {
+    func encode(with aCoder: NSCoder) {
         
-        aCoder.encodeInt( Int32( start ), forKey: kResultsStart )
-        aCoder.encodeInt( Int32( numFound ), forKey: kResultsNumFound )
-        aCoder.encodeInt( Int32( pageSize ), forKey: kResultsPageSize )
+        aCoder.encodeCInt( Int32( start ), forKey: kResultsStart )
+        aCoder.encodeCInt( Int32( numFound ), forKey: kResultsNumFound )
+        aCoder.encodeCInt( Int32( pageSize ), forKey: kResultsPageSize )
     }
 }
 
-typealias SearchResultsUpdater = SearchResults -> Void
+typealias SearchResultsUpdater = (SearchResults) -> Void
 
 

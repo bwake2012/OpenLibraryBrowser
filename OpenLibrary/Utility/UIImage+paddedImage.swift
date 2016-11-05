@@ -10,7 +10,7 @@ import UIKit
 
 extension UIImage {
     
-    func paddedImage( left: CGFloat = 0.0, top: CGFloat = 0.0, right: CGFloat, bottom: CGFloat, backgroundColor: UIColor = UIColor.whiteColor() ) -> UIImage? {
+    func paddedImage( _ left: CGFloat = 0.0, top: CGFloat = 0.0, right: CGFloat, bottom: CGFloat, backgroundColor: UIColor = UIColor.white ) -> UIImage? {
         
         let width: CGFloat = self.size.width + left + right
         let height: CGFloat = self.size.height + top + bottom
@@ -21,10 +21,10 @@ extension UIImage {
 
         UIGraphicsPushContext( context )
         
-        CGContextSetFillColorWithColor( context, backgroundColor.CGColor )
-        CGContextFillRect( context, CGRect( x: 0, y: 0, width: width, height: height ) )
+        context.setFillColor(backgroundColor.cgColor )
+        context.fill(CGRect( x: 0, y: 0, width: width, height: height ) )
         
-        self.drawAtPoint( CGPoint(x: left, y: top ) )
+        self.draw( at: CGPoint(x: left, y: top ) )
         
         UIGraphicsPopContext()
         

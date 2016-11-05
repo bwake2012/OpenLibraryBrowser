@@ -11,28 +11,28 @@ import UIKit
 extension UIView {
     
     class var nameOfClass: String {
-        return NSStringFromClass(self).componentsSeparatedByString(".").last!
+        return NSStringFromClass(self).components(separatedBy: ".").last!
     }
     
     var nameOfClass: String {
-        return NSStringFromClass(self.dynamicType).componentsSeparatedByString(".").last!
+        return NSStringFromClass(type(of: self)).components( separatedBy: "." ).last!
     }
     
-    private class func registerCell( tableView: UITableView, className: String ) {
+    fileprivate class func registerCell( _ tableView: UITableView, className: String ) {
         
         let nib = UINib( nibName: className, bundle: nil )
         
-        tableView.registerNib( nib, forCellReuseIdentifier: className )
+        tableView.register( nib, forCellReuseIdentifier: className )
     }
     
-    class func registerCell( tableView: UITableView ) {
+    class func registerCell( _ tableView: UITableView ) {
         
         registerCell( tableView, className: nameOfClass )
     }
 
     class func createFromNib() -> UIView? {
         
-        guard let view = NSBundle.mainBundle().loadNibNamed( nameOfClass, owner: nil, options: nil ).last as? UIView else { return nil }
+        guard let view = Bundle.main.loadNibNamed( nameOfClass, owner: nil, options: nil )?.last as? UIView else { return nil }
         
         return view
     }

@@ -86,12 +86,14 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/BNRCoreDataStack/BNRCoreDataStack.framework"
   install_framework "$BUILT_PRODUCTS_DIR/BRYXBanner/BRYXBanner.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Down/Down.framework"
   install_framework "$BUILT_PRODUCTS_DIR/PSOperations/PSOperations.framework"
   install_framework "$BUILT_PRODUCTS_DIR/ReachabilitySwift/ReachabilitySwift.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/BNRCoreDataStack/BNRCoreDataStack.framework"
   install_framework "$BUILT_PRODUCTS_DIR/BRYXBanner/BRYXBanner.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Down/Down.framework"
   install_framework "$BUILT_PRODUCTS_DIR/PSOperations/PSOperations.framework"
   install_framework "$BUILT_PRODUCTS_DIR/ReachabilitySwift/ReachabilitySwift.framework"
 fi

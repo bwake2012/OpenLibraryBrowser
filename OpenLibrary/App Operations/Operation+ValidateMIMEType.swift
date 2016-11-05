@@ -18,11 +18,11 @@ let mimeTypeDesiredKey  = "MIMETypeDesired"
 let mimeTypeReturnedKey = "MIMETypeReturned"
 let hostURLKey = "hostURL"
 
-extension Operation {
+extension PSOperation {
     
-    func validateDataMIMEType( mimeTypes: [String], response: NSHTTPURLResponse?, data: NSData? ) -> NSError? {
+    func validateDataMIMEType( _ mimeTypes: [String], response: HTTPURLResponse?, data: Data? ) -> NSError? {
         
-        guard let response = response, responseMIMEType = response.MIMEType else {
+        guard let response = response, let responseMIMEType = response.mimeType else {
             
             return nil
         }
@@ -31,7 +31,7 @@ extension Operation {
             
 //            let className = NSStringFromClass(self.dynamicType).componentsSeparatedByString(".").last!
             
-            var userInfo: [NSObject: AnyObject] =
+            var userInfo: [AnyHashable: Any] =
                 [
 //                    OperationConditionKey: className,
                     mimeTypeDesiredKey: mimeTypes,
@@ -42,22 +42,22 @@ extension Operation {
                 userInfo[dataKey] = data
             }
             
-            return NSError( code: OperationErrorCode.ExecutionFailed, userInfo: userInfo )
+            return NSError( code: OperationErrorCode.executionFailed, userInfo: userInfo as [NSObject : AnyObject]? )
         }
         
         return nil
     }
 
-    func validateStreamMIMEType( mimeTypes: [String], response: NSHTTPURLResponse?, url: NSURL? ) -> NSError? {
+    func validateStreamMIMEType( _ mimeTypes: [String], response: HTTPURLResponse?, url: URL? ) -> NSError? {
         
-        guard let response = response, responseMIMEType = response.MIMEType else {
+        guard let response = response, let responseMIMEType = response.mimeType else {
             
             return nil
         }
         
         if !mimeTypes.contains( responseMIMEType ) {
         
-            var userInfo: [NSObject: AnyObject] =
+            var userInfo: [AnyHashable: Any] =
                 [
     //                    OperationConditionKey: className,
                     mimeTypeDesiredKey: mimeTypes,
@@ -68,7 +68,7 @@ extension Operation {
                 userInfo[streamKey] = url
             }
             
-            return NSError( code: OperationErrorCode.ExecutionFailed, userInfo: userInfo )
+            return NSError( code: OperationErrorCode.executionFailed, userInfo: userInfo as [NSObject : AnyObject]? )
         }
         
         return nil

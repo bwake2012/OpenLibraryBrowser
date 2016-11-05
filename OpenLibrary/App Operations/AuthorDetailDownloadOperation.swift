@@ -13,12 +13,12 @@ import PSOperations
 class AuthorDetailDownloadOperation: GroupOperation {
     // MARK: Properties
 
-    let cacheFile: NSURL
+    let cacheFile: URL
     
     // MARK: Initialization
     
     /// - parameter cacheFile: The file `NSURL` to which the earthquake feed will be downloaded.
-    init( queryText: String, cacheFile: NSURL) {
+    init( queryText: String, cacheFile: URL) {
 
         self.cacheFile = cacheFile
         super.init(operations: [])
@@ -36,13 +36,8 @@ class AuthorDetailDownloadOperation: GroupOperation {
         assert( queryText.hasPrefix( kAuthorsPrefix ) )
         
         let urlString = "https://openlibrary.org\(queryText).json"
-        let url = NSURL( string: urlString )!
-        let task = NSURLSession.sharedSession().downloadTaskWithURL( url ) {
-            
-            url, response, error in
-            
-            self.downloadFinished(url, response: response as? NSHTTPURLResponse, error: error)
-        }
+        let url = URL( string: urlString )!
+        let task = URLSession.shared.downloadTask( with: url, completionHandler: downloadFinished )
         
         let taskOperation = URLSessionTaskOperation(task: task)
         
@@ -55,19 +50,19 @@ class AuthorDetailDownloadOperation: GroupOperation {
         addOperation(taskOperation)
     }
         
-    func downloadFinished(url: NSURL?, response: NSHTTPURLResponse?, error: NSError?) {
+    func downloadFinished(_ url: URL?, response: URLResponse?, error: Error?) {
         if let localURL = url {
             do {
                 /*
                     If we already have a file at this location, just delete it.
                     Also, swallow the error, because we don't really care about it.
                 */
-                try NSFileManager.defaultManager().removeItemAtURL(cacheFile)
+                try FileManager.default.removeItem(at: cacheFile)
             }
             catch { }
             
             do {
-                try NSFileManager.defaultManager().moveItemAtURL(localURL, toURL: cacheFile)
+                try FileManager.default.moveItem(at: localURL, to: cacheFile)
             }
             catch let error as NSError {
                 aggregateError(error)
@@ -75,7 +70,7 @@ class AuthorDetailDownloadOperation: GroupOperation {
             
         }
         else if let error = error {
-            aggregateError(error)
+            aggregateError( error as NSError )
         }
         else {
             // Do nothing, and the operation will automatically finish.

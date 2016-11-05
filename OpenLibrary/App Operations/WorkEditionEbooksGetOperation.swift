@@ -19,11 +19,11 @@ class WorkEditionEbooksGetOperation: GroupOperation {
     
     let downloadOperation: WorkEditionListDownloadOperation
     let parseOperation: WorkEditionListParseOperation
-    let finishOperation: NSBlockOperation
+    let finishOperation: PSBlockOperation
    
 //    private var hasProducedAlert = false
     
-    private let coreDataStack: CoreDataStack
+    fileprivate let coreDataStack: OLDataStack
      
     /**
         - parameter coreDataStack: The Big Nerd Ranch Core Data Stack 
@@ -33,19 +33,19 @@ class WorkEditionEbooksGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( workKey: String, coreDataStack: CoreDataStack, completionHandler: Void -> Void ) {
+    init( workKey: String, coreDataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
 
         assert( !workKey.isEmpty )
         
         self.coreDataStack = coreDataStack
         
-        let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+        let cachesFolder = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
-        let parts = workKey.componentsSeparatedByString( "/" )
+        let parts = workKey.components( separatedBy: "/" )
         let goodParts = parts.filter { (x) -> Bool in !x.isEmpty }
         let olid = goodParts.last!
         let cacheFile =
-            cachesFolder.URLByAppendingPathComponent("\(olid)workEditionEbooksList.json")
+            cachesFolder.appendingPathComponent("\(olid)workEditionEbooksList.json")
 //        print( "cache: \(cacheFile.absoluteString)" )
         
         /*
@@ -59,13 +59,13 @@ class WorkEditionEbooksGetOperation: GroupOperation {
         downloadOperation = WorkEditionListDownloadOperation( workKey: workKey, cacheFile: cacheFile )
         parseOperation = WorkEditionListParseOperation( parentKey: workKey, cacheFile: cacheFile )
         
-        finishOperation = NSBlockOperation( block: completionHandler )
+        finishOperation = PSBlockOperation { completionHandler() }
         
         // These operations must be executed in order
         parseOperation.addDependency(downloadOperation)
         finishOperation.addDependency(parseOperation)
         
-        let operations = [downloadOperation, parseOperation, finishOperation]
+        let operations = [downloadOperation, parseOperation, finishOperation] as [Foundation.Operation]
         super.init( operations: operations )
 
         addCondition( MutuallyExclusive<WorkEditionsGetOperation>() )
@@ -73,9 +73,9 @@ class WorkEditionEbooksGetOperation: GroupOperation {
         name = "Get Work Edition List"
     }
     
-    override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
+    override func operationDidFinish(_ operation: Foundation.Operation, withErrors errors: [NSError]) {
 
-        if let firstError = errors.first where (operation === downloadOperation || operation === parseOperation) {
+        if let firstError = errors.first , (operation === downloadOperation || operation === parseOperation) {
             
             produceAlert(firstError)
         

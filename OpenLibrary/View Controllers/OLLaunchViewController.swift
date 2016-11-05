@@ -12,19 +12,19 @@ class OLLaunchViewController: UIViewController {
     
     var enableClose: Bool = false
     
-    private lazy var mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+    fileprivate lazy var mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
     
-    private lazy var navController: UINavigationController = {
-        return self.mainStoryboard.instantiateViewControllerWithIdentifier("rootNavigationController")
+    fileprivate lazy var navController: UINavigationController = {
+        return self.mainStoryboard.instantiateViewController(withIdentifier: "rootNavigationController")
             as! UINavigationController
     }()
     
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var copyright: UIButton!
 
-    @IBAction func copyrightButtonTapped( sender: UIButton ) {
+    @IBAction func copyrightButtonTapped( _ sender: UIButton ) {
         
-        dismissViewControllerAnimated( true, completion: nil )
+        dismiss( animated: true, completion: nil )
     }
     
     override func viewDidLoad() {
@@ -38,7 +38,7 @@ class OLLaunchViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear( animated )
         
@@ -46,7 +46,7 @@ class OLLaunchViewController: UIViewController {
             activityIndicator.stopAnimating()
         }
         
-        copyright.enabled = enableClose
+        copyright.isEnabled = enableClose
     }
     
     /*

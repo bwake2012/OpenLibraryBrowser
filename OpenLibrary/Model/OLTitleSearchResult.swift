@@ -91,7 +91,7 @@ private class ParsedSearchResult: OpenLibraryObject {
     }
 }
 
-class OLTitleSearchResult: OLManagedObject, CoreDataModelable {
+class OLTitleSearchResult: OLManagedObject {
     
     // MARK: Search Info
     struct SearchInfo {
@@ -103,13 +103,13 @@ class OLTitleSearchResult: OLManagedObject, CoreDataModelable {
     
     static let entityName = "TitleSearchResult"
     
-    class func parseJSON(sequence: Int64, index: Int64, match: [String: AnyObject], moc: NSManagedObjectContext ) -> OLTitleSearchResult? {
+    class func parseJSON(_ sequence: Int64, index: Int64, match: [String: AnyObject], moc: NSManagedObjectContext ) -> OLTitleSearchResult? {
         
         guard let parsed = ParsedSearchResult( match: match ) else { return nil }
         
         guard let newObject =
-            NSEntityDescription.insertNewObjectForEntityForName(
-                OLTitleSearchResult.entityName, inManagedObjectContext: moc
+            NSEntityDescription.insertNewObject(
+                forEntityName: OLTitleSearchResult.entityName, into: moc
                 ) as? OLTitleSearchResult else { return nil }
         
         newObject.sequence = sequence
@@ -138,8 +138,18 @@ class OLTitleSearchResult: OLManagedObject, CoreDataModelable {
     override var hasImage: Bool { return 0 < cover_i }
     override var firstImageID: Int { return Int( cover_i ) }
     
-    override func localURL( size: String, index: Int = 0 ) -> NSURL {
+    override func localURL( _ size: String, index: Int = 0 ) -> URL {
         
         return super.localURL( firstImageID, size: size )
     }
 }
+
+extension OLTitleSearchResult {
+    
+    class func buildFetchRequest() -> NSFetchRequest< OLTitleSearchResult > {
+        
+        return NSFetchRequest( entityName: OLTitleSearchResult.entityName )
+    }
+}
+
+

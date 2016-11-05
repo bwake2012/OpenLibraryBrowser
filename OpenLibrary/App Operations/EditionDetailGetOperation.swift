@@ -28,14 +28,14 @@ class EditionDetailGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, parentObjectID: NSManagedObjectID?, coreDataStack: CoreDataStack, completionHandler: Void -> Void ) {
+    init( queryText: String, parentObjectID: NSManagedObjectID?, coreDataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
 
-        let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+        let cachesFolder = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
-        let parts = queryText.componentsSeparatedByString( "/" )
+        let parts = queryText.components( separatedBy: "/" )
         let goodParts = parts.filter { (x) -> Bool in !x.isEmpty }
         let editionKey = goodParts.last!
-        let cacheFile = cachesFolder.URLByAppendingPathComponent("\(editionKey)EditionDetailResults.json")
+        let cacheFile = cachesFolder.appendingPathComponent("\(editionKey)EditionDetailResults.json")
 //        print( "cache: \(cacheFile.absoluteString)" )
         
         /*
@@ -49,7 +49,7 @@ class EditionDetailGetOperation: GroupOperation {
         downloadOperation = EditionDetailDownloadOperation( queryText: queryText, cacheFile: cacheFile )
         parseOperation = EditionDetailParseOperation( parentObjectID: parentObjectID, cacheFile: cacheFile, coreDataStack: coreDataStack )
         
-        let finishOperation = NSBlockOperation( block: completionHandler )
+        let finishOperation = PSBlockOperation { completionHandler() }
         
         // These operations must be executed in order
         parseOperation.addDependency(downloadOperation)
@@ -62,8 +62,8 @@ class EditionDetailGetOperation: GroupOperation {
         name = "Get Edition Detail"
     }
     
-    override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
-        if let firstError = errors.first where (operation === downloadOperation || operation === parseOperation) {
+    override func operationDidFinish(_ operation: Foundation.Operation, withErrors errors: [NSError]) {
+        if let firstError = errors.first , (operation === downloadOperation || operation === parseOperation) {
             produceAlert(firstError)
        }
     }

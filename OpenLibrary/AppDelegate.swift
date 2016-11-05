@@ -18,134 +18,126 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: Properties
     var window: UIWindow?
     
-    private lazy var launchStoryboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
+    fileprivate lazy var launchStoryboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
     
-    private lazy var launchController: UIViewController = {
+    fileprivate lazy var launchController: UIViewController = {
         
-        return self.launchStoryboard.instantiateViewControllerWithIdentifier( "launchVC" )
+        return self.launchStoryboard.instantiateViewController( withIdentifier: "launchVC" )
     }()
 
-    private lazy var mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+    fileprivate lazy var mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
     
-    private lazy var navController: UINavigationController = {
-        return self.mainStoryboard.instantiateViewControllerWithIdentifier("rootNavigationController")
+    fileprivate let storeName = "OpenLibraryBrowser"
+    
+    fileprivate lazy var navController: UINavigationController = {
+        return self.mainStoryboard.instantiateViewController(withIdentifier: "rootNavigationController")
             as! UINavigationController
     }()
     
-    private let storeName = "OpenLibraryBrowser"
-    
-    private let operationQueue = OperationQueue()
-    private var reachabilityOperation: OLReachabilityOperation?
-    private var generalSearchResultsCoordinator: GeneralSearchResultsCoordinator?
+    fileprivate let operationQueue = PSOperationQueue()
+    fileprivate var dataStack: OLDataStack?
+    fileprivate var reachabilityOperation: OLReachabilityOperation?
+    fileprivate var generalSearchResultsCoordinator: GeneralSearchResultsCoordinator?
 
-    private var coreDataStack: CoreDataStack?
-    
     func nukeObsoleteStore() -> Void {
         
-        if let currentVersion = NSBundle.getAppVersionString() {
+        if let currentVersion = Bundle.getAppVersionString() {
 
-            let storeFolder = NSFileManager().URLsForDirectory( .DocumentDirectory, inDomains: .UserDomainMask ).first!
-            let versionURL = storeFolder.URLByAppendingPathComponent( storeName + ".version" )
-            let previousVersion = NSKeyedUnarchiver.unarchiveObjectWithFile( versionURL.path! ) as? String
+            guard let storeFolder = FileManager().urls( for: .documentDirectory, in: .userDomainMask ).first else { return }
+            let versionURL = storeFolder.appendingPathComponent( storeName + ".version" )
+            let previousVersion = NSKeyedUnarchiver.unarchiveObject( withFile: versionURL.path ) as? String
             
             if nil == previousVersion || currentVersion != previousVersion {
                 
-                let archiveURL = storeFolder.URLByAppendingPathComponent( storeName + ".sqlite" )
+                let archiveURL = storeFolder.appendingPathComponent( storeName + ".sqlite" )
                 
                 do {
                     /*
                      If we already have a file at this location, just delete it.
                      Also, swallow the error, because we don't really care about it.
                      */
-                    try NSFileManager.defaultManager().removeItemAtURL( archiveURL )
+                    try FileManager.default.removeItem( at: archiveURL )
 
-                    let searchStateURL = storeFolder.URLByAppendingPathComponent( "SearchState" )
-                    try NSFileManager.defaultManager().removeItemAtURL( searchStateURL )
+                    let searchStateURL = storeFolder.appendingPathComponent( "SearchState" )
+                    
+                    try FileManager.default.removeItem( at: searchStateURL )
                 }
                 catch {}
 
-                NSKeyedArchiver.archiveRootObject( currentVersion, toFile: versionURL.path! )
+                let path = versionURL.path
+                    
+                NSKeyedArchiver.archiveRootObject( currentVersion, toFile: path )
             }
         }
     }
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        window = UIWindow( frame: UIScreen.mainScreen().bounds )
+        window = UIWindow( frame: UIScreen.main.bounds )
         window?.rootViewController = launchController
 
-//        nukeObsoleteStore()
+        nukeObsoleteStore()
+        
+        let launchUserInterface = {
 
-        CoreDataStack.constructSQLiteStack( withModelName: storeName ) {
+            OLLanguage.retrieveLanguages( self.operationQueue, coreDataStack: self.dataStack! )
             
-            result in
-            
-            switch result {
-
-            case .Success(let stack):
+            let delay = DispatchTime.now() + .milliseconds( 500 )
+            DispatchQueue.main.asyncAfter( deadline: delay ) {
                 
-                self.coreDataStack = stack
-                
-                self.coreDataStack?.privateQueueContext.performBlockAndWait {
-                    self.coreDataStack?.privateQueueContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-                }
-                self.coreDataStack?.mainQueueContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-
-                OLLanguage.retrieveLanguages( self.operationQueue, coreDataStack: stack )
-                
-                let delayTime = dispatch_time( DISPATCH_TIME_NOW, Int64( 0.5 * Double( NSEC_PER_SEC ) ) )
-                
-                dispatch_after( delayTime, dispatch_get_main_queue() ) {
-                    
-                    dispatch_async( dispatch_get_main_queue() ) {
-                        
-                        let navController = self.navController
-                        navController.navigationBar.barStyle = .Black
-                        self.window?.rootViewController = navController                   }
-                }
-
-            case .Failure(let error):
-                assertionFailure("\(error)")
-                
+                let navController = self.navController
+                navController.navigationBar.barStyle = .black
+                self.window?.rootViewController = navController
             }
         }
         
+        if #available(iOS 10.0, *) {
+            
+            self.dataStack =
+                IOS10DataStack( operationQueue: operationQueue, completion: launchUserInterface )
+
+        } else {
+            
+            self.dataStack =
+                IOS09DataStack( operationQueue: operationQueue, completion: launchUserInterface )
+        }
+
         window?.makeKeyAndVisible()
                 
         return true
     }
 
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
 
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
 
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         
     }
 
-    func getGeneralSearchCoordinator( destVC: OLSearchResultsTableViewController ) -> GeneralSearchResultsCoordinator {
+    func getGeneralSearchCoordinator( _ destVC: OLSearchResultsTableViewController ) -> GeneralSearchResultsCoordinator {
         
         guard let queryCoordinator = self.generalSearchResultsCoordinator else {
         
             generalSearchResultsCoordinator =
                 GeneralSearchResultsCoordinator(
                         tableVC: destVC,
-                        coreDataStack: coreDataStack!,
+                        coreDataStack: dataStack!,
                         operationQueue: operationQueue
                     )
             

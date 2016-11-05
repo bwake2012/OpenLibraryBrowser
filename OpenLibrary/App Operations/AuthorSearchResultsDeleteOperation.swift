@@ -12,23 +12,23 @@ import CoreData
 import BNRCoreDataStack
 import PSOperations
 
-class AuthorSearchResultsDeleteOperation: Operation {
+class AuthorSearchResultsDeleteOperation: PSOperation {
     
     let deleteContext: NSManagedObjectContext
     
-    init( coreDataStack: CoreDataStack ) {
+    init( coreDataStack: OLDataStack ) {
         
-        self.deleteContext = coreDataStack.newChildContext()
+        self.deleteContext = coreDataStack.newChildContext( name: "AuthorSearchResultsDelete Context" )
     }
     
     override func execute() {
         
-        let fetchRequest = NSFetchRequest( entityName: OLAuthorSearchResult.entityName )
-        let deleteRequest = NSBatchDeleteRequest( fetchRequest: fetchRequest )
+        let fetchRequest = OLAuthorSearchResult.buildFetchRequest()
+        let deleteRequest = NSBatchDeleteRequest( fetchRequest: fetchRequest as! NSFetchRequest<NSFetchRequestResult> )
         
         do {
 
-            try deleteContext.persistentStoreCoordinator?.executeRequest( deleteRequest, withContext: self.deleteContext )
+            try deleteContext.persistentStoreCoordinator?.execute( deleteRequest, with: self.deleteContext )
 
         } catch let error as NSError {
             

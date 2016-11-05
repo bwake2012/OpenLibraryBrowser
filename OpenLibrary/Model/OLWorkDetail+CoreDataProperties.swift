@@ -10,18 +10,22 @@ import CoreData
 
 extension OLWorkDetail {
 
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<OLWorkDetail> {
+        return NSFetchRequest<OLWorkDetail>( entityName: OLWorkDetail.entityName )
+    }
+    
     @NSManaged var author_key: String
     @NSManaged var index: Int64
     
-    @NSManaged var retrieval_date: NSDate
-    @NSManaged var provisional_date: NSDate?
+    @NSManaged var retrieval_date: Date
+    @NSManaged var provisional_date: Date?
     @NSManaged var is_provisional: Bool
     
     @NSManaged var has_fulltext: Int16
 
     @NSManaged var key: String
-    @NSManaged var created: NSDate?
-    @NSManaged var last_modified: NSDate?
+    @NSManaged var created: Date?
+    @NSManaged var last_modified: Date?
     @NSManaged var revision: Int64
     @NSManaged var latest_revision: Int64
     @NSManaged var type: String

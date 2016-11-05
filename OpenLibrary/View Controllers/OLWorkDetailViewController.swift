@@ -34,13 +34,13 @@ class OLWorkDetailViewController: UIViewController {
 
     var workEditionsVC: OLWorkDetailEditionsTableViewController?
     
-    var currentImageURL: NSURL?
+    var currentImageURL: URL?
     
     var searchInfo: OLWorkDetail?
     
-    @IBAction func displayAuthorDetail(sender: UIButton) {
+    @IBAction func displayAuthorDetail(_ sender: UIButton) {
         
-        performSegueWithIdentifier( "displayAuthorDetail", sender: self )
+        performSegue( withIdentifier: "displayAuthorDetail", sender: self )
     }
     
     // MARK: UIViewController
@@ -63,25 +63,25 @@ class OLWorkDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear( animated )
         
         navigationController?.setNavigationBarHidden( false, animated: animated )
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear( animated )
         
         queryCoordinator?.updateUI()
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "embedWorkEditions" {
             
-            if let destVC = segue.destinationViewController as? OLWorkDetailEditionsTableViewController {
+            if let destVC = segue.destination as? OLWorkDetailEditionsTableViewController {
                 
                 self.workEditionsVC = destVC
                 
@@ -90,28 +90,28 @@ class OLWorkDetailViewController: UIViewController {
 
         } else if segue.identifier == "embedWorkEBooks" {
             
-            if let destVC = segue.destinationViewController as? OLEBookEditionsTableViewController {
+            if let destVC = segue.destination as? OLEBookEditionsTableViewController {
                 
                 queryCoordinator!.installEBookEditionsCoordinator( destVC  )
             }
         
         } else if segue.identifier == "largeCoverImage" {
             
-            if let destVC = segue.destinationViewController as? OLPictureViewController {
+            if let destVC = segue.destination as? OLPictureViewController {
                 
                 queryCoordinator!.installCoverPictureViewCoordinator( destVC )
                 
             }
         } else if segue.identifier == "displayDeluxeWorkDetail" {
             
-            if let destVC = segue.destinationViewController as? OLDeluxeDetailTableViewController {
+            if let destVC = segue.destination as? OLDeluxeDetailTableViewController {
                 
                 queryCoordinator!.installWorkDeluxeDetailCoordinator( destVC )
             }
             
         } else if segue.identifier == "displayAuthorDetail" {
             
-            if let destVC = segue.destinationViewController as? OLAuthorDetailViewController {
+            if let destVC = segue.destination as? OLAuthorDetailViewController {
                 
                 queryCoordinator!.installAuthorDetailCoordinator( destVC )
             }
@@ -119,7 +119,7 @@ class OLWorkDetailViewController: UIViewController {
     }
 
     // MARK: UIRefreshControl
-    func testRefresh( refreshControl: UIRefreshControl ) {
+    func testRefresh( _ refreshControl: UIRefreshControl ) {
         
         refreshControl.attributedTitle = NSAttributedString( string: "Refreshing data..." )
         
@@ -142,20 +142,20 @@ class OLWorkDetailViewController: UIViewController {
     }
     
     
-    func displayImage( localURL: NSURL ) -> Bool {
+    func displayImage( _ localURL: URL ) -> Bool {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
 
         guard nil == currentImageURL || localURL == currentImageURL else { return true }
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
 
         currentImageURL = localURL
-        if let data = NSData( contentsOfURL: localURL ) {
+        if let data = try? Data( contentsOf: localURL ) {
             if let image = UIImage( data: data ) {
                 
                 workCover.image = image
-                self.displayLargeCover.enabled = true
+                self.displayLargeCover.isEnabled = true
                 return true
             }
         }
@@ -163,18 +163,18 @@ class OLWorkDetailViewController: UIViewController {
         return false
     }
 
-    func displayImageFromLocalURL( localURL: NSURL, imageView: UIImageView ) -> Bool {
+    func displayImageFromLocalURL( _ localURL: URL, imageView: UIImageView ) -> Bool {
         
         guard nil == currentImageURL || localURL == currentImageURL else { return true }
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
 
         currentImageURL = localURL
-        if let data = NSData( contentsOfURL: localURL ) {
+        if let data = try? Data( contentsOf: localURL ) {
             if let image = UIImage( data: data ) {
                 
                 imageView.image = image
-                self.displayLargeCover.enabled = true
+                self.displayLargeCover.isEnabled = true
                 return true
             }
         }
@@ -183,14 +183,14 @@ class OLWorkDetailViewController: UIViewController {
     }
     
     
-    func updateUI( workDetail: OLWorkDetail ) {
+    func updateUI( _ workDetail: OLWorkDetail ) {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
 
         workTitle.text = workDetail.title
         workSubtitle.text = workDetail.subtitle
-        workAuthor.text = workDetail.author_names.joinWithSeparator( ", " )
-        displayLargeCover.enabled = workDetail.coversFound
+        workAuthor.text = workDetail.author_names.joined( separator: ", " )
+        displayLargeCover.isEnabled = workDetail.coversFound
         if !workDetail.coversFound {
             workCover.image = nil
             coverSummarySpacing.constant = 0
@@ -198,7 +198,7 @@ class OLWorkDetailViewController: UIViewController {
             workCover.image = UIImage( named: workDetail.defaultImageName )
         }
 
-        displayDeluxeDetail.enabled = !workDetail.isProvisional
+        displayDeluxeDetail.isEnabled = !workDetail.isProvisional
         workTitle.textColor = displayDeluxeDetail.currentTitleColor
         workSubtitle.textColor = displayDeluxeDetail.currentTitleColor
 
@@ -229,7 +229,7 @@ extension OLWorkDetailViewController: UncoverBottomTransitionSource {
 
 extension OLWorkDetailViewController: UIScrollViewDelegate {
     
-    func scrollViewDidEndDragging( scrollView: UIScrollView, willDecelerate decelerate: Bool ) {
+    func scrollViewDidEndDragging( _ scrollView: UIScrollView, willDecelerate decelerate: Bool ) {
         
         // UITableView only moves in one direction, y axis
         let currentOffset = scrollView.contentOffset.y
@@ -246,7 +246,7 @@ extension OLWorkDetailViewController: UIScrollViewDelegate {
         }
     }
 
-    func scrollViewWillEndDragging( scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint> ) {
+    func scrollViewWillEndDragging( _ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint> ) {
         
         // up
         if velocity.y < -1.5 {

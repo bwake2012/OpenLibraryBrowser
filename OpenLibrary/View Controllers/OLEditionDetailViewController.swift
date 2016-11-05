@@ -20,7 +20,7 @@ class OLEditionDetailViewController: UIViewController {
         
         didSet( newDetail ) {
             
-            if let newDetail = newDetail where newDetail.hasImage {
+            if let newDetail = newDetail , newDetail.hasImage {
                 
                 editionCoverView.displayFromURL( newDetail.localURL( "S" ) )
             }
@@ -37,7 +37,7 @@ class OLEditionDetailViewController: UIViewController {
         queryCoordinator?.updateUI()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear( animated )
         
@@ -50,11 +50,11 @@ class OLEditionDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "zoomDeluxeDetailImage" {
             
-            if let destVC = segue.destinationViewController as? OLPictureViewController {
+            if let destVC = segue.destination as? OLPictureViewController {
                 
                 queryCoordinator!.installCoverPictureViewCoordinator( destVC )
                 
@@ -63,27 +63,27 @@ class OLEditionDetailViewController: UIViewController {
     }
     
     // MARK: Utility
-    func updateUI( editionDetail: OLEditionDetail ) {
+    func updateUI( _ editionDetail: OLEditionDetail ) {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
 
         self.editionTitleView.text = editionDetail.title
         self.editionSubtitleView.text = editionDetail.subtitle
         self.editionAuthorView.text =
             !editionDetail.by_statement.isEmpty ?
-                editionDetail.by_statement : editionDetail.author_names.joinWithSeparator( ", " )
+                editionDetail.by_statement : editionDetail.author_names.joined( separator: ", " )
         
-        self.displayLargeCover.enabled = editionDetail.coversFound
+        self.displayLargeCover.isEnabled = editionDetail.coversFound
         if !editionDetail.coversFound {
             editionCoverView.image = UIImage( named: editionDetail.defaultImageName )
         }
     }
     
-    func displayImage( localURL: NSURL ) -> Bool {
+    @discardableResult func displayImage( _ localURL: URL ) -> Bool {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
 
-        if let data = NSData( contentsOfURL: localURL ) {
+        if let data = try? Data( contentsOf: localURL ) {
             if let image = UIImage( data: data ) {
                 
                 editionCoverView.image = image

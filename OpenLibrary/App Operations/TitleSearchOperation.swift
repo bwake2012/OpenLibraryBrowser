@@ -8,20 +8,19 @@
 
 import CoreData
 
-import BNRCoreDataStack
 import PSOperations
 
 /// A composite `Operation` to both download and parse Title search result data.
 class TitleSearchOperation: GroupOperation {
     // MARK: Properties
     
-    var deleteOperation: TitleSearchResultsDeleteOperation?
+//    var deleteOperation: TitleSearchResultsDeleteOperation?
     let downloadOperation: TitleSearchResultsDownloadOperation
     let parseOperation: TitleSearchResultsParseOperation
    
 //    private var hasProducedAlert = false
     
-    private let coreDataStack: CoreDataStack
+    fileprivate let coreDataStack: OLDataStack
     
     /**
         - parameter context: The `NSManagedObjectContext` into which the parsed
@@ -31,13 +30,13 @@ class TitleSearchOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, offset: Int, limit: Int, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater, completionHandler: Void -> Void ) {
+    init( queryText: String, offset: Int, limit: Int, coreDataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater, completionHandler: @escaping () -> Void ) {
 
         self.coreDataStack = coreDataStack
         
-        let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+        var cacheFile = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
-        let cacheFile = cachesFolder.URLByAppendingPathComponent("TitleSearchResults.json")
+        cacheFile.appendPathComponent( "TitleSearchResults.json" )
 //        print( "cache: \(cacheFile.absoluteString)" )
         
         /*
@@ -51,22 +50,25 @@ class TitleSearchOperation: GroupOperation {
         downloadOperation = TitleSearchResultsDownloadOperation( queryText: queryText, offset: offset, limit: limit, cacheFile: cacheFile )
         parseOperation = TitleSearchResultsParseOperation( cacheFile: cacheFile, coreDataStack: coreDataStack, updateResults: updateResults )
         
-        let finishOperation = NSBlockOperation( block: completionHandler )
+        let finishOperation = PSBlockOperation { completionHandler() }
         
         // These operations must be executed in order
         parseOperation.addDependency(downloadOperation)
         finishOperation.addDependency(parseOperation)
         
-        var operations = [NSOperation]()
-        if 0 == offset {
-            deleteOperation = TitleSearchResultsDeleteOperation( coreDataStack: coreDataStack )
-            if let dO = deleteOperation {
-                downloadOperation.addDependency( dO )
-                operations.append( dO )
-            }
-        }
+        var operations: [Foundation.Operation] = []
+//        if 0 == offset {
+//            deleteOperation = TitleSearchResultsDeleteOperation( coreDataStack: coreDataStack )
+//            if let dO = deleteOperation {
+//                downloadOperation.addDependency( dO )
+//                operations.append( dO )
+//            }
+//        }
         
-        operations += [downloadOperation, parseOperation, finishOperation]
+        operations.append( downloadOperation )
+        operations.append( parseOperation )
+        operations.append( finishOperation )
+        
         super.init( operations: operations )
 
         addCondition( MutuallyExclusive<TitleSearchOperation>() )
@@ -74,7 +76,7 @@ class TitleSearchOperation: GroupOperation {
         name = "Title Search " + queryText
     }
     
-    override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
+    override func operationDidFinish(_ operation: Foundation.Operation, withErrors errors: [NSError]) {
         if let firstError = errors.first {
 
             if operation === downloadOperation || operation === parseOperation {

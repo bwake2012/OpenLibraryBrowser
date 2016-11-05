@@ -13,13 +13,13 @@ class DeluxeDetailHTMLTableViewCell: DeluxeDetailTableViewCell {
     @IBOutlet weak var htmlView: UITextView!
     @IBOutlet weak var captionView: UILabel!
 
-    override func configure( data: DeluxeData ) {
+    override func configure( _ data: DeluxeData ) {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
         
         captionView.text = data.caption
         
-        if let stringData = data.value.dataUsingEncoding( NSUTF8StringEncoding, allowLossyConversion: false ) {
+        if let stringData = data.value.data( using: String.Encoding.utf8, allowLossyConversion: false ) {
         
             do {
                 let theAttributedString =
@@ -31,12 +31,12 @@ class DeluxeDetailHTMLTableViewCell: DeluxeDetailTableViewCell {
 
                 theAttributedString.enumerateAttribute(
                         NSFontAttributeName,
-                        inRange: NSRange( location: 0, length: theAttributedString.length ),
-                        options: NSAttributedStringEnumerationOptions(rawValue: 0)
+                        in: NSRange( location: 0, length: theAttributedString.length ),
+                        options: NSAttributedString.EnumerationOptions(rawValue: 0)
                     ) {
                         (value, range, stop) -> Void in
                         
-                        let newFont = UIFont.preferredFontForTextStyle( UIFontTextStyleBody )
+                        let newFont = UIFont.preferredFont( forTextStyle: UIFontTextStyle.body )
                         
                         theAttributedString.removeAttribute( NSFontAttributeName, range: range )
                         theAttributedString.addAttribute( NSFontAttributeName, value: newFont, range: range )

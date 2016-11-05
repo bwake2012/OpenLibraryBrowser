@@ -37,7 +37,7 @@ import UIKit
 
 class TableviewCellZoomTransition: ZoomTransition {
     
-    private struct animaSegment {
+    fileprivate struct animaSegment {
         
         let view: UIView
         let fadeView: UIView
@@ -49,20 +49,20 @@ class TableviewCellZoomTransition: ZoomTransition {
     // create either the top or bottom image and fade views plus the ending frame
     // set the initial alpha value on the fade view
     // if the view is zero height or less return nil
-    private func animaViews( isTop: Bool, masterSnapshot: UIImage, splitPoint: CGFloat, initialAlpha: CGFloat ) -> animaSegment? {
+    fileprivate func animaViews( _ isTop: Bool, masterSnapshot: UIImage, splitPoint: CGFloat, initialAlpha: CGFloat ) -> animaSegment? {
     
         let height = isTop ? splitPoint : masterSnapshot.size.height - splitPoint
         guard 0 < height else { return nil }
             
-        var endFrame = CGRectMake( 0, 0, 0, 0 )
+        var endFrame = CGRect( x: 0, y: 0, width: 0, height: 0 )
  
-        let masterImageRef = masterSnapshot.CGImage
-        let scale = UIScreen.mainScreen().scale
+        guard let masterImageRef = masterSnapshot.cgImage else { return nil }
+        let scale = UIScreen.main.scale
         let y = isTop ? 0.0 : splitPoint * scale
         let deltaY = isTop ? -height : height
     
-        let imageRef = CGImageCreateWithImageInRect( masterImageRef, CGRectMake(0, y, masterSnapshot.size.width * scale, height ) )
-        let image = UIImage.init( CGImage: imageRef!, scale: scale, orientation: .Up )
+        guard let imageRef = masterImageRef.cropping(to: CGRect(x: 0, y: y, width: masterSnapshot.size.width * scale, height: height ) ) else { return nil }
+        let image = UIImage.init( cgImage: imageRef, scale: scale, orientation: .up )
         //          CGImageRelease( bottomImageRef )
         
         // create views for the top or bottom part of the master view
@@ -74,7 +74,7 @@ class TableviewCellZoomTransition: ZoomTransition {
         // setup the inital and final frames for the master view top and bottom
         // view depending on whether we're doing a push or a pop transition
         endFrame = view.frame
-        if self.operation == .Push {
+        if self.operation == .push {
         
             endFrame.origin.y += deltaY
         
@@ -93,35 +93,32 @@ class TableviewCellZoomTransition: ZoomTransition {
     }
     
     // MARK: Overrides
-    override func animateTransition( transitionContext: UIViewControllerContextTransitioning ) -> Void {
+    override func animateTransition( using transitionContext: UIViewControllerContextTransitioning ) -> Void {
 
-        guard let fromVC = transitionContext.viewControllerForKey( UITransitionContextFromViewControllerKey ) else {
+        guard let fromVC = transitionContext.viewController( forKey: UITransitionContextViewControllerKey.from ) else {
             
             print( "transitionContext to VC is missing!" )
             return
         }
-        guard let toVC = transitionContext.viewControllerForKey( UITransitionContextToViewControllerKey ) else {
+        guard let toVC = transitionContext.viewController( forKey: UITransitionContextViewControllerKey.to ) else {
             
             print( "transitionContext from VC is missing!" )
             return
         }
         
-        guard let inView = transitionContext.containerView() else {
-            
-            print( "transitionContext containerView is missing!" )
-            return
-        }
-        let masterView = self.operation == .Push ? fromVC.view : toVC.view
-        let detailView = self.operation == .Push ? toVC.view : fromVC.view
+        let inView = transitionContext.containerView
         
-        if self.operation == .Push {
-            detailView!.frame = transitionContext.finalFrameForViewController( toVC )
+        guard let masterView = self.operation == .push ? fromVC.view : toVC.view else { return }
+        guard let detailView = self.operation == .push ? toVC.view : fromVC.view else { return }
+        
+        if self.operation == .push {
+            detailView.frame = transitionContext.finalFrame( for: toVC )
         } else {
-            masterView.frame = transitionContext.finalFrameForViewController( toVC )
+            masterView.frame = transitionContext.finalFrame( for: toVC )
         }
         
-        let initialAlpha = CGFloat( self.operation == .Push ? 0.0 : 1.0 )
-        let finalAlpha   = CGFloat( self.operation == .Push ? 1.0 : 0.0 )
+        let initialAlpha = CGFloat( self.operation == .push ? 0.0 : 1.0 )
+        let finalAlpha   = CGFloat( self.operation == .push ? 1.0 : 0.0 )
         
         // add the to VC's view to the intermediate view (where it has to be at the
         // end of the transition anyway). We'll hide it during the transition with
@@ -131,7 +128,7 @@ class TableviewCellZoomTransition: ZoomTransition {
         
         // if the detail view is a UIScrollView (eg a UITableView) then
         // get its content offset so we get the snapshot correctly
-        var detailContentOffset = CGPointMake( 0.0, 0.0 )
+        var detailContentOffset = CGPoint( x: 0.0, y: 0.0 )
         if let dv = detailView as? UIScrollView {
             
             detailContentOffset = dv.contentOffset
@@ -140,7 +137,7 @@ class TableviewCellZoomTransition: ZoomTransition {
         // if the master view is a UIScrollView (eg a UITableView) then
         // get its content offset so we get the snapshot correctly and
         // so we can correctly calculate the split point for the zoom effect
-        var masterContentOffset = CGPointMake( 0.0, 0.0 )
+        var masterContentOffset = CGPoint( x: 0.0, y: 0.0 )
         if let mv = masterView as? UIScrollView {
             
             masterContentOffset = mv.contentOffset
@@ -157,8 +154,8 @@ class TableviewCellZoomTransition: ZoomTransition {
         let masterSnapshot = masterView.dt_takeSnapshot( 0, yOffset: masterContentOffset.y )
         
         // get the rect of the source cell in the coords of the from view
-        let sourceViewRect = masterView.convertRect( self.sourceView!.bounds, fromView: self.sourceView )
-        let splitPoint = sourceViewRect.origin.y - masterContentOffset.y
+        let sourceViewRect = masterView.convert( self.sourceView!.bounds, from: self.sourceView )
+        let splitPoint = (sourceViewRect.origin.y) - masterContentOffset.y
         
         // split the master view snapshot into two parts, splitting
         // above the master view (usually a UITableViewCell) that originated the transition
@@ -173,10 +170,10 @@ class TableviewCellZoomTransition: ZoomTransition {
         // for a push transition, make the detail view small, to be zoomed in
         // for a pop transition, the detail view will be zoomed out, so it starts without
         // a transform
-        if self.operation == .Push {
+        if self.operation == .push {
             
             detailSmokeScreenView.layer.transform =
-                CATransform3DMakeAffineTransform( CGAffineTransformMakeScale( 0.1, 0.1 ) );
+                CATransform3DMakeAffineTransform( CGAffineTransform( scaleX: 0.1, y: 0.1 ) );
         }
         
         // create a background view so that we don't see the actual VC
@@ -199,12 +196,12 @@ class TableviewCellZoomTransition: ZoomTransition {
             inView.addSubview( b.fadeView )
         }
         
-        let totalDuration = self.transitionDuration( transitionContext )
+        let totalDuration = self.transitionDuration( using: transitionContext )
         
-        UIView.animateKeyframesWithDuration(
-            totalDuration,
+        UIView.animateKeyframes(
+            withDuration: totalDuration,
             delay: 0,
-            options: .CalculationModeLinear,
+            options: UIViewKeyframeAnimationOptions(),
             animations: { () -> Void in
                 
                 // move the master view top and bottom views (and their
@@ -221,19 +218,19 @@ class TableviewCellZoomTransition: ZoomTransition {
                 
                 // zoom the detail view in or out, depending on whether we're doing a push
                 // or pop transition
-                if self.operation == .Push {
+                if self.operation == .push {
                     detailSmokeScreenView.layer.transform =
-                        CATransform3DMakeAffineTransform(CGAffineTransformIdentity)
+                        CATransform3DMakeAffineTransform(CGAffineTransform.identity)
                 } else {
                     detailSmokeScreenView.layer.transform =
-                        CATransform3DMakeAffineTransform(CGAffineTransformMakeScale( 0.1, 0.1))
+                        CATransform3DMakeAffineTransform(CGAffineTransform( scaleX: 0.1, y: 0.1))
                 }
                 
                 // fade out (or in) the master view top and bottom views
                 // want the fade out animation to happen near the end of the transition
                 // and the fade in animation to happen at the start of the transition
-                let fadeStartTime = self.operation == .Push ? 0.5 : 0.0
-                UIView.addKeyframeWithRelativeStartTime( fadeStartTime, relativeDuration: 0.5 ) { () -> Void in
+                let fadeStartTime = self.operation == .push ? 0.5 : 0.0
+                UIView.addKeyframe( withRelativeStartTime: fadeStartTime, relativeDuration: 0.5 ) { () -> Void in
                     
                     topAnima?.fadeView.alpha = finalAlpha
                     bottomAnima?.fadeView.alpha = finalAlpha
@@ -251,7 +248,7 @@ class TableviewCellZoomTransition: ZoomTransition {
                 bottomAnima?.view.removeFromSuperview()
                 bottomAnima?.fadeView.removeFromSuperview()
                 
-                if transitionContext.transitionWasCancelled() {
+                if transitionContext.transitionWasCancelled {
                     
                     // we added this at the start, so we have to remove it
                     // if the transition is canccelled

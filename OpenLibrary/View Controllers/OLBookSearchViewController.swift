@@ -8,7 +8,7 @@
 
 import UIKit
     
-typealias SaveSearchDictionary = ( searchDictionary: [String: String] ) -> Void
+typealias SaveSearchDictionary = ( _ searchDictionary: [String: String] ) -> Void
 
 class OLBookSearchViewController: UIViewController {
 
@@ -29,16 +29,16 @@ class OLBookSearchViewController: UIViewController {
     
     weak var activeField: UITextField?
     
-    private var searchKeys = [String: String]()
+    fileprivate var searchKeys = [String: String]()
     var saveSearchDictionary: SaveSearchDictionary?
     
     var fields = [(field: UITextField, key: String)]()
     
-    @IBAction func ebookOnlySwitchChanged(sender: AnyObject) {
+    @IBAction func ebookOnlySwitchChanged(_ sender: AnyObject) {
         
     }
     
-    @IBAction func cancelButtonTapped(sender: UIButton) {
+    @IBAction func cancelButtonTapped(_ sender: UIButton) {
         
         if let activeField = activeField {
             
@@ -46,7 +46,7 @@ class OLBookSearchViewController: UIViewController {
         }
     }
     
-    @IBAction func searchButtonTapped(sender: UIButton) {
+    @IBAction func searchButtonTapped(_ sender: UIButton) {
         
         if let activeField = activeField {
             
@@ -57,12 +57,12 @@ class OLBookSearchViewController: UIViewController {
     }
     
     // MARK: set initial search keys
-    func initialSearchKeys( searchKeys: [String: String] ) {
+    func initialSearchKeys( _ searchKeys: [String: String] ) {
         
         self.searchKeys = searchKeys
     }
 
-    private func displaySearchKeys( searchKeys: [String: String] ) {
+    fileprivate func displaySearchKeys( _ searchKeys: [String: String] ) {
         
         for field in fields {
             
@@ -77,14 +77,14 @@ class OLBookSearchViewController: UIViewController {
         
         if let hasFullText = searchKeys["has_fulltext"] {
             
-            ebookOnlySwitch.on = "true" == hasFullText
+            ebookOnlySwitch.isOn = "true" == hasFullText
         }
         
     }
     
     // MARK: Swift classes
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver( self )
+        NotificationCenter.default.removeObserver( self )
         fields = []
     }
     
@@ -100,15 +100,15 @@ class OLBookSearchViewController: UIViewController {
         
         displaySearchKeys( searchKeys )
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OLBookSearchViewController.keyboardDidShow(_:)), name: UIKeyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(OLBookSearchViewController.keyboardDidShow(_:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(OLBookSearchViewController.keyboardWillBeHidden(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(OLBookSearchViewController.keyboardWillBeHidden(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         // what's our version?
-        aboutButton.setTitle( NSBundle.getAppVersionString() ?? "Version Not Found!", forState: .Normal )
+        aboutButton.setTitle( Bundle.getAppVersionString() ?? "Version Not Found!", for: UIControlState() )
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear( animated )
         
@@ -121,11 +121,11 @@ class OLBookSearchViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if "aboutOpenLibraryBrowser" == segue.identifier {
             
-            if let vc = segue.destinationViewController as? OLLaunchViewController {
+            if let vc = segue.destination as? OLLaunchViewController {
                 
                 vc.enableClose = true
             }
@@ -134,59 +134,59 @@ class OLBookSearchViewController: UIViewController {
     
     
     // MARK: Notifications
-    func keyboardDidShow(notification: NSNotification) {
+    func keyboardDidShow(_ notification: Notification) {
 
-        if let activeField = self.activeField, keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+        if let activeField = self.activeField, let keyboardSize = ((notification as NSNotification).userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             
             let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
             self.scrollView.contentInset = contentInsets
             self.scrollView.scrollIndicatorInsets = contentInsets
             var aRect = self.view.frame
             aRect.size.height -= keyboardSize.size.height
-            if (!CGRectContainsPoint(aRect, activeField.frame.origin)) {
+            if (!aRect.contains(activeField.frame.origin)) {
                 
                 self.scrollView.scrollRectToVisible(activeField.frame, animated: true)
             }
         }
     }
     
-    func keyboardWillBeHidden(notification: NSNotification) {
-        let contentInsets = UIEdgeInsetsZero
+    func keyboardWillBeHidden(_ notification: Notification) {
+        let contentInsets = UIEdgeInsets.zero
         self.scrollView.contentInset = contentInsets
         self.scrollView.scrollIndicatorInsets = contentInsets
     }
     
     // MARK: Search Keys
     
-    private func assembleSearchKeys() -> [String: String] {
+    fileprivate func assembleSearchKeys() -> [String: String] {
     
         var searchKeys = [String: String]()
         for field in fields {
             
-            if let t = field.field.text where !t.isEmpty {
+            if let t = field.field.text , !t.isEmpty {
                 
                 searchKeys[field.key] = t
             }
         }
         
         // don't set the eBooksOnly parameter if no other fields have been set
-        if !searchKeys.isEmpty && ebookOnlySwitch.on {
+        if !searchKeys.isEmpty && ebookOnlySwitch.isOn {
             searchKeys["has_fulltext"] = "true"
         }
     
         return searchKeys
     }
 
-    private func assembleAndSaveSearchKeys() {
+    fileprivate func assembleAndSaveSearchKeys() {
 
         searchKeys = assembleSearchKeys()
         if !searchKeys.isEmpty {
             
             if let saveSearchDictionary = saveSearchDictionary {
                 
-                saveSearchDictionary( searchDictionary: searchKeys )
+                saveSearchDictionary( searchKeys )
                 
-                performSegueWithIdentifier( "beginBookSearch", sender: self )
+                performSegue( withIdentifier: "beginBookSearch", sender: self )
             }
         }
     }
@@ -195,15 +195,15 @@ class OLBookSearchViewController: UIViewController {
 extension OLBookSearchViewController: UITextFieldDelegate {
     
     // MARK: UITextFieldDelegate
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         self.activeField = nil
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         self.activeField = textField
     }
     
-    func textFieldShouldReturn( textField: UITextField ) -> Bool {
+    func textFieldShouldReturn( _ textField: UITextField ) -> Bool {
         
         textField.resignFirstResponder()
         

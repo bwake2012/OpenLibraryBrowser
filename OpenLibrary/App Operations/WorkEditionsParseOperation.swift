@@ -13,13 +13,13 @@ import BNRCoreDataStack
 import PSOperations
 
 /// An `Operation` to parse Editions out of a query from OpenLibrary.
-class WorkEditionsParseOperation: Operation {
+class WorkEditionsParseOperation: PSOperation {
     
     let parentKey: String
     let parentObjectID: NSManagedObjectID?
     let offset: Int
     let limit: Int
-    let cacheFile: NSURL
+    let cacheFile: URL
     let context: NSManagedObjectContext
     let updateResults: SearchResultsUpdater
     
@@ -33,7 +33,7 @@ class WorkEditionsParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( parentKey: String, parentObjectID: NSManagedObjectID?, offset: Int, limit: Int, cacheFile: NSURL, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater ) {
+    init( parentKey: String, parentObjectID: NSManagedObjectID?, offset: Int, limit: Int, cacheFile: URL, coreDataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -55,7 +55,7 @@ class WorkEditionsParseOperation: Operation {
     }
     
     override func execute() {
-        guard let stream = NSInputStream(URL: cacheFile) else {
+        guard let stream = InputStream(url: cacheFile) else {
             finish()
             return
         }
@@ -67,7 +67,7 @@ class WorkEditionsParseOperation: Operation {
         }
         
         do {
-            if let json = try NSJSONSerialization.JSONObjectWithStream(stream, options: []) as? [String: AnyObject] {
+            if let json = try JSONSerialization.jsonObject(with: stream, options: []) as? [String: AnyObject] {
             
                 parse( json )
             }
@@ -80,7 +80,7 @@ class WorkEditionsParseOperation: Operation {
         }
     }
     
-    private func parse( resultSet: [String: AnyObject] ) {
+    fileprivate func parse( _ resultSet: [String: AnyObject] ) {
 
         guard var numFound = resultSet["size"] as? Int else {
             
@@ -114,7 +114,7 @@ class WorkEditionsParseOperation: Operation {
             numFound = min( numFound, offset + entries.count )
         }
         
-        context.performBlock {
+        context.perform {
             
             var index = self.offset
             var newEditions: [OLEditionDetail] = []
@@ -153,7 +153,7 @@ class WorkEditionsParseOperation: Operation {
         - note: This method returns an `NSError?` because it will be immediately
             passed to the `finishWithError()` method, which accepts an `NSError?`.
     */
-    private func saveContext() -> NSError? {
+    fileprivate func saveContext() -> NSError? {
         var error: NSError?
 
         do {
@@ -166,7 +166,7 @@ class WorkEditionsParseOperation: Operation {
         return error
     }
     
-    func Update( searchResults: SearchResults ) {
+    func Update( _ searchResults: SearchResults ) {
         
         self.searchResults = searchResults
     }

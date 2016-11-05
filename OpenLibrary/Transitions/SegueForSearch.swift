@@ -12,7 +12,7 @@ class SegueForSearch: UIStoryboardSegue {
 
     override func perform() {
         
-        destinationViewController.transitioningDelegate = self
+        destination.transitioningDelegate = self
         
         super.perform()
     }
@@ -22,13 +22,13 @@ extension SegueForSearch: UIViewControllerTransitioningDelegate {
 
     // MARK: UIViewControllerTransitioningDelegate
     
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
         return SearchPresentationAnimator()
         
     }
     
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
         return SearchDismissalAnimator()
         
