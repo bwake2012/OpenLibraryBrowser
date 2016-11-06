@@ -193,8 +193,8 @@ extension AuthorsCoordinator: FetchedResultsControllerDelegate {
             tableView.deleteSections( deletedSectionIndexes as IndexSet, with: .automatic )
             tableView.insertSections( insertedSectionIndexes as IndexSet, with: .automatic )
             
-            tableView.deleteRows( at: deletedRowIndexPaths as [IndexPath], with: .left )
-            tableView.insertRows( at: insertedRowIndexPaths as [IndexPath], with: .right )
+            tableView.deleteRows( at: deletedRowIndexPaths as [IndexPath], with: .automatic )
+            tableView.insertRows( at: insertedRowIndexPaths as [IndexPath], with: .automatic )
             tableView.reloadRows( at: updatedRowIndexPaths as [IndexPath], with: .automatic )
             
             tableView.endUpdates()
