@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A64C74A024E2CBF23A530809 /* Pods_OpenLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF3EFADF19C5ED450051A7D4 /* Pods_OpenLibrary.framework */; };
+		66CF87CF60812291B5A483C3 /* Pods_OpenLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6418131330C094E20927EACA /* Pods_OpenLibrary.framework */; };
 		C402AA601D9194D30030E35F /* OpenLibraryBrowser.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C402AA5E1D9194D30030E35F /* OpenLibraryBrowser.xcdatamodeld */; };
 		C406E7561D8C75C9008E2379 /* NSBundle+AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C406E7551D8C75C9008E2379 /* NSBundle+AppVersion.swift */; };
 		C40A28631D71121A001ABC20 /* EditionDetailDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40A28601D711219001ABC20 /* EditionDetailDownloadOperation.swift */; };
@@ -215,9 +215,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6E4EBA060AF831974CCE2A15 /* Pods-OpenLibrary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenLibrary.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OpenLibrary/Pods-OpenLibrary.debug.xcconfig"; sourceTree = "<group>"; };
-		81B7407A8B503351B2DB0144 /* Pods-OpenLibrary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenLibrary.release.xcconfig"; path = "Pods/Target Support Files/Pods-OpenLibrary/Pods-OpenLibrary.release.xcconfig"; sourceTree = "<group>"; };
-		AF3EFADF19C5ED450051A7D4 /* Pods_OpenLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6418131330C094E20927EACA /* Pods_OpenLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9BBDA9D0BB53DFD704107AAA /* Pods-OpenLibrary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenLibrary.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OpenLibrary/Pods-OpenLibrary.debug.xcconfig"; sourceTree = "<group>"; };
 		C402AA5F1D9194D30030E35F /* OpenLibraryBrowser.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OpenLibraryBrowser.xcdatamodel; sourceTree = "<group>"; };
 		C406E7551D8C75C9008E2379 /* NSBundle+AppVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSBundle+AppVersion.swift"; path = "Utility/NSBundle+AppVersion.swift"; sourceTree = "<group>"; };
 		C40A28601D711219001ABC20 /* EditionDetailDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditionDetailDownloadOperation.swift; path = "App Operations/EditionDetailDownloadOperation.swift"; sourceTree = "<group>"; };
@@ -277,6 +276,7 @@
 		C430E9C91CD2B294007E15AD /* DeluxeDetailInlineTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeluxeDetailInlineTableViewCell.swift; path = Views/DeluxeDetailInlineTableViewCell.swift; sourceTree = "<group>"; };
 		C430E9CB1CD2B2AC007E15AD /* DeluxeDetailBlockTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeluxeDetailBlockTableViewCell.swift; path = Views/DeluxeDetailBlockTableViewCell.swift; sourceTree = "<group>"; };
 		C430E9CD1CD41687007E15AD /* DeluxeDetailLinkTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeluxeDetailLinkTableViewCell.swift; path = Views/DeluxeDetailLinkTableViewCell.swift; sourceTree = "<group>"; };
+		C4333D3E1DCE7A7500357231 /* OpenLibrary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenLibrary.entitlements; sourceTree = "<group>"; };
 		C4345DFC1CFFCCDF0091D4A0 /* WorkEditionListParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkEditionListParseOperation.swift; path = "App Operations/WorkEditionListParseOperation.swift"; sourceTree = "<group>"; };
 		C4345DFD1CFFCCDF0091D4A0 /* WorkEditionEbooksGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkEditionEbooksGetOperation.swift; path = "App Operations/WorkEditionEbooksGetOperation.swift"; sourceTree = "<group>"; };
 		C4345DFE1CFFCCDF0091D4A0 /* WorkEditionListDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkEditionListDownloadOperation.swift; path = "App Operations/WorkEditionListDownloadOperation.swift"; sourceTree = "<group>"; };
@@ -411,6 +411,7 @@
 		C4F00C561CD93128002D7E14 /* DeluxeDetailBodyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeluxeDetailBodyTableViewCell.swift; path = Views/DeluxeDetailBodyTableViewCell.swift; sourceTree = "<group>"; };
 		C4F00C581CD96D4E002D7E14 /* OLDeluxeDetailCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OLDeluxeDetailCoordinator.swift; sourceTree = "<group>"; };
 		C4F82C9E1DC95AA600669BEA /* DataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataStack.swift; path = Model/DataStack.swift; sourceTree = "<group>"; };
+		CF1397E0D0A09330686834E7 /* Pods-OpenLibrary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenLibrary.release.xcconfig"; path = "Pods/Target Support Files/Pods-OpenLibrary/Pods-OpenLibrary.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -418,7 +419,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A64C74A024E2CBF23A530809 /* Pods_OpenLibrary.framework in Frameworks */,
+				66CF87CF60812291B5A483C3 /* Pods_OpenLibrary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,21 +440,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		14F6CA197954905222A4AEAF /* Pods */ = {
+		A4E792FE7A6E0B79BC0E3241 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				6E4EBA060AF831974CCE2A15 /* Pods-OpenLibrary.debug.xcconfig */,
-				81B7407A8B503351B2DB0144 /* Pods-OpenLibrary.release.xcconfig */,
+				9BBDA9D0BB53DFD704107AAA /* Pods-OpenLibrary.debug.xcconfig */,
+				CF1397E0D0A09330686834E7 /* Pods-OpenLibrary.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		43D0CB676930ADAAA842690E /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				AF3EFADF19C5ED450051A7D4 /* Pods_OpenLibrary.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		C42DBE4B1CBD67B10048788E /* Transitions */ = {
@@ -531,8 +524,8 @@
 				C4E35E361C7E07950015D187 /* OpenLibraryTests */,
 				C4E35E411C7E07950015D187 /* OpenLibraryUITests */,
 				C4E35E201C7E07950015D187 /* Products */,
-				14F6CA197954905222A4AEAF /* Pods */,
-				43D0CB676930ADAAA842690E /* Frameworks */,
+				A4E792FE7A6E0B79BC0E3241 /* Pods */,
+				C7DA60421F430B39967E1D87 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -549,6 +542,7 @@
 		C4E35E211C7E07950015D187 /* OpenLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				C4333D3E1DCE7A7500357231 /* OpenLibrary.entitlements */,
 				C444C4F31CBF16A100CFD0E1 /* Graphics */,
 				C4E35EA41C7E1F1C0015D187 /* App Operations */,
 				C4677E9D1C9CD7020070CDFD /* Coordinators */,
@@ -761,6 +755,14 @@
 			name = Utility;
 			sourceTree = "<group>";
 		};
+		C7DA60421F430B39967E1D87 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6418131330C094E20927EACA /* Pods_OpenLibrary.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -768,13 +770,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C4E35E471C7E07950015D187 /* Build configuration list for PBXNativeTarget "OpenLibrary" */;
 			buildPhases = (
-				7027272F1D022577BB5DF133 /* [CP] Check Pods Manifest.lock */,
+				9FCB31B0F793BDA323D2E194 /* [CP] Check Pods Manifest.lock */,
 				C4E35E1B1C7E07950015D187 /* Sources */,
 				C4E35E1C1C7E07950015D187 /* Frameworks */,
 				C4E35E1D1C7E07950015D187 /* Resources */,
 				C48B8A401D4D1D3A00C29D00 /* ShellScript */,
-				F197900CC7F9A6311F6CE036 /* [CP] Embed Pods Frameworks */,
-				18EB10437A620585C45B4EA2 /* [CP] Copy Pods Resources */,
+				5938A6F2206B2857EA6685D0 /* [CP] Embed Pods Frameworks */,
+				949690BECEBB89355B23A104 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -835,6 +837,11 @@
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = 8G7W6WCEM9;
 						LastSwiftMigration = 0800;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 0;
+							};
+						};
 					};
 					C4E35E321C7E07950015D187 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -912,7 +919,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		18EB10437A620585C45B4EA2 /* [CP] Copy Pods Resources */ = {
+		5938A6F2206B2857EA6685D0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OpenLibrary/Pods-OpenLibrary-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		949690BECEBB89355B23A104 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -927,7 +949,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OpenLibrary/Pods-OpenLibrary-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7027272F1D022577BB5DF133 /* [CP] Check Pods Manifest.lock */ = {
+		9FCB31B0F793BDA323D2E194 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -954,21 +976,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#\n# Set the build number to the current git commit count.\n# If we're using the Dev scheme, then we'll suffix the build\n# number with the current branch name, to make collisions\n# far less likely across feature branches.\n# Based on: http://w3facility.info/question/how-do-i-force-xcode-to-rebuild-the-info-plist-file-in-my-project-every-time-i-build-the-project/\n#\n# Updated with dSYM handling from http://yellowfeather.co.uk/blog/auto-incrementing-build-number-in-xcode-revisited/\n#\n\ngit=`sh /etc/profile; which git`\nappBuild=`\"$git\" rev-list HEAD --count`\nif [ $CONFIGURATION = \"Debug\" ]; then\nbranchName=`\"$git\" rev-parse --abbrev-ref HEAD`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $appBuild-$branchName\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $appBuild-$branchName\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}.dSYM/Contents/Info.plist\"\nelse\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $appBuild\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $appBuild\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}.dSYM/Contents/Info.plist\"\nfi\necho \"Incremented the build number ${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n";
-		};
-		F197900CC7F9A6311F6CE036 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OpenLibrary/Pods-OpenLibrary-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1307,12 +1314,14 @@
 		};
 		C4E35E481C7E07950015D187 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6E4EBA060AF831974CCE2A15 /* Pods-OpenLibrary.debug.xcconfig */;
+			baseConfigurationReference = 9BBDA9D0BB53DFD704107AAA /* Pods-OpenLibrary.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = OpenLibrary/OpenLibrary.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 8G7W6WCEM9;
 				INFOPLIST_FILE = OpenLibrary/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.cockleburr.OpenLibraryBrowser;
@@ -1324,12 +1333,14 @@
 		};
 		C4E35E491C7E07950015D187 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 81B7407A8B503351B2DB0144 /* Pods-OpenLibrary.release.xcconfig */;
+			baseConfigurationReference = CF1397E0D0A09330686834E7 /* Pods-OpenLibrary.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = OpenLibrary/OpenLibrary.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 8G7W6WCEM9;
 				INFOPLIST_FILE = OpenLibrary/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.cockleburr.OpenLibraryBrowser;

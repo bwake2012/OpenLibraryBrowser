@@ -7,8 +7,7 @@ target 'OpenLibrary' do
     pod 'BNRCoreDataStack' #, '>= 2.0.2'
     pod 'ReachabilitySwift', '~> 3'
     pod 'PSOperations', '~> 3.0'
-    pod 'BRYXBanner'  #, :git => 'https://github.com/bryx-inc/BRYXBanner.git', :branch => 'swift3'
     pod 'Down'
+    pod 'BRYXBanner'
 end
-
 
