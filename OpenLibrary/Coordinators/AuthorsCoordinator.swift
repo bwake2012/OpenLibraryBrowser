@@ -29,7 +29,7 @@ class AuthorsCoordinator: OLQueryCoordinator {
     var highWaterMark: Int = 0
     var authorDetailsSet: Set< String > = []
     
-    init( keys: [String], viewController: OLAuthorsTableViewController, operationQueue: OperationQueue, coreDataStack: CoreDataStack ) {
+    init( keys: [String], viewController: OLAuthorsTableViewController, operationQueue: PSOperationQueue, coreDataStack: OLDataStack ) {
         
         authorsTableVC = viewController
         authorKeys = keys
@@ -42,7 +42,7 @@ class AuthorsCoordinator: OLQueryCoordinator {
         if !authorKeys.isEmpty {
             
             do {
-                NSFetchedResultsController.deleteCacheWithName( kAuthorsCache )
+//                NSFetchedResultsController< OLAuthorDetail >.deleteCache( withName: kAuthorsCache )
                 try fetchedResultsController.performFetch()
             }
             catch {
@@ -56,12 +56,12 @@ class AuthorsCoordinator: OLQueryCoordinator {
         return fetchedResultsController.sections?.count ?? 0
     }
     
-    func numberOfRowsInSection( section: Int ) -> Int {
+    func numberOfRowsInSection( _ section: Int ) -> Int {
         
         return fetchedResultsController.sections?[section].objects.count ?? 0
     }
     
-    func objectAtIndexPath( indexPath: NSIndexPath ) -> OLAuthorDetail? {
+    func objectAtIndexPath( _ indexPath: IndexPath ) -> OLAuthorDetail? {
         
         guard let sections = fetchedResultsController.sections else {
             assertionFailure("Sections missing")
@@ -75,7 +75,7 @@ class AuthorsCoordinator: OLQueryCoordinator {
             return nil
         }
         
-        let index = indexPath.row
+        let index = (indexPath as NSIndexPath).row
         let authorDetail = section.objects[index]
         
         if authorDetail.isProvisional && !authorDetailsSet.contains( authorDetail.key ) {
@@ -86,7 +86,7 @@ class AuthorsCoordinator: OLQueryCoordinator {
         return authorDetail
     }
     
-    func displayToCell( cell: AuthorsTableViewCell, indexPath: NSIndexPath ) -> OLAuthorDetail? {
+    @discardableResult func displayToCell( _ cell: AuthorsTableViewCell, indexPath: IndexPath ) -> OLAuthorDetail? {
         
         guard let authorDetail = objectAtIndexPath( indexPath ) else { return nil }
         
@@ -99,7 +99,7 @@ class AuthorsCoordinator: OLQueryCoordinator {
         return authorDetail
     }
         
-    func newQuery( key: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
+    func newQuery( _ key: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
         
         authorDetailsSet.insert( key )
         
@@ -114,7 +114,7 @@ class AuthorsCoordinator: OLQueryCoordinator {
                     
                     [weak self] in
                     
-                    dispatch_async( dispatch_get_main_queue() ) {
+                    DispatchQueue.main.async {
                         
                         if let strongSelf = self {
                             
@@ -133,7 +133,7 @@ class AuthorsCoordinator: OLQueryCoordinator {
     }
 
     // MARK: Utility
-    private func updateFooter( text: String = "" ) -> Void {
+    fileprivate func updateFooter( _ text: String = "" ) -> Void {
         
         highWaterMark = fetchedResultsController.count
 
@@ -143,7 +143,7 @@ class AuthorsCoordinator: OLQueryCoordinator {
     
     func BuildFetchedResultsController() -> FetchedOLAuthorDetailController {
         
-        let fetchRequest = NSFetchRequest( entityName: OLAuthorDetail.entityName )
+        let fetchRequest = OLAuthorDetail.buildFetchRequest()
         let keys = authorKeys
         
 //        let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
@@ -174,28 +174,28 @@ class AuthorsCoordinator: OLQueryCoordinator {
 extension AuthorsCoordinator: FetchedResultsControllerDelegate {
     
     // MARK: FetchedResultsControllerDelegate
-    func fetchedResultsControllerDidPerformFetch( controller: FetchedOLAuthorDetailController ) {
+    func fetchedResultsControllerDidPerformFetch( _ controller: FetchedOLAuthorDetailController ) {
         
         highWaterMark = controller.count
         updateFooter()
     }
     
-    func fetchedResultsControllerWillChangeContent( controller: FetchedOLAuthorDetailController ) {
+    func fetchedResultsControllerWillChangeContent( _ controller: FetchedOLAuthorDetailController ) {
         //        authorWorksTableVC?.tableView.beginUpdates()
     }
     
-    func fetchedResultsControllerDidChangeContent( controller: FetchedOLAuthorDetailController ) {
+    func fetchedResultsControllerDidChangeContent( _ controller: FetchedOLAuthorDetailController ) {
         
         if let tableView = authorsTableVC?.tableView {
             
             tableView.beginUpdates()
             
-            tableView.deleteSections( deletedSectionIndexes, withRowAnimation: .Automatic )
-            tableView.insertSections( insertedSectionIndexes, withRowAnimation: .Automatic )
+            tableView.deleteSections( deletedSectionIndexes as IndexSet, with: .automatic )
+            tableView.insertSections( insertedSectionIndexes as IndexSet, with: .automatic )
             
-            tableView.deleteRowsAtIndexPaths( deletedRowIndexPaths, withRowAnimation: .Left )
-            tableView.insertRowsAtIndexPaths( insertedRowIndexPaths, withRowAnimation: .Right )
-            tableView.reloadRowsAtIndexPaths( updatedRowIndexPaths, withRowAnimation: .Automatic )
+            tableView.deleteRows( at: deletedRowIndexPaths as [IndexPath], with: .automatic )
+            tableView.insertRows( at: insertedRowIndexPaths as [IndexPath], with: .automatic )
+            tableView.reloadRows( at: updatedRowIndexPaths as [IndexPath], with: .automatic )
             
             tableView.endUpdates()
             
@@ -212,43 +212,43 @@ extension AuthorsCoordinator: FetchedResultsControllerDelegate {
         }
     }
     
-    func fetchedResultsController( controller: FetchedOLAuthorDetailController,
+    func fetchedResultsController( _ controller: FetchedOLAuthorDetailController,
                                    didChangeObject change: FetchedResultsObjectChange< OLAuthorDetail > ) {
         
         switch change {
-        case let .Insert(_, indexPath):
-            if !insertedSectionIndexes.containsIndex( indexPath.section ) {
+        case let .insert(_, indexPath):
+            if !insertedSectionIndexes.contains( indexPath.section ) {
                 insertedRowIndexPaths.append( indexPath )
             }
             break
             
-        case let .Delete(_, indexPath):
-            if !deletedSectionIndexes.containsIndex( indexPath.section ) {
+        case let .delete(_, indexPath):
+            if !deletedSectionIndexes.contains( indexPath.section ) {
                 deletedRowIndexPaths.append( indexPath )
             }
             break
             
-        case let .Move(_, fromIndexPath, toIndexPath):
-            if !insertedSectionIndexes.containsIndex( toIndexPath.section ) {
+        case let .move(_, fromIndexPath, toIndexPath):
+            if !insertedSectionIndexes.contains( toIndexPath.section ) {
                 insertedRowIndexPaths.append( toIndexPath )
             }
-            if !deletedSectionIndexes.containsIndex( fromIndexPath.section ) {
+            if !deletedSectionIndexes.contains( fromIndexPath.section ) {
                 deletedRowIndexPaths.append( fromIndexPath )
             }
             
-        case let .Update(_, indexPath):
+        case let .update(_, indexPath):
             updatedRowIndexPaths.append( indexPath )
         }
     }
     
-    func fetchedResultsController(controller: FetchedOLAuthorDetailController,
+    func fetchedResultsController(_ controller: FetchedOLAuthorDetailController,
                                   didChangeSection change: FetchedResultsSectionChange< OLAuthorDetail >) {
         
         switch change {
-        case let .Insert(_, index):
-            insertedSectionIndexes.addIndex( index )
-        case let .Delete(_, index):
-            deletedSectionIndexes.addIndex( index )
+        case let .insert(_, index):
+            insertedSectionIndexes.add( index )
+        case let .delete(_, index):
+            deletedSectionIndexes.add( index )
         }
     }
 }

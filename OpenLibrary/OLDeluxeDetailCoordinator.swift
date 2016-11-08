@@ -12,15 +12,15 @@ import UIKit
 protocol OLDeluxeDetailCoordinator {
 
     func numberOfSections() -> Int
-    func numberOfRowsInSection( section: Int ) -> Int
-    func objectAtIndexPath( indexPath: NSIndexPath ) -> DeluxeData?
-    func didSelectRowAtIndexPath( indexPath: NSIndexPath )
+    func numberOfRowsInSection( _ section: Int ) -> Int
+    func objectAtIndexPath( _ indexPath: IndexPath ) -> DeluxeData?
+    func didSelectRowAtIndexPath( _ indexPath: IndexPath )
     
-    func displayToTableViewCell( tableView: UITableView, indexPath: NSIndexPath ) -> UITableViewCell
+    func displayToTableViewCell( _ tableView: UITableView, indexPath: IndexPath ) -> UITableViewCell
     
     func cancelOperations() -> Void
     
-    func installPictureCoordinator( destVC: OLPictureViewController ) -> Void
-    func installBookDownloadCoordinator( destVC: OLBookDownloadViewController ) -> Void
+    func installPictureCoordinator( _ destVC: OLPictureViewController ) -> Void
+    func installBookDownloadCoordinator( _ destVC: OLBookDownloadViewController ) -> Void
 }
 

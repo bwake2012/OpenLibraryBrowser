@@ -13,9 +13,9 @@ import BNRCoreDataStack
 import PSOperations
 
 /// An `Operation` to parse Editions out of a query from OpenLibrary.
-class IAEBookItemParseOperation: Operation {
+class IAEBookItemParseOperation: PSOperation {
     
-    let cacheFile: NSURL
+    let cacheFile: URL
     let context: NSManagedObjectContext
     
     var searchResults = SearchResults()
@@ -28,7 +28,7 @@ class IAEBookItemParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( cacheFile: NSURL, coreDataStack: CoreDataStack ) {
+    init( cacheFile: URL, coreDataStack: OLDataStack ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -36,7 +36,7 @@ class IAEBookItemParseOperation: Operation {
         */
         
         self.cacheFile = cacheFile
-        self.context = coreDataStack.newChildContext()
+        self.context = coreDataStack.newChildContext( name: "IAEBookItemParse Context" )
         self.context.mergePolicy = NSOverwriteMergePolicy
         
         super.init()
@@ -45,7 +45,7 @@ class IAEBookItemParseOperation: Operation {
     }
     
     override func execute() {
-        guard let stream = NSInputStream(URL: cacheFile) else {
+        guard let stream = InputStream(url: cacheFile) else {
             finish()
             return
         }
@@ -57,7 +57,7 @@ class IAEBookItemParseOperation: Operation {
         }
         
         do {
-            if let json = try NSJSONSerialization.JSONObjectWithStream(stream, options: []) as? [String: AnyObject] {
+            if let json = try JSONSerialization.jsonObject(with: stream, options: []) as? [String: AnyObject] {
             
                 parse( json )
             }
@@ -70,7 +70,7 @@ class IAEBookItemParseOperation: Operation {
         }
     }
     
-    private func parse( resultSet: [String: AnyObject] ) {
+    fileprivate func parse( _ resultSet: [String: AnyObject] ) {
 
         guard let items = resultSet["items"] as? [[String: AnyObject]] else {
             
@@ -102,7 +102,7 @@ class IAEBookItemParseOperation: Operation {
             return
         }
         
-        context.performBlock {
+        context.perform {
             
             var index = 0
             for jsonItem in items {
@@ -128,7 +128,7 @@ class IAEBookItemParseOperation: Operation {
         - note: This method returns an `NSError?` because it will be immediately
             passed to the `finishWithError()` method, which accepts an `NSError?`.
     */
-    private func saveContext() -> NSError? {
+    fileprivate func saveContext() -> NSError? {
         var error: NSError?
 
         do {

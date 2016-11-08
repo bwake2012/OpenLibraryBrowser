@@ -15,6 +15,6 @@ extension String {
     
     func stringWithNonBreakingSpaces() -> String {
         
-        return self.stringByReplacingOccurrencesOfString( space, withString: nonBreakingSpace )
+        return self.replacingOccurrences( of: space, with: nonBreakingSpace )
     }
 }

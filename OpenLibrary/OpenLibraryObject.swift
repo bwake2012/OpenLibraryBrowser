@@ -15,52 +15,52 @@ class OpenLibraryObject {
 
     // time stamps must be converted to NSDate
     // 2011-12-02T18:33:15.439307
-    private static let timestampFormatter: NSDateFormatter = {
+    fileprivate static let timestampFormatter: DateFormatter = {
         
-        let f = NSDateFormatter()
-        f.locale = NSLocale( localeIdentifier: "en_US_POSIX" )
+        let f = DateFormatter()
+        f.locale = Locale( identifier: "en_US_POSIX" )
         f.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
-        f.timeZone = NSTimeZone( abbreviation: "UTC" )
+        f.timeZone = TimeZone( abbreviation: "UTC" )
         
         return ( f )
     }()
     
-    private static let altTimestampFormatter: NSDateFormatter = {
+    fileprivate static let altTimestampFormatter: DateFormatter = {
         
-        let f = NSDateFormatter()
-        f.locale = NSLocale( localeIdentifier: "en_US_POSIX" )
+        let f = DateFormatter()
+        f.locale = Locale( identifier: "en_US_POSIX" )
         f.dateFormat = "yyyy-MM-dd' 'HH:mm:ss.SSSSSS"
-        f.timeZone = NSTimeZone( abbreviation: "UTC" )
+        f.timeZone = TimeZone( abbreviation: "UTC" )
         
         return ( f )
     }()
     
-    static func OLDateStamp( dateStamp: AnyObject? ) -> String {
+    static func OLDateStamp( _ dateStamp: AnyObject? ) -> String {
         
         guard let dateStamp = dateStamp as? String else { return "" }
         
         return dateStamp
     }
     
-    static func OLTimeStamp( timeStamp: AnyObject? ) -> NSDate? {
+    static func OLTimeStamp( _ timeStamp: AnyObject? ) -> Date? {
         
-        guard let timeStamp = timeStamp as? [String: String] where timeStamp["type"] == "/type/datetime" else {
+        guard let timeStamp = timeStamp as? [String: String] , timeStamp["type"] == "/type/datetime" else {
             
             return nil
         }
         
         guard let timeStampString = timeStamp["value"] else { return nil }
         
-        var timeStampVal = OpenLibraryObject.timestampFormatter.dateFromString( timeStampString )
+        var timeStampVal = OpenLibraryObject.timestampFormatter.date( from: timeStampString )
         if nil == timeStampVal {
             
-            timeStampVal = OpenLibraryObject.altTimestampFormatter.dateFromString( timeStampString )
+            timeStampVal = OpenLibraryObject.altTimestampFormatter.date( from: timeStampString )
         }
         
         return timeStampVal
     }
     
-    static func OLLinks( match: [String: AnyObject] ) -> [[String: String]] {
+    static func OLLinks( _ match: [String: AnyObject] ) -> [[String: String]] {
         
         var links = [[String: String]]()
         if let linkArray = match["links"] as? [AnyObject] {
@@ -87,7 +87,7 @@ class OpenLibraryObject {
     }
     
     // returns array of author object keys
-    static func OLAuthorRole( match: AnyObject? ) -> [String] {
+    static func OLAuthorRole( _ match: AnyObject? ) -> [String] {
         
         var authors = [String]()
         // there is an array of dictionaries under ["authors"]
@@ -108,7 +108,7 @@ class OpenLibraryObject {
                 }
 
                 // The type value must be:
-                if let authorRole = authorRole where authorRole == "/type/author_role" {
+                if let authorRole = authorRole , authorRole == "/type/author_role" {
                     
                     // the author OLID will be in a dictionary under ["author"]
                     if let authorKey = author["author"] as? [String: String] {
@@ -127,7 +127,7 @@ class OpenLibraryObject {
     }
     
     // returns array of keyed values
-    static func OLKeyedValue( match: AnyObject?, key: String ) -> String {
+    static func OLKeyedValue( _ match: AnyObject?, key: String ) -> String {
 
         var valueString = ""
         if let keyedValue = match as? [String: String] {
@@ -141,7 +141,7 @@ class OpenLibraryObject {
     }
     
     // returns array of keyed values
-    static func OLKeyedValueArray( match: AnyObject?, key: String ) -> [String] {
+    static func OLKeyedValueArray( _ match: AnyObject?, key: String ) -> [String] {
         
         var valueArray = [String]()
         if let match = match as? [[String: AnyObject]] {
@@ -160,7 +160,7 @@ class OpenLibraryObject {
         return valueArray
     }
     
-    static func OLTableOfContents( match: AnyObject? ) -> [[String: AnyObject]] {
+    static func OLTableOfContents( _ match: AnyObject? ) -> [[String: AnyObject]] {
         
         var toc = [[String: AnyObject]]()
         
@@ -180,11 +180,11 @@ class OpenLibraryObject {
         return toc
     }
     
-    static func OLText( match: AnyObject? ) -> String {
+    static func OLText( _ match: AnyObject? ) -> String {
         
         var text = ""
         if let match = match as? [String: AnyObject] {
-            if let type = match["type"] as? String where type == "/type/text" {
+            if let type = match["type"] as? String , type == "/type/text" {
                 text = match["value"] as? String ?? ""
             }
         } else if let match = match as? String {
@@ -195,7 +195,7 @@ class OpenLibraryObject {
         return text
     }
     
-    static func OLString( match: AnyObject? ) -> String {
+    static func OLString( _ match: AnyObject? ) -> String {
         
         var string = ""
         if let aString = match as? String {
@@ -206,7 +206,7 @@ class OpenLibraryObject {
         return string
     }
     
-    static func OLInt( match: AnyObject? ) -> Int {
+    static func OLInt( _ match: AnyObject? ) -> Int {
         
         var value = 0
         if let aValue = match as? Int {
@@ -217,7 +217,7 @@ class OpenLibraryObject {
         return value
     }
     
-    static func OLBool( match: AnyObject? ) -> Bool {
+    static func OLBool( _ match: AnyObject? ) -> Bool {
         
         var value = false
         if let aValue = match as? Int {
@@ -232,7 +232,7 @@ class OpenLibraryObject {
         return value
     }
     
-    static func OLStringArray( match: AnyObject? ) -> [String] {
+    static func OLStringArray( _ match: AnyObject? ) -> [String] {
         
         var stringArray = [String]()
         if let strings = match as? [AnyObject] {
@@ -249,7 +249,7 @@ class OpenLibraryObject {
         return stringArray
     }
     
-    static func OLIntArray( match: AnyObject? ) -> [Int] {
+    static func OLIntArray( _ match: AnyObject? ) -> [Int] {
         
         var intArray = [Int]()
         if let matchedInts = match as? [AnyObject] {
@@ -266,7 +266,7 @@ class OpenLibraryObject {
         return intArray
     }
     
-    static func OLStringDictionaryArray( match: AnyObject? ) -> [[String: String]] {
+    static func OLStringDictionaryArray( _ match: AnyObject? ) -> [[String: String]] {
         
         var stringDictArray = [[String:String]]()
         if let elements = match as? [AnyObject] {

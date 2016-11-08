@@ -17,8 +17,8 @@ import PSOperations
 class IAEBookItemListGetOperation: GroupOperation {
 
     // MARK: Properties
-    private var operations: [NSOperation] = []
-    private let finishOperation: NSBlockOperation
+    fileprivate var operations: [PSOperation] = []
+    fileprivate let finishOperation: PSBlockOperation
     
     /**
      
@@ -32,9 +32,9 @@ class IAEBookItemListGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( editionKeys: [String], coreDataStack: CoreDataStack, completionHandler: Void -> Void ) {
+    init( editionKeys: [String], coreDataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
         
-        let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+        let docFolder = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         
         /*
          This operation is made of these child operations:
@@ -55,12 +55,11 @@ class IAEBookItemListGetOperation: GroupOperation {
             var olid = ""
             if let editionKey = subset.first {
                 
-                let parts = editionKey.componentsSeparatedByString( "/" )
+                let parts = editionKey.components( separatedBy: "/" )
                 let goodParts = parts.filter { (x) -> Bool in !x.isEmpty }
                 olid = goodParts.last!
             }
-            let cacheFile =
-                cachesFolder.URLByAppendingPathComponent( "\(olid)InternetArchiveEBookItems.json")
+            let cacheFile = docFolder.appendingPathComponent( "\(olid)InternetArchiveEBookItems.json")
             //       print( "cache: \(cacheFile.absoluteString)" )
             
             let urlString = IAEBookItemListDownloadOperation.urlString( subset )
@@ -81,7 +80,7 @@ class IAEBookItemListGetOperation: GroupOperation {
             index += subsetSize
         }
 
-        finishOperation = NSBlockOperation( block: completionHandler )
+        finishOperation = PSBlockOperation { completionHandler() }
 
         if let previousOperation = operations.last {
             finishOperation.addDependency( previousOperation )
@@ -96,9 +95,11 @@ class IAEBookItemListGetOperation: GroupOperation {
         name = "Get IAEBookItems"
     }
     
-    override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
+    override func operationDidFinish(_ operation: Foundation.Operation, withErrors errors: [NSError]) {
 
-        if let firstError = errors.first where operations.contains( operation ) {
+        guard let operation = operation as? PSOperation else { return }
+        
+        if let firstError = errors.first, operations.contains( operation ) {
 
             produceAlert( firstError )
         }

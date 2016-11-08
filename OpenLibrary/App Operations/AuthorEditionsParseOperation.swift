@@ -13,11 +13,11 @@ import BNRCoreDataStack
 import PSOperations
 
 /// An `Operation` to parse Editions out of a query from OpenLibrary.
-class AuthorEditionsParseOperation: Operation {
+class AuthorEditionsParseOperation: PSOperation {
     
     let authorKey: String
     let offset: Int
-    let cacheFile: NSURL
+    let cacheFile: URL
     let context: NSManagedObjectContext
     let updateResults: SearchResultsUpdater
     
@@ -31,7 +31,7 @@ class AuthorEditionsParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( authorKey: String, offset: Int, cacheFile: NSURL, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater ) {
+    init( authorKey: String, offset: Int, cacheFile: URL, coreDataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -39,7 +39,7 @@ class AuthorEditionsParseOperation: Operation {
         */
         
         self.cacheFile = cacheFile
-        self.context = coreDataStack.newChildContext()
+        self.context = coreDataStack.newChildContext( name: "AuthorEditionsParse Context" )
         self.context.mergePolicy = NSOverwriteMergePolicy
         self.updateResults = updateResults
         self.offset = offset
@@ -51,7 +51,7 @@ class AuthorEditionsParseOperation: Operation {
     }
     
     override func execute() {
-        guard let stream = NSInputStream(URL: cacheFile) else {
+        guard let stream = InputStream(url: cacheFile) else {
             finish()
             return
         }
@@ -63,7 +63,7 @@ class AuthorEditionsParseOperation: Operation {
         }
         
         do {
-            if let json = try NSJSONSerialization.JSONObjectWithStream(stream, options: []) as? [[String: AnyObject]] {
+            if let json = try JSONSerialization.jsonObject(with: stream, options: []) as? [[String: AnyObject]] {
             
                 parse( json )
             }
@@ -76,7 +76,7 @@ class AuthorEditionsParseOperation: Operation {
         }
     }
     
-    private func parse( resultSet: [[String: AnyObject]] ) {
+    fileprivate func parse( _ resultSet: [[String: AnyObject]] ) {
 
         
         // guard let numFound = resultSet["size"] as? Int where numFound > 0 else { return }
@@ -87,7 +87,7 @@ class AuthorEditionsParseOperation: Operation {
             return
         }
         
-        context.performBlock {
+        context.perform {
             
             var index = self.offset
             for entry in resultSet {
@@ -122,7 +122,7 @@ class AuthorEditionsParseOperation: Operation {
         - note: This method returns an `NSError?` because it will be immediately
             passed to the `finishWithError()` method, which accepts an `NSError?`.
     */
-    private func saveContext() -> NSError? {
+    fileprivate func saveContext() -> NSError? {
         var error: NSError?
 
         do {
@@ -135,7 +135,7 @@ class AuthorEditionsParseOperation: Operation {
         return error
     }
     
-    func Update( searchResults: SearchResults ) {
+    func Update( _ searchResults: SearchResults ) {
         
         self.searchResults = searchResults
     }

@@ -27,27 +27,27 @@ class SaveProvisionalObjectsOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( searchResult: OLGeneralSearchResult, coreDataStack: CoreDataStack, completionHandler: Void -> Void ) {
+    init( searchResult: OLGeneralSearchResult, coreDataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
         
         saveOperation =
             SaveObjectsOperation( objectID: searchResult.objectID, coreDataStack: coreDataStack )
-        let finishOperation = NSBlockOperation( block: completionHandler )
+        let finishOperation = PSBlockOperation { completionHandler() }
         
         // These operations must be executed in order
         finishOperation.addDependency( saveOperation )
         
         super.init( operations: [saveOperation, finishOperation] )
         
-        queuePriority = .Normal
+        queuePriority = .normal
         
         addCondition( MutuallyExclusive< SaveProvisionalObjectsOperation >() )
 
         name = "Save Provisional Objects"
     }
     
-    override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
+    override func operationDidFinish(_ operation: Foundation.Operation, withErrors errors: [NSError]) {
         
-        if let firstError = errors.first where (operation === saveOperation) {
+        if let firstError = errors.first , (operation === saveOperation) {
             
             produceAlert( firstError )
         }

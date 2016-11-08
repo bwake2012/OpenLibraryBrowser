@@ -18,11 +18,11 @@ class GeneralSearchOperation: GroupOperation {
     var deleteOperation: GeneralSearchResultsDeleteOperation?
     let downloadOperation: GeneralSearchResultsDownloadOperation
     let parseOperation: GeneralSearchResultsParseOperation
-    let finishOperation: NSBlockOperation
+    let finishOperation: PSBlockOperation
    
 //    private var hasProducedAlert = false
     
-    private let coreDataStack: CoreDataStack
+    fileprivate let coreDataStack: OLDataStack
     
     /**
         - parameter context: The `NSManagedObjectContext` into which the parsed
@@ -32,13 +32,13 @@ class GeneralSearchOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryParms: [String: String], sequence: Int, offset: Int, limit: Int, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater, completionHandler: Void -> Void ) {
+    init( queryParms: [String: String], sequence: Int, offset: Int, limit: Int, coreDataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater, completionHandler: @escaping (Void) -> Void ) {
 
         self.coreDataStack = coreDataStack
         
-        let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+        let cachesFolder = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
-        let cacheFile = cachesFolder.URLByAppendingPathComponent("GeneralSearchResults.json")
+        let cacheFile = cachesFolder.appendingPathComponent("GeneralSearchResults.json")
 //        print( "cache: \(cacheFile.absoluteString)" )
         
         /*
@@ -52,25 +52,25 @@ class GeneralSearchOperation: GroupOperation {
         downloadOperation = GeneralSearchResultsDownloadOperation( queryParms: queryParms, offset: offset, limit: limit, cacheFile: cacheFile )
         parseOperation = GeneralSearchResultsParseOperation( sequence: sequence, offset: offset, cacheFile: cacheFile, coreDataStack: coreDataStack, updateResults: updateResults )
         
-        finishOperation = NSBlockOperation( block: completionHandler )
+        finishOperation = PSBlockOperation { completionHandler() }
         
         // These operations must be executed in order
         parseOperation.addDependency(downloadOperation)
         finishOperation.addDependency(parseOperation)
         
-        var operations = [NSOperation]()
+        var operations: [Foundation.Operation] = []
         
         operations += [downloadOperation, parseOperation, finishOperation]
         super.init( operations: operations )
 
         addCondition( MutuallyExclusive<GeneralSearchOperation>() )
         
-        queuePriority = .High
+        queuePriority = .high
         
         name = "General Search"
     }
     
-    override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
+    override func operationDidFinish(_ operation: Foundation.Operation, withErrors errors: [NSError]) {
         if let firstError = errors.first {
 
             if operation === downloadOperation || operation === parseOperation {

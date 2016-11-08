@@ -25,17 +25,17 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
     
     weak var tableVC: UITableViewController?
     
-    var authorEditionsGetOperation: Operation?
+    var authorEditionsGetOperation: PSOperation?
 
-    private lazy var fetchedResultsController: FetchedAuthorEditionsController = {
+    fileprivate lazy var fetchedResultsController: FetchedAuthorEditionsController = {
         
-        let fetchRequest = NSFetchRequest( entityName: OLEditionDetail.entityName )
+        let fetchRequest = OLEditionDetail.buildFetchRequest()
 
-        let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
+        let secondsPerDay = TimeInterval( 24 * 60 * 60 )
         let today = NSDate()
-        let lastWeek = today.dateByAddingTimeInterval( -7 * secondsPerDay )
+        let lastWeek = today.addingTimeInterval( -7 * secondsPerDay )
         
-        fetchRequest.predicate = NSPredicate( format: "author_key==%@ && retrieval_date > %@", "\(self.authorKey)", lastWeek )
+        fetchRequest.predicate = NSPredicate( format: "author_key==%@ && retrieval_date > %@", self.authorKey, lastWeek as NSDate )
         
         fetchRequest.sortDescriptors =
             [NSSortDescriptor(key: "coversFound", ascending: false),
@@ -56,7 +56,7 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
     
     var highWaterMark = 0
     
-    init( authorKey: String, tableVC: UITableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
+    init( authorKey: String, tableVC: UITableViewController, coreDataStack: OLDataStack, operationQueue: PSOperationQueue ) {
         
         self.authorKey = authorKey
         self.tableVC = tableVC
@@ -71,14 +71,14 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
         return fetchedResultsController.sections?.count ?? 0
     }
 
-    func numberOfRowsInSection( section: Int ) -> Int {
+    func numberOfRowsInSection( _ section: Int ) -> Int {
 
         return max( worksCount, fetchedResultsController.sections?[section].objects.count ?? 0 )
     }
     
-    func objectAtIndexPath( indexPath: NSIndexPath ) -> OLEditionDetail? {
+    func objectAtIndexPath( _ indexPath: IndexPath ) -> OLEditionDetail? {
         
-        if needAnotherPage( indexPath.row, highWaterMark: highWaterMark ) {
+        if needAnotherPage( (indexPath as NSIndexPath).row, highWaterMark: highWaterMark ) {
             
             nextQueryPage( highWaterMark )
             
@@ -101,7 +101,7 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
     func updateUI() {
 
         do {
-            NSFetchedResultsController.deleteCacheWithName( kAuthorEditonsCache )
+//            NSFetchedResultsController< OLEditionDetail >.deleteCache( withName: kAuthorEditonsCache )
             try fetchedResultsController.performFetch()
         }
         catch {
@@ -111,7 +111,7 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
         tableVC?.tableView.reloadData()
     }
 
-    func newQuery( authorKey: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
+    func newQuery( _ authorKey: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
 
         guard libraryIsReachable() else {
             
@@ -134,7 +134,7 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
                         updateResults: self.updateResults
                     ) {
 
-                        dispatch_async( dispatch_get_main_queue() ) {
+                        DispatchQueue.main.async {
                             
                                 refreshControl?.endRefreshing()
                                 self.updateUI()
@@ -146,7 +146,7 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
         }
     }
     
-    func nextQueryPage( offset: Int ) -> Void {
+    func nextQueryPage( _ offset: Int ) -> Void {
         
         guard libraryIsReachable() else {
             
@@ -165,7 +165,7 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
                         updateResults: self.updateResults
                     ) {
                 
-                dispatch_async( dispatch_get_main_queue() ) {
+                DispatchQueue.main.async {
     //                refreshControl?.endRefreshing()
 //                    self.updateUI()
                 }
@@ -176,7 +176,7 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
         }
     }
     
-    private func needAnotherPage( index: Int, highWaterMark: Int ) -> Bool {
+    fileprivate func needAnotherPage( _ index: Int, highWaterMark: Int ) -> Bool {
         
         return
             !authorKey.isEmpty &&
@@ -185,12 +185,12 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
     }
     
     // MARK: SearchResultsUpdater
-    func updateResults(searchResults: SearchResults) -> Void {
+    func updateResults(_ searchResults: SearchResults) -> Void {
         
         self.searchResults = searchResults
         self.highWaterMark = searchResults.start + searchResults.pageSize
 
-        dispatch_async( dispatch_get_main_queue() ) {
+        DispatchQueue.main.async {
             [weak self] in
             
             if let strongSelf = self {
@@ -200,20 +200,20 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
         }
     }
     
-    private func updateHeader( string: String = "" ) {
+    fileprivate func updateHeader( _ string: String = "" ) {
         
         updateTableHeader( tableVC?.tableView, text: string )
     }
     
-    private func updateFooter( text: String = "" ) -> Void {
+    fileprivate func updateFooter( _ text: String = "" ) -> Void {
         
         updateTableFooter( tableVC?.tableView, highWaterMark: highWaterMark, numFound: searchResults.numFound, text: text )
     }
     
     // MARK: FetchedResultsControllerDelegate
-    func fetchedResultsControllerDidPerformFetch(controller: FetchedAuthorEditionsController) {
+    func fetchedResultsControllerDidPerformFetch(_ controller: FetchedAuthorEditionsController) {
         
-        let detail = objectAtIndexPath( NSIndexPath( forRow: 0, inSection: 0 ) )
+        let detail = objectAtIndexPath( IndexPath( row: 0, section: 0 ) )
         if nil == detail {
             
             newQuery( authorKey, userInitiated: true, refreshControl: nil )
@@ -231,41 +231,41 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDel
         }
     }
     
-    func fetchedResultsControllerWillChangeContent( controller: FetchedAuthorEditionsController ) {
+    func fetchedResultsControllerWillChangeContent( _ controller: FetchedAuthorEditionsController ) {
 //        tableView?.beginUpdates()
     }
     
-    func fetchedResultsControllerDidChangeContent( controller: FetchedAuthorEditionsController ) {
+    func fetchedResultsControllerDidChangeContent( _ controller: FetchedAuthorEditionsController ) {
 //        tableView?.endUpdates()
     }
     
-    func fetchedResultsController( controller: FetchedAuthorEditionsController,
+    func fetchedResultsController( _ controller: FetchedAuthorEditionsController,
         didChangeObject change: FetchedAuthorEditionChange ) {
             switch change {
-            case .Insert(_, _):
+            case .insert(_, _):
                 // tableView?.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
-            case .Delete(_, _):
+            case .delete(_, _):
                 // tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 break
                 
-            case let .Move(_, fromIndexPath, toIndexPath):
-                tableVC?.tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
+            case let .move(_, fromIndexPath, toIndexPath):
+                tableVC?.tableView.moveRow(at: fromIndexPath, to: toIndexPath)
                 
-            case let .Update(_, indexPath):
-                tableVC?.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            case let .update(_, indexPath):
+                tableVC?.tableView.reloadRows(at: [indexPath], with: .automatic)
             }
     }
     
-    func fetchedResultsController( controller: FetchedAuthorEditionsController,
+    func fetchedResultsController( _ controller: FetchedAuthorEditionsController,
         didChangeSection change: FetchedAuthorEditionSectionChange ) {
             switch change {
-            case let .Insert(_, index):
-                tableVC?.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+            case let .insert(_, index):
+                tableVC?.tableView.insertSections(IndexSet( integer: index ), with: .automatic)
                 
-            case let .Delete(_, index):
-                tableVC?.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+            case let .delete(_, index):
+                tableVC?.tableView.deleteSections(IndexSet( integer: index ), with: .automatic)
             }
     }
 }

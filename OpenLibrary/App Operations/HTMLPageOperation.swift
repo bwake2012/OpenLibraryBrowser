@@ -20,16 +20,16 @@ public enum HTMLPage { }
 public typealias HTMLPresentation = MutuallyExclusive<HTMLPage>
 
 
-class HTMLPageOperation: Operation {
+class HTMLPageOperation: PSOperation {
     // MARK: Properties
 
-    private let presentationContext: UIViewController?
+    fileprivate let presentationContext: UIViewController?
     
     var operationName = "HTML page presentation"
-    var response:NSHTTPURLResponse?
+    var response:HTTPURLResponse?
     var operationError: NSError?
-    var data: NSData?
-    var url: NSURL?
+    var data: Data?
+    var url: URL?
 
     // MARK: Initialization
     
@@ -62,7 +62,7 @@ class HTMLPageOperation: Operation {
         
         let storyboard = UIStoryboard( name: "Main", bundle:nil )
         
-        if let htmlPageController = storyboard.instantiateViewControllerWithIdentifier( sceneID ) as? OLHTMLErrorViewController {
+        if let htmlPageController = storyboard.instantiateViewController( withIdentifier: sceneID ) as? OLHTMLErrorViewController {
         
             var theAttributedString = NSMutableAttributedString()
             do {
@@ -70,27 +70,27 @@ class HTMLPageOperation: Operation {
                 let htmlOptions = [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType]
                 if let data = data {
                 
-                    try theAttributedString.readFromData( data, options: htmlOptions, documentAttributes: nil )
+                    try theAttributedString.read( from: data, options: htmlOptions, documentAttributes: nil )
 
                 } else if let url = url {
                 
-                    try theAttributedString.readFromURL( url, options: htmlOptions, documentAttributes: nil )
+                    try theAttributedString.read( from: url, options: htmlOptions, documentAttributes: nil )
                 
                 }
             }
                 
             catch {
                 
-                theAttributedString.replaceCharactersInRange(
-                        NSRange( location: 0, length: 0),
-                        withString: "Unable to display openlibrary.org server error page."
+                theAttributedString.replaceCharacters(
+                        in: NSRange( location: 0, length: 0),
+                        with: "Unable to display openlibrary.org server error page."
                     )
             }
             
             let string: String = theAttributedString.string
             theAttributedString = NSMutableAttributedString( string: string )
             
-            let newFont = UIFont.preferredFontForTextStyle( UIFontTextStyleBody )
+            let newFont = UIFont.preferredFont( forTextStyle: UIFontTextStyle.body )
             let range = NSRange( location: 0, length: theAttributedString.length )
             theAttributedString.addAttribute( NSFontAttributeName, value: newFont, range: range )
             
@@ -100,9 +100,9 @@ class HTMLPageOperation: Operation {
             
             htmlPageController.urlString = operationError?.userInfo[hostURLKey] as? String ?? ""
 
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 
-                presentationContext.presentViewController(
+                presentationContext.present(
                         htmlPageController, animated: true, completion: self.presentationComplete
                     )
             }
@@ -114,7 +114,7 @@ class HTMLPageOperation: Operation {
                      Delete the file at this URL. It's not the file we were looking for.
                      Also, swallow any error, because we don't really care about it.
                      */
-                    try NSFileManager.defaultManager().removeItemAtURL( url )
+                    try FileManager.default.removeItem( at: url )
                 }
                 catch {}
             }

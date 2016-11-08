@@ -15,25 +15,25 @@ class WorkEditionTableViewCell: OLTableViewCell {
     @IBOutlet weak var editionName: UILabel!
     @IBOutlet weak var editionPublishDate: UILabel!
 
-    override func configure( tableView: UITableView, indexPath: NSIndexPath, key: String, data: OLManagedObject? ) {
+    override func configure( _ tableView: UITableView, indexPath: IndexPath, key: String, data: OLManagedObject? ) {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
         
         if let entry = data as? OLEditionDetail {
             
             let trimmedPrefix =
-                entry.title_prefix.stringByTrimmingCharactersInSet(
-                        NSCharacterSet.whitespaceAndNewlineCharacterSet()
+                entry.title_prefix.trimmingCharacters(
+                        in: CharacterSet.whitespacesAndNewlines
                     )
             
             let trimmedTitle =
-                entry.title.stringByTrimmingCharactersInSet(
-                        NSCharacterSet.whitespaceAndNewlineCharacterSet()
+                entry.title.trimmingCharacters(
+                        in: CharacterSet.whitespacesAndNewlines
                     )
             
             editionTitle.text =
-                ( trimmedPrefix + " " + trimmedTitle ).stringByTrimmingCharactersInSet(
-                        NSCharacterSet.whitespaceAndNewlineCharacterSet()
+                ( trimmedPrefix + " " + trimmedTitle ).trimmingCharacters(
+                        in: CharacterSet.whitespacesAndNewlines
                     )
 
             editionSubTitle.text = entry.subtitle

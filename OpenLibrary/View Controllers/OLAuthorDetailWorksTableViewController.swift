@@ -47,7 +47,7 @@ class OLAuthorDetailWorksTableViewController: UIViewController {
         
         // Dynamic sizing for the header view
         if let footerView = tableView.tableFooterView {
-            let height = footerView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+            let height = footerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
             var footerFrame = footerView.frame
             
             // If we don't have this check, viewDidLayoutSubviews() will get
@@ -60,11 +60,11 @@ class OLAuthorDetailWorksTableViewController: UIViewController {
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if "displayWorkDetail" == segue.identifier {
             
-            if let destVC = segue.destinationViewController as? OLWorkDetailViewController {
+            if let destVC = segue.destination as? OLWorkDetailViewController {
                 
                 if let indexPath = self.tableView.indexPathForSelectedRow {
 
@@ -77,7 +77,7 @@ class OLAuthorDetailWorksTableViewController: UIViewController {
     // MARK: Query in Progress
     func coordinatorIsBusy() -> Void {
         
-        if let parentVC = parentViewController as? OLAuthorDetailViewController {
+        if let parentVC = parent as? OLAuthorDetailViewController {
             
             parentVC.coordinatorIsBusy()
         }
@@ -85,7 +85,7 @@ class OLAuthorDetailWorksTableViewController: UIViewController {
     
     func coordinatorIsNoLongerBusy() -> Void {
         
-        if let parentVC = parentViewController as? OLAuthorDetailViewController {
+        if let parentVC = parent as? OLAuthorDetailViewController {
             
             parentVC.coordinatorIsNoLongerBusy()
         }
@@ -93,7 +93,7 @@ class OLAuthorDetailWorksTableViewController: UIViewController {
     
     // MARK: Utility
     
-    func refreshQuery( refreshControl: UIRefreshControl? ) {
+    func refreshQuery( _ refreshControl: UIRefreshControl? ) {
         
         queryCoordinator?.refreshQuery( refreshControl )
     }
@@ -107,7 +107,7 @@ extension OLAuthorDetailWorksTableViewController: TransitionSourceCell {
         
         if let indexPath = tableView.indexPathForSelectedRow {
             
-            sourceRectView = tableView.cellForRowAtIndexPath( indexPath )
+            sourceRectView = tableView.cellForRow( at: indexPath )
         }
         
         return sourceRectView
@@ -119,7 +119,7 @@ extension OLAuthorDetailWorksTableViewController: TransitionSourceCell {
 
 extension OLAuthorDetailWorksTableViewController: UIScrollViewDelegate {
     
-    func scrollViewDidEndDragging( scrollView: UIScrollView, willDecelerate decelerate: Bool ) {
+    func scrollViewDidEndDragging( _ scrollView: UIScrollView, willDecelerate decelerate: Bool ) {
         
         // UITableView only moves in one direction, y axis
         let currentOffset = scrollView.contentOffset.y
@@ -136,7 +136,7 @@ extension OLAuthorDetailWorksTableViewController: UIScrollViewDelegate {
         }
     }
 
-    func scrollViewWillEndDragging( scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint> ) {
+    func scrollViewWillEndDragging( _ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint> ) {
         
         // up
         if velocity.y < -1.5 {
@@ -153,20 +153,20 @@ extension OLAuthorDetailWorksTableViewController: UITableViewDelegate {
 // MARK: UITableviewDataSource
 extension OLAuthorDetailWorksTableViewController: UITableViewDataSource {
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         
         return queryCoordinator?.numberOfSections() ?? 0
     }
 
-    func tableView( tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
+    func tableView( _ tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
         
         return queryCoordinator?.numberOfRowsInSection( section ) ?? 0
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("authorWorksEntry", forIndexPath: indexPath) as! AuthorWorksTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "authorWorksEntry", for: indexPath) as! AuthorWorksTableViewCell
         
-        queryCoordinator?.displayToCell( cell, indexPath: indexPath )
+        _ = queryCoordinator?.displayToCell( cell, indexPath: indexPath )
         
         return cell
     }

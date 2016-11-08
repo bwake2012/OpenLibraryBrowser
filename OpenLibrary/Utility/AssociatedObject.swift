@@ -9,7 +9,7 @@
 import Foundation
 
 func associatedObject<ValueType: AnyObject>(
-    base: AnyObject,
+    _ base: AnyObject,
     key: UnsafePointer<UInt8>,
     initialiser: () -> ValueType
     ) -> ValueType {
@@ -20,7 +20,7 @@ func associatedObject<ValueType: AnyObject>(
 }
 
 func associateObject<ValueType: AnyObject>(
-    base: AnyObject,
+    _ base: AnyObject,
     key: UnsafePointer<UInt8>,
     value: ValueType
     ) {

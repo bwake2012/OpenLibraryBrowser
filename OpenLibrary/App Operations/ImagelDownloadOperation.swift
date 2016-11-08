@@ -14,15 +14,15 @@ import PSOperations
 class ImageDownloadOperation: GroupOperation {
     
     // MARK: Properties
-    let localImageURL: NSURL
-    let remoteImageURL: NSURL
+    let localImageURL: URL
+    let remoteImageURL: URL
     
     let displayPointSize: CGSize?
 
     // MARK: Initialization
     
     /// - parameter cacheFile: The file `NSURL` to which the earthquake feed will be downloaded.
-    init( stringID: String, imageKeyName: String, size: String, type: String, imageURL: NSURL, displayPointSize: CGSize? ) {
+    init( stringID: String, imageKeyName: String, size: String, type: String, imageURL: URL, displayPointSize: CGSize? ) {
 
         self.localImageURL = imageURL
         self.displayPointSize = displayPointSize
@@ -36,16 +36,16 @@ class ImageDownloadOperation: GroupOperation {
             should always prefer to use https.
         */
         let urlString = "https://covers.openlibrary.org/\(type)/\(imageKeyName)/\(stringID)-\(size).jpg?default=false"
-        remoteImageURL = NSURL( string: urlString )!
+        remoteImageURL = URL( string: urlString )!
 
         super.init(operations: [])
         name = "Download Image"
         
-        let task = NSURLSession.sharedSession().jpgDownloadTaskWithURL( remoteImageURL ) {
+        let task = URLSession.shared.jpgDownloadTaskWithURL( remoteImageURL ) {
             
             url, response, error in
             
-            self.downloadFinished( url, response: response as? NSHTTPURLResponse, error: error)
+            self.downloadFinished( url, response: response as? HTTPURLResponse, error: error)
         }
         
         let taskOperation = URLSessionTaskOperation(task: task)
@@ -59,11 +59,11 @@ class ImageDownloadOperation: GroupOperation {
         addOperation(taskOperation)
     }
     
-    func downloadFinished( url: NSURL?, response: NSHTTPURLResponse?, error: NSError? ) {
+    func downloadFinished( _ url: URL?, response: HTTPURLResponse?, error: Error? ) {
         
         if let error = error {
 
-            aggregateError( error )
+            aggregateError( error as NSError )
 
         } else if let downloadURL = url {
             
@@ -72,18 +72,17 @@ class ImageDownloadOperation: GroupOperation {
                     If we already have a file at this location, just delete it.
                     Also, swallow the error, because we don't really care about it.
                 */
-                try NSFileManager.defaultManager().removeItemAtURL( self.localImageURL )
+                try FileManager.default.removeItem( at: self.localImageURL )
             }
             catch {}
             
-            if let directoryURL = self.localImageURL.URLByDeletingLastPathComponent {
+            let directoryURL = self.localImageURL.deletingLastPathComponent()
 
-                do {
-                    try NSFileManager.defaultManager().createDirectoryAtURL( directoryURL, withIntermediateDirectories: true, attributes: nil )
-                }
-                catch let error as NSError {
-                    print( "\(error)" )
-                }
+            do {
+                try FileManager.default.createDirectory( at: directoryURL, withIntermediateDirectories: true, attributes: nil )
+            }
+            catch let error as NSError {
+                print( "\(error)" )
             }
 
             if let error = validateStreamMIMEType( [jpegMIMEType,jpgMIMEType], response: response, url: localImageURL ) {
@@ -100,7 +99,7 @@ class ImageDownloadOperation: GroupOperation {
                 
                     do {
                         
-                        try NSFileManager.defaultManager().moveItemAtURL( downloadURL, toURL: localImageURL )
+                        try FileManager.default.moveItem( at: downloadURL, to: localImageURL )
                     }
                     catch let error as NSError {
                         aggregateError(error)
@@ -110,13 +109,13 @@ class ImageDownloadOperation: GroupOperation {
                     
                     let maxPixels = max(displayPointSize.width, displayPointSize.height) * 2
                     let options: [NSString: NSObject] = [
-                        kCGImageSourceThumbnailMaxPixelSize: maxPixels,
-                        kCGImageSourceCreateThumbnailFromImageAlways: true,
-                        kCGImageSourceTypeIdentifierHint: "public.jpeg"
+                        kCGImageSourceThumbnailMaxPixelSize: maxPixels as NSObject,
+                        kCGImageSourceCreateThumbnailFromImageAlways: true as NSObject,
+                        kCGImageSourceTypeIdentifierHint: "public.jpeg" as NSObject
                     ]
-                    if let imageSource = CGImageSourceCreateWithURL( downloadURL, options ) {
+                    if let imageSource = CGImageSourceCreateWithURL( downloadURL as CFURL, options as CFDictionary? ) {
                         
-                        if let scaledImage = CGImageSourceCreateThumbnailAtIndex( imageSource, 0, options ) {
+                        if let scaledImage = CGImageSourceCreateThumbnailAtIndex( imageSource, 0, options as CFDictionary? ) {
                             
                             writeCGImage( scaledImage, toURL: self.localImageURL )
                         }
@@ -129,12 +128,12 @@ class ImageDownloadOperation: GroupOperation {
         }
     }
     
-    private func writeCGImage( image: CGImageRef, toURL: NSURL ) -> Void {
+    fileprivate func writeCGImage( _ image: CGImage, toURL: URL ) -> Void {
         
-        if let imageDest = CGImageDestinationCreateWithURL( self.localImageURL, "public.jpeg", 1, nil ) {
+        if let imageDest = CGImageDestinationCreateWithURL( self.localImageURL as CFURL, "public.jpeg" as CFString, 1, nil ) {
             
-            let options: [NSString: NSObject] = [kCGImageDestinationLossyCompressionQuality: 1.0]
-            CGImageDestinationAddImage( imageDest, image, options )
+            let options: [NSString: NSObject] = [kCGImageDestinationLossyCompressionQuality: 1.0 as NSObject]
+            CGImageDestinationAddImage( imageDest, image, options as CFDictionary? )
             CGImageDestinationFinalize( imageDest )
         }
     }

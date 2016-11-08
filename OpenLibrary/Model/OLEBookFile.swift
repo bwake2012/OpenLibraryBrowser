@@ -50,17 +50,17 @@ private struct ParsedResult {
     var originalName: String = ""
 }
 
-private class XMLParser: NSObject, NSXMLParserDelegate {
+private class XMLParser: NSObject, XMLParserDelegate {
     
-    var parser   = NSXMLParser()
+    var parser   = Foundation.XMLParser()
     var element: EBookTag = .tagUnknown
     
     var parsedResult = ParsedResult()
     var resultArray = [ParsedResult]()
     
-    func beginParsing( stream: NSInputStream ) -> [ParsedResult] {
+    func beginParsing( _ stream: InputStream ) -> [ParsedResult] {
         
-        parser = NSXMLParser( stream: stream )
+        parser = Foundation.XMLParser( stream: stream )
         parser.delegate = self
         parser.parse()
         
@@ -71,8 +71,8 @@ private class XMLParser: NSObject, NSXMLParserDelegate {
         return resultArray
     }
     
-    func beginParsing( urlString urlString: String ) -> [ParsedResult] {
-        if let url = NSURL( string: urlString ) {
+    func beginParsing( urlString: String ) -> [ParsedResult] {
+        if let url = URL( string: urlString ) {
             
             return beginParsing( localURL: url )
         }
@@ -80,10 +80,10 @@ private class XMLParser: NSObject, NSXMLParserDelegate {
         return resultArray
     }
     
-    func beginParsing( localURL localURL: NSURL ) -> [ParsedResult] {
+    func beginParsing( localURL: URL ) -> [ParsedResult] {
         
         do {
-            let xmlString = try String( contentsOfURL: localURL )
+            let xmlString = try String( contentsOf: localURL )
             
             return beginParsing( xmlString: xmlString )
         }
@@ -94,10 +94,10 @@ private class XMLParser: NSObject, NSXMLParserDelegate {
         return resultArray
     }
     
-    func beginParsing( xmlString xmlString: String ) -> [ParsedResult] {
+    func beginParsing( xmlString: String ) -> [ParsedResult] {
         
-        if let data = xmlString.dataUsingEncoding( NSUTF8StringEncoding ) {
-            parser = NSXMLParser( data: data )
+        if let data = xmlString.data( using: String.Encoding.utf8 ) {
+            parser = Foundation.XMLParser( data: data )
             parser.delegate = self
             parser.parse()
             
@@ -110,8 +110,8 @@ private class XMLParser: NSObject, NSXMLParserDelegate {
         return resultArray
     }
     
-    @objc func parser(
-        parser: NSXMLParser,
+    @nonobjc func parser(
+        _ parser: XMLParser,
         didStartElement elementName: String,
                         namespaceURI: String?,
                         qualifiedName qName: String?,
@@ -125,7 +125,7 @@ private class XMLParser: NSObject, NSXMLParserDelegate {
                 parsedResult = ParsedResult()
                 
                 if let name   = attributeDict[EBookAttr.attrname.rawValue],
-                    source = attributeDict[EBookAttr.attrsource.rawValue] {
+                    let source = attributeDict[EBookAttr.attrsource.rawValue] {
                     
                     parsedResult.name = name
                     parsedResult.source = source
@@ -140,7 +140,7 @@ private class XMLParser: NSObject, NSXMLParserDelegate {
         }
     }
     
-    @objc func parser( parser: NSXMLParser, foundCharacters string: String )
+    @nonobjc func parser( _ parser: XMLParser, foundCharacters string: String )
     {
         switch element {
         case .tagUnknown:
@@ -172,8 +172,8 @@ private class XMLParser: NSObject, NSXMLParserDelegate {
         }
     }
     
-    @objc func parser(
-        parser: NSXMLParser,
+    @nonobjc func parser(
+        _ parser: XMLParser,
         didEndElement elementName: String,
                       namespaceURI: String?,
                       qualifiedName qName: String?
@@ -194,12 +194,12 @@ private class XMLParser: NSObject, NSXMLParserDelegate {
     
 }
 
-class OLEBookFile: OLManagedObject, CoreDataModelable {
+class OLEBookFile: OLManagedObject {
 
     // Insert code here to add functionality to your managed object subclass
     static let entityName = "EBookFile"
 
-    private class func saveParsedResults( eBookKey: String, parsedResults:[ParsedResult], moc: NSManagedObjectContext ) -> Int {
+    fileprivate class func saveParsedResults( _ eBookKey: String, parsedResults:[ParsedResult], moc: NSManagedObjectContext ) -> Int {
         
         var count = 0
         
@@ -214,14 +214,14 @@ class OLEBookFile: OLManagedObject, CoreDataModelable {
                     
                     if nil == newObject {
                         newObject =
-                            NSEntityDescription.insertNewObjectForEntityForName(
-                                OLEBookFile.entityName, inManagedObjectContext: moc
+                            NSEntityDescription.insertNewObject(
+                                forEntityName: OLEBookFile.entityName, into: moc
                                 ) as? OLEBookFile
                     }
                     
                     if let newObject = newObject {
                         
-                        newObject.retrieval_date = NSDate()
+                        newObject.retrieval_date = Date()
                         
                         newObject.eBookKey      = eBookKey
                         newObject.workKey       = existingItem.workKey
@@ -249,7 +249,7 @@ class OLEBookFile: OLManagedObject, CoreDataModelable {
         return count
     }
     
-    class func parseXML( eBookKey: String, localURL: NSURL, moc: NSManagedObjectContext ) -> Int {
+    class func parseXML( _ eBookKey: String, localURL: URL, moc: NSManagedObjectContext ) -> Int {
         
         let xmlParser = XMLParser()
         let parsedResults = xmlParser.beginParsing( localURL: localURL )
@@ -260,4 +260,12 @@ class OLEBookFile: OLManagedObject, CoreDataModelable {
     }
 
     
+}
+
+extension OLEBookFile {
+    
+    class func buildFetchRequest() -> NSFetchRequest< OLEBookFile > {
+        
+        return NSFetchRequest( entityName: OLEBookFile.entityName )
+    }
 }

@@ -10,9 +10,9 @@ import UIKit
 
 protocol OLCell: class {
     
-    func displayImage( localURL: NSURL, image: UIImage ) -> Bool
+    func displayImage( _ localURL: URL, image: UIImage ) -> Bool
     func clearCurrentImage() -> Void
-    func configure( tableView: UITableView, indexPath: NSIndexPath, key: String, data: OLManagedObject? ) -> Void
+    func configure( _ tableView: UITableView, indexPath: IndexPath, key: String, data: OLManagedObject? ) -> Void
     func imageSize() -> CGSize?
 }
 
@@ -32,9 +32,9 @@ class OLTableViewCell: UITableViewCell, OLCell {
         return cellImage.bounds.size
     }
     
-    func displayImage( localURL: NSURL, image: UIImage ) -> Bool {
+    func displayImage( _ localURL: URL, image: UIImage ) -> Bool {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
         
         let newImageFile = localURL.lastPathComponent
         guard nil == currentImageFile || newImageFile == currentImageFile else { return true }
@@ -51,7 +51,7 @@ class OLTableViewCell: UITableViewCell, OLCell {
         cellImage.image = UIImage( named: "961-book-32.png" )
     }
     
-    func configure( tableView: UITableView, indexPath: NSIndexPath, key: String, data: OLManagedObject? ) -> Void {
+    func configure( _ tableView: UITableView, indexPath: IndexPath, key: String, data: OLManagedObject? ) -> Void {
         
     }
 }
@@ -60,7 +60,7 @@ protocol OLConfigureCell {
     
     associatedtype ObjectType
     
-    func configureCell( object: ObjectType )
+    func configureCell( _ object: ObjectType )
 }
 
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-typealias SaveAuthorKey = ( authorKey: String ) -> Void
+typealias SaveAuthorKey = ( _ authorKey: String ) -> Void
 
 class OLAuthorsTableViewController: UIViewController {
 
@@ -27,8 +27,8 @@ class OLAuthorsTableViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         assert( nil != queryCoordinator )
         
-        self.edgesForExtendedLayout = .None
-        navigationController?.navigationBar.translucent = false
+        self.edgesForExtendedLayout = UIRectEdge()
+        navigationController?.navigationBar.isTranslucent = false
         
         self.tableView.estimatedRowHeight = 102.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -38,7 +38,7 @@ class OLAuthorsTableViewController: UIViewController {
         queryCoordinator?.updateUI()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear( animated )
         
@@ -69,7 +69,7 @@ class OLAuthorsTableViewController: UIViewController {
 
 extension OLAuthorsTableViewController: UIScrollViewDelegate {
     
-    func scrollViewDidEndDragging( scrollView: UIScrollView, willDecelerate decelerate: Bool ) {
+    func scrollViewDidEndDragging( _ scrollView: UIScrollView, willDecelerate decelerate: Bool ) {
         
         // UITableView only moves in one direction, y axis
         let currentOffset = scrollView.contentOffset.y
@@ -81,7 +81,7 @@ extension OLAuthorsTableViewController: UIScrollViewDelegate {
         
     }
     
-    func scrollViewWillEndDragging( scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint> ) {
+    func scrollViewWillEndDragging( _ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint> ) {
         
         // up
         if velocity.y < -1.5 {
@@ -93,16 +93,16 @@ extension OLAuthorsTableViewController: UIScrollViewDelegate {
 // MARK: UITableViewDelegate
 extension OLAuthorsTableViewController: UITableViewDelegate {
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if let authorDetail = queryCoordinator?.objectAtIndexPath( indexPath ) {
             
             if let saveAuthorKey = saveAuthorKey {
                 
-                saveAuthorKey( authorKey: authorDetail.key )
+                saveAuthorKey( authorDetail.key )
             }
             
-            performSegueWithIdentifier( "beginAuthorDetail", sender: self )
+            performSegue( withIdentifier: "beginAuthorDetail", sender: self )
         }
     }
 }
@@ -110,20 +110,20 @@ extension OLAuthorsTableViewController: UITableViewDelegate {
 // MARK: UITableviewDataSource
 extension OLAuthorsTableViewController: UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         
         return queryCoordinator?.numberOfSections() ?? 0
     }
     
-    func tableView( tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
+    func tableView( _ tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
         
         return queryCoordinator?.numberOfRowsInSection( section ) ?? 0
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("AuthorsTableViewCell", forIndexPath: indexPath) as! AuthorsTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "AuthorsTableViewCell", for: indexPath) as! AuthorsTableViewCell
         
-        queryCoordinator?.displayToCell( cell, indexPath: indexPath )
+        _ = queryCoordinator?.displayToCell( cell, indexPath: indexPath )
         
         return cell
     }

@@ -13,7 +13,7 @@ import BNRCoreDataStack
 let kAuthorsPrefix = "/authors/"
 let kAuthorType    = "/type/author"
 
-class OLAuthorDetail: OLManagedObject, CoreDataModelable {
+class OLAuthorDetail: OLManagedObject {
 
     // MARK: Search Info
     struct SearchInfo {
@@ -24,31 +24,31 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
     
     static let entityName = "AuthorDetail"
     
-    class func parseJSON( parentObjectID: NSManagedObjectID?, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLAuthorDetail? {
+    class func parseJSON( _ parentObjectID: NSManagedObjectID?, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLAuthorDetail? {
         
         guard let parsed = ParsedFromJSON.fromJSON( json ) else { return nil }
         
         moc.mergePolicy = NSOverwriteMergePolicy
         let newObject: OLAuthorDetail? =
-                NSEntityDescription.insertNewObjectForEntityForName(
-                    OLAuthorDetail.entityName, inManagedObjectContext: moc
+                NSEntityDescription.insertNewObject(
+                    forEntityName: OLAuthorDetail.entityName, into: moc
                 ) as? OLAuthorDetail
         
         if let newObject = newObject {
             
-            newObject.retrieval_date = NSDate()
+            newObject.retrieval_date = Date()
             newObject.provisional_date = nil
             newObject.is_provisional = false
 
             newObject.populateObject( parsed )
             
-            newObject.addToAuthorCache( newObject.key, authorName: newObject.name )
+            newObject.addAuthorToCache( newObject.key, authorName: newObject.name )
         }
        
         return newObject
     }
     
-    class func saveProvisionalAuthor( authorIndex: Int, parsed: OLGeneralSearchResult.ParsedFromJSON, moc: NSManagedObjectContext ) -> OLAuthorDetail? {
+    class func saveProvisionalAuthor( _ authorIndex: Int, parsed: OLGeneralSearchResult.ParsedFromJSON, moc: NSManagedObjectContext ) -> OLAuthorDetail? {
         
         var newObject: OLAuthorDetail?
         
@@ -58,14 +58,14 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
             if nil == newObject {
                 
                 newObject =
-                    NSEntityDescription.insertNewObjectForEntityForName(
-                        OLAuthorDetail.entityName, inManagedObjectContext: moc
+                    NSEntityDescription.insertNewObject(
+                        forEntityName: OLAuthorDetail.entityName, into: moc
                     ) as? OLAuthorDetail
                 
                 if let newObject = newObject {
                     
-                    newObject.retrieval_date = NSDate()
-                    newObject.provisional_date = NSDate()
+                    newObject.retrieval_date = Date()
+                    newObject.provisional_date = Date()
                     newObject.is_provisional = true
                     
                     newObject.key = parsed.author_key[authorIndex]
@@ -84,7 +84,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
                     newObject.revision = 0
                     newObject.latest_revision = 0
 
-                    newObject.addToAuthorCache( newObject.key, authorName: newObject.name )
+                    newObject.addAuthorToCache( newObject.key, authorName: newObject.name )
                 }
             }
         }
@@ -124,27 +124,27 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
     
     override var imageType: String { return "a" }
     
-    override func imageID( index: Int ) -> Int {
+    override func imageID( _ index: Int ) -> Int {
         
         return !hasImage ? 0 : self.photos[index]
     }
     
-    override func localURL( size: String, index: Int = 0 ) -> NSURL {
+    override func localURL( _ size: String, index: Int = 0 ) -> URL {
         
         return super.localURL( self.photos[index], size: size )
     }
     
-    override func populateObject( parsed: OpenLibraryObject ) {
+    override func populateObject( _ parsed: OpenLibraryObject ) {
 
-        self.retrieval_date = NSDate()
+        self.retrieval_date = Date()
         
         if let parsed = parsed as? ParsedFromJSON {
             
             self.key = parsed.key
             self.name = parsed.name
             self.personal_name = parsed.personal_name
-            self.birth_date = OpenLibraryObject.OLDateStamp( parsed.birth_date )
-            self.death_date = OpenLibraryObject.OLDateStamp( parsed.death_date )
+            self.birth_date = parsed.birth_date
+            self.death_date = parsed.death_date
             
             self.photos = parsed.photos
             self.links = parsed.links
@@ -171,14 +171,12 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
         
         if hasImage {
 
-            let value = localURL( "M", index: 0 ).absoluteString
-            let extraValue = localURL( "L", index: 0 ).absoluteString
             let deluxeItem =
                 DeluxeData(
                         type: .imageAuthor,
                         caption: String( firstImageID ),
-                        value: value,
-                        extraValue: extraValue
+                        value: localURL( "M", index: 0 ).absoluteString,
+                        extraValue: localURL( "L", index: 0 ).absoluteString
                     )
 
             deluxeData.append( [deluxeItem] )
@@ -203,7 +201,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
         if !self.bio.isEmpty {
 
             let bio = self.bio
-            let fancyOutput = fancyMarkdown.transform( bio )
+            let fancyOutput = convertMarkdownToHTML( markdown: bio )
             
             deluxeData.append( [DeluxeData( type: .html, caption: "Biography", value: fancyOutput )] )
         }
@@ -214,7 +212,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
             
             for link in self.links {
                 
-                if let title = link["title"], url = link["url"] {
+                if let title = link["title"], let url = link["url"] {
                     newData.append( DeluxeData( type: .link, caption: title, value: url ) )
 //                    print( "\(title) \(url)" )
                 }
@@ -239,14 +237,12 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
                 
                 if 0 < photos[index] {
 
-                    let value = localURL( "M", index: index ).absoluteString
-                    let extraValue = localURL( "L", index: index ).absoluteString
                     let deluxeItem =
                         DeluxeData(
                             type: .imageAuthor,
                             caption: String( imageID( index ) ),
-                            value: value,
-                            extraValue: extraValue
+                            value: localURL( "M", index: index ).absoluteString,
+                            extraValue: localURL( "L", index: index ).absoluteString
                     )
                     
                     deluxeData.append( [deluxeItem] )
@@ -259,10 +255,10 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
             }
         }
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         
-        dateFormatter.dateStyle = .MediumStyle
-        dateFormatter.timeStyle = .MediumStyle
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .medium
         
         var newData = [DeluxeData]()
         
@@ -272,7 +268,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
                 DeluxeData(
                     type: .inline,
                     caption: "Created",
-                    value: dateFormatter.stringFromDate( created )
+                    value: dateFormatter.string( from: created as Date )
                 )
             )
         }
@@ -283,7 +279,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
                 DeluxeData(
                     type: .inline,
                     caption: "Last Modified",
-                    value: dateFormatter.stringFromDate( last_modified )
+                    value: dateFormatter.string( from: last_modified as Date )
                 )
             )
         }
@@ -308,7 +304,7 @@ class OLAuthorDetail: OLManagedObject, CoreDataModelable {
             DeluxeData(
                 type: .inline,
                 caption: "Retrieved",
-                value: dateFormatter.stringFromDate( retrieval_date )
+                value: dateFormatter.string( from: retrieval_date as Date )
             )
         )
         
@@ -345,14 +341,14 @@ extension OLAuthorDetail {
         let revision: Int64
         let latest_revision: Int64
         
-        let created: NSDate?
-        let last_modified: NSDate?
+        let created: Date?
+        let last_modified: Date?
         
         let type: String
         
         // MARK: Class Factory
         
-        class func fromJSON ( json: [String: AnyObject] ) -> ParsedFromJSON? {
+        class func fromJSON ( _ json: [String: AnyObject] ) -> ParsedFromJSON? {
             
             guard let key = json["key"] as? String else { return nil }
             
@@ -429,8 +425,8 @@ extension OLAuthorDetail {
             revision: Int64,
             latest_revision: Int64,
             
-            created: NSDate?,
-            last_modified: NSDate?,
+            created: Date?,
+            last_modified: Date?,
             
             type: String
             ) {
@@ -461,7 +457,7 @@ extension OLAuthorDetail {
 
 extension OLAuthorDetail {
     
-    class func saveProvisionalAuthor( authorIndex: Int, parsed: OLGeneralSearchResult, moc: NSManagedObjectContext ) -> OLAuthorDetail? {
+    class func saveProvisionalAuthor( _ authorIndex: Int, parsed: OLGeneralSearchResult, moc: NSManagedObjectContext ) -> OLAuthorDetail? {
         
         var newObject: OLAuthorDetail?
         
@@ -471,14 +467,14 @@ extension OLAuthorDetail {
             if nil == newObject {
                 
                 newObject =
-                    NSEntityDescription.insertNewObjectForEntityForName(
-                        OLAuthorDetail.entityName, inManagedObjectContext: moc
+                    NSEntityDescription.insertNewObject(
+                        forEntityName: OLAuthorDetail.entityName, into: moc
                     ) as? OLAuthorDetail
                 
                 if let newObject = newObject {
                     
-                    newObject.retrieval_date = NSDate()
-                    newObject.provisional_date = NSDate()
+                    newObject.retrieval_date = Date()
+                    newObject.provisional_date = Date()
                     newObject.is_provisional = true
                     
                     newObject.key = parsed.author_key[authorIndex]
@@ -502,6 +498,13 @@ extension OLAuthorDetail {
         
         return newObject
     }
+}
+
+extension OLAuthorDetail {
     
+    class func buildFetchRequest() -> NSFetchRequest< OLAuthorDetail > {
+        
+        return NSFetchRequest( entityName: OLAuthorDetail.entityName )
+    }
 }
 

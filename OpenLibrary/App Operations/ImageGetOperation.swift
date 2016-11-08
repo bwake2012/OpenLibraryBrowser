@@ -27,31 +27,31 @@ class ImageGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( stringID: String, imageKeyName: String, localURL: NSURL, size: String, type: String, displayPointSize: CGSize? = nil, completionHandler: Void -> Void ) {
+    init( stringID: String, imageKeyName: String, localURL: URL, size: String, type: String, displayPointSize: CGSize? = nil, completionHandler: @escaping (Void) -> Void ) {
         
         downloadOperation =
             ImageDownloadOperation( stringID: stringID, imageKeyName: imageKeyName, size: size, type: type, imageURL: localURL, displayPointSize: displayPointSize )
-        let finishOperation = NSBlockOperation( block: completionHandler )
+        let finishOperation = PSBlockOperation { completionHandler() }
         
         // These operations must be executed in order
         finishOperation.addDependency(downloadOperation)
         
         super.init( operations: [downloadOperation, finishOperation] )
         
-        queuePriority = .Low
+        queuePriority = .low
         
 //        addCondition( MutuallyExclusive<ImageGetOperation>() )
 
         name = "Get Image"
     }
 
-    convenience init( numberID: Int, imageKeyName: String, localURL: NSURL, size: String, type: String, displayPointSize: CGSize? = nil, completionHandler: Void -> Void ) {
+    convenience init( numberID: Int, imageKeyName: String, localURL: URL, size: String, type: String, displayPointSize: CGSize? = nil, completionHandler: @escaping (Void) -> Void ) {
 
         self.init( stringID: String( numberID ), imageKeyName: imageKeyName, localURL: localURL, size: size, type: type, displayPointSize: displayPointSize, completionHandler: completionHandler )
     }
     
-    override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
-        if let firstError = errors.first where (operation === downloadOperation) {
+    override func operationDidFinish(_ operation: Foundation.Operation, withErrors errors: [NSError]) {
+        if let firstError = errors.first , (operation === downloadOperation) {
             produceAlert(firstError)
         }
     }

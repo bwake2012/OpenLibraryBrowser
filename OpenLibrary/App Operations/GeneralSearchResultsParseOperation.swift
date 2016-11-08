@@ -13,11 +13,11 @@ import BNRCoreDataStack
 import PSOperations
 
 /// An `Operation` to parse earthquakes out of a downloaded feed from the USGS.
-class GeneralSearchResultsParseOperation: Operation {
+class GeneralSearchResultsParseOperation: PSOperation {
     
     let sequence: Int64
     let offset: Int64
-    let cacheFile: NSURL
+    let cacheFile: URL
     let context: NSManagedObjectContext
     let updateResults: SearchResultsUpdater
     
@@ -33,7 +33,7 @@ class GeneralSearchResultsParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( sequence: Int, offset: Int, cacheFile: NSURL, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater ) {
+    init( sequence: Int, offset: Int, cacheFile: URL, coreDataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -43,7 +43,7 @@ class GeneralSearchResultsParseOperation: Operation {
         self.sequence = Int64( sequence )
         self.offset = Int64( offset )
         self.cacheFile = cacheFile
-        self.context = coreDataStack.newChildContext()
+        self.context = coreDataStack.newChildContext( name: "GeneralSearchResultParse Context" )
         self.context.mergePolicy = NSOverwriteMergePolicy
         self.updateResults = updateResults
         
@@ -53,7 +53,7 @@ class GeneralSearchResultsParseOperation: Operation {
     }
     
     override func execute() {
-        guard let stream = NSInputStream(URL: cacheFile) else {
+        guard let stream = InputStream(url: cacheFile) else {
             finish()
             return
         }
@@ -65,7 +65,7 @@ class GeneralSearchResultsParseOperation: Operation {
         }
         
         do {
-            if let json = try NSJSONSerialization.JSONObjectWithStream(stream, options: []) as? [String: AnyObject] {
+            if let json = try JSONSerialization.jsonObject(with: stream, options: []) as? [String: AnyObject] {
             
                 parse( json )
             }
@@ -78,7 +78,7 @@ class GeneralSearchResultsParseOperation: Operation {
         }
     }
     
-    private func parse( resultSet: [String: AnyObject] ) {
+    fileprivate func parse( _ resultSet: [String: AnyObject] ) {
 
         guard let start = resultSet["start"] as? Int else {
             finishWithError( nil )
@@ -96,7 +96,7 @@ class GeneralSearchResultsParseOperation: Operation {
         }
 
         let sequence = self.sequence
-        context.performBlock {
+        context.perform {
             
             var error: NSError?
             var index = Int64( start )
@@ -135,7 +135,7 @@ class GeneralSearchResultsParseOperation: Operation {
         - note: This method returns an `NSError?` because it will be immediately
             passed to the `finishWithError()` method, which accepts an `NSError?`.
     */
-    private func saveContext() -> NSError? {
+    fileprivate func saveContext() -> NSError? {
         var error: NSError?
 
         do {
@@ -148,7 +148,7 @@ class GeneralSearchResultsParseOperation: Operation {
         return error
     }
     
-    func Update( searchResults: SearchResults ) {
+    func Update( _ searchResults: SearchResults ) {
         
         self.searchResults = searchResults
     }

@@ -33,14 +33,14 @@ private class ParsedSearchResult: OpenLibraryObject {
     let revision: Int64
     let latest_revision: Int64
     
-    let created: NSDate?
-    let last_modified: NSDate?
+    let created: Date?
+    let last_modified: Date?
     
     let type: String
     
     // MARK: Class Factory
     
-    class func fromJSON ( match: [String: AnyObject] ) -> ParsedSearchResult? {
+    class func fromJSON ( _ match: [String: AnyObject] ) -> ParsedSearchResult? {
         
         guard let key = match["key"] as? String else { return nil }
         
@@ -117,8 +117,8 @@ private class ParsedSearchResult: OpenLibraryObject {
         revision: Int64,
         latest_revision: Int64,
         
-        created: NSDate?,
-        last_modified: NSDate?,
+        created: Date?,
+        last_modified: Date?,
         
         type: String
     ) {
@@ -147,18 +147,18 @@ private class ParsedSearchResult: OpenLibraryObject {
 }
 
 /// An `Operation` to parse earthquakes out of a downloaded feed from the USGS.
-class AuthorDetailParseOperation: Operation {
+class AuthorDetailParseOperation: PSOperation {
     
     let parentObjectID: NSManagedObjectID?
-    let cacheFile: NSURL
+    let cacheFile: URL
     let context: NSManagedObjectContext
 
     var searchResults = SearchResults()
     
     var photos = [Int]()
-    var localThumbURL = NSURL()
-    var localMediumURL = NSURL()
-    var localLargeURL = NSURL()
+    var localThumbURL: URL?
+    var localMediumURL: URL?
+    var localLargeURL: URL?
     
     /**
         - parameter cacheFile: The file `NSURL` from which to load author query data.
@@ -168,7 +168,7 @@ class AuthorDetailParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( parentObjectID: NSManagedObjectID?, cacheFile: NSURL, coreDataStack: CoreDataStack ) {
+    init( parentObjectID: NSManagedObjectID?, cacheFile: URL, coreDataStack: OLDataStack ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -178,7 +178,7 @@ class AuthorDetailParseOperation: Operation {
         self.parentObjectID = parentObjectID
 
         self.cacheFile = cacheFile
-        self.context = coreDataStack.newChildContext()
+        self.context = coreDataStack.newChildContext( name: "AuthorDetailParse Context" )
         self.context.mergePolicy = NSOverwriteMergePolicy
         
         super.init()
@@ -187,7 +187,7 @@ class AuthorDetailParseOperation: Operation {
     }
     
     override func execute() {
-        guard let stream = NSInputStream(URL: cacheFile) else {
+        guard let stream = InputStream(url: cacheFile) else {
             finish()
             return
         }
@@ -199,7 +199,7 @@ class AuthorDetailParseOperation: Operation {
         }
         
         do {
-            if let json = try NSJSONSerialization.JSONObjectWithStream(stream, options: []) as? [String: AnyObject] {
+            if let json = try JSONSerialization.jsonObject(with: stream, options: []) as? [String: AnyObject] {
             
                 parse( json )
             }
@@ -212,9 +212,9 @@ class AuthorDetailParseOperation: Operation {
         }
     }
     
-    private func parse( resultSet: [String: AnyObject] ) {
+    fileprivate func parse( _ resultSet: [String: AnyObject] ) {
 
-        context.performBlock {
+        context.perform {
             
             if let newObject = OLAuthorDetail.parseJSON( self.parentObjectID, json: resultSet, moc: self.context ) {
 
@@ -247,7 +247,7 @@ class AuthorDetailParseOperation: Operation {
         - note: This method returns an `NSError?` because it will be immediately
             passed to the `finishWithError()` method, which accepts an `NSError?`.
     */
-    private func saveContext() -> NSError? {
+    fileprivate func saveContext() -> NSError? {
         var error: NSError?
 
         do {
@@ -260,7 +260,7 @@ class AuthorDetailParseOperation: Operation {
         return error
     }
     
-    func Update( searchResults: SearchResults ) {
+    func Update( _ searchResults: SearchResults ) {
         
         self.searchResults = searchResults
     }

@@ -23,7 +23,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
     
     weak var authorWorksTableVC: OLAuthorDetailWorksTableViewController?
 
-    var authorWorksGetOperation: Operation?
+    var authorWorksGetOperation: PSOperation?
     
     lazy var fetchedResultsController: FetchedOLWorkDetailController = self.BuildFetchedResultsController()
     
@@ -35,7 +35,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
     var setRetrievals = Set< Int >()
     var objectRetrievalsInProgress = Set< NSManagedObjectID >()
     
-    init( authorKey: String, authorWorksTableVC: OLAuthorDetailWorksTableViewController, coreDataStack: CoreDataStack, operationQueue: OperationQueue ) {
+    init( authorKey: String, authorWorksTableVC: OLAuthorDetailWorksTableViewController, coreDataStack: OLDataStack, operationQueue: PSOperationQueue ) {
         
         self.authorKey = authorKey
 
@@ -49,12 +49,12 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
         return fetchedResultsController.sections?.count ?? 0
     }
 
-    func numberOfRowsInSection( section: Int ) -> Int {
+    func numberOfRowsInSection( _ section: Int ) -> Int {
 
         return fetchedResultsController.sections?[section].objects.count ?? 0
     }
     
-    func objectAtIndexPath( indexPath: NSIndexPath ) -> OLWorkDetail? {
+    func objectAtIndexPath( _ indexPath: IndexPath ) -> OLWorkDetail? {
         
         guard let sections = fetchedResultsController.sections else {
             assertionFailure("Sections missing")
@@ -68,7 +68,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
             return nil
         }
         
-        let index = indexPath.row
+        let index = (indexPath as NSIndexPath).row
         let workDetail = section.objects[index]
         if workDetail.isProvisional || needAnotherPage( index ) {
             
@@ -104,7 +104,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
         return workDetail
     }
     
-    func displayToCell( cell: AuthorWorksTableViewCell, indexPath: NSIndexPath ) -> OLWorkDetail? {
+    @discardableResult func displayToCell( _ cell: AuthorWorksTableViewCell, indexPath: IndexPath ) -> OLWorkDetail? {
         
         guard let workDetail = objectAtIndexPath( indexPath ) else { return nil }
         
@@ -120,7 +120,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
     func updateUI() {
 
         do {
-            NSFetchedResultsController.deleteCacheWithName( kWorksByAuthorCache )
+//            NSFetchedResultsController< OLWorkDetail >.deleteCache( withName: kWorksByAuthorCache )
             try fetchedResultsController.performFetch()
         }
         catch {
@@ -128,7 +128,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
         }
     }
 
-    func newQuery( authorKey: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
+    func newQuery( _ authorKey: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
 
         guard libraryIsReachable() else {
             
@@ -175,7 +175,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
          }
     }
     
-    func enqueueQuery( authorKey: String, offset: Int, userInitiated: Bool, refreshControl: UIRefreshControl? ) -> Operation {
+    func enqueueQuery( _ authorKey: String, offset: Int, userInitiated: Bool, refreshControl: UIRefreshControl? ) -> PSOperation {
         
         authorWorksTableVC?.coordinatorIsBusy()
         
@@ -192,7 +192,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
             ) {
                 [weak self] in
                 
-                dispatch_async( dispatch_get_main_queue() ) {
+                DispatchQueue.main.async {
                         
                     if let strongSelf = self {
                         
@@ -213,12 +213,12 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
         return authorWorksGetOperation
     }
     
-    func refreshQuery( refreshControl: UIRefreshControl? ) {
+    func refreshQuery( _ refreshControl: UIRefreshControl? ) {
         
         newQuery( authorKey, userInitiated: true, refreshControl: refreshControl )
     }
     
-    private func needAnotherPage( index: Int ) -> Bool {
+    fileprivate func needAnotherPage( _ index: Int ) -> Bool {
         
         return
             !setRetrievals.contains( index / kPageSize ) &&
@@ -227,9 +227,9 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
     }
     
     // MARK: SearchResultsUpdater
-    func updateResults(searchResults: SearchResults) -> Void {
+    func updateResults(_ searchResults: SearchResults) -> Void {
         
-        dispatch_async( dispatch_get_main_queue() ) {
+        DispatchQueue.main.async {
             [weak self] in
             
             if let strongSelf = self {
@@ -242,12 +242,12 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
         }
     }
     
-    private func updateHeader( string: String = "" ) {
+    fileprivate func updateHeader( _ string: String = "" ) {
         
         updateTableHeader( authorWorksTableVC?.tableView, text: string )
     }
     
-    private func updateFooter( text: String = "" ) {
+    fileprivate func updateFooter( _ text: String = "" ) {
         
         updateTableFooter( authorWorksTableVC?.tableView, highWaterMark: highWaterMark, numFound: searchResults.numFound, text: text )
     }
@@ -255,14 +255,14 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
     // MARK: Utility
     func BuildFetchedResultsController() -> FetchedOLWorkDetailController {
         
-        let fetchRequest = NSFetchRequest( entityName: OLWorkDetail.entityName )
+        let fetchRequest = OLWorkDetail.buildFetchRequest()
         let key = authorKey
         
-        let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
-        let today = NSDate()
-        let lastWeek = today.dateByAddingTimeInterval( -7 * secondsPerDay )
+        let secondsPerDay = TimeInterval( 24 * 60 * 60 )
+        let today = Date()
+        let lastWeek = today.addingTimeInterval( -7 * secondsPerDay )
         
-        fetchRequest.predicate = NSPredicate( format: "author_key==%@ && retrieval_date > %@", "\(key)", lastWeek )
+        fetchRequest.predicate = NSPredicate( format: "author_key==%@ && retrieval_date > %@", key, lastWeek as NSDate )
         
         fetchRequest.sortDescriptors =
             [
@@ -281,7 +281,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
 
     // MARK: install Query Coordinators
     
-    func installWorkDetailCoordinator( destVC: OLWorkDetailViewController, indexPath: NSIndexPath ){
+    func installWorkDetailCoordinator( _ destVC: OLWorkDetailViewController, indexPath: IndexPath ){
     
         guard let workDetail = objectAtIndexPath( indexPath ) else {
             
@@ -303,7 +303,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
 extension AuthorWorksCoordinator: FetchedResultsControllerDelegate {
     
     // MARK: FetchedResultsControllerDelegate
-    func fetchedResultsControllerDidPerformFetch( controller: FetchedOLWorkDetailController ) {
+    func fetchedResultsControllerDidPerformFetch( _ controller: FetchedOLWorkDetailController ) {
         
         guard nil != controller.fetchedObjects?.first else {
             
@@ -315,22 +315,22 @@ extension AuthorWorksCoordinator: FetchedResultsControllerDelegate {
         updateFooter()
     }
     
-    func fetchedResultsControllerWillChangeContent( controller: FetchedOLWorkDetailController ) {
+    func fetchedResultsControllerWillChangeContent( _ controller: FetchedOLWorkDetailController ) {
         //        authorWorksTableVC?.tableView.beginUpdates()
     }
     
-    func fetchedResultsControllerDidChangeContent( controller: FetchedOLWorkDetailController ) {
+    func fetchedResultsControllerDidChangeContent( _ controller: FetchedOLWorkDetailController ) {
         
         if let tableView = authorWorksTableVC?.tableView {
             
             tableView.beginUpdates()
             
-            tableView.deleteSections( deletedSectionIndexes, withRowAnimation: .Automatic )
-            tableView.insertSections( insertedSectionIndexes, withRowAnimation: .Automatic )
+            tableView.deleteSections( deletedSectionIndexes as IndexSet, with: .automatic )
+            tableView.insertSections( insertedSectionIndexes as IndexSet, with: .automatic )
             
-            tableView.deleteRowsAtIndexPaths( deletedRowIndexPaths, withRowAnimation: .Left )
-            tableView.insertRowsAtIndexPaths( insertedRowIndexPaths, withRowAnimation: .Right )
-            tableView.reloadRowsAtIndexPaths( updatedRowIndexPaths, withRowAnimation: .Automatic )
+            tableView.deleteRows( at: deletedRowIndexPaths as [IndexPath], with: .left )
+            tableView.insertRows( at: insertedRowIndexPaths as [IndexPath], with: .right )
+            tableView.reloadRows( at: updatedRowIndexPaths as [IndexPath], with: .automatic )
             
             tableView.endUpdates()
             
@@ -347,43 +347,43 @@ extension AuthorWorksCoordinator: FetchedResultsControllerDelegate {
         }
     }
     
-    func fetchedResultsController( controller: FetchedOLWorkDetailController,
+    func fetchedResultsController( _ controller: FetchedOLWorkDetailController,
                                    didChangeObject change: FetchedResultsObjectChange< OLWorkDetail > ) {
         
         switch change {
-        case let .Insert(_, indexPath):
-            if !insertedSectionIndexes.containsIndex( indexPath.section ) {
+        case let .insert(_, indexPath):
+            if !insertedSectionIndexes.contains( indexPath.section ) {
                 insertedRowIndexPaths.append( indexPath )
             }
             break
             
-        case let .Delete(_, indexPath):
-            if !deletedSectionIndexes.containsIndex( indexPath.section ) {
+        case let .delete(_, indexPath):
+            if !deletedSectionIndexes.contains( indexPath.section ) {
                 deletedRowIndexPaths.append( indexPath )
             }
             break
             
-        case let .Move(_, fromIndexPath, toIndexPath):
-            if !insertedSectionIndexes.containsIndex( toIndexPath.section ) {
+        case let .move(_, fromIndexPath, toIndexPath):
+            if !insertedSectionIndexes.contains( toIndexPath.section ) {
                 insertedRowIndexPaths.append( toIndexPath )
             }
-            if !deletedSectionIndexes.containsIndex( fromIndexPath.section ) {
+            if !deletedSectionIndexes.contains( fromIndexPath.section ) {
                 deletedRowIndexPaths.append( fromIndexPath )
             }
             
-        case let .Update(_, indexPath):
+        case let .update(_, indexPath):
             updatedRowIndexPaths.append( indexPath )
         }
     }
     
-    func fetchedResultsController(controller: FetchedOLWorkDetailController,
+    func fetchedResultsController(_ controller: FetchedOLWorkDetailController,
                                   didChangeSection change: FetchedResultsSectionChange< OLWorkDetail >) {
         
         switch change {
-        case let .Insert(_, index):
-            insertedSectionIndexes.addIndex( index )
-        case let .Delete(_, index):
-            deletedSectionIndexes.addIndex( index )
+        case let .insert(_, index):
+            insertedSectionIndexes.add( index )
+        case let .delete(_, index):
+            deletedSectionIndexes.add( index )
         }
     }
     

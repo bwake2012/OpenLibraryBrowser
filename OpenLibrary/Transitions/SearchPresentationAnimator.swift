@@ -14,59 +14,56 @@ class SearchPresentationAnimator: NSObject, UIViewControllerAnimatedTransitionin
     
     let velocity: CGFloat = 10.0
     
-    func transitionDuration( transitionContext: UIViewControllerContextTransitioning? ) -> NSTimeInterval {
+    func transitionDuration( using transitionContext: UIViewControllerContextTransitioning? ) -> TimeInterval {
         
         return 1.0
     }
     
-    func animateTransition( transitionContext: UIViewControllerContextTransitioning ) {
+    func animateTransition( using transitionContext: UIViewControllerContextTransitioning ) {
         
-        guard let fromVC = transitionContext.viewControllerForKey( UITransitionContextFromViewControllerKey ) else {
+        guard let fromVC = transitionContext.viewController( forKey: UITransitionContextViewControllerKey.from ) else {
             transitionContext.completeTransition( false )
             return
         }
 
-        guard let toView = transitionContext.viewForKey( UITransitionContextToViewKey ) else {            transitionContext.completeTransition( false )
+        guard let toView = transitionContext.view( forKey: UITransitionContextViewKey.to ) else {            transitionContext.completeTransition( false )
             return
         }
         
-        guard let containerView = transitionContext.containerView() else {
-            transitionContext.completeTransition( false )
-            return
-        }
-        
-        var fromView = transitionContext.viewForKey( UITransitionContextFromViewKey )
+        let containerView = transitionContext.containerView
+
+        var fromView = transitionContext.view( forKey: UITransitionContextViewKey.from )
         let hasFromView = nil != fromView
         if !hasFromView {
             
             fromView = fromVC.view
         }
         
-        let halfDuration = transitionDuration(transitionContext) / 2.0
+        let halfDuration = transitionDuration(using: transitionContext) / 2.0
         
         toView.frame = CGRect(x: toView.frame.width, y: toView.frame.origin.y, width: toView.frame.width, height: toView.frame.height)
         
         containerView.addSubview(toView)
         
-        UIView.animateWithDuration(
-                    halfDuration,
+        UIView.animate(
+                    withDuration: halfDuration,
                     delay: 0,
                     usingSpringWithDamping: damping,
                     initialSpringVelocity: velocity,
-                    options: UIViewAnimationOptions.CurveLinear,
+                    options: UIViewAnimationOptions.curveLinear,
                     animations: {
                             () -> Void in
-                            fromView!.transform = CGAffineTransformMakeScale(0.9, 0.9)
+                            fromView!.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
                         },
                     completion: {
                         (finished: Bool) -> Void in
                         if finished {
-                            UIView.animateWithDuration(
-                                halfDuration,
+                            UIView.animate(
+                                withDuration: halfDuration,
                                 delay: 0,
                                 usingSpringWithDamping: self.damping,
                                 initialSpringVelocity: self.velocity,
-                                options: UIViewAnimationOptions.CurveLinear,
+                                options: UIViewAnimationOptions.curveLinear,
                                 animations: {
                                     () -> Void in
                                     toView.frame = CGRect(x: 0, y: 0, width: toView.frame.width, height: toView.frame.height)

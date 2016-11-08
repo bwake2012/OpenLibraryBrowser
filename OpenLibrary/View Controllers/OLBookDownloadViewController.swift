@@ -25,7 +25,7 @@ class OLBookDownloadViewController: UIViewController, UIDocumentInteractionContr
 
     @IBOutlet weak var sendToKindleButton: UIButton!
 
-    @IBAction func readOnline(sender: UIButton) {
+    @IBAction func readOnline(_ sender: UIButton) {
         
         queryCoordinator?.readOnline()
         
@@ -33,42 +33,42 @@ class OLBookDownloadViewController: UIViewController, UIDocumentInteractionContr
         
     }
 
-    @IBAction func downloadPDF(sender: UIButton) {
+    @IBAction func downloadPDF(_ sender: UIButton) {
         
         queryCoordinator?.readTextPDF( sender )
     }
 
-    @IBAction func downloadPlainText(sender: UIButton) {
+    @IBAction func downloadPlainText(_ sender: UIButton) {
         
         queryCoordinator?.readText( sender )
     }
 
-    @IBAction func downloadZippedDaisy(sender: UIButton) {
+    @IBAction func downloadZippedDaisy(_ sender: UIButton) {
     }
 
-    @IBAction func downloadePub(sender: UIButton) {
+    @IBAction func downloadePub(_ sender: UIButton) {
         
         queryCoordinator?.readEPUB( sender )
     }
 
-    @IBAction func downloadDjVu(sender: UIButton) {
+    @IBAction func downloadDjVu(_ sender: UIButton) {
         
         queryCoordinator?.readDjVu( sender )
     }
 
-    @IBAction func downloadMOBI(sender: UIButton) {
+    @IBAction func downloadMOBI(_ sender: UIButton) {
         
         queryCoordinator?.readMOBI( sender )
     }
 
-    @IBAction func sendToKindle(sender: UIButton) {
+    @IBAction func sendToKindle(_ sender: UIButton) {
         
         queryCoordinator?.sendToKindle( sender )
     }
 
-    @IBAction func closeView( sender: UIButton ) {
+    @IBAction func closeView( _ sender: UIButton ) {
         
-        performSegueWithIdentifier( "dismissDownload", sender: self )
+        performSegue( withIdentifier: "dismissDownload", sender: self )
     }
     
     // MARK: UIViewController
@@ -80,39 +80,39 @@ class OLBookDownloadViewController: UIViewController, UIDocumentInteractionContr
         queryCoordinator?.updateUI()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear( animated )
         
         navigationController?.setNavigationBarHidden( false, animated: animated )
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear( animated )
     }
     
     // MARK: Utility
     
-    func updateHeading( heading: String ) {
+    func updateHeading( _ heading: String ) {
         
         workTitleView.text = heading
     }
     
-    func updateUI( eBookFile: OLEBookFile ) {
+    func updateUI( _ eBookFile: OLEBookFile ) {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
 
         switch( eBookFile.format ) {
             
             case kFileTypeDjVu:
-                downloadDjVuButton.enabled = true
+                downloadDjVuButton.isEnabled = true
                 break
             case kFileTypeTextPDF:
-                downloadPDFButton.enabled = true
+                downloadPDFButton.isEnabled = true
                 break
             case kFileTypeDjVuText:
-                downloadPlainTextButton.enabled = true
+                downloadPlainTextButton.isEnabled = true
             default:
                 break
         }

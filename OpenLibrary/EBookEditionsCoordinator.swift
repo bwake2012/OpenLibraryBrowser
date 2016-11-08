@@ -25,19 +25,19 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
     
     weak var tableVC: UITableViewController?
     
-    var workEditionsGetOperation: Operation?
-    var ebookItemGetOperation: Operation?
+    var workEditionsGetOperation: PSOperation?
+    var ebookItemGetOperation: PSOperation?
     
-    private lazy var fetchedResultsController: FetchedEBookItemController = {
+    fileprivate lazy var fetchedResultsController: FetchedEBookItemController = {
         
-        let fetchRequest = NSFetchRequest( entityName: OLEBookItem.entityName )
+        let fetchRequest = OLEBookItem.buildFetchRequest()
         
 //        let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
 //        let today = NSDate()
 //        let lastWeek = today.dateByAddingTimeInterval( -7 * secondsPerDay )
         
         fetchRequest.predicate =
-            NSPredicate( format: "workKey==%@", "\(self.workDetail.key)" )
+            NSPredicate( format: "workKey==%@", self.workDetail.key )
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "publish_date", ascending: false)]
         fetchRequest.fetchBatchSize = 100
@@ -60,8 +60,8 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
     var highWaterMark = 0
     
     init(
-        operationQueue: OperationQueue,
-        coreDataStack: CoreDataStack,
+        operationQueue: PSOperationQueue,
+        coreDataStack: OLDataStack,
         workDetail: OLWorkDetail,
         editionKeys: [String],
         tableVC: UITableViewController
@@ -79,12 +79,12 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         return fetchedResultsController.sections?.count ?? 0
     }
     
-    func numberOfRowsInSection( section: Int ) -> Int {
+    func numberOfRowsInSection( _ section: Int ) -> Int {
         
         return fetchedResultsController.sections?[section].objects.count ?? 0
     }
     
-    func objectAtIndexPath( indexPath: NSIndexPath ) -> OLEBookItem? {
+    func objectAtIndexPath( _ indexPath: IndexPath ) -> OLEBookItem? {
         
         guard let sections = fetchedResultsController.sections else {
             assertionFailure("Sections missing")
@@ -93,7 +93,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         
         let section = sections[indexPath.section]
         guard indexPath.row < section.objects.count else {
-            assertionFailure( "row:\(indexPath.row) out of bounds" )
+            assertionFailure( "row:\((indexPath as NSIndexPath).row) out of bounds" )
             return nil
         }
         
@@ -111,7 +111,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
                             coreDataStack: coreDataStack
                         ) {
                             
-                            dispatch_async( dispatch_get_main_queue() ) {
+                            DispatchQueue.main.async {
                             
                                 item.matchingEdition()
                             }
@@ -124,18 +124,18 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         return item
     }
     
-    func didSelectItemAtIndexPath( indexPath: NSIndexPath ) -> Void {
+    func didSelectItemAtIndexPath( _ indexPath: IndexPath ) -> Void {
         
         guard let object = objectAtIndexPath( indexPath ) else { return }
         
         switch object.status {
             
             case "full access":
-                tableVC?.performSegueWithIdentifier( "EbookEditionTableViewCell", sender: tableVC )
+                tableVC?.performSegue( withIdentifier: "EbookEditionTableViewCell", sender: tableVC )
                 break
             
             case "lendable":
-                if let url = NSURL( string: object.itemURL ) {
+                if let url = URL( string: object.itemURL ) {
                     showLinkedWebSite( tableVC!, url: url )
                 }
                 break
@@ -149,7 +149,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         }
     }
     
-    func displayToCell( cell: EbookEditionTableViewCell, indexPath: NSIndexPath ) -> OLEBookItem? {
+    @discardableResult func displayToCell( _ cell: EbookEditionTableViewCell, indexPath: IndexPath ) -> OLEBookItem? {
         
         guard let result = objectAtIndexPath( indexPath ) else { return nil }
         
@@ -175,7 +175,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
     func updateUI() {
         
         do {
-            NSFetchedResultsController.deleteCacheWithName( kEBookEditionsCache )
+//            NSFetchedResultsController< OLEBookItem >.deleteCache( withName: kEBookEditionsCache )
             try fetchedResultsController.performFetch()
         }
         catch {
@@ -184,7 +184,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
     }
     
     
-    func newQuery( userInitiated: Bool, refreshControl: UIRefreshControl? ) {
+    func newQuery( _ userInitiated: Bool, refreshControl: UIRefreshControl? ) {
         
         guard libraryIsReachable( tattle: false ) else {
             
@@ -203,7 +203,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
                     
                     [weak self] in
                     
-                    dispatch_async( dispatch_get_main_queue() ) {
+                    DispatchQueue.main.async {
                             
                         if let strongSelf = self {
                         
@@ -219,7 +219,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         }
     }
     
-    func refreshQuery( refreshControl: UIRefreshControl? ) {
+    func refreshQuery( _ refreshControl: UIRefreshControl? ) {
         
         newQuery( true, refreshControl: refreshControl )
     }
@@ -234,7 +234,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
 //    }
     
     // MARK: SearchResultsUpdater
-    func updateResults(searchResults: SearchResults) -> Void {
+    func updateResults(_ searchResults: SearchResults) -> Void {
         
         self.searchResults = searchResults
         self.highWaterMark = min( searchResults.numFound, searchResults.start + searchResults.pageSize )
@@ -245,12 +245,12 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         updateFooter()
     }
     
-    private func updateHeader( string: String = "" ) {
+    fileprivate func updateHeader( _ string: String = "" ) {
         
         updateTableHeader( tableVC?.tableView, text: string )
     }
     
-    private func updateFooter( text: String = "" ) -> Void {
+    fileprivate func updateFooter( _ text: String = "" ) -> Void {
         
         highWaterMark = fetchedResultsController.count
         searchResults = SearchResults(start: 0, numFound: highWaterMark, pageSize: kPageSize )
@@ -259,7 +259,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
     }
     
     // MARK: FetchedResultsControllerDelegate
-    func fetchedResultsControllerDidPerformFetch(controller: FetchedEBookItemController) {
+    func fetchedResultsControllerDidPerformFetch(_ controller: FetchedEBookItemController) {
         
         if 0 == controller.count {
             
@@ -273,47 +273,47 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         }
     }
 
-    func fetchedResultsControllerWillChangeContent( controller: FetchedEBookItemController ) {
+    func fetchedResultsControllerWillChangeContent( _ controller: FetchedEBookItemController ) {
         tableVC?.tableView.beginUpdates()
     }
     
-    func fetchedResultsControllerDidChangeContent( controller: FetchedEBookItemController ) {
+    func fetchedResultsControllerDidChangeContent( _ controller: FetchedEBookItemController ) {
         tableVC?.tableView.endUpdates()
     }
     
-    func fetchedResultsController( controller: FetchedEBookItemController,
+    func fetchedResultsController( _ controller: FetchedEBookItemController,
                                    didChangeObject change: FetchedResultsObjectChange< OLEBookItem > ) {
         switch change {
-        case let .Insert(_, indexPath):
-            tableVC?.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        case let .insert(_, indexPath):
+            tableVC?.tableView.insertRows(at: [indexPath], with: .automatic)
             break
             
-        case let .Delete(_, indexPath):
-            tableVC?.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        case let .delete(_, indexPath):
+            tableVC?.tableView.deleteRows(at: [indexPath], with: .automatic)
             break
             
-        case let .Move(_, fromIndexPath, toIndexPath):
-            tableVC?.tableView.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
+        case let .move(_, fromIndexPath, toIndexPath):
+            tableVC?.tableView.moveRow(at: fromIndexPath, to: toIndexPath)
             
-        case let .Update(_, indexPath):
-            tableVC?.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        case let .update(_, indexPath):
+            tableVC?.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
     }
     
-    func fetchedResultsController(controller: FetchedEBookItemController,
+    func fetchedResultsController(_ controller: FetchedEBookItemController,
                                   didChangeSection change: FetchedResultsSectionChange< OLEBookItem >) {
         switch change {
-        case let .Insert(_, index):
-            tableVC?.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+        case let .insert(_, index):
+            tableVC?.tableView.insertSections(IndexSet(integer: index), with: .automatic)
             
-        case let .Delete(_, index):
-            tableVC?.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
+        case let .delete(_, index):
+            tableVC?.tableView.deleteSections(IndexSet(integer: index), with: .automatic)
         }
     }
     
     // MARK: install query coordinators
     
-    func installBookDownloadCoordinator( destVC: OLBookDownloadViewController ) -> Void {
+    func installBookDownloadCoordinator( _ destVC: OLBookDownloadViewController ) -> Void {
         
         guard let sourceVC = tableVC else { return }
         
@@ -321,7 +321,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         
         guard let object = objectAtIndexPath( indexPath ) else { return }
         
-        guard let itemURL = NSURL( string: object.itemURL ) else { assert( false ); return }
+        guard let itemURL = URL( string: object.itemURL ) else { assert( false ); return }
         
         guard let title = object.editionDetail?.title else { assert( false ); return }
         
@@ -338,19 +338,19 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
 
 extension EBookEditionsCoordinator: SFSafariViewControllerDelegate {
     
-    func showLinkedWebSite( vc: UIViewController, url: NSURL? ) {
+    func showLinkedWebSite( _ vc: UIViewController, url: URL? ) {
         
         if let url = url {
-            let webVC = SFSafariViewController( URL: url )
+            let webVC = SFSafariViewController( url: url )
             webVC.delegate = self
-            vc.presentViewController( webVC, animated: true, completion: nil )
+            vc.present( webVC, animated: true, completion: nil )
         }
     }
     
     // MARK: SFSafariViewControllerDelegate
-    func safariViewControllerDidFinish(controller: SFSafariViewController) {
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         
-        controller.dismissViewControllerAnimated( true, completion: nil )
+        controller.dismiss( animated: true, completion: nil )
     }
     
 }

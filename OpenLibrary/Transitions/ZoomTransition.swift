@@ -10,23 +10,23 @@ import UIKit
 
 extension UIView {
     
-    func dt_takeSnapshot( xOffset: CGFloat, yOffset: CGFloat ) -> UIImage
+    func dt_takeSnapshot( _ xOffset: CGFloat, yOffset: CGFloat ) -> UIImage
     {
         // Use pre iOS-7 snapshot API since we need to render views that are off-screen.
         // iOS 7 snapshot API allows us to snapshot only things on screen
-        UIGraphicsBeginImageContextWithOptions( self.bounds.size, self.opaque, 0 )
+        UIGraphicsBeginImageContextWithOptions( self.bounds.size, self.isOpaque, 0 )
         if let ctx = UIGraphicsGetCurrentContext() {
             
             if xOffset != 0 || yOffset != 0 {
-                CGContextTranslateCTM( ctx, -xOffset, -yOffset )
+                ctx.translateBy(x: -xOffset, y: -yOffset )
             }
 
-            self.layer.renderInContext( ctx )
+            self.layer.render( in: ctx )
         }
         let snapshot = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return snapshot;
+        return snapshot!;
     }
     
     func dt_takeSnapshot() -> UIImage {
@@ -40,10 +40,10 @@ extension UIView {
 
 protocol ZoomTransitionGestureTarget {
     
-    func handlePinch( gestureRecognizer: UIPinchGestureRecognizer ) -> Void
-    func handleEdgePan( gestureRecognizer: UIScreenEdgePanGestureRecognizer ) -> Void
+    func handlePinch( _ gestureRecognizer: UIPinchGestureRecognizer ) -> Void
+    func handleEdgePan( _ gestureRecognizer: UIScreenEdgePanGestureRecognizer ) -> Void
     
-    func addTransitionGesturesToView( view: UIView )
+    func addTransitionGesturesToView( _ view: UIView )
 }
 
 // MARK - base class for zoom transitions holds common data and utility functions
@@ -52,12 +52,12 @@ class ZoomTransition: UIPercentDrivenInteractiveTransition, UIViewControllerAnim
 
     var sourceView: UIView?
     var operation: UINavigationControllerOperation
-    var transitionDuration = NSTimeInterval( 0.3 )
+    var transitionDuration = TimeInterval( 0.3 )
     
     var parent: UINavigationController
     var interactive = false
     
-    var transitionBackgroundColor = UIColor.whiteColor()
+    var transitionBackgroundColor = UIColor.white
     
     var startScale = CGFloat( 1.0 )
     var shouldCompleteTransition = true
@@ -74,21 +74,21 @@ class ZoomTransition: UIPercentDrivenInteractiveTransition, UIViewControllerAnim
         assert( navigationController.delegate is NavigationControllerDelegate )
     }
     
-    func animateTransition( transitionContext: UIViewControllerContextTransitioning ) -> Void {
+    func animateTransition( using transitionContext: UIViewControllerContextTransitioning ) -> Void {
     }
     
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         
         return self.transitionDuration
     }    
 
-    func animationEnded( transitionCompleted: Bool ) {
+    func animationEnded( _ transitionCompleted: Bool ) {
         
         if let ncd = self.parent.delegate as? NavigationControllerDelegate {
         
-            if transitionCompleted && .Pop == self.operation {
+            if transitionCompleted && .pop == self.operation {
                 
-                    ncd.popZoomTransition()
+                _ = ncd.popZoomTransition()
 
             }
         }
@@ -100,40 +100,40 @@ class ZoomTransition: UIPercentDrivenInteractiveTransition, UIViewControllerAnim
 
 extension ZoomTransition: ZoomTransitionGestureTarget {
     
-    func addTransitionGesturesToView( view: UIView ) {
+    func addTransitionGesturesToView( _ view: UIView ) {
         
 //        let pinchRecognizer = UIPinchGestureRecognizer.init( target: self, action: #selector(ZoomTransition.handlePinch(_:)) )
 //        view.addGestureRecognizer( pinchRecognizer )
         
         let edgePanRecognizer =
         UIScreenEdgePanGestureRecognizer.init( target: self, action: #selector(ZoomTransition.handleEdgePan(_:)) )
-        edgePanRecognizer.edges = .Left
+        edgePanRecognizer.edges = .left
         view.addGestureRecognizer( edgePanRecognizer )
     }
     
     // MARK - pinch and edge pan gesture recognition handlers ported from LCZoomTransition
 
-    func handlePinch( gr: UIPinchGestureRecognizer ) -> Void {
+    func handlePinch( _ gr: UIPinchGestureRecognizer ) -> Void {
         
         let scale = gr.scale
         switch gr.state {
             
-        case .Began:
+        case .began:
             self.interactive = true
             self.startScale = scale
-            self.parent.popViewControllerAnimated( true )
+            self.parent.popViewController( animated: true )
             
-        case .Changed:
+        case .changed:
             let percent = 1.0 - scale / self.startScale
             self.shouldCompleteTransition = ( percent > 0.25 )
             
-            self.updateInteractiveTransition( percent <= 0.0 ? 0.0 : percent )
+            self.update( percent <= 0.0 ? 0.0 : percent )
             
-        case .Ended, .Cancelled:
-            if !self.shouldCompleteTransition || gr.state == .Cancelled {
-                self.cancelInteractiveTransition()
+        case .ended, .cancelled:
+            if !self.shouldCompleteTransition || gr.state == .cancelled {
+                self.cancel()
             } else {
-                self.finishInteractiveTransition()
+                self.finish()
             }
             self.interactive = false
             
@@ -141,27 +141,27 @@ extension ZoomTransition: ZoomTransitionGestureTarget {
         }
     }
     
-    func handleEdgePan( gr: UIScreenEdgePanGestureRecognizer ) -> Void {
+    func handleEdgePan( _ gr: UIScreenEdgePanGestureRecognizer ) -> Void {
         
-        let point = gr.translationInView( gr.view )
+        let point = gr.translation( in: gr.view )
         
         switch gr.state {
             
-        case .Began:
+        case .began:
             self.interactive = true
-            self.parent.popViewControllerAnimated( true )
+            self.parent.popViewController( animated: true )
             
-        case .Changed:
+        case .changed:
             let percent = point.x / gr.view!.frame.size.width
             self.shouldCompleteTransition = percent > 0.25
             
-            self.updateInteractiveTransition( percent <= 0.0 ? 0.0 : percent )
+            self.update( percent <= 0.0 ? 0.0 : percent )
             
-        case .Ended, .Cancelled:
-            if !self.shouldCompleteTransition || gr.state == .Cancelled {
-                self.cancelInteractiveTransition()
+        case .ended, .cancelled:
+            if !self.shouldCompleteTransition || gr.state == .cancelled {
+                self.cancel()
             } else {
-                self.finishInteractiveTransition()
+                self.finish()
             }
             self.interactive = false
             

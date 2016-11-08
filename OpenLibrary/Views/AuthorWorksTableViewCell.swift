@@ -13,9 +13,9 @@ class AuthorWorksTableViewCell: OLTableViewCell {
     @IBOutlet weak var workTitle: UILabel!
     @IBOutlet weak var workSubTitle: UILabel!
 
-    override func configure( tableView: UITableView, indexPath: NSIndexPath, key: String, data: OLManagedObject? ) {
+    override func configure( _ tableView: UITableView, indexPath: IndexPath, key: String, data: OLManagedObject? ) {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
         
         if let entry = data as? OLWorkDetail {
             

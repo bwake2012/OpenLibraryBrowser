@@ -13,10 +13,10 @@ import BNRCoreDataStack
 import PSOperations
 
 /// An `Operation` to parse Editions out of a query from OpenLibrary.
-class WorkEditionListParseOperation: Operation {
+class WorkEditionListParseOperation: PSOperation {
     
     let parentKey: String
-    let cacheFile: NSURL
+    let cacheFile: URL
     
     var editions = [String]()
     
@@ -30,7 +30,7 @@ class WorkEditionListParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( parentKey: String, cacheFile: NSURL ) {
+    init( parentKey: String, cacheFile: URL ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -46,7 +46,7 @@ class WorkEditionListParseOperation: Operation {
     }
     
     override func execute() {
-        guard let stream = NSInputStream(URL: cacheFile) else {
+        guard let stream = InputStream(url: cacheFile) else {
             finish()
             return
         }
@@ -58,7 +58,7 @@ class WorkEditionListParseOperation: Operation {
         }
         
         do {
-            if let json = try NSJSONSerialization.JSONObjectWithStream(stream, options: []) as? [[String: AnyObject]] {
+            if let json = try JSONSerialization.jsonObject(with: stream, options: []) as? [[String: AnyObject]] {
             
                 parse( json )
             }
@@ -71,7 +71,7 @@ class WorkEditionListParseOperation: Operation {
         }
     }
     
-    private func parse( resultSet: [[String: AnyObject]] ) {
+    fileprivate func parse( _ resultSet: [[String: AnyObject]] ) {
 
         let numFound = resultSet.count
 

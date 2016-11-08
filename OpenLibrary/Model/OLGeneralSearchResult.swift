@@ -11,26 +11,26 @@ import CoreData
 
 import BNRCoreDataStack
 
-class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
+class OLGeneralSearchResult: OLManagedObject {
 
     static let entityName = "GeneralSearchResult"
 
     // Insert code here to add functionality to your managed object subclass
-    lazy var language_names: [String] = {
+    var language_names: [String] {
         
         var names = [String]()
-        for code in self.language {
+        for code in language {
             
-            if let name = OLManagedObject.languageLookup["/languages/" + code] {
+            if let name = findLanguage( forKey: "/languages/" + code ) {
                 
                 names.append( name )
             }
         }
         
-        return names.sort()
-    }()
+        return names.sorted()
+    }
     
-    class func parseJSON(sequence: Int64, index: Int64, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLGeneralSearchResult? {
+    class func parseJSON(_ sequence: Int64, index: Int64, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLGeneralSearchResult? {
         
         guard let parsed = ParsedFromJSON( json: json ) else { return nil }
         
@@ -40,8 +40,8 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
         if nil == newObject {
             
             newObject =
-                NSEntityDescription.insertNewObjectForEntityForName(
-                    OLGeneralSearchResult.entityName, inManagedObjectContext: moc
+                NSEntityDescription.insertNewObject(
+                    forEntityName: OLGeneralSearchResult.entityName, into: moc
                 ) as? OLGeneralSearchResult
             
         }
@@ -51,15 +51,15 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
             newObject.sequence = sequence
             newObject.index = index
             
-            newObject.retrieval_date = NSDate()
+            newObject.retrieval_date = Date()
             
             newObject.populateObject( parsed )
             
             assert( parsed.author_key.count == parsed.author_name.count )
             for index in 0 ..< min( parsed.author_key.count, parsed.author_name.count ) {
                 
-                OLManagedObject.authorCache.setObject(
-                        parsed.author_name[index], forKey: parsed.author_key[index]
+                OLManagedObject.addAuthorToCache(
+                        parsed.author_key[index], authorName: parsed.author_name[index]
                     )
             }
             
@@ -77,12 +77,12 @@ class OLGeneralSearchResult: OLManagedObject, CoreDataModelable {
     
     override var imageType: String { return "b" }
     
-    override func localURL( size: String, index: Int = 0 ) -> NSURL {
+    override func localURL( _ size: String, index: Int = 0 ) -> URL {
 
         return super.localURL( firstImageID, size: size )
     }
     
-    func populateObject( parsed: OLGeneralSearchResult.ParsedFromJSON ) {
+    func populateObject( _ parsed: OLGeneralSearchResult.ParsedFromJSON ) {
         
         self.author_key = parsed.author_key
         self.author_name = parsed.author_name
@@ -355,7 +355,7 @@ extension OLGeneralSearchResult {
             // save provisional authors
             for authorIndex in 0 ..< min( self.author_key.count, self.author_name.count ) {
                 
-                OLAuthorDetail.saveProvisionalAuthor( authorIndex, parsed: self, moc: moc )
+                _ = OLAuthorDetail.saveProvisionalAuthor( authorIndex, parsed: self, moc: moc )
             }
 
             // do not save provisional editions
@@ -365,4 +365,13 @@ extension OLGeneralSearchResult {
         return workDetail
     }
 
+}
+
+extension OLGeneralSearchResult {
+    
+    class func buildFetchRequest() -> NSFetchRequest< OLGeneralSearchResult > {
+        
+        return NSFetchRequest( entityName: OLGeneralSearchResult.entityName )
+    }
+    
 }

@@ -8,12 +8,12 @@
 
 import CoreData
 
-import BNRCoreDataStack
+// import BNRCoreDataStack
 
 let kWorksPrefix = "/works/"
 let kWorkType    = "/type/work"
 
-class OLWorkDetail: OLManagedObject, CoreDataModelable {
+class OLWorkDetail: OLManagedObject {
 
     // MARK: Search Info
     struct SearchInfo {
@@ -40,7 +40,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         }
     }
 
-    private var ebook_item_cache = [OLEBookItem]()
+    fileprivate var ebook_item_cache = [OLEBookItem]()
     var ebook_items: [OLEBookItem] {
         
         get {
@@ -49,7 +49,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
                 if let moc = self.managedObjectContext {
                     
                     let items: [OLEBookItem]? = OLEBookItem.findObject( key, entityName: OLEBookItem.entityName, keyFieldName: "workKey", moc: moc )
-                    if let items = items where !items.isEmpty {
+                    if let items = items , !items.isEmpty {
                         
                         ebook_item_cache = items
                         has_fulltext = 1
@@ -61,7 +61,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         }
     }
 
-    class func parseJSON( parentKey: String, index: Int, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLWorkDetail? {
+    class func parseJSON( _ parentKey: String, index: Int, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLWorkDetail? {
         
         guard let parsed = ParsedFromJSON.fromJSON( json ) else { return nil }
             
@@ -70,8 +70,8 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         var newObject: OLWorkDetail?
         
         newObject =
-            NSEntityDescription.insertNewObjectForEntityForName(
-                OLWorkDetail.entityName, inManagedObjectContext: moc
+            NSEntityDescription.insertNewObject(
+                forEntityName: OLWorkDetail.entityName, into: moc
             ) as? OLWorkDetail
         
         if let newObject = newObject {
@@ -86,7 +86,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             if 0 <= index {
                 newObject.index = Int64( index )
             }
-            newObject.retrieval_date = NSDate()
+            newObject.retrieval_date = Date()
             
             newObject.populateObject( parsed )
         }
@@ -101,7 +101,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         if let moc = self.managedObjectContext {
             
             let items: [OLEBookItem]? = OLEBookItem.findObject( key, entityName: OLEBookItem.entityName, keyFieldName: "workKey", moc: moc )
-            if let items = items where !items.isEmpty {
+            if let items = items , !items.isEmpty {
                 
                 ebook_item_cache = items
                 has_fulltext = 1
@@ -148,17 +148,17 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
     
     override var imageType: String { return "b" }
     
-    override func imageID( index: Int ) -> Int {
+    override func imageID( _ index: Int ) -> Int {
         
         return index >= self.covers.count ? 0 : self.covers[index]
     }
     
-    override func localURL( size: String, index: Int = 0 ) -> NSURL {
+    override func localURL( _ size: String, index: Int = 0 ) -> URL {
         
         return super.localURL( self.covers[index], size: size )
     }
     
-    override func populateObject(parsed: OpenLibraryObject) {
+    override func populateObject(_ parsed: OpenLibraryObject) {
         
         if let parsed = parsed as? ParsedFromJSON {
             
@@ -207,7 +207,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         
         if !author_names.isEmpty {
             
-            let authorNames = author_names.joinWithSeparator( ", " )
+            let authorNames = author_names.joined( separator: ", " )
             deluxeData[0].append(
                 DeluxeData(
                         type: .heading,
@@ -218,15 +218,13 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         }
         
         if hasImage {
-            
-            let value = localURL( "M" ).absoluteString
-            let extraValue = localURL( "L", index: 0 ).absoluteString
+
             let deluxeItem =
                 DeluxeData(
                         type: .imageBook,
                         caption: String( firstImageID ),
-                        value: value,
-                        extraValue: extraValue
+                        value: localURL( "M" ).absoluteString,
+                        extraValue: localURL( "L", index: 0 ).absoluteString
                     )
             
             deluxeData.append( [deluxeItem] )
@@ -263,21 +261,21 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
         
         if !self.work_description.isEmpty {
             
-            let fancyOutput = fancyMarkdown.transform( self.work_description )
+            let fancyOutput = convertMarkdownToHTML( markdown: self.work_description )
             
             deluxeData.append( [DeluxeData( type: .html, caption: "Description", value: fancyOutput )] )
         }
         
         if !self.first_sentence.isEmpty {
             
-            let fancyOutput = fancyMarkdown.transform( self.first_sentence )
+            let fancyOutput = convertMarkdownToHTML( markdown: self.first_sentence )
             
             deluxeData.append( [DeluxeData( type: .html, caption: "First Sentence", value: fancyOutput )] )
         }
         
         if !self.notes.isEmpty {
             
-            let fancyOutput = fancyMarkdown.transform( self.notes )
+            let fancyOutput = convertMarkdownToHTML( markdown: self.notes )
             
             deluxeData.append( [DeluxeData( type: .html, caption: "Notes", value: fancyOutput )] )
         }
@@ -288,7 +286,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             
             if !self.subjects.isEmpty {
                 
-                let subjects = self.subjects.joinWithSeparator( ", " )
+                let subjects = self.subjects.joined( separator: ", " )
                 newData.append(
                     DeluxeData(
                         type: .block,
@@ -299,7 +297,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             }
             if !self.subject_people.isEmpty {
                 
-                let subjects = self.subject_people.joinWithSeparator( ", " )
+                let subjects = self.subject_people.joined( separator: ", " )
                 newData.append(
                     DeluxeData(
                         type: .block,
@@ -310,7 +308,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             }
             if !self.subject_places.isEmpty {
                 
-                let subjects = self.subject_places.joinWithSeparator( ", " )
+                let subjects = self.subject_places.joined( separator: ", " )
                 newData.append(
                     DeluxeData(
                         type: .block,
@@ -321,7 +319,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             }
             if !subject_times.isEmpty {
                 
-                let subjects = self.subject_times.joinWithSeparator( ", " )
+                let subjects = self.subject_times.joined( separator: ", " )
                 newData.append(
                     DeluxeData(
                         type: .block,
@@ -343,7 +341,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             
             for link in self.links {
                 
-                if let title = link["title"], url = link["url"] {
+                if let title = link["title"], let url = link["url"] {
                     newData.append( DeluxeData( type: .link, caption: title, value: url ) )
 //                    print( "\(title) \(url)" )
                 }
@@ -363,15 +361,13 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
                 
                 if 0 < covers[index] {
                     
-                    let value = localURL( "M", index: index ).absoluteString
-                    let extraValue = localURL( "L", index: index ).absoluteString
                     let deluxeItem =
                         DeluxeData(
-                            type: .imageBook,
-                            caption: String( covers[index] ),
-                            value: value,
-                            extraValue: extraValue
-                    )
+                                type: .imageBook,
+                                caption: String( covers[index] ),
+                                value: localURL( "M", index: index ).absoluteString,
+                                extraValue: localURL( "L", index: index ).absoluteString
+                            )
                     
                     deluxeData.append( [deluxeItem] )
                 }
@@ -383,10 +379,10 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
             }
         }
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         
-        dateFormatter.dateStyle = .MediumStyle
-        dateFormatter.timeStyle = .MediumStyle
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .medium
         
         var newData = [DeluxeData]()
         
@@ -396,7 +392,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
                     DeluxeData(
                         type: .inline,
                         caption: "Created",
-                        value: dateFormatter.stringFromDate( created )
+                        value: dateFormatter.string( from: created as Date )
                     )
                 )
         }
@@ -407,7 +403,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
                 DeluxeData(
                     type: .inline,
                     caption: "Last Modified",
-                    value: dateFormatter.stringFromDate( last_modified )
+                    value: dateFormatter.string( from: last_modified as Date )
                 )
             )
         }
@@ -432,7 +428,7 @@ class OLWorkDetail: OLManagedObject, CoreDataModelable {
                 DeluxeData(
                     type: .inline,
                     caption: "Retrieved",
-                    value: dateFormatter.stringFromDate( retrieval_date )
+                    value: dateFormatter.string( from: retrieval_date as Date )
                 )
             )
         
@@ -453,8 +449,8 @@ extension OLWorkDetail {
         
         // MARK: Properties.
         let key: String
-        let created: NSDate?
-        let last_modified: NSDate?
+        let created: Date?
+        let last_modified: Date?
         let revision: Int64
         let latest_revision: Int64
         let type: String
@@ -481,11 +477,11 @@ extension OLWorkDetail {
         
         // MARK: Initialization
         
-        class func fromJSON( json: [String: AnyObject] ) -> ParsedFromJSON? {
+        class func fromJSON( _ json: [String: AnyObject] ) -> ParsedFromJSON? {
             
-            guard let key = json["key"] as? String where !key.isEmpty else { return nil }
+            guard let key = json["key"] as? String , !key.isEmpty else { return nil }
             
-            guard let title = json["title"] as? String where !title.isEmpty else { return nil }
+            guard let title = json["title"] as? String , !title.isEmpty else { return nil }
             
             let subtitle = OpenLibraryObject.OLString( json["subtitle"] )
             
@@ -545,8 +541,8 @@ extension OLWorkDetail {
         
         init(
             key: String,
-            created: NSDate?,
-            last_modified: NSDate?,
+            created: Date?,
+            last_modified: Date?,
             revision: Int64,
             latest_revision: Int64,
             type: String,
@@ -604,7 +600,7 @@ extension OLWorkDetail {
 
 extension OLWorkDetail {
     
-    class func saveProvisionalWork( parsed: OLGeneralSearchResult, moc: NSManagedObjectContext ) -> OLWorkDetail? {
+    class func saveProvisionalWork( _ parsed: OLGeneralSearchResult, moc: NSManagedObjectContext ) -> OLWorkDetail? {
         
         var newObject: OLWorkDetail?
         
@@ -612,8 +608,8 @@ extension OLWorkDetail {
         if nil == newObject {
             
             newObject =
-                NSEntityDescription.insertNewObjectForEntityForName(
-                    OLWorkDetail.entityName, inManagedObjectContext: moc
+                NSEntityDescription.insertNewObject(
+                    forEntityName: OLWorkDetail.entityName, into: moc
                 ) as? OLWorkDetail
             
             if let newObject = newObject {
@@ -625,10 +621,10 @@ extension OLWorkDetail {
         return newObject
     }
     
-    func populateProvisional( parsed: OLGeneralSearchResult ) {
+    func populateProvisional( _ parsed: OLGeneralSearchResult ) {
         
-        self.retrieval_date = NSDate()
-        self.provisional_date = NSDate()
+        self.retrieval_date = Date()
+        self.provisional_date = Date()
         self.is_provisional = true
         
         self.has_fulltext = parsed.has_fulltext ? 1 : 0
@@ -673,7 +669,7 @@ extension OLWorkDetail {
         self.work_description = ""
     }
 
-    class func saveProvisionalWork( parsed: OLGeneralSearchResult.ParsedFromJSON, moc: NSManagedObjectContext ) -> OLWorkDetail? {
+    class func saveProvisionalWork( _ parsed: OLGeneralSearchResult.ParsedFromJSON, moc: NSManagedObjectContext ) -> OLWorkDetail? {
         
         var newObject: OLWorkDetail?
         
@@ -681,8 +677,8 @@ extension OLWorkDetail {
         if nil == newObject {
             
             newObject =
-                NSEntityDescription.insertNewObjectForEntityForName(
-                    OLWorkDetail.entityName, inManagedObjectContext: moc
+                NSEntityDescription.insertNewObject(
+                    forEntityName: OLWorkDetail.entityName, into: moc
                 ) as? OLWorkDetail
             
             if let newObject = newObject {
@@ -694,10 +690,10 @@ extension OLWorkDetail {
         return newObject
     }
     
-    func populateProvisional( parsed: OLGeneralSearchResult.ParsedFromJSON ) {
+    func populateProvisional( _ parsed: OLGeneralSearchResult.ParsedFromJSON ) {
         
-        self.retrieval_date = NSDate()
-        self.provisional_date = NSDate()
+        self.retrieval_date = Date()
+        self.provisional_date = Date()
         self.is_provisional = true
         
         self.has_fulltext = parsed.has_fulltext ? 1 : 0
@@ -744,3 +740,12 @@ extension OLWorkDetail {
     }
     
 }
+
+extension OLWorkDetail {
+    
+    class func buildFetchRequest() -> NSFetchRequest< OLWorkDetail > {
+        
+        return NSFetchRequest( entityName: OLWorkDetail.entityName )
+    }
+}
+

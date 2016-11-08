@@ -20,73 +20,73 @@ let pngMIMEType  = "image/png"
 let jpegMIMEType = "image/jpeg"
 let jpgMIMEType  = "image/jpg"
 
-extension NSURLSession {
+extension URLSession {
     
-    func mimeTypeDownloadTaskWithURL( mimeType: String, url: NSURL, completionHandler: ( NSURL?, NSURLResponse?, NSError? ) -> Void ) -> NSURLSessionDownloadTask {
+    func mimeTypeDownloadTaskWithURL( _ mimeType: String, url: URL, completionHandler: @escaping ( URL?, URLResponse?, Error? ) -> Void ) -> URLSessionDownloadTask {
         
-        let request = NSMutableURLRequest( URL: url )
+        let request = NSMutableURLRequest( url: url )
         request.setValue( mimeType, forHTTPHeaderField: httpHeaderAccept )
         
-        let task = NSURLSession.sharedSession().downloadTaskWithURL( url, completionHandler: completionHandler )
+        let task = URLSession.shared.downloadTask( with: url, completionHandler: completionHandler )
         
         return task
     }
     
-    func mimeTypeDataTaskWithURL( mimeType: String, url: NSURL, completionHandler: ( NSData?, NSURLResponse?, NSError? ) -> Void ) -> NSURLSessionDataTask {
+    func mimeTypeDataTaskWithURL( _ mimeType: String, url: URL, completionHandler: @escaping ( Data?, URLResponse?, Error? ) -> Void ) -> URLSessionDataTask {
         
-        let request = NSMutableURLRequest( URL: url )
+        let request = NSMutableURLRequest( url: url )
         request.setValue( mimeType, forHTTPHeaderField: httpHeaderAccept )
-        let task = NSURLSession.sharedSession().dataTaskWithRequest( request, completionHandler: completionHandler )
+        let task = URLSession.shared.dataTask( with: request as URLRequest, completionHandler: completionHandler )
 
         return task
     }
 
-    func jsonDownloadTaskWithURL( url: NSURL, completionHandler: ( NSURL?, NSURLResponse?, NSError? ) -> Void ) -> NSURLSessionDownloadTask {
+    func jsonDownloadTaskWithURL( _ url: URL, completionHandler: @escaping ( URL?, URLResponse?, Error? ) -> Void ) -> URLSessionDownloadTask {
         
         return mimeTypeDownloadTaskWithURL( jsonMIMEType, url: url, completionHandler: completionHandler )
     }
     
-    func jsonDataTaskWithURL( url: NSURL, completionHandler: ( NSData?, NSURLResponse?, NSError? ) -> Void ) -> NSURLSessionDataTask {
+    func jsonDataTaskWithURL( _ url: URL, completionHandler: @escaping ( Data?, URLResponse?, Error? ) -> Void ) -> URLSessionDataTask {
         
         return mimeTypeDataTaskWithURL( jsonMIMEType, url: url, completionHandler: completionHandler )
     }
 
-    func xmlDownloadTaskWithURL( url: NSURL, completionHandler: ( NSURL?, NSURLResponse?, NSError? ) -> Void ) -> NSURLSessionDownloadTask {
+    func xmlDownloadTaskWithURL( _ url: URL, completionHandler: @escaping ( URL?, URLResponse?, Error? ) -> Void ) -> URLSessionDownloadTask {
         
         return mimeTypeDownloadTaskWithURL( xmlMIMEType, url: url, completionHandler: completionHandler )
     }
     
-    func xmlDataTaskWithURL( url: NSURL, completionHandler: ( NSData?, NSURLResponse?, NSError? ) -> Void ) -> NSURLSessionDataTask {
+    func xmlDataTaskWithURL( _ url: URL, completionHandler: @escaping ( Data?, URLResponse?, Error? ) -> Void ) -> URLSessionDataTask {
         
         return mimeTypeDataTaskWithURL( xmlMIMEType, url: url, completionHandler: completionHandler )
     }
     
-    func htmlDownloadTaskWithURL( url: NSURL, completionHandler: ( NSURL?, NSURLResponse?, NSError? ) -> Void ) -> NSURLSessionDownloadTask {
+    func htmlDownloadTaskWithURL( _ url: URL, completionHandler: @escaping ( URL?, URLResponse?, Error? ) -> Void ) -> URLSessionDownloadTask {
         
         return mimeTypeDownloadTaskWithURL( htmlMIMEType, url: url, completionHandler: completionHandler )
     }
     
-    func htmlDataTaskWithURL( url: NSURL, completionHandler: ( NSData?, NSURLResponse?, NSError? ) -> Void ) -> NSURLSessionDataTask {
+    func htmlDataTaskWithURL( _ url: URL, completionHandler: @escaping ( Data?, URLResponse?, Error? ) -> Void ) -> URLSessionDataTask {
         
         return mimeTypeDataTaskWithURL( htmlMIMEType, url: url, completionHandler: completionHandler )
     }
     
-    func pngDownloadTaskWithURL( url: NSURL, completionHandler: ( NSURL?, NSURLResponse?, NSError? ) -> Void ) -> NSURLSessionDownloadTask {
+    func pngDownloadTaskWithURL( _ url: URL, completionHandler: @escaping ( URL?, URLResponse?, Error? ) -> Void ) -> URLSessionDownloadTask {
         
         return mimeTypeDownloadTaskWithURL( pngMIMEType, url: url, completionHandler: completionHandler )
     }
     
-    func pngDataTaskWithURL( url: NSURL, completionHandler: ( NSData?, NSURLResponse?, NSError? ) -> Void ) -> NSURLSessionDataTask {
+    func pngDataTaskWithURL( _ url: URL, completionHandler: @escaping ( Data?, URLResponse?, Error? ) -> Void ) -> URLSessionDataTask {
         
         return mimeTypeDataTaskWithURL( pngMIMEType, url: url, completionHandler: completionHandler )
     }
     
-    func jpgDownloadTaskWithURL( url: NSURL, completionHandler: ( NSURL?, NSURLResponse?, NSError? ) -> Void ) -> NSURLSessionDownloadTask {
+    func jpgDownloadTaskWithURL( _ url: URL, completionHandler: @escaping ( URL?, URLResponse?, Error? ) -> Void ) -> URLSessionDownloadTask {
         
         return mimeTypeDownloadTaskWithURL( jpgMIMEType, url: url, completionHandler: completionHandler )
     }
     
-    func jpgDataTaskWithURL( url: NSURL, completionHandler: ( NSData?, NSURLResponse?, NSError? ) -> Void ) -> NSURLSessionDataTask {
+    func jpgDataTaskWithURL( _ url: URL, completionHandler: @escaping ( Data?, URLResponse?, Error? ) -> Void ) -> URLSessionDataTask {
         
         return mimeTypeDataTaskWithURL( jpgMIMEType, url: url, completionHandler: completionHandler )
     }

@@ -13,7 +13,7 @@ import BNRCoreDataStack
 import PSOperations
 
 /// An `Operation` to parse works out of a query from OpenLibrary.
-class SaveObjectsOperation: Operation {
+class SaveObjectsOperation: PSOperation {
     
     let objectID: NSManagedObjectID
     let context: NSManagedObjectContext
@@ -26,7 +26,7 @@ class SaveObjectsOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( objectID: NSManagedObjectID, coreDataStack: CoreDataStack ) {
+    init( objectID: NSManagedObjectID, coreDataStack: OLDataStack ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -45,11 +45,11 @@ class SaveObjectsOperation: Operation {
     override func execute() {
 
         let objectID = self.objectID
-        context.performBlock {
+        context.perform {
             
-            if let object = self.context.objectWithID( objectID ) as? OLGeneralSearchResult {
+            if let object = self.context.object( with: objectID ) as? OLGeneralSearchResult {
                 
-                object.saveProvisionalObjects()
+                _ = object.saveProvisionalObjects()
 
                 let error = self.saveContext()
                 
@@ -68,7 +68,7 @@ class SaveObjectsOperation: Operation {
         - note: This method returns an `NSError?` because it will be immediately
             passed to the `finishWithError()` method, which accepts an `NSError?`.
     */
-    private func saveContext() -> NSError? {
+    fileprivate func saveContext() -> NSError? {
         var error: NSError?
 
         do {

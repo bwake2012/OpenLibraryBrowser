@@ -13,9 +13,9 @@ class TitleSearchResultTableViewCell: OLTableViewCell {
     @IBOutlet weak var titleText: UILabel!
     @IBOutlet weak var subtitleText: UILabel!
     
-    override func configure( tableView: UITableView, indexPath: NSIndexPath, key: String, data: OLManagedObject? ) {
+    override func configure( _ tableView: UITableView, indexPath: IndexPath, key: String, data: OLManagedObject? ) {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
         
         if let r = data as? OLTitleSearchResult {
             titleText.text = "\(r.title)"

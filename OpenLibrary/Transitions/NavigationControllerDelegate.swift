@@ -16,7 +16,7 @@ class NavigationControllerDelegate: NSObject, UINavigationControllerDelegate {
     
     var transitionStack = [ZoomTransition]()
     
-    static func addDelegateToNavController( navController: UINavigationController ) -> UINavigationControllerDelegate? {
+    static func addDelegateToNavController( _ navController: UINavigationController ) -> UINavigationControllerDelegate? {
     
         let delegate = navController.delegate
 //        assert( nil == delegate || delegate is NavigationControllerDelegate )
@@ -43,7 +43,7 @@ class NavigationControllerDelegate: NSObject, UINavigationControllerDelegate {
     
     // MARK: transition stack maintenance
     
-    func pushZoomTransition( zoomTransition: ZoomTransition ) {
+    func pushZoomTransition( _ zoomTransition: ZoomTransition ) {
         
         self.transitionStack.append( zoomTransition )
         
@@ -75,12 +75,12 @@ class NavigationControllerDelegate: NSObject, UINavigationControllerDelegate {
     
     // MARK: UINavigationControllerDelegate
 
-    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
         assert( !transitionStackEmpty() )
         
         let transition = self.currentZoomTransition()
-        if .Pop == operation {
+        if .pop == operation {
             
             transition.operation = operation
             
@@ -94,7 +94,7 @@ class NavigationControllerDelegate: NSObject, UINavigationControllerDelegate {
         return transition
     }
     
-    func navigationController( navigationController: UINavigationController, interactionControllerForAnimationController animationController: UIViewControllerAnimatedTransitioning ) -> UIViewControllerInteractiveTransitioning? {
+    func navigationController( _ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning ) -> UIViewControllerInteractiveTransitioning? {
         
         let zoomTransition = currentZoomTransition()
             

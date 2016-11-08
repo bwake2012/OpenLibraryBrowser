@@ -10,7 +10,7 @@ import UIKit
 
 extension UIImage {
     
-    func aspectFitSize( fitSize: CGSize ) -> CGSize {
+    func aspectFitSize( _ fitSize: CGSize ) -> CGSize {
 
         let resizeWidth  = ( self.size.width  * fitSize.height ) / self.size.height
         let resizeHeight = ( self.size.height * fitSize.width  ) / self.size.width
@@ -23,7 +23,7 @@ extension UIImage {
         return reSize
     }
     
-    func aspectFitRect( fitRect: CGRect ) -> CGRect {
+    func aspectFitRect( _ fitRect: CGRect ) -> CGRect {
         
         let reSize = self.aspectFitSize( fitRect.size )
         
@@ -57,10 +57,10 @@ class AspectRatioImageView: UIImageView {
                 }
 
                 for constraint in constraints {
-                    if constraint.firstAttribute == .Width && constraint.secondAttribute == .NotAnAttribute {
+                    if constraint.firstAttribute == .width && constraint.secondAttribute == .notAnAttribute {
                         constraint.constant = resize.width
                     }
-                    if constraint.firstAttribute == .Height && constraint.secondAttribute == .NotAnAttribute {
+                    if constraint.firstAttribute == .height && constraint.secondAttribute == .notAnAttribute {
                         constraint.constant = resize.height
                     }
                 }

@@ -37,7 +37,7 @@ import UIKit
 
 class WindowShadeTransition: ZoomTransition {
     
-    private struct animaSegment {
+    fileprivate struct animaSegment {
         
         let view: UIView
         let fadeView: UIView
@@ -56,7 +56,7 @@ class WindowShadeTransition: ZoomTransition {
             }
         }
         
-        func setParentView( parentView: UIView ) {
+        func setParentView( _ parentView: UIView ) {
             
             parentView.addSubview( view )
             parentView.addSubview( fadeView )
@@ -74,22 +74,20 @@ class WindowShadeTransition: ZoomTransition {
     // create either the top or bottom image and fade views plus the ending frame
     // set the initial alpha value on the fade view
     // if the view is zero height or less return nil
-    private func animaViews( viewFrame: CGRect, viewSnapshot: UIImage ) -> animaSegment? {
+    fileprivate func animaViews( _ viewFrame: CGRect, viewSnapshot: UIImage ) -> animaSegment? {
     
         guard 0 < viewFrame.height && 0 < viewFrame.width else { return nil }
             
-        let viewSnapshotRef = viewSnapshot.CGImage
-        let scale = UIScreen.mainScreen().scale
+        guard let viewSnapshotRef = viewSnapshot.cgImage else { return nil }
+        let scale = UIScreen.main.scale
     
         let imageRef =
-            CGImageCreateWithImageInRect(
-                    viewSnapshotRef,
-                    CGRect(
+            viewSnapshotRef.cropping(to: CGRect(
                         x: viewFrame.origin.x * scale, y: viewFrame.origin.y * scale,
                         width: viewFrame.size.width * scale, height: viewFrame.size.height * scale
                     )
                 )
-        let image = UIImage.init( CGImage: imageRef!, scale: scale, orientation: .Up )
+        let image = UIImage.init( cgImage: imageRef!, scale: scale, orientation: .up )
         //          CGImageRelease( bottomImageRef )
         
         // create views for the top or bottom part of the master view
@@ -102,44 +100,41 @@ class WindowShadeTransition: ZoomTransition {
     }
     
     // MARK: Overrides
-    override func animateTransition( transitionContext: UIViewControllerContextTransitioning ) -> Void {
+    override func animateTransition( using transitionContext: UIViewControllerContextTransitioning ) -> Void {
 
-        guard let fromVC = transitionContext.viewControllerForKey( UITransitionContextFromViewControllerKey ) else {
+        guard let fromVC = transitionContext.viewController( forKey: UITransitionContextViewControllerKey.from ) else {
             
             print( "transitionContext to VC is missing!" )
             return
         }
-        guard let toVC = transitionContext.viewControllerForKey( UITransitionContextToViewControllerKey ) else {
+        guard let toVC = transitionContext.viewController( forKey: UITransitionContextViewControllerKey.to ) else {
             
             print( "transitionContext from VC is missing!" )
             return
         }
         
-        guard let inView = transitionContext.containerView() else {
-            
-            print( "transitionContext containerView is missing!" )
-            return
-        }
-        let masterVC = self.operation == .Push ? fromVC : toVC
-        let detailVC = self.operation == .Push ? toVC   : fromVC
-        let masterView = masterVC.view
-        let masterFrame = masterView.frame
-        let detailView = detailVC.view
-        let detailFrame = detailView.frame
-                
-        let finalFrame = transitionContext.finalFrameForViewController( toVC )
+        let inView = transitionContext.containerView
         
-        if self.operation == .Push {
+        let masterVC = self.operation == .push ? fromVC : toVC
+        let detailVC = self.operation == .push ? toVC   : fromVC
+        let masterView = masterVC.view
+        let masterFrame = masterView!.frame
+        let detailView = detailVC.view
+        let detailFrame = detailView!.frame
+                
+        let finalFrame = transitionContext.finalFrame( for: toVC )
+        
+        if self.operation == .push {
             detailView!.frame = finalFrame
         } else {
-            masterView.frame = finalFrame
+            masterView?.frame = finalFrame
         }
         
         let isNavBarVisible =
-            ( .Push == self.operation ) ? ( 0 != masterFrame.origin.y ) : ( 0 != detailFrame.origin.y )
+            ( .push == self.operation ) ? ( 0 != masterFrame.origin.y ) : ( 0 != detailFrame.origin.y )
 
-        let initialAlpha = CGFloat( self.operation == .Push ? 0.0 : 1.0 )
-        let finalAlpha   = CGFloat( self.operation == .Push ? 1.0 : 0.0 )
+        let initialAlpha = CGFloat( self.operation == .push ? 0.0 : 1.0 )
+        let finalAlpha   = CGFloat( self.operation == .push ? 1.0 : 0.0 )
         
         // add the to VC's view to the intermediate view (where it has to be at the
         // end of the transition anyway). We'll hide it during the transition with
@@ -149,7 +144,7 @@ class WindowShadeTransition: ZoomTransition {
         
         // if the detail view is a UIScrollView (eg a UITableView) then
         // get its content offset so we get the snapshot correctly
-        var detailContentOffset = CGPointMake( 0.0, 0.0 )
+        var detailContentOffset = CGPoint( x: 0.0, y: 0.0 )
         if let dv = detailView as? UIScrollView {
             
             detailContentOffset = dv.contentOffset
@@ -158,7 +153,7 @@ class WindowShadeTransition: ZoomTransition {
         // if the master view is a UIScrollView (eg a UITableView) then
         // get its content offset so we get the snapshot correctly and
         // so we can correctly calculate the split point for the zoom effect
-        var masterContentOffset = CGPointMake( 0.0, 0.0 )
+        var masterContentOffset = CGPoint( x: 0.0, y: 0.0 )
         if let mv = masterView as? UIScrollView {
             
             masterContentOffset = mv.contentOffset
@@ -167,12 +162,12 @@ class WindowShadeTransition: ZoomTransition {
         // Take a snapshot of the detail view
         // use renderInContext: instead of the new iOS7 snapshot API as that
         // only works for views that are currently visible in the view hierarchy
-        let detailSnapshot = detailView.dt_takeSnapshot( 0, yOffset: detailContentOffset.y )
+        let detailSnapshot = detailView!.dt_takeSnapshot( 0, yOffset: detailContentOffset.y )
         
         // take a snapshot of the master view
         // use renderInContext: instead of the new iOS7 snapshot API as that
         // only works for views that are currently visible in the view hierarchy
-        let masterSnapshot = masterView.dt_takeSnapshot( 0, yOffset: masterContentOffset.y )
+        let masterSnapshot = masterView!.dt_takeSnapshot( 0, yOffset: masterContentOffset.y )
         
         let topBarsHeight = masterVC.topLayoutGuide.length
         let topBarsFrame =
@@ -181,9 +176,9 @@ class WindowShadeTransition: ZoomTransition {
                         size: CGSize( width: masterFrame.width, height: topBarsHeight )
                     )
         var animaTopBars =
-            animaViews( topBarsFrame, viewSnapshot: .Push == self.operation ? masterSnapshot : detailSnapshot )
+            animaViews( topBarsFrame, viewSnapshot: .push == self.operation ? masterSnapshot : detailSnapshot )
         
-        let movingFrame = CGRect( origin: CGPointZero, size: finalFrame.size )
+        let movingFrame = CGRect( origin: CGPoint.zero, size: finalFrame.size )
         
         var animaMaster =
             animaViews( isNavBarVisible ? movingFrame : masterFrame, viewSnapshot: masterSnapshot )
@@ -196,8 +191,8 @@ class WindowShadeTransition: ZoomTransition {
                 )
         let frameDown = finalFrame
         
-        let frameStart = .Push == self.operation ? frameUp   : frameDown
-        let frameEnd   = .Push == self.operation ? frameDown : frameUp
+        let frameStart = .push == self.operation ? frameUp   : frameDown
+        let frameEnd   = .push == self.operation ? frameDown : frameUp
         
         // create a background view so that we don't see the actual VC
         // views anywhere - start with a blank canvas.
@@ -219,12 +214,12 @@ class WindowShadeTransition: ZoomTransition {
         animaTopBars?.frame = topBarsFrame
         animaTopBars?.fadeView.alpha = initialAlpha
         
-        let totalDuration = self.transitionDuration( transitionContext ) // * 10
+        let totalDuration = self.transitionDuration( using: transitionContext ) // * 10
         
-        UIView.animateKeyframesWithDuration(
-            totalDuration,
+        UIView.animateKeyframes(
+            withDuration: totalDuration,
             delay: 0,
-            options: .CalculationModeLinear,
+            options: UIViewKeyframeAnimationOptions(),
             animations: { () -> Void in
                 
                 // move the master view top and bottom views (and their
@@ -235,7 +230,7 @@ class WindowShadeTransition: ZoomTransition {
                 // want the fade out animation to happen near the end of the transition
                 // and the fade in animation to happen at the start of the transition
                 let fadeStartTime = 0.8 // self.operation == .Push ? 0.8 : 0.0
-                UIView.addKeyframeWithRelativeStartTime( fadeStartTime, relativeDuration: 0.2 ) { () -> Void in
+                UIView.addKeyframe( withRelativeStartTime: fadeStartTime, relativeDuration: 0.2 ) { () -> Void in
                     
                     animaTopBars?.fadeView.alpha = finalAlpha
                 }
@@ -251,7 +246,7 @@ class WindowShadeTransition: ZoomTransition {
                 animaDetail?.removeFromSuperview()
                 animaTopBars?.removeFromSuperview()
 
-                if transitionContext.transitionWasCancelled() {
+                if transitionContext.transitionWasCancelled {
                     
                     // we added this at the start, so we have to remove it
                     // if the transition is canccelled

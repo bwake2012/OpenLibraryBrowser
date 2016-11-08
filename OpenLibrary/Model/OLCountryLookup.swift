@@ -10,9 +10,9 @@ import Foundation
 
 class OLCountryLookup {
     
-    private var countryLookup: [String: String]?
+    fileprivate var countryLookup: [String: String]?
     
-    private func parse( json: [String: AnyObject] ) -> [String: String]? {
+    fileprivate func parse( _ json: [String: AnyObject] ) -> [String: String]? {
     
         guard let countries = json["countries"] as? [String: AnyObject] else {
             return nil
@@ -46,8 +46,8 @@ class OLCountryLookup {
                 
                 if var code = code {
                     
-                    code = code.stringByTrimmingCharactersInSet( NSCharacterSet.whitespaceAndNewlineCharacterSet() )
-                    code = code.lowercaseString
+                    code = code.trimmingCharacters( in: CharacterSet.whitespacesAndNewlines )
+                    code = code.lowercased()
                     
                     countryLookup[code] = nameText
                 }
@@ -59,14 +59,14 @@ class OLCountryLookup {
     
     init() {
 
-        let mainBundle = NSBundle.mainBundle()
-        guard let countriesPath = mainBundle.pathForResource( "countries", ofType: "json" ) else {
+        let mainBundle = Bundle.main
+        guard let countriesPath = mainBundle.path( forResource: "countries", ofType: "json" ) else {
             
             fatalError( "OLCountryLookup could not retrieve countries.json" )
         }
         
-        let url = NSURL.fileURLWithPath( countriesPath )
-        guard let stream = NSInputStream( URL: url ) else {
+        let url = URL( fileURLWithPath: countriesPath )
+        guard let stream = InputStream( url: url ) else {
 
             fatalError( "OLCountryLookup could not open \(url.absoluteString)" )
         }
@@ -78,7 +78,7 @@ class OLCountryLookup {
         }
         
         do {
-            if let json = try NSJSONSerialization.JSONObjectWithStream(stream, options: []) as? [String: AnyObject] {
+            if let json = try JSONSerialization.jsonObject(with: stream, options: []) as? [String: AnyObject] {
                 
                 countryLookup = parse( json )
                 if nil == countryLookup {
@@ -105,8 +105,8 @@ class OLCountryLookup {
             return "***** Country Lookup not initialized. *****"
         }
         
-        var code = code.stringByTrimmingCharactersInSet( NSCharacterSet.whitespaceAndNewlineCharacterSet() )
-        code = code.lowercaseString
+        var code = code.trimmingCharacters( in: CharacterSet.whitespacesAndNewlines )
+        code = code.lowercased()
         
         if var name = countryLookup[code] {
             
@@ -129,7 +129,7 @@ class OLCountryLookup {
                             break
                     }
                     
-                    if let countryName = countryName where countryName != name {
+                    if let countryName = countryName , countryName != name {
                         
                         name += ", " + countryName
                     }

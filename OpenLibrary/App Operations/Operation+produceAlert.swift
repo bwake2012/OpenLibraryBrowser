@@ -16,7 +16,7 @@ private var extensionPropertiesKey: UInt8 = 42
 
 extension GroupOperation {
     
-    private class ExtensionProperties {
+    fileprivate class ExtensionProperties {
         
         var hasProducedAlert: Bool = false
         
@@ -26,7 +26,7 @@ extension GroupOperation {
         }
     }
 
-    private var extensionProperties: ExtensionProperties {
+    fileprivate var extensionProperties: ExtensionProperties {
         
         get {
             
@@ -44,7 +44,7 @@ extension GroupOperation {
         set { extensionProperties.hasProducedAlert = newValue }
     }
     
-    func produceAlert( error: NSError ) {
+    func produceAlert( _ error: NSError ) {
         /*
          We only want to show the first error, since subsequent errors might
          be caused by the first.
@@ -58,11 +58,11 @@ extension GroupOperation {
         let errorReason = (error.domain, error.code, error.userInfo[OperationConditionKey] as? String)
         
         // These are examples of errors for which we might choose to display an error to the user
-        let failedReachability = (OperationErrorDomain, OperationErrorCode.ConditionFailed, ReachabilityCondition.name)
+        let failedReachability = (OperationErrorDomain, OperationErrorCode.conditionFailed, ReachabilityCondition.name)
         
         let failedJSON = (NSCocoaErrorDomain, NSPropertyListReadCorruptError, nil as String?)
         
-        let failedServerError = (OperationErrorDomain, OperationErrorCode.ExecutionFailed.rawValue, nil as String?)
+        let failedServerError = (OperationErrorDomain, OperationErrorCode.executionFailed.rawValue, nil as String?)
         
         let failedOther = (NSURLErrorDomain, -1200, nil as String?)
         
@@ -83,7 +83,7 @@ extension GroupOperation {
             
         case failedServerError:
             guard let desiredMIMEType = error.userInfo[mimeTypeDesiredKey] as? [String],
-                  let returnedMIMEType = error.userInfo[mimeTypeReturnedKey] as? String where
+                  let returnedMIMEType = error.userInfo[mimeTypeReturnedKey] as? String ,
                   !desiredMIMEType.contains( returnedMIMEType ) else {
             
                 alert = AlertOperation()
@@ -99,9 +99,9 @@ extension GroupOperation {
                 if let name = name {
                     html?.operationName = name
                 }
-                if let data = error.userInfo[dataKey] as? NSData {
+                if let data = error.userInfo[dataKey] as? Data {
                     html?.data = data
-                } else if let url = error.userInfo[streamKey] as? NSURL {
+                } else if let url = error.userInfo[streamKey] as? URL {
                     html?.url = url
                 }
             }

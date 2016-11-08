@@ -15,25 +15,25 @@ class EbookEditionTableViewCell: OLTableViewCell {
     @IBOutlet weak var authorName: UILabel!
     @IBOutlet weak var eBookStatus: UILabel!
 
-    func configure( tableView: UITableView, key: String, eBookStatusText: String, data: OLManagedObject? ) {
+    func configure( _ tableView: UITableView, key: String, eBookStatusText: String, data: OLManagedObject? ) {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
         
         if let entry = data as? OLEditionDetail {
             
             let trimmedPrefix =
-                entry.title_prefix.stringByTrimmingCharactersInSet(
-                        NSCharacterSet.whitespaceAndNewlineCharacterSet()
+                entry.title_prefix.trimmingCharacters(
+                        in: CharacterSet.whitespacesAndNewlines
                     )
             
             let trimmedTitle =
-                entry.title.stringByTrimmingCharactersInSet(
-                        NSCharacterSet.whitespaceAndNewlineCharacterSet()
+                entry.title.trimmingCharacters(
+                        in: CharacterSet.whitespacesAndNewlines
                     )
             
             editionTitle.text =
-                ( trimmedPrefix + " " + trimmedTitle ).stringByTrimmingCharactersInSet(
-                        NSCharacterSet.whitespaceAndNewlineCharacterSet()
+                ( trimmedPrefix + " " + trimmedTitle ).trimmingCharacters(
+                        in: CharacterSet.whitespacesAndNewlines
                     )
 
             editionSubTitle.text = entry.subtitle
@@ -45,7 +45,7 @@ class EbookEditionTableViewCell: OLTableViewCell {
                 
             } else {
                 
-                authorName.text = entry.author_names.joinWithSeparator( ", " )
+                authorName.text = entry.author_names.joined( separator: ", " )
             }
             
             eBookStatus.text = eBookStatusText

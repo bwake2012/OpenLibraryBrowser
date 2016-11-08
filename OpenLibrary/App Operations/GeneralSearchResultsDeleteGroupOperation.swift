@@ -16,11 +16,11 @@ class GeneralSearchResultsDeleteGroupOperation: GroupOperation {
     // MARK: Properties
     
     var deleteOperation: GeneralSearchResultsDeleteOperation?
-    let finishOperation: NSBlockOperation
+    let finishOperation: PSBlockOperation
    
 //    private var hasProducedAlert = false
     
-    private let coreDataStack: CoreDataStack
+    fileprivate let coreDataStack: OLDataStack
     
     /**
         - parameter context: The `NSManagedObjectContext` into which the parsed
@@ -30,7 +30,7 @@ class GeneralSearchResultsDeleteGroupOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( coreDataStack: CoreDataStack, completionHandler: Void -> Void ) {
+    init( coreDataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
 
         self.coreDataStack = coreDataStack
 
@@ -39,22 +39,22 @@ class GeneralSearchResultsDeleteGroupOperation: GroupOperation {
             operation to delete the existing contents of the Core Data store
         */
         deleteOperation = GeneralSearchResultsDeleteOperation( coreDataStack: coreDataStack )
-        finishOperation = NSBlockOperation( block: completionHandler )
+        finishOperation = PSBlockOperation { completionHandler() }
         
         // These operations must be executed in order
         finishOperation.addDependency( deleteOperation! )
         
-        let operations: [NSOperation] = [deleteOperation!, finishOperation]
+        let operations: [PSOperation] = [deleteOperation!, finishOperation]
         super.init( operations: operations )
 
         addCondition( MutuallyExclusive<GeneralSearchResultsDeleteGroupOperation>() )
         
-        queuePriority = .High
+        queuePriority = .high
         
         name = "General Search Delete"
     }
     
-    override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
+    override func operationDidFinish(_ operation: Foundation.Operation, withErrors errors: [NSError]) {
         if let firstError = errors.first {
 
             if operation === deleteOperation {

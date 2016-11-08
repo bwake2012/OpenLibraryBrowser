@@ -10,9 +10,9 @@ import CoreData
 
 import BNRCoreDataStack
 
-class OLAuthorSearchResult: OLManagedObject, CoreDataModelable {
+class OLAuthorSearchResult: OLManagedObject {
     
-    private let kHasPhoto = "has_photos"
+    fileprivate let kHasPhoto = "has_photos"
 
     // MARK: Search Info
     struct SearchInfo {
@@ -43,28 +43,28 @@ class OLAuthorSearchResult: OLManagedObject, CoreDataModelable {
         }
     }
     
-    override func localURL( size: String, index: Int = 0 ) -> NSURL {
+    override func localURL( _ size: String, index: Int = 0 ) -> URL {
         
-        let docFolder = try! NSFileManager.defaultManager().URLForDirectory( .CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false )
+        let docFolder = try! FileManager.default.url( for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: false )
         
-        let imagesFolder = docFolder.URLByAppendingPathComponent( "images" )
+        let imagesFolder = docFolder.appendingPathComponent( "images" )
         
-        let parts = self.key.componentsSeparatedByString( "/" )
+        let parts = self.key.components( separatedBy: "/" )
         let goodParts = parts.filter { (x) -> Bool in !x.isEmpty }
         
-        let imagesSubFolder = imagesFolder.URLByAppendingPathComponent( goodParts[0] )
+        let imagesSubFolder = imagesFolder.appendingPathComponent( goodParts[0] )
         
         var fileName = "\(goodParts[1])-\(size)"
         if 0 < index {
             fileName += "\(index)"
         }
         fileName += ".jpg"
-        let url = imagesSubFolder.URLByAppendingPathComponent( fileName )
+        let url = imagesSubFolder.appendingPathComponent( fileName )
         
         return url
     }
 
-    func displayThumbnail( imageView: UIImageView ) -> HasPhoto {
+    func displayThumbnail( _ imageView: UIImageView ) -> HasPhoto {
         
         var bDisplayed = false
         if .none != havePhoto {
@@ -109,14 +109,22 @@ class OLAuthorSearchResult: OLManagedObject, CoreDataModelable {
 
                 if bDisplayed || .none == havePhoto {
                     
-                    willChangeValueForKey( kHasPhoto )
+                    willChangeValue( forKey: kHasPhoto )
                     setValue( bDisplayed, forKey: kHasPhoto )
-                    didChangeValueForKey( kHasPhoto )
+                    didChangeValue( forKey: kHasPhoto )
                 }
             }
         }
             
         return bDisplayed ? .local : havePhoto
     }
-
 }
+
+extension OLAuthorSearchResult {
+    
+    class func buildFetchRequest() -> NSFetchRequest< OLAuthorSearchResult > {
+        
+        return NSFetchRequest( entityName: OLAuthorSearchResult.entityName )
+    }
+}
+

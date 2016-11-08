@@ -9,10 +9,11 @@
 import CoreData
 
 import BNRCoreDataStack
+import Down
 
-typealias ObjectResultClosure = ( objectID: NSManagedObjectID ) -> Void
+typealias ObjectResultClosure = ( _ objectID: NSManagedObjectID ) -> Void
 
-typealias ImageDisplayClosure = ( localURL: NSURL ) -> Bool
+typealias ImageDisplayClosure = ( _ localURL: URL ) -> Bool
 
 enum HasPhoto: Int {
     case unknown = -1
@@ -80,31 +81,31 @@ enum DeluxeDetail: Int {
         
         switch self {
         
-        case unknown:
+        case .unknown:
             return "unknown"
-        case inline:
+        case .inline:
             return DeluxeDetailInlineTableViewCell.nameOfClass
-        case block:
+        case .block:
             return DeluxeDetailBlockTableViewCell.nameOfClass
-        case link:
+        case .link:
             return DeluxeDetailLinkTableViewCell.nameOfClass
-        case heading:
+        case .heading:
             return DeluxeDetailHeadingTableViewCell.nameOfClass
-        case subheading:
+        case .subheading:
             return DeluxeDetailSubheadingTableViewCell.nameOfClass
-        case body:
+        case .body:
             return DeluxeDetailBodyTableViewCell.nameOfClass
-        case imageAuthor:
+        case .imageAuthor:
             return DeluxeDetailImageTableViewCell.nameOfClass
-        case imageBook:
+        case .imageBook:
             return DeluxeDetailImageTableViewCell.nameOfClass
-        case html:
+        case .html:
             return DeluxeDetailHTMLTableViewCell.nameOfClass
-        case downloadBook:
+        case .downloadBook:
             return DeluxeDetailBookDownloadTableViewCell.nameOfClass
-        case borrowBook:
+        case .borrowBook:
             return DeluxeDetailBookDownloadTableViewCell.nameOfClass
-        case buyBook:
+        case .buyBook:
             return DeluxeDetailBookDownloadTableViewCell.nameOfClass
         }
     }
@@ -134,23 +135,27 @@ struct DeluxeData {
     }
 }
 
-
 class OLManagedObject: NSManagedObject {
     
-    private static var countryLookup = OLCountryLookup()
+    fileprivate static var countryLookup = OLCountryLookup()
     
-    static var languageLookup = [String: String]()
+    fileprivate static var languageLookup = [String: String]()
     
-    static var authorCache = NSCache()
+    fileprivate static var authorCache = NSCache< NSString, NSString >()
+    
+    func findLanguage( forKey key: String ) -> String? {
+        
+        return OLManagedObject.languageLookup[key]
+    }
     
     func findCountryName( forCode code: String ) -> String {
         
         return OLManagedObject.countryLookup.findName( forCode: code )
     }
     
-    func cachedAuthor( authorKey: String ) -> String? {
+    func cachedAuthor( _ authorKey: String ) -> String? {
         
-        if let name = OLManagedObject.authorCache.objectForKey( authorKey ) as? String {
+        if let name = OLManagedObject.authorCache.object( forKey: authorKey as NSString ) as? String {
             
             return name
             
@@ -160,7 +165,7 @@ class OLManagedObject: NSManagedObject {
             
             if let author = author {
                 
-                OLManagedObject.authorCache.setObject( author.name, forKey: authorKey )
+                OLManagedObject.authorCache.setObject( author.name as NSString, forKey: authorKey as NSString )
                 return author.name
             }
         }
@@ -168,9 +173,14 @@ class OLManagedObject: NSManagedObject {
         return nil
     }
 
-    func addToAuthorCache( authorKey: String, authorName: String ) -> Void {
+    class func addAuthorToCache( _ authorKey: String, authorName: String ) -> Void {
         
-        OLManagedObject.authorCache.setObject( authorName, forKey: authorKey )
+        OLManagedObject.authorCache.setObject( authorName as NSString, forKey: authorKey as NSString )
+    }
+    
+    func addAuthorToCache( _ authorKey: String, authorName: String ) -> Void {
+        
+        OLManagedObject.addAuthorToCache( authorKey, authorName: authorName )
     }
     
     var heading: String {
@@ -206,24 +216,24 @@ class OLManagedObject: NSManagedObject {
         return true
     }
     
-    class func saveLoadedLanguages( loadedLanguages: [String: String] ) {
+    class func saveLoadedLanguages( _ loadedLanguages: [String: String] ) {
         
         OLManagedObject.languageLookup = loadedLanguages
     }
     
-    class func findObject<T: OLManagedObject>( key: String, entityName: String, keyFieldName: String = "key", moc: NSManagedObjectContext ) -> [T]? {
+    class func findObject<T: OLManagedObject>( _ key: String, entityName: String, keyFieldName: String = "key", moc: NSManagedObjectContext ) -> [T]? {
         
-        let fetchRequest = NSFetchRequest( entityName: entityName )
+        let fetchRequest = NSFetchRequest< T >( entityName: entityName )
         
-        fetchRequest.predicate = NSPredicate( format: "\(keyFieldName)==%@", "\(key)" )
+        fetchRequest.predicate = NSPredicate( format: "\(keyFieldName)==%@", key )
         
         fetchRequest.sortDescriptors =
             [NSSortDescriptor(key: "retrieval_date", ascending: false)]
         fetchRequest.fetchBatchSize = 100
         
-        var results = [T]?()
+        var results: [T] = []
         do {
-            results = try moc.executeFetchRequest( fetchRequest ) as? [T]
+            results = try moc.fetch( fetchRequest )
         }
         catch {
             
@@ -233,7 +243,7 @@ class OLManagedObject: NSManagedObject {
         return results
     }
     
-    class func findObject<T: OLManagedObject>( key: String, entityName: String, keyFieldName: String = "key", moc: NSManagedObjectContext ) -> T? {
+    class func findObject<T: OLManagedObject>( _ key: String, entityName: String, keyFieldName: String = "key", moc: NSManagedObjectContext ) -> T? {
         
         let results: [T]? = findObject( key, entityName: entityName, keyFieldName: keyFieldName, moc: moc )
         
@@ -254,59 +264,68 @@ class OLManagedObject: NSManagedObject {
     var firstImageID: Int { return 0 }
     
     var imageType: String { return "" }
+
+//    fileprivate static var cacheMarkdown: Markdown?
+//    var fancyMarkdown: Markdown {
+//        
+//        get {
+//            if nil == OLWorkDetail.cacheMarkdown {
+//                
+//                var options = MarkdownOptions()
+//                options.autoHyperlink = false
+//                options.autoNewlines = true
+//                options.emptyElementSuffix = ">"
+//                options.encodeProblemUrlCharacters = true
+//                options.linkEmails = false
+//                options.strictBoldItalic = true
+//                
+//                OLWorkDetail.cacheMarkdown = Markdown( options: options )
+//            }
+//            
+//            return OLWorkDetail.cacheMarkdown!
+//        }
+//        
+//        set {
+//            
+//            OLWorkDetail.cacheMarkdown = newValue
+//        }
+//    }
     
-    private static var cacheMarkdown: Markdown?
-    var fancyMarkdown: Markdown {
+    func convertMarkdownToHTML( markdown: String ) -> String {
         
-        get {
-            if nil == OLWorkDetail.cacheMarkdown {
-                
-                var options = MarkdownOptions()
-                options.autoHyperlink = false
-                options.autoNewlines = true
-                options.emptyElementSuffix = ">"
-                options.encodeProblemUrlCharacters = true
-                options.linkEmails = false
-                options.strictBoldItalic = true
-                
-                OLWorkDetail.cacheMarkdown = Markdown( options: options )
-            }
-            
-            return OLWorkDetail.cacheMarkdown!
-        }
+        let down = Down( markdownString: markdown )
         
-        set {
-            
-            OLWorkDetail.cacheMarkdown = newValue
-        }
+        let html = try? down.toHTML()
+        
+        return html ?? ""
     }
     
-    func localURL( imageID:Int, size: String ) -> NSURL {
+    func localURL( _ imageID:Int, size: String ) -> URL {
         
-        let docFolder = try! NSFileManager.defaultManager().URLForDirectory( .CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: false )
+        let docFolder = try! FileManager.default.url( for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: false )
         
-        let imagesFolder = docFolder.URLByAppendingPathComponent( "images" )
+        let imagesFolder = docFolder.appendingPathComponent( "images" )
         
         let imageIDString = String( imageID )
        
         var fileName = "\(imageIDString)-\(size)"
         fileName += ".jpg"
-        let url = imagesFolder.URLByAppendingPathComponent( fileName )
+        let url = imagesFolder.appendingPathComponent( fileName )
         
         return url
     }
     
-    func imageID( index: Int ) -> Int {
+    func imageID( _ index: Int ) -> Int {
         
         return 0
     }
     
-    func localURL( size: String, index: Int = 0 ) -> NSURL {
+    func localURL( _ size: String, index: Int = 0 ) -> URL {
         
-        return NSURL()
+        return URL( fileURLWithPath: "" )
     }
     
-    func populateObject( parsed: OpenLibraryObject ) {
+    func populateObject( _ parsed: OpenLibraryObject ) {
     }
     
     func buildDeluxeData() -> [[DeluxeData]] {
@@ -315,6 +334,13 @@ class OLManagedObject: NSManagedObject {
 
         return deluxeData
     }
+    
 }
 
+extension OLManagedObject {
+    
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<OLManagedObject> {
+        return NSFetchRequest<OLManagedObject>( entityName: "ManagedObject" )
+    }
+}
 

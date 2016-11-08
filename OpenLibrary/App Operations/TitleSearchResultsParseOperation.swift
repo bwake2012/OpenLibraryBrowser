@@ -17,9 +17,9 @@ let kTitlesPrefix = "/Titles/"
 /// A struct to represent a parsed Title search result.
 
 /// An `Operation` to parse earthquakes out of a downloaded feed from the USGS.
-class TitleSearchResultsParseOperation: Operation {
+class TitleSearchResultsParseOperation: PSOperation {
     
-    let cacheFile: NSURL
+    let cacheFile: URL
     let context: NSManagedObjectContext
     let updateResults: SearchResultsUpdater
     
@@ -33,7 +33,7 @@ class TitleSearchResultsParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( cacheFile: NSURL, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater ) {
+    init( cacheFile: URL, coreDataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -41,7 +41,7 @@ class TitleSearchResultsParseOperation: Operation {
         */
         
         self.cacheFile = cacheFile
-        self.context = coreDataStack.newChildContext()
+        self.context = coreDataStack.newChildContext( name: "TitleSearchResultsParse Context" )
         self.context.mergePolicy = NSOverwriteMergePolicy
         self.updateResults = updateResults
         
@@ -51,7 +51,7 @@ class TitleSearchResultsParseOperation: Operation {
     }
     
     override func execute() {
-        guard let stream = NSInputStream(URL: cacheFile) else {
+        guard let stream = InputStream(url: cacheFile) else {
             finish()
             return
         }
@@ -63,7 +63,7 @@ class TitleSearchResultsParseOperation: Operation {
         }
         
         do {
-            if let json = try NSJSONSerialization.JSONObjectWithStream(stream, options: []) as? [String: AnyObject] {
+            if let json = try JSONSerialization.jsonObject(with: stream, options: []) as? [String: AnyObject] {
             
                 parse( json )
             }
@@ -76,7 +76,7 @@ class TitleSearchResultsParseOperation: Operation {
         }
     }
     
-    private func parse( resultSet: [String: AnyObject] ) {
+    fileprivate func parse( _ resultSet: [String: AnyObject] ) {
 
         guard let start = resultSet["start"] as? Int else {
             finishWithError( nil )
@@ -93,7 +93,7 @@ class TitleSearchResultsParseOperation: Operation {
             return
         }
 
-        context.performBlock {
+        context.perform {
             
             var index = Int64( start )
             for result in results {
@@ -127,7 +127,7 @@ class TitleSearchResultsParseOperation: Operation {
         - note: This method returns an `NSError?` because it will be immediately
             passed to the `finishWithError()` method, which accepts an `NSError?`.
     */
-    private func saveContext() -> NSError? {
+    fileprivate func saveContext() -> NSError? {
         var error: NSError?
 
         do {
@@ -140,7 +140,7 @@ class TitleSearchResultsParseOperation: Operation {
         return error
     }
     
-    func Update( searchResults: SearchResults ) {
+    func Update( _ searchResults: SearchResults ) {
         
         self.searchResults = searchResults
     }

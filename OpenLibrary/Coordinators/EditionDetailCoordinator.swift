@@ -16,12 +16,12 @@ class EditionDetailCoordinator: OLQueryCoordinator {
 
     let editionDetail: OLEditionDetail
     weak var editionDetailVC: OLEditionDetailViewController?
-    var authorDetailGetOperation: Operation?
-    var ebookItemGetOperation: Operation?
+    var authorDetailGetOperation: PSOperation?
+    var ebookItemGetOperation: PSOperation?
     
     init(
-        operationQueue: OperationQueue,
-        coreDataStack: CoreDataStack,
+        operationQueue: PSOperationQueue,
+        coreDataStack: OLDataStack,
         searchInfo: OLEditionDetail,
         editionDetailVC: OLEditionDetailViewController
     ) {
@@ -31,9 +31,9 @@ class EditionDetailCoordinator: OLQueryCoordinator {
         super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: editionDetailVC )
     }
     
-    func updateUI( editionDetail: OLEditionDetail ) {
+    func updateUI( _ editionDetail: OLEditionDetail ) {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
         if let editionDetailVC = editionDetailVC {
             
             retrieveAuthors( editionDetail )
@@ -50,16 +50,16 @@ class EditionDetailCoordinator: OLQueryCoordinator {
                     let imageGetOperation =
                         ImageGetOperation( numberID: editionDetail.firstImageID, imageKeyName: "id", localURL: url, size: "M", type: "a" ) {
                             
-                            dispatch_async( dispatch_get_main_queue() ) {
+                            DispatchQueue.main.async {
                                 
-                                editionDetailVC.displayImage( url )
+                                _ = editionDetailVC.displayImage( url )
                             }
                     }
                     
                     imageGetOperation.userInitiated = true
                     operationQueue.addOperation( imageGetOperation )
 
-                    editionDetailVC.displayImage( editionDetail.localURL( "S" ) )
+                    _ = editionDetailVC.displayImage( editionDetail.localURL( "S" ) )
                 }
             }
         }
@@ -70,7 +70,7 @@ class EditionDetailCoordinator: OLQueryCoordinator {
         updateUI( editionDetail )
     }
     
-    func retrieveAuthors ( editionDetail: OLEditionDetail ) {
+    func retrieveAuthors ( _ editionDetail: OLEditionDetail ) {
         
         if editionDetail.author_names.count < editionDetail.authors.count {
             
@@ -78,7 +78,7 @@ class EditionDetailCoordinator: OLQueryCoordinator {
         }
     }
     
-    func newAuthorQueries( editionDetail: OLEditionDetail ) {
+    func newAuthorQueries( _ editionDetail: OLEditionDetail ) {
         
         if nil == authorDetailGetOperation {
             
@@ -110,7 +110,7 @@ class EditionDetailCoordinator: OLQueryCoordinator {
                         
                         [weak self] in
 
-                        dispatch_async( dispatch_get_main_queue() ) {
+                        DispatchQueue.main.async {
                                 
                            if let strongSelf = self {
 
@@ -125,7 +125,7 @@ class EditionDetailCoordinator: OLQueryCoordinator {
         }
     }
     
-    func retrieveEBookItems ( editionDetail: OLEditionDetail ) {
+    func retrieveEBookItems ( _ editionDetail: OLEditionDetail ) {
         
         if editionDetail.mayHaveFullText && editionDetail.ebook_items.isEmpty  {
             
@@ -133,7 +133,7 @@ class EditionDetailCoordinator: OLQueryCoordinator {
         }
     }
     
-    func newEbookItemQuery( editionDetail: OLEditionDetail ) {
+    func newEbookItemQuery( _ editionDetail: OLEditionDetail ) {
         
         if nil == ebookItemGetOperation {
             
@@ -145,7 +145,7 @@ class EditionDetailCoordinator: OLQueryCoordinator {
                     
                     [weak self] in
                     
-                    dispatch_async( dispatch_get_main_queue() ) {
+                    DispatchQueue.main.async {
                             
                         if let strongSelf = self {
                             
@@ -163,7 +163,7 @@ class EditionDetailCoordinator: OLQueryCoordinator {
         }
     }
     
-    func installCoverPictureViewCoordinator( destVC: OLPictureViewController ) {
+    func installCoverPictureViewCoordinator( _ destVC: OLPictureViewController ) {
 
         destVC.queryCoordinator =
             PictureViewCoordinator(

@@ -59,11 +59,11 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
     
     var deluxeData = [[DeluxeData]]()
     
-    var authorDetailGetOperation: Operation?
+    var authorDetailGetOperation: PSOperation?
     
     init(
-        operationQueue: OperationQueue,
-        coreDataStack: CoreDataStack,
+        operationQueue: PSOperationQueue,
+        coreDataStack: OLDataStack,
         authorKey: String,
         authorDetailVC: OLAuthorDetailViewController
         ) {
@@ -76,11 +76,11 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
     }
     
     
-    func updateUI( authorDetail: OLAuthorDetail ) {
+    func updateUI( _ authorDetail: OLAuthorDetail ) {
         
         if let authorDetailVC = authorDetailVC {
                 
-            dispatch_async( dispatch_get_main_queue() ) {
+            DispatchQueue.main.async {
             
                 authorDetailVC.updateUI( authorDetail )
                 
@@ -93,16 +93,16 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
                         let imageGetOperation =
                             ImageGetOperation( numberID: authorDetail.firstImageID, imageKeyName: "ID", localURL: url, size: "M", type: authorDetail.imageType ) {
                                 
-                                    dispatch_async( dispatch_get_main_queue() ) {
+                                    DispatchQueue.main.async {
                                         
-                                        authorDetailVC.displayImage( url )
+                                        _ = authorDetailVC.displayImage( url )
                                     }
                                 }
                         
                         imageGetOperation.userInitiated = true
                         self.operationQueue.addOperation( imageGetOperation )
                         
-                        authorDetailVC.displayImage( authorDetail.localURL( "S" ) )
+                        _ = authorDetailVC.displayImage( authorDetail.localURL( "S" ) )
                     }
                 }
             }
@@ -112,7 +112,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
     func updateUI() {
         
         do {
-            NSFetchedResultsController.deleteCacheWithName( kAuthorDetailCache )
+//            NSFetchedResultsController< OLAuthorDetail >.deleteCache( withName: kAuthorDetailCache )
             try fetchedResultsController.performFetch()
         }
         catch {
@@ -121,7 +121,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
         }
     }
     
-    func newQuery( authorKey: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
+    func newQuery( _ authorKey: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
         
         guard libraryIsReachable() else {
             
@@ -139,7 +139,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
                 ) {
                     [weak self] in
                     
-                    dispatch_async( dispatch_get_main_queue() ) {
+                    DispatchQueue.main.async {
 
                         if let strongSelf = self {
                             
@@ -155,7 +155,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
         }
     }
     
-    func refreshQuery( refreshControl: UIRefreshControl? ) {
+    func refreshQuery( _ refreshControl: UIRefreshControl? ) {
         
         newQuery( authorKey, userInitiated: true, refreshControl: refreshControl )
     }
@@ -163,14 +163,14 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
     // MARK: Utility
     func BuildFetchedResultsController() -> FetchedOLAuthorDetailController {
         
-        let fetchRequest = NSFetchRequest( entityName: OLAuthorDetail.entityName )
+        let fetchRequest = OLAuthorDetail.buildFetchRequest()
         let key = authorKey
         
-        let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
-        let today = NSDate()
-        let lastWeek = today.dateByAddingTimeInterval( -7 * secondsPerDay )
+        let secondsPerDay = TimeInterval( 24 * 60 * 60 )
+        let today = Date()
+        let lastWeek = today.addingTimeInterval( -7 * secondsPerDay )
         
-        fetchRequest.predicate = NSPredicate( format: "key==%@ && retrieval_date > %@", "\(key)", lastWeek )
+        fetchRequest.predicate = NSPredicate( format: "key==%@ && retrieval_date > %@", key, lastWeek as NSDate )
         
         fetchRequest.sortDescriptors =
             [
@@ -183,7 +183,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
                 fetchRequest: fetchRequest,
                 managedObjectContext: self.coreDataStack.mainQueueContext,
                 sectionNameKeyPath: nil,
-                cacheName: kAuthorDetailCache
+                cacheName: nil // kAuthorDetailCache
         )
         
         frc.setDelegate( self )
@@ -192,7 +192,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
     
     // MARK: install query coordinators
     
-    func installAuthorWorksCoordinator( destVC: OLAuthorDetailWorksTableViewController ) {
+    func installAuthorWorksCoordinator( _ destVC: OLAuthorDetailWorksTableViewController ) {
 
         destVC.queryCoordinator =
             AuthorWorksCoordinator(
@@ -203,7 +203,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
                 )
     }
 
-    func installAuthorDeluxeDetailCoordinator( destVC: OLDeluxeDetailTableViewController ) {
+    func installAuthorDeluxeDetailCoordinator( _ destVC: OLDeluxeDetailTableViewController ) {
 
         destVC.queryCoordinator =
             DeluxeDetailCoordinator(
@@ -216,7 +216,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
                 )
     }
     
-    func installAuthorPictureCoordinator( destVC: OLPictureViewController ) {
+    func installAuthorPictureCoordinator( _ destVC: OLPictureViewController ) {
         
         destVC.queryCoordinator =
             PictureViewCoordinator(
@@ -232,7 +232,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
 
 extension AuthorDetailCoordinator: FetchedResultsControllerDelegate {
     
-    func fetchedResultsControllerDidPerformFetch( controller: FetchedOLAuthorDetailController ) {
+    func fetchedResultsControllerDidPerformFetch( _ controller: FetchedOLAuthorDetailController ) {
         
         guard let authorDetail = controller.fetchedObjects?.first else {
 
@@ -251,11 +251,11 @@ extension AuthorDetailCoordinator: FetchedResultsControllerDelegate {
         }
     }
     
-    func fetchedResultsControllerWillChangeContent( controller: FetchedOLAuthorDetailController ) {
+    func fetchedResultsControllerWillChangeContent( _ controller: FetchedOLAuthorDetailController ) {
         //        authorAuthorsTableVC?.tableView.beginUpdates()
     }
     
-    func fetchedResultsControllerDidChangeContent( controller: FetchedOLAuthorDetailController ) {
+    func fetchedResultsControllerDidChangeContent( _ controller: FetchedOLAuthorDetailController ) {
         
         guard let authorDetail = controller.fetchedObjects?.first else {
             
@@ -267,7 +267,7 @@ extension AuthorDetailCoordinator: FetchedResultsControllerDelegate {
         updateUI( authorDetail )
     }
     
-    func fetchedResultsController( controller: FetchedOLAuthorDetailController,
+    func fetchedResultsController( _ controller: FetchedOLAuthorDetailController,
                                    didChangeObject change: FetchedResultsObjectChange< OLAuthorDetail > ) {
         
 //        switch change {
@@ -285,7 +285,7 @@ extension AuthorDetailCoordinator: FetchedResultsControllerDelegate {
 //        }
     }
     
-    func fetchedResultsController(controller: FetchedOLAuthorDetailController,
+    func fetchedResultsController(_ controller: FetchedOLAuthorDetailController,
                                   didChangeSection change: FetchedResultsSectionChange< OLAuthorDetail >) {
         
 //        switch change {

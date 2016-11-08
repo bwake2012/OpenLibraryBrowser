@@ -42,33 +42,33 @@ class OLDeluxeDetailTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear( animated )
         
         navigationController?.setNavigationBarHidden( false, animated: animated )
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         
         queryCoordinator?.cancelOperations()
         
         super.viewWillDisappear( animated )
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if let queryCoordinator = queryCoordinator {
 
             if "zoomDeluxeDetailImage" == segue.identifier {
             
-                if let destVC = segue.destinationViewController as? OLPictureViewController {
+                if let destVC = segue.destination as? OLPictureViewController {
                     
                     queryCoordinator.installPictureCoordinator( destVC )
                 }
             } else if DeluxeDetail.downloadBook.reuseIdentifier == segue.identifier {
                 
-                if let destVC = segue.destinationViewController as? OLBookDownloadViewController {
+                if let destVC = segue.destination as? OLBookDownloadViewController {
                     
                     queryCoordinator.installBookDownloadCoordinator( destVC )
                 }
@@ -78,7 +78,7 @@ class OLDeluxeDetailTableViewController: UITableViewController {
 
     // MARK: UITableViewDataSource
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var cell: UITableViewCell?
         if let queryCoordinator = queryCoordinator {
@@ -89,7 +89,7 @@ class OLDeluxeDetailTableViewController: UITableViewController {
         return cell!
     }
     
-    override func numberOfSectionsInTableView( tableView: UITableView ) -> Int {
+    override func numberOfSections( in tableView: UITableView ) -> Int {
     
         var count = 0
     
@@ -101,7 +101,7 @@ class OLDeluxeDetailTableViewController: UITableViewController {
         return count
     }
     
-    override func tableView( tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
+    override func tableView( _ tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
         
         var rows = 0
         if let queryCoordinator = queryCoordinator {
@@ -112,7 +112,7 @@ class OLDeluxeDetailTableViewController: UITableViewController {
         return rows
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if let queryCoordinator = queryCoordinator {
             
@@ -120,7 +120,7 @@ class OLDeluxeDetailTableViewController: UITableViewController {
         }
     }
     
-    @IBAction func dismiss(segue: UIStoryboardSegue) {
+    @IBAction func dismiss(_ segue: UIStoryboardSegue) {
         
 
     }
@@ -132,7 +132,7 @@ extension OLDeluxeDetailTableViewController: TransitionSourceImage {
         
         guard let indexPath = tableView.indexPathForSelectedRow else { return nil }
         
-        guard let imageCell = tableView.cellForRowAtIndexPath( indexPath ) as? DeluxeDetailImageTableViewCell else { return nil }
+        guard let imageCell = tableView.cellForRow( at: indexPath ) as? DeluxeDetailImageTableViewCell else { return nil }
 
         return imageCell.deluxeImage
     }
@@ -146,7 +146,7 @@ extension OLDeluxeDetailTableViewController: TransitionSourceCell {
         
         if let indexPath = tableView.indexPathForSelectedRow {
             
-            sourceRectView = tableView.cellForRowAtIndexPath( indexPath )
+            sourceRectView = tableView.cellForRow( at: indexPath )
         }
         
         return sourceRectView

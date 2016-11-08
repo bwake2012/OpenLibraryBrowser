@@ -17,7 +17,7 @@ class AuthorDetailWithThumbGetOperation: GroupOperation {
     
     let downloadOperation: AuthorDetailDownloadOperation
     let parseOperation: AuthorDetailParseOperation
-    let finishOperation: NSBlockOperation
+    let finishOperation: PSBlockOperation
    
     var getThumbOperation: ImageGetOperation?
     var getMediumOperation: ImageGetOperation?
@@ -25,9 +25,9 @@ class AuthorDetailWithThumbGetOperation: GroupOperation {
     
 //    private var hasProducedAlert = false
     
-    private let queryText: String
-    private let parentObjectID: NSManagedObjectID
-    private let size: String
+    fileprivate let queryText: String
+    fileprivate let parentObjectID: NSManagedObjectID
+    fileprivate let size: String
     
     /**
         - parameter context: The `NSManagedObjectContext` into which the parsed
@@ -37,18 +37,18 @@ class AuthorDetailWithThumbGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, parentObjectID: NSManagedObjectID, size: String, coreDataStack: CoreDataStack, completionHandler: Void -> Void ) {
+    init( queryText: String, parentObjectID: NSManagedObjectID, size: String, coreDataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
         
         self.queryText = queryText
         self.parentObjectID = parentObjectID
         self.size = size
 
-        let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+        let cachesFolder = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
-        let parts = queryText.componentsSeparatedByString( "/" )
+        let parts = queryText.components( separatedBy: "/" )
         let goodParts = parts.filter { (x) -> Bool in !x.isEmpty }
         let authorKey = goodParts.last!
-        let cacheFile = cachesFolder.URLByAppendingPathComponent("\(authorKey)AuthorDetailResults.json")
+        let cacheFile = cachesFolder.appendingPathComponent("\(authorKey)AuthorDetailResults.json")
         
         /*
             This operation is made of three child operations:
@@ -59,7 +59,7 @@ class AuthorDetailWithThumbGetOperation: GroupOperation {
         downloadOperation = AuthorDetailDownloadOperation( queryText: queryText, cacheFile: cacheFile )
         parseOperation = AuthorDetailParseOperation( parentObjectID: parentObjectID, cacheFile: cacheFile, coreDataStack: coreDataStack )
         
-        finishOperation = NSBlockOperation( block: completionHandler )
+        finishOperation = PSBlockOperation { completionHandler() }
         
         // These operations must be executed in order
         parseOperation.addDependency(downloadOperation)
@@ -72,7 +72,7 @@ class AuthorDetailWithThumbGetOperation: GroupOperation {
         name = "Get Author Detail with Thumbnail " + queryText
     }
     
-    override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
+    override func operationDidFinish(_ operation: Foundation.Operation, withErrors errors: [NSError]) {
         if let firstError = errors.first {
             
             if operation === downloadOperation || operation === parseOperation {
@@ -87,48 +87,60 @@ class AuthorDetailWithThumbGetOperation: GroupOperation {
                 var operation: GroupOperation?
                 
                 if "S" == size || "A" == size {
-                    self.getThumbOperation =
-                        ImageGetOperation(
-                                numberID: photoID,
-                                imageKeyName: "ID",
-                                localURL: parseOperation.localThumbURL,
-                                size: "S", type: "a",
-                                completionHandler: {}
-                            )
-                    addOperation( getThumbOperation! )
-                    operation = getThumbOperation
+                    
+                    if let localThumbURL = parseOperation.localThumbURL {
+
+                        self.getThumbOperation =
+                            ImageGetOperation(
+                                    numberID: photoID,
+                                    imageKeyName: "ID",
+                                    localURL: localThumbURL,
+                                    size: "S", type: "a",
+                                    completionHandler: {}
+                                )
+                        addOperation( getThumbOperation! )
+                        operation = getThumbOperation
+                    }
                 }
                 if "M" == size || "A" == size || "B" == size {
-                    getMediumOperation =
-                        ImageGetOperation(
-                            numberID: photoID,
-                            imageKeyName: "ID",
-                            localURL: parseOperation.localMediumURL,
-                            size: "M", type: "a",
-                            completionHandler: {}
-                        )
-                    if let op = operation {
-                        
-                        getMediumOperation!.addDependency( op )
+                    
+                    if let localMediumURL = parseOperation.localMediumURL {
+
+                        getMediumOperation =
+                            ImageGetOperation(
+                                numberID: photoID,
+                                imageKeyName: "ID",
+                                localURL: localMediumURL,
+                                size: "M", type: "a",
+                                completionHandler: {}
+                            )
+                        if let op = operation {
+                            
+                            getMediumOperation!.addDependency( op )
+                        }
+                        operation = getMediumOperation
+                        addOperation( getMediumOperation! )
                     }
-                    operation = getMediumOperation
-                    addOperation( getMediumOperation! )
                 }
                 if "L" == size || "A" == size || "B" == size {
-                    self.getLargeOperation =
-                        ImageGetOperation(
-                            numberID: photoID,
-                            imageKeyName: "ID",
-                            localURL: parseOperation.localLargeURL,
-                            size: "L", type: "a",
-                            completionHandler: {}
-                        )
-                    if let op = operation {
-                        
-                        getLargeOperation!.addDependency( op )
+                    
+                    if let localLargeURL = parseOperation.localLargeURL {
+
+                        self.getLargeOperation =
+                            ImageGetOperation(
+                                numberID: photoID,
+                                imageKeyName: "ID",
+                                localURL: localLargeURL,
+                                size: "L", type: "a",
+                                completionHandler: {}
+                            )
+                        if let op = operation {
+                            
+                            getLargeOperation!.addDependency( op )
+                        }
+                        operation = getLargeOperation
+                        addOperation( getLargeOperation! )
                     }
-                    operation = getLargeOperation
-                    addOperation( getLargeOperation! )
                 }
                 
                 if let operation = operation {

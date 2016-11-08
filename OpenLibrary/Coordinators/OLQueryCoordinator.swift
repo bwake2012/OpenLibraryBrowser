@@ -16,14 +16,14 @@ import BRYXBanner
 
 class OLQueryCoordinator: NSObject {
 
-    private static var previousNetStatus: Reachability.NetworkStatus = .ReachableViaWiFi
-    private static var previousDescription: String = ""
+    fileprivate static var previousNetStatus: Reachability.NetworkStatus = .reachableViaWiFi
+    fileprivate static var previousDescription: String = ""
     
-    private static var thumbnailCache = NSCache()
-    private class CacheData {
+    fileprivate static var thumbnailCache = NSCache< NSString, CacheData >()
+    fileprivate class CacheData {
         
         var image: UIImage?
-        let date = NSDate()
+        let date = Date()
         var fetchInProgress: Bool {
             
             return nil == image && date.timeIntervalSinceNow < 10.0
@@ -35,53 +35,51 @@ class OLQueryCoordinator: NSObject {
         }
     }
 
-    private static var reachability: Reachability?
-    private static var queryCoordinatorCount: Int = 0
+    fileprivate static var reachability: Reachability?
+    fileprivate static var queryCoordinatorCount: Int = 0
     
-    private static var dateFormatter: NSDateFormatter?
+    fileprivate static var dateFormatter: DateFormatter?
 
     // MARK: Instance variables
     var deletedSectionIndexes = NSMutableIndexSet()
     var insertedSectionIndexes = NSMutableIndexSet()
     
-    var deletedRowIndexPaths: [NSIndexPath] = []
-    var insertedRowIndexPaths: [NSIndexPath] = []
-    var updatedRowIndexPaths: [NSIndexPath] = []
+    var deletedRowIndexPaths: [IndexPath] = []
+    var insertedRowIndexPaths: [IndexPath] = []
+    var updatedRowIndexPaths: [IndexPath] = []
     
-    let operationQueue: OperationQueue
-    let coreDataStack: CoreDataStack
+    let operationQueue: PSOperationQueue
+    let coreDataStack: OLDataStack
     
-    private var reachability: Reachability {
+    fileprivate var reachability: Reachability {
         
         if nil == OLQueryCoordinator.reachability {
             
-            do {
-                OLQueryCoordinator.reachability =
-                    try Reachability( hostname: "openlibrary.org" )
+            OLQueryCoordinator.reachability =
+                Reachability( hostname: "openlibrary.org" )
+            
+            if let reachability = OLQueryCoordinator.reachability {
                 
-                if let reachability = OLQueryCoordinator.reachability {
-                    
-                    OLQueryCoordinator.previousDescription = reachability.description
+                OLQueryCoordinator.previousDescription = reachability.description
 
-                    reachability.whenReachable = reachable
-                    reachability.whenUnreachable = unreachable
-                    
-                    do {
-                        try reachability.startNotifier()
-                    } catch {
-                        fatalError( "Unable to start network reachability notifier.")
-                    }
-                }
+                reachability.whenReachable = reachable
+                reachability.whenUnreachable = unreachable
                 
-            } catch {
+                do {
+                    try reachability.startNotifier()
+                } catch {
+                    fatalError( "Unable to start network reachability notifier.")
+                }
+            } else {
                 fatalError( "Unable to create network reachability monitor.")
             }
+            
         }
         
         return OLQueryCoordinator.reachability!
     }
     
-    init( operationQueue: OperationQueue, coreDataStack: CoreDataStack, viewController: UIViewController ) {
+    init( operationQueue: PSOperationQueue, coreDataStack: OLDataStack, viewController: UIViewController ) {
         
         OLQueryCoordinator.queryCoordinatorCount += 1
         self.operationQueue = operationQueue
@@ -102,7 +100,7 @@ class OLQueryCoordinator: NSObject {
         }
     }
     
-    func libraryIsReachable( tattle tattle: Bool = false, keepQuiet: Bool = false ) -> Bool {
+    func libraryIsReachable( tattle: Bool = false, keepQuiet: Bool = false ) -> Bool {
         
         var isReachable = false
         
@@ -113,15 +111,15 @@ class OLQueryCoordinator: NSObject {
         
         switch newStatus {
         
-            case .NotReachable:
+            case .notReachable:
                 if !keepQuiet && ( tattle || ( newStatus != oldStatus ) ) {
                     showNetworkUnreachableAlert( oldStatus, newStatus: newStatus )
                 }
                 break
-            case .ReachableViaWWAN:
+            case .reachableViaWWAN:
                 isReachable = true
                 break
-            case .ReachableViaWiFi:
+            case .reachableViaWiFi:
                 isReachable = true
                 break
         }
@@ -130,11 +128,11 @@ class OLQueryCoordinator: NSObject {
     }
 
     func showNetworkUnreachableAlert(
-                oldStatus: Reachability.NetworkStatus,
+                _ oldStatus: Reachability.NetworkStatus,
                 newStatus: Reachability.NetworkStatus
             ) {
         
-        dispatch_async( dispatch_get_main_queue() ) {
+        DispatchQueue.main.async {
 
             guard let presentationContext = UIApplication.topViewController() else {
 
@@ -145,44 +143,44 @@ class OLQueryCoordinator: NSObject {
                 UIAlertController(
                         title: "Could not Reach OpenLibrary",
                         message: "Either you have not signed on to WiFi or you have not given this app permission to use cell data. Please enable it in Settings to continue.",
-                        preferredStyle: .Alert
+                        preferredStyle: .alert
                     )
             
             let settingsAction =
-                UIAlertAction( title: "Settings", style: .Default ) {
+                UIAlertAction( title: "Settings", style: .default ) {
                     
                     (alertAction) in
                     
                         // THIS IS WHERE THE MAGIC HAPPENS!!!!
                         if let appSettings = NSURL(string: UIApplicationOpenSettingsURLString) {
-                            UIApplication.sharedApplication().openURL(appSettings)
+                            UIApplication.shared.openURL(appSettings as URL)
                         }
                     }
             alertController.addAction( settingsAction )
             
-            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             alertController.addAction( cancelAction )
             
-            presentationContext.presentViewController( alertController, animated: true, completion: nil )
+            presentationContext.present( alertController, animated: true, completion: nil )
         }
     }
     
-    func refreshComplete( refreshControl: UIRefreshControl? ) {
+    func refreshComplete( _ refreshControl: UIRefreshControl? ) {
 
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
                 
             if let refreshControl = refreshControl {
                 
                 if nil == OLQueryCoordinator.dateFormatter {
                     
-                    OLQueryCoordinator.dateFormatter = NSDateFormatter()
+                    OLQueryCoordinator.dateFormatter = DateFormatter()
                 
                     OLQueryCoordinator.dateFormatter?.dateFormat = "MMM d, h:mm a"
                 }
                 
                 if let dateFormatter = OLQueryCoordinator.dateFormatter {
                 
-                    let lastUpdate = "Last updated on \( dateFormatter.stringFromDate( NSDate() ) )"
+                    let lastUpdate = "Last updated on \( dateFormatter.string( from: Date() ) )"
                     
                     refreshControl.attributedTitle = NSAttributedString( string: lastUpdate )
                 }
@@ -191,9 +189,9 @@ class OLQueryCoordinator: NSObject {
         }
     }
     
-    func updateTableHeader( tableView: UITableView?, text: String = "" ) {
+    func updateTableHeader( _ tableView: UITableView?, text: String = "" ) {
         
-        dispatch_async( dispatch_get_main_queue() ) {
+        DispatchQueue.main.async {
             
             if let tableView = tableView {
                 
@@ -220,9 +218,9 @@ class OLQueryCoordinator: NSObject {
         }
     }
 
-    func updateTableFooter( tableView: UITableView?, highWaterMark: Int, numFound: Int, text: String = "" ) -> Void {
+    func updateTableFooter( _ tableView: UITableView?, highWaterMark: Int, numFound: Int, text: String = "" ) -> Void {
         
-        dispatch_async( dispatch_get_main_queue() ) {
+        DispatchQueue.main.async {
             
             [weak tableView] in
             
@@ -242,22 +240,20 @@ class OLQueryCoordinator: NSObject {
         }
     }
     
-    private func cachedData( cacheKey: String ) -> CacheData? {
+    fileprivate func cachedData( _ cacheKey: String ) -> CacheData? {
         
-        return OLQueryCoordinator.thumbnailCache.objectForKey( cacheKey ) as? CacheData
+        return OLQueryCoordinator.thumbnailCache.object( forKey: cacheKey as NSString )
     }
     
-    private func cachedImage( localURL: NSURL ) -> UIImage? {
+    fileprivate func cachedImage( _ localURL: URL ) -> UIImage? {
         
-        guard localURL.fileURL else {
+        guard localURL.isFileURL else {
             
             return nil
         }
         
-        guard let cacheKey = localURL.lastPathComponent else {
-            return nil
-        }
-        
+        let cacheKey = localURL.lastPathComponent
+
         guard let cacheData = cachedData( cacheKey ) else {
             
             return nil
@@ -267,37 +263,43 @@ class OLQueryCoordinator: NSObject {
             
             return image
             
-        } else if let data = NSData( contentsOfURL: localURL ) {
-                
-            if let image = UIImage( data: data ) {
+        } else {
+            
+            do {
 
-                OLQueryCoordinator.thumbnailCache.setObject( CacheData( image: image ), forKey: cacheKey )
+                let data = try Data( contentsOf: localURL )
                 
-                return image
+                if let image = UIImage( data: data ) {
+
+                    OLQueryCoordinator.thumbnailCache.setObject( CacheData( image: image ), forKey: cacheKey as NSString )
+                    
+                    return image
+                }
             }
+            catch {}
         }
         
         return nil
     }
     
-    private func displayThumbnailImage(
-                    url: NSURL,
+    fileprivate func displayThumbnailImage(
+                    _ url: URL,
                     image: UIImage,
                     cell: OLCell
                 ) {
         
-        dispatch_async( dispatch_get_main_queue() ) {
+        DispatchQueue.main.async {
             
             [weak cell] in
             
             if let cell = cell {
                 
-                cell.displayImage( url, image: image )
+                _ = cell.displayImage( url, image: image )
             }
         }
     }
     
-    private func enqueueImageFetch( url: NSURL, imageID: Int, imageType: String, cell: OLCell ) {
+    fileprivate func enqueueImageFetch( _ url: URL, imageID: Int, imageType: String, cell: OLCell ) {
         
         guard libraryIsReachable( keepQuiet: true ) else {
             return
@@ -309,7 +311,7 @@ class OLQueryCoordinator: NSObject {
                 
                 [weak self, weak cell] in
                 
-                if let strongSelf = self, cell = cell {
+                if let strongSelf = self, let cell = cell {
                     
                     if let image = strongSelf.cachedImage( url ) {
                         
@@ -322,17 +324,14 @@ class OLQueryCoordinator: NSObject {
         operationQueue.addOperation( imageGetOperation )
     }
     
-    func displayThumbnail( object: OLManagedObject, cell: OLCell? ) -> Bool {
+    @discardableResult func displayThumbnail( _ object: OLManagedObject, cell: OLCell? ) -> Bool {
         
         guard object.hasImage else {
             return false
         }
         
         let url = object.localURL( "S" )
-        guard let cacheKey = url.lastPathComponent else {
-            assert( false )
-            return false
-        }
+        let cacheKey = url.lastPathComponent
         
         // is there an entry in the cache?
         if let cacheData = cachedData( cacheKey ) {
@@ -342,7 +341,7 @@ class OLQueryCoordinator: NSObject {
             
                 if let cell = cell {
                     
-                    cell.displayImage( url, image: image )
+                    _ = cell.displayImage( url, image: image )
                     return true
                 }
 
@@ -353,16 +352,16 @@ class OLQueryCoordinator: NSObject {
             }
         }
 
-        OLQueryCoordinator.thumbnailCache.setObject( CacheData( image: nil ), forKey: cacheKey )
+        OLQueryCoordinator.thumbnailCache.setObject( CacheData( image: nil ), forKey: cacheKey as NSString )
 
         // retrieve the thumbnail from openlibrary.org
         let imageID = object.firstImageID
         let imageType = object.imageType
-        dispatch_async( dispatch_queue_create( "preloadThumbnail", nil ) ) {
+        DispatchQueue( label: "preloadThumbnail", attributes: [] ).async {
             
             [weak self, weak cell] in
 
-            if let strongSelf = self, cell = cell {
+            if let strongSelf = self, let cell = cell {
 
                 if let image = strongSelf.cachedImage( url ) {
                     
@@ -389,7 +388,7 @@ class OLQueryCoordinator: NSObject {
     
     // MARK: Reachability delegates
 
-    private func reachable( reachability: Reachability ) {
+    fileprivate func reachable( _ reachability: Reachability ) {
         
         let currentDescription = reachability.description
         if currentDescription != OLQueryCoordinator.previousDescription {
@@ -398,7 +397,7 @@ class OLQueryCoordinator: NSObject {
         
             // this is called on a background thread, but UI updates must
             // be on the main thread, like this:
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 let reachMessage = "Reachable"
                 let banner =
                     Banner(
@@ -419,13 +418,13 @@ class OLQueryCoordinator: NSObject {
         }
     }
     
-    private func unreachable( reachability: Reachability ) {
+    fileprivate func unreachable( _ reachability: Reachability ) {
         
         OLQueryCoordinator.previousDescription = reachability.description
 
         // this is called on a background thread, but UI updates must
         // be on the main thread, like this:
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             let reachMessage = "Not Reachable"
             let banner =
                 Banner(

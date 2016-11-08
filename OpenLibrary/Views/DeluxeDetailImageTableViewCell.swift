@@ -13,9 +13,9 @@ class DeluxeDetailImageTableViewCell: DeluxeDetailTableViewCell {
     @IBOutlet weak var deluxeImage: AspectRatioImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    func displayFromURL( url: NSURL ) -> Bool {
+    func displayFromURL( _ url: URL ) -> Bool {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
         
         let success = deluxeImage.displayFromURL( url )
         if success {

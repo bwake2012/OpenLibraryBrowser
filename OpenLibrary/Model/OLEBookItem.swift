@@ -11,7 +11,7 @@ import CoreData
 
 import BNRCoreDataStack
 
-class OLEBookItem: OLManagedObject, CoreDataModelable {
+class OLEBookItem: OLManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
     struct SearchInfo {
@@ -22,21 +22,21 @@ class OLEBookItem: OLManagedObject, CoreDataModelable {
     
     static let entityName = "EBookItem"
     
-    class func parseJSON( jsonItem: [String: AnyObject], jsonDetail: [String: AnyObject], moc: NSManagedObjectContext ) -> OLEBookItem? {
+    class func parseJSON( _ jsonItem: [String: AnyObject], jsonDetail: [String: AnyObject], moc: NSManagedObjectContext ) -> OLEBookItem? {
         
         guard let parsed = ParsedFromJSON.fromJSON( jsonItem, details: jsonDetail ) else { return nil }
 
         var newObject: OLEBookItem? = findObject( parsed.editionKey, entityName: OLEBookItem.entityName, keyFieldName: "editionKey", moc: moc )
         if nil == newObject {
             newObject =
-                NSEntityDescription.insertNewObjectForEntityForName(
-                        OLEBookItem.entityName, inManagedObjectContext: moc
+                NSEntityDescription.insertNewObject(
+                        forEntityName: OLEBookItem.entityName, into: moc
                     ) as? OLEBookItem
         }
 
         if let newObject = newObject {
             
-            newObject.retrieval_date = NSDate()
+            newObject.retrieval_date = Date()
 
             newObject.status       = parsed.status
             newObject.workKey      = parsed.workKey
@@ -50,7 +50,7 @@ class OLEBookItem: OLManagedObject, CoreDataModelable {
             newObject.fromRecord   = parsed.fromRecord
             newObject.match        = parsed.match
             
-            newObject.editionDetail = OLEditionDetail.saveProvisionalEdition( parsed: parsed, moc: moc )
+            newObject.editionDetail = OLEditionDetail.saveProvisionalEdition( parsed, moc: moc )
         }
         
         return newObject
@@ -68,19 +68,19 @@ class OLEBookItem: OLManagedObject, CoreDataModelable {
     
     override var imageType: String { return "b" }
     
-    override func imageID( index: Int ) -> Int {
+    override func imageID( _ index: Int ) -> Int {
         
         return index > 0 ? 0 : Int( cover_id )
     }
     
-    override func localURL( size: String, index: Int = 0 ) -> NSURL {
+    override func localURL( _ size: String, index: Int = 0 ) -> URL {
         
         return super.localURL( firstImageID, size: size )
     }
     
     var editionDetail: OLEditionDetail?
 
-    func matchingEdition() -> OLEditionDetail? {
+    @discardableResult func matchingEdition() -> OLEditionDetail? {
         
         if nil == editionDetail {
 
@@ -128,7 +128,7 @@ extension OLEBookItem {
         
         // MARK: Initialization
         
-        class func fromJSON( item: [String: AnyObject], details: [String: AnyObject] ) -> ParsedFromJSON? {
+        class func fromJSON( _ item: [String: AnyObject], details: [String: AnyObject] ) -> ParsedFromJSON? {
             
             let status       = item["status"] as? String ?? ""
             var workKey      = item["ol-work-id"] as? String ?? ""
@@ -143,12 +143,9 @@ extension OLEBookItem {
             let itemURL      = item["itemURL"] as? String ?? ""
             var eBookKey = ""
             if !itemURL.isEmpty {
-                if let url = NSURL( string: itemURL ) {
+                if let url = URL( string: itemURL ) {
                     
-                    if let lastComponent = url.lastPathComponent {
-                        
-                        eBookKey = lastComponent
-                    }
+                    eBookKey = url.lastPathComponent
                 }
             }
             let enumcron     = item["enumcron"] as? Bool ?? false
@@ -163,15 +160,15 @@ extension OLEBookItem {
                     
                     if entry.0 == "small" || entry.0 == "large" || entry.0 == "medium" {
                         
-                        if let url = NSURL( string: entry.1 ) {
+                        if let url = URL( string: entry.1 ) {
                             
-                            if let last = url.lastPathComponent {
-                                let parts = last.characters.split( "-" ).map( String.init )
-                                
-                                if let id = Int64( parts[0] ) {
-                                    cover_id = id
-                                    break
-                                }
+                            let last = url.lastPathComponent
+                            
+                            let parts = last.characters.split( separator: "-" ).map( String.init )
+                            
+                            if let id = Int64( parts[0] ) {
+                                cover_id = id
+                                break
                             }
                         }
                     }
@@ -191,7 +188,7 @@ extension OLEBookItem {
                 
                 for authorEntry in authorList {
                     
-                    if let name = authorEntry["name"], key = authorEntry["key"] {
+                    if let name = authorEntry["name"], let key = authorEntry["key"] {
                         
                         author_names.append( name )
                         author_keys.append(  key )
@@ -271,3 +268,12 @@ extension OLEBookItem {
         }
     }
 }
+
+extension OLEBookItem {
+    
+    class func buildFetchRequest() -> NSFetchRequest< OLEBookItem > {
+        
+        return NSFetchRequest( entityName: OLEBookItem.entityName )
+    }
+}
+

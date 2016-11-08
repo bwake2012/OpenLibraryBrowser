@@ -14,14 +14,14 @@ class HTMLFooterTextDisplayView: HTMLTextDisplayView {
         
         super.init( frame: frame, textContainer: textContainer )
         
-        displayHTML( self.text, textStyle: UIFontTextStyleFootnote )
+        displayHTML( self.text, textStyle: UIFontTextStyle.footnote.rawValue )
     }
     
     required init?(coder aDecoder: NSCoder) {
         
         super.init( coder: aDecoder )
         
-        displayHTML( self.text, textStyle: UIFontTextStyleFootnote )
+        displayHTML( self.text, textStyle: UIFontTextStyle.footnote.rawValue )
     }
     
 }
@@ -42,11 +42,11 @@ class HTMLTextDisplayView: UITextView {
         displayHTML( self.text )
     }
     
-    func displayHTML( htmlText: String, textStyle: String = UIFontTextStyleBody ) {
+    func displayHTML( _ htmlText: String, textStyle: String = UIFontTextStyle.body.rawValue ) {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
         
-        if let stringData = htmlText.dataUsingEncoding( NSUTF8StringEncoding, allowLossyConversion: false ) {
+        if let stringData = htmlText.data( using: String.Encoding.utf8, allowLossyConversion: false ) {
             
             do {
                 let theAttributedString =
@@ -58,12 +58,12 @@ class HTMLTextDisplayView: UITextView {
 
                 theAttributedString.enumerateAttribute(
                     NSFontAttributeName,
-                    inRange: NSRange( location: 0, length: theAttributedString.length ),
-                    options: NSAttributedStringEnumerationOptions(rawValue: 0)
+                    in: NSRange( location: 0, length: theAttributedString.length ),
+                    options: NSAttributedString.EnumerationOptions(rawValue: 0)
                 ) {
                     (value, range, stop) -> Void in
                     
-                    let newFont = UIFont.preferredFontForTextStyle( textStyle )
+                    let newFont = UIFont.preferredFont( forTextStyle: UIFontTextStyle(rawValue: textStyle) )
                     
                     theAttributedString.removeAttribute( NSFontAttributeName, range: range )
                     theAttributedString.addAttribute( NSFontAttributeName, value: newFont, range: range )

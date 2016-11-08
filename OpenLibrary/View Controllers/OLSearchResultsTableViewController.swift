@@ -19,28 +19,28 @@ class OLSearchResultsTableViewController: UIViewController {
     
     var searchController = UISearchController( searchResultsController: nil )
     
-    var touchedCellIndexPath: NSIndexPath?
+    var touchedCellIndexPath: IndexPath?
     
     var savedSearchKeys = [String: String]()
-    var savedIndexPath: NSIndexPath?
+    var savedIndexPath: IndexPath?
     var savedAuthorKey: String?
     var immediateSegueName: String?
     
     var beginningOffset: CGFloat = 0.0
 
-    @IBAction func presentGeneralSearch(sender: UIBarButtonItem) {
+    @IBAction func presentGeneralSearch(_ sender: UIBarButtonItem) {
         
-        performSegueWithIdentifier( "openBookSearch", sender: sender )
+        performSegue( withIdentifier: "openBookSearch", sender: sender )
     }
-    @IBAction func presentSearchResultsSort(sender: UIBarButtonItem) {
+    @IBAction func presentSearchResultsSort(_ sender: UIBarButtonItem) {
         
-        performSegueWithIdentifier( "openBookSort", sender: sender )
+        performSegue( withIdentifier: "openBookSort", sender: sender )
     }
     
     @IBOutlet var tableView: UITableView!
-    @IBOutlet private var refreshControl: UIRefreshControl?
+    @IBOutlet fileprivate var refreshControl: UIRefreshControl?
     
-    @IBOutlet private var activityView: UIActivityIndicatorView!
+    @IBOutlet fileprivate var activityView: UIActivityIndicatorView!
     
     deinit {
         
@@ -66,23 +66,23 @@ class OLSearchResultsTableViewController: UIViewController {
         sortButton =
             UIBarButtonItem(
                     image: sortImage,
-                    style: .Plain,
+                    style: .plain,
                     target: self,
                     action: #selector( OLSearchResultsTableViewController.presentSearchResultsSort( _: ) )
                 )
-        sortButton?.tintColor = UIColor.whiteColor()
+        sortButton?.tintColor = UIColor.white
         
         searchButton =
             UIBarButtonItem(
                     image: searchImage,
-                    style: .Plain,
+                    style: .plain,
                     target: self,
                     action: #selector(OLSearchResultsTableViewController.presentGeneralSearch( _: ) )
                 )
-        searchButton?.tintColor = UIColor.whiteColor()
+        searchButton?.tintColor = UIColor.white
         
         navigationItem.rightBarButtonItems = [searchButton!, sortButton!]
-        navigationItem.leftBarButtonItem?.tintColor = UIColor.whiteColor()
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.white
         
         self.tableView.estimatedRowHeight = SegmentedTableViewCell.estimatedCellHeight
 //        self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -96,19 +96,19 @@ class OLSearchResultsTableViewController: UIViewController {
         generalSearchCoordinator = buildQueryCoordinator()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
         // navigationController?.hidesBarsOnSwipe = true
         
         if let segueName = immediateSegueName {
             
-            performSegueWithIdentifier( segueName, sender: self )
+            performSegue( withIdentifier: segueName, sender: self )
             immediateSegueName = nil
         }
 
         if let indexPath = savedIndexPath {
             
-            tableView.selectRowAtIndexPath( indexPath, animated: true, scrollPosition: .None )
+            tableView.selectRow( at: indexPath, animated: true, scrollPosition: .none )
             savedIndexPath = nil
         
         }
@@ -128,7 +128,7 @@ class OLSearchResultsTableViewController: UIViewController {
         
         // Dynamic sizing for the header view
         if let footerView = tableView.tableFooterView {
-            let height = footerView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+            let height = footerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
             var footerFrame = footerView.frame
             
             // If we don't have this check, viewDidLayoutSubviews() will get
@@ -141,14 +141,14 @@ class OLSearchResultsTableViewController: UIViewController {
         }
     }
     
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
        
-        super.viewWillTransitionToSize( size, withTransitionCoordinator: coordinator )
+        super.viewWillTransition( to: size, with: coordinator )
 
         SegmentedTableViewCell.emptyCellHeights( tableView )
     }
     
-    override func traitCollectionDidChange(previousTraitCollection: UITraitCollection?) {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         
         super.traitCollectionDidChange( previousTraitCollection )
         
@@ -158,14 +158,14 @@ class OLSearchResultsTableViewController: UIViewController {
         
         guard visible.contains( indexPath ) else { return }
         
-        guard let cell = tableView.cellForRowAtIndexPath( indexPath ) as? SegmentedTableViewCell else { return }
+        guard let cell = tableView.cellForRow( at: indexPath ) as? SegmentedTableViewCell else { return }
         
         guard !cell.key.isEmpty else { return }
 
         expandCell( tableView, segmentedCell: cell, key: cell.key )
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         guard let generalSearchCoordinator = generalSearchCoordinator else {
             assert( false )
@@ -176,7 +176,7 @@ class OLSearchResultsTableViewController: UIViewController {
         
         if segueName == "openBookSearch" {
             
-            if let destVC = segue.destinationViewController as? OLBookSearchViewController {
+            if let destVC = segue.destination as? OLBookSearchViewController {
 
                 destVC.initialSearchKeys( generalSearchCoordinator.searchKeys )
                     
@@ -184,7 +184,7 @@ class OLSearchResultsTableViewController: UIViewController {
             }
         } else if segueName == "openBookSort" {
             
-            if let destVC = segue.destinationViewController as? OLBookSortViewController {
+            if let destVC = segue.destination as? OLBookSortViewController {
 
                 destVC.sortFields = generalSearchCoordinator.sortFields
                     
@@ -199,7 +199,7 @@ class OLSearchResultsTableViewController: UIViewController {
             
             case "displayGeneralSearchAuthorDetail":
 
-                if let destVC = segue.destinationViewController as? OLAuthorDetailViewController {
+                if let destVC = segue.destination as? OLAuthorDetailViewController {
                     
                     if let key = savedAuthorKey {
                         
@@ -214,7 +214,7 @@ class OLSearchResultsTableViewController: UIViewController {
                 
             case "displayGeneralSearchAuthorList":
                 
-                if let destVC = segue.destinationViewController as? OLAuthorsTableViewController {
+                if let destVC = segue.destination as? OLAuthorsTableViewController {
                     
                     generalSearchCoordinator.installAuthorsTableViewCoordinator( destVC, indexPath: indexPath )
                     destVC.saveAuthorKey = self.saveAuthorKey
@@ -222,28 +222,28 @@ class OLSearchResultsTableViewController: UIViewController {
 
             case "displayGeneralSearchWorkDetail":
                 
-                if let destVC = segue.destinationViewController as? OLWorkDetailViewController {
+                if let destVC = segue.destination as? OLWorkDetailViewController {
                     
                     generalSearchCoordinator.installWorkDetailCoordinator( destVC, indexPath: indexPath )
                 }
                 
             case "largeCoverImage":
 
-                if let destVC = segue.destinationViewController as? OLPictureViewController {
+                if let destVC = segue.destination as? OLPictureViewController {
                     
                     generalSearchCoordinator.installCoverPictureViewCoordinator( destVC, indexPath: indexPath )
                 }
  
             case "displayWorkEBooks":
 
-                if let destVC = segue.destinationViewController as? OLWorkDetailViewController {
+                if let destVC = segue.destination as? OLWorkDetailViewController {
                     
                     generalSearchCoordinator.installWorkDetailCoordinator( destVC, indexPath: indexPath )
                 }
                 
             case "displayAuthorDetail":
                 
-                if let destVC = segue.destinationViewController as? OLAuthorDetailViewController {
+                if let destVC = segue.destination as? OLAuthorDetailViewController {
                     
                     generalSearchCoordinator.installAuthorDetailCoordinator( destVC, indexPath: indexPath )
                 }
@@ -259,14 +259,14 @@ class OLSearchResultsTableViewController: UIViewController {
     
     func buildQueryCoordinator() -> GeneralSearchResultsCoordinator {
         
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
         return appDelegate.getGeneralSearchCoordinator( self )
     }
     
    // MARK: Search
     
-    func getFirstSearchResults( authorName: String, scopeIndex: Int, userInitiated: Bool = true ) {
+    func getFirstSearchResults( _ authorName: String, scopeIndex: Int, userInitiated: Bool = true ) {
 
         self.title = "Search"
         
@@ -278,7 +278,7 @@ class OLSearchResultsTableViewController: UIViewController {
         generalSearchCoordinator?.clearQuery()
     }
     
-    private func updateUI() {
+    fileprivate func updateUI() {
         
         generalSearchCoordinator?.updateUI()
     }
@@ -287,15 +287,15 @@ class OLSearchResultsTableViewController: UIViewController {
     
     func presentSearch() -> Void {
         
-        performSegueWithIdentifier( "openBookSearch", sender: self )
+        performSegue( withIdentifier: "openBookSearch", sender: self )
     }
     
-    func saveSearchKeys( searchKeys: [String: String] ) -> Void {
+    func saveSearchKeys( _ searchKeys: [String: String] ) -> Void {
         
         self.savedSearchKeys = searchKeys
     }
     
-    @IBAction func dismissSearch( segue: UIStoryboardSegue ) {
+    @IBAction func dismissSearch( _ segue: UIStoryboardSegue ) {
 
         if segue.identifier == "beginBookSearch" {
         
@@ -306,8 +306,8 @@ class OLSearchResultsTableViewController: UIViewController {
                 SegmentedTableViewCell.emptyCellHeights( tableView )
                 generalSearchCoordinator?.newQuery( savedSearchKeys, userInitiated: true, refreshControl: nil )
                 
-                let indexPath = NSIndexPath( forRow: Foundation.NSNotFound, inSection: 0 )
-                tableView.scrollToRowAtIndexPath( indexPath, atScrollPosition: .Top, animated: true )
+                let indexPath = IndexPath( row: Foundation.NSNotFound, section: 0 )
+                tableView.scrollToRow( at: indexPath, at: .top, animated: true )
             }
             savedIndexPath = nil
         }
@@ -317,15 +317,15 @@ class OLSearchResultsTableViewController: UIViewController {
     
     func presentSort() -> Void {
         
-        performSegueWithIdentifier( "openBookSort", sender: self )
+        performSegue( withIdentifier: "openBookSort", sender: self )
     }
     
-    func saveSortFields( sortFields: [SortField] ) -> Void {
+    func saveSortFields( _ sortFields: [SortField] ) -> Void {
         
         generalSearchCoordinator?.sortFields = sortFields
     }
     
-    @IBAction func dismissSort(segue: UIStoryboardSegue) {
+    @IBAction func dismissSort(_ segue: UIStoryboardSegue) {
         
         if segue.identifier == "beginBookSort" {
             
@@ -338,15 +338,15 @@ class OLSearchResultsTableViewController: UIViewController {
     
     func presentAuthors() -> Void {
         
-        performSegueWithIdentifier( "displayGeneralSearchAuthorList", sender: self )
+        performSegue( withIdentifier: "displayGeneralSearchAuthorList", sender: self )
     }
     
-    func saveAuthorKey( authorKey: String ) -> Void {
+    func saveAuthorKey( _ authorKey: String ) -> Void {
         
         savedAuthorKey = authorKey
     }
     
-    @IBAction func dismissAuthors(segue: UIStoryboardSegue) {
+    @IBAction func dismissAuthors(_ segue: UIStoryboardSegue) {
         
         if segue.identifier == "beginAuthorDetail" {
             
@@ -363,8 +363,8 @@ class OLSearchResultsTableViewController: UIViewController {
     func coordinatorIsBusy() -> Void {
         
         activityView?.startAnimating()
-        sortButton?.enabled = false
-        searchButton?.enabled = false
+        sortButton?.isEnabled = false
+        searchButton?.isEnabled = false
         
         SegmentedTableViewCell.emptyIndexPathToKeyLookup( tableView )
     }
@@ -372,20 +372,20 @@ class OLSearchResultsTableViewController: UIViewController {
     func coordinatorIsNoLongerBusy() -> Void {
         
         activityView?.stopAnimating()
-        sortButton?.enabled = true
-        searchButton?.enabled = true
+        sortButton?.isEnabled = true
+        searchButton?.isEnabled = true
     }
     
     // MARK: cell expansion and contraction
     
-    private func expandCell( tableView: UITableView, segmentedCell: SegmentedTableViewCell, key: String ) {
+    fileprivate func expandCell( _ tableView: UITableView, segmentedCell: SegmentedTableViewCell, key: String ) {
 
         let duration = 0.3
         
         segmentedCell.setOpen( tableView, key: key )
         
-        UIView.animateWithDuration(
-            duration, delay: 0, options: .CurveLinear,
+        UIView.animate(
+            withDuration: duration, delay: 0, options: .curveLinear,
             animations: {
                 () -> Void in
                 
@@ -395,21 +395,21 @@ class OLSearchResultsTableViewController: UIViewController {
         ) {
             (finished) -> Void in
             
-            segmentedCell.selectedAnimation( tableView, key: key, expandCell: true, animated: true ) {
+            _ = segmentedCell.selectedAnimation( tableView, key: key, expandCell: true, animated: true ) {
                 
                 SegmentedTableViewCell.animationComplete()
             }
         }
     }
     
-    private func contractCell( tableView: UITableView, segmentedCell: SegmentedTableViewCell, key: String ) {
+    fileprivate func contractCell( _ tableView: UITableView, segmentedCell: SegmentedTableViewCell, key: String ) {
         
         let duration = 0.1 // isOpen ? 0.3 : 0.1 // isOpen ? 1.1 : 0.6
         
-        segmentedCell.selectedAnimation( tableView, key: key, expandCell: false, animated: true ) {
+        _ = segmentedCell.selectedAnimation( tableView, key: key, expandCell: false, animated: true ) {
             
-            UIView.animateWithDuration(
-                duration, delay: 0.0, options: .CurveLinear,
+            UIView.animate(
+                withDuration: duration, delay: 0.0, options: .curveLinear,
                 
                 animations: {
                     () -> Void in
@@ -430,7 +430,7 @@ extension OLSearchResultsTableViewController: TransitionSourceImage {
     func transitionSourceRectImageView() -> UIImageView? {
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            if let cell = tableView.cellForRowAtIndexPath( indexPath ) as? GeneralSearchResultSegmentedTableViewCell {
+            if let cell = tableView.cellForRow( at: indexPath ) as? GeneralSearchResultSegmentedTableViewCell {
                 
                 return cell.transitionSourceRectView()
             }
@@ -448,7 +448,7 @@ extension OLSearchResultsTableViewController: TransitionSourceCell {
         
         if let indexPath = tableView.indexPathForSelectedRow {
             
-            sourceRectView = tableView.cellForRowAtIndexPath( indexPath )
+            sourceRectView = tableView.cellForRow( at: indexPath )
         }
         
         return sourceRectView
@@ -460,7 +460,7 @@ extension OLSearchResultsTableViewController: TransitionSourceCell {
 
 extension OLSearchResultsTableViewController: UIScrollViewDelegate {
     
-    func scrollViewDidEndDragging( scrollView: UIScrollView, willDecelerate decelerate: Bool ) {
+    func scrollViewDidEndDragging( _ scrollView: UIScrollView, willDecelerate decelerate: Bool ) {
         
         // UITableView only moves in one direction, y axis
         let currentOffset = scrollView.contentOffset.y
@@ -478,7 +478,7 @@ extension OLSearchResultsTableViewController: UIScrollViewDelegate {
         
     }
 
-    func scrollViewWillEndDragging( scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint> ) {
+    func scrollViewWillEndDragging( _ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint> ) {
         
         // up
         if velocity.y < -1.5 {
@@ -493,7 +493,7 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
     
     // do not implement this function! The overhead involved in getting the key isn't worth it
 
-    func tableView( tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath ) -> CGFloat {
+    func tableView( _ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath ) -> CGFloat {
         
         let height = SegmentedTableViewCell.estimatedCellHeight
         
@@ -501,13 +501,13 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
         return height
     }
     
-    func tableView( tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath ) -> CGFloat {
+    func tableView( _ tableView: UITableView, heightForRowAt indexPath: IndexPath ) -> CGFloat {
         
-        assert( NSThread.isMainThread() )
+        assert( Thread.isMainThread )
 
         var height = SegmentedTableViewCell.estimatedCellHeight
 
-        let cell = tableView.cellForRowAtIndexPath( indexPath ) as? SegmentedTableViewCell
+        let cell = tableView.cellForRow( at: indexPath ) as? SegmentedTableViewCell
         if let cell = cell {
 
             height = cell.height( tableView )
@@ -522,20 +522,20 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
         return height
     }
 
-    func tableView( tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath ) {
+    func tableView( _ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath ) {
         
         if let cell = cell as? GeneralSearchResultSegmentedTableViewCell {
             
-            cell.selectedAnimation( tableView, key: cell.key )
+            _ = cell.selectedAnimation( tableView, key: cell.key )
 
 //            print( "willDisplayCell forRowAtIndexPath \(indexPath.row) \(cell.key)" )
         }
         
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if let cell = tableView.cellForRowAtIndexPath( indexPath ) as? SegmentedTableViewCell {
+        if let cell = tableView.cellForRow( at: indexPath ) as? SegmentedTableViewCell {
         
             generalSearchCoordinator?.didSelectRowAtIndexPath( indexPath )
 
@@ -548,10 +548,10 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
         }
     }
     
-    func tableView( tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath ) {
+    func tableView( _ tableView: UITableView, didDeselectRowAt indexPath: IndexPath ) {
         
         SegmentedTableViewCell.setClosed( tableView, indexPath: indexPath )
-        if let cell = tableView.cellForRowAtIndexPath( indexPath ) as? SegmentedTableViewCell {
+        if let cell = tableView.cellForRow( at: indexPath ) as? SegmentedTableViewCell {
             
             contractCell( tableView, segmentedCell: cell, key: cell.key )
             
@@ -565,7 +565,7 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
 
 extension OLSearchResultsTableViewController: UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         
         guard let generalSearchCoordinator = generalSearchCoordinator else {
             return 0
@@ -574,7 +574,7 @@ extension OLSearchResultsTableViewController: UITableViewDataSource {
         return generalSearchCoordinator.numberOfSections()
     }
     
-    func tableView( tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
+    func tableView( _ tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
         
         guard let generalSearchCoordinator = generalSearchCoordinator else {
             return 0
@@ -583,11 +583,11 @@ extension OLSearchResultsTableViewController: UITableViewDataSource {
         return generalSearchCoordinator.numberOfRowsInSection( section )
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var cell: UITableViewCell? = nil
         
-        if let expandingCell = tableView.dequeueReusableCellWithIdentifier( GeneralSearchResultSegmentedTableViewCell.nameOfClass ) as? GeneralSearchResultSegmentedTableViewCell {
+        if let expandingCell = tableView.dequeueReusableCell( withIdentifier: GeneralSearchResultSegmentedTableViewCell.nameOfClass ) as? GeneralSearchResultSegmentedTableViewCell {
             
             if let object = generalSearchCoordinator?.objectAtIndexPath( indexPath ) {
                 

@@ -13,12 +13,12 @@ import PSOperations
 class EditionDetailDownloadOperation: GroupOperation {
     // MARK: Properties
 
-    let cacheFile: NSURL
+    let cacheFile: URL
     
     // MARK: Initialization
     
     /// - parameter cacheFile: The file `NSURL` to which the Edition detail json will be downloaded.
-    init( queryText: String, cacheFile: NSURL) {
+    init( queryText: String, cacheFile: URL) {
 
         self.cacheFile = cacheFile
         super.init(operations: [])
@@ -37,17 +37,17 @@ class EditionDetailDownloadOperation: GroupOperation {
         
         let query = queryText.stringByAddingPercentEncodingForRFC3986()!
         let urlString = "https://openlibrary.org\(query).json"
-        let url = NSURL( string: urlString )!
-        let task = NSURLSession.sharedSession().jsonDownloadTaskWithURL( url ) {
+        let url = URL( string: urlString )!
+        let task = URLSession.shared.jsonDownloadTaskWithURL( url ) {
             
             url, response, error in
             
-            self.downloadFinished(url, response: response as? NSHTTPURLResponse, error: error)
+            self.downloadFinished(url, response: response as? HTTPURLResponse, error: error)
         }
         
         let taskOperation = URLSessionTaskOperation(task: task)
         
-        let reachabilityCondition = ReachabilityCondition(host: url)
+        let reachabilityCondition = ReachabilityCondition( host: url )
         taskOperation.addCondition(reachabilityCondition)
 
         let networkObserver = NetworkObserver()
@@ -56,19 +56,19 @@ class EditionDetailDownloadOperation: GroupOperation {
         addOperation(taskOperation)
     }
         
-    func downloadFinished(url: NSURL?, response: NSHTTPURLResponse?, error: NSError?) {
+    func downloadFinished( _ url: URL?, response: HTTPURLResponse?, error: Error? ) {
         if let localURL = url {
             do {
                 /*
                     If we already have a file at this location, just delete it.
                     Also, swallow the error, because we don't really care about it.
                 */
-                try NSFileManager.defaultManager().removeItemAtURL(cacheFile)
+                try FileManager.default.removeItem(at: cacheFile)
             }
             catch { }
             
             do {
-                try NSFileManager.defaultManager().moveItemAtURL(localURL, toURL: cacheFile)
+                try FileManager.default.moveItem(at: localURL, to: cacheFile)
             }
             catch let error as NSError {
                 aggregateError(error)
@@ -76,7 +76,7 @@ class EditionDetailDownloadOperation: GroupOperation {
             
         }
         else if let error = error {
-            aggregateError(error)
+            aggregateError( error as NSError )
         }
         else {
             // Do nothing, and the operation will automatically finish.

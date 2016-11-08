@@ -13,9 +13,9 @@ import BNRCoreDataStack
 import PSOperations
 
 /// An `Operation` to parse works out of a query from OpenLibrary.
-class LanguagesParseOperation: Operation {
+class LanguagesParseOperation: PSOperation {
     
-    let cacheFile: NSURL
+    let cacheFile: URL
     let context: NSManagedObjectContext
     
     /**
@@ -26,7 +26,7 @@ class LanguagesParseOperation: Operation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( cacheFile: NSURL, coreDataStack: CoreDataStack ) {
+    init( cacheFile: URL, coreDataStack: OLDataStack ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -43,7 +43,7 @@ class LanguagesParseOperation: Operation {
     }
     
     override func execute() {
-        guard let stream = NSInputStream(URL: cacheFile) else {
+        guard let stream = InputStream(url: cacheFile) else {
             finish()
             return
         }
@@ -55,7 +55,7 @@ class LanguagesParseOperation: Operation {
         }
         
         do {
-            if let json = try NSJSONSerialization.JSONObjectWithStream(stream, options: []) as? [[String: AnyObject]] {
+            if let json = try JSONSerialization.jsonObject(with: stream, options: []) as? [[String: AnyObject]] {
             
                 parse( json )
             }
@@ -68,7 +68,7 @@ class LanguagesParseOperation: Operation {
         }
     }
     
-    private func parse( resultSet: [[String: AnyObject]] ) {
+    fileprivate func parse( _ resultSet: [[String: AnyObject]] ) {
 
         let numFound = resultSet.count
         if 0 >= numFound {
@@ -77,7 +77,7 @@ class LanguagesParseOperation: Operation {
             return
         }
 
-        context.performBlock {
+        context.perform {
             
             let sequence = Int64( 0 )
             var index: Int64 = 0
@@ -106,7 +106,7 @@ class LanguagesParseOperation: Operation {
         - note: This method returns an `NSError?` because it will be immediately
             passed to the `finishWithError()` method, which accepts an `NSError?`.
     */
-    private func saveContext() -> NSError? {
+    fileprivate func saveContext() -> NSError? {
         var error: NSError?
 
         do {

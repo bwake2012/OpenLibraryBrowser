@@ -14,8 +14,12 @@ import CoreData
 
 extension OLEBookFile {
     
-    @NSManaged var retrieval_date: NSDate
-    @NSManaged var provisional_date: NSDate?
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<OLEBookFile> {
+        return NSFetchRequest<OLEBookFile>( entityName: OLEBookFile.entityName )
+    }
+    
+    @NSManaged var retrieval_date: Date
+    @NSManaged var provisional_date: Date?
     @NSManaged var is_provisional: Bool
 
     @NSManaged var workKey: String

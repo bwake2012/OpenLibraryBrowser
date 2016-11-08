@@ -30,14 +30,14 @@ class AuthorEditionsGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, offset: Int, coreDataStack: CoreDataStack, updateResults: SearchResultsUpdater, completionHandler: Void -> Void ) {
+    init( queryText: String, offset: Int, coreDataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater, completionHandler: @escaping (Void) -> Void ) {
 
-        let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+        let cachesFolder = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
-        let parts = queryText.componentsSeparatedByString( "/" )
+        let parts = queryText.components( separatedBy: "/" )
         let goodParts = parts.filter { (x) -> Bool in !x.isEmpty }
         let authorKey = goodParts.last!
-        let cacheFile = cachesFolder.URLByAppendingPathComponent("\(authorKey)authorEditions.json")
+        let cacheFile = cachesFolder.appendingPathComponent("\(authorKey)authorEditions.json")
 //        print( "cache: \(cacheFile.absoluteString)" )
         
         /*
@@ -51,13 +51,13 @@ class AuthorEditionsGetOperation: GroupOperation {
         downloadOperation = AuthorEditionsDownloadOperation( queryText: queryText, offset: offset, cacheFile: cacheFile )
         parseOperation = AuthorEditionsParseOperation( authorKey: queryText, offset: offset, cacheFile: cacheFile, coreDataStack: coreDataStack, updateResults: updateResults )
         
-        let finishOperation = NSBlockOperation( block: completionHandler )
+        let finishOperation = PSBlockOperation { completionHandler() }
         
         // These operations must be executed in order
         parseOperation.addDependency(downloadOperation)
         finishOperation.addDependency(parseOperation)
         
-        let operations = [downloadOperation, parseOperation, finishOperation]
+        let operations = [downloadOperation, parseOperation, finishOperation] as [Foundation.Operation]
         super.init( operations: operations )
 
         addCondition( MutuallyExclusive<AuthorEditionsGetOperation>() )
@@ -65,8 +65,8 @@ class AuthorEditionsGetOperation: GroupOperation {
         name = "Get Author Editions"
     }
     
-    override func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
-        if let firstError = errors.first where (operation === downloadOperation || operation === parseOperation) {
+    override func operationDidFinish(_ operation: Foundation.Operation, withErrors errors: [NSError]) {
+        if let firstError = errors.first , (operation === downloadOperation || operation === parseOperation) {
             produceAlert(firstError)
         }
     }
