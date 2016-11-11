@@ -402,7 +402,7 @@ class OLWorkDetail: OLManagedObject {
             newData.append(
                 DeluxeData(
                     type: .inline,
-                    caption: "Last Modified",
+                    caption: "Modified",
                     value: dateFormatter.string( from: last_modified as Date )
                 )
             )
