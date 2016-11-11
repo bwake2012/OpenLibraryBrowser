@@ -58,12 +58,21 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
     
     func objectAtIndexPath( _ indexPath: IndexPath ) -> DeluxeData? {
         
-        guard (indexPath as NSIndexPath).section >= 0 else { return nil }
-        guard (indexPath as NSIndexPath).section < deluxeData.count else { return nil }
-        guard (indexPath as NSIndexPath).row >= 0 else { return nil }
-        guard (indexPath as NSIndexPath).row < deluxeData[(indexPath as NSIndexPath).section].count else { return nil }
+        let section = indexPath.section
+        assert( section >= 0 && section < deluxeData.count )
+        guard section >= 0 else { return nil }
+        guard section < deluxeData.count else { return nil }
         
-        return deluxeData[(indexPath as NSIndexPath).section][(indexPath as NSIndexPath).row]
+        let sectionData = deluxeData[section]
+        
+        let row = indexPath.row
+        assert( row >= 0 && row < sectionData.count )
+        guard row >= 0 else { return nil }
+        guard row < sectionData.count else { return nil }
+        
+        let rowData = sectionData[row]
+        
+        return rowData
     }
     
     func didSelectRowAtIndexPath( _ indexPath: IndexPath ) {
