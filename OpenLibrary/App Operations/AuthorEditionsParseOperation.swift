@@ -19,7 +19,7 @@ class AuthorEditionsParseOperation: PSOperation {
     let offset: Int
     let cacheFile: URL
     let context: NSManagedObjectContext
-    let updateResults: SearchResultsUpdater
+    var updateResults: SearchResultsUpdater?
     
     var searchResults = SearchResults()
     
@@ -103,7 +103,7 @@ class AuthorEditionsParseOperation: PSOperation {
             let error = self.saveContext()
 
             if nil == error {
-                self.updateResults( SearchResults( start: self.offset, numFound: numFound, pageSize: resultSet.count ) )
+                self.updateResults?( SearchResults( start: self.offset, numFound: numFound, pageSize: resultSet.count ) )
             } else {
                 
                 print( "\(error?.localizedDescription)" )
