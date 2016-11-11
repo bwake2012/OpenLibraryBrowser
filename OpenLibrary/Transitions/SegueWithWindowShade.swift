@@ -12,22 +12,24 @@ class SegueWithWindowShade: UIStoryboardSegue {
 
     override func perform() {
 
-        assert( nil != self.source.navigationController )
-        assert( self.source.navigationController!.delegate is NavigationControllerDelegate )
-
-        if let navController = self.source.navigationController {
+        guard let navController = self.source.navigationController else {
             
-            if let ncd = navController.delegate as? NavigationControllerDelegate {
-
-                ncd.pushZoomTransition(
-                    WindowShadeTransition(
-                                navigationController: navController,
-                                operation: .push,
-                                sourceRectView: nil
-                            )
-                        )
-            }
+            fatalError( "Source VC not embedded in a navigation controller" )
         }
+        
+        guard let ncd = navController.delegate as? NavigationControllerDelegate else {
+            
+            fatalError( "source VC navigation controller has no NavigationControllerDelegate" )
+        }
+        
+        ncd.pushZoomTransition(
+            WindowShadeTransition(
+                        navigationController: navController,
+                        operation: .push,
+                        sourceRectView: nil
+                    )
+                )
+
         super.perform()
     }
     
