@@ -21,7 +21,7 @@ class AuthorWorksParseOperation: PSOperation {
     let limit: Int
     let cacheFile: URL
     let context: NSManagedObjectContext
-    let updateResults: SearchResultsUpdater
+    var updateResults: SearchResultsUpdater?
     
     var searchResults = SearchResults()
     
@@ -84,14 +84,14 @@ class AuthorWorksParseOperation: PSOperation {
 
         guard var numFound = resultSet["size"] as? Int else {
             
-            updateResults( SearchResults( start: offset, numFound: offset, pageSize: 0 ) )
+            updateResults?( SearchResults( start: offset, numFound: offset, pageSize: 0 ) )
             finishWithError( nil )
             return
         }
         
         guard let entries = resultSet["entries"] as? [[String: AnyObject]] else {
             
-            updateResults( SearchResults( start: offset, numFound: offset, pageSize: 0 ) )
+            updateResults?( SearchResults( start: offset, numFound: offset, pageSize: 0 ) )
             finishWithError( nil )
             return
         }
@@ -105,7 +105,7 @@ class AuthorWorksParseOperation: PSOperation {
             
         if 0 == numFound {
 
-            updateResults( SearchResults( start: offset, numFound: offset, pageSize: 0 ) )
+            updateResults?( SearchResults( start: offset, numFound: offset, pageSize: 0 ) )
             finishWithError( nil )
             return
         }
@@ -129,7 +129,7 @@ class AuthorWorksParseOperation: PSOperation {
             let error = self.saveContext()
 
             if nil == error {
-                self.updateResults( SearchResults( start: self.offset, numFound: numFound, pageSize: entries.count ) )
+                self.updateResults?( SearchResults( start: self.offset, numFound: numFound, pageSize: entries.count ) )
             }
 
             self.finishWithError( error )

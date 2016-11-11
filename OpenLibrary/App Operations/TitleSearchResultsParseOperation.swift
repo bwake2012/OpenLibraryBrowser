@@ -21,7 +21,7 @@ class TitleSearchResultsParseOperation: PSOperation {
     
     let cacheFile: URL
     let context: NSManagedObjectContext
-    let updateResults: SearchResultsUpdater
+    var updateResults: SearchResultsUpdater?
     
     var searchResults = SearchResults()
     
@@ -109,7 +109,7 @@ class TitleSearchResultsParseOperation: PSOperation {
             let error = self.saveContext()
 
             if nil == error {
-                self.updateResults(
+                self.updateResults?(
                         SearchResults( start: Int( start ), numFound: Int( numFound ), pageSize: results.count )
                     )
             }

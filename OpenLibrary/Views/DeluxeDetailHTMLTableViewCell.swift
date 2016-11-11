@@ -19,39 +19,63 @@ class DeluxeDetailHTMLTableViewCell: DeluxeDetailTableViewCell {
         
         captionView.text = data.caption
         
-        if let stringData = data.value.data( using: String.Encoding.utf8, allowLossyConversion: false ) {
-        
-            do {
-                let theAttributedString =
-                    try NSMutableAttributedString(
-                                data: stringData,
-                                options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
-                                documentAttributes: nil
-                            )
+        var attributedText = NSMutableAttributedString( string: "" )
+        if data.value.isEmpty {
+            
+            attributedText = NSMutableAttributedString( attributedString: data.attributedValue )
 
-                theAttributedString.enumerateAttribute(
-                        NSFontAttributeName,
-                        in: NSRange( location: 0, length: theAttributedString.length ),
-                        options: NSAttributedString.EnumerationOptions(rawValue: 0)
-                    ) {
-                        (value, range, stop) -> Void in
-                        
-                        let newFont = UIFont.preferredFont( forTextStyle: UIFontTextStyle.body )
-                        
-                        theAttributedString.removeAttribute( NSFontAttributeName, range: range )
-                        theAttributedString.addAttribute( NSFontAttributeName, value: newFont, range: range )
-                    }
+        } else {
+            
+            attributedText = convertHTMLText( htmlValue: data.value )
+        }
+        
+        let newFont = UIFont.preferredFont( forTextStyle: UIFontTextStyle.body )
+        
+        attributedText.enumerateAttribute(
+            NSFontAttributeName,
+            in: NSRange( location: 0, length: attributedText.length ),
+            options: NSAttributedString.EnumerationOptions(rawValue: 0)
+        ) {
+            (value, range, stop) -> Void in
+            
+            attributedText.removeAttribute( NSFontAttributeName, range: range )
+            attributedText.addAttribute( NSFontAttributeName, value: newFont, range: range )
+        }
+
+        htmlView.attributedText = attributedText
+
+        setNeedsLayout()
+        layoutIfNeeded()
+    }
+    
+    func convertHTMLText( htmlValue: String ) -> NSMutableAttributedString {
+        
+        var valueText = htmlValue.replacingOccurrences( of: "\n", with: "<br>" )
+        valueText = valueText.replacingOccurrences( of: "</p><br>", with: "</p>" )
+        
+        var theAttributedString = NSMutableAttributedString( string: "" )
+        if let stringData = valueText.data( using: String.Encoding.utf8, allowLossyConversion: true ) {
+            
+            do {
+                theAttributedString =
+                    try NSMutableAttributedString(
+                        data: stringData,
+                        options: [
+                            NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType
+                        ],
+                        documentAttributes: nil
+                )
                 
-                htmlView.attributedText = theAttributedString
+                
             }
             catch {
                 
                 print( "\(error)" )
             }
             
-            setNeedsLayout()
-            layoutIfNeeded()
         }
+
+        return theAttributedString
     }
 }
 

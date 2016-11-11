@@ -201,7 +201,7 @@ class OLAuthorDetail: OLManagedObject {
         if !self.bio.isEmpty {
 
             let bio = self.bio
-            let fancyOutput = convertMarkdownToHTML( markdown: bio )
+            let fancyOutput = convertMarkdownToAttributedString( markdown: bio )
             
             deluxeData.append( [DeluxeData( type: .html, caption: "Biography", value: fancyOutput )] )
         }
@@ -278,7 +278,7 @@ class OLAuthorDetail: OLManagedObject {
             newData.append(
                 DeluxeData(
                     type: .inline,
-                    caption: "Last Modified",
+                    caption: "Modified",
                     value: dateFormatter.string( from: last_modified as Date )
                 )
             )

@@ -335,7 +335,7 @@ class OLEditionDetail: OLManagedObject {
             }
         }
         
-        var newData = [DeluxeData]()
+        var newData: [DeluxeData] = []
         
         if !self.publish_date.isEmpty {
             
@@ -400,7 +400,7 @@ class OLEditionDetail: OLManagedObject {
             deluxeData.append( newData )
         }
         
-        newData = [DeluxeData]()
+        newData = []
         if !self.physical_format.isEmpty {
             
             newData.append( DeluxeData( type: .block, caption: "Format", value: self.physical_format ) )
@@ -429,31 +429,40 @@ class OLEditionDetail: OLManagedObject {
 
             deluxeData.append( newData )
         }
+        
+        newData = []
 
         if !self.edition_description.isEmpty {
             
-            let fancyOutput = convertMarkdownToHTML( markdown: self.edition_description )
+            let fancyOutput = convertMarkdownToAttributedString( markdown: self.edition_description )
             
-            deluxeData.append( [DeluxeData( type: .html, caption: "Description", value: fancyOutput )] )
+            newData.append( DeluxeData( type: .html, caption: "Description", value: fancyOutput ) )
         }
 
         if !self.first_sentence.isEmpty {
             
-            let fancyOutput = convertMarkdownToHTML( markdown: self.first_sentence )
+            let fancyOutput = convertMarkdownToAttributedString( markdown: self.first_sentence )
             
-            deluxeData.append( [DeluxeData( type: .html, caption: "First Sentence", value: fancyOutput )] )
+            newData.append( DeluxeData( type: .html, caption: "First Sentence", value: fancyOutput ) )
         }
         
         if !self.notes.isEmpty {
             
-            let fancyOutput = convertMarkdownToHTML( markdown: self.notes )
+            let fancyOutput = convertMarkdownToAttributedString( markdown: self.notes )
             
-            deluxeData.append( [DeluxeData( type: .html, caption: "Notes", value: fancyOutput )] )
+            newData.append( DeluxeData( type: .html, caption: "Notes", value: fancyOutput ) )
         }
         
+        if !newData.isEmpty {
+            
+            deluxeData.append( newData )
+        }
+        
+        newData = []
+
         if !self.uris.isEmpty && !uri_descriptions.isEmpty {
             
-            var newData = [DeluxeData]()
+            newData = []
             
             for link in 0 ..< min( uris.count, uri_descriptions.count ) {
                 
@@ -468,7 +477,7 @@ class OLEditionDetail: OLManagedObject {
         
         if 1 < self.covers.count {
 
-            newData = [DeluxeData]()
+            newData = []
             
             for index in 1 ..< self.covers.count {
                 
@@ -497,7 +506,7 @@ class OLEditionDetail: OLManagedObject {
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .medium
         
-        newData = [DeluxeData]()
+        newData = []
         
         if let created = created {
             
@@ -515,7 +524,7 @@ class OLEditionDetail: OLManagedObject {
             newData.append(
                 DeluxeData(
                     type: .inline,
-                    caption: "Last Modified",
+                    caption: "Modified",
                     value: dateFormatter.string( from: last_modified as Date )
                 )
             )
