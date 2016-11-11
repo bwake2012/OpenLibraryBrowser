@@ -117,6 +117,7 @@ struct DeluxeData {
     let caption: String
     let value: String
     let extraValue: String
+    let attributedValue: NSAttributedString
     
     init( type: DeluxeDetail, caption: String, value: String, extraValue: String ) {
         
@@ -124,6 +125,7 @@ struct DeluxeData {
         self.caption = caption
         self.value = value
         self.extraValue = extraValue
+        self.attributedValue = NSAttributedString( string: "" )
     }
 
     init( type: DeluxeDetail, caption: String, value: String ) {
@@ -132,6 +134,16 @@ struct DeluxeData {
         self.caption = caption
         self.value = value
         self.extraValue = ""
+        self.attributedValue = NSAttributedString( string: "" )
+    }
+
+    init( type: DeluxeDetail, caption: String, value: NSAttributedString ) {
+        
+        self.type = type
+        self.caption = caption
+        self.value = ""
+        self.extraValue = ""
+        self.attributedValue = value
     }
 }
 
@@ -291,13 +303,22 @@ class OLManagedObject: NSManagedObject {
 //        }
 //    }
     
-    func convertMarkdownToHTML( markdown: String ) -> String {
+//    func convertMarkdownToHTML( markdown: String ) -> String {
+//        
+//        let down = Down( markdownString: markdown )
+//        
+//        let html = try? down.toHTML( DownOptions.ValidateUTF8 )
+//        
+//        return html ?? ""
+//    }
+    
+    func convertMarkdownToAttributedString( markdown: String ) -> NSAttributedString {
         
         let down = Down( markdownString: markdown )
         
-        let html = try? down.toHTML()
+        let attributedString = try? down.toAttributedString( DownOptions.ValidateUTF8 )
         
-        return html ?? ""
+        return nil != attributedString ? attributedString! : NSAttributedString( string: "" )
     }
     
     func localURL( _ imageID:Int, size: String ) -> URL {

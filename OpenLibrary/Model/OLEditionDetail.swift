@@ -434,21 +434,21 @@ class OLEditionDetail: OLManagedObject {
 
         if !self.edition_description.isEmpty {
             
-            let fancyOutput = convertMarkdownToHTML( markdown: self.edition_description )
+            let fancyOutput = convertMarkdownToAttributedString( markdown: self.edition_description )
             
             newData.append( DeluxeData( type: .html, caption: "Description", value: fancyOutput ) )
         }
 
         if !self.first_sentence.isEmpty {
             
-            let fancyOutput = convertMarkdownToHTML( markdown: self.first_sentence )
+            let fancyOutput = convertMarkdownToAttributedString( markdown: self.first_sentence )
             
             newData.append( DeluxeData( type: .html, caption: "First Sentence", value: fancyOutput ) )
         }
         
         if !self.notes.isEmpty {
             
-            let fancyOutput = convertMarkdownToHTML( markdown: self.notes )
+            let fancyOutput = convertMarkdownToAttributedString( markdown: self.notes )
             
             newData.append( DeluxeData( type: .html, caption: "Notes", value: fancyOutput ) )
         }
