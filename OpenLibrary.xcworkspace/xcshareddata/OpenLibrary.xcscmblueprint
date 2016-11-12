@@ -4,12 +4,10 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "70CA96865943C96D0F1CD372F2B17C7C14C7F167" : 0,
     "16564CA58B40DA1E6C70CA053059C9743EF214EB" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "E395F818-84B6-486F-BF36-EC2EB88A97C4",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "70CA96865943C96D0F1CD372F2B17C7C14C7F167" : "..\/Interviews\/OrgSync\/MusicBrowse",
     "16564CA58B40DA1E6C70CA053059C9743EF214EB" : "OpenLibrary\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "OpenLibrary",
@@ -20,11 +18,6 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/bwake2012\/OpenLibraryBrowser.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "16564CA58B40DA1E6C70CA053059C9743EF214EB"
-    },
-    {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/bwake2012\/MusicBrowse",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "70CA96865943C96D0F1CD372F2B17C7C14C7F167"
     }
   ]
 }
