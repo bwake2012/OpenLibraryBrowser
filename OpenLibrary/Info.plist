@@ -37,6 +37,12 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+	<key>NSCalendarsUsageDescription</key>
+	<string>This application should not access your calendar.</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>This application should not share your health information.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>This application should not update your health information.</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
