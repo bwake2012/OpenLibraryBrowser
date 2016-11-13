@@ -33,7 +33,12 @@ class IOS10DataStack: OLDataStack {
         
         persistentContainer.loadPersistentStores {
             
-            (storeDescription, error ) in
+            ( storeDescription, error ) in
+
+            if nil != error {
+                
+                fatalError( "Error \(error!) loading persistent store \(storeName) iOS 10" )
+            }
 
             let delay = DispatchTime.now() + .milliseconds( 250 )
             DispatchQueue.main.asyncAfter( deadline: delay, execute: completion )
@@ -81,11 +86,11 @@ class IOS09DataStack: OLDataStack {
                 }
                 stack.mainQueueContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
                 
-                let delay = DispatchTime.now() + .milliseconds( 500 )
+                let delay = DispatchTime.now() + .milliseconds( 250 )
                 DispatchQueue.main.asyncAfter( deadline: delay, execute: completion )
                 
             case .failure( let error ):
-                assertionFailure("\(error)")
+                fatalError( "Error \(error) constructing SQLLite stack \(storeName)" )
             }
         }
     }

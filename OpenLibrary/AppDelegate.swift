@@ -49,6 +49,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             if nil == previousVersion || currentVersion != previousVersion {
                 
+                print( "Nuking previous data store" )
+                
                 let archiveURL = storeFolder.appendingPathComponent( storeName + ".sqlite" )
                 
                 do {
@@ -62,7 +64,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     
                     try FileManager.default.removeItem( at: searchStateURL )
                 }
-                catch {}
+                catch {
+                    
+                    print( "\(error)" )
+                }
 
                 let path = versionURL.path
                     
@@ -93,11 +98,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if #available(iOS 10.0, *) {
             
+            print( "iOS 10 Core Data Stack" )
             self.dataStack =
                 IOS10DataStack( operationQueue: operationQueue, completion: launchUserInterface )
 
         } else {
             
+            print( "Big Nerd Ranch Core Data Stack" )
             self.dataStack =
                 IOS09DataStack( operationQueue: operationQueue, completion: launchUserInterface )
         }

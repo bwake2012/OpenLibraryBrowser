@@ -165,32 +165,28 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
     
     func numberOfSections() -> Int {
         
-        return fetchedResultsController.sections?.count ?? 0
+        return fetchedResultsController.sectionCount
     }
 
     func numberOfRowsInSection( _ section: Int ) -> Int {
 
-        let rows = fetchedResultsController.sections?[section].objects.count ?? 0
+        guard let sections = fetchedResultsController.sections else {
+            return 0
+        }
+        
+        guard section < sections.count else {
+            return 0
+        }
+        
+        let rows = sections[section].objects.count 
 
         return rows
     }
     
     func objectAtIndexPath( _ indexPath: IndexPath ) -> OLGeneralSearchResult? {
         
-        guard let sections = fetchedResultsController.sections else {
-            assertionFailure("Sections missing")
-            return nil
-        }
+        return fetchedResultsController[indexPath]
         
-        let section = sections[indexPath.section]
-        if indexPath.row >= section.objects.count {
-
-            return nil
-
-        } else {
-            
-            return section.objects[indexPath.row]
-        }
     }
     
     @discardableResult func displayToCell( _ cell: OLTableViewCell, indexPath: IndexPath ) -> OLManagedObject? {
