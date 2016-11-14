@@ -1316,7 +1316,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9BBDA9D0BB53DFD704107AAA /* Pods-OpenLibrary.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = OpenLibrary/OpenLibrary.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1335,7 +1335,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CF1397E0D0A09330686834E7 /* Pods-OpenLibrary.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = OpenLibrary/OpenLibrary.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
