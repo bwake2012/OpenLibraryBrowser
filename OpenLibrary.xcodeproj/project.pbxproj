@@ -180,6 +180,8 @@
 		C4E863951C99E951002C0E6B /* AuthorEditionsGetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E863921C99E951002C0E6B /* AuthorEditionsGetOperation.swift */; };
 		C4E863961C99E951002C0E6B /* AuthorEditionsParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E863931C99E951002C0E6B /* AuthorEditionsParseOperation.swift */; };
 		C4E8639A1C9A3897002C0E6B /* EBookEditionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E863991C9A3897002C0E6B /* EBookEditionTableViewCell.swift */; };
+		C4EAD6FB1DDB85CC001EE378 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4EAD6FA1DDB85CC001EE378 /* GameKit.framework */; };
+		C4EAD6FD1DDB8603001EE378 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4EAD6FC1DDB8603001EE378 /* StoreKit.framework */; };
 		C4EF72F51D46818E0056D8E4 /* GeneralSearchResultSegmentedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4EF72F41D46818E0056D8E4 /* GeneralSearchResultSegmentedTableViewCell.xib */; };
 		C4EF99D21CA1B04C00BEF2D3 /* AuthorDetailWithThumbGetOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EF99D11CA1B04C00BEF2D3 /* AuthorDetailWithThumbGetOperation.swift */; };
 		C4EF99D51CA3707900BEF2D3 /* OLWorkDetailEditionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EF99D31CA3707900BEF2D3 /* OLWorkDetailEditionsTableViewController.swift */; };
@@ -396,6 +398,8 @@
 		C4E863921C99E951002C0E6B /* AuthorEditionsGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorEditionsGetOperation.swift; path = "App Operations/AuthorEditionsGetOperation.swift"; sourceTree = "<group>"; };
 		C4E863931C99E951002C0E6B /* AuthorEditionsParseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorEditionsParseOperation.swift; path = "App Operations/AuthorEditionsParseOperation.swift"; sourceTree = "<group>"; };
 		C4E863991C9A3897002C0E6B /* EBookEditionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EBookEditionTableViewCell.swift; path = Views/EBookEditionTableViewCell.swift; sourceTree = "<group>"; };
+		C4EAD6FA1DDB85CC001EE378 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		C4EAD6FC1DDB8603001EE378 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		C4EF72F41D46818E0056D8E4 /* GeneralSearchResultSegmentedTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GeneralSearchResultSegmentedTableViewCell.xib; path = Views/GeneralSearchResultSegmentedTableViewCell.xib; sourceTree = "<group>"; };
 		C4EF99D11CA1B04C00BEF2D3 /* AuthorDetailWithThumbGetOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthorDetailWithThumbGetOperation.swift; path = "App Operations/AuthorDetailWithThumbGetOperation.swift"; sourceTree = "<group>"; };
 		C4EF99D31CA3707900BEF2D3 /* OLWorkDetailEditionsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLWorkDetailEditionsTableViewController.swift; path = "View Controllers/OLWorkDetailEditionsTableViewController.swift"; sourceTree = "<group>"; };
@@ -419,7 +423,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4EAD6FD1DDB8603001EE378 /* StoreKit.framework in Frameworks */,
 				66CF87CF60812291B5A483C3 /* Pods_OpenLibrary.framework in Frameworks */,
+				C4EAD6FB1DDB85CC001EE378 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -758,6 +764,8 @@
 		C7DA60421F430B39967E1D87 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C4EAD6FC1DDB8603001EE378 /* StoreKit.framework */,
+				C4EAD6FA1DDB85CC001EE378 /* GameKit.framework */,
 				6418131330C094E20927EACA /* Pods_OpenLibrary.framework */,
 			);
 			name = Frameworks;
@@ -838,6 +846,12 @@
 						DevelopmentTeam = 8G7W6WCEM9;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
 							com.apple.Keychain = {
 								enabled = 0;
 							};
