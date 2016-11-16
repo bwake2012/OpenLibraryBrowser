@@ -106,6 +106,12 @@ class TableviewCellZoomTransition: ZoomTransition {
             return
         }
         
+        guard let sourceView = sourceView else {
+            
+            print( "Table view cell zoom transition source cell view is nil")
+            return
+        }
+        
         let inView = transitionContext.containerView
         
         guard let masterView = self.operation == .push ? fromVC.view : toVC.view else { return }
@@ -154,7 +160,7 @@ class TableviewCellZoomTransition: ZoomTransition {
         let masterSnapshot = masterView.dt_takeSnapshot( 0, yOffset: masterContentOffset.y )
         
         // get the rect of the source cell in the coords of the from view
-        let sourceViewRect = masterView.convert( self.sourceView!.bounds, from: self.sourceView )
+        let sourceViewRect = masterView.convert( sourceView.bounds, from: self.sourceView )
         let splitPoint = (sourceViewRect.origin.y) - masterContentOffset.y
         
         // split the master view snapshot into two parts, splitting

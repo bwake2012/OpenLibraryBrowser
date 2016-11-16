@@ -449,6 +449,10 @@ extension OLSearchResultsTableViewController: TransitionSourceCell {
         if let indexPath = tableView.indexPathForSelectedRow {
             
             sourceRectView = tableView.cellForRow( at: indexPath )
+            
+        } else if let indexPath = tableView.indexPathForRow( at: tableView.center ) {
+            
+            sourceRectView = tableView.cellForRow( at: indexPath )
         }
         
         return sourceRectView

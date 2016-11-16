@@ -316,9 +316,14 @@ class OLManagedObject: NSManagedObject {
         
         let down = Down( markdownString: markdown )
         
-        let attributedString = try? down.toAttributedString( DownOptions.ValidateUTF8 )
+        var attributedString: NSAttributedString?
+            
+        do {
+            attributedString = try down.toAttributedString( DownOptions.ValidateUTF8 )
+        }
+        catch {}
         
-        return nil != attributedString ? attributedString! : NSAttributedString( string: "" )
+        return attributedString ?? NSAttributedString( string: "" )
     }
     
     func localURL( _ imageID:Int, size: String ) -> URL {

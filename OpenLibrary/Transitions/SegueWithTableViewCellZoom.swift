@@ -28,6 +28,10 @@ class SegueWithTableViewCellZoom: UIStoryboardSegue {
         }
         
         let sourceRectView = source.transitionSourceRectCellView()
+        if nil == sourceRectView {
+            print( "error in transition: \(self.identifier)" )
+            assert( nil != sourceRectView )
+        }
 
         ncd.pushZoomTransition( TableviewCellZoomTransition( navigationController: navController, operation: .push, sourceRectView: sourceRectView ) )
 

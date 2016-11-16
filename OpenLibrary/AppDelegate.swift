@@ -27,8 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     fileprivate lazy var mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
     
-    fileprivate let storeName = "OpenLibraryBrowser"
-    
     fileprivate lazy var navController: UINavigationController = {
         return self.mainStoryboard.instantiateViewController(withIdentifier: "rootNavigationController")
             as! UINavigationController
@@ -39,43 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     fileprivate var reachabilityOperation: OLReachabilityOperation?
     fileprivate var generalSearchResultsCoordinator: GeneralSearchResultsCoordinator?
 
-    func nukeObsoleteStore() -> Void {
-        
-        if let currentVersion = Bundle.getAppVersionString() {
-
-            guard let storeFolder = FileManager().urls( for: .documentDirectory, in: .userDomainMask ).first else { return }
-            let versionURL = storeFolder.appendingPathComponent( storeName + ".version" )
-            let previousVersion = NSKeyedUnarchiver.unarchiveObject( withFile: versionURL.path ) as? String
-            
-            if nil == previousVersion || currentVersion != previousVersion {
-                
-                print( "Nuking previous data store" )
-                
-                let archiveURL = storeFolder.appendingPathComponent( storeName + ".sqlite" )
-                
-                do {
-                    /*
-                     If we already have a file at this location, just delete it.
-                     Also, swallow the error, because we don't really care about it.
-                     */
-                    try FileManager.default.removeItem( at: archiveURL )
-
-                    let searchStateURL = storeFolder.appendingPathComponent( "SearchState" )
-                    
-                    try FileManager.default.removeItem( at: searchStateURL )
-                }
-                catch {
-                    
-                    print( "\(error)" )
-                }
-
-                let path = versionURL.path
-                    
-                NSKeyedArchiver.archiveRootObject( currentVersion, toFile: path )
-            }
-        }
-    }
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow( frame: UIScreen.main.bounds )
@@ -135,6 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         
+        self.dataStack?.save()
     }
 
     func getGeneralSearchCoordinator( _ destVC: OLSearchResultsTableViewController ) -> GeneralSearchResultsCoordinator {
