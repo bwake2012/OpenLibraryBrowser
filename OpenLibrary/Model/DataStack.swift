@@ -14,6 +14,29 @@ import BNRCoreDataStack
 fileprivate let storeName = "OpenLibraryBrowser"
 fileprivate let appGroupID = "group.net.cockleburr.openlibrary"
 
+func displayAlert( message: String ) {
+
+    guard let presentationContext = UIApplication.topViewController() else {
+        
+        return
+    }
+
+    let alertController = UIAlertController( title: storeName, message: message, preferredStyle: .alert )
+    alertController.addAction( UIAlertAction( title:"OK", style: .default, handler: nil ) )
+
+    if Thread.isMainThread {
+        
+        presentationContext.present( alertController, animated: true ) {}
+
+    } else {
+        
+        DispatchQueue.main.sync {
+            
+            presentationContext.present( alertController, animated: true ) {}
+        }
+    }
+}
+
 func nukeObsoleteStore() -> Void {
     
     if let currentVersion = Bundle.getAppVersionString() {
@@ -31,7 +54,7 @@ func nukeObsoleteStore() -> Void {
         
         if nil == previousVersion || currentVersion != previousVersion {
             
-            print( "Nuking previous data store" )
+            displayAlert( message: "Nuking previous data store" )
             
             let archiveURL = groupURL.appendingPathComponent( storeName ).appendingPathExtension( "sqlite" )
             
@@ -87,7 +110,8 @@ class IOS10DataStack: OLDataStack {
         
         guard let storeURL = persistentStoreURL() else {
             
-            fatalError( "Unable to create URL to persistent store in app group" )
+            displayAlert( message: "Unable to create URL to persistent store in app group" )
+            fatalError()
         }
         
         persistentContainer.persistentStoreDescriptions.append( NSPersistentStoreDescription( url: storeURL ) )
@@ -97,7 +121,8 @@ class IOS10DataStack: OLDataStack {
 
             if let error = error as NSError? {
                 
-                fatalError("Error \(error), \(error.userInfo) loading persistent store \(storeName)" )
+                displayAlert( message: "Error \(error), \(error.userInfo) loading persistent store \(storeName)" )
+                fatalError()
             }
 
             let delay = DispatchTime.now() + .milliseconds( 250 )
@@ -127,7 +152,8 @@ class IOS10DataStack: OLDataStack {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                displayAlert( message: "Unresolved error \(nserror), \(nserror.userInfo)" )
+                fatalError()
             }
         }
     }
@@ -137,7 +163,13 @@ class IOS09DataStack: OLDataStack {
 
     var mainQueueContext: NSManagedObjectContext {
         
-        return self.coreDataStack!.mainQueueContext
+        guard let coreDataStack = self.coreDataStack else {
+            
+            displayAlert( message: "Error: main context - coreDataStack has not been initialized" )
+            fatalError()
+        }
+        
+        return coreDataStack.mainQueueContext
     }
     
     var coreDataStack: CoreDataStack?
@@ -165,14 +197,21 @@ class IOS09DataStack: OLDataStack {
                 DispatchQueue.main.asyncAfter( deadline: delay, execute: completion )
                 
             case .failure( let error ):
-                fatalError( "Error \(error) constructing SQLLite stack \(storeName)" )
+                displayAlert( message: "Error \(error) constructing SQLLite stack \(storeName)" )
+                fatalError()
             }
         }
     }
     
     func newChildContext( name: String ) -> NSManagedObjectContext {
         
-        return coreDataStack!.newChildContext( name: name )
+        guard let coreDataStack = self.coreDataStack else {
+            
+            displayAlert(message: "Error: child context - coreDataStack has not been initialized" )
+            fatalError()
+        }
+
+        return coreDataStack.newChildContext( name: name )
     }
 
     func save () -> Void {

@@ -42,6 +42,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow( frame: UIScreen.main.bounds )
         window?.rootViewController = launchController
 
+        window?.makeKeyAndVisible()
+        
         nukeObsoleteStore()
         
         let launchUserInterface = {
@@ -70,8 +72,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 IOS09DataStack( operationQueue: operationQueue, completion: launchUserInterface )
         }
 
-        window?.makeKeyAndVisible()
-                
         return true
     }
 
