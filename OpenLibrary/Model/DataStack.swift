@@ -54,7 +54,7 @@ func nukeObsoleteStore() -> Void {
         
         if nil == previousVersion || currentVersion != previousVersion {
             
-            displayAlert( message: "Nuking previous data store" )
+            print( "Nuking previous data store" )
             
             let archiveURL = groupURL.appendingPathComponent( storeName ).appendingPathExtension( "sqlite" )
             
