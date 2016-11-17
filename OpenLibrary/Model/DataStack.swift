@@ -16,25 +16,7 @@ fileprivate let appGroupID = "group.net.cockleburr.openlibrary"
 
 func displayAlert( message: String ) {
 
-    guard let presentationContext = UIApplication.topViewController() else {
-        
-        return
-    }
-
-    let alertController = UIAlertController( title: storeName, message: message, preferredStyle: .alert )
-    alertController.addAction( UIAlertAction( title:"OK", style: .default, handler: nil ) )
-
-    if Thread.isMainThread {
-        
-        presentationContext.present( alertController, animated: true ) {}
-
-    } else {
-        
-        DispatchQueue.main.sync {
-            
-            presentationContext.present( alertController, animated: true ) {}
-        }
-    }
+    NSLog( message + "\n" )
 }
 
 func nukeObsoleteStore() -> Void {
