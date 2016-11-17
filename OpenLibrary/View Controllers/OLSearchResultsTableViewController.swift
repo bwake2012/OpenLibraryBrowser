@@ -96,6 +96,13 @@ class OLSearchResultsTableViewController: UIViewController {
         generalSearchCoordinator = buildQueryCoordinator()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear( animated )
+        
+        generalSearchCoordinator?.updateUI()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         
         // navigationController?.hidesBarsOnSwipe = true

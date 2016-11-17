@@ -153,8 +153,6 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             operationQueue.addOperation( strongSelf.reachabilityOperation! )
             
             strongSelf.updateFooter()
-        
-            strongSelf.updateUI()
         }
     }
     
