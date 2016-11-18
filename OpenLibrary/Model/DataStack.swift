@@ -14,11 +14,6 @@ import BNRCoreDataStack
 fileprivate let storeName = "OpenLibraryBrowser"
 fileprivate let appGroupID = "group.net.cockleburr.openlibrary"
 
-func displayAlert( message: String ) {
-
-    NSLog( message + "\n" )
-}
-
 func nukeObsoleteStore() -> Void {
     
     if let currentVersion = Bundle.getAppVersionString() {
@@ -77,7 +72,11 @@ extension OLDataStack {
         
         let groupURL = FileManager.default.containerURL( forSecurityApplicationGroupIdentifier: appGroupID )
 
-        return groupURL?.appendingPathComponent( storeName ).appendingPathExtension( "sqlite" )
+        let url = groupURL?.appendingPathComponent( storeName ).appendingPathExtension( "sqlite" )
+        
+        NSLog( "persistentStoreURL: \(url?.description)" )
+        
+        return url
     }
 }
 
@@ -92,8 +91,7 @@ class IOS10DataStack: OLDataStack {
         
         guard let storeURL = persistentStoreURL() else {
             
-            displayAlert( message: "Unable to create URL to persistent store in app group" )
-            fatalError()
+            fatalError( "Unable to create URL to persistent store in app group" )
         }
         
         persistentContainer.persistentStoreDescriptions.append( NSPersistentStoreDescription( url: storeURL ) )
@@ -103,10 +101,10 @@ class IOS10DataStack: OLDataStack {
 
             if let error = error as NSError? {
                 
-                displayAlert( message: "Error \(error), \(error.userInfo) loading persistent store \(storeName)" )
-                fatalError()
+                fatalError( "Error \(error), \(error.userInfo) loading persistent store \(storeName)" )
             }
 
+            NSLog( "persistent store loaded" )
             let delay = DispatchTime.now() + .milliseconds( 250 )
             DispatchQueue.main.asyncAfter( deadline: delay, execute: completion )
         }
@@ -114,6 +112,7 @@ class IOS10DataStack: OLDataStack {
     
     var mainQueueContext: NSManagedObjectContext {
         
+        NSLog( "retrieve mainQueueContext" )
         let context = persistentContainer.viewContext
         context.automaticallyMergesChangesFromParent = true
         return context
@@ -121,6 +120,7 @@ class IOS10DataStack: OLDataStack {
     
     func newChildContext(name: String) -> NSManagedObjectContext {
         
+        NSLog( "retrieve newChildContext \(name)" )
         return persistentContainer.newBackgroundContext()
     }
     
@@ -134,8 +134,7 @@ class IOS10DataStack: OLDataStack {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nserror = error as NSError
-                displayAlert( message: "Unresolved error \(nserror), \(nserror.userInfo)" )
-                fatalError()
+                fatalError( "Unresolved error \(nserror), \(nserror.userInfo)" )
             }
         }
     }
@@ -145,10 +144,10 @@ class IOS09DataStack: OLDataStack {
 
     var mainQueueContext: NSManagedObjectContext {
         
+        NSLog( "retrieve BNR main context" )
         guard let coreDataStack = self.coreDataStack else {
             
-            displayAlert( message: "Error: main context - coreDataStack has not been initialized" )
-            fatalError()
+            fatalError( "Error: main context - coreDataStack has not been initialized" )
         }
         
         return coreDataStack.mainQueueContext
@@ -168,6 +167,7 @@ class IOS09DataStack: OLDataStack {
                 
             case .success(let stack):
                 
+                NSLog( "BNR persistent store loaded" )
                 strongSelf.coreDataStack = stack
                 
                 stack.privateQueueContext.performAndWait {
@@ -179,18 +179,17 @@ class IOS09DataStack: OLDataStack {
                 DispatchQueue.main.asyncAfter( deadline: delay, execute: completion )
                 
             case .failure( let error ):
-                displayAlert( message: "Error \(error) constructing SQLLite stack \(storeName)" )
-                fatalError()
+                fatalError( "Error \(error) constructing SQLLite stack \(storeName)" )
             }
         }
     }
     
     func newChildContext( name: String ) -> NSManagedObjectContext {
         
+        NSLog( "retrieve new BNR child context \(name)" )
         guard let coreDataStack = self.coreDataStack else {
             
-            displayAlert(message: "Error: child context - coreDataStack has not been initialized" )
-            fatalError()
+            fatalError( "Error: child context - coreDataStack has not been initialized" )
         }
 
         return coreDataStack.newChildContext( name: name )
