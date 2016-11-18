@@ -101,7 +101,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
                     fetchRequest: fetchRequest,
                     managedObjectContext: stack.mainQueueContext,
                     sectionNameKeyPath: nil,
-                    cacheName: nil // kGeneralSearchCache
+                    cacheName:  kGeneralSearchCache
                 )
         
         controller.setDelegate( delegate )
@@ -246,7 +246,9 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
 
         NSLog( "starting UI Updates - perform fetch" )
         do {
-//            NSFetchedResultsController< OLGeneralSearchResult >.deleteCache( withName: kGeneralSearchCache )
+            NSFetchedResultsController< OLGeneralSearchResult >.deleteCache( withName: kGeneralSearchCache )
+            
+            NSLog( "perform fetch" )
             try fetchedResultsController.performFetch()
         }
         catch {
@@ -408,6 +410,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
     // MARK: FetchedResultsControllerDelegate
     func fetchedResultsControllerDidPerformFetch(_ controller: FetchedResultsController< OLGeneralSearchResult >) {
 
+        NSLog( "fetchedResultsControllerDidPerformFetch" )
         highWaterMark = fetchedResultsController.count
         if 0 == highWaterMark && searchKeys.isEmpty {
 
@@ -427,6 +430,8 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         
         if let tableView = tableVC?.tableView {
             
+            NSLog( "fetchedResultsControllerDidChangeContent" )
+
             tableView.beginUpdates()
             
             tableView.deleteSections( deletedSectionIndexes as IndexSet, with: .automatic )

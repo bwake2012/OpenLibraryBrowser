@@ -112,7 +112,7 @@ class IOS10DataStack: OLDataStack {
     
     var mainQueueContext: NSManagedObjectContext {
         
-        NSLog( "retrieve mainQueueContext" )
+        NSLog( "retrieve mainQueueContext \(Thread.isMainThread ? "Main" : "Background")" )
         let context = persistentContainer.viewContext
         context.automaticallyMergesChangesFromParent = true
         return context
@@ -142,17 +142,6 @@ class IOS10DataStack: OLDataStack {
 
 class IOS09DataStack: OLDataStack {
 
-    var mainQueueContext: NSManagedObjectContext {
-        
-        NSLog( "retrieve BNR main context" )
-        guard let coreDataStack = self.coreDataStack else {
-            
-            fatalError( "Error: main context - coreDataStack has not been initialized" )
-        }
-        
-        return coreDataStack.mainQueueContext
-    }
-    
     var coreDataStack: CoreDataStack?
     
     required init( operationQueue: PSOperationQueue, completion: @escaping () -> Void ) {
@@ -182,6 +171,17 @@ class IOS09DataStack: OLDataStack {
                 fatalError( "Error \(error) constructing SQLLite stack \(storeName)" )
             }
         }
+    }
+    
+    var mainQueueContext: NSManagedObjectContext {
+        
+        NSLog( "retrieve BNR main context \(Thread.isMainThread ? "Main" : "Background")" )
+        guard let coreDataStack = self.coreDataStack else {
+            
+            fatalError( "Error: main context - coreDataStack has not been initialized" )
+        }
+        
+        return coreDataStack.mainQueueContext
     }
     
     func newChildContext( name: String ) -> NSManagedObjectContext {
