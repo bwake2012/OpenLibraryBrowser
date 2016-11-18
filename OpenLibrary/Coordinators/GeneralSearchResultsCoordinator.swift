@@ -87,6 +87,8 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
     // MARK: Fetched Results Controller
     fileprivate func buildFetchedResultsController( _ delegate: GeneralSearchResultsCoordinator, stack: OLDataStack, sortFields: [SortField] ) -> FetchedOLGeneralSearchResultController {
         
+        NSLog( "Building Fetched Results Controller" )
+        
         let fetchRequest = OLGeneralSearchResult.buildFetchRequest()
         fetchRequest.predicate = NSPredicate( format: "sequence==%@", self.sequence as NSNumber )
 
@@ -242,13 +244,14 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
 
     func updateUI() {
 
+        NSLog( "starting UI Updates - perform fetch" )
         do {
 //            NSFetchedResultsController< OLGeneralSearchResult >.deleteCache( withName: kGeneralSearchCache )
             try fetchedResultsController.performFetch()
         }
         catch {
 
-            print("Error in the fetched results controller: \(error).")
+            NSLog( "Error in the fetched results controller: \(error)." )
         }
 
         tableVC?.tableView.reloadData()
