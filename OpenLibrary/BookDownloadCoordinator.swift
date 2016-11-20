@@ -21,7 +21,7 @@ let kFileTypeDjVu     = "DjVu"
 let kFileTypeTextPDF  = "Text PDF"
 let kFileTypeDjVuText = "DjVuTXT"
 
-class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate, UIDocumentInteractionControllerDelegate {
+class BookDownloadCoordinator: OLQueryCoordinator, NSFetchedResultsControllerDelegate, UIDocumentInteractionControllerDelegate {
     
     weak var downloadVC: OLBookDownloadViewController?
     
@@ -40,7 +40,7 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
                     )
 
     
-    typealias FetchedEBookFileController    = FetchedResultsController< OLEBookFile >
+    typealias FetchedEBookFileController    = NSFetchedResultsController< OLEBookFile >
     typealias FetchedEBookFileChange        = FetchedResultsObjectChange< OLEBookFile >
     typealias FetchedEBookFileSectionChange = FetchedResultsSectionChange< OLEBookFile >
     
@@ -67,7 +67,7 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
             sectionNameKeyPath: nil,
             cacheName: nil ) // kEBookFileCache )
         
-        frc.setDelegate( self )
+        frc.delegate = self
         return frc
     }()
     
@@ -358,10 +358,14 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
         }
         
         let section = sections[indexPath.section]
-        if indexPath.row >= section.objects.count {
+        guard let itemsInSection = section.objects as? [OLEBookFile] else {
+            fatalError("Missing items")
+        }
+        
+        if indexPath.row >= itemsInSection.count {
             return nil
         } else {
-            return section.objects[indexPath.row]
+            return itemsInSection[indexPath.row]
         }
     }
     
@@ -369,7 +373,7 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
     
     func fetchedResultsControllerDidPerformFetch(_ controller: FetchedEBookFileController) {
         
-        if 0 == controller.count {
+        if 0 == controller.sections?[0].numberOfObjects ?? 0 {
             
             newQuery( eBookKey, userInitiated: true, refreshControl: nil )
             
@@ -384,48 +388,6 @@ class BookDownloadCoordinator: OLQueryCoordinator, FetchedResultsControllerDeleg
                         
                 }
             }
-        }
-    }
-    
-    func fetchedResultsControllerWillChangeContent( _ controller: FetchedEBookFileController ) {
-        //        tableView?.beginUpdates()
-    }
-    
-    func fetchedResultsControllerDidChangeContent( _ controller: FetchedEBookFileController ) {
-        //        tableView?.endUpdates()
-    }
-    
-    func fetchedResultsController(_ controller: FetchedEBookFileController,
-                                  didChangeObject change: FetchedEBookFileChange) {
-        switch change {
-        case .insert(_, _):
-//            tableView?.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-            break
-            
-        case .delete(_, _):
-//            tableView?.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-            break
-            
-        case .move(_, _, _):
-//            tableView?.moveRowAtIndexPath(fromIndexPath, toIndexPath: toIndexPath)
-            break
-            
-        case .update(_, _):
-//            tableView?.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-            break
-        }
-    }
-    
-    func fetchedResultsController( _ controller: FetchedEBookFileController,
-                                   didChangeSection change: FetchedEBookFileSectionChange ) {
-        switch change {
-        case .insert(_, _):
-            // tableVC.tableView.insertSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
-            break
-            
-        case .delete(_, _):
-            // tableVC.tableView.deleteSections(NSIndexSet(index: index), withRowAnimation: .Automatic)
-            break
         }
     }
     

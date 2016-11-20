@@ -14,11 +14,11 @@ import PSOperations
 
 private let kLanguagesCache = "languagesCache"
 
-class LanguagesCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate {
+class LanguagesCoordinator: OLQueryCoordinator, NSFetchedResultsControllerDelegate {
     
     fileprivate let kPageSize = 1000
     
-    typealias FetchedOLLanguageController = FetchedResultsController< OLLanguage >
+    typealias FetchedOLLanguageController = NSFetchedResultsController< OLLanguage >
     
     var searchResults = SearchResults()
     
@@ -40,7 +40,7 @@ class LanguagesCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate
                         sectionNameKeyPath: nil,
                         cacheName: nil ) // kLanguagesCache )
         
-        frc.setDelegate( self )
+        frc.delegate = self
         return frc
     }()
     
@@ -83,6 +83,8 @@ class LanguagesCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate
         do {
 //            NSFetchedResultsController< OLLanguage >.deleteCache( withName: kLanguagesCache )
             try fetchedResultsController.performFetch()
+
+            controllerDidPerformFetch( fetchedResultsController )
         }
         catch {
             print("Error in the fetched results controller: \(error).")
@@ -90,45 +92,12 @@ class LanguagesCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate
     }
     
     // MARK: FetchedResultsControllerDelegate
-    func fetchedResultsControllerDidPerformFetch(_ controller: FetchedOLLanguageController) {
+    func controllerDidPerformFetch(_ controller: FetchedOLLanguageController) {
         
-        if 0 == controller.count {
+        if 0 == controller.sections?[0].numberOfObjects ?? 0 {
             
             newQuery( true, refreshControl: nil )
         }
     }
     
-    func fetchedResultsControllerWillChangeContent( _ controller: FetchedOLLanguageController ) {
-    }
-    
-    func fetchedResultsControllerDidChangeContent( _ controller: FetchedOLLanguageController ) {
-    }
-    
-    func fetchedResultsController( _ controller: FetchedOLLanguageController,
-                                   didChangeObject change: FetchedResultsObjectChange< OLLanguage > ) {
-//        switch change {
-//        case let .Insert(_, indexPath):
-//            break
-//            
-//        case let .Delete(_, indexPath):
-//            break
-//            
-//        case let .Move(_, fromIndexPath, toIndexPath):
-//            break
-//            
-//        case let .Update(_, indexPath):
-//            break
-//        }
-    }
-    
-    func fetchedResultsController(_ controller: FetchedOLLanguageController,
-                                  didChangeSection change: FetchedResultsSectionChange< OLLanguage >) {
-//        switch change {
-//        case let .Insert(_, index):
-//            break
-//            
-//        case let .Delete(_, index):
-//            break
-//        }
-    }
  }

@@ -18,7 +18,7 @@ private let kAuthorsCache = "authorsOfWork"
 
 class AuthorsCoordinator: OLQueryCoordinator {
 
-    typealias FetchedOLAuthorDetailController = FetchedResultsController< OLAuthorDetail >
+    typealias FetchedOLAuthorDetailController = NSFetchedResultsController< OLAuthorDetail >
     
     weak var authorsTableVC: OLAuthorsTableViewController?
     
@@ -44,6 +44,8 @@ class AuthorsCoordinator: OLQueryCoordinator {
             do {
 //                NSFetchedResultsController< OLAuthorDetail >.deleteCache( withName: kAuthorsCache )
                 try fetchedResultsController.performFetch()
+
+                controllerDidPerformFetch( fetchedResultsController )
             }
             catch {
                 print("Error in the authors fetched results controller: \(error).")
@@ -58,7 +60,7 @@ class AuthorsCoordinator: OLQueryCoordinator {
     
     func numberOfRowsInSection( _ section: Int ) -> Int {
         
-        return fetchedResultsController.sections?[section].objects.count ?? 0
+        return fetchedResultsController.sections?[section].objects?.count ?? 0
     }
     
     func objectAtIndexPath( _ indexPath: IndexPath ) -> OLAuthorDetail? {
@@ -70,13 +72,16 @@ class AuthorsCoordinator: OLQueryCoordinator {
         
         let section = sections[indexPath.section]
         
-        guard indexPath.row < section.objects.count else {
+        guard indexPath.row < section.objects?.count ?? 0 else {
             
             return nil
         }
         
         let index = (indexPath as NSIndexPath).row
-        let authorDetail = section.objects[index]
+        guard let authorDetail = section.objects?[index] as? OLAuthorDetail else {
+            
+            return nil
+        }
         
         if authorDetail.isProvisional && !authorDetailsSet.contains( authorDetail.key ) {
             
@@ -135,7 +140,7 @@ class AuthorsCoordinator: OLQueryCoordinator {
     // MARK: Utility
     fileprivate func updateFooter( _ text: String = "" ) -> Void {
         
-        highWaterMark = fetchedResultsController.count
+        highWaterMark = numberOfRowsInSection( 0 )
 
         updateTableFooter( authorsTableVC?.tableView, highWaterMark: highWaterMark, numFound: authorKeys.count, text: text )
     }
@@ -159,11 +164,15 @@ class AuthorsCoordinator: OLQueryCoordinator {
             ]
         fetchRequest.fetchBatchSize = 100
         
-        let frc = FetchedOLAuthorDetailController( fetchRequest: fetchRequest,
-                                                   managedObjectContext: self.coreDataStack.mainQueueContext,
-                                                   sectionNameKeyPath: nil )
+        let frc =
+            FetchedOLAuthorDetailController(
+                fetchRequest: fetchRequest,
+                managedObjectContext: self.coreDataStack.mainQueueContext,
+                sectionNameKeyPath: nil,
+                cacheName: nil // kAuthorDetailCache
+        )
         
-        frc.setDelegate( self )
+        frc.delegate = self
         return frc
     }
     
@@ -171,20 +180,16 @@ class AuthorsCoordinator: OLQueryCoordinator {
     
 }
 
-extension AuthorsCoordinator: FetchedResultsControllerDelegate {
+extension AuthorsCoordinator: NSFetchedResultsControllerDelegate {
     
     // MARK: FetchedResultsControllerDelegate
-    func fetchedResultsControllerDidPerformFetch( _ controller: FetchedOLAuthorDetailController ) {
+    func controllerDidPerformFetch( _ controller: FetchedOLAuthorDetailController ) {
         
-        highWaterMark = controller.count
+        highWaterMark = numberOfRowsInSection( 0 )
         updateFooter()
     }
-    
-    func fetchedResultsControllerWillChangeContent( _ controller: FetchedOLAuthorDetailController ) {
-        //        authorWorksTableVC?.tableView.beginUpdates()
-    }
-    
-    func fetchedResultsControllerDidChangeContent( _ controller: FetchedOLAuthorDetailController ) {
+        
+    func controllerDidChangeContent( _ controller: NSFetchedResultsController<NSFetchRequestResult> ) {
         
         if let tableView = authorsTableVC?.tableView {
             
@@ -207,48 +212,54 @@ extension AuthorsCoordinator: FetchedResultsControllerDelegate {
             self.insertedRowIndexPaths = []
             self.updatedRowIndexPaths = []
             
-            highWaterMark = max( highWaterMark, controller.count )
+            highWaterMark = max( highWaterMark, numberOfRowsInSection( 0 ) )
             updateFooter()
         }
     }
     
-    func fetchedResultsController( _ controller: FetchedOLAuthorDetailController,
-                                   didChangeObject change: FetchedResultsObjectChange< OLAuthorDetail > ) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
         
-        switch change {
-        case let .insert(_, indexPath):
-            if !insertedSectionIndexes.contains( indexPath.section ) {
-                insertedRowIndexPaths.append( indexPath )
+        switch type {
+        case .insert:
+            if !insertedSectionIndexes.contains( newIndexPath!.section ) {
+                insertedRowIndexPaths.append( newIndexPath! )
             }
             break
             
-        case let .delete(_, indexPath):
-            if !deletedSectionIndexes.contains( indexPath.section ) {
-                deletedRowIndexPaths.append( indexPath )
+        case .delete:
+            if !deletedSectionIndexes.contains( indexPath!.section ) {
+                deletedRowIndexPaths.append( indexPath! )
             }
             break
             
-        case let .move(_, fromIndexPath, toIndexPath):
-            if !insertedSectionIndexes.contains( toIndexPath.section ) {
-                insertedRowIndexPaths.append( toIndexPath )
+        case .move:
+            if !insertedSectionIndexes.contains( newIndexPath!.section ) {
+                insertedRowIndexPaths.append( newIndexPath! )
             }
-            if !deletedSectionIndexes.contains( fromIndexPath.section ) {
-                deletedRowIndexPaths.append( fromIndexPath )
+            if !deletedSectionIndexes.contains( indexPath!.section ) {
+                deletedRowIndexPaths.append( indexPath! )
             }
             
-        case let .update(_, indexPath):
-            updatedRowIndexPaths.append( indexPath )
+        case .update:
+            updatedRowIndexPaths.append( indexPath! )
         }
     }
     
-    func fetchedResultsController(_ controller: FetchedOLAuthorDetailController,
-                                  didChangeSection change: FetchedResultsSectionChange< OLAuthorDetail >) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange sectionInfo: NSFetchedResultsSectionInfo,
+                    atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         
-        switch change {
-        case let .insert(_, index):
-            insertedSectionIndexes.add( index )
-        case let .delete(_, index):
-            deletedSectionIndexes.add( index )
+        switch type {
+        case .insert:
+            insertedSectionIndexes.add( sectionIndex )
+        case .delete:
+            deletedSectionIndexes.add( sectionIndex )
+        default:
+            break
         }
     }
 }

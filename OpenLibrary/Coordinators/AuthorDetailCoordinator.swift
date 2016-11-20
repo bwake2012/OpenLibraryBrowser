@@ -16,7 +16,7 @@ let kAuthorDetailCache = "authorDetailSearch"
 
 class AuthorDetailCoordinator: OLQueryCoordinator {
     
-    typealias FetchedOLAuthorDetailController = FetchedResultsController< OLAuthorDetail >
+    typealias FetchedOLAuthorDetailController = NSFetchedResultsController< OLAuthorDetail >
     
     lazy var fetchedResultsController: FetchedOLAuthorDetailController = self.BuildFetchedResultsController()
     
@@ -114,6 +114,8 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
         do {
 //            NSFetchedResultsController< OLAuthorDetail >.deleteCache( withName: kAuthorDetailCache )
             try fetchedResultsController.performFetch()
+
+            controllerDidPerformFetch( fetchedResultsController )
         }
         catch {
             
@@ -161,35 +163,6 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
     }
     
     // MARK: Utility
-    func BuildFetchedResultsController() -> FetchedOLAuthorDetailController {
-        
-        let fetchRequest = OLAuthorDetail.buildFetchRequest()
-        let key = authorKey
-        
-        let secondsPerDay = TimeInterval( 24 * 60 * 60 )
-        let today = Date()
-        let lastWeek = today.addingTimeInterval( -7 * secondsPerDay )
-        
-        fetchRequest.predicate = NSPredicate( format: "key==%@ && retrieval_date > %@", key, lastWeek as NSDate )
-        
-        fetchRequest.sortDescriptors =
-            [
-                NSSortDescriptor(key: "name", ascending: true)
-            ]
-        fetchRequest.fetchBatchSize = 100
-        
-        let frc =
-            FetchedOLAuthorDetailController(
-                fetchRequest: fetchRequest,
-                managedObjectContext: self.coreDataStack.mainQueueContext,
-                sectionNameKeyPath: nil,
-                cacheName: nil // kAuthorDetailCache
-        )
-        
-        frc.setDelegate( self )
-        return frc
-    }
-    
     // MARK: install query coordinators
     
     func installAuthorWorksCoordinator( _ destVC: OLAuthorDetailWorksTableViewController ) {
@@ -230,9 +203,38 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
     }
 }
 
-extension AuthorDetailCoordinator: FetchedResultsControllerDelegate {
+extension AuthorDetailCoordinator: NSFetchedResultsControllerDelegate {
     
-    func fetchedResultsControllerDidPerformFetch( _ controller: FetchedOLAuthorDetailController ) {
+    func BuildFetchedResultsController() -> FetchedOLAuthorDetailController {
+        
+        let fetchRequest = OLAuthorDetail.buildFetchRequest()
+        let key = authorKey
+        
+        let secondsPerDay = TimeInterval( 24 * 60 * 60 )
+        let today = Date()
+        let lastWeek = today.addingTimeInterval( -7 * secondsPerDay )
+        
+        fetchRequest.predicate = NSPredicate( format: "key==%@ && retrieval_date > %@", key, lastWeek as NSDate )
+        
+        fetchRequest.sortDescriptors =
+            [
+                NSSortDescriptor(key: "name", ascending: true)
+        ]
+        fetchRequest.fetchBatchSize = 100
+        
+        let frc =
+            FetchedOLAuthorDetailController(
+                fetchRequest: fetchRequest,
+                managedObjectContext: self.coreDataStack.mainQueueContext,
+                sectionNameKeyPath: nil,
+                cacheName: nil // kAuthorDetailCache
+        )
+        
+        frc.delegate = self
+        return frc
+    }
+    
+    func controllerDidPerformFetch( _ controller: FetchedOLAuthorDetailController ) {
         
         guard let authorDetail = controller.fetchedObjects?.first else {
 
@@ -251,13 +253,9 @@ extension AuthorDetailCoordinator: FetchedResultsControllerDelegate {
         }
     }
     
-    func fetchedResultsControllerWillChangeContent( _ controller: FetchedOLAuthorDetailController ) {
-        //        authorAuthorsTableVC?.tableView.beginUpdates()
-    }
-    
-    func fetchedResultsControllerDidChangeContent( _ controller: FetchedOLAuthorDetailController ) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         
-        guard let authorDetail = controller.fetchedObjects?.first else {
+        guard let authorDetail = controller.fetchedObjects?.first as? OLAuthorDetail else {
             
             newQuery( self.authorKey, userInitiated: true, refreshControl: nil )
             return
@@ -265,35 +263,6 @@ extension AuthorDetailCoordinator: FetchedResultsControllerDelegate {
         
         self.authorDetail = authorDetail
         updateUI( authorDetail )
-    }
-    
-    func fetchedResultsController( _ controller: FetchedOLAuthorDetailController,
-                                   didChangeObject change: FetchedResultsObjectChange< OLAuthorDetail > ) {
-        
-//        switch change {
-//        case let .Insert( object, indexPath):
-//            break
-//            
-//        case let .Delete(_, indexPath):
-//            break
-//            
-//        case let .Move(_, fromIndexPath, toIndexPath):
-//            break
-//            
-//        case let .Update( object, indexPath):
-//            break
-//        }
-    }
-    
-    func fetchedResultsController(_ controller: FetchedOLAuthorDetailController,
-                                  didChangeSection change: FetchedResultsSectionChange< OLAuthorDetail >) {
-        
-//        switch change {
-//        case let .Insert(_, index):
-//            break
-//        case let .Delete(_, index):
-//            break
-//        }
     }
     
 }

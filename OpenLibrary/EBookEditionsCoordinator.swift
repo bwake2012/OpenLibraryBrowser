@@ -19,9 +19,9 @@ private let kEBookEditionsCache = "eBookEditionsCache"
 private let kPageSize = 100
     
 
-class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDelegate {
+class EBookEditionsCoordinator: OLQueryCoordinator, NSFetchedResultsControllerDelegate {
     
-    typealias FetchedEBookItemController = FetchedResultsController< OLEBookItem >
+    typealias FetchedEBookItemController = NSFetchedResultsController< OLEBookItem >
     
     weak var tableVC: UITableViewController?
     
@@ -45,10 +45,11 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         let frc = FetchedEBookItemController(
                         fetchRequest: fetchRequest,
                         managedObjectContext: self.coreDataStack.mainQueueContext,
-                        sectionNameKeyPath: nil
+                        sectionNameKeyPath: nil,
+                        cacheName: nil
                     )
         
-        frc.setDelegate( self )
+        frc.delegate = nil
         return frc
     }()
     
@@ -81,7 +82,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
     
     func numberOfRowsInSection( _ section: Int ) -> Int {
         
-        return fetchedResultsController.sections?[section].objects.count ?? 0
+        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
     
     func objectAtIndexPath( _ indexPath: IndexPath ) -> OLEBookItem? {
@@ -92,12 +93,15 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         }
         
         let section = sections[indexPath.section]
-        guard indexPath.row < section.objects.count else {
+        guard let itemsInSection = section.objects as? [OLEBookItem] else {
+            fatalError("Missing items")
+        }
+        guard indexPath.row < itemsInSection.count else {
             assertionFailure( "row:\((indexPath as NSIndexPath).row) out of bounds" )
             return nil
         }
         
-        let item = section.objects[indexPath.row]
+        let item = itemsInSection[indexPath.row]
         
         let editionDetail = item.matchingEdition()
         if editionDetail?.isProvisional ?? true {
@@ -177,6 +181,8 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
         do {
 //            NSFetchedResultsController< OLEBookItem >.deleteCache( withName: kEBookEditionsCache )
             try fetchedResultsController.performFetch()
+
+            controllerDidPerformFetch( fetchedResultsController )
         }
         catch {
             print("Error in the fetched results controller: \(error).")
@@ -252,62 +258,100 @@ class EBookEditionsCoordinator: OLQueryCoordinator, FetchedResultsControllerDele
     
     fileprivate func updateFooter( _ text: String = "" ) -> Void {
         
-        highWaterMark = fetchedResultsController.count
+        highWaterMark = numberOfRowsInSection( 0 )
         searchResults = SearchResults(start: 0, numFound: highWaterMark, pageSize: kPageSize )
         
         updateTableFooter( tableVC?.tableView, highWaterMark: highWaterMark, numFound: searchResults.numFound, text: text )
     }
     
     // MARK: FetchedResultsControllerDelegate
-    func fetchedResultsControllerDidPerformFetch(_ controller: FetchedEBookItemController) {
+    func controllerDidPerformFetch(_ controller: FetchedEBookItemController) {
         
-        if 0 == controller.count {
+        let count = controller.sections?[0].numberOfObjects ?? 0
+        if 0 == count {
             
             newQuery( false, refreshControl: nil )
             
         }
         
-        if 0 != controller.count {
+        if 0 != count {
             
             updateFooter()
         }
     }
 
-    func fetchedResultsControllerWillChangeContent( _ controller: FetchedEBookItemController ) {
-        tableVC?.tableView.beginUpdates()
-    }
-    
-    func fetchedResultsControllerDidChangeContent( _ controller: FetchedEBookItemController ) {
-        tableVC?.tableView.endUpdates()
-    }
-    
-    func fetchedResultsController( _ controller: FetchedEBookItemController,
-                                   didChangeObject change: FetchedResultsObjectChange< OLEBookItem > ) {
-        switch change {
-        case let .insert(_, indexPath):
-            tableVC?.tableView.insertRows(at: [indexPath], with: .automatic)
-            break
+    func controllerDidChangeContent( _ controller: NSFetchedResultsController<NSFetchRequestResult> ) {
+        
+        if let tableView = tableVC?.tableView {
             
-        case let .delete(_, indexPath):
-            tableVC?.tableView.deleteRows(at: [indexPath], with: .automatic)
-            break
+            NSLog( "fetchedResultsControllerDidChangeContent start" )
             
-        case let .move(_, fromIndexPath, toIndexPath):
-            tableVC?.tableView.moveRow(at: fromIndexPath, to: toIndexPath)
+            tableView.beginUpdates()
             
-        case let .update(_, indexPath):
-            tableVC?.tableView.reloadRows(at: [indexPath], with: .automatic)
+            tableView.deleteSections( deletedSectionIndexes as IndexSet, with: .automatic )
+            tableView.insertSections( insertedSectionIndexes as IndexSet, with: .automatic )
+            
+            tableView.deleteRows( at: deletedRowIndexPaths as [IndexPath], with: .left )
+            tableView.insertRows( at: insertedRowIndexPaths as [IndexPath], with: .right )
+            tableView.reloadRows( at: updatedRowIndexPaths as [IndexPath], with: .automatic )
+            
+            tableView.endUpdates()
+            
+            // nil out the collections so they are ready for their next use.
+            self.insertedSectionIndexes = NSMutableIndexSet()
+            self.deletedSectionIndexes = NSMutableIndexSet()
+            
+            self.deletedRowIndexPaths = []
+            self.insertedRowIndexPaths = []
+            self.updatedRowIndexPaths = []
+            
+            NSLog( "fetchedResultsControllerDidChangeContent end" )
         }
     }
     
-    func fetchedResultsController(_ controller: FetchedEBookItemController,
-                                  didChangeSection change: FetchedResultsSectionChange< OLEBookItem >) {
-        switch change {
-        case let .insert(_, index):
-            tableVC?.tableView.insertSections(IndexSet(integer: index), with: .automatic)
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+        
+        switch type {
+        case .insert:
+            if !insertedSectionIndexes.contains( newIndexPath!.section ) {
+                insertedRowIndexPaths.append( newIndexPath! )
+            }
+            break
             
-        case let .delete(_, index):
-            tableVC?.tableView.deleteSections(IndexSet(integer: index), with: .automatic)
+        case .delete:
+            if !deletedSectionIndexes.contains( indexPath!.section ) {
+                deletedRowIndexPaths.append( indexPath! )
+            }
+            break
+            
+        case .move:
+            if !insertedSectionIndexes.contains( newIndexPath!.section ) {
+                insertedRowIndexPaths.append( newIndexPath! )
+            }
+            if !deletedSectionIndexes.contains( indexPath!.section ) {
+                deletedRowIndexPaths.append( indexPath! )
+            }
+            
+        case .update:
+            updatedRowIndexPaths.append( indexPath! )
+        }
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange sectionInfo: NSFetchedResultsSectionInfo,
+                    atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        
+        switch type {
+        case .insert:
+            insertedSectionIndexes.add( sectionIndex )
+        case .delete:
+            deletedSectionIndexes.add( sectionIndex )
+        default:
+            break
         }
     }
     

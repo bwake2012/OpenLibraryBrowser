@@ -17,9 +17,9 @@ private let kGeneralSearchCache = "GeneralSearch"
 
 private let kPageSize = 100
 
-class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, FetchedResultsControllerDelegate {
+class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource {
     
-    typealias FetchedOLGeneralSearchResultController = FetchedResultsController< OLGeneralSearchResult >
+    typealias FetchedOLGeneralSearchResultController = NSFetchedResultsController< OLGeneralSearchResult >
     
     weak var tableVC: OLSearchResultsTableViewController?
 
@@ -84,48 +84,6 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
     var highWaterMark = 0
     var nextOffset = 0
     
-    // MARK: Fetched Results Controller
-    fileprivate func buildFetchedResultsController( _ delegate: GeneralSearchResultsCoordinator, stack: OLDataStack, sortFields: [SortField] ) -> FetchedOLGeneralSearchResultController {
-        
-        NSLog( "Building Fetched Results Controller" )
-        
-        let fetchRequest = OLGeneralSearchResult.buildFetchRequest()
-        fetchRequest.predicate = NSPredicate( format: "sequence==%@", self.sequence as NSNumber )
-
-        fetchRequest.sortDescriptors = buildSortDescriptors( sortFields )
-        assert( nil == fetchRequest.sortDescriptors || !fetchRequest.sortDescriptors!.isEmpty )
-        fetchRequest.fetchBatchSize = 100
-        
-        let controller =
-            FetchedOLGeneralSearchResultController(
-                    fetchRequest: fetchRequest,
-                    managedObjectContext: stack.mainQueueContext,
-                    sectionNameKeyPath: nil,
-                    cacheName:  kGeneralSearchCache
-                )
-        
-        controller.setDelegate( delegate )
-        return controller
-    }
-    
-    fileprivate func buildSortDescriptors( _ sortFields: [SortField] ) -> [NSSortDescriptor]? {
-        
-        var sortDescriptors = [NSSortDescriptor]()
-        for sortField in sortFields {
-            
-            if .sortNone != sortField.sort {
-                
-                sortDescriptors.append(
-                        NSSortDescriptor( key: sortField.name, ascending: sortField.sort.ascending )
-                    )
-            }
-        }
-        
-        sortDescriptors.append( NSSortDescriptor( key: "index", ascending: true ) )
-
-        return sortDescriptors
-    }
-    
     // MARK: instance
     
     init( tableVC: OLSearchResultsTableViewController, coreDataStack: OLDataStack, operationQueue: PSOperationQueue ) {
@@ -165,28 +123,33 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
     
     func numberOfSections() -> Int {
         
-        return fetchedResultsController.sectionCount
+        NSLog( "numberOfSections" )
+        return fetchedResultsController.sections?.count ?? 0
     }
 
     func numberOfRowsInSection( _ section: Int ) -> Int {
 
-        guard let sections = fetchedResultsController.sections else {
-            return 0
-        }
-        
-        guard section < sections.count else {
-            return 0
-        }
-        
-        let rows = sections[section].objects.count 
+        NSLog( "numberOfRowsInSection" )
 
-        return rows
+        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
     
     func objectAtIndexPath( _ indexPath: IndexPath ) -> OLGeneralSearchResult? {
         
-        return fetchedResultsController[indexPath]
+        NSLog( "objectAtIndexPath" )
         
+        guard let sections = fetchedResultsController.sections else {
+            fatalError("Sections missing")
+        }
+        
+        let section = sections[indexPath.section]
+        guard let itemsInSection = section.objects as? [OLGeneralSearchResult] else {
+            fatalError("Missing items")
+        }
+        
+        let result = itemsInSection[indexPath.row]
+        
+        return result
     }
     
     @discardableResult func displayToCell( _ cell: OLTableViewCell, indexPath: IndexPath ) -> OLManagedObject? {
@@ -250,6 +213,8 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             
             NSLog( "perform fetch" )
             try fetchedResultsController.performFetch()
+
+            controllerDidPerformFetch( fetchedResultsController )
         }
         catch {
 
@@ -386,7 +351,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
             nil == self.generalSearchOperation &&
             !searchKeys.isEmpty &&
             highWaterMark < searchResults.numFound &&
-            index >= self.fetchedResultsController.count - 1
+            index >= numberOfRowsInSection( 0 ) - 1
     }
     
     // MARK: SearchResultsUpdater
@@ -408,10 +373,10 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
     }
 
     // MARK: FetchedResultsControllerDelegate
-    func fetchedResultsControllerDidPerformFetch(_ controller: FetchedResultsController< OLGeneralSearchResult >) {
+    func controllerDidPerformFetch(_ controller: FetchedOLGeneralSearchResultController ) {
 
         NSLog( "fetchedResultsControllerDidPerformFetch" )
-        highWaterMark = fetchedResultsController.count
+        highWaterMark = numberOfRowsInSection( 0 )
         if 0 == highWaterMark && searchKeys.isEmpty {
 
             updateFooter( "Tap Search to Look for Books" )
@@ -419,76 +384,6 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         } else if nil == generalSearchOperation {
         
             updateFooter()
-        }
-    }
-    
-    func fetchedResultsControllerWillChangeContent( _ controller: FetchedOLGeneralSearchResultController ) {
-        //        authorWorksTableVC?.tableView.beginUpdates()
-    }
-    
-    func fetchedResultsControllerDidChangeContent( _ controller: FetchedOLGeneralSearchResultController ) {
-        
-        if let tableView = tableVC?.tableView {
-            
-            NSLog( "fetchedResultsControllerDidChangeContent" )
-
-            tableView.beginUpdates()
-            
-            tableView.deleteSections( deletedSectionIndexes as IndexSet, with: .automatic )
-            tableView.insertSections( insertedSectionIndexes as IndexSet, with: .automatic )
-            
-            tableView.deleteRows( at: deletedRowIndexPaths as [IndexPath], with: .left )
-            tableView.insertRows( at: insertedRowIndexPaths as [IndexPath], with: .right )
-            tableView.reloadRows( at: updatedRowIndexPaths as [IndexPath], with: .automatic )
-            
-            tableView.endUpdates()
-            
-            // nil out the collections so they are ready for their next use.
-            self.insertedSectionIndexes = NSMutableIndexSet()
-            self.deletedSectionIndexes = NSMutableIndexSet()
-            
-            self.deletedRowIndexPaths = []
-            self.insertedRowIndexPaths = []
-            self.updatedRowIndexPaths = []
-        }
-    }
-    
-    func fetchedResultsController( _ controller: FetchedOLGeneralSearchResultController,
-                                   didChangeObject change: FetchedResultsObjectChange< OLGeneralSearchResult > ) {
-        switch change {
-        case let .insert(_, indexPath):
-            if !insertedSectionIndexes.contains( indexPath.section ) {
-                insertedRowIndexPaths.append( indexPath )
-            }
-            break
-            
-        case let .delete(_, indexPath):
-            if !deletedSectionIndexes.contains( indexPath.section ) {
-                deletedRowIndexPaths.append( indexPath )
-            }
-            break
-            
-        case let .move(_, fromIndexPath, toIndexPath):
-            if !insertedSectionIndexes.contains( toIndexPath.section ) {
-                insertedRowIndexPaths.append( toIndexPath )
-            }
-            if !deletedSectionIndexes.contains( fromIndexPath.section ) {
-                deletedRowIndexPaths.append( fromIndexPath )
-            }
-            
-        case let .update(_, indexPath):
-            updatedRowIndexPaths.append( indexPath )
-        }
-    }
-    
-    func fetchedResultsController(_ controller: FetchedOLGeneralSearchResultController,
-                                  didChangeSection change: FetchedResultsSectionChange< OLGeneralSearchResult >) {
-        
-        switch change {
-        case let .insert(_, index):
-            insertedSectionIndexes.add( index )
-        case let .delete(_, index):
-            deletedSectionIndexes.add( index )
         }
     }
     
@@ -631,5 +526,128 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource, Fetched
         )
         
     }
+
+}
+
+extension GeneralSearchResultsCoordinator: NSFetchedResultsControllerDelegate {
+    
+    // MARK: Fetched Results Controller
+
+    fileprivate func buildSortDescriptors( _ sortFields: [SortField] ) -> [NSSortDescriptor]? {
+        
+        var sortDescriptors = [NSSortDescriptor]()
+        for sortField in sortFields {
+            
+            if .sortNone != sortField.sort {
+                
+                sortDescriptors.append(
+                    NSSortDescriptor( key: sortField.name, ascending: sortField.sort.ascending )
+                )
+            }
+        }
+        
+        sortDescriptors.append( NSSortDescriptor( key: "index", ascending: true ) )
+        
+        return sortDescriptors
+    }
+
+    fileprivate func buildFetchedResultsController( _ delegate: GeneralSearchResultsCoordinator, stack: OLDataStack, sortFields: [SortField] ) -> FetchedOLGeneralSearchResultController {
+        
+        NSLog( "Building Fetched Results Controller" )
+        
+        let fetchRequest = OLGeneralSearchResult.buildFetchRequest()
+        fetchRequest.predicate = NSPredicate( format: "sequence==%@", self.sequence as NSNumber )
+        
+        fetchRequest.sortDescriptors = buildSortDescriptors( sortFields )
+        assert( nil == fetchRequest.sortDescriptors || !fetchRequest.sortDescriptors!.isEmpty )
+        fetchRequest.fetchBatchSize = 100
+        
+        let controller =
+            FetchedOLGeneralSearchResultController(
+                fetchRequest: fetchRequest,
+                managedObjectContext: stack.mainQueueContext,
+                sectionNameKeyPath: nil,
+                cacheName:  kGeneralSearchCache
+        )
+        
+        controller.delegate = self
+        return controller
+    }
+    
+    func controllerDidChangeContent( _ controller: NSFetchedResultsController<NSFetchRequestResult> ) {
+        
+        if let tableView = tableVC?.tableView {
+            
+            NSLog( "fetchedResultsControllerDidChangeContent start" )
+            
+            tableView.beginUpdates()
+            
+            tableView.deleteSections( deletedSectionIndexes as IndexSet, with: .automatic )
+            tableView.insertSections( insertedSectionIndexes as IndexSet, with: .automatic )
+            
+            tableView.deleteRows( at: deletedRowIndexPaths as [IndexPath], with: .left )
+            tableView.insertRows( at: insertedRowIndexPaths as [IndexPath], with: .right )
+            tableView.reloadRows( at: updatedRowIndexPaths as [IndexPath], with: .automatic )
+            
+            tableView.endUpdates()
+            
+            // nil out the collections so they are ready for their next use.
+            self.insertedSectionIndexes = NSMutableIndexSet()
+            self.deletedSectionIndexes = NSMutableIndexSet()
+            
+            self.deletedRowIndexPaths = []
+            self.insertedRowIndexPaths = []
+            self.updatedRowIndexPaths = []
+            
+            NSLog( "fetchedResultsControllerDidChangeContent end" )
+        }
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+        
+        switch type {
+        case .insert:
+            if !insertedSectionIndexes.contains( newIndexPath!.section ) {
+                insertedRowIndexPaths.append( newIndexPath! )
+            }
+            break
+            
+        case .delete:
+            if !deletedSectionIndexes.contains( indexPath!.section ) {
+                deletedRowIndexPaths.append( indexPath! )
+            }
+            break
+            
+        case .move:
+            if !insertedSectionIndexes.contains( newIndexPath!.section ) {
+                insertedRowIndexPaths.append( newIndexPath! )
+            }
+            if !deletedSectionIndexes.contains( indexPath!.section ) {
+                deletedRowIndexPaths.append( indexPath! )
+            }
+            
+        case .update:
+            updatedRowIndexPaths.append( indexPath! )
+        }
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange sectionInfo: NSFetchedResultsSectionInfo,
+                    atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        
+        switch type {
+        case .insert:
+            insertedSectionIndexes.add( sectionIndex )
+        case .delete:
+            deletedSectionIndexes.add( sectionIndex )
+        default:
+            break
+        }
+    }
+    
 
 }

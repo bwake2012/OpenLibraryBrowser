@@ -16,7 +16,7 @@ private let kWorkDetailCache = "workDetailSearch"
 
 class WorkDetailCoordinator: OLQueryCoordinator {
     
-    typealias FetchedOLWorkDetailController = FetchedResultsController< OLWorkDetail >
+    typealias FetchedOLWorkDetailController = NSFetchedResultsController< OLWorkDetail >
     
     lazy var fetchedResultsController: FetchedOLWorkDetailController = self.BuildFetchedResultsController()
     
@@ -125,6 +125,8 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         do {
 //            NSFetchedResultsController< OLWorkDetail >.deleteCache( withName: kWorkDetailCache )
             try fetchedResultsController.performFetch()
+            
+            controllerDidPerformFetch( fetchedResultsController )
         }
         catch {
             
@@ -263,37 +265,6 @@ class WorkDetailCoordinator: OLQueryCoordinator {
 
     }
     
-    // MARK: Utility
-    func BuildFetchedResultsController() -> FetchedOLWorkDetailController {
-        
-        let fetchRequest = OLWorkDetail.buildFetchRequest()
-        let key = workKey
-        
-        let secondsPerDay = TimeInterval( 24 * 60 * 60 )
-        let today = Date()
-        let lastWeek = today.addingTimeInterval( -7 * secondsPerDay )
-        
-        fetchRequest.predicate = NSPredicate( format: "key==%@ && retrieval_date > %@", key, lastWeek as NSDate )
-        
-        fetchRequest.sortDescriptors =
-            [
-                //                NSSortDescriptor(key: "coversFound", ascending: false),
-                NSSortDescriptor(key: "index", ascending: true)
-            ]
-        fetchRequest.fetchBatchSize = 100
-        
-        let frc =
-            FetchedOLWorkDetailController(
-                    fetchRequest: fetchRequest,
-                    managedObjectContext: self.coreDataStack.mainQueueContext,
-                    sectionNameKeyPath: nil,
-                    cacheName: nil // kWorkDetailCache
-                )
-        
-        frc.setDelegate( self )
-        return frc
-    }
-    
     // MARK: install query coordinators
     
     func installWorkDetailEditionsQueryCoordinator( _ destVC: OLWorkDetailEditionsTableViewController ) {
@@ -371,9 +342,39 @@ class WorkDetailCoordinator: OLQueryCoordinator {
     
 }
 
-extension WorkDetailCoordinator: FetchedResultsControllerDelegate {
+extension WorkDetailCoordinator: NSFetchedResultsControllerDelegate {
     
-    func fetchedResultsControllerDidPerformFetch( _ controller: FetchedOLWorkDetailController ) {
+    func BuildFetchedResultsController() -> FetchedOLWorkDetailController {
+        
+        let fetchRequest = OLWorkDetail.buildFetchRequest()
+        let key = workKey
+        
+        let secondsPerDay = TimeInterval( 24 * 60 * 60 )
+        let today = Date()
+        let lastWeek = today.addingTimeInterval( -7 * secondsPerDay )
+        
+        fetchRequest.predicate = NSPredicate( format: "key==%@ && retrieval_date > %@", key, lastWeek as NSDate )
+        
+        fetchRequest.sortDescriptors =
+            [
+                //                NSSortDescriptor(key: "coversFound", ascending: false),
+                NSSortDescriptor(key: "index", ascending: true)
+        ]
+        fetchRequest.fetchBatchSize = 100
+        
+        let frc =
+            FetchedOLWorkDetailController(
+                fetchRequest: fetchRequest,
+                managedObjectContext: self.coreDataStack.mainQueueContext,
+                sectionNameKeyPath: nil,
+                cacheName: nil // kWorkDetailCache
+        )
+        
+        frc.delegate = self
+        return frc
+    }
+    
+    func controllerDidPerformFetch( _ controller: FetchedOLWorkDetailController ) {
         
         guard let workDetail = controller.fetchedObjects?.first else {
             
@@ -391,13 +392,9 @@ extension WorkDetailCoordinator: FetchedResultsControllerDelegate {
         updateUI( workDetail )
     }
     
-    func fetchedResultsControllerWillChangeContent( _ controller: FetchedOLWorkDetailController ) {
-        //        authorWorksTableVC?.tableView.beginUpdates()
-    }
-    
-    func fetchedResultsControllerDidChangeContent( _ controller: FetchedOLWorkDetailController ) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         
-        guard let workDetail = controller.fetchedObjects?.first else {
+        guard let workDetail = controller.fetchedObjects?.first as? OLWorkDetail else {
             
             newQuery( self.workKey, userInitiated: true, refreshControl: nil )
             return
@@ -407,33 +404,5 @@ extension WorkDetailCoordinator: FetchedResultsControllerDelegate {
         updateUI( workDetail )
     }
     
-    func fetchedResultsController( _ controller: FetchedOLWorkDetailController,
-                                   didChangeObject change: FetchedResultsObjectChange< OLWorkDetail > ) {
-        
-//        switch change {
-//        case let .Insert( object, indexPath):
-//            break
-//            
-//        case let .Delete(_, indexPath):
-//            break
-//            
-//        case let .Move(_, fromIndexPath, toIndexPath):
-//            break
-//            
-//        case let .Update( object, indexPath):
-//            break
-//        }
-    }
-    
-    func fetchedResultsController(_ controller: FetchedOLWorkDetailController,
-                                  didChangeSection change: FetchedResultsSectionChange< OLWorkDetail >) {
-        
-//        switch change {
-//        case let .Insert(_, index):
-//            break
-//        case let .Delete(_, index):
-//            break
-//        }
-    }
     
 }
