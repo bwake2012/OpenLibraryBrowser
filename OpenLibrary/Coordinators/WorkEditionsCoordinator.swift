@@ -346,7 +346,7 @@ extension WorkEditionsCoordinator: NSFetchedResultsControllerDelegate {
                                                  sectionNameKeyPath: nil,
                                                  cacheName: kWorkEditionsCache )
         
-        frc.delegate = nil
+        frc.delegate = self
         
         return frc
     }
