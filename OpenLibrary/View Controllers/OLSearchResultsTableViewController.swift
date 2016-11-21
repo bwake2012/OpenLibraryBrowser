@@ -107,17 +107,16 @@ class OLSearchResultsTableViewController: UIViewController {
         
         // navigationController?.hidesBarsOnSwipe = true
         
-        if let segueName = immediateSegueName {
-            
-            performSegue( withIdentifier: segueName, sender: self )
-            immediateSegueName = nil
-        }
-
         if let indexPath = savedIndexPath {
             
             tableView.selectRow( at: indexPath, animated: true, scrollPosition: .none )
             savedIndexPath = nil
-        
+        }
+
+        if let segueName = immediateSegueName {
+            
+            performSegue( withIdentifier: segueName, sender: self )
+            immediateSegueName = nil
         }
     }
     
