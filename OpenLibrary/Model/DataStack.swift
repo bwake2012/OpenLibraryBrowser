@@ -31,7 +31,7 @@ func nukeObsoleteStore() -> Void {
         
         if nil == previousVersion || currentVersion != previousVersion {
             
-            print( "Nuking previous data store" )
+            NSLog( "Nuking previous data store" )
             
             let archiveURL = groupURL.appendingPathComponent( storeName ).appendingPathExtension( "sqlite" )
             
@@ -74,7 +74,7 @@ extension OLDataStack {
 
         let url = groupURL?.appendingPathComponent( storeName ).appendingPathExtension( "sqlite" )
         
-        NSLog( "persistentStoreURL: \(url?.description)" )
+        // NSLog( "persistentStoreURL: \(url?.description)" )
         
         return url
     }
@@ -104,7 +104,7 @@ class IOS10DataStack: OLDataStack {
                 fatalError( "Error \(error), \(error.userInfo) loading persistent store \(storeName)" )
             }
 
-            NSLog( "persistent store loaded" )
+            // NSLog( "persistent store loaded" )
             let delay = DispatchTime.now() + .milliseconds( 250 )
             DispatchQueue.main.asyncAfter( deadline: delay, execute: completion )
         }
@@ -112,7 +112,7 @@ class IOS10DataStack: OLDataStack {
     
     var mainQueueContext: NSManagedObjectContext {
         
-        NSLog( "retrieve mainQueueContext \(Thread.isMainThread ? "Main" : "Background")" )
+        // NSLog( "retrieve mainQueueContext \(Thread.isMainThread ? "Main" : "Background")" )
         let context = persistentContainer.viewContext
         context.automaticallyMergesChangesFromParent = true
         return context
@@ -120,7 +120,7 @@ class IOS10DataStack: OLDataStack {
     
     func newChildContext(name: String) -> NSManagedObjectContext {
         
-        NSLog( "retrieve newChildContext \(name)" )
+        // NSLog( "retrieve newChildContext \(name)" )
         return persistentContainer.newBackgroundContext()
     }
     
@@ -156,7 +156,7 @@ class IOS09DataStack: OLDataStack {
                 
             case .success(let stack):
                 
-                NSLog( "BNR persistent store loaded" )
+                // NSLog( "BNR persistent store loaded" )
                 strongSelf.coreDataStack = stack
                 
                 stack.privateQueueContext.performAndWait {
@@ -175,7 +175,7 @@ class IOS09DataStack: OLDataStack {
     
     var mainQueueContext: NSManagedObjectContext {
         
-        NSLog( "retrieve BNR main context \(Thread.isMainThread ? "Main" : "Background")" )
+        // NSLog( "retrieve BNR main context \(Thread.isMainThread ? "Main" : "Background")" )
         guard let coreDataStack = self.coreDataStack else {
             
             fatalError( "Error: main context - coreDataStack has not been initialized" )
@@ -186,7 +186,7 @@ class IOS09DataStack: OLDataStack {
     
     func newChildContext( name: String ) -> NSManagedObjectContext {
         
-        NSLog( "retrieve new BNR child context \(name)" )
+        // NSLog( "retrieve new BNR child context \(name)" )
         guard let coreDataStack = self.coreDataStack else {
             
             fatalError( "Error: child context - coreDataStack has not been initialized" )

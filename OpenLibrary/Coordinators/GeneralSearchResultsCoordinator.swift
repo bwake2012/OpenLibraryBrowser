@@ -123,20 +123,20 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource {
     
     func numberOfSections() -> Int {
         
-        NSLog( "numberOfSections" )
+        // NSLog( "numberOfSections" )
         return fetchedResultsController.sections?.count ?? 0
     }
 
     func numberOfRowsInSection( _ section: Int ) -> Int {
 
-        NSLog( "numberOfRowsInSection" )
+        // NSLog( "numberOfRowsInSection" )
 
         return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
     
     func objectAtIndexPath( _ indexPath: IndexPath ) -> OLGeneralSearchResult? {
         
-        NSLog( "objectAtIndexPath" )
+        // NSLog( "objectAtIndexPath" )
         
         guard let sections = fetchedResultsController.sections else {
             fatalError("Sections missing")
@@ -207,18 +207,18 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource {
 
     func updateUI() {
 
-        NSLog( "starting UI Updates - perform fetch" )
+        // NSLog( "starting UI Updates - perform fetch" )
         do {
             NSFetchedResultsController< OLGeneralSearchResult >.deleteCache( withName: kGeneralSearchCache )
             
-            NSLog( "perform fetch" )
+            // NSLog( "perform fetch" )
             try fetchedResultsController.performFetch()
 
             controllerDidPerformFetch( fetchedResultsController )
         }
         catch {
 
-            NSLog( "Error in the fetched results controller: \(error)." )
+            // NSLog( "Error in the fetched results controller: \(error)." )
         }
 
         tableVC?.tableView.reloadData()
@@ -375,7 +375,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource {
     // MARK: FetchedResultsControllerDelegate
     func controllerDidPerformFetch(_ controller: FetchedOLGeneralSearchResultController ) {
 
-        NSLog( "fetchedResultsControllerDidPerformFetch" )
+        // NSLog( "fetchedResultsControllerDidPerformFetch" )
         highWaterMark = numberOfRowsInSection( 0 )
         if 0 == highWaterMark && searchKeys.isEmpty {
 
@@ -553,7 +553,7 @@ extension GeneralSearchResultsCoordinator: NSFetchedResultsControllerDelegate {
 
     fileprivate func buildFetchedResultsController( _ delegate: GeneralSearchResultsCoordinator, stack: OLDataStack, sortFields: [SortField] ) -> FetchedOLGeneralSearchResultController {
         
-        NSLog( "Building Fetched Results Controller" )
+        // NSLog( "Building Fetched Results Controller" )
         
         let fetchRequest = OLGeneralSearchResult.buildFetchRequest()
         fetchRequest.predicate = NSPredicate( format: "sequence==%@", self.sequence as NSNumber )
@@ -578,7 +578,7 @@ extension GeneralSearchResultsCoordinator: NSFetchedResultsControllerDelegate {
         
         if let tableView = tableVC?.tableView {
             
-            NSLog( "fetchedResultsControllerDidChangeContent start" )
+            // NSLog( "fetchedResultsControllerDidChangeContent start" )
             
             tableView.beginUpdates()
             
@@ -599,7 +599,7 @@ extension GeneralSearchResultsCoordinator: NSFetchedResultsControllerDelegate {
             self.insertedRowIndexPaths = []
             self.updatedRowIndexPaths = []
             
-            NSLog( "fetchedResultsControllerDidChangeContent end" )
+            // NSLog( "fetchedResultsControllerDidChangeContent end" )
         }
     }
     

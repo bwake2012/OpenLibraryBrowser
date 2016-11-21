@@ -284,7 +284,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, NSFetchedResultsControllerDe
         
         if let tableView = tableVC?.tableView {
             
-            NSLog( "fetchedResultsControllerDidChangeContent start" )
+            // NSLog( "fetchedResultsControllerDidChangeContent start" )
             
             tableView.beginUpdates()
             
@@ -305,7 +305,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, NSFetchedResultsControllerDe
             self.insertedRowIndexPaths = []
             self.updatedRowIndexPaths = []
             
-            NSLog( "fetchedResultsControllerDidChangeContent end" )
+            // NSLog( "fetchedResultsControllerDidChangeContent end" )
         }
     }
     

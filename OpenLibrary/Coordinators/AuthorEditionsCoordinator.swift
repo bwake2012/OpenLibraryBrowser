@@ -242,7 +242,7 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, NSFetchedResultsControllerD
         
         if let tableView = tableVC?.tableView {
             
-            NSLog( "fetchedResultsControllerDidChangeContent start" )
+            // NSLog( "fetchedResultsControllerDidChangeContent start" )
             
             tableView.beginUpdates()
             
@@ -263,7 +263,7 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, NSFetchedResultsControllerD
             self.insertedRowIndexPaths = []
             self.updatedRowIndexPaths = []
             
-            NSLog( "fetchedResultsControllerDidChangeContent end" )
+            // NSLog( "fetchedResultsControllerDidChangeContent end" )
         }
     }
     

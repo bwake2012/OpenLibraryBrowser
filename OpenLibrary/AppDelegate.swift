@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        NSLog( "Redisplaying Launch Screen" )
+        // NSLog( "Redisplaying Launch Screen" )
         
         window = UIWindow( frame: UIScreen.main.bounds )
         window?.rootViewController = launchController
@@ -50,13 +50,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let launchUserInterface = {
             
-            NSLog( "Retrieving Languages" )
+            // NSLog( "Retrieving Languages" )
             OLLanguage.retrieveLanguages( self.operationQueue, coreDataStack: self.dataStack! )
             
             let delay = DispatchTime.now() + .milliseconds( 250 )
             DispatchQueue.main.asyncAfter( deadline: delay ) {
                 
-                NSLog( "Displaying Navigation Controller" )
+                // NSLog( "Displaying Navigation Controller" )
                 let navController = self.navController
                 navController.navigationBar.barStyle = .black
                 self.window?.rootViewController = navController
@@ -65,13 +65,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if #available(iOS 10.0, *) {
             
-            NSLog( "iOS 10 Core Data Stack" )
+            // NSLog( "iOS 10 Core Data Stack" )
             self.dataStack =
                 IOS10DataStack( operationQueue: operationQueue, completion: launchUserInterface )
 
         } else {
             
-            NSLog( "Big Nerd Ranch Core Data Stack" )
+            // NSLog( "Big Nerd Ranch Core Data Stack" )
             self.dataStack =
                 IOS09DataStack( operationQueue: operationQueue, completion: launchUserInterface )
         }
