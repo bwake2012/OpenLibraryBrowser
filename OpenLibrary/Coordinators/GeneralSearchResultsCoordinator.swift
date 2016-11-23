@@ -209,7 +209,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource {
 
         // NSLog( "starting UI Updates - perform fetch" )
         do {
-            NSFetchedResultsController< OLGeneralSearchResult >.deleteCache( withName: kGeneralSearchCache )
+//            NSFetchedResultsController< OLGeneralSearchResult >.deleteCache( withName: kGeneralSearchCache )
             
             // NSLog( "perform fetch" )
             try fetchedResultsController.performFetch()
@@ -567,7 +567,7 @@ extension GeneralSearchResultsCoordinator: NSFetchedResultsControllerDelegate {
                 fetchRequest: fetchRequest,
                 managedObjectContext: stack.mainQueueContext,
                 sectionNameKeyPath: nil,
-                cacheName:  kGeneralSearchCache
+                cacheName: nil          // kGeneralSearchCache
         )
         
         controller.delegate = self

@@ -135,7 +135,7 @@ class WorkEditionsCoordinator: OLQueryCoordinator {
     func updateUI() {
 
         do {
-            NSFetchedResultsController< OLEditionDetail >.deleteCache( withName: kWorkEditionsCache )
+//             NSFetchedResultsController< OLEditionDetail >.deleteCache( withName: kWorkEditionsCache )
             try fetchedResultsController.performFetch()
             
             controllerDidPerformFetch( fetchedResultsController )
@@ -344,7 +344,8 @@ extension WorkEditionsCoordinator: NSFetchedResultsControllerDelegate {
         let frc = FetchedWorkEditionsController( fetchRequest: fetchRequest,
                                                  managedObjectContext: self.coreDataStack.mainQueueContext,
                                                  sectionNameKeyPath: nil,
-                                                 cacheName: kWorkEditionsCache )
+                                                 cacheName: nil         // kWorkEditionsCache
+                                    )
         
         frc.delegate = self
         
