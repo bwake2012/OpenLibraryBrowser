@@ -23,10 +23,10 @@ func nukeObsoleteStore() -> Void {
             return
         }
         
-        guard let storeFolder = FileManager().urls( for: .documentDirectory, in: .userDomainMask ).first else {
+        guard let storeFolderURL = FileManager().urls( for: .documentDirectory, in: .userDomainMask ).first else {
             return
         }
-        let versionURL = storeFolder.appendingPathComponent( storeName ).appendingPathExtension( "version" )
+        let versionURL = storeFolderURL.appendingPathComponent( storeName ).appendingPathExtension( "version" )
         let previousVersion = NSKeyedUnarchiver.unarchiveObject( withFile: versionURL.path ) as? String
         
         if nil == previousVersion || currentVersion != previousVersion {
@@ -34,19 +34,38 @@ func nukeObsoleteStore() -> Void {
             NSLog( "Nuking previous data store" )
             
             let archiveURL = groupURL.appendingPathComponent( storeName ).appendingPathExtension( "sqlite" )
-            
             do {
                 /*
                  If we already have a file at this location, just delete it.
                  Also, swallow the error, because we don't really care about it.
                  */
-                try FileManager.default.removeItem( at: archiveURL )
                 
-                let searchStateURL = storeFolder.appendingPathComponent( "SearchState" )
+                try FileManager.default.removeItem( at: archiveURL )
+            }
+            catch {
+                
+                NSLog( "Error \(error) removing \(archiveURL)" )
+            }
+            
+            let searchStateURL = storeFolderURL.appendingPathComponent( "SearchState" )
+            do {
                 
                 try FileManager.default.removeItem( at: searchStateURL )
             }
-            catch {}
+            catch {
+                
+                NSLog( "Error \(error) removing \(searchStateURL)" )
+            }
+
+            let oldArchiveURL = storeFolderURL.appendingPathComponent( storeName ).appendingPathExtension( "sqlite" )
+            do {
+            
+                try FileManager.default.removeItem( at: oldArchiveURL )
+            }
+            catch {
+            
+                NSLog( "Error \(error) removing \(oldArchiveURL)" )
+            }
             
             let path = versionURL.path
             
@@ -81,9 +100,18 @@ extension OLDataStack {
 }
 
 @available(iOS 10.0, *)
+class OLPersistentContainer: NSPersistentContainer {
+    
+    override class func defaultDirectoryURL() -> URL {
+        
+        return FileManager.default.containerURL( forSecurityApplicationGroupIdentifier: appGroupID )!
+    }
+}
+
+@available(iOS 10.0, *)
 class IOS10DataStack: OLDataStack {
     
-    fileprivate let persistentContainer = NSPersistentContainer( name: storeName )
+    fileprivate let persistentContainer = OLPersistentContainer( name: storeName )
 
     fileprivate var coreDataStack: OLDataStack?
     
