@@ -117,12 +117,6 @@ class IOS10DataStack: OLDataStack {
     
     required init( operationQueue: PSOperationQueue, completion: @escaping () -> Void ) {
         
-        guard let storeURL = persistentStoreURL() else {
-            
-            fatalError( "Unable to create URL to persistent store in app group" )
-        }
-        
-        persistentContainer.persistentStoreDescriptions.append( NSPersistentStoreDescription( url: storeURL ) )
         persistentContainer.loadPersistentStores {
             
             ( storeDescription, error ) in
