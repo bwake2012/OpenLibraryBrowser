@@ -52,7 +52,7 @@ class OLEditionDetailViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "zoomDeluxeDetailImage" {
+        if segue.identifier == "zoomLargeImage" {
             
             if let destVC = segue.destination as? OLPictureViewController {
                 

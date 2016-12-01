@@ -14,18 +14,8 @@ import BNRCoreDataStack
 
 class OLAuthorDetailViewController: UIViewController {
 
-    @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var summaryHeight: NSLayoutConstraint!
-    
-    @IBOutlet weak var authorName: UILabel!
-    @IBOutlet weak var birthDate: UILabel!
-    @IBOutlet weak var deathDate: UILabel!
-    @IBOutlet weak var authorPhoto: AspectRatioImageView!
-    @IBOutlet weak var displayLargePhoto: UIButton!
-    @IBOutlet weak var displayDeluxeDetail: UIButton!
+    @IBOutlet weak var headerView: OLHeaderView!
     @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var coverSummarySpacing: NSLayoutConstraint!
     
     @IBOutlet weak var activityView: UIActivityIndicatorView!
 
@@ -40,6 +30,8 @@ class OLAuthorDetailViewController: UIViewController {
         super.viewDidLoad()
 
         assert( nil != queryCoordinator )
+
+        headerView.headerViewDelegate = self
     }
     
     override func didReceiveMemoryWarning() {
@@ -79,7 +71,7 @@ class OLAuthorDetailViewController: UIViewController {
                 queryCoordinator!.installAuthorDeluxeDetailCoordinator( destVC )
             }
             
-        } else if segue.identifier == "largeAuthorPhoto" {
+        } else if segue.identifier == "zoomLargeImage" {
             
             if let destVC = segue.destination as? OLPictureViewController {
 
@@ -97,9 +89,8 @@ class OLAuthorDetailViewController: UIViewController {
         if let data = try? Data( contentsOf: localURL ) {
             if let image = UIImage( data: data ) {
                 
-                authorPhoto.image = image
+                headerView.image = image
                 
-                authorPhoto.superview?.layoutIfNeeded()
                 return true
             }
         }
@@ -112,32 +103,24 @@ class OLAuthorDetailViewController: UIViewController {
         
         assert( Thread.isMainThread )
 
-        self.displayLargePhoto.isEnabled = authorDetail.hasImage
+        headerView.clearSummary()
+        headerView.addSummaryLine( text: authorDetail.name, style: .headline, segueName: "displayAuthorDeluxeDetail" )
+        
+        if !authorDetail.birth_date.isEmpty {
 
-        self.displayDeluxeDetail.isEnabled = !authorDetail.isProvisional
-        authorName.textColor = displayDeluxeDetail.currentTitleColor
-        
-        self.authorName.text = authorDetail.name
-        
-        self.birthDate.text =
-            authorDetail.birth_date.isEmpty ? nil : "Born: " + authorDetail.birth_date.stringWithNonBreakingSpaces()
-        self.deathDate.text =
-            authorDetail.death_date.isEmpty ? nil : "Died: " + authorDetail.death_date.stringWithNonBreakingSpaces()
-        
-        if !authorDetail.hasImage && !authorDetail.isProvisional {
+            headerView.addSummaryLine( text: "Born: " + authorDetail.birth_date.stringWithNonBreakingSpaces(), style: .footnote, segueName: "" )
+        }
+        if !authorDetail.death_date.isEmpty {
             
-            var totalTextHeight = authorName.bounds.height
-            totalTextHeight += nil == birthDate.text ? 0 : birthDate.bounds.height
-            totalTextHeight += nil == deathDate.text ? 0 : deathDate.bounds.height
-            
-            self.authorPhoto.image = nil
-            coverSummarySpacing.constant = 0
-            summaryHeight.constant = min( 128, totalTextHeight )
-        } else {
-            self.authorPhoto.image = UIImage( named: "253-person.png" )
+            headerView.addSummaryLine( text: "Died: " + authorDetail.death_date.stringWithNonBreakingSpaces(), style: .footnote, segueName: "" )
         }
         
-        view.layoutIfNeeded()
+        if !authorDetail.hasImage {
+            headerView.image = nil
+        } else {
+            headerView.image = UIImage( named: authorDetail.defaultImageName )
+        }
+        
     }
     
     // MARK: query in progress
@@ -160,7 +143,7 @@ extension OLAuthorDetailViewController: TransitionSourceImage {
     
     func transitionSourceRectImageView() -> UIImageView? {
         
-        return authorPhoto
+        return headerView.imageView
     }
 }
 
@@ -169,6 +152,19 @@ extension OLAuthorDetailViewController: UncoverBottomTransitionSource {
     func uncoverSourceRectangle() -> UIView? {
         
         return containerView
+    }
+}
+
+extension OLAuthorDetailViewController: OLHeaderViewDelegate {
+    
+    func performSegue( segueName: String, sender: Any? ) {
+        
+        assert( !segueName.isEmpty )
+        
+        if !segueName.isEmpty {
+            
+            super.performSegue( withIdentifier: segueName, sender: sender )
+        }
     }
 }
 

@@ -233,7 +233,7 @@ class OLSearchResultsTableViewController: UIViewController {
                     generalSearchCoordinator.installWorkDetailCoordinator( destVC, indexPath: indexPath )
                 }
                 
-            case "largeCoverImage":
+            case "zoomLargeImage":
 
                 if let destVC = segue.destination as? OLPictureViewController {
                     

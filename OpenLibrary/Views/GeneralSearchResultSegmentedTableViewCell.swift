@@ -40,7 +40,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
     
     @IBAction fileprivate func zoomCoverTapped(_ sender: UIButton) {
         
-        tableVC?.performSegue( withIdentifier: "largeCoverImage", sender: self )
+        tableVC?.performSegue( withIdentifier: "zoomLargeImage", sender: self )
     }
     
     @IBAction fileprivate func viewAuthorDetailTapped(_ sender: UIButton) {

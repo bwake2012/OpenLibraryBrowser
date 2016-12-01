@@ -14,17 +14,7 @@ import BNRCoreDataStack
 
 class OLWorkDetailViewController: UIViewController {
 
-    @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var summaryView: UIView!
-    @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var workTitle: UILabel!
-    @IBOutlet weak var workSubtitle: UILabel!
-    @IBOutlet weak var workAuthor: UILabel!
-    @IBOutlet weak var workCover: UIImageView!
-    @IBOutlet weak var displayLargeCover: UIButton!
-    @IBOutlet weak var displayDeluxeDetail: UIButton!
-    @IBOutlet weak var coverSummarySpacing: NSLayoutConstraint!
+    @IBOutlet weak var headerView: OLHeaderView!
 
     @IBOutlet weak var containerView: UIView!
     
@@ -55,8 +45,9 @@ class OLWorkDetailViewController: UIViewController {
         
         assert( nil != queryCoordinator )
         
+        headerView.headerViewDelegate = self
     }
-    
+
     override func didReceiveMemoryWarning() {
         
         super.didReceiveMemoryWarning()
@@ -95,7 +86,7 @@ class OLWorkDetailViewController: UIViewController {
                 queryCoordinator!.installEBookEditionsCoordinator( destVC  )
             }
         
-        } else if segue.identifier == "largeCoverImage" {
+        } else if segue.identifier == "zoomLargeImage" {
             
             if let destVC = segue.destination as? OLPictureViewController {
                 
@@ -154,8 +145,7 @@ class OLWorkDetailViewController: UIViewController {
         if let data = try? Data( contentsOf: localURL ) {
             if let image = UIImage( data: data ) {
                 
-                workCover.image = image
-                self.displayLargeCover.isEnabled = true
+                headerView.image = image
                 return true
             }
         }
@@ -174,7 +164,6 @@ class OLWorkDetailViewController: UIViewController {
             if let image = UIImage( data: data ) {
                 
                 imageView.image = image
-                self.displayLargeCover.isEnabled = true
                 return true
             }
         }
@@ -187,23 +176,38 @@ class OLWorkDetailViewController: UIViewController {
         
         assert( Thread.isMainThread )
 
-        workTitle.text = workDetail.title
-        workSubtitle.text = workDetail.subtitle
-        workAuthor.text = workDetail.author_names.joined( separator: ", " )
-        displayLargeCover.isEnabled = workDetail.coversFound
-        if !workDetail.coversFound {
-            workCover.image = nil
-            coverSummarySpacing.constant = 0
-        } else {
-            workCover.image = UIImage( named: workDetail.defaultImageName )
+        headerView.clearSummary()
+        headerView.addSummaryLine(
+                text: workDetail.title,
+                style: .headline,
+                segueName: "displayDeluxeWorkDetail"
+            )
+
+        if !workDetail.subtitle.isEmpty {
+
+            headerView.addSummaryLine(
+                    text: workDetail.subtitle,
+                    style: .subheadline,
+                    segueName: "displayDeluxeWorkDetail"
+                )
+        }
+        
+        let authorNames = workDetail.author_names.joined( separator: ", " )
+        if !authorNames.isEmpty {
+            
+            headerView.addSummaryLine(
+                    text: authorNames,
+                    style: .subheadline,
+                    segueName: ""
+                )
         }
 
-        displayDeluxeDetail.isEnabled = !workDetail.isProvisional
-        workTitle.textColor = displayDeluxeDetail.currentTitleColor
-        workSubtitle.textColor = displayDeluxeDetail.currentTitleColor
+        if !workDetail.coversFound {
+            headerView.image = nil
+        } else {
+            headerView.image = UIImage( named: workDetail.defaultImageName )
+        }
 
-        view.layoutIfNeeded()
-        
 //        print( "header:\(headerView.frame) summary:\(summaryView.frame) scroll: \(scrollView.frame) stack:\(stackView.frame) cover:\(workCover.frame)" )
     }
     
@@ -215,7 +219,7 @@ extension OLWorkDetailViewController: TransitionSourceImage {
     
     func transitionSourceRectImageView() -> UIImageView? {
         
-        return workCover
+        return headerView.transitionSourceRectImageView()
     }
 }
 
@@ -224,6 +228,19 @@ extension OLWorkDetailViewController: UncoverBottomTransitionSource {
     func uncoverSourceRectangle() -> UIView? {
         
         return containerView
+    }
+}
+
+extension OLWorkDetailViewController: OLHeaderViewDelegate {
+    
+    func performSegue( segueName: String, sender: Any? ) {
+        
+        assert( !segueName.isEmpty )
+        
+        if !segueName.isEmpty {
+
+            super.performSegue( withIdentifier: segueName, sender: sender )
+        }
     }
 }
 

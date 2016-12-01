@@ -136,7 +136,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
         
         } else if .imageAuthor == obj.type || .imageBook == obj.type {
             
-            vc.performSegue( withIdentifier: "zoomDeluxeDetailImage", sender: self )
+            vc.performSegue( withIdentifier: "zoomLargeImage", sender: self )
             
         } else if .downloadBook == obj.type {
             

@@ -60,7 +60,7 @@ class OLDeluxeDetailTableViewController: UITableViewController {
         
         if let queryCoordinator = queryCoordinator {
 
-            if "zoomDeluxeDetailImage" == segue.identifier {
+            if "zoomLargeImage" == segue.identifier {
             
                 if let destVC = segue.destination as? OLPictureViewController {
                     

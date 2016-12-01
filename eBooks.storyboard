@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--eBook Table-->
+        <scene sceneID="gW6-Yu-orO">
+            <objects>
+                <tableViewController storyboardIdentifier="OLEBookEditionsTableViewController" title="eBook Table" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ngT-C6-aPc" customClass="OLEBookEditionsTableViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="101" sectionHeaderHeight="28" sectionFooterHeight="28" id="74E-K6-Czr">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="459"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="EbookEditionTableViewCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="EbookEditionTableViewCell" rowHeight="101" id="YYo-Za-IsZ" customClass="EbookEditionTableViewCell" customModule="OpenLibrary">
+                                <rect key="frame" x="0.0" y="28" width="375" height="101"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YYo-Za-IsZ" id="h4q-bs-TUQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" translatesAutoresizingMaskIntoConstraints="NO" id="WNJ-dU-1y0" userLabel="WorkEditionCover">
+                                            <rect key="frame" x="8" y="8" width="60" height="84"/>
+                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="tintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="84" id="O1l-S0-quc"/>
+                                                <constraint firstAttribute="width" constant="60" id="WvH-Q7-rgg"/>
+                                            </constraints>
+                                        </imageView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="d0i-Q2-w2J">
+                                            <rect key="frame" x="76" y="8" width="236" height="85"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" text=" Title" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oud-ZT-Tod">
+                                                    <rect key="frame" x="0.0" y="0.0" width="236" height="20.5"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" text=" Subtitle" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="94D-nn-H2C">
+                                                    <rect key="frame" x="0.0" y="20.5" width="236" height="18"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" text="Author Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="37q-q8-Dny">
+                                                    <rect key="frame" x="0.0" y="38.5" width="236" height="18"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="eBook Status" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7E8-RR-p1T" userLabel="eBook Status">
+                                                    <rect key="frame" x="0.0" y="56.5" width="236" height="28.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="WNJ-dU-1y0" firstAttribute="leading" secondItem="h4q-bs-TUQ" secondAttribute="leadingMargin" id="lns-WE-PEP"/>
+                                        <constraint firstItem="d0i-Q2-w2J" firstAttribute="top" secondItem="h4q-bs-TUQ" secondAttribute="topMargin" id="oEr-8U-31h"/>
+                                        <constraint firstItem="WNJ-dU-1y0" firstAttribute="top" secondItem="h4q-bs-TUQ" secondAttribute="topMargin" id="pha-YA-HCq"/>
+                                        <constraint firstItem="d0i-Q2-w2J" firstAttribute="trailing" secondItem="h4q-bs-TUQ" secondAttribute="trailingMargin" id="prU-k7-yVI"/>
+                                        <constraint firstItem="d0i-Q2-w2J" firstAttribute="leading" secondItem="WNJ-dU-1y0" secondAttribute="trailing" constant="8" symbolic="YES" id="u5n-ZG-itN"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="d0i-Q2-w2J" secondAttribute="bottom" id="zMo-97-H1J"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="authorName" destination="37q-q8-Dny" id="geE-eR-Naa"/>
+                                    <outlet property="cellImage" destination="WNJ-dU-1y0" id="emw-UW-ldB"/>
+                                    <outlet property="eBookStatus" destination="7E8-RR-p1T" id="8NL-Pp-sdi"/>
+                                    <outlet property="editionSubTitle" destination="94D-nn-H2C" id="UtD-ot-T5W"/>
+                                    <outlet property="editionTitle" destination="Oud-ZT-Tod" id="qE0-UQ-id6"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="ngT-C6-aPc" id="02s-DO-upS"/>
+                            <outlet property="delegate" destination="ngT-C6-aPc" id="3lD-04-LJY"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <segue destination="4TK-DC-Htd" kind="show" identifier="EbookEditionTableViewCell" customClass="SegueWithWindowShade" customModule="OpenLibrary" customModuleProvider="target" id="FM2-bP-Kat"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WUH-dV-u0j" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2321" y="1641"/>
+        </scene>
+        <!--eBooks-->
+        <scene sceneID="uV6-be-qcx">
+            <objects>
+                <viewController storyboardIdentifier="workDetailEBooks" title="eBooks" useStoryboardIdentifierAsRestorationIdentifier="YES" id="WVd-O9-5v6" customClass="OLWorkDetailViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="R5D-cX-R1r"/>
+                        <viewControllerLayoutGuide type="bottom" id="8Qy-49-bqy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="SLx-w6-l5i">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" verticalHuggingPriority="750" restorationIdentifier="OLHeaderView" translatesAutoresizingMaskIntoConstraints="NO" id="crf-cB-pWP" userLabel="Header View" customClass="OLHeaderView" customModule="OpenLibrary" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="64" width="375" height="144"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="image" value="961-book-32"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k3K-Yk-1Gr">
+                                <rect key="frame" x="0.0" y="208" width="375" height="459"/>
+                                <connections>
+                                    <segue destination="ngT-C6-aPc" kind="embed" identifier="embedWorkEBooks" id="Afh-8e-9Xv"/>
+                                </connections>
+                            </containerView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="NI8-mo-MUe">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="NI8-mo-MUe" firstAttribute="centerX" secondItem="SLx-w6-l5i" secondAttribute="centerX" id="0i2-mr-LdO"/>
+                            <constraint firstItem="k3K-Yk-1Gr" firstAttribute="leading" secondItem="SLx-w6-l5i" secondAttribute="leading" id="8DG-kJ-JYs"/>
+                            <constraint firstItem="crf-cB-pWP" firstAttribute="top" secondItem="R5D-cX-R1r" secondAttribute="bottom" id="DIf-uK-vCP"/>
+                            <constraint firstItem="NI8-mo-MUe" firstAttribute="centerY" secondItem="SLx-w6-l5i" secondAttribute="centerY" id="Dfy-pq-NRC"/>
+                            <constraint firstItem="crf-cB-pWP" firstAttribute="leading" secondItem="SLx-w6-l5i" secondAttribute="leading" id="ESk-27-EEZ"/>
+                            <constraint firstItem="k3K-Yk-1Gr" firstAttribute="trailing" secondItem="SLx-w6-l5i" secondAttribute="trailing" id="hrx-xR-VFe"/>
+                            <constraint firstItem="8Qy-49-bqy" firstAttribute="top" secondItem="k3K-Yk-1Gr" secondAttribute="bottom" id="oyJ-ma-388"/>
+                            <constraint firstItem="crf-cB-pWP" firstAttribute="trailing" secondItem="SLx-w6-l5i" secondAttribute="trailing" id="rlC-wT-IUB"/>
+                            <constraint firstItem="k3K-Yk-1Gr" firstAttribute="top" secondItem="crf-cB-pWP" secondAttribute="bottom" id="yTZ-Ml-Wmu"/>
+                        </constraints>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO">
+                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </simulatedNavigationBarMetrics>
+                    <connections>
+                        <outlet property="activityView" destination="NI8-mo-MUe" id="ndf-wW-GfN"/>
+                        <outlet property="containerView" destination="k3K-Yk-1Gr" id="0Hd-Q2-LFs"/>
+                        <outlet property="headerView" destination="crf-cB-pWP" id="mKv-xj-5h3"/>
+                        <segue destination="9tK-TA-F2b" kind="show" identifier="largeCoverImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" id="pSw-ZH-NRh"/>
+                        <segue destination="k4O-M7-aeU" kind="show" identifier="displayDeluxeWorkDetail" customClass="SegueWithUnfold" customModule="OpenLibrary" id="41y-72-MI3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aQs-XP-2dL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2321" y="994"/>
+        </scene>
+        <!--UIViewController-QNA-1N-1O1-->
+        <scene sceneID="mgI-88-LLM">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="UIViewController-QNA-1N-1O1" id="4TK-DC-Htd" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="w8h-GB-4H5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3086" y="1640"/>
+        </scene>
+        <!--authorDeluxeDetailTableView-->
+        <scene sceneID="l4b-PG-Ry8">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="authorDeluxeDetailTableView" storyboardName="Main" referencedIdentifier="authorDeluxeDetailTableView" id="k4O-M7-aeU" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7uL-QW-HOS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3080" y="1151"/>
+        </scene>
+        <!--photoCoverPictureViewController-->
+        <scene sceneID="6GW-Tz-ZhL">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="photoCoverPictureViewController" storyboardName="Main" referencedIdentifier="photoCoverPictureViewController" id="9tK-TA-F2b" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n6w-0z-fKj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3101" y="905"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="961-book-32" width="20" height="28"/>
+    </resources>
+</document>
