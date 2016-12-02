@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_0" orientation="portrait">
+    <device id="retina4_0" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -18,40 +18,43 @@
                         <viewControllerLayoutGuide type="bottom" id="sKH-cd-bo6"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="rhm-ph-9je">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZCm-QX-3Jp" userLabel="Header View" customClass="OLHeaderView" customModule="OpenLibrary" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="20" width="320" height="144"/>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="image" keyPath="image" value="253-person"/>
-                                </userDefinedRuntimeAttributes>
-                            </view>
-                            <containerView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="760" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GtZ-lM-FnV">
-                                <rect key="frame" x="0.0" y="164" width="320" height="404"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="tintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <connections>
-                                    <segue destination="zwq-ib-FDJ" kind="embed" identifier="embedAuthorWorks" id="3ha-7a-Qju"/>
-                                </connections>
-                            </containerView>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ggG-Qf-Add">
+                                <rect key="frame" x="0.0" y="20" width="568" height="144"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZCm-QX-3Jp" userLabel="Header View" customClass="OLHeaderView" customModule="OpenLibrary" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="144"/>
+                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="image" keyPath="image" value="253-person"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <containerView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="760" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GtZ-lM-FnV">
+                                        <rect key="frame" x="320" y="0.0" width="248" height="144"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <segue destination="zwq-ib-FDJ" kind="embed" identifier="embedAuthorWorks" id="3ha-7a-Qju"/>
+                                        </connections>
+                                    </containerView>
+                                </subviews>
+                                <variation key="heightClass=compact-widthClass=compact" axis="horizontal"/>
+                            </stackView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="8zT-S9-MSn">
-                                <rect key="frame" x="141.5" y="265.5" width="37" height="37"/>
+                                <rect key="frame" x="265.5" y="141.5" width="37" height="37"/>
                                 <color key="color" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="GtZ-lM-FnV" firstAttribute="trailing" secondItem="rhm-ph-9je" secondAttribute="trailing" id="7fw-ct-8Lh"/>
-                            <constraint firstItem="GtZ-lM-FnV" firstAttribute="top" secondItem="ZCm-QX-3Jp" secondAttribute="bottom" id="ARO-8c-aik"/>
-                            <constraint firstItem="ZCm-QX-3Jp" firstAttribute="top" secondItem="WMK-h2-Oo1" secondAttribute="bottom" id="E3Z-4H-I6S"/>
-                            <constraint firstItem="GtZ-lM-FnV" firstAttribute="leading" secondItem="rhm-ph-9je" secondAttribute="leading" id="Mi5-o4-8Rv"/>
-                            <constraint firstItem="GtZ-lM-FnV" firstAttribute="bottom" secondItem="sKH-cd-bo6" secondAttribute="top" id="VIn-CB-GXH"/>
-                            <constraint firstItem="ZCm-QX-3Jp" firstAttribute="trailing" secondItem="rhm-ph-9je" secondAttribute="trailing" id="bTz-05-Dwh"/>
+                            <constraint firstItem="ggG-Qf-Add" firstAttribute="leading" secondItem="rhm-ph-9je" secondAttribute="leading" id="Ynb-mp-NsH"/>
+                            <constraint firstAttribute="trailing" secondItem="ggG-Qf-Add" secondAttribute="trailing" id="YzZ-nQ-Zbe"/>
                             <constraint firstItem="8zT-S9-MSn" firstAttribute="centerY" secondItem="rhm-ph-9je" secondAttribute="centerY" id="cw5-cQ-9JC"/>
+                            <constraint firstItem="ggG-Qf-Add" firstAttribute="bottom" secondItem="sKH-cd-bo6" secondAttribute="top" id="doL-Ja-UXY"/>
                             <constraint firstItem="8zT-S9-MSn" firstAttribute="centerX" secondItem="rhm-ph-9je" secondAttribute="centerX" id="k1b-eK-cEp"/>
-                            <constraint firstItem="ZCm-QX-3Jp" firstAttribute="leading" secondItem="rhm-ph-9je" secondAttribute="leading" id="uIe-hL-rT5"/>
+                            <constraint firstItem="ggG-Qf-Add" firstAttribute="top" secondItem="WMK-h2-Oo1" secondAttribute="bottom" id="z7C-QL-uMs"/>
                         </constraints>
                     </view>
                     <connections>
@@ -95,15 +98,15 @@
             <objects>
                 <tableViewController storyboardIdentifier="AuthorDetailWorks" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zwq-ib-FDJ" customClass="OLAuthorDetailWorksTableViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="101" sectionHeaderHeight="28" sectionFooterHeight="28" id="54q-gE-kUZ">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="404"/>
+                        <rect key="frame" x="0.0" y="0.0" width="248" height="144"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="authorWorksEntry" rowHeight="101" id="kYx-8i-9Gr" customClass="AuthorWorksTableViewCell" customModule="OpenLibrary" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="320" height="101"/>
+                                <rect key="frame" x="0.0" y="28" width="248" height="101"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kYx-8i-9Gr" id="WT4-wB-rFR">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="100.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="248" height="100.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" translatesAutoresizingMaskIntoConstraints="NO" id="C7B-u3-GKW" userLabel="AuthorWorkCover">
@@ -174,15 +177,15 @@
             <objects>
                 <tableViewController storyboardIdentifier="AuthorDetailEditions" useStoryboardIdentifierAsRestorationIdentifier="YES" id="hJl-Hc-Y47" customClass="OLAuthorDetailEditionsTableViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="74" sectionHeaderHeight="28" sectionFooterHeight="28" id="6DK-XW-M4f">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="authorEditionEntry" selectionStyle="default" indentationWidth="10" reuseIdentifier="authorEditionEntry" rowHeight="74" id="lPK-jt-K0C" customClass="EditionTableViewCell" customModule="OpenLibrary" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="320" height="74"/>
+                                <rect key="frame" x="0.0" y="28" width="568" height="74"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" verticalCompressionResistancePriority="740" tableViewCell="lPK-jt-K0C" id="N2O-aa-v4s">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="73.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="568" height="73.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cSC-Zj-B96">
@@ -193,13 +196,13 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edition Title" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lGV-OP-7g9">
-                                            <rect key="frame" x="72" y="8" width="240" height="20.5"/>
+                                            <rect key="frame" x="72" y="8" width="488" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edition Subtitle" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5gf-HY-Czb">
-                                            <rect key="frame" x="72" y="47.5" width="240" height="16"/>
+                                            <rect key="frame" x="72" y="47.5" width="488" height="16"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>

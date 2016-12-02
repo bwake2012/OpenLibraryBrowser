@@ -51,7 +51,7 @@
                         <outlet property="tableView" destination="hw0-1g-Jjf" id="chP-9l-vgm"/>
                         <segue destination="gFU-3t-GOM" kind="show" identifier="displayGeneralSearchAuthorDetail" customClass="SegueWithTableViewCellZoom" customModule="OpenLibrary" customModuleProvider="target" id="slP-df-BRM"/>
                         <segue destination="xzb-fe-grp" kind="show" identifier="displayGeneralSearchWorkDetail" customClass="SegueWithTableViewCellZoom" customModule="OpenLibrary" customModuleProvider="target" id="bNH-qu-qcP"/>
-                        <segue destination="RJ5-x8-uas" kind="show" identifier="largeCoverImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" customModuleProvider="target" id="dvZ-I4-SaB"/>
+                        <segue destination="RJ5-x8-uas" kind="show" identifier="zoomLargeImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" customModuleProvider="target" id="dvZ-I4-SaB"/>
                         <segue destination="565-lf-E8F" kind="show" identifier="openBookSearch" customClass="SegueWithWindowShade" customModule="OpenLibrary" customModuleProvider="target" id="94o-EF-7BE"/>
                         <segue destination="Xmm-OC-cfc" kind="show" identifier="openBookSort" customClass="SegueWithWindowShade" customModule="OpenLibrary" customModuleProvider="target" id="a5k-8T-2Gm"/>
                         <segue destination="9lP-Th-a8R" kind="show" identifier="displayWorkEBooks" customClass="SegueWithTableViewCellZoom" customModule="OpenLibrary" customModuleProvider="target" id="usZ-AJ-S00"/>
@@ -586,7 +586,7 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <segue destination="RJ5-x8-uas" kind="show" identifier="zoomDeluxeDetailImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" id="MSI-XC-TWv"/>
+                        <segue destination="RJ5-x8-uas" kind="show" identifier="zoomLargeImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" id="MSI-XC-TWv"/>
                         <segue destination="QNA-1N-1O1" kind="show" identifier="DeluxeDetailBookDownloadTableViewCell" customClass="SegueWithWindowShade" customModule="OpenLibrary" customModuleProvider="target" id="DGw-06-isa"/>
                     </connections>
                 </tableViewController>
@@ -631,7 +631,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Lb-GV-7Ci" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1173" y="2834"/>
+            <point key="canvasLocation" x="1224" y="2834"/>
         </scene>
         <!--Download-->
         <scene sceneID="GvV-Xr-xLh">
@@ -793,7 +793,7 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <segue destination="RJ5-x8-uas" kind="show" identifier="zoomDeluxeDetailImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" id="GFh-zh-PVi"/>
+                        <segue destination="RJ5-x8-uas" kind="show" identifier="zoomLargeImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" id="GFh-zh-PVi"/>
                         <segue destination="QNA-1N-1O1" kind="show" identifier="DeluxeDetailBookDownloadTableViewCell" customClass="SegueWithWindowShade" customModule="OpenLibrary" customModuleProvider="target" id="3XC-3S-Rbd"/>
                     </connections>
                 </tableViewController>
@@ -815,7 +815,7 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <segue destination="RJ5-x8-uas" kind="show" identifier="zoomDeluxeDetailImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" id="Yjz-qW-0Hz"/>
+                        <segue destination="RJ5-x8-uas" kind="show" identifier="zoomLargeImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" id="Yjz-qW-0Hz"/>
                         <segue destination="QNA-1N-1O1" kind="show" identifier="DeluxeDetailBookDownloadTableViewCell" customClass="SegueWithWindowShade" customModule="OpenLibrary" customModuleProvider="target" id="N1H-Eu-32X"/>
                     </connections>
                 </tableViewController>
@@ -1145,7 +1145,7 @@ MarkDown text to HTML for display.&lt;/p&gt;
         <image name="rsw-notsorted-28x26" width="28" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="dvZ-I4-SaB"/>
-        <segue reference="DGw-06-isa"/>
+        <segue reference="MSI-XC-TWv"/>
+        <segue reference="N1H-Eu-32X"/>
     </inferredMetricsTieBreakers>
 </document>
