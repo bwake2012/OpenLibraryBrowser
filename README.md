@@ -6,4 +6,4 @@ It leans heavily on the NSOperation based classes originally developed by Apple 
 
 It builds its Core Data stack with the [Big Nerd Ranch Core Data stack](https://github.com/bignerdranch/CoreDataStack). 
 
-It converts markdown text into HTML with [Markingbird](Kristopher Johnson) by Kristopher Johnson
+It converts markdown text directly into NSAttributedText with [Down](https://github.com/iwasrobbed/Down) by Rob Phillips.
