@@ -35,10 +35,18 @@ class OLHeaderView: UIView {
 
         set {
             
+            let imageWasNil = contentStack.arrangedSubviews.first != imageParentView
             imageView.image = newValue
             zoomImage.isEnabled = nil != newValue
-            summarySpacing.constant = nil != newValue ? standardSpacing : noSpacing
             imageZoomSegueName = nil == newValue ? "" : "zoomLargeImage"
+            if nil == newValue && !imageWasNil {
+                
+                contentStack.removeArrangedSubview( imageParentView )
+                
+            } else if nil != newValue && imageWasNil {
+                
+                contentStack.insertArrangedSubview( imageParentView, at: 0 )
+            }
         }
 
         get {
@@ -49,9 +57,10 @@ class OLHeaderView: UIView {
 
     // MARK: Private UI Properties
     @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var contentStack: UIStackView!
+    @IBOutlet weak var imageParentView: UIView!
     @IBOutlet weak var imageView: AspectRatioImageView!
     @IBOutlet weak var zoomImage: UIButton!
-    @IBOutlet weak var summarySpacing: NSLayoutConstraint!
     @IBOutlet weak var summaryStack: UIStackView!
     
     // MARK: Private UI Actions
@@ -114,14 +123,21 @@ class OLHeaderView: UIView {
     func xibSetup() {
         contentView = loadViewFromNib()
         
+        // Adding custom subview on top of our view (over any custom drawing > see note below)
+        addSubview(contentView)
+        
         // use bounds not frame or it'll be offset
+        contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.frame = bounds
         
         // Make the view stretch with containing view
-        contentView.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
+        NSLayoutConstraint( item: contentView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1.0, constant: 0.0 ).isActive = true
         
-        // Adding custom subview on top of our view (over any custom drawing > see note below)
-        addSubview(contentView)
+        NSLayoutConstraint( item: contentView, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1.0, constant: 0.0 ).isActive = true
+        
+        NSLayoutConstraint( item: contentView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: 0.0 ).isActive = true
+        
+        NSLayoutConstraint( item: contentView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: 0.0 ).isActive = true
     }
     
     func loadViewFromNib() -> UIView {
@@ -172,7 +188,10 @@ class OLHeaderView: UIView {
         summaryStack.insertArrangedSubview( label, at: index )
         label.attributedText = makeAttributedString( string: text, style: style )
         label.textColor = segueName.isEmpty ? UIColor.darkText : self.tintColor
+        label.backgroundColor = self.contentView.backgroundColor
+        label.isOpaque = true
         label.lineBreakMode = .byWordWrapping
+        label.setContentCompressionResistancePriority( 1000, for: .vertical )
         label.numberOfLines = 0
 
         button.backgroundColor = UIColor.clear
