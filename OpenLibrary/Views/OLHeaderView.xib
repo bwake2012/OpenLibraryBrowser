@@ -47,7 +47,7 @@
                                 <constraint firstItem="dnu-cX-SJx" firstAttribute="leading" secondItem="pQJ-RR-Dsh" secondAttribute="leading" id="Ic7-9U-eML"/>
                                 <constraint firstItem="dnu-cX-SJx" firstAttribute="top" secondItem="pQJ-RR-Dsh" secondAttribute="top" id="crQ-68-0uM"/>
                             </constraints>
-                            <variation key="heightClass=compact-widthClass=compact">
+                            <variation key="heightClass=compact">
                                 <mask key="constraints">
                                     <exclude reference="FMo-x2-Snm"/>
                                 </mask>
@@ -93,7 +93,7 @@
                             <exclude reference="8lY-o0-Kq7"/>
                         </mask>
                     </variation>
-                    <variation key="heightClass=compact-widthClass=compact" axis="vertical">
+                    <variation key="heightClass=compact" axis="vertical">
                         <mask key="constraints">
                             <exclude reference="4BM-aE-EIE"/>
                             <include reference="8lY-o0-Kq7"/>
