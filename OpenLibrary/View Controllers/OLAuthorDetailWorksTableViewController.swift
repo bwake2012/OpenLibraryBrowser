@@ -20,7 +20,8 @@ class OLAuthorDetailWorksTableViewController: UIViewController {
     
     var parentVC: OLAuthorDetailViewController?
     var queryCoordinator: AuthorWorksCoordinator?
-
+    var indexPathSavedForTransition: IndexPath?
+    
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +69,7 @@ class OLAuthorDetailWorksTableViewController: UIViewController {
                 
                 if let indexPath = self.tableView.indexPathForSelectedRow {
 
+                    indexPathSavedForTransition = indexPath
                     queryCoordinator!.installWorkDetailCoordinator( destVC, indexPath: indexPath )
                 }
             }
@@ -105,14 +107,14 @@ extension OLAuthorDetailWorksTableViewController: TransitionSourceCell {
         
         var sourceRectView: UITableViewCell?
         
-        if let indexPath = tableView.indexPathForSelectedRow {
+        assert( nil != indexPathSavedForTransition )
+        if let indexPath = indexPathSavedForTransition {
             
             sourceRectView = tableView.cellForRow( at: indexPath )
-
-        } else if let indexPath = tableView.indexPathForRow( at: tableView.center ) {
-            
-            sourceRectView = tableView.cellForRow( at: indexPath )
+            indexPathSavedForTransition = nil
         }
+        
+        assert( nil != sourceRectView )
         
         return sourceRectView
     }

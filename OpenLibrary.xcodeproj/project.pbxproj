@@ -78,6 +78,8 @@
 		C434CC291D9595AC009540E3 /* UIImage+paddedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C434CC281D9595AC009540E3 /* UIImage+paddedImage.swift */; };
 		C437DEA21CECEE45005CED1A /* GeneralSearchResultsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C437DEA11CECEE45005CED1A /* GeneralSearchResultsCoordinator.swift */; };
 		C437DEA41CECF8D9005CED1A /* GeneralSearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C437DEA31CECF8D9005CED1A /* GeneralSearchResultTableViewCell.swift */; };
+		C45106D71DFDFAE2006AF6C9 /* LoginPostOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45106D61DFDFAE2006AF6C9 /* LoginPostOperation.swift */; };
+		C45106D91DFE078C006AF6C9 /* LoginOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45106D81DFE078C006AF6C9 /* LoginOperation.swift */; };
 		C451837C1D3E8662006681B0 /* OperationErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C451837B1D3E8662006681B0 /* OperationErrors.swift */; };
 		C453C3821D5E1985003EAA45 /* OLTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C453C3811D5E1985003EAA45 /* OLTableViewHeaderFooterView.swift */; };
 		C453C3841D5E2030003EAA45 /* OLTableViewHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C453C3831D5E2030003EAA45 /* OLTableViewHeaderFooterView.xib */; };
@@ -291,6 +293,8 @@
 		C434CC281D9595AC009540E3 /* UIImage+paddedImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIImage+paddedImage.swift"; path = "Utility/UIImage+paddedImage.swift"; sourceTree = "<group>"; };
 		C437DEA11CECEE45005CED1A /* GeneralSearchResultsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneralSearchResultsCoordinator.swift; path = Coordinators/GeneralSearchResultsCoordinator.swift; sourceTree = "<group>"; };
 		C437DEA31CECF8D9005CED1A /* GeneralSearchResultTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneralSearchResultTableViewCell.swift; path = Views/GeneralSearchResultTableViewCell.swift; sourceTree = "<group>"; };
+		C45106D61DFDFAE2006AF6C9 /* LoginPostOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginPostOperation.swift; path = "App Operations/LoginPostOperation.swift"; sourceTree = "<group>"; };
+		C45106D81DFE078C006AF6C9 /* LoginOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginOperation.swift; path = "App Operations/LoginOperation.swift"; sourceTree = "<group>"; };
 		C451837B1D3E8662006681B0 /* OperationErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OperationErrors.swift; path = "App Operations/OperationErrors.swift"; sourceTree = "<group>"; };
 		C453C3811D5E1985003EAA45 /* OLTableViewHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OLTableViewHeaderFooterView.swift; path = Views/OLTableViewHeaderFooterView.swift; sourceTree = "<group>"; };
 		C453C3831D5E2030003EAA45 /* OLTableViewHeaderFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OLTableViewHeaderFooterView.xib; path = Views/OLTableViewHeaderFooterView.xib; sourceTree = "<group>"; };
@@ -677,6 +681,8 @@
 				C4EF99D71CA3708900BEF2D3 /* WorkEditionsDownloadOperation.swift */,
 				C4EF99D81CA3708900BEF2D3 /* WorkEditionsGetOperation.swift */,
 				C4EF99D91CA3708900BEF2D3 /* WorkEditionsParseOperation.swift */,
+				C45106D61DFDFAE2006AF6C9 /* LoginPostOperation.swift */,
+				C45106D81DFE078C006AF6C9 /* LoginOperation.swift */,
 			);
 			name = "App Operations";
 			sourceTree = "<group>";
@@ -1092,6 +1098,7 @@
 				C45EBC091D6F4A3D00ED1908 /* Operation+ValidateMIMEType.swift in Sources */,
 				C412FE571CC2C99800EDB935 /* OLLanguage.swift in Sources */,
 				C412FE5C1CC3D45A00EDB935 /* OLAuthorSearchResult+CoreDataProperties.swift in Sources */,
+				C45106D91DFE078C006AF6C9 /* LoginOperation.swift in Sources */,
 				C40E97F91CC7D1540013A3F5 /* GeneralSearchResultsDeleteOperation.swift in Sources */,
 				C40E97F71CC7D1540013A3F5 /* GeneralSearchResultsParseOperation.swift in Sources */,
 				C40E97F11CC6C2E10013A3F5 /* OLGeneralSearchResult+CoreDataProperties.swift in Sources */,
@@ -1132,6 +1139,7 @@
 				C4DA1F7D1C8A329B00DFA4BF /* AuthorWorksDownloadOperation.swift in Sources */,
 				C4E35EA61C7E41B60015D187 /* OLSearchResultsTableViewController.swift in Sources */,
 				C40A28651D71121A001ABC20 /* EditionDetailParseOperation.swift in Sources */,
+				C45106D71DFDFAE2006AF6C9 /* LoginPostOperation.swift in Sources */,
 				C4B2AC1E1CE0F44F003E3E74 /* OLBookSearchViewController.swift in Sources */,
 				C4677E9F1C9CE35A0070CDFD /* UIImageView+DisplayFromURL.swift in Sources */,
 				C4F00C591CD96D4E002D7E14 /* OLDeluxeDetailCoordinator.swift in Sources */,

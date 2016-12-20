@@ -41,7 +41,7 @@
                                 <variation key="heightClass=compact" axis="horizontal"/>
                             </stackView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="uN5-a9-Cwg">
-                                <rect key="frame" x="265.5" y="141.5" width="37" height="37"/>
+                                <rect key="frame" x="266" y="142" width="37" height="37"/>
                                 <color key="color" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
                         </subviews>

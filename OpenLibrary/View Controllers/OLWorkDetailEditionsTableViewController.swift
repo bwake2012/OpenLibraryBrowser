@@ -19,6 +19,8 @@ class OLWorkDetailEditionsTableViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     var queryCoordinator: WorkEditionsCoordinator?
     
+    var indexPathSavedForTransition: IndexPath?
+    
     // MARK: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,20 +62,19 @@ class OLWorkDetailEditionsTableViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "displayEditionDetail" {
+        if let indexPath = self.tableView.indexPathForSelectedRow {
+
+            indexPathSavedForTransition = indexPath
+            if segue.identifier == "displayEditionDetail" {
             
-            if let destVC = segue.destination as? OLEditionDetailViewController {
-                
-                if let indexPath = self.tableView.indexPathForSelectedRow {
+                if let destVC = segue.destination as? OLEditionDetailViewController {
+                    
                     queryCoordinator!.installEditionCoordinator( destVC, indexPath: indexPath )
-                    
                 }
-            }
-        } else if segue.identifier == "displayEditionDeluxeDetail" {
-            
-            if let destVC = segue.destination as? OLDeluxeDetailTableViewController {
-                if let indexPath = self.tableView.indexPathForSelectedRow {
-                    
+            } else if segue.identifier == "displayEditionDeluxeDetail" {
+                
+                if let destVC = segue.destination as? OLDeluxeDetailTableViewController {
+
                     queryCoordinator!.installEditionDeluxeCoordinator( destVC, indexPath: indexPath )
                 }
             }
@@ -111,13 +112,11 @@ extension OLWorkDetailEditionsTableViewController: TransitionSourceCell {
         
         var sourceRectView: UITableViewCell?
         
-        if let indexPath = tableView.indexPathForSelectedRow {
+        assert( nil != indexPathSavedForTransition )
+        if let indexPath = indexPathSavedForTransition {
             
             sourceRectView = tableView.cellForRow( at: indexPath )
-
-        } else if let indexPath = tableView.indexPathForRow( at: tableView.center ) {
-            
-            sourceRectView = tableView.cellForRow( at: indexPath )
+            indexPathSavedForTransition = nil
         }
         
         return sourceRectView

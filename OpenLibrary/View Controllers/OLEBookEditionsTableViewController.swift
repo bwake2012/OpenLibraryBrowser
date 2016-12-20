@@ -11,6 +11,7 @@ import UIKit
 class OLEBookEditionsTableViewController: UITableViewController {
 
     var queryCoordinator: EBookEditionsCoordinator?
+    var indexPathSavedForTransition: IndexPath?
     
     // MARK: UIViewController
     override func viewDidLoad() {
@@ -63,6 +64,7 @@ class OLEBookEditionsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        indexPathSavedForTransition = indexPath
         queryCoordinator?.didSelectItemAtIndexPath( indexPath )
     }
     
@@ -129,13 +131,11 @@ extension OLEBookEditionsTableViewController: TransitionSourceCell {
         
         var sourceRectView: UITableViewCell?
         
-        if let indexPath = tableView.indexPathForSelectedRow {
+        assert( nil != indexPathSavedForTransition )
+        if let indexPath = indexPathSavedForTransition {
             
             sourceRectView = tableView.cellForRow( at: indexPath )
-            
-        } else if let indexPath = tableView.indexPathForRow( at: tableView.center ) {
-            
-            sourceRectView = tableView.cellForRow( at: indexPath )
+            indexPathSavedForTransition = nil
         }
         
         return sourceRectView

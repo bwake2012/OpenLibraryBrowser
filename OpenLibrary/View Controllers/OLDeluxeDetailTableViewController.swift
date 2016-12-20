@@ -11,7 +11,8 @@ import UIKit
 class OLDeluxeDetailTableViewController: UITableViewController {
 
     var queryCoordinator: OLDeluxeDetailCoordinator?
-    
+    var indexPathSavedForTransition: IndexPath?
+        
 //    var hidesBarsOnSwipe = false
     
     // MARK: UIView
@@ -59,7 +60,7 @@ class OLDeluxeDetailTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if let queryCoordinator = queryCoordinator {
-
+            
             if "zoomLargeImage" == segue.identifier {
             
                 if let destVC = segue.destination as? OLPictureViewController {
@@ -116,6 +117,7 @@ class OLDeluxeDetailTableViewController: UITableViewController {
         
         if let queryCoordinator = queryCoordinator {
             
+            indexPathSavedForTransition = indexPath
             queryCoordinator.didSelectRowAtIndexPath( indexPath )
         }
     }
@@ -144,15 +146,14 @@ extension OLDeluxeDetailTableViewController: TransitionSourceCell {
         
         var sourceRectView: UITableViewCell?
         
-        if let indexPath = tableView.indexPathForSelectedRow {
+        assert( nil != indexPathSavedForTransition )
+        if let indexPath = indexPathSavedForTransition {
             
             sourceRectView = tableView.cellForRow( at: indexPath )
-            
-        } else if let indexPath = tableView.indexPathForRow( at: tableView.center ) {
-            
-            sourceRectView = tableView.cellForRow( at: indexPath )
+            indexPathSavedForTransition = nil
         }
-        
+        assert( nil != sourceRectView )
+
         return sourceRectView
     }
     

@@ -25,7 +25,8 @@ class OLSearchResultsTableViewController: UIViewController {
     var savedIndexPath: IndexPath?
     var savedAuthorKey: String?
     var immediateSegueName: String?
-    
+    var indexPathSavedForTransition: IndexPath?
+        
     var beginningOffset: CGFloat = 0.0
 
     @IBAction func presentGeneralSearch(_ sender: UIBarButtonItem) {
@@ -200,6 +201,7 @@ class OLSearchResultsTableViewController: UIViewController {
         } else if let indexPath = tableView.indexPathForSelectedRow {
         
             savedIndexPath = indexPath
+            indexPathSavedForTransition = indexPath
             
             switch segueName {
             
@@ -435,7 +437,15 @@ extension OLSearchResultsTableViewController: TransitionSourceImage {
     
     func transitionSourceRectImageView() -> UIImageView? {
         
-        if let indexPath = tableView.indexPathForSelectedRow {
+        if let indexPath = indexPathSavedForTransition {
+            
+            if let cell = tableView.cellForRow( at: indexPath ) as? GeneralSearchResultSegmentedTableViewCell {
+                
+                return cell.transitionSourceRectView()
+            }
+            
+        } else if let indexPath = tableView.indexPathForSelectedRow {
+
             if let cell = tableView.cellForRow( at: indexPath ) as? GeneralSearchResultSegmentedTableViewCell {
                 
                 return cell.transitionSourceRectView()
@@ -452,13 +462,11 @@ extension OLSearchResultsTableViewController: TransitionSourceCell {
         
         var sourceRectView: UITableViewCell?
         
-        if let indexPath = tableView.indexPathForSelectedRow {
+        assert( nil != indexPathSavedForTransition )
+        if let indexPath = indexPathSavedForTransition {
             
             sourceRectView = tableView.cellForRow( at: indexPath )
-            
-        } else if let indexPath = tableView.indexPathForRow( at: tableView.center ) {
-            
-            sourceRectView = tableView.cellForRow( at: indexPath )
+            indexPathSavedForTransition = nil
         }
         
         return sourceRectView
@@ -547,6 +555,8 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
         
         if let cell = tableView.cellForRow( at: indexPath ) as? SegmentedTableViewCell {
         
+            indexPathSavedForTransition = indexPath
+            
             generalSearchCoordinator?.didSelectRowAtIndexPath( indexPath )
 
             expandCell( tableView, segmentedCell: cell, key: cell.key )
