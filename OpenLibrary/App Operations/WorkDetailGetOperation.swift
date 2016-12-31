@@ -29,7 +29,7 @@ class WorkDetailGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, coreDataStack: OLDataStack, resultHandler: ObjectResultClosure?, completionHandler: @escaping (Void) -> Void ) {
+    init( queryText: String, currentObjectID: NSManagedObjectID?, dataStack: OLDataStack, resultHandler: ObjectResultClosure?, completionHandler: @escaping (Void) -> Void ) {
 
         var cacheFile = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
@@ -48,7 +48,7 @@ class WorkDetailGetOperation: GroupOperation {
             There is an optional operation 0 to delete the existing contents of the Core Data store
         */
         downloadOperation = WorkDetailDownloadOperation( queryText: queryText, cacheFile: cacheFile )
-        parseOperation = WorkDetailParseOperation( cacheFile: cacheFile, coreDataStack: coreDataStack, resultHandler: resultHandler )
+        parseOperation = WorkDetailParseOperation( currentObjectID: currentObjectID, cacheFile: cacheFile, dataStack: dataStack, resultHandler: resultHandler )
         
         let finishOperation = PSBlockOperation { completionHandler() }
         

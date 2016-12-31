@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let launchUserInterface = {
             
             // NSLog( "Retrieving Languages" )
-            OLLanguage.retrieveLanguages( self.operationQueue, coreDataStack: self.dataStack! )
+            OLLanguage.retrieveLanguages( self.operationQueue, dataStack: self.dataStack! )
             
             let delay = DispatchTime.now() + .milliseconds( 250 )
             DispatchQueue.main.asyncAfter( deadline: delay ) {
@@ -110,7 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             generalSearchResultsCoordinator =
                 GeneralSearchResultsCoordinator(
                         tableVC: destVC,
-                        coreDataStack: dataStack!,
+                        dataStack: dataStack!,
                         operationQueue: operationQueue
                     )
             

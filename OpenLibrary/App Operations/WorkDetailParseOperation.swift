@@ -17,6 +17,7 @@ class WorkDetailParseOperation: PSOperation {
     
     let cacheFile: URL
     let context: NSManagedObjectContext
+    var currentObjectID: NSManagedObjectID?
     let resultHandler: ObjectResultClosure?
 
     var searchResults = SearchResults()
@@ -31,15 +32,16 @@ class WorkDetailParseOperation: PSOperation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( cacheFile: URL, coreDataStack: OLDataStack, resultHandler: ObjectResultClosure? ) {
+    init( currentObjectID: NSManagedObjectID?, cacheFile: URL, dataStack: OLDataStack, resultHandler: ObjectResultClosure? ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
             to replace the ones in the store.
         */
         
+        self.currentObjectID = currentObjectID
         self.cacheFile = cacheFile
-        self.context = coreDataStack.newChildContext( name: "WorkDetail child context" )
+        self.context = dataStack.newChildContext( name: "WorkDetail child context" )
         self.context.mergePolicy = NSOverwriteMergePolicy
         self.resultHandler = resultHandler
         
@@ -78,12 +80,12 @@ class WorkDetailParseOperation: PSOperation {
 
         context.perform {
             
-            if let newObject = OLWorkDetail.parseJSON( "", index: -1, json: resultSet, moc: self.context ) {
+            if let newObject = OLWorkDetail.parseJSON( "", index: -1, currentObjectID: self.currentObjectID, json: resultSet, moc: self.context ) {
             
                 // sometimes we have one or more editions without an associated work
                 if "/type/edition" == newObject.type {
                     
-                    _ = OLEditionDetail.parseJSON( "", workKey: newObject.key, index: 0, json: resultSet, moc: self.context )
+                    _ = OLEditionDetail.parseJSON( "", workKey: newObject.key, index: 0, currentObjectID: nil, json: resultSet, moc: self.context )
                 }
                 
                 let error = self.saveContext()

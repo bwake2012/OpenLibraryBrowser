@@ -27,7 +27,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
     
     init(
             operationQueue: PSOperationQueue,
-            coreDataStack: OLDataStack,
+            dataStack: OLDataStack,
             heading: String,
             deluxeData: [[DeluxeData]],
             imageType: String,
@@ -39,7 +39,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
         self.imageType = imageType
         self.deluxeDetailVC = deluxeDetailVC
 
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: deluxeDetailVC )
+        super.init( operationQueue: operationQueue, dataStack: dataStack, viewController: deluxeDetailVC )
         
     }
     
@@ -242,7 +242,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
         destVC.queryCoordinator =
             PictureViewCoordinator(
                     operationQueue: operationQueue,
-                    coreDataStack: coreDataStack,
+                    dataStack: dataStack,
                     localURL: largeImageURL,
                     imageID: Int( object.caption )!,
                     pictureType: imageType,
@@ -263,7 +263,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
         destVC.queryCoordinator =
             BookDownloadCoordinator(
                     operationQueue: operationQueue,
-                    coreDataStack: coreDataStack,
+                    dataStack: dataStack,
                     heading: heading,
                     bookURL: bookURL,
                     downloadVC: destVC

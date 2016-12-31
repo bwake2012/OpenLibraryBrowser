@@ -32,4 +32,5 @@ extension OLEBookItem {
     @NSManaged var fromRecord: String
     @NSManaged var match: String
 
+    @NSManaged var editionDetail: OLEditionDetail?
 }

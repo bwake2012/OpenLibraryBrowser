@@ -28,7 +28,7 @@ class EditionDetailGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, parentObjectID: NSManagedObjectID?, coreDataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
+    init( queryText: String, parentObjectID: NSManagedObjectID?, currentObjectID: NSManagedObjectID?, dataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
 
         let cachesFolder = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
@@ -47,7 +47,7 @@ class EditionDetailGetOperation: GroupOperation {
             There is an optional operation 0 to delete the existing contents of the Core Data store
         */
         downloadOperation = EditionDetailDownloadOperation( queryText: queryText, cacheFile: cacheFile )
-        parseOperation = EditionDetailParseOperation( parentObjectID: parentObjectID, cacheFile: cacheFile, coreDataStack: coreDataStack )
+        parseOperation = EditionDetailParseOperation( parentObjectID: parentObjectID, currentObjectID: currentObjectID, cacheFile: cacheFile, dataStack: dataStack )
         
         let finishOperation = PSBlockOperation { completionHandler() }
         

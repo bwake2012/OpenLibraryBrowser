@@ -32,7 +32,7 @@ class AuthorDetailParseOperation: PSOperation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( parentObjectID: NSManagedObjectID?, cacheFile: URL, coreDataStack: OLDataStack ) {
+    init( parentObjectID: NSManagedObjectID?, cacheFile: URL, dataStack: OLDataStack ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -42,7 +42,7 @@ class AuthorDetailParseOperation: PSOperation {
         self.parentObjectID = parentObjectID
 
         self.cacheFile = cacheFile
-        self.context = coreDataStack.newChildContext( name: "AuthorDetailParse Context" )
+        self.context = dataStack.newChildContext( name: "AuthorDetailParse Context" )
         self.context.mergePolicy = NSOverwriteMergePolicy
         
         super.init()

@@ -35,13 +35,13 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
     var setRetrievals = Set< Int >()
     var objectRetrievalsInProgress = Set< NSManagedObjectID >()
     
-    init( authorKey: String, authorWorksTableVC: OLAuthorDetailWorksTableViewController, coreDataStack: OLDataStack, operationQueue: PSOperationQueue ) {
+    init( authorKey: String, authorWorksTableVC: OLAuthorDetailWorksTableViewController, dataStack: OLDataStack, operationQueue: PSOperationQueue ) {
         
         self.authorKey = authorKey
 
         self.authorWorksTableVC = authorWorksTableVC
         
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: authorWorksTableVC )
+        super.init( operationQueue: operationQueue, dataStack: dataStack, viewController: authorWorksTableVC )
     }
     
     func numberOfSections() -> Int {
@@ -91,7 +91,8 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
                     authorWorksGetOperation =
                         WorkDetailGetOperation(
                             queryText: workDetail.key,
-                            coreDataStack: coreDataStack,
+                            currentObjectID: workObjectID,
+                            dataStack: dataStack,
                             resultHandler: nil
                         ) {
                             
@@ -192,7 +193,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
                 queryText: authorKey,
                 parentObjectID: nil,
                 offset: page * kPageSize, limit: kPageSize,
-                coreDataStack: coreDataStack,
+                dataStack: dataStack,
                 updateResults: self.updateResults
             ) {
                 [weak self] in
@@ -269,7 +270,7 @@ class AuthorWorksCoordinator: OLQueryCoordinator {
         destVC.queryCoordinator =
             WorkDetailCoordinator(
                     operationQueue: self.operationQueue,
-                    coreDataStack: self.coreDataStack,
+                    dataStack: self.dataStack,
                     workDetail: workDetail,
                     editionKeys: [],
                     workDetailVC: destVC
@@ -299,7 +300,7 @@ extension AuthorWorksCoordinator: NSFetchedResultsControllerDelegate {
         fetchRequest.fetchBatchSize = 100
         
         let frc = FetchedOLWorkDetailController( fetchRequest: fetchRequest,
-                                                 managedObjectContext: self.coreDataStack.mainQueueContext,
+                                                 managedObjectContext: self.dataStack.mainQueueContext,
                                                  sectionNameKeyPath: nil,
                                                  cacheName: nil )
         

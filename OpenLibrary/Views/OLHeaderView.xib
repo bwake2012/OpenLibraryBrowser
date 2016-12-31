@@ -100,9 +100,8 @@
                         </mask>
                     </variation>
                 </stackView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XFm-0i-Kko">
+                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XFm-0i-Kko">
                     <rect key="frame" x="8" y="8" width="128" height="128"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <state key="normal">
                         <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -115,6 +114,10 @@
             <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="C9X-mi-XAg" firstAttribute="leading" secondItem="Rwj-Gh-1zW" secondAttribute="leadingMargin" id="9T6-CU-TXB"/>
+                <constraint firstItem="XFm-0i-Kko" firstAttribute="centerX" secondItem="dnu-cX-SJx" secondAttribute="centerX" id="Dav-wr-eFN"/>
+                <constraint firstItem="XFm-0i-Kko" firstAttribute="centerY" secondItem="dnu-cX-SJx" secondAttribute="centerY" id="b3Z-Ce-Hs9"/>
+                <constraint firstItem="XFm-0i-Kko" firstAttribute="height" secondItem="dnu-cX-SJx" secondAttribute="height" id="feP-7T-UsD"/>
+                <constraint firstItem="XFm-0i-Kko" firstAttribute="width" secondItem="dnu-cX-SJx" secondAttribute="width" id="iye-rf-wEW"/>
                 <constraint firstItem="C9X-mi-XAg" firstAttribute="top" secondItem="Rwj-Gh-1zW" secondAttribute="topMargin" id="kkt-bK-Phh"/>
                 <constraint firstAttribute="bottomMargin" secondItem="C9X-mi-XAg" secondAttribute="bottom" id="mbA-8t-bNE"/>
                 <constraint firstItem="C9X-mi-XAg" firstAttribute="trailing" secondItem="Rwj-Gh-1zW" secondAttribute="trailingMargin" id="reT-k3-MP7"/>

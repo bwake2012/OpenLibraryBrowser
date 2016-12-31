@@ -33,7 +33,7 @@ class WorkEditionsParseOperation: PSOperation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( parentKey: String, parentObjectID: NSManagedObjectID?, offset: Int, limit: Int, cacheFile: URL, coreDataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater ) {
+    init( parentKey: String, parentObjectID: NSManagedObjectID?, offset: Int, limit: Int, cacheFile: URL, dataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -41,7 +41,7 @@ class WorkEditionsParseOperation: PSOperation {
         */
         
         self.cacheFile = cacheFile
-        self.context = coreDataStack.newChildContext( name: "WorkEditions child context" )
+        self.context = dataStack.newChildContext( name: "WorkEditions child context" )
         self.context.mergePolicy = NSOverwriteMergePolicy
         self.updateResults = updateResults
         self.limit = limit
@@ -121,7 +121,7 @@ class WorkEditionsParseOperation: PSOperation {
 
             for entry in entries {
                 
-                if let editionDetail = OLEditionDetail.parseJSON( "", workKey: self.parentKey, index: index, json: entry, moc: self.context ) {
+                if let editionDetail = OLEditionDetail.parseJSON( "", workKey: self.parentKey, index: index, currentObjectID: nil, json: entry, moc: self.context ) {
                 
                     newEditions.append( editionDetail )
 

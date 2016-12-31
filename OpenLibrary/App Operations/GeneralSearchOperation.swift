@@ -22,7 +22,7 @@ class GeneralSearchOperation: GroupOperation {
    
 //    private var hasProducedAlert = false
     
-    fileprivate let coreDataStack: OLDataStack
+    fileprivate let dataStack: OLDataStack
     
     /**
         - parameter context: The `NSManagedObjectContext` into which the parsed
@@ -32,9 +32,9 @@ class GeneralSearchOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryParms: [String: String], sequence: Int, offset: Int, limit: Int, coreDataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater, completionHandler: @escaping (Void) -> Void ) {
+    init( queryParms: [String: String], sequence: Int, offset: Int, limit: Int, dataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater, completionHandler: @escaping (Void) -> Void ) {
 
-        self.coreDataStack = coreDataStack
+        self.dataStack = dataStack
         
         let cachesFolder = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
@@ -50,7 +50,7 @@ class GeneralSearchOperation: GroupOperation {
             There is an optional operation 0 to delete the existing contents of the Core Data store
         */
         downloadOperation = GeneralSearchResultsDownloadOperation( queryParms: queryParms, offset: offset, limit: limit, cacheFile: cacheFile )
-        parseOperation = GeneralSearchResultsParseOperation( sequence: sequence, offset: offset, cacheFile: cacheFile, coreDataStack: coreDataStack, updateResults: updateResults )
+        parseOperation = GeneralSearchResultsParseOperation( sequence: sequence, offset: offset, cacheFile: cacheFile, dataStack: dataStack, updateResults: updateResults )
         
         finishOperation = PSBlockOperation { completionHandler() }
         

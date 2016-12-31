@@ -30,7 +30,7 @@ class IAEBookItemGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( editionKey: String, coreDataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
+    init( editionKey: String, dataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
 
         let cachesFolder = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
@@ -48,7 +48,7 @@ class IAEBookItemGetOperation: GroupOperation {
             3. The operation to invoke the completion handler
         */
         downloadOperation = IAEBookItemDownloadOperation( editionKey: editionKey, cacheFile: cacheFile )
-        parseOperation = IAEBookItemParseOperation( cacheFile: cacheFile, coreDataStack: coreDataStack )
+        parseOperation = IAEBookItemParseOperation( cacheFile: cacheFile, dataStack: dataStack )
         
         let finishOperation = PSBlockOperation { completionHandler() }
         

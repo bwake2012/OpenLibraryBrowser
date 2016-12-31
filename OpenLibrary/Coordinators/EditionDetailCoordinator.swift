@@ -21,14 +21,14 @@ class EditionDetailCoordinator: OLQueryCoordinator {
     
     init(
         operationQueue: PSOperationQueue,
-        coreDataStack: OLDataStack,
+        dataStack: OLDataStack,
         searchInfo: OLEditionDetail,
         editionDetailVC: OLEditionDetailViewController
     ) {
         self.editionDetail = searchInfo
         self.editionDetailVC = editionDetailVC
         
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: editionDetailVC )
+        super.init( operationQueue: operationQueue, dataStack: dataStack, viewController: editionDetailVC )
     }
     
     func updateUI( _ editionDetail: OLEditionDetail ) {
@@ -93,7 +93,7 @@ class EditionDetailCoordinator: OLQueryCoordinator {
                         AuthorDetailGetOperation(
                             queryText: olid,
                             parentObjectID: nil,
-                            coreDataStack: coreDataStack
+                            dataStack: dataStack
                         ) {}
                     operationQueue.addOperation( operation )
                 }
@@ -105,7 +105,7 @@ class EditionDetailCoordinator: OLQueryCoordinator {
                     AuthorDetailGetOperation(
                         queryText: firstOLID,
                         parentObjectID: nil,
-                        coreDataStack: coreDataStack
+                        dataStack: dataStack
                     ) {
                         
                         [weak self] in
@@ -140,7 +140,7 @@ class EditionDetailCoordinator: OLQueryCoordinator {
             ebookItemGetOperation =
                 IAEBookItemGetOperation(
                     editionKey: editionDetail.key,
-                    coreDataStack: coreDataStack
+                    dataStack: dataStack
                 ) {
                     
                     [weak self] in
@@ -168,7 +168,7 @@ class EditionDetailCoordinator: OLQueryCoordinator {
         destVC.queryCoordinator =
             PictureViewCoordinator(
                     operationQueue: self.operationQueue,
-                    coreDataStack: self.coreDataStack,
+                    dataStack: dataStack,
                     localURL: self.editionDetail.localURL( "L", index: 0 ),
                     imageID: self.editionDetail.firstImageID,
                     pictureType: "b",

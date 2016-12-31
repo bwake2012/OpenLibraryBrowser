@@ -26,7 +26,7 @@ class SaveObjectsOperation: PSOperation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( objectID: NSManagedObjectID, coreDataStack: OLDataStack ) {
+    init( objectID: NSManagedObjectID, dataStack: OLDataStack ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -34,7 +34,7 @@ class SaveObjectsOperation: PSOperation {
         */
         
         self.objectID = objectID
-        self.context = coreDataStack.newChildContext( name: "saveObjects" )
+        self.context = dataStack.newChildContext( name: "saveObjects" )
         self.context.mergePolicy = NSOverwriteMergePolicy
         
         super.init()

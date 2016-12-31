@@ -49,7 +49,7 @@ class OLQueryCoordinator: NSObject {
     var updatedRowIndexPaths: [IndexPath] = []
     
     let operationQueue: PSOperationQueue
-    let coreDataStack: OLDataStack
+    let dataStack: OLDataStack
     
     fileprivate var reachability: Reachability {
         
@@ -79,11 +79,11 @@ class OLQueryCoordinator: NSObject {
         return OLQueryCoordinator.reachability!
     }
     
-    init( operationQueue: PSOperationQueue, coreDataStack: OLDataStack, viewController: UIViewController ) {
+    init( operationQueue: PSOperationQueue, dataStack: OLDataStack, viewController: UIViewController ) {
         
         OLQueryCoordinator.queryCoordinatorCount += 1
         self.operationQueue = operationQueue
-        self.coreDataStack = coreDataStack
+        self.dataStack = dataStack
     }
     
     deinit {

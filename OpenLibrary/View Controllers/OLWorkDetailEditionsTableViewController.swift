@@ -16,7 +16,7 @@ class OLWorkDetailEditionsTableViewController: UIViewController {
     // MARK: Properties
     var searchInfo: OLWorkDetail?
 
-    @IBOutlet var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
     var queryCoordinator: WorkEditionsCoordinator?
     
     var indexPathSavedForTransition: IndexPath?

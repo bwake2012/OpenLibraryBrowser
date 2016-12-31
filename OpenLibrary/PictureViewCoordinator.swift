@@ -24,7 +24,7 @@ class PictureViewCoordinator: OLQueryCoordinator {
     
     init(
         operationQueue: PSOperationQueue,
-        coreDataStack: OLDataStack,
+        dataStack: OLDataStack,
         localURL: URL,
         imageID: Int,
         pictureType: String,
@@ -37,7 +37,7 @@ class PictureViewCoordinator: OLQueryCoordinator {
     
         self.pictureVC = pictureVC
 
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: pictureVC )
+        super.init( operationQueue: operationQueue, dataStack: dataStack, viewController: pictureVC )
     }
     
     func updateUI() {

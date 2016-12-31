@@ -21,7 +21,7 @@ class AuthorNameSearchOperation: GroupOperation {
    
 //    private var hasProducedAlert = false
     
-    fileprivate let coreDataStack: OLDataStack
+    fileprivate let dataStack: OLDataStack
     
     /**
         - parameter context: The `NSManagedObjectContext` into which the parsed
@@ -31,9 +31,9 @@ class AuthorNameSearchOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, offset: Int, limit: Int, coreDataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater, completionHandler: @escaping (Void) -> Void ) {
+    init( queryText: String, offset: Int, limit: Int, dataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater, completionHandler: @escaping (Void) -> Void ) {
 
-        self.coreDataStack = coreDataStack
+        self.dataStack = dataStack
         
         let cachesFolder = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
@@ -49,7 +49,7 @@ class AuthorNameSearchOperation: GroupOperation {
             There is an optional operation 0 to delete the existing contents of the Core Data store
         */
         downloadOperation = AuthorNameSearchResultsDownloadOperation( queryText: queryText, offset: offset, limit: limit, cacheFile: cacheFile )
-        parseOperation = AuthorNameSearchResultsParseOperation( cacheFile: cacheFile, coreDataStack: coreDataStack, updateResults: updateResults )
+        parseOperation = AuthorNameSearchResultsParseOperation( cacheFile: cacheFile, dataStack: dataStack, updateResults: updateResults )
         
         let finishOperation = PSBlockOperation { completionHandler() }
         
@@ -59,7 +59,7 @@ class AuthorNameSearchOperation: GroupOperation {
         
         var operations: [PSOperation] = []
         if 0 == offset {
-            deleteOperation = AuthorSearchResultsDeleteOperation( coreDataStack: coreDataStack )
+            deleteOperation = AuthorSearchResultsDeleteOperation( dataStack: dataStack )
             if let dO = deleteOperation {
                 downloadOperation.addDependency( dO )
                 operations.append( dO )

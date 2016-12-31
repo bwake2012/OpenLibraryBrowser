@@ -22,7 +22,7 @@ class OLEBookItem: OLManagedObject {
     
     static let entityName = "EBookItem"
     
-    class func parseJSON( _ jsonItem: [String: AnyObject], jsonDetail: [String: AnyObject], moc: NSManagedObjectContext ) -> OLEBookItem? {
+    class func parseJSON( jsonItem: [String: AnyObject], jsonDetail: [String: AnyObject], moc: NSManagedObjectContext ) -> OLEBookItem? {
         
         guard let parsed = ParsedFromJSON.fromJSON( jsonItem, details: jsonDetail ) else { return nil }
 
@@ -35,7 +35,7 @@ class OLEBookItem: OLManagedObject {
         }
 
         if let newObject = newObject {
-            
+
             newObject.retrieval_date = Date()
 
             newObject.status       = parsed.status
@@ -50,7 +50,11 @@ class OLEBookItem: OLManagedObject {
             newObject.fromRecord   = parsed.fromRecord
             newObject.match        = parsed.match
             
-            newObject.editionDetail = OLEditionDetail.saveProvisionalEdition( parsed, moc: moc )
+            if nil == newObject.editionDetail {
+
+                newObject.editionDetail =
+                    OLEditionDetail.saveProvisionalEdition( parsed: parsed, moc: moc )
+            }
         }
         
         return newObject
@@ -78,8 +82,6 @@ class OLEBookItem: OLManagedObject {
         return super.localURL( firstImageID, size: size )
     }
     
-    var editionDetail: OLEditionDetail?
-
     @discardableResult func matchingEdition() -> OLEditionDetail? {
         
         if nil == editionDetail {

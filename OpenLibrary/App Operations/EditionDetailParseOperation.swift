@@ -23,6 +23,7 @@ class EditionDetailParseOperation: PSOperation {
     var searchResults = SearchResults()
     
     var parentObjectID: NSManagedObjectID?
+    var currentObjectID: NSManagedObjectID?
     
     /**
         - parameter cacheFile: The file `NSURL` from which to load Work query data.
@@ -32,7 +33,7 @@ class EditionDetailParseOperation: PSOperation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( parentObjectID: NSManagedObjectID?, cacheFile: URL, coreDataStack: OLDataStack ) {
+    init( parentObjectID: NSManagedObjectID?, currentObjectID: NSManagedObjectID?, cacheFile: URL, dataStack: OLDataStack ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -40,8 +41,9 @@ class EditionDetailParseOperation: PSOperation {
         */
         
         self.parentObjectID = parentObjectID
+        self.currentObjectID = currentObjectID
         self.cacheFile = cacheFile
-        self.context = coreDataStack.newChildContext( name: "EditionDetailParse Context" )
+        self.context = dataStack.newChildContext( name: "EditionDetailParse Context" )
         self.context.mergePolicy = NSOverwriteMergePolicy
         
         super.init()
@@ -80,7 +82,7 @@ class EditionDetailParseOperation: PSOperation {
 
         context.perform {
             
-            _ = OLEditionDetail.parseJSON( "", workKey: "", index: -1, json: resultSet, moc: self.context )
+            _ = OLEditionDetail.parseJSON( "", workKey: "", index: -1, currentObjectID: self.currentObjectID, json: resultSet, moc: self.context )
                 
             let error = self.saveContext()
             

@@ -30,7 +30,7 @@ class LanguagesGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( coreDataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
+    init( dataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
 
         let cachesFolder = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
@@ -44,7 +44,7 @@ class LanguagesGetOperation: GroupOperation {
             3. The operation to invoke the completion handler
         */
         downloadOperation = LanguagesDownloadOperation( cacheFile: cacheFile )
-        parseOperation = LanguagesParseOperation( cacheFile: cacheFile, coreDataStack: coreDataStack )
+        parseOperation = LanguagesParseOperation( cacheFile: cacheFile, dataStack: dataStack )
         
         let finishOperation = PSBlockOperation { completionHandler() }
         

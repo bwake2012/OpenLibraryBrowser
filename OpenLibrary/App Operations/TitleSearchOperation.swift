@@ -20,7 +20,7 @@ class TitleSearchOperation: GroupOperation {
    
 //    private var hasProducedAlert = false
     
-    fileprivate let coreDataStack: OLDataStack
+    fileprivate let dataStack: OLDataStack
     
     /**
         - parameter context: The `NSManagedObjectContext` into which the parsed
@@ -30,9 +30,9 @@ class TitleSearchOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, offset: Int, limit: Int, coreDataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater, completionHandler: @escaping () -> Void ) {
+    init( queryText: String, offset: Int, limit: Int, dataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater, completionHandler: @escaping () -> Void ) {
 
-        self.coreDataStack = coreDataStack
+        self.dataStack = dataStack
         
         var cacheFile = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
@@ -48,7 +48,7 @@ class TitleSearchOperation: GroupOperation {
             There is an optional operation 0 to delete the existing contents of the Core Data store
         */
         downloadOperation = TitleSearchResultsDownloadOperation( queryText: queryText, offset: offset, limit: limit, cacheFile: cacheFile )
-        parseOperation = TitleSearchResultsParseOperation( cacheFile: cacheFile, coreDataStack: coreDataStack, updateResults: updateResults )
+        parseOperation = TitleSearchResultsParseOperation( cacheFile: cacheFile, dataStack: dataStack, updateResults: updateResults )
         
         let finishOperation = PSBlockOperation { completionHandler() }
         
@@ -58,7 +58,7 @@ class TitleSearchOperation: GroupOperation {
         
         var operations: [Foundation.Operation] = []
 //        if 0 == offset {
-//            deleteOperation = TitleSearchResultsDeleteOperation( coreDataStack: coreDataStack )
+//            deleteOperation = TitleSearchResultsDeleteOperation( dataStack: dataStack )
 //            if let dO = deleteOperation {
 //                downloadOperation.addDependency( dO )
 //                operations.append( dO )

@@ -28,7 +28,7 @@ class AuthorDetailGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, parentObjectID: NSManagedObjectID?, coreDataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
+    init( queryText: String, parentObjectID: NSManagedObjectID?, dataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
 
         let cachesFolder = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
@@ -45,7 +45,7 @@ class AuthorDetailGetOperation: GroupOperation {
             3. The operation to invoke the completion handler
         */
         downloadOperation = AuthorDetailDownloadOperation( queryText: queryText, cacheFile: cacheFile )
-        parseOperation = AuthorDetailParseOperation( parentObjectID: parentObjectID, cacheFile: cacheFile, coreDataStack: coreDataStack )
+        parseOperation = AuthorDetailParseOperation( parentObjectID: parentObjectID, cacheFile: cacheFile, dataStack: dataStack )
         
         let finishOperation = PSBlockOperation { completionHandler() }
         

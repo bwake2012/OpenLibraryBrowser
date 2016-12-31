@@ -8,8 +8,10 @@
 
 import UIKit
 
-class OLEBookEditionsTableViewController: UITableViewController {
+class OLEBookEditionsTableViewController: UIViewController {
 
+    @IBOutlet weak var tableView: UITableView!
+    
     var queryCoordinator: EBookEditionsCoordinator?
     var indexPathSavedForTransition: IndexPath?
     
@@ -30,13 +32,6 @@ class OLEBookEditionsTableViewController: UITableViewController {
         self.tableView.rowHeight = UITableViewAutomaticDimension
 
         self.tableView.tableFooterView = OLTableViewHeaderFooterView.createFromNib()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
-        super.viewWillAppear( animated )
-        
-        navigationController?.setNavigationBarHidden( false, animated: animated )
 
         queryCoordinator?.updateUI()
     }
@@ -58,37 +53,6 @@ class OLEBookEditionsTableViewController: UITableViewController {
                 }
             }
         }
-    }
-    
-    // MARK: UITableViewDelegate
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        indexPathSavedForTransition = indexPath
-        queryCoordinator?.didSelectItemAtIndexPath( indexPath )
-    }
-    
-    // MARK: UITableviewDataSource
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        
-        return queryCoordinator?.numberOfSections() ?? 0
-    }
-    
-    override func tableView( _ tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
-        
-        return queryCoordinator?.numberOfRowsInSection( section ) ?? 0
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "EbookEditionTableViewCell", for: indexPath)
-        if let cell = cell as? EbookEditionTableViewCell {
-            
-            _ = queryCoordinator?.displayToCell( cell, indexPath: indexPath )
-            
-        }
-        
-        return cell
     }
     
     // MARK: dismiss model view controller
@@ -143,4 +107,38 @@ extension OLEBookEditionsTableViewController: TransitionSourceCell {
     
 }
 
+// MARK: UITableViewDelegate
+extension OLEBookEditionsTableViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        indexPathSavedForTransition = indexPath
+        queryCoordinator?.didSelectItemAtIndexPath( indexPath )
+    }
+}
+
+// MARK: UITableviewDataSource
+extension OLEBookEditionsTableViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        
+        return queryCoordinator?.numberOfSections() ?? 0
+    }
+
+    func tableView( _ tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
+        
+        return queryCoordinator?.numberOfRowsInSection( section ) ?? 0
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "EbookEditionTableViewCell", for: indexPath)
+        if let cell = cell as? EbookEditionTableViewCell {
+            
+            _ = queryCoordinator?.displayToCell( cell, indexPath: indexPath )
+            
+        }
+        
+        return cell
+    }
+}
 

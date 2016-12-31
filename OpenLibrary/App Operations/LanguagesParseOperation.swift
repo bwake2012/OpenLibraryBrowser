@@ -26,7 +26,7 @@ class LanguagesParseOperation: PSOperation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( cacheFile: URL, coreDataStack: OLDataStack ) {
+    init( cacheFile: URL, dataStack: OLDataStack ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -34,7 +34,7 @@ class LanguagesParseOperation: PSOperation {
         */
         
         self.cacheFile = cacheFile
-        self.context = coreDataStack.newChildContext( name: "saveLanguages" )
+        self.context = dataStack.newChildContext( name: "saveLanguages" )
         self.context.mergePolicy = NSOverwriteMergePolicy
         
         super.init()

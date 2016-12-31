@@ -27,10 +27,10 @@ class SaveProvisionalObjectsOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( searchResult: OLGeneralSearchResult, coreDataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
+    init( searchResult: OLGeneralSearchResult, dataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
         
         saveOperation =
-            SaveObjectsOperation( objectID: searchResult.objectID, coreDataStack: coreDataStack )
+            SaveObjectsOperation( objectID: searchResult.objectID, dataStack: dataStack )
         let finishOperation = PSBlockOperation { completionHandler() }
         
         // These operations must be executed in order

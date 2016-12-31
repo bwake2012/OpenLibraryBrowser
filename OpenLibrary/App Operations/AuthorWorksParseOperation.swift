@@ -33,7 +33,7 @@ class AuthorWorksParseOperation: PSOperation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( authorKey: String, parentObjectID: NSManagedObjectID?, offset: Int, limit: Int, cacheFile: URL, coreDataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater ) {
+    init( authorKey: String, parentObjectID: NSManagedObjectID?, offset: Int, limit: Int, cacheFile: URL, dataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -41,7 +41,7 @@ class AuthorWorksParseOperation: PSOperation {
         */
         
         self.cacheFile = cacheFile
-        self.context = coreDataStack.newChildContext( name: "AuthorWorksParse Context" )
+        self.context = dataStack.newChildContext( name: "AuthorWorksParse Context" )
         self.context.mergePolicy = NSOverwriteMergePolicy
         self.updateResults = updateResults
         self.offset = offset
@@ -120,7 +120,7 @@ class AuthorWorksParseOperation: PSOperation {
             
             for entry in entries {
                 
-                if nil != OLWorkDetail.parseJSON( self.authorKey, index: index, json: entry, moc: self.context ) {
+                if nil != OLWorkDetail.parseJSON( self.authorKey, index: index, currentObjectID: nil, json: entry, moc: self.context ) {
                 
                     index += 1
                 }

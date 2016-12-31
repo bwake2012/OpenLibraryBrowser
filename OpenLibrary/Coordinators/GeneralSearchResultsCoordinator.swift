@@ -32,7 +32,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource {
 
         guard let frc = cachedFetchedResultsController else {
             
-            let frc = buildFetchedResultsController( self, stack: coreDataStack, sortFields: sortFields )
+            let frc = buildFetchedResultsController( self, stack: dataStack, sortFields: sortFields )
             
             cachedFetchedResultsController = frc
             return frc
@@ -86,11 +86,11 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource {
     
     // MARK: instance
     
-    init( tableVC: OLSearchResultsTableViewController, coreDataStack: OLDataStack, operationQueue: PSOperationQueue ) {
+    init( tableVC: OLSearchResultsTableViewController, dataStack: OLDataStack, operationQueue: PSOperationQueue ) {
         
         self.tableVC = tableVC
 
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: tableVC )
+        super.init( operationQueue: operationQueue, dataStack: dataStack, viewController: tableVC )
         
         if let searchState = SearchState.loadState() {
         
@@ -182,7 +182,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource {
             let operation =
                 SaveProvisionalObjectsOperation(
                     searchResult: object,
-                    coreDataStack: coreDataStack
+                    dataStack: dataStack
                 ) {
                     
                     [weak self] in
@@ -308,7 +308,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource {
                 queryParms: searchKeys,
                 sequence: sequence,
                 offset: offset, limit: pageSize,
-                coreDataStack: coreDataStack,
+                dataStack: dataStack,
                 updateResults: updateResults
             ) {
                 
@@ -338,7 +338,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource {
     
     func clearQuery() {
         
-        let queryClearOperation = GeneralSearchResultsDeleteOperation( coreDataStack: coreDataStack )
+        let queryClearOperation = GeneralSearchResultsDeleteOperation( dataStack: dataStack )
         
         queryClearOperation.userInitiated = false
         operationQueue.addOperation( queryClearOperation )
@@ -442,7 +442,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource {
         destVC.queryCoordinator =
             AuthorDetailCoordinator(
                 operationQueue: operationQueue,
-                coreDataStack: coreDataStack,
+                dataStack: dataStack,
                 authorKey: authorKey,
                 authorDetailVC: destVC
         )
@@ -467,7 +467,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource {
         destVC.queryCoordinator =
             AuthorDetailCoordinator(
                     operationQueue: operationQueue,
-                    coreDataStack: coreDataStack,
+                    dataStack: dataStack,
                     authorKey: workDetail.author_key,
                     authorDetailVC: destVC
                 )
@@ -484,7 +484,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource {
                     keys: searchResult.author_key,
                     viewController: destVC,
                     operationQueue: operationQueue,
-                    coreDataStack: coreDataStack
+                    dataStack: dataStack
                 )
     }
     
@@ -502,7 +502,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource {
         destVC.queryCoordinator =
             WorkDetailCoordinator(
                     operationQueue: operationQueue,
-                    coreDataStack: coreDataStack,
+                    dataStack: dataStack,
                     workDetail: workDetail,
                     editionKeys: searchResult.edition_key,
                     workDetailVC: destVC
@@ -518,7 +518,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource {
         destVC.queryCoordinator =
             PictureViewCoordinator(
                 operationQueue: operationQueue,
-                coreDataStack: coreDataStack,
+                dataStack: dataStack,
                 localURL: searchResult.localURL( "L", index: 0 ),
                 imageID: searchResult.firstImageID,
                 pictureType: searchResult.imageType,

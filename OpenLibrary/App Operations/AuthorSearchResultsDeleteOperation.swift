@@ -16,9 +16,9 @@ class AuthorSearchResultsDeleteOperation: PSOperation {
     
     let deleteContext: NSManagedObjectContext
     
-    init( coreDataStack: OLDataStack ) {
+    init( dataStack: OLDataStack ) {
         
-        self.deleteContext = coreDataStack.newChildContext( name: "AuthorSearchResultsDelete Context" )
+        self.deleteContext = dataStack.newChildContext( name: "AuthorSearchResultsDelete Context" )
     }
     
     override func execute() {

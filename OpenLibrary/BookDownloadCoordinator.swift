@@ -63,7 +63,7 @@ class BookDownloadCoordinator: OLQueryCoordinator, NSFetchedResultsControllerDel
         
         let frc = FetchedEBookFileController(
             fetchRequest: fetchRequest,
-            managedObjectContext: self.coreDataStack.mainQueueContext,
+            managedObjectContext: self.dataStack.mainQueueContext,
             sectionNameKeyPath: nil,
             cacheName: nil ) // kEBookFileCache )
         
@@ -73,7 +73,7 @@ class BookDownloadCoordinator: OLQueryCoordinator, NSFetchedResultsControllerDel
     
     init(
         operationQueue: PSOperationQueue,
-        coreDataStack: OLDataStack,
+        dataStack: OLDataStack,
         heading: String,
         bookURL: URL,
         downloadVC: OLBookDownloadViewController
@@ -85,7 +85,7 @@ class BookDownloadCoordinator: OLQueryCoordinator, NSFetchedResultsControllerDel
     
         self.downloadVC = downloadVC
 
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: downloadVC )
+        super.init( operationQueue: operationQueue, dataStack: dataStack, viewController: downloadVC )
     }
     
     func updateUI() {
@@ -334,7 +334,7 @@ class BookDownloadCoordinator: OLQueryCoordinator, NSFetchedResultsControllerDel
             xmlFileDownloadOperation =
                 InternetArchiveEbookInfoGetOperation(
                     eBookKey: eBookKey,
-                    coreDataStack: coreDataStack
+                    dataStack: dataStack
                 ) {
                     
                     self.xmlFileDownloadOperation = nil

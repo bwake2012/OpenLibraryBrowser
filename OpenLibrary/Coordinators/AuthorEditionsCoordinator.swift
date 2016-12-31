@@ -43,7 +43,7 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, NSFetchedResultsControllerD
         fetchRequest.fetchBatchSize = 100
         
         let frc = FetchedAuthorEditionsController( fetchRequest: fetchRequest,
-            managedObjectContext: self.coreDataStack.mainQueueContext,
+            managedObjectContext: self.dataStack.mainQueueContext,
             sectionNameKeyPath: nil,
             cacheName: nil )
         
@@ -57,12 +57,12 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, NSFetchedResultsControllerD
     
     var highWaterMark = 0
     
-    init( authorKey: String, tableVC: UITableViewController, coreDataStack: OLDataStack, operationQueue: PSOperationQueue ) {
+    init( authorKey: String, tableVC: UITableViewController, dataStack: OLDataStack, operationQueue: PSOperationQueue ) {
         
         self.authorKey = authorKey
         self.tableVC = tableVC
         
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: tableVC )
+        super.init( operationQueue: operationQueue, dataStack: dataStack, viewController: tableVC )
         
         updateUI()
     }
@@ -137,7 +137,7 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, NSFetchedResultsControllerD
                 AuthorEditionsGetOperation(
                         queryText: authorKey,
                         offset: 0,
-                        coreDataStack: coreDataStack,
+                        dataStack: dataStack,
                         updateResults: self.updateResults
                     ) {
 
@@ -168,7 +168,7 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, NSFetchedResultsControllerD
                 AuthorEditionsGetOperation(
                         queryText: self.authorKey,
                         offset: offset,
-                        coreDataStack: coreDataStack,
+                        dataStack: dataStack,
                         updateResults: self.updateResults
                     ) {
                 

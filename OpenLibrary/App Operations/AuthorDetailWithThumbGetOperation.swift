@@ -37,7 +37,7 @@ class AuthorDetailWithThumbGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, parentObjectID: NSManagedObjectID, size: String, coreDataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
+    init( queryText: String, parentObjectID: NSManagedObjectID, size: String, dataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
         
         self.queryText = queryText
         self.parentObjectID = parentObjectID
@@ -57,7 +57,7 @@ class AuthorDetailWithThumbGetOperation: GroupOperation {
             3. The operation to invoke the completion handler
         */
         downloadOperation = AuthorDetailDownloadOperation( queryText: queryText, cacheFile: cacheFile )
-        parseOperation = AuthorDetailParseOperation( parentObjectID: parentObjectID, cacheFile: cacheFile, coreDataStack: coreDataStack )
+        parseOperation = AuthorDetailParseOperation( parentObjectID: parentObjectID, cacheFile: cacheFile, dataStack: dataStack )
         
         finishOperation = PSBlockOperation { completionHandler() }
         

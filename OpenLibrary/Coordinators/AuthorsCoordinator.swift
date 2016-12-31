@@ -29,12 +29,12 @@ class AuthorsCoordinator: OLQueryCoordinator {
     var highWaterMark: Int = 0
     var authorDetailsSet: Set< String > = []
     
-    init( keys: [String], viewController: OLAuthorsTableViewController, operationQueue: PSOperationQueue, coreDataStack: OLDataStack ) {
+    init( keys: [String], viewController: OLAuthorsTableViewController, operationQueue: PSOperationQueue, dataStack: OLDataStack ) {
         
         authorsTableVC = viewController
         authorKeys = keys
 
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: viewController )
+        super.init( operationQueue: operationQueue, dataStack: dataStack, viewController: viewController )
     }
     
     func updateUI() {
@@ -114,7 +114,7 @@ class AuthorsCoordinator: OLQueryCoordinator {
             AuthorDetailGetOperation(
                     queryText: key,
                     parentObjectID: nil,
-                    coreDataStack: coreDataStack
+                    dataStack: dataStack
                 ) {
                     
                     [weak self] in
@@ -167,7 +167,7 @@ class AuthorsCoordinator: OLQueryCoordinator {
         let frc =
             FetchedOLAuthorDetailController(
                 fetchRequest: fetchRequest,
-                managedObjectContext: self.coreDataStack.mainQueueContext,
+                managedObjectContext: self.dataStack.mainQueueContext,
                 sectionNameKeyPath: nil,
                 cacheName: nil // kAuthorDetailCache
         )

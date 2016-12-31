@@ -91,16 +91,16 @@ class OLLanguage: OLManagedObject {
 
 extension OLLanguage {
 
-    class func retrieveLanguages( _ operationQueue: PSOperationQueue, coreDataStack: OLDataStack ) {
+    class func retrieveLanguages( _ operationQueue: PSOperationQueue, dataStack: OLDataStack ) {
         
-        let context = coreDataStack.newChildContext( name: "findLanguages" )
+        let context = dataStack.newChildContext( name: "findLanguages" )
         
         context.perform {
         
             let languageCount = loadLanguageLookup( context )
             if 0 == languageCount {
         
-                let operation = LanguagesGetOperation( coreDataStack: coreDataStack ) {
+                let operation = LanguagesGetOperation( dataStack: dataStack ) {
                     
                     context.perform {
                         _ = loadLanguageLookup( context )

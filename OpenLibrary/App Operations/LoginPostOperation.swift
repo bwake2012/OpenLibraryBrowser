@@ -35,18 +35,10 @@ class LoginPostOperation: PSOperations.GroupOperation {
             print( error.localizedDescription )
         }
 
-        request.setValue( "application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type" )
-        request.setValue( "application/json", forHTTPHeaderField: "Accept" )
+        request.setValue( "application/json", forHTTPHeaderField: "Content-Type" )
+        request.setValue( "*/*", forHTTPHeaderField: "Accept" )
         
-        let task = URLSession.shared.dataTask( with: request ) {
-            
-            data, response, error -> Void in
-            
-            if error == nil {
-                
-                self.downloadFinished( data: data, response: response, error: error )
-            }
-        }
+        let task = URLSession.shared.dataTask( with: request, completionHandler: downloadFinished )
         
         let taskOperation = URLSessionTaskOperation( task: task )
         
@@ -60,6 +52,16 @@ class LoginPostOperation: PSOperations.GroupOperation {
     }
     
     func downloadFinished( data: Data?, response: URLResponse?, error: Error? ) {
+        
+        if let error = error {
+            
+            dump( error )
+        }
+        
+        if let response = response {
+            
+            dump( response )
+        }
         
     }
 }

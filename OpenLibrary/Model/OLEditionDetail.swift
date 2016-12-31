@@ -62,16 +62,32 @@ class OLEditionDetail: OLManagedObject {
     
     static let entityName = "EditionDetail"
     
-    class func parseJSON( _ authorKey: String, workKey: String, index: Int, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLEditionDetail? {
+    class func parseJSON( _ authorKey: String, workKey: String, index: Int, currentObjectID: NSManagedObjectID?, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLEditionDetail? {
 
         guard let parsed = ParsedFromJSON.fromJSON( json ) else { return nil }
         
         moc.mergePolicy = NSOverwriteMergePolicy
 
-        let newObject: OLEditionDetail? =
-                NSEntityDescription.insertNewObject(
-                    forEntityName: OLEditionDetail.entityName, into: moc
-                    ) as? OLEditionDetail
+        var newObject: OLEditionDetail?
+        
+        if let currentObjectID = currentObjectID {
+            
+            do {
+
+                newObject = try moc.existingObject( with: currentObjectID ) as? OLEditionDetail
+            }
+            catch {
+                
+            }
+        }
+        
+        if nil == newObject {
+
+            newObject =
+                    NSEntityDescription.insertNewObject(
+                        forEntityName: OLEditionDetail.entityName, into: moc
+                        ) as? OLEditionDetail
+        }
         
         if let newObject = newObject {
         
@@ -86,7 +102,7 @@ class OLEditionDetail: OLManagedObject {
                 newObject.author_key = parsed.authors.isEmpty ? "" : parsed.authors[0]
             }
 
-            if 0 <= index {
+            if 0 <= index && 0 <= newObject.index {
                 newObject.index = Int64( index )
             }
             newObject.retrieval_date = Date()
@@ -930,6 +946,11 @@ extension OLEditionDetail {
                 
                 if let newObject = newObject {
                     
+                    if 0 <= editionIndex {
+                        
+                        newObject.index = Int64( editionIndex )
+                    }
+                    
                     newObject.retrieval_date = Date()
                     newObject.provisional_date = Date()
                     newObject.is_provisional = true
@@ -1021,9 +1042,9 @@ extension OLEditionDetail {
 
 extension OLEditionDetail {
 
-    // create or update an editionDetail object with information from the ebook data
+    // create an editionDetail object with information from the ebook data
     
-    class func saveProvisionalEdition( _ parsed: OLEBookItem.ParsedFromJSON, moc: NSManagedObjectContext )  -> OLEditionDetail? {
+    class func saveProvisionalEdition( parsed: OLEBookItem.ParsedFromJSON, moc: NSManagedObjectContext ) -> OLEditionDetail? {
         
         var newObject: OLEditionDetail?
         
@@ -1037,6 +1058,7 @@ extension OLEditionDetail {
             
             if let newObject = newObject {
                 
+                newObject.index = -1
                 newObject.retrieval_date = Date()
                 newObject.provisional_date = Date()
                 newObject.is_provisional = true
@@ -1122,6 +1144,8 @@ extension OLEditionDetail {
         return newObject
     }
     
+    // create an edition detail object with information from the general search result
+    
     class func saveProvisionalEdition( _ editionIndex: Int, parsed: OLGeneralSearchResult.ParsedFromJSON, moc: NSManagedObjectContext ) -> OLEditionDetail? {
         
         var newObject: OLEditionDetail?
@@ -1138,6 +1162,8 @@ extension OLEditionDetail {
                 
                 if let newObject = newObject {
                     
+                    newObject.index = Int64( editionIndex )
+
                     newObject.retrieval_date = Date()
                     newObject.provisional_date = Date()
                     newObject.is_provisional = true

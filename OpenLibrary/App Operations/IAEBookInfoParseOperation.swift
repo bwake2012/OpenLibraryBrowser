@@ -28,7 +28,7 @@ class InternetArchiveEbookInfoParseOperation: PSOperation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( eBookKey: String, cacheFile: URL, coreDataStack: OLDataStack ) {
+    init( eBookKey: String, cacheFile: URL, dataStack: OLDataStack ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -38,7 +38,7 @@ class InternetArchiveEbookInfoParseOperation: PSOperation {
         self.eBookKey   = eBookKey
        
         self.cacheFile = cacheFile
-        self.context = coreDataStack.newChildContext( name: "InternetArchiveEbookInfoParse Context" )
+        self.context = dataStack.newChildContext( name: "InternetArchiveEbookInfoParse Context" )
         self.context.mergePolicy = NSOverwriteMergePolicy
 
         super.init()

@@ -23,7 +23,7 @@ class WorkEditionEbooksGetOperation: GroupOperation {
    
 //    private var hasProducedAlert = false
     
-    fileprivate let coreDataStack: OLDataStack
+    fileprivate let dataStack: OLDataStack
      
     /**
         - parameter coreDataStack: The Big Nerd Ranch Core Data Stack 
@@ -33,11 +33,11 @@ class WorkEditionEbooksGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( workKey: String, coreDataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
+    init( workKey: String, dataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
 
         assert( !workKey.isEmpty )
         
-        self.coreDataStack = coreDataStack
+        self.dataStack = dataStack
         
         let cachesFolder = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
@@ -85,7 +85,7 @@ class WorkEditionEbooksGetOperation: GroupOperation {
                 
                 let ebookOperation =
                     IAEBookItemListGetOperation(
-                            editionKeys: parseOperation.editions, coreDataStack: coreDataStack, completionHandler: {}
+                            editionKeys: parseOperation.editions, dataStack: dataStack, completionHandler: {}
                         )
                 
                 finishOperation.addDependency( ebookOperation )

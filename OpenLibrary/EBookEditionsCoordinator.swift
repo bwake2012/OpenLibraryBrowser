@@ -14,44 +14,34 @@ import SafariServices
 import BNRCoreDataStack
 import PSOperations
 
-private let kEBookEditionsCache = "eBookEditionsCache"
+// private let kEBookEditionsCache = "eBookEditionsCache"
 
 private let kPageSize = 100
     
 
-class EBookEditionsCoordinator: OLQueryCoordinator, NSFetchedResultsControllerDelegate {
+class EBookEditionsCoordinator: OLQueryCoordinator {
     
     typealias FetchedEBookItemController = NSFetchedResultsController< OLEBookItem >
     
-    weak var tableVC: UITableViewController?
+    weak var tableVC: OLEBookEditionsTableViewController?
     
     var workEditionsGetOperation: PSOperation?
     var ebookItemGetOperation: PSOperation?
     
-    fileprivate lazy var fetchedResultsController: FetchedEBookItemController = {
+    fileprivate var cachedFetchedResultsController: FetchedEBookItemController?
+    
+    fileprivate var fetchedResultsController: FetchedEBookItemController {
         
-        let fetchRequest = OLEBookItem.buildFetchRequest()
+        guard let frc = cachedFetchedResultsController else {
+            
+            let frc = buildFetchedResultsController()
+            
+            cachedFetchedResultsController = frc
+            return frc
+        }
         
-//        let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
-//        let today = NSDate()
-//        let lastWeek = today.dateByAddingTimeInterval( -7 * secondsPerDay )
-        
-        fetchRequest.predicate =
-            NSPredicate( format: "workKey==%@", self.workDetail.key )
-        
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "publish_date", ascending: false)]
-        fetchRequest.fetchBatchSize = 100
-        
-        let frc = FetchedEBookItemController(
-                        fetchRequest: fetchRequest,
-                        managedObjectContext: self.coreDataStack.mainQueueContext,
-                        sectionNameKeyPath: nil,
-                        cacheName: nil
-                    )
-        
-        frc.delegate = nil
         return frc
-    }()
+    }
     
     var workDetail: OLWorkDetail
     var editionKeys = [String]()
@@ -62,17 +52,17 @@ class EBookEditionsCoordinator: OLQueryCoordinator, NSFetchedResultsControllerDe
     
     init(
         operationQueue: PSOperationQueue,
-        coreDataStack: OLDataStack,
+        dataStack: OLDataStack,
         workDetail: OLWorkDetail,
         editionKeys: [String],
-        tableVC: UITableViewController
+        tableVC: OLEBookEditionsTableViewController
         ) {
         
         self.workDetail = workDetail
         self.editionKeys = editionKeys
         self.tableVC = tableVC
         
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: tableVC )
+        super.init( operationQueue: operationQueue, dataStack: dataStack, viewController: tableVC )
     }
     
     func numberOfSections() -> Int {
@@ -108,11 +98,14 @@ class EBookEditionsCoordinator: OLQueryCoordinator, NSFetchedResultsControllerDe
             
             if libraryIsReachable( tattle: false ) {
                 
+                let currentObjectID = editionDetail?.objectID
+                
                 let getOperation =
                     EditionDetailGetOperation(
                             queryText: item.editionKey,
                             parentObjectID: workDetail.objectID,
-                            coreDataStack: coreDataStack
+                            currentObjectID: currentObjectID,
+                            dataStack: dataStack
                         ) {
                             
                             DispatchQueue.main.async {
@@ -204,7 +197,7 @@ class EBookEditionsCoordinator: OLQueryCoordinator, NSFetchedResultsControllerDe
             ebookItemGetOperation =
                 IAEBookItemListGetOperation(
                     editionKeys: editionKeys,
-                    coreDataStack: coreDataStack
+                    dataStack: dataStack
                 ) {
                     
                     [weak self] in
@@ -263,23 +256,96 @@ class EBookEditionsCoordinator: OLQueryCoordinator, NSFetchedResultsControllerDe
         
         updateTableFooter( tableVC?.tableView, highWaterMark: highWaterMark, numFound: searchResults.numFound, text: text )
     }
+
+    // MARK: install query coordinators
+    
+    func installBookDownloadCoordinator( _ destVC: OLBookDownloadViewController ) -> Void {
+        
+        guard let sourceVC = tableVC else { return }
+        
+        guard let indexPath = sourceVC.tableView.indexPathForSelectedRow else { return }
+        
+        guard let object = objectAtIndexPath( indexPath ) else { return }
+        
+        guard let itemURL = URL( string: object.itemURL ) else { assert( false ); return }
+        
+        guard let title = object.editionDetail?.title else { assert( false ); return }
+        
+        destVC.queryCoordinator =
+            BookDownloadCoordinator(
+                operationQueue: operationQueue,
+                dataStack: dataStack,
+                heading: title,
+                bookURL: itemURL,
+                downloadVC: destVC
+        )
+    }
+}
+
+extension EBookEditionsCoordinator: SFSafariViewControllerDelegate {
+    
+    func showLinkedWebSite( _ vc: UIViewController, url: URL? ) {
+        
+        if let url = url {
+            let webVC = SFSafariViewController( url: url )
+            webVC.delegate = self
+            vc.present( webVC, animated: true, completion: nil )
+        }
+    }
+    
+    // MARK: SFSafariViewControllerDelegate
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        
+        controller.dismiss( animated: true, completion: nil )
+    }
+    
+}
+
+extension EBookEditionsCoordinator: NSFetchedResultsControllerDelegate {
+    
+    func buildFetchedResultsController() -> FetchedEBookItemController {
+        
+        let fetchRequest = OLEBookItem.buildFetchRequest()
+        
+        //        let secondsPerDay = NSTimeInterval( 24 * 60 * 60 )
+        //        let today = NSDate()
+        //        let lastWeek = today.dateByAddingTimeInterval( -7 * secondsPerDay )
+        
+        let key = self.workDetail.key
+        fetchRequest.predicate = NSPredicate( format: "workKey==%@", key )
+        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "publish_date", ascending: false)]
+        fetchRequest.fetchBatchSize = 100
+        
+        let frc = FetchedEBookItemController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: self.dataStack.mainQueueContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+        
+        frc.delegate = self
+        return frc
+    }
+
     
     // MARK: FetchedResultsControllerDelegate
     func controllerDidPerformFetch(_ controller: FetchedEBookItemController) {
         
-        let count = controller.sections?[0].numberOfObjects ?? 0
-        if 0 == count {
+        guard nil != controller.fetchedObjects?.first else {
             
             newQuery( false, refreshControl: nil )
-            
+            return
         }
         
-        if 0 != count {
-            
-            updateFooter()
-        }
+        highWaterMark = numberOfRowsInSection( 0 )
+        updateFooter()
     }
-
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        
+    }
+    
     func controllerDidChangeContent( _ controller: NSFetchedResultsController<NSFetchRequestResult> ) {
         
         if let tableView = tableVC?.tableView {
@@ -354,47 +420,5 @@ class EBookEditionsCoordinator: OLQueryCoordinator, NSFetchedResultsControllerDe
             break
         }
     }
-    
-    // MARK: install query coordinators
-    
-    func installBookDownloadCoordinator( _ destVC: OLBookDownloadViewController ) -> Void {
-        
-        guard let sourceVC = tableVC else { return }
-        
-        guard let indexPath = sourceVC.tableView.indexPathForSelectedRow else { return }
-        
-        guard let object = objectAtIndexPath( indexPath ) else { return }
-        
-        guard let itemURL = URL( string: object.itemURL ) else { assert( false ); return }
-        
-        guard let title = object.editionDetail?.title else { assert( false ); return }
-        
-        destVC.queryCoordinator =
-            BookDownloadCoordinator(
-                operationQueue: operationQueue,
-                coreDataStack: coreDataStack,
-                heading: title,
-                bookURL: itemURL,
-                downloadVC: destVC
-        )
-    }
 }
 
-extension EBookEditionsCoordinator: SFSafariViewControllerDelegate {
-    
-    func showLinkedWebSite( _ vc: UIViewController, url: URL? ) {
-        
-        if let url = url {
-            let webVC = SFSafariViewController( url: url )
-            webVC.delegate = self
-            vc.present( webVC, animated: true, completion: nil )
-        }
-    }
-    
-    // MARK: SFSafariViewControllerDelegate
-    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        
-        controller.dismiss( animated: true, completion: nil )
-    }
-    
-}

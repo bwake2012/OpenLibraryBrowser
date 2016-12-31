@@ -113,7 +113,7 @@ class IOS10DataStack: OLDataStack {
     
     fileprivate let persistentContainer = OLPersistentContainer( name: storeName )
 
-    fileprivate var coreDataStack: OLDataStack?
+    fileprivate var dataStack: OLDataStack?
     
     required init( operationQueue: PSOperationQueue, completion: @escaping () -> Void ) {
         

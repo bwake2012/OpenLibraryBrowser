@@ -63,7 +63,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
     
     init(
         operationQueue: PSOperationQueue,
-        coreDataStack: OLDataStack,
+        dataStack: OLDataStack,
         workDetail: OLWorkDetail,
         editionKeys: [String],
         workDetailVC: OLWorkDetailViewController
@@ -76,7 +76,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         self.editionKeys = editionKeys
         self.workDetailVC = workDetailVC
         
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: workDetailVC )
+        super.init( operationQueue: operationQueue, dataStack: dataStack, viewController: workDetailVC )
     }
     
     func updateUI( _ workDetail: OLWorkDetail ) {
@@ -137,10 +137,13 @@ class WorkDetailCoordinator: OLQueryCoordinator {
     func newQuery( _ workKey: String, userInitiated: Bool, refreshControl: UIRefreshControl? ) {
         
         if nil == workDetailGetOperation {
+
+            let workDetailID = cachedWorkDetail?.objectID
             workDetailGetOperation =
                 WorkDetailGetOperation(
                     queryText: workKey,
-                    coreDataStack: coreDataStack,
+                    currentObjectID: workDetailID,
+                    dataStack: dataStack,
                     resultHandler: nil
                 ) {
                     [weak self] in
@@ -185,7 +188,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
                         AuthorDetailGetOperation(
                             queryText: olid,
                             parentObjectID: nil,
-                            coreDataStack: coreDataStack
+                            dataStack: dataStack
                         ) {}
                     operationQueue.addOperation( operation )
                 }
@@ -197,7 +200,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
                     AuthorDetailGetOperation(
                         queryText: firstOLID,
                         parentObjectID: nil,
-                        coreDataStack: coreDataStack
+                        dataStack: dataStack
                     ) {
                         
                         [weak self] in
@@ -237,7 +240,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
             ebookItemGetOperation =
                 WorkEditionEbooksGetOperation(
                     workKey: self.workDetail.key,
-                    coreDataStack: coreDataStack
+                    dataStack: dataStack
                 ) {
                     
                     [weak self] in
@@ -273,7 +276,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
             WorkEditionsCoordinator(
                 workDetail: workDetail,
                 tableVC: destVC,
-                coreDataStack: self.coreDataStack,
+                dataStack: self.dataStack,
                 operationQueue: self.operationQueue
         )
      }
@@ -285,7 +288,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         destVC.queryCoordinator =
             EBookEditionsCoordinator(
                 operationQueue: operationQueue,
-                coreDataStack: coreDataStack,
+                dataStack: dataStack,
                 workDetail: workDetail,
                 editionKeys: editionKeys,
                 tableVC: destVC
@@ -297,7 +300,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         destVC.queryCoordinator =
             DeluxeDetailCoordinator(
                     operationQueue: operationQueue,
-                    coreDataStack: coreDataStack,
+                    dataStack: dataStack,
                     heading: workDetail.title,
                     deluxeData: workDetail.deluxeData,
                     imageType: workDetail.imageType,
@@ -310,7 +313,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         destVC.queryCoordinator =
             PictureViewCoordinator(
                     operationQueue: operationQueue,
-                    coreDataStack: coreDataStack,
+                    dataStack: dataStack,
                     localURL: workDetail.localURL( "L", index: 0 ),
                     imageID: workDetail.firstImageID,
                     pictureType: workDetail.imageType,
@@ -334,7 +337,7 @@ class WorkDetailCoordinator: OLQueryCoordinator {
         destVC.queryCoordinator =
             AuthorDetailCoordinator(
                 operationQueue: operationQueue,
-                coreDataStack: coreDataStack,
+                dataStack: dataStack,
                 authorKey: workDetail.author_key,
                 authorDetailVC: destVC
             )
@@ -365,7 +368,7 @@ extension WorkDetailCoordinator: NSFetchedResultsControllerDelegate {
         let frc =
             FetchedOLWorkDetailController(
                 fetchRequest: fetchRequest,
-                managedObjectContext: self.coreDataStack.mainQueueContext,
+                managedObjectContext: self.dataStack.mainQueueContext,
                 sectionNameKeyPath: nil,
                 cacheName: nil // kWorkDetailCache
         )

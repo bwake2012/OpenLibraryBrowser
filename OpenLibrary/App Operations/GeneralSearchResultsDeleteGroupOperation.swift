@@ -20,7 +20,7 @@ class GeneralSearchResultsDeleteGroupOperation: GroupOperation {
    
 //    private var hasProducedAlert = false
     
-    fileprivate let coreDataStack: OLDataStack
+    fileprivate let dataStack: OLDataStack
     
     /**
         - parameter context: The `NSManagedObjectContext` into which the parsed
@@ -30,15 +30,15 @@ class GeneralSearchResultsDeleteGroupOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( coreDataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
+    init( dataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
 
-        self.coreDataStack = coreDataStack
+        self.dataStack = dataStack
 
         /*
             This operation has one child operation:
             operation to delete the existing contents of the Core Data store
         */
-        deleteOperation = GeneralSearchResultsDeleteOperation( coreDataStack: coreDataStack )
+        deleteOperation = GeneralSearchResultsDeleteOperation( dataStack: dataStack )
         finishOperation = PSBlockOperation { completionHandler() }
         
         // These operations must be executed in order

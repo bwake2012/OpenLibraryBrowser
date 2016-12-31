@@ -28,7 +28,7 @@ class IAEBookItemParseOperation: PSOperation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( cacheFile: URL, coreDataStack: OLDataStack ) {
+    init( cacheFile: URL, dataStack: OLDataStack ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -36,7 +36,7 @@ class IAEBookItemParseOperation: PSOperation {
         */
         
         self.cacheFile = cacheFile
-        self.context = coreDataStack.newChildContext( name: "IAEBookItemParse Context" )
+        self.context = dataStack.newChildContext( name: "IAEBookItemParse Context" )
         self.context.mergePolicy = NSOverwriteMergePolicy
         
         super.init()
@@ -104,13 +104,9 @@ class IAEBookItemParseOperation: PSOperation {
         
         context.perform {
             
-            var index = 0
-            for jsonItem in items {
+            for (index, jsonItem) in items.enumerated() {
                 
-                if OLEBookItem.parseJSON( jsonItem, jsonDetail: details, moc: self.context ) != nil {
-                
-                    index += 1
-                }
+                _ = OLEBookItem.parseJSON( jsonItem: jsonItem, jsonDetail: details, moc: self.context )
             }
 
             let error = self.saveContext()

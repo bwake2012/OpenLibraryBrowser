@@ -15,7 +15,7 @@ class OLSearchResultsTableViewController: UIViewController {
     var sortButton: UIBarButtonItem?
     var searchButton: UIBarButtonItem?
     
-    var generalSearchCoordinator: GeneralSearchResultsCoordinator?
+    lazy var generalSearchCoordinator: GeneralSearchResultsCoordinator = self.buildQueryCoordinator()
     
     var searchController = UISearchController( searchResultsController: nil )
     
@@ -47,7 +47,7 @@ class OLSearchResultsTableViewController: UIViewController {
         
         SegmentedTableViewCell.emptyCellHeights( tableView )
         
-        generalSearchCoordinator?.saveState()
+        generalSearchCoordinator.saveState()
     }
     
     // MARK: UIViewController
@@ -94,14 +94,14 @@ class OLSearchResultsTableViewController: UIViewController {
             tableFooterView.footerLabel.text = "Tap the Search Button to Look for Books"
         }
         
-        generalSearchCoordinator = buildQueryCoordinator()
+//        generalSearchCoordinator = buildQueryCoordinator()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear( animated )
         
-        generalSearchCoordinator?.updateUI()
+        generalSearchCoordinator.updateUI()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -126,7 +126,7 @@ class OLSearchResultsTableViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
         
-        generalSearchCoordinator?.saveState()
+        generalSearchCoordinator.saveState()
     }
     
     override func viewDidLayoutSubviews() {
@@ -173,11 +173,6 @@ class OLSearchResultsTableViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        guard let generalSearchCoordinator = generalSearchCoordinator else {
-            assert( false )
-            return
-        }
         
         guard let segueName = segue.identifier else { assert( false ); return }
         
@@ -283,12 +278,12 @@ class OLSearchResultsTableViewController: UIViewController {
     
     func clearSearchResults() {
         
-        generalSearchCoordinator?.clearQuery()
+        generalSearchCoordinator.clearQuery()
     }
     
     fileprivate func updateUI() {
         
-        generalSearchCoordinator?.updateUI()
+        generalSearchCoordinator.updateUI()
     }
     
     // MARK: Search View Controller
@@ -312,7 +307,7 @@ class OLSearchResultsTableViewController: UIViewController {
                 // searchType = .searchGeneral
                 
                 SegmentedTableViewCell.emptyCellHeights( tableView )
-                generalSearchCoordinator?.newQuery( savedSearchKeys, userInitiated: true, refreshControl: nil )
+                generalSearchCoordinator.newQuery( savedSearchKeys, userInitiated: true, refreshControl: nil )
                 
                 let indexPath = IndexPath( row: Foundation.NSNotFound, section: 0 )
                 tableView.scrollToRow( at: indexPath, at: .top, animated: true )
@@ -330,7 +325,7 @@ class OLSearchResultsTableViewController: UIViewController {
     
     func saveSortFields( _ sortFields: [SortField] ) -> Void {
         
-        generalSearchCoordinator?.sortFields = sortFields
+        generalSearchCoordinator.sortFields = sortFields
     }
     
     @IBAction func dismissSort(_ segue: UIStoryboardSegue) {
@@ -487,7 +482,7 @@ extension OLSearchResultsTableViewController: UIScrollViewDelegate {
         // Change 10.0 to adjust the distance from bottom
         if maximumOffset - currentOffset <= -10.0 {
             
-            generalSearchCoordinator?.nextQueryPage()
+            generalSearchCoordinator.nextQueryPage()
         
         } else if currentOffset <= -10.0 {
             
@@ -557,7 +552,7 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
         
             indexPathSavedForTransition = indexPath
             
-            generalSearchCoordinator?.didSelectRowAtIndexPath( indexPath )
+            generalSearchCoordinator.didSelectRowAtIndexPath( indexPath )
 
             expandCell( tableView, segmentedCell: cell, key: cell.key )
             
@@ -587,18 +582,10 @@ extension OLSearchResultsTableViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         
-        guard let generalSearchCoordinator = generalSearchCoordinator else {
-            return 0
-        }
-        
         return generalSearchCoordinator.numberOfSections()
     }
     
     func tableView( _ tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
-        
-        guard let generalSearchCoordinator = generalSearchCoordinator else {
-            return 0
-        }
         
         return generalSearchCoordinator.numberOfRowsInSection( section )
     }
@@ -609,11 +596,11 @@ extension OLSearchResultsTableViewController: UITableViewDataSource {
         
         if let expandingCell = tableView.dequeueReusableCell( withIdentifier: GeneralSearchResultSegmentedTableViewCell.nameOfClass ) as? GeneralSearchResultSegmentedTableViewCell {
             
-            if let object = generalSearchCoordinator?.objectAtIndexPath( indexPath ) {
+            if let object = generalSearchCoordinator.objectAtIndexPath( indexPath ) {
                 
                 expandingCell.tableVC = self
                 expandingCell.configure( tableView, indexPath: indexPath, key: object.key, data: object )
-                generalSearchCoordinator?.displayThumbnail( object, cell: expandingCell )
+                generalSearchCoordinator.displayThumbnail( object, cell: expandingCell )
             }
             
 //            print( "cellForRowAtIndexPath \(indexPath.row) \(expandingCell.key)" )

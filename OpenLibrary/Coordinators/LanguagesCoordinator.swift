@@ -36,7 +36,7 @@ class LanguagesCoordinator: OLQueryCoordinator, NSFetchedResultsControllerDelega
         
         let frc = FetchedOLLanguageController(
                         fetchRequest: fetchRequest,
-                        managedObjectContext: self.coreDataStack.mainQueueContext,
+                        managedObjectContext: self.dataStack.mainQueueContext,
                         sectionNameKeyPath: nil,
                         cacheName: nil ) // kLanguagesCache )
         
@@ -44,9 +44,9 @@ class LanguagesCoordinator: OLQueryCoordinator, NSFetchedResultsControllerDelega
         return frc
     }()
     
-    override init( operationQueue: PSOperationQueue, coreDataStack: OLDataStack, viewController: UIViewController ) {
+    override init( operationQueue: PSOperationQueue, dataStack: OLDataStack, viewController: UIViewController ) {
         
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: viewController )
+        super.init( operationQueue: operationQueue, dataStack: dataStack, viewController: viewController )
         
         updateUI()
     }
@@ -57,7 +57,7 @@ class LanguagesCoordinator: OLQueryCoordinator, NSFetchedResultsControllerDelega
         
         self.languagesGetOperation =
             LanguagesGetOperation(
-                coreDataStack: coreDataStack
+                dataStack: dataStack
             ) {
                 
                 DispatchQueue.main.async {

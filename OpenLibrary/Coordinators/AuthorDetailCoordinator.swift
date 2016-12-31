@@ -63,7 +63,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
     
     init(
         operationQueue: PSOperationQueue,
-        coreDataStack: OLDataStack,
+        dataStack: OLDataStack,
         authorKey: String,
         authorDetailVC: OLAuthorDetailViewController
         ) {
@@ -72,7 +72,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
 
         self.authorDetailVC = authorDetailVC
         
-        super.init( operationQueue: operationQueue, coreDataStack: coreDataStack, viewController: authorDetailVC )
+        super.init( operationQueue: operationQueue, dataStack: dataStack, viewController: authorDetailVC )
     }
     
     
@@ -137,7 +137,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
                 AuthorDetailGetOperation(
                     queryText: authorKey,
                     parentObjectID: parentObjectID,
-                    coreDataStack: coreDataStack
+                    dataStack: dataStack
                 ) {
                     [weak self] in
                     
@@ -171,7 +171,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
             AuthorWorksCoordinator(
                     authorKey: authorKey,
                     authorWorksTableVC: destVC,
-                    coreDataStack: coreDataStack,
+                    dataStack: dataStack,
                     operationQueue: operationQueue
                 )
     }
@@ -181,7 +181,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
         destVC.queryCoordinator =
             DeluxeDetailCoordinator(
                     operationQueue: operationQueue,
-                    coreDataStack: coreDataStack,
+                    dataStack: dataStack,
                     heading: authorDetail.name,
                     deluxeData: authorDetail.deluxeData,
                     imageType: authorDetail.imageType,
@@ -194,7 +194,7 @@ class AuthorDetailCoordinator: OLQueryCoordinator {
         destVC.queryCoordinator =
             PictureViewCoordinator(
                     operationQueue: operationQueue,
-                    coreDataStack: coreDataStack,
+                    dataStack: dataStack,
                     localURL: authorDetail.localURL( "L", index: 0 ),
                     imageID: authorDetail.firstImageID,
                     pictureType: authorDetail.imageType,
@@ -225,7 +225,7 @@ extension AuthorDetailCoordinator: NSFetchedResultsControllerDelegate {
         let frc =
             FetchedOLAuthorDetailController(
                 fetchRequest: fetchRequest,
-                managedObjectContext: self.coreDataStack.mainQueueContext,
+                managedObjectContext: self.dataStack.mainQueueContext,
                 sectionNameKeyPath: nil,
                 cacheName: nil // kAuthorDetailCache
         )

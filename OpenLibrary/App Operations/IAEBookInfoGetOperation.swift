@@ -30,7 +30,7 @@ class InternetArchiveEbookInfoGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( eBookKey: String, coreDataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
+    init( eBookKey: String, dataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
 
         let cachesFolder = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
@@ -48,7 +48,7 @@ class InternetArchiveEbookInfoGetOperation: GroupOperation {
             InternetArchiveEbookInfoParseOperation(
                     eBookKey: eBookKey,
                     cacheFile: cacheFile,
-                    coreDataStack: coreDataStack
+                    dataStack: dataStack
                 )
         
         let finishOperation = PSBlockOperation { completionHandler() }

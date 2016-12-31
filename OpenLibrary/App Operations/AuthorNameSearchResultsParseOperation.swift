@@ -90,7 +90,7 @@ class AuthorNameSearchResultsParseOperation: PSOperation {
                              to the same `NSPersistentStoreCoordinator` as the
                              passed-in context.
     */
-    init( cacheFile: URL, coreDataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater ) {
+    init( cacheFile: URL, dataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater ) {
         
         /*
             Use the overwrite merge policy, because we want any updated objects
@@ -98,8 +98,8 @@ class AuthorNameSearchResultsParseOperation: PSOperation {
         */
         
         self.cacheFile = cacheFile
-        self.context = coreDataStack.newChildContext( name: "" )
-        self.detailContext = coreDataStack.newChildContext( name: "" )
+        self.context = dataStack.newChildContext( name: "" )
+        self.detailContext = dataStack.newChildContext( name: "" )
         self.context.mergePolicy = NSOverwriteMergePolicy
         self.updateResults = updateResults
         

@@ -17,7 +17,6 @@ import PSOperations
 class IAEBookItemListGetOperation: GroupOperation {
 
     // MARK: Properties
-    fileprivate var operations: [PSOperation] = []
     fileprivate let finishOperation: PSBlockOperation
     
     /**
@@ -32,9 +31,11 @@ class IAEBookItemListGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( editionKeys: [String], coreDataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
+    init( editionKeys: [String], dataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
         
         let docFolder = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+    
+        var operations: [PSOperation] = []
         
         /*
          This operation is made of these child operations:
@@ -71,7 +72,7 @@ class IAEBookItemListGetOperation: GroupOperation {
             }
             operations.append( downloadOperation )
 
-            let parseOperation = IAEBookItemListParseOperation( urlString: urlString, cacheFile: cacheFile, coreDataStack: coreDataStack )
+            let parseOperation = IAEBookItemListParseOperation( urlString: urlString, cacheFile: cacheFile, dataStack: dataStack )
             
             parseOperation.addDependency( operations.last! )
             
@@ -99,7 +100,7 @@ class IAEBookItemListGetOperation: GroupOperation {
 
         guard let operation = operation as? PSOperation else { return }
         
-        if let firstError = errors.first, operations.contains( operation ) {
+        if let firstError = errors.first, !( operation === finishOperation ) {
 
             produceAlert( firstError )
         }

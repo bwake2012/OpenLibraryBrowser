@@ -61,7 +61,7 @@ class OLWorkDetail: OLManagedObject {
         }
     }
 
-    class func parseJSON( _ parentKey: String, index: Int, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLWorkDetail? {
+    class func parseJSON( _ parentKey: String, index: Int, currentObjectID: NSManagedObjectID?, json: [String: AnyObject], moc: NSManagedObjectContext ) -> OLWorkDetail? {
         
         guard let parsed = ParsedFromJSON.fromJSON( json ) else { return nil }
             
@@ -69,10 +69,23 @@ class OLWorkDetail: OLManagedObject {
         
         var newObject: OLWorkDetail?
         
-        newObject =
-            NSEntityDescription.insertNewObject(
-                forEntityName: OLWorkDetail.entityName, into: moc
-            ) as? OLWorkDetail
+        if let currentObjectID = currentObjectID {
+            
+            do {
+                newObject = try moc.existingObject( with: currentObjectID ) as? OLWorkDetail
+            }
+            catch {
+                
+            }
+        }
+        
+        if nil == newObject {
+
+            newObject =
+                NSEntityDescription.insertNewObject(
+                    forEntityName: OLWorkDetail.entityName, into: moc
+                ) as? OLWorkDetail
+        }
         
         if let newObject = newObject {
         
