@@ -556,10 +556,9 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
 
             expandCell( tableView, segmentedCell: cell, key: cell.key )
             
-//            tableView.scrollToNearestSelectedRowAtScrollPosition( .Top, animated: true )
+            tableView.scrollToRow( at: indexPath, at: .none, animated: true )
 
 //            print( "didSelectRowAtIndexPath \(indexPath.row) \(cell.key)" )
-
         }
     }
     

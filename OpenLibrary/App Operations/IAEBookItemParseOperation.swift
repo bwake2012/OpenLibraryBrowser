@@ -104,7 +104,7 @@ class IAEBookItemParseOperation: PSOperation {
         
         context.perform {
             
-            for (index, jsonItem) in items.enumerated() {
+            for jsonItem in items {
                 
                 _ = OLEBookItem.parseJSON( jsonItem: jsonItem, jsonDetail: details, moc: self.context )
             }
