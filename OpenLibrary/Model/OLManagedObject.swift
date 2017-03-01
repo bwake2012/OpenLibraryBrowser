@@ -77,6 +77,16 @@ enum DeluxeDetail: Int {
     case borrowBook             = 11
     case buyBook                = 12
     
+    var captionNotDisplayed: Bool {
+        
+        return self == .imageAuthor || self == .imageBook || self == .link
+    }
+    
+    var captionIsDisplayed: Bool {
+        
+        return self != .imageAuthor && self != .imageBook && self != .link
+    }
+    
     var reuseIdentifier: String {
         
         switch self {
@@ -122,7 +132,7 @@ struct DeluxeData {
     init( type: DeluxeDetail, caption: String, value: String, extraValue: String ) {
         
         self.type = type
-        self.caption = caption
+        self.caption = type.captionIsDisplayed ? NSLocalizedString( caption, comment: "" ) : caption
         self.value = value
         self.extraValue = extraValue
         self.attributedValue = NSAttributedString( string: "" )
@@ -131,7 +141,7 @@ struct DeluxeData {
     init( type: DeluxeDetail, caption: String, value: String ) {
         
         self.type = type
-        self.caption = caption
+        self.caption = type.captionIsDisplayed ? NSLocalizedString( caption, comment: "" ) : caption
         self.value = value
         self.extraValue = ""
         self.attributedValue = NSAttributedString( string: "" )
@@ -140,7 +150,7 @@ struct DeluxeData {
     init( type: DeluxeDetail, caption: String, value: NSAttributedString ) {
         
         self.type = type
-        self.caption = caption
+        self.caption = type.captionIsDisplayed ? NSLocalizedString( caption, comment: "" ) : caption
         self.value = ""
         self.extraValue = ""
         self.attributedValue = value

@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="OpenLibrary/Base.lproj/AuthorDetail.storyboard" source-language="en" datatype="plaintext" target-language="sv">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="8.2.1" build-num="8C1002"/>
+    </header>
+    <body>
+      <trans-unit id="5gf-HY-Czb.text">
+        <source>Edition Subtitle</source>
+        <target>Edition Subtitle</target>
+        <note>Class = "UILabel"; text = "Edition Subtitle"; ObjectID = "5gf-HY-Czb";</note>
+      </trans-unit>
+      <trans-unit id="85c-bq-NUk.text">
+        <source> </source>
+        <target> </target>
+        <note>Class = "UILabel"; text = " "; ObjectID = "85c-bq-NUk";</note>
+      </trans-unit>
+      <trans-unit id="VNg-qS-tdy.text">
+        <source> </source>
+        <target> </target>
+        <note>Class = "UILabel"; text = " "; ObjectID = "VNg-qS-tdy";</note>
+      </trans-unit>
+      <trans-unit id="cMf-c7-rTV.title">
+        <source>Author</source>
+        <target>Author</target>
+        <note>Class = "UIViewController"; title = "Author"; ObjectID = "cMf-c7-rTV";</note>
+      </trans-unit>
+      <trans-unit id="lGV-OP-7g9.text">
+        <source>Edition Title</source>
+        <target>Edition Title</target>
+        <note>Class = "UILabel"; text = "Edition Title"; ObjectID = "lGV-OP-7g9";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="OpenLibrary/Base.lproj/LaunchScreen.storyboard" source-language="en" datatype="plaintext" target-language="sv">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="8.2.1" build-num="8C1002"/>
+    </header>
+    <body>
+      <trans-unit id="TtJ-SR-yKp.text">
+        <source>Copyright 2016 Cockleburr Software</source>
+        <target>Copyright 2016 Cockleburr Software</target>
+        <note>Class = "UILabel"; text = "Copyright 2016 Cockleburr Software"; ObjectID = "TtJ-SR-yKp";</note>
+      </trans-unit>
+      <trans-unit id="iLc-sG-h4x.text">
+        <source>An iOS client for the database at openlibrary.org.</source>
+        <target>An iOS client for the database at openlibrary.org.</target>
+        <note>Class = "UILabel"; text = "An iOS client for the database at openlibrary.org."; ObjectID = "iLc-sG-h4x";</note>
+      </trans-unit>
+      <trans-unit id="k7l-GP-5vN.text">
+        <source>OpenLibrary Browser</source>
+        <target>OpenLibrary Browser</target>
+        <note>Class = "UILabel"; text = "OpenLibrary Browser"; ObjectID = "k7l-GP-5vN";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="OpenLibrary/Base.lproj/Main.storyboard" source-language="en" datatype="plaintext" target-language="sv">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="8.2.1" build-num="8C1002"/>
+    </header>
+    <body>
+      <trans-unit id="2AC-lQ-LEj.normalTitle">
+        <source>Read Online</source>
+        <target>Read Online</target>
+        <note>Class = "UIButton"; normalTitle = "Read Online"; ObjectID = "2AC-lQ-LEj";</note>
+      </trans-unit>
+      <trans-unit id="5Gx-mk-Ecz.text">
+        <source>Title</source>
+        <target>Title</target>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "5Gx-mk-Ecz";</note>
+      </trans-unit>
+      <trans-unit id="7eU-nC-dMn.text">
+        <source>An iOS client for the database at openlibrary.org.</source>
+        <target>An iOS client for the database at openlibrary.org.</target>
+        <note>Class = "UILabel"; text = "An iOS client for the database at openlibrary.org."; ObjectID = "7eU-nC-dMn";</note>
+      </trans-unit>
+      <trans-unit id="8DK-Ju-MdT.normalTitle">
+        <source>OpenLibrary Browser v1.0(109)</source>
+        <target>OpenLibrary Browser v1.0(109)</target>
+        <note>Class = "UIButton"; normalTitle = "OpenLibrary Browser v1.0(109)"; ObjectID = "8DK-Ju-MdT";</note>
+      </trans-unit>
+      <trans-unit id="8Dw-ER-C6a.text">
+        <source>Placeholder</source>
+        <target>Placeholder</target>
+        <note>Class = "UITextField"; text = "Placeholder"; ObjectID = "8Dw-ER-C6a";</note>
+      </trans-unit>
+      <trans-unit id="565-lf-E8F.title">
+        <source>Search</source>
+        <target>Search</target>
+        <note>Class = "UIViewController"; title = "Search"; ObjectID = "565-lf-E8F";</note>
+      </trans-unit>
+      <trans-unit id="EhG-1g-qly.normalTitle">
+        <source>Button</source>
+        <target>Button</target>
+        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "EhG-1g-qly";</note>
+      </trans-unit>
+      <trans-unit id="Fdm-hf-bPB.text">
+        <source>Download</source>
+        <target>Download</target>
+        <note>Class = "UILabel"; text = "Download"; ObjectID = "Fdm-hf-bPB";</note>
+      </trans-unit>
+      <trans-unit id="GQL-pj-Q2w.title">
+        <source>Sort</source>
+        <target>Sort</target>
+        <note>Class = "UIBarButtonItem"; title = "Sort"; ObjectID = "GQL-pj-Q2w";</note>
+      </trans-unit>
+      <trans-unit id="HpN-Ja-Kph.text">
+        <source>General</source>
+        <target>General</target>
+        <note>Class = "UILabel"; text = "General"; ObjectID = "HpN-Ja-Kph";</note>
+      </trans-unit>
+      <trans-unit id="I6X-4r-uFy.text">
+        <source>ISBN</source>
+        <target>ISBN</target>
+        <note>Class = "UILabel"; text = "ISBN"; ObjectID = "I6X-4r-uFy";</note>
+      </trans-unit>
+      <trans-unit id="K2s-7v-hMb.title">
+        <source>Open Library</source>
+        <target>Open Library</target>
+        <note>Class = "UIViewController"; title = "Open Library"; ObjectID = "K2s-7v-hMb";</note>
+      </trans-unit>
+      <trans-unit id="KSa-Zg-gX1.text">
+        <source>Author Name</source>
+        <target>Author Name</target>
+        <note>Class = "UILabel"; text = "Author Name"; ObjectID = "KSa-Zg-gX1";</note>
+      </trans-unit>
+      <trans-unit id="Kgh-5l-Rnb.text">
+        <source>Subject</source>
+        <target>Subject</target>
+        <note>Class = "UILabel"; text = "Subject"; ObjectID = "Kgh-5l-Rnb";</note>
+      </trans-unit>
+      <trans-unit id="LLA-yZ-bgg.text">
+        <source>Placeholder</source>
+        <target>Placeholder</target>
+        <note>Class = "UITextField"; text = "Placeholder"; ObjectID = "LLA-yZ-bgg";</note>
+      </trans-unit>
+      <trans-unit id="M7G-lr-9TT.text">
+        <source>Placeholder</source>
+        <target>Placeholder</target>
+        <note>Class = "UITextField"; text = "Placeholder"; ObjectID = "M7G-lr-9TT";</note>
+      </trans-unit>
+      <trans-unit id="MNt-a0-gSS.text">
+        <source>Publisher</source>
+        <target>Publisher</target>
+        <note>Class = "UILabel"; text = "Publisher"; ObjectID = "MNt-a0-gSS";</note>
+      </trans-unit>
+      <trans-unit id="Mf7-Yt-LHg.text">
+        <source>Place</source>
+        <target>Place</target>
+        <note>Class = "UILabel"; text = "Place"; ObjectID = "Mf7-Yt-LHg";</note>
+      </trans-unit>
+      <trans-unit id="N8Y-Hl-mZn.text">
+        <source>OpenLibrary Browser</source>
+        <target>OpenLibrary Browser</target>
+        <note>Class = "UILabel"; text = "OpenLibrary Browser"; ObjectID = "N8Y-Hl-mZn";</note>
+      </trans-unit>
+      <trans-unit id="NX4-wa-2bZ.text">
+        <source>Show Only eBooks</source>
+        <target>Show Only eBooks</target>
+        <note>Class = "UILabel"; text = "Show Only eBooks"; ObjectID = "NX4-wa-2bZ";</note>
+      </trans-unit>
+      <trans-unit id="O8i-Yk-rI6.normalTitle">
+        <source>ePub</source>
+        <target>ePub</target>
+        <note>Class = "UIButton"; normalTitle = "ePub"; ObjectID = "O8i-Yk-rI6";</note>
+      </trans-unit>
+      <trans-unit id="Oc1-qU-P2y.normalTitle">
+        <source>Close</source>
+        <target>Close</target>
+        <note>Class = "UIButton"; normalTitle = "Close"; ObjectID = "Oc1-qU-P2y";</note>
+      </trans-unit>
+      <trans-unit id="PBy-pJ-0EQ.text">
+        <source>Label</source>
+        <target>Label</target>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "PBy-pJ-0EQ";</note>
+      </trans-unit>
+      <trans-unit id="PJ0-MI-tIL.text">
+        <source>Label</source>
+        <target>Label</target>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "PJ0-MI-tIL";</note>
+      </trans-unit>
+      <trans-unit id="QNA-1N-1O1.title">
+        <source>Download</source>
+        <target>Download</target>
+        <note>Class = "UIViewController"; title = "Download"; ObjectID = "QNA-1N-1O1";</note>
+      </trans-unit>
+      <trans-unit id="QxR-sZ-ZKg.normalTitle">
+        <source>Button</source>
+        <target>Button</target>
+        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "QxR-sZ-ZKg";</note>
+      </trans-unit>
+      <trans-unit id="SCp-4e-ica.title">
+        <source>Search</source>
+        <target>Search</target>
+        <note>Class = "UIBarButtonItem"; title = "Search"; ObjectID = "SCp-4e-ica";</note>
+      </trans-unit>
+      <trans-unit id="SUC-X3-2RT.normalTitle">
+        <source>Button</source>
+        <target>Button</target>
+        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "SUC-X3-2RT";</note>
+      </trans-unit>
+      <trans-unit id="TRq-cs-gUA.normalTitle">
+        <source>DjVu</source>
+        <target>DjVu</target>
+        <note>Class = "UIButton"; normalTitle = "DjVu"; ObjectID = "TRq-cs-gUA";</note>
+      </trans-unit>
+      <trans-unit id="XNA-ax-Yz7.normalTitle">
+        <source>Send to Kindle</source>
+        <target>Send to Kindle</target>
+        <note>Class = "UIButton"; normalTitle = "Send to Kindle"; ObjectID = "XNA-ax-Yz7";</note>
+      </trans-unit>
+      <trans-unit id="Xmm-OC-cfc.title">
+        <source>Sort Field</source>
+        <target>Sort Field</target>
+        <note>Class = "UIViewController"; title = "Sort Field"; ObjectID = "Xmm-OC-cfc";</note>
+      </trans-unit>
+      <trans-unit id="a9G-S7-6D9.normalTitle">
+        <source>Button</source>
+        <target>Button</target>
+        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "a9G-S7-6D9";</note>
+      </trans-unit>
+      <trans-unit id="bAa-pw-ZzB.text">
+        <source>Birth Date:</source>
+        <target>Birth Date:</target>
+        <note>Class = "UILabel"; text = "Birth Date:"; ObjectID = "bAa-pw-ZzB";</note>
+      </trans-unit>
+      <trans-unit id="bIn-rR-3ib.text">
+        <source>Placeholder</source>
+        <target>Placeholder</target>
+        <note>Class = "UITextField"; text = "Placeholder"; ObjectID = "bIn-rR-3ib";</note>
+      </trans-unit>
+      <trans-unit id="bSx-E4-xdw.title">
+        <source>Sort</source>
+        <target>Sort</target>
+        <note>Class = "UINavigationItem"; title = "Sort"; ObjectID = "bSx-E4-xdw";</note>
+      </trans-unit>
+      <trans-unit id="crh-R6-hjV.normalTitle">
+        <source>Plain Text</source>
+        <target>Plain Text</target>
+        <note>Class = "UIButton"; normalTitle = "Plain Text"; ObjectID = "crh-R6-hjV";</note>
+      </trans-unit>
+      <trans-unit id="dfl-mg-dhr.text">
+        <source>The Horror Story Shorter by One Letter Than the Shortest Horror Story Ever Written</source>
+        <target>The Horror Story Shorter by One Letter Than the Shortest Horror Story Ever Written</target>
+        <note>Class = "UILabel"; text = "The Horror Story Shorter by One Letter Than the Shortest Horror Story Ever Written"; ObjectID = "dfl-mg-dhr";</note>
+      </trans-unit>
+      <trans-unit id="e0R-9A-ewM.normalTitle">
+        <source>MOBI</source>
+        <target>MOBI</target>
+        <note>Class = "UIButton"; normalTitle = "MOBI"; ObjectID = "e0R-9A-ewM";</note>
+      </trans-unit>
+      <trans-unit id="eu6-f8-2Gb.text">
+        <source>Placeholder</source>
+        <target>Placeholder</target>
+        <note>Class = "UITextField"; text = "Placeholder"; ObjectID = "eu6-f8-2Gb";</note>
+      </trans-unit>
+      <trans-unit id="hCA-q2-UsH.normalTitle">
+        <source>Done</source>
+        <target>Done</target>
+        <note>Class = "UIButton"; normalTitle = "Done"; ObjectID = "hCA-q2-UsH";</note>
+      </trans-unit>
+      <trans-unit id="hHi-E3-Zq7.text">
+        <source>Placeholder</source>
+        <target>Placeholder</target>
+        <note>Class = "UITextField"; text = "Placeholder"; ObjectID = "hHi-E3-Zq7";</note>
+      </trans-unit>
+      <trans-unit id="iE0-dO-jOb.title">
+        <source>Results</source>
+        <target>Results</target>
+        <note>Class = "UINavigationItem"; title = "Results"; ObjectID = "iE0-dO-jOb";</note>
+      </trans-unit>
+      <trans-unit id="iIF-pt-ddg.text">
+        <source>Person</source>
+        <target>Person</target>
+        <note>Class = "UILabel"; text = "Person"; ObjectID = "iIF-pt-ddg";</note>
+      </trans-unit>
+      <trans-unit id="iZj-qn-gJu.text">
+        <source>This application leans heavily on the NSOperation based classes originally developed by Apple
+for their WWDC app and published with their WWDC 2015 sample 
+&lt;a href="https://developer.apple.com/sample-code/wwdc/2015/"&gt;Advanced NSOperations&lt;/a&gt;, 
+as adapted by Pluralsight in their version named 
+&lt;a href="https://github.com/pluralsight/PSOperations"&gt;PSOperations&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The Core Data stack is built using the 
+&lt;a href="https://github.com/bignerdranch/CoreDataStack"&gt;Big Nerd Ranch Core Data Stack&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Network status monitored with 
+&lt;a href="https://github.com/ashleymills/Reachability.swift"&gt;ReachabilitySwift&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Network status changes displayed with 
+&lt;a href="https://github.com/bryx-inc/BRYXBanner"&gt;BRYXBanner&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/iwasrobbed/Down"&gt;Down&lt;/a&gt; converts 
+MarkDown text to HTML for display.&lt;/p&gt;
+&lt;p&gt;Icons by &lt;a href="http://www.glyphish.com" title="Glyphish"&gt;Glyphish&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Special thanks to &lt;a href="https://twitter.com/jwclark"&gt;Jim Clark&lt;/a&gt; for his advice and encouragement.&lt;/p&gt;
+&lt;p align="center"&gt;Copyright&amp;nbsp;2016 Cockleburr&amp;nbsp;Software</source>
+        <target>This application leans heavily on the NSOperation based classes originally developed by Apple
+for their WWDC app and published with their WWDC 2015 sample 
+&lt;a href="https://developer.apple.com/sample-code/wwdc/2015/"&gt;Advanced NSOperations&lt;/a&gt;, 
+as adapted by Pluralsight in their version named 
+&lt;a href="https://github.com/pluralsight/PSOperations"&gt;PSOperations&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The Core Data stack is built using the 
+&lt;a href="https://github.com/bignerdranch/CoreDataStack"&gt;Big Nerd Ranch Core Data Stack&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Network status monitored with 
+&lt;a href="https://github.com/ashleymills/Reachability.swift"&gt;ReachabilitySwift&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Network status changes displayed with 
+&lt;a href="https://github.com/bryx-inc/BRYXBanner"&gt;BRYXBanner&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/iwasrobbed/Down"&gt;Down&lt;/a&gt; converts 
+MarkDown text to HTML for display.&lt;/p&gt;
+&lt;p&gt;Icons by &lt;a href="http://www.glyphish.com" title="Glyphish"&gt;Glyphish&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Special thanks to &lt;a href="https://twitter.com/jwclark"&gt;Jim Clark&lt;/a&gt; for his advice and encouragement.&lt;/p&gt;
+&lt;p align="center"&gt;Copyright&amp;nbsp;2016 Cockleburr&amp;nbsp;Software</target>
+        <note>Class = "UITextView"; text = "This application leans heavily on the NSOperation based classes originally developed by Apple\nfor their WWDC app and published with their WWDC 2015 sample \n&lt;a href=\"https://developer.apple.com/sample-code/wwdc/2015/\"&gt;Advanced NSOperations&lt;/a&gt;, \nas adapted by Pluralsight in their version named \n&lt;a href=\"https://github.com/pluralsight/PSOperations\"&gt;PSOperations&lt;/a&gt;.&lt;/p&gt;\n&lt;p&gt;The Core Data stack is built using the \n&lt;a href=\"https://github.com/bignerdranch/CoreDataStack\"&gt;Big Nerd Ranch Core Data Stack&lt;/a&gt;.&lt;/p&gt;\n&lt;p&gt;Network status monitored with \n&lt;a href=\"https://github.com/ashleymills/Reachability.swift\"&gt;ReachabilitySwift&lt;/a&gt;.&lt;/p&gt;\n&lt;p&gt;Network status changes displayed with \n&lt;a href=\"https://github.com/bryx-inc/BRYXBanner\"&gt;BRYXBanner&lt;/a&gt;.&lt;/p&gt;\n&lt;p&gt;&lt;a href=\"https://github.com/iwasrobbed/Down\"&gt;Down&lt;/a&gt; converts \nMarkDown text to HTML for display.&lt;/p&gt;\n&lt;p&gt;Icons by &lt;a href=\"http://www.glyphish.com\" title=\"Glyphish\"&gt;Glyphish&lt;/a&gt;&lt;/p&gt;\n&lt;p&gt;Special thanks to &lt;a href=\"https://twitter.com/jwclark\"&gt;Jim Clark&lt;/a&gt; for his advice and encouragement.&lt;/p&gt;\n&lt;p align=\"center\"&gt;Copyright&amp;nbsp;2016 Cockleburr&amp;nbsp;Software"; ObjectID = "iZj-qn-gJu";</note>
+      </trans-unit>
+      <trans-unit id="k0Y-aN-nm1.title">
+        <source>Search</source>
+        <target>Search</target>
+        <note>Class = "UINavigationItem"; title = "Search"; ObjectID = "k0Y-aN-nm1";</note>
+      </trans-unit>
+      <trans-unit id="kZb-yw-dsi.text">
+        <source>Author</source>
+        <target>Author</target>
+        <note>Class = "UILabel"; text = "Author"; ObjectID = "kZb-yw-dsi";</note>
+      </trans-unit>
+      <trans-unit id="r2D-oi-XhZ.normalTitle">
+        <source>PDF</source>
+        <target>PDF</target>
+        <note>Class = "UIButton"; normalTitle = "PDF"; ObjectID = "r2D-oi-XhZ";</note>
+      </trans-unit>
+      <trans-unit id="rKM-QO-vqF.text">
+        <source>Placeholder</source>
+        <target>Placeholder</target>
+        <note>Class = "UITextField"; text = "Placeholder"; ObjectID = "rKM-QO-vqF";</note>
+      </trans-unit>
+      <trans-unit id="rb5-iV-6cX.text">
+        <source>Aknowlegements:</source>
+        <target>Aknowlegements:</target>
+        <note>Class = "UILabel"; text = "Aknowlegements:"; ObjectID = "rb5-iV-6cX";</note>
+      </trans-unit>
+      <trans-unit id="tRo-1I-Do4.text">
+        <source>Now is the time for all good computers to come to the aid of their programmers!</source>
+        <target>Now is the time for all good computers to come to the aid of their programmers!</target>
+        <note>Class = "UITextView"; text = "Now is the time for all good computers to come to the aid of their programmers!"; ObjectID = "tRo-1I-Do4";</note>
+      </trans-unit>
+      <trans-unit id="waU-LW-wjq.title">
+        <source>Authors</source>
+        <target>Authors</target>
+        <note>Class = "UINavigationItem"; title = "Authors"; ObjectID = "waU-LW-wjq";</note>
+      </trans-unit>
+      <trans-unit id="yzG-JE-7DI.text">
+        <source>Placeholder</source>
+        <target>Placeholder</target>
+        <note>Class = "UITextField"; text = "Placeholder"; ObjectID = "yzG-JE-7DI";</note>
+      </trans-unit>
+      <trans-unit id="z66-od-tZg.text">
+        <source>Death Date</source>
+        <target>Death Date</target>
+        <note>Class = "UILabel"; text = "Death Date"; ObjectID = "z66-od-tZg";</note>
+      </trans-unit>
+      <trans-unit id="zhw-we-xGc.normalTitle">
+        <source>Button</source>
+        <target>Button</target>
+        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "zhw-we-xGc";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="OpenLibrary/Base.lproj/WorkDetail.storyboard" source-language="en" datatype="plaintext" target-language="sv">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="8.2.1" build-num="8C1002"/>
+    </header>
+    <body>
+      <trans-unit id="2g0-tJ-LdK.text">
+        <source>Date Published</source>
+        <target>Date Published</target>
+        <note>Class = "UILabel"; text = "Date Published"; ObjectID = "2g0-tJ-LdK";</note>
+      </trans-unit>
+      <trans-unit id="CsL-qH-Mpk.title">
+        <source>Work</source>
+        <target>Work</target>
+        <note>Class = "UIViewController"; title = "Work"; ObjectID = "CsL-qH-Mpk";</note>
+      </trans-unit>
+      <trans-unit id="TfL-nA-0i1.text">
+        <source> Title</source>
+        <target> Title</target>
+        <note>Class = "UILabel"; text = " Title"; ObjectID = "TfL-nA-0i1";</note>
+      </trans-unit>
+      <trans-unit id="VdD-Y9-DUh.text">
+        <source>Edition Name</source>
+        <target>Edition Name</target>
+        <note>Class = "UILabel"; text = "Edition Name"; ObjectID = "VdD-Y9-DUh";</note>
+      </trans-unit>
+      <trans-unit id="W5t-0C-FXW.text">
+        <source> Subtitle</source>
+        <target> Subtitle</target>
+        <note>Class = "UILabel"; text = " Subtitle"; ObjectID = "W5t-0C-FXW";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="OpenLibrary/Info.plist" source-language="en" datatype="plaintext" target-language="sv">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="8.2.1" build-num="8C1002"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName">
+        <source>$(PRODUCT_NAME)</source>
+      </trans-unit>
+      <trans-unit id="CFBundleShortVersionString">
+        <source>1.02</source>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="OpenLibrary/en.lproj/Localizable.strings" source-language="en" datatype="plaintext" target-language="sv">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="8.2.1" build-num="8C1002"/>
+    </header>
+    <body>
+      <trans-unit id="Actual">
+        <source>Actual</source>
+        <target>Actual</target>
+      </trans-unit>
+      <trans-unit id="Author">
+        <source>Author</source>
+        <target>Author</target>
+        <note>sort by author name</note>
+      </trans-unit>
+      <trans-unit id="Biography">
+        <source>Biography</source>
+        <target>Biography</target>
+      </trans-unit>
+      <trans-unit id="Born">
+        <source>Born</source>
+        <target>Born</target>
+      </trans-unit>
+      <trans-unit id="By Statement">
+        <source>By Statement</source>
+        <target>By Statement</target>
+      </trans-unit>
+      <trans-unit id="Cancel">
+        <source>Cancel</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Copyright">
+        <source>Copyright</source>
+        <target>Copyright</target>
+      </trans-unit>
+      <trans-unit id="Could not Reach OpenLibrary">
+        <source>Could not Reach OpenLibrary</source>
+        <target>Could not Reach OpenLibrary</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Created">
+        <source>Created</source>
+        <target>Created</target>
+      </trans-unit>
+      <trans-unit id="Description">
+        <source>Description</source>
+        <target>Description</target>
+      </trans-unit>
+      <trans-unit id="Died">
+        <source>Died</source>
+        <target>Died</target>
+      </trans-unit>
+      <trans-unit id="Dimensions">
+        <source>Dimensions</source>
+        <target>Dimensions</target>
+      </trans-unit>
+      <trans-unit id="Edition">
+        <source>Edition</source>
+        <target>Edition</target>
+      </trans-unit>
+      <trans-unit id="Edition Count">
+        <source>Edition Count</source>
+        <target>Edition Count</target>
+        <note>sort by the number of editions</note>
+      </trans-unit>
+      <trans-unit id="Electronic Editions">
+        <source>Electronic Editions</source>
+        <target>Electronic Editions</target>
+        <note>sort by the number of electronic editions</note>
+      </trans-unit>
+      <trans-unit id="First Published">
+        <source>First Published</source>
+        <target>First Published</target>
+      </trans-unit>
+      <trans-unit id="First Sentence">
+        <source>First Sentence</source>
+        <target>First Sentence</target>
+      </trans-unit>
+      <trans-unit id="Format">
+        <source>Format</source>
+        <target>Format</target>
+      </trans-unit>
+      <trans-unit id="Last updated on">
+        <source>Last updated on</source>
+        <target>Last updated on</target>
+      </trans-unit>
+      <trans-unit id="Last updated on ">
+        <source>Last updated on </source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Latest Revision">
+        <source>Latest Revision</source>
+        <target>Latest Revision</target>
+      </trans-unit>
+      <trans-unit id="Modified">
+        <source>Modified</source>
+        <target>Modified</target>
+      </trans-unit>
+      <trans-unit id="Name">
+        <source>Name</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="Network Access">
+        <source>Network Access</source>
+        <target>Network Access</target>
+        <note>status title for network access</note>
+      </trans-unit>
+      <trans-unit id="No results found.">
+        <source>No results found.</source>
+        <target>No results found.</target>
+        <note>the search on openlibrary.org returned no results</note>
+      </trans-unit>
+      <trans-unit id="Not Logged In to WiFi">
+        <source>Not Logged In to WiFi</source>
+        <target>Not Logged In to WiFi</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Not Reachable">
+        <source>Not Reachable</source>
+        <target>Not Reachable</target>
+        <note>the app cannot reach openlibrary.org</note>
+      </trans-unit>
+      <trans-unit id="Notes">
+        <source>Notes</source>
+        <target>Notes</target>
+      </trans-unit>
+      <trans-unit id="OLID">
+        <source>OLID</source>
+        <target>OLID</target>
+      </trans-unit>
+      <trans-unit id="Pages">
+        <source>Pages</source>
+        <target>Pages</target>
+      </trans-unit>
+      <trans-unit id="Please log on to the WiFi access point.">
+        <source>Please log on to the WiFi access point.</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Provisional">
+        <source>Provisional</source>
+        <target>Provisional</target>
+      </trans-unit>
+      <trans-unit id="Published">
+        <source>Published</source>
+        <target>Published</target>
+      </trans-unit>
+      <trans-unit id="Published Country">
+        <source>Published Country</source>
+        <target>Published Country</target>
+      </trans-unit>
+      <trans-unit id="Reachable">
+        <source>Reachable</source>
+        <target>Reachable</target>
+        <note>the app can reach openlibrary.org</note>
+      </trans-unit>
+      <trans-unit id="Retrieved">
+        <source>Retrieved</source>
+        <target>Retrieved</target>
+      </trans-unit>
+      <trans-unit id="Revision">
+        <source>Revision</source>
+        <target>Revision</target>
+      </trans-unit>
+      <trans-unit id="Settings">
+        <source>Settings</source>
+        <target>Settings</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Subject People">
+        <source>Subject People</source>
+        <target>Subject People</target>
+      </trans-unit>
+      <trans-unit id="Subject Places">
+        <source>Subject Places</source>
+        <target>Subject Places</target>
+      </trans-unit>
+      <trans-unit id="Subject Times">
+        <source>Subject Times</source>
+        <target>Subject Times</target>
+      </trans-unit>
+      <trans-unit id="Subjects">
+        <source>Subjects</source>
+        <target>Subjects</target>
+      </trans-unit>
+      <trans-unit id="Subtitle">
+        <source>Subtitle</source>
+        <target>Subtitle</target>
+      </trans-unit>
+      <trans-unit id="Tap the Search Button to Look for Books">
+        <source>Tap the Search Button to Look for Books</source>
+        <target>Tap the Search Button to Look for Books</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Title">
+        <source>Title</source>
+        <target>Title</target>
+        <note>sort by title</note>
+      </trans-unit>
+      <trans-unit id="Type">
+        <source>Type</source>
+        <target>Type</target>
+      </trans-unit>
+      <trans-unit id="Unable to Connect">
+        <source>Unable to Connect</source>
+        <target>Unable to Connect</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Unable to Download">
+        <source>Unable to Download</source>
+        <target>Unable to Download</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Unknown">
+        <source>Unknown</source>
+        <target>Unknown</target>
+        <note>the app does not know the number of works/editions/eBooks</note>
+      </trans-unit>
+      <trans-unit id="Unknown error">
+        <source>Unknown error</source>
+        <target>Unknown error</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Wikipedia">
+        <source>Wikipedia</source>
+        <target>Wikipedia</target>
+      </trans-unit>
+      <trans-unit id="Work">
+        <source>Work</source>
+        <target>Work</target>
+      </trans-unit>
+      <trans-unit id="Year First Published">
+        <source>Year First Published</source>
+        <target>Year First Published</target>
+        <note>sort by the year the work was first published</note>
+      </trans-unit>
+      <trans-unit id="cannot-connect">
+        <source>Make sure your device is connected to the internet and try again. Cannot connect to </source>
+        <target>Make sure your device is connected to the internet and try again. Cannot connect to </target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="cannot-parse">
+        <source>Cannot parse results. Try again later.</source>
+        <target>Cannot parse results. Try again later.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="need-debugging-pronto">
+        <source>Don't know how we got here. Need some serious debugging pronto!</source>
+        <target>Don't know how we got here. Need some serious debugging pronto!</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="need-wan-access">
+        <source>Either you have not signed on to WiFi or you have not given this app permission to use cell data. Please enable it in Settings to continue.</source>
+        <target>Either you have not signed on to WiFi or you have not given this app permission to use cell data. Please enable it in Settings to continue.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="of">
+        <source>of</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="OpenLibraryTests/Info.plist" source-language="en" datatype="plaintext" target-language="sv">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="8.2.1" build-num="8C1002"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName">
+        <source>$(PRODUCT_NAME)</source>
+      </trans-unit>
+      <trans-unit id="CFBundleShortVersionString">
+        <source>1.0</source>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="OpenLibraryUITests/Info.plist" source-language="en" datatype="plaintext" target-language="sv">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="8.2.1" build-num="8C1002"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName">
+        <source>$(PRODUCT_NAME)</source>
+      </trans-unit>
+      <trans-unit id="CFBundleShortVersionString">
+        <source>1.0</source>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -303,7 +303,7 @@ class OLWorkDetail: OLManagedObject {
                 newData.append(
                     DeluxeData(
                         type: .block,
-                        caption: "Subject\(self.subjects.count > 1 ? "s" : "")",
+                        caption: "Subjects",
                         value: subjects
                     )
                 )
@@ -325,7 +325,7 @@ class OLWorkDetail: OLManagedObject {
                 newData.append(
                     DeluxeData(
                         type: .block,
-                        caption: "Subject Place\(self.subjects.count > 1 ? "s" : "")",
+                        caption: "Subject Places",
                         value: subjects
                     )
                 )
@@ -336,7 +336,7 @@ class OLWorkDetail: OLManagedObject {
                 newData.append(
                     DeluxeData(
                         type: .block,
-                        caption: "Subject Time\(self.subjects.count > 1 ? "s" : "")",
+                        caption: "Subject Times",
                         value: subjects
                     )
                 )
@@ -446,7 +446,7 @@ class OLWorkDetail: OLManagedObject {
             )
         
         newData.append(
-            DeluxeData(type: .inline, caption: "", value: isProvisional ? "Provisional" : "Actual" )
+            DeluxeData(type: .inline, caption: "Data", value: isProvisional ? "Provisional" : "Actual" )
         )
         
         deluxeData.append( newData )

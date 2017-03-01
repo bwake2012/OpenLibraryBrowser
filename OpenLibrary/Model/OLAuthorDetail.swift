@@ -309,7 +309,11 @@ class OLAuthorDetail: OLManagedObject {
         )
         
         newData.append(
-            DeluxeData(type: .inline, caption: "", value: isProvisional ? "Provisional" : "Actual" )
+            DeluxeData(
+                type: .inline,
+                caption: "Data",
+                value: NSLocalizedString( isProvisional ? "Provisional" : "Actual", comment: "" )
+            )
         )
         
         deluxeData.append( newData )

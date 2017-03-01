@@ -72,23 +72,23 @@ extension GroupOperation {
             let hostURL = error.userInfo[ReachabilityCondition.hostKey] as! NSURL
             
             alert = AlertOperation()
-            alert?.title = "Unable to Connect"
-            alert?.message = "Cannot connect to \(hostURL.host!). Make sure your device is connected to the internet and try again."
+            alert?.title = NSLocalizedString( "Unable to Connect", comment: "" )
+            alert?.message = NSLocalizedString( "cannot-connect", comment: "" ) + ( hostURL.host ?? "unknown host" )
             
         case failedJSON:
             // We failed because the JSON was malformed.
             alert = AlertOperation()
-            alert?.title = "Unable to Download"
-            alert?.message = "Cannot parse \(name) results. Try again later."
+            alert?.title = NSLocalizedString( "Unable to Download", comment: "" )
+            alert?.message = NSLocalizedString( "cannot-parse", comment: "" )
             
         case failedServerError:
             guard let desiredMIMEType = error.userInfo[mimeTypeDesiredKey] as? [String],
-                  let returnedMIMEType = error.userInfo[mimeTypeReturnedKey] as? String ,
+                  let returnedMIMEType = error.userInfo[mimeTypeReturnedKey] as? String,
                   !desiredMIMEType.contains( returnedMIMEType ) else {
             
                 alert = AlertOperation()
-                    alert?.title = "Unknown error"
-                    alert?.message = "Don't know how we got here. Need some serious debugging pronto!"
+                    alert?.title = NSLocalizedString( "Unknown error", comment: "" )
+                    alert?.message = NSLocalizedString( "need-debugging-pronto", comment: "" )
                     produceOperation( alert! )
                 return
             }
@@ -108,8 +108,8 @@ extension GroupOperation {
 
         case failedOther:
             alert = AlertOperation()
-            alert?.title = "Not Logged In to WiFi"
-            alert?.message = "Please log on to the WiFi access point."
+            alert?.title = NSLocalizedString( "Not Logged In to WiFi", comment: "" )
+            alert?.message = NSLocalizedString( "Please log on to the WiFi access point.", comment: "" )
             
         default:
 //            alert = AlertOperation()

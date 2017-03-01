@@ -571,7 +571,7 @@ class OLEditionDetail: OLManagedObject {
         )
         
         newData.append(
-            DeluxeData(type: .inline, caption: "", value: isProvisional ? "Provisional" : "Actual" )
+            DeluxeData(type: .inline, caption: "Data", value: isProvisional ? "Provisional" : "Actual" )
         )
         
         deluxeData.append( newData )

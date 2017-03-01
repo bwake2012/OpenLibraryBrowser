@@ -68,7 +68,7 @@ class OLQueryCoordinator: NSObject {
                 do {
                     try reachability.startNotifier()
                 } catch {
-                    fatalError( "Unable to start network reachability notifier.")
+                    fatalError( "Unable to start network reachability notifier." )
                 }
             } else {
                 fatalError( "Unable to create network reachability monitor.")
@@ -141,13 +141,13 @@ class OLQueryCoordinator: NSObject {
             
             let alertController =
                 UIAlertController(
-                        title: "Could not Reach OpenLibrary",
-                        message: "Either you have not signed on to WiFi or you have not given this app permission to use cell data. Please enable it in Settings to continue.",
+                        title: NSLocalizedString( "Could not Reach OpenLibrary", comment: "" ),
+                        message: NSLocalizedString( "need-wan-access", comment: "" ),
                         preferredStyle: .alert
                     )
             
             let settingsAction =
-                UIAlertAction( title: "Settings", style: .default ) {
+                UIAlertAction( title: NSLocalizedString( "Settings", comment: "" ), style: .default ) {
                     
                     (alertAction) in
                     
@@ -158,7 +158,7 @@ class OLQueryCoordinator: NSObject {
                     }
             alertController.addAction( settingsAction )
             
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: NSLocalizedString( "Cancel", comment: "" ), style: .cancel, handler: nil)
             alertController.addAction( cancelAction )
             
             presentationContext.present( alertController, animated: true, completion: nil )
@@ -175,12 +175,12 @@ class OLQueryCoordinator: NSObject {
                     
                     OLQueryCoordinator.dateFormatter = DateFormatter()
                 
-                    OLQueryCoordinator.dateFormatter?.dateFormat = "MMM d, h:mm a"
+                    OLQueryCoordinator.dateFormatter?.dateStyle = .medium
                 }
                 
                 if let dateFormatter = OLQueryCoordinator.dateFormatter {
                 
-                    let lastUpdate = "Last updated on \( dateFormatter.string( from: Date() ) )"
+                    let lastUpdate = NSLocalizedString( "Last updated on ", comment: "" ) + "\( dateFormatter.string( from: Date() ) )"
                     
                     refreshControl.attributedTitle = NSAttributedString( string: lastUpdate )
                 }
@@ -230,10 +230,23 @@ class OLQueryCoordinator: NSObject {
                     if !text.isEmpty {
                         footer.footerLabel.text = text
                     } else if 0 == highWaterMark && 0 == numFound {
-                        footer.footerLabel.text = "No results found."
+                        footer.footerLabel.text =
+                            NSLocalizedString(
+                                    "No results found.",
+                                    comment: "the search on openlibrary.org returned no results"
+                                )
                     } else {
                         footer.footerLabel.text =
-                            "\(highWaterMark) of \(-1 == numFound ? "Unknown" : String(numFound))"
+                            "\(highWaterMark)" +
+                            NSLocalizedString( " of ", comment: "X of Y" ) +
+                            (
+                                -1 == numFound ?
+                                NSLocalizedString(
+                                        "Unknown",
+                                        comment: "the app does not know the number of works/editions/eBooks"
+                                    ) :
+                                String( numFound )
+                            )
                     }
                 }
             }
@@ -398,10 +411,10 @@ class OLQueryCoordinator: NSObject {
             // this is called on a background thread, but UI updates must
             // be on the main thread, like this:
             DispatchQueue.main.async {
-                let reachMessage = "Reachable"
+                let reachMessage = NSLocalizedString( "Reachable", comment: "the app can reach openlibrary.org" )
                 let banner =
                     Banner(
-                        title: "Network Access",
+                        title: NSLocalizedString( "Network Access", comment: "status title for network access" ),
                         subtitle: "OpenLibrary " + reachMessage,
                         image: UIImage(named: "777-thumbs-up-selected-white"),
                         backgroundColor:
@@ -425,10 +438,10 @@ class OLQueryCoordinator: NSObject {
         // this is called on a background thread, but UI updates must
         // be on the main thread, like this:
         DispatchQueue.main.async {
-            let reachMessage = "Not Reachable"
+            let reachMessage = NSLocalizedString( "Not Reachable", comment: "the app cannot reach openlibrary.org" )
             let banner =
                 Banner(
-                    title: "Network Access",
+                    title: NSLocalizedString( "Network Access", comment: "status title for network access" ),
                     subtitle: "OpenLibrary " + reachMessage,
                     image: UIImage(named: "778-thumbs-down-selected-white"),
                     backgroundColor:

@@ -91,7 +91,7 @@ class OLSearchResultsTableViewController: UIViewController {
         if let tableFooterView = OLTableViewHeaderFooterView.createFromNib() as? OLTableViewHeaderFooterView {
 
             self.tableView.tableFooterView = tableFooterView
-            tableFooterView.footerLabel.text = "Tap the Search Button to Look for Books"
+            tableFooterView.footerLabel.text = NSLocalizedString( "Tap the Search Button to Look for Books", comment: "" )
         }
         
 //        generalSearchCoordinator = buildQueryCoordinator()
@@ -202,7 +202,18 @@ class OLSearchResultsTableViewController: UIViewController {
             
             case "displayGeneralSearchAuthorDetail":
 
-                if let destVC = segue.destination as? OLAuthorDetailViewController {
+                var destVC: OLAuthorDetailViewController?
+
+                destVC = segue.destination as? OLAuthorDetailViewController
+                if nil == destVC {
+                    
+                    if let navVC = segue.destination as? UINavigationController {
+                        
+                        destVC = navVC.topViewController as? OLAuthorDetailViewController
+                    }
+                }
+
+                if let destVC = destVC {
                     
                     if let key = savedAuthorKey {
                         
@@ -225,32 +236,84 @@ class OLSearchResultsTableViewController: UIViewController {
 
             case "displayGeneralSearchWorkDetail":
                 
-                if let destVC = segue.destination as? OLWorkDetailViewController {
+                var destVC: OLWorkDetailViewController?
+                
+                destVC = segue.destination as? OLWorkDetailViewController
+                if nil == destVC {
+                    
+                    if let navVC = segue.destination as? UINavigationController {
+                        
+                        destVC = navVC.topViewController as? OLWorkDetailViewController
+                    }
+                }
+                
+                if let destVC = destVC {
+                    
+                    if let delegate = splitViewController?.delegate as? SplitViewControllerDelegate {
+                        
+                        delegate.collapseDetailViewController = false
+                    }
                     
                     generalSearchCoordinator.installWorkDetailCoordinator( destVC, indexPath: indexPath )
                 }
                 
             case "zoomLargeImage":
 
-                if let destVC = segue.destination as? OLPictureViewController {
+                var destVC: OLPictureViewController?
+                
+                destVC = segue.destination as? OLPictureViewController
+                if nil == destVC {
+                    
+                    if let navVC = segue.destination as? UINavigationController {
+                        
+                        destVC = navVC.topViewController as? OLPictureViewController
+                    }
+                }
+                
+                if let destVC = destVC {
                     
                     generalSearchCoordinator.installCoverPictureViewCoordinator( destVC, indexPath: indexPath )
                 }
  
             case "displayWorkEBooks":
 
-                if let destVC = segue.destination as? OLWorkDetailViewController {
+                var destVC: OLWorkDetailViewController?
+                
+                destVC = segue.destination as? OLWorkDetailViewController
+                if nil == destVC {
+                    
+                    if let navVC = segue.destination as? UINavigationController {
+                        
+                        destVC = navVC.topViewController as? OLWorkDetailViewController
+                    }
+                }
+                
+                if let destVC = destVC {
                     
                     generalSearchCoordinator.installWorkDetailCoordinator( destVC, indexPath: indexPath )
                 }
                 
             case "displayAuthorDetail":
                 
-                if let destVC = segue.destination as? OLAuthorDetailViewController {
+                var destVC: OLAuthorDetailViewController?
+                
+                destVC = segue.destination as? OLAuthorDetailViewController
+                if nil == destVC {
+                    
+                    if let navVC = segue.destination as? UINavigationController {
+                        
+                        destVC = navVC.topViewController as? OLAuthorDetailViewController
+                    }
+                }
+                
+                if let destVC = destVC {
                     
                     generalSearchCoordinator.installAuthorDetailCoordinator( destVC, indexPath: indexPath )
                 }
 
+            case "displayBlank":
+                break
+                
             default:
 
                 assert( false )
@@ -550,8 +613,11 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
         
         if let cell = tableView.cellForRow( at: indexPath ) as? SegmentedTableViewCell {
         
-            indexPathSavedForTransition = indexPath
-            
+            if !(splitViewController?.isCollapsed ?? true) && indexPath != indexPathSavedForTransition {
+                
+                performSegue( withIdentifier: "displayBlank", sender: self )
+            }
+
             generalSearchCoordinator.didSelectRowAtIndexPath( indexPath )
 
             expandCell( tableView, segmentedCell: cell, key: cell.key )
@@ -559,6 +625,8 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
             tableView.scrollToRow( at: indexPath, at: .none, animated: true )
 
 //            print( "didSelectRowAtIndexPath \(indexPath.row) \(cell.key)" )
+
+            indexPathSavedForTransition = indexPath
         }
     }
     

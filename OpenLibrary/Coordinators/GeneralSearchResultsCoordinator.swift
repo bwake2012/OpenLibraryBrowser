@@ -45,11 +45,26 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource {
     
     fileprivate let defaultSortFields =
         [
-            SortField( name: "sort_author_name", label: "Author", sort: .sortNone ),
-            SortField( name: "title", label: "Title", sort: .sortNone ),
-            SortField( name: "edition_count", label: "Edition Count", sort: .sortDown ),
-            SortField( name: "ebook_count_i", label: "Electronic Editions", sort: .sortNone ),
-            SortField( name: "first_publish_year", label: "Year First Published", sort: .sortNone )
+            SortField(
+                name: "sort_author_name",
+                label: NSLocalizedString( "Author", comment: "sort by author name" ),
+                sort: .sortNone ),
+            SortField(
+                name: "title",
+                label: NSLocalizedString( "Title", comment: "sort by title" ),
+                sort: .sortNone ),
+            SortField(
+                name: "edition_count",
+                label: NSLocalizedString( "Edition Count", comment: "sort by the number of editions" ),
+                sort: .sortDown ),
+            SortField(
+                name: "ebook_count_i",
+                label: NSLocalizedString( "Electronic Editions", comment: "sort by the number of electronic editions" ),
+                sort: .sortNone ),
+            SortField(
+                name: "first_publish_year",
+                label: NSLocalizedString( "Year First Published", comment: "sort by the year the work was first published" ),
+                sort: .sortNone )
         ]
     
     fileprivate var cachedSortFields = [SortField]()

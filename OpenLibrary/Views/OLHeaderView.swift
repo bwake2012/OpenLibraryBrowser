@@ -185,6 +185,7 @@ class OLHeaderView: UIView {
                 ),
                 at: index
             )
+        
         summaryStack.insertArrangedSubview( label, at: index )
         label.attributedText = makeAttributedString( string: text, style: style )
         label.textColor = segueName.isEmpty ? UIColor.darkText : self.tintColor

@@ -1,0 +1,15 @@
+
+/* Class = "UILabel"; text = "Author Name"; ObjectID = "37q-q8-Dny"; */
+"37q-q8-Dny.text" = "Author Name";
+
+/* Class = "UILabel"; text = "eBook Status"; ObjectID = "7E8-RR-p1T"; */
+"7E8-RR-p1T.text" = "eBook Status";
+
+/* Class = "UILabel"; text = " Subtitle"; ObjectID = "94D-nn-H2C"; */
+"94D-nn-H2C.text" = " Subtitle";
+
+/* Class = "UILabel"; text = " Title"; ObjectID = "Oud-ZT-Tod"; */
+"Oud-ZT-Tod.text" = " Title";
+
+/* Class = "UIViewController"; title = "eBooks"; ObjectID = "WVd-O9-5v6"; */
+"WVd-O9-5v6.title" = "eBooks";
