@@ -1,0 +1,82 @@
+/*
+  Localizable.strings
+  OpenLibrary
+
+  Created by Bob Wakefield on 1/5/17.
+  Copyright Â© 2017 Bob Wakefield. All rights reserved.
+ */
+
+"Created"           = "Skapad";            // the date the record was created on openlibrary.org
+"Modified"          = "Ändrad";           // the date of the latest modification
+"Revision"          = "Revision";           // the version number of the record
+"Latest Revision"   = "Senaste revision";    // the latest version number of the record
+"Type"				= "Typ";               // the record type; author, edition, work, ...
+"OLID"				= "OLID";               // the openlibrary.org record identifier
+"Retrieved"         = "Hämtad";          // the date the record was retrieved
+"Provisional"       = "Provisorisk";        // the record was assempled from data on hand
+"Actual"            = "Faktisk";             // the record was actually retrieved from openlibrary.org
+
+"Name"				= "Namn";               // the author name
+"Born"				= "Född";               // the date of the author's birth
+"Died"				= "Död";               // the date of the author's death
+"Biography"			= "Biografi";
+"Wikipedia"			= "Wikipedia";
+
+"Title"				= "Titel";              // major title of the work
+"Subtitle"			= "Undertitel";           // minor title of the work
+"Edition"			= "Upplaga";            // edition specific title
+"By Statement"		= "Av redovisning";       // author name plus other contributors
+"Published"			= "Publiserad";          // date published
+"Copyright"			= "Copyright";          // date of copyright
+"Published Country"	= "Publiserad land";  // country in which the edition was published
+"Format"			= "Format";             // physical format; hardcover, paperback, compact casette, CD, ...
+"Pages"				= "Sidor";              // number of pages
+"Dimensions"        = "Dimensioner";         // physical dimensions
+"Description"		= "Beskrivning";        // description of the work or the edition
+"First Sentence"	= "Första meningen";     // the first sentence of the work
+"Notes"				= "Information";              // additional information about the work or the edition
+
+"First Published"	= "Först utgiven";    // the date the work was first published
+"Description"		= "Beskrivning";        // description of the work
+"First Sentence"	= "Första meningen";     // the first sentence of the work
+"Notes"				= "Information";              // additional information about the work
+"Subjects"          = "Ämne";
+"Subject People"    = "Ämne människor";
+"Subject Places"    = "Ämne platser";
+"Subject Times"     = "Ämne tider";
+
+"No results found."                         = "Inget resultat.";
+"Tap the Search Button to Look for Books"	= "Klicka på sök knappen för att leta efter böcker";
+
+"Author"				= "Författare";
+"Edition Count"			= "Upplaga nummer";
+"Electronic Editions"	= "Electroniska upplagor";
+"Year First Published"	= "Först utgiven";
+"Language"              = "Språk";           // the language in which the book was written
+
+"Work"                  = "Verk";
+"Edition"               = "Upplaga";
+
+"Unable to Connect"	= "Kan ej ansluta";
+"cannot-connect"    = "Säkerställ att din anordning är ansluten till Internet och försök igen. Kan ej ansluta till ";
+
+"Unable to Download"    = "Kan ej hämta";
+"cannot-parse"          = "Kan ej analysera resultaten. Försök igen senare.";
+
+"Unknown error"			= "Okänt fel";
+"need-debugging-pronto" = "Vet ej hur vi hamnade här. Grundlig felsökning behövs omgående!";
+
+"Not Logged In to WiFi"	= "Ej inloggad på WiFi";
+
+"Could not Reach OpenLibrary"   = "Kunde ej nå OpenLibrary";
+"need-wan-access"               = "Antingen har du inte loggat in på WiFi eller så har du inte givit den här anordningen tillstånd att använda mobil data. Var god aktivera det i Inställningar för att fortsätta.";
+
+"Settings"				= "Inställningar";
+
+"Last updated on"		= "Senast uppdaterad";
+
+"Unknown"				= "Okänd";
+
+"Network Access"		= "Nätanslutning";
+"Reachable"				= "Nåbar";
+"Not Reachable"			= "Onåbar";

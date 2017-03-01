@@ -1,0 +1,82 @@
+/* 
+  Localizable.strings
+  OpenLibrary
+
+  Created by Bob Wakefield on 1/5/17.
+  Copyright © 2017 Bob Wakefield. All rights reserved.
+*/
+
+"Created"           = "Created";            // the date the record was created on openlibrary.org
+"Modified"          = "Modified";           // the date of the latest modification
+"Revision"          = "Revision";           // the version number of the record
+"Latest Revision"   = "Latest Revision";    // the latest version number of the record
+"Type"				= "Type";               // the record type; author, edition, work, ...
+"OLID"				= "OLID";               // the openlibrary.org record identifier
+"Retrieved"         = "Retrieved";          // the date the record was retrieved
+"Provisional"       = "Provisional";        // the record was assempled from data on hand
+"Actual"            = "Actual";             // the record was actually retrieved from openlibrary.org
+
+"Name"				= "Name";               // the author name
+"Born"				= "Born";               // the date of the author's birth
+"Died"				= "Died";               // the date of the author's death
+"Biography"			= "Biography";
+"Wikipedia"			= "Wikipedia";
+
+"Title"				= "Title";              // major title of the work
+"Subtitle"			= "Subtitle";           // minor title of the work
+"Edition"			= "Edition";            // edition specific title
+"By Statement"		= "By Statement";       // author name plus other contributors
+"Published"			= "Published";          // date published
+"Copyright"			= "Copyright";          // date of copyright
+"Published Country"	= "Published Country";  // country in which the edition was published
+"Format"			= "Format";             // physical format; hardcover, paperback, compact casette, CD, ...
+"Pages"				= "Pages";              // number of pages
+"Dimensions"        = "Dimensions";         // physical dimensions
+"Description"		= "Description";        // description of the work or the edition
+"First Sentence"	= "First Sentence";     // the first sentence of the work
+"Notes"				= "Notes";              // additional information about the work or the edition
+
+"First Published"	= "First Published";    // the date the work was first published
+"Description"		= "Description";        // description of the work
+"First Sentence"	= "First Sentence";     // the first sentence of the work
+"Notes"				= "Notes";              // additional information about the work
+"Subjects"          = "Subjects";
+"Subject People"    = "Subject People";
+"Subject Places"    = "Subject Places";
+"Subject Times"     = "Subject Times";
+
+"No results found."                         = "No results found.";
+"Tap the Search Button to Look for Books"	= "Tap the Search Button to Look for Books";
+
+"Author"				= "Author";
+"Edition Count"			= "Edition Count";
+"Electronic Editions"	= "Electronic Editions";
+"Year First Published"	= "Year First Published";
+"Language"              = "Language";           // the language in which the book was written
+
+"Work"                  = "Work";
+"Edition"               = "Edition";
+
+"Unable to Connect"	= "Unable to Connect";
+"cannot-connect"    = "Make sure your device is connected to the internet and try again. Cannot connect to ";
+
+"Unable to Download"    = "Unable to Download";
+"cannot-parse"          = "Cannot parse results. Try again later.";
+
+"Unknown error"			= "Unknown error";
+"need-debugging-pronto" = "Don't know how we got here. Need some serious debugging pronto!";
+
+"Not Logged In to WiFi"	= "Not Logged In to WiFi";
+
+"Could not Reach OpenLibrary"   = "Could not Reach OpenLibrary";
+"need-wan-access"               = "Either you have not signed on to WiFi or you have not given this app permission to use cell data. Please enable it in Settings to continue.";
+
+"Settings"				= "Settings";
+
+"Last updated on"		= "Last updated on";
+
+"Unknown"				= "Unknown";
+
+"Network Access"		= "Network Access";
+"Reachable"				= "Reachable";
+"Not Reachable"			= "Not Reachable";

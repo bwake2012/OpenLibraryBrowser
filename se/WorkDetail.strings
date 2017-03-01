@@ -1,0 +1,15 @@
+
+/* Class = "UILabel"; text = "Date Published"; ObjectID = "2g0-tJ-LdK"; */
+"2g0-tJ-LdK.text" = "Utgivningsdatum";
+
+/* Class = "UIViewController"; title = "Verk"; ObjectID = "CsL-qH-Mpk"; */
+"CsL-qH-Mpk.title" = "Verk";
+
+/* Class = "UILabel"; text = " Titel"; ObjectID = "TfL-nA-0i1"; */
+"TfL-nA-0i1.text" = " Titel";
+
+/* Class = "UILabel"; text = "Upplagansnamn"; ObjectID = "VdD-Y9-DUh"; */
+"VdD-Y9-DUh.text" = "Upplagansnamn";
+
+/* Class = "UILabel"; text = " Subtitle"; ObjectID = "W5t-0C-FXW"; */
+"W5t-0C-FXW.text" = " Undertitel";

@@ -1,0 +1,162 @@
+
+/* Class = "UIButton"; normalTitle = "Read Online"; ObjectID = "2AC-lQ-LEj"; */
+"2AC-lQ-LEj.normalTitle" = "Read Online";
+
+/* Class = "UIViewController"; title = "Search"; ObjectID = "565-lf-E8F"; */
+"565-lf-E8F.title" = "Search";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "5Gx-mk-Ecz"; */
+"5Gx-mk-Ecz.text" = "Title";
+
+/* Class = "UILabel"; text = "An iOS client for the database at openlibrary.org."; ObjectID = "7eU-nC-dMn"; */
+"7eU-nC-dMn.text" = "An iOS client for the database at openlibrary.org.";
+
+/* Class = "UIButton"; normalTitle = "OpenLibrary Browser v1.0(109)"; ObjectID = "8DK-Ju-MdT"; */
+"8DK-Ju-MdT.normalTitle" = "OpenLibrary Browser v1.0(109)";
+
+/* Class = "UITextField"; text = "Placeholder"; ObjectID = "8Dw-ER-C6a"; */
+"8Dw-ER-C6a.text" = "Placeholder";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "EhG-1g-qly"; */
+"EhG-1g-qly.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Download"; ObjectID = "Fdm-hf-bPB"; */
+"Fdm-hf-bPB.text" = "Download";
+
+/* Class = "UIBarButtonItem"; title = "Sort"; ObjectID = "GQL-pj-Q2w"; */
+"GQL-pj-Q2w.title" = "Sort";
+
+/* Class = "UILabel"; text = "General"; ObjectID = "HpN-Ja-Kph"; */
+"HpN-Ja-Kph.text" = "General";
+
+/* Class = "UILabel"; text = "ISBN"; ObjectID = "I6X-4r-uFy"; */
+"I6X-4r-uFy.text" = "ISBN";
+
+/* Class = "UIViewController"; title = "Open Library"; ObjectID = "K2s-7v-hMb"; */
+"K2s-7v-hMb.title" = "Open Library";
+
+/* Class = "UILabel"; text = "Author Name"; ObjectID = "KSa-Zg-gX1"; */
+"KSa-Zg-gX1.text" = "Author Name";
+
+/* Class = "UILabel"; text = "Subject"; ObjectID = "Kgh-5l-Rnb"; */
+"Kgh-5l-Rnb.text" = "Subject";
+
+/* Class = "UITextField"; text = "Placeholder"; ObjectID = "LLA-yZ-bgg"; */
+"LLA-yZ-bgg.text" = "Placeholder";
+
+/* Class = "UITextField"; text = "Placeholder"; ObjectID = "M7G-lr-9TT"; */
+"M7G-lr-9TT.text" = "Placeholder";
+
+/* Class = "UILabel"; text = "Publisher"; ObjectID = "MNt-a0-gSS"; */
+"MNt-a0-gSS.text" = "Publisher";
+
+/* Class = "UILabel"; text = "Place"; ObjectID = "Mf7-Yt-LHg"; */
+"Mf7-Yt-LHg.text" = "Place";
+
+/* Class = "UILabel"; text = "OpenLibrary Browser"; ObjectID = "N8Y-Hl-mZn"; */
+"N8Y-Hl-mZn.text" = "OpenLibrary Browser";
+
+/* Class = "UILabel"; text = "Show Only eBooks"; ObjectID = "NX4-wa-2bZ"; */
+"NX4-wa-2bZ.text" = "Show Only eBooks";
+
+/* Class = "UIButton"; normalTitle = "ePub"; ObjectID = "O8i-Yk-rI6"; */
+"O8i-Yk-rI6.normalTitle" = "ePub";
+
+/* Class = "UIButton"; normalTitle = "Close"; ObjectID = "Oc1-qU-P2y"; */
+"Oc1-qU-P2y.normalTitle" = "Close";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "PBy-pJ-0EQ"; */
+"PBy-pJ-0EQ.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "PJ0-MI-tIL"; */
+"PJ0-MI-tIL.text" = "Label";
+
+/* Class = "UIViewController"; title = "Download"; ObjectID = "QNA-1N-1O1"; */
+"QNA-1N-1O1.title" = "Download";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "QxR-sZ-ZKg"; */
+"QxR-sZ-ZKg.normalTitle" = "Button";
+
+/* Class = "UIBarButtonItem"; title = "Search"; ObjectID = "SCp-4e-ica"; */
+"SCp-4e-ica.title" = "Search";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "SUC-X3-2RT"; */
+"SUC-X3-2RT.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "DjVu"; ObjectID = "TRq-cs-gUA"; */
+"TRq-cs-gUA.normalTitle" = "DjVu";
+
+/* Class = "UIButton"; normalTitle = "Send to Kindle"; ObjectID = "XNA-ax-Yz7"; */
+"XNA-ax-Yz7.normalTitle" = "Send to Kindle";
+
+/* Class = "UIViewController"; title = "Sort Field"; ObjectID = "Xmm-OC-cfc"; */
+"Xmm-OC-cfc.title" = "Sort Field";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "a9G-S7-6D9"; */
+"a9G-S7-6D9.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Birth Date:"; ObjectID = "bAa-pw-ZzB"; */
+"bAa-pw-ZzB.text" = "Birth Date:";
+
+/* Class = "UITextField"; text = "Placeholder"; ObjectID = "bIn-rR-3ib"; */
+"bIn-rR-3ib.text" = "Placeholder";
+
+/* Class = "UINavigationItem"; title = "Sort"; ObjectID = "bSx-E4-xdw"; */
+"bSx-E4-xdw.title" = "Sort";
+
+/* Class = "UIButton"; normalTitle = "Plain Text"; ObjectID = "crh-R6-hjV"; */
+"crh-R6-hjV.normalTitle" = "Plain Text";
+
+/* Class = "UILabel"; text = "The Horror Story Shorter by One Letter Than the Shortest Horror Story Ever Written"; ObjectID = "dfl-mg-dhr"; */
+"dfl-mg-dhr.text" = "The Horror Story Shorter by One Letter Than the Shortest Horror Story Ever Written";
+
+/* Class = "UIButton"; normalTitle = "MOBI"; ObjectID = "e0R-9A-ewM"; */
+"e0R-9A-ewM.normalTitle" = "MOBI";
+
+/* Class = "UITextField"; text = "Placeholder"; ObjectID = "eu6-f8-2Gb"; */
+"eu6-f8-2Gb.text" = "Placeholder";
+
+/* Class = "UIButton"; normalTitle = "Done"; ObjectID = "hCA-q2-UsH"; */
+"hCA-q2-UsH.normalTitle" = "Done";
+
+/* Class = "UITextField"; text = "Placeholder"; ObjectID = "hHi-E3-Zq7"; */
+"hHi-E3-Zq7.text" = "Placeholder";
+
+/* Class = "UINavigationItem"; title = "Results"; ObjectID = "iE0-dO-jOb"; */
+"iE0-dO-jOb.title" = "Results";
+
+/* Class = "UILabel"; text = "Person"; ObjectID = "iIF-pt-ddg"; */
+"iIF-pt-ddg.text" = "Person";
+
+/* Class = "UITextView"; text = "This application leans heavily on the NSOperation based classes originally developed by Apple\nfor their WWDC app and published with their WWDC 2015 sample \n<a href=\"https://developer.apple.com/sample-code/wwdc/2015/\">Advanced NSOperations</a>, \nas adapted by Pluralsight in their version named \n<a href=\"https://github.com/pluralsight/PSOperations\">PSOperations</a>.</p>\n<p>The Core Data stack is built using the \n<a href=\"https://github.com/bignerdranch/CoreDataStack\">Big Nerd Ranch Core Data Stack</a>.</p>\n<p>Network status monitored with \n<a href=\"https://github.com/ashleymills/Reachability.swift\">ReachabilitySwift</a>.</p>\n<p>Network status changes displayed with \n<a href=\"https://github.com/bryx-inc/BRYXBanner\">BRYXBanner</a>.</p>\n<p><a href=\"https://github.com/iwasrobbed/Down\">Down</a> converts \nMarkDown text to HTML for display.</p>\n<p>Icons by <a href=\"http://www.glyphish.com\" title=\"Glyphish\">Glyphish</a></p>\n<p>Special thanks to <a href=\"https://twitter.com/jwclark\">Jim Clark</a> for his advice and encouragement.</p>\n<p align=\"center\">Copyright&nbsp;2016 Cockleburr&nbsp;Software"; ObjectID = "iZj-qn-gJu"; */
+"iZj-qn-gJu.text" = "This application leans heavily on the NSOperation based classes originally developed by Apple\nfor their WWDC app and published with their WWDC 2015 sample \n<a href=\"https://developer.apple.com/sample-code/wwdc/2015/\">Advanced NSOperations</a>, \nas adapted by Pluralsight in their version named \n<a href=\"https://github.com/pluralsight/PSOperations\">PSOperations</a>.</p>\n<p>The Core Data stack is built using the \n<a href=\"https://github.com/bignerdranch/CoreDataStack\">Big Nerd Ranch Core Data Stack</a>.</p>\n<p>Network status monitored with \n<a href=\"https://github.com/ashleymills/Reachability.swift\">ReachabilitySwift</a>.</p>\n<p>Network status changes displayed with \n<a href=\"https://github.com/bryx-inc/BRYXBanner\">BRYXBanner</a>.</p>\n<p><a href=\"https://github.com/iwasrobbed/Down\">Down</a> converts \nMarkDown text to HTML for display.</p>\n<p>Icons by <a href=\"http://www.glyphish.com\" title=\"Glyphish\">Glyphish</a></p>\n<p>Special thanks to <a href=\"https://twitter.com/jwclark\">Jim Clark</a> for his advice and encouragement.</p>\n<p align=\"center\">Copyright&nbsp;2016 Cockleburr&nbsp;Software";
+
+/* Class = "UINavigationItem"; title = "Search"; ObjectID = "k0Y-aN-nm1"; */
+"k0Y-aN-nm1.title" = "Search";
+
+/* Class = "UILabel"; text = "Author"; ObjectID = "kZb-yw-dsi"; */
+"kZb-yw-dsi.text" = "Author";
+
+/* Class = "UIButton"; normalTitle = "PDF"; ObjectID = "r2D-oi-XhZ"; */
+"r2D-oi-XhZ.normalTitle" = "PDF";
+
+/* Class = "UITextField"; text = "Placeholder"; ObjectID = "rKM-QO-vqF"; */
+"rKM-QO-vqF.text" = "Placeholder";
+
+/* Class = "UILabel"; text = "Aknowlegements:"; ObjectID = "rb5-iV-6cX"; */
+"rb5-iV-6cX.text" = "Aknowlegements:";
+
+/* Class = "UITextView"; text = "Now is the time for all good computers to come to the aid of their programmers!"; ObjectID = "tRo-1I-Do4"; */
+"tRo-1I-Do4.text" = "Now is the time for all good computers to come to the aid of their programmers!";
+
+/* Class = "UINavigationItem"; title = "Authors"; ObjectID = "waU-LW-wjq"; */
+"waU-LW-wjq.title" = "Authors";
+
+/* Class = "UITextField"; text = "Placeholder"; ObjectID = "yzG-JE-7DI"; */
+"yzG-JE-7DI.text" = "Placeholder";
+
+/* Class = "UILabel"; text = "Death Date"; ObjectID = "z66-od-tZg"; */
+"z66-od-tZg.text" = "Death Date";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "zhw-we-xGc"; */
+"zhw-we-xGc.normalTitle" = "Button";

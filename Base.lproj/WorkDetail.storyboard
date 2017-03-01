@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Work-->
+        <scene sceneID="KY0-jO-V5V">
+            <objects>
+                <viewController storyboardIdentifier="WorkDetail" title="Work" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="CsL-qH-Mpk" customClass="OLWorkDetailViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="iIS-Mq-bMH"/>
+                        <viewControllerLayoutGuide type="bottom" id="oyS-Hd-MJ5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" verticalHuggingPriority="750" id="sv2-JV-oVl">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ixk-HT-12z">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="79a-aY-mSm" userLabel="Header View" customClass="OLHeaderView" customModule="OpenLibrary" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="144"/>
+                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="image" keyPath="image" value="961-book-32"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y3I-Gm-Wdh" userLabel="Table View Container">
+                                        <rect key="frame" x="0.0" y="144" width="320" height="360"/>
+                                        <connections>
+                                            <segue destination="B5O-yR-S4l" kind="embed" identifier="embedWorkEditions" id="1s5-T6-MrY"/>
+                                        </connections>
+                                    </containerView>
+                                </subviews>
+                                <variation key="heightClass=compact" axis="horizontal"/>
+                            </stackView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="uN5-a9-Cwg">
+                                <rect key="frame" x="141.5" y="265.5" width="37" height="37"/>
+                                <color key="color" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="ixk-HT-12z" firstAttribute="bottom" secondItem="oyS-Hd-MJ5" secondAttribute="top" id="Iye-Xw-cxZ"/>
+                            <constraint firstItem="ixk-HT-12z" firstAttribute="leading" secondItem="sv2-JV-oVl" secondAttribute="leading" id="JS1-Hn-2EO"/>
+                            <constraint firstAttribute="trailing" secondItem="ixk-HT-12z" secondAttribute="trailing" id="Vp8-Hi-ZiC"/>
+                            <constraint firstItem="uN5-a9-Cwg" firstAttribute="centerX" secondItem="sv2-JV-oVl" secondAttribute="centerX" id="Yhu-dW-WMw"/>
+                            <constraint firstItem="uN5-a9-Cwg" firstAttribute="centerY" secondItem="sv2-JV-oVl" secondAttribute="centerY" id="aSW-Jh-9YJ"/>
+                            <constraint firstItem="ixk-HT-12z" firstAttribute="top" secondItem="iIS-Mq-bMH" secondAttribute="bottom" id="oYe-mn-nTo"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="MtV-Go-58t"/>
+                    <connections>
+                        <outlet property="activityView" destination="uN5-a9-Cwg" id="PkR-wg-HLq"/>
+                        <outlet property="containerView" destination="y3I-Gm-Wdh" id="Dto-8Z-v8B"/>
+                        <outlet property="headerView" destination="79a-aY-mSm" id="XtQ-8Q-yIJ"/>
+                        <segue destination="gFU-3t-GOM" kind="show" identifier="displayAuthorDetail" customClass="SegueWithUnfold" customModule="OpenLibrary" id="Z83-4e-1AQ"/>
+                        <segue destination="4xQ-04-bzr" kind="show" identifier="displayDeluxeWorkDetail" customClass="SegueWithUnfold" customModule="OpenLibrary" id="2bt-Ky-WYS"/>
+                        <segue destination="I4B-nK-8hJ" kind="show" identifier="zoomLargeImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" id="z36-38-Tbi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yat-eW-AXd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2100" y="188.02816901408451"/>
+        </scene>
+        <!--AuthorDetail-->
+        <scene sceneID="dkQ-Pm-QpD">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="AuthorDetail" storyboardName="AuthorDetail" referencedIdentifier="AuthorDetail" id="gFU-3t-GOM" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="din-9s-GtI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2869.6875" y="42.25352112676056"/>
+        </scene>
+        <!--photoCoverPictureViewController-->
+        <scene sceneID="wO2-Fy-ujG">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="photoCoverPictureViewController" storyboardName="Main" referencedIdentifier="photoCoverPictureViewController" id="I4B-nK-8hJ" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Oca-4I-x3f"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5aa-2l-LmQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2988.75" y="186.97183098591549"/>
+        </scene>
+        <!--workDeluxeDetailTableView-->
+        <scene sceneID="lKe-XV-7lP">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="workDeluxeDetailTableView" storyboardName="Main" referencedIdentifier="workDeluxeDetailTableView" id="4xQ-04-bzr" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rxm-3x-Cvc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2955" y="354.92957746478874"/>
+        </scene>
+        <!--Work Detail Editions Table View Controller-->
+        <scene sceneID="zGR-Hh-JOd">
+            <objects>
+                <tableViewController storyboardIdentifier="WorkDetailEditons" useStoryboardIdentifierAsRestorationIdentifier="YES" id="B5O-yR-S4l" customClass="OLWorkDetailEditionsTableViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="102" sectionHeaderHeight="28" sectionFooterHeight="28" id="s7g-Ug-caf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="360"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="workEditionEntry" selectionStyle="default" indentationWidth="10" reuseIdentifier="workEditionEntry" rowHeight="102" id="yeP-tF-kLr" customClass="WorkEditionTableViewCell" customModule="OpenLibrary">
+                                <rect key="frame" x="0.0" y="28" width="320" height="102"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" verticalHuggingPriority="260" tableViewCell="yeP-tF-kLr" id="hGs-dQ-WQ7">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="101"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" translatesAutoresizingMaskIntoConstraints="NO" id="GZj-Wc-MzS" userLabel="WorkEditionCover">
+                                            <rect key="frame" x="8" y="8" width="60" height="84"/>
+                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="84" id="34M-2C-bgR"/>
+                                                <constraint firstAttribute="width" constant="60" id="mFx-ju-Xoc"/>
+                                            </constraints>
+                                        </imageView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="2Jq-gd-rqS">
+                                            <rect key="frame" x="76" y="8" width="236" height="84"/>
+                                            <subviews>
+                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="260" verticalCompressionResistancePriority="760" text=" Title" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TfL-nA-0i1">
+                                                    <rect key="frame" x="0.0" y="0.0" width="236" height="20.5"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="260" verticalCompressionResistancePriority="760" text=" Subtitle" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W5t-0C-FXW">
+                                                    <rect key="frame" x="0.0" y="20.5" width="236" height="18"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edition Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VdD-Y9-DUh" userLabel="Edition Name">
+                                                    <rect key="frame" x="0.0" y="38.5" width="236" height="18"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="760" text="Date Published" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2g0-tJ-LdK">
+                                                    <rect key="frame" x="0.0" y="56.5" width="236" height="27.5"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </stackView>
+                                    </subviews>
+                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstItem="2Jq-gd-rqS" firstAttribute="height" relation="greaterThanOrEqual" secondItem="GZj-Wc-MzS" secondAttribute="height" id="4e7-5i-aUe"/>
+                                        <constraint firstItem="GZj-Wc-MzS" firstAttribute="top" secondItem="hGs-dQ-WQ7" secondAttribute="topMargin" id="Py3-cR-cNY"/>
+                                        <constraint firstItem="2Jq-gd-rqS" firstAttribute="trailing" secondItem="hGs-dQ-WQ7" secondAttribute="trailingMargin" id="e3Z-1J-bt5"/>
+                                        <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="2Jq-gd-rqS" secondAttribute="bottom" priority="750" id="ho4-lL-a3P"/>
+                                        <constraint firstItem="GZj-Wc-MzS" firstAttribute="leading" secondItem="hGs-dQ-WQ7" secondAttribute="leadingMargin" id="mWc-wk-auQ"/>
+                                        <constraint firstItem="2Jq-gd-rqS" firstAttribute="top" secondItem="hGs-dQ-WQ7" secondAttribute="topMargin" id="nZh-rE-gPM"/>
+                                        <constraint firstItem="2Jq-gd-rqS" firstAttribute="leading" secondItem="GZj-Wc-MzS" secondAttribute="trailing" constant="8" symbolic="YES" id="nai-q8-qVq"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <outlet property="cellImage" destination="GZj-Wc-MzS" id="SRx-zz-L2J"/>
+                                    <outlet property="editionName" destination="VdD-Y9-DUh" id="5gS-Vv-w3f"/>
+                                    <outlet property="editionPublishDate" destination="2g0-tJ-LdK" id="qMd-iO-FCh"/>
+                                    <outlet property="editionSubTitle" destination="W5t-0C-FXW" id="Kj6-og-YV7"/>
+                                    <outlet property="editionTitle" destination="TfL-nA-0i1" id="pSw-c5-eVX"/>
+                                    <segue destination="LP6-Or-omE" kind="show" identifier="displayEditionDeluxeDetail" customClass="SegueWithTableViewCellZoom" customModule="OpenLibrary" id="TjK-Ra-R9r"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="B5O-yR-S4l" id="Dsz-NA-9hX"/>
+                            <outlet property="delegate" destination="B5O-yR-S4l" id="l8P-ZB-YsF"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="tableView" destination="s7g-Ug-caf" id="1Yi-Px-ux9"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Q6C-JU-dIy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1103" y="1004"/>
+        </scene>
+        <!--editionDeluxeDetailTableView-->
+        <scene sceneID="r2v-5n-hJu">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="editionDeluxeDetailTableView" storyboardName="Main" referencedIdentifier="editionDeluxeDetailTableView" id="LP6-Or-omE" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5fO-5z-1VL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1972" y="1004"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="GPY-vN-PdR">
+            <objects>
+                <navigationController storyboardIdentifier="WorkDetailNav" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="hRD-G1-SMr" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tHJ-1z-S8X">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <outlet property="delegate" destination="Zya-6Q-bgv" id="KJo-4P-Mxb"/>
+                        <segue destination="CsL-qH-Mpk" kind="relationship" relationship="rootViewController" id="wJs-2l-fcm"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YaQ-Er-X3l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="Zya-6Q-bgv" customClass="NavigationControllerDelegate" customModule="OpenLibrary" customModuleProvider="target"/>
+            </objects>
+            <point key="canvasLocation" x="1102.5" y="188.02816901408451"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="961-book-32" width="20" height="28"/>
+    </resources>
+</document>
