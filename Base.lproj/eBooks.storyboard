@@ -203,7 +203,7 @@
         <!--Navigation Controller-->
         <scene sceneID="T7S-MV-F5M">
             <objects>
-                <navigationController storyboardIdentifier="workDetailEBooksNav" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GUI-sz-cul" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="workDetailEBooksNav" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" hidesBarsOnSwipe="YES" id="GUI-sz-cul" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="vxA-S8-hF9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

@@ -201,7 +201,7 @@
         <!--Navigation Controller-->
         <scene sceneID="GPY-vN-PdR">
             <objects>
-                <navigationController storyboardIdentifier="WorkDetailNav" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="hRD-G1-SMr" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="WorkDetailNav" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" hidesBarsOnSwipe="YES" id="hRD-G1-SMr" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="tHJ-1z-S8X">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

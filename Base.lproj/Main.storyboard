@@ -784,7 +784,7 @@
         <!--Image Zoom Navigation Controller-->
         <scene sceneID="86U-Ze-SUb">
             <objects>
-                <navigationController id="A6z-YD-Ru0" userLabel="Image Zoom Navigation Controller" sceneMemberID="viewController">
+                <navigationController modalTransitionStyle="crossDissolve" hidesBarsOnSwipe="YES" id="A6z-YD-Ru0" userLabel="Image Zoom Navigation Controller" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="79o-PL-uuF"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="cJO-aE-CaZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1207,7 +1207,7 @@ MarkDown text to HTML for display.&lt;/p&gt;
         <!--Blank Navigation Controller-->
         <scene sceneID="lZA-4j-Wjm">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="L7Y-QI-d8l" userLabel="Blank Navigation Controller" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" hidesBarsOnSwipe="YES" id="L7Y-QI-d8l" userLabel="Blank Navigation Controller" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ddP-kA-W1a">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1235,8 +1235,8 @@ MarkDown text to HTML for display.&lt;/p&gt;
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="O9W-Qw-PGf"/>
+        <segue reference="MsK-Mb-BFi"/>
         <segue reference="N1H-Eu-32X"/>
-        <segue reference="Yjz-qW-0Hz"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
