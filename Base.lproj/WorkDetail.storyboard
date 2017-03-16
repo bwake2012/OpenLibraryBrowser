@@ -55,7 +55,7 @@
                             <constraint firstItem="ixk-HT-12z" firstAttribute="top" secondItem="iIS-Mq-bMH" secondAttribute="bottom" id="oYe-mn-nTo"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="MtV-Go-58t"/>
+                    <navigationItem key="navigationItem" title="Work" id="MtV-Go-58t"/>
                     <connections>
                         <outlet property="activityView" destination="uN5-a9-Cwg" id="PkR-wg-HLq"/>
                         <outlet property="containerView" destination="y3I-Gm-Wdh" id="Dto-8Z-v8B"/>
@@ -206,6 +206,11 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="tHJ-1z-S8X">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

@@ -159,6 +159,7 @@
 		C4B34D821D400A5600BC85E8 /* OLEBookEditionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B34D811D400A5600BC85E8 /* OLEBookEditionsTableViewController.swift */; };
 		C4B34D841D400ADF00BC85E8 /* EBookEditionsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B34D831D400ADF00BC85E8 /* EBookEditionsCoordinator.swift */; };
 		C4B34D861D4057DD00BC85E8 /* WorkEditionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B34D851D4057DD00BC85E8 /* WorkEditionTableViewCell.swift */; };
+		C4C8FF5B1E69D19200650BBE /* SegueShowDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8FF5A1E69D19200650BBE /* SegueShowDetail.swift */; };
 		C4CBCC4D1DB7C81E00BA2F4C /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = C4CBCC4C1DB7C81E00BA2F4C /* countries.json */; };
 		C4CBCC4F1DB7CE4700BA2F4C /* OLCountryLookup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CBCC4E1DB7CE4700BA2F4C /* OLCountryLookup.swift */; };
 		C4D0A9571CEF4DD20032E429 /* DeluxeDetailImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4D0A9561CEF4DD20032E429 /* DeluxeDetailImageTableViewCell.xib */; };
@@ -376,13 +377,14 @@
 		C4AB170F1CDB83B800D6DF05 /* DeluxeDetailHeadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeluxeDetailHeadingTableViewCell.xib; sourceTree = "<group>"; };
 		C4AB17111CDB83B800D6DF05 /* DeluxeDetailSubheadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeluxeDetailSubheadingTableViewCell.xib; sourceTree = "<group>"; };
 		C4AB17161CDB86B200D6DF05 /* DeluxeDetailLinkTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeluxeDetailLinkTableViewCell.xib; sourceTree = "<group>"; };
-		C4B0F8761E42D12500421EDC /* SplitViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SplitViewControllerDelegate.swift; path = Transitions/SplitViewControllerDelegate.swift; sourceTree = "<group>"; };
+		C4B0F8761E42D12500421EDC /* SplitViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SplitViewControllerDelegate.swift; path = ../Transitions/SplitViewControllerDelegate.swift; sourceTree = "<group>"; };
 		C4B2AC1D1CE0F44F003E3E74 /* OLBookSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OLBookSearchViewController.swift; sourceTree = "<group>"; };
 		C4B31B5D1D789700002DA5CD /* OLLaunchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OLLaunchViewController.swift; sourceTree = "<group>"; };
 		C4B31B5F1D78A0B1002DA5CD /* UIApplication+topViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+topViewController.swift"; sourceTree = "<group>"; };
 		C4B34D811D400A5600BC85E8 /* OLEBookEditionsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OLEBookEditionsTableViewController.swift; sourceTree = "<group>"; };
 		C4B34D831D400ADF00BC85E8 /* EBookEditionsCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EBookEditionsCoordinator.swift; sourceTree = "<group>"; };
 		C4B34D851D4057DD00BC85E8 /* WorkEditionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkEditionTableViewCell.swift; sourceTree = "<group>"; };
+		C4C8FF5A1E69D19200650BBE /* SegueShowDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegueShowDetail.swift; sourceTree = "<group>"; };
 		C4CBCC4C1DB7C81E00BA2F4C /* countries.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
 		C4CBCC4E1DB7CE4700BA2F4C /* OLCountryLookup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OLCountryLookup.swift; sourceTree = "<group>"; };
 		C4D0A9561CEF4DD20032E429 /* DeluxeDetailImageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeluxeDetailImageTableViewCell.xib; sourceTree = "<group>"; };
@@ -487,6 +489,7 @@
 				C48AE6011D4FFE7800F2B1E6 /* SearchDismissalAnimator.swift */,
 				C45F1F0E1CEA19FB002EDA5B /* SearchPresentationAnimator.swift */,
 				C45F1F121CEA1E5E002EDA5B /* SegueForSearch.swift */,
+				C4C8FF5A1E69D19200650BBE /* SegueShowDetail.swift */,
 				C42DBE621CBD68740048788E /* SegueWithImageZoom.swift */,
 				C42DBE631CBD68740048788E /* SegueWithTableViewCellZoom.swift */,
 				C422A49E1CCD22AC00A6B4A7 /* SegueWithUnfold.swift */,
@@ -581,7 +584,6 @@
 				C4E35E2B1C7E07950015D187 /* LaunchScreen.storyboard */,
 				C49B637E1E22B9CD00A1514B /* Localizable.strings */,
 				C4E35E261C7E07950015D187 /* Main.storyboard */,
-				C4B0F8761E42D12500421EDC /* SplitViewControllerDelegate.swift */,
 				C4AA89451CF39F110082B654 /* WorkDetail.storyboard */,
 				C49B63801E22BBE800A1514B /* eBooks.storyboard */,
 			);
@@ -728,6 +730,7 @@
 				C4EF99D31CA3707900BEF2D3 /* OLWorkDetailEditionsTableViewController.swift */,
 				C4EF99D41CA3707900BEF2D3 /* OLWorkDetailViewController.swift */,
 				C4FB0AEE1E5A1AD60060A122 /* SplitViewController.swift */,
+				C4B0F8761E42D12500421EDC /* SplitViewControllerDelegate.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -1043,6 +1046,7 @@
 				C4A0F0841D1468C500D0F604 /* BookDownloadOperation.swift in Sources */,
 				C46E7E4D1C8619C300D2ED51 /* OLAuthorDetailViewController.swift in Sources */,
 				C46E7E571C861E8500D2ED51 /* OLAuthorDetail.swift in Sources */,
+				C4C8FF5B1E69D19200650BBE /* SegueShowDetail.swift in Sources */,
 				C4B31B5E1D789700002DA5CD /* OLLaunchViewController.swift in Sources */,
 				C412FE5D1CC3D45A00EDB935 /* OLEditionDetail+CoreDataProperties.swift in Sources */,
 				C412FE511CC29D2400EDB935 /* LanguagesParseOperation.swift in Sources */,

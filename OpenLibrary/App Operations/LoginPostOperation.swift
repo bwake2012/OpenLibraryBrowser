@@ -12,8 +12,8 @@ class LoginPostOperation: PSOperations.GroupOperation {
 
     // MARK: Properties
     
-    let userName = "bwake1959"
-    let passWord = "bTXdt6upj?VMK&.(!BE6,!a4"
+    let userName = ""
+    let passWord = ""
     init() {
         
         super.init( operations: [] )

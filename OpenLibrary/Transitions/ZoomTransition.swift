@@ -172,3 +172,24 @@ extension ZoomTransition: ZoomTransitionGestureTarget {
     }
 }
 
+extension ZoomTransition {
+    
+    func viewControllerForTransition< T >( viewController: UIViewController ) -> T? {
+        
+        var vc: T? = nil
+        
+        if let navVC = viewController as? UINavigationController {
+            
+            vc = navVC.topViewController as? T
+        }
+        
+        if nil == vc {
+            
+            vc = viewController as? T
+        }
+                
+        return vc
+    }
+    
+}
+

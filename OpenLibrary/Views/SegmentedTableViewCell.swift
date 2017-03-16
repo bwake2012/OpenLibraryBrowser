@@ -49,16 +49,18 @@ class SegmentedTableViewCell: UITableViewCell {
     static fileprivate var minimumCellHeight: CGFloat = 0.0
     static fileprivate var tableCellHeightsByKey = [UITableView: [String: CellHeights]]()
     static fileprivate var tableCellKeysByIndexPath = [UITableView: [IndexPath: String]]()
-
-    @IBOutlet weak fileprivate var segmentView0: UIView!
     
-    @IBOutlet fileprivate var segmentViews: Array< UIView >!
-    @IBOutlet fileprivate var segmentViewTops: Array< NSLayoutConstraint >!
+    @IBOutlet weak fileprivate var segmentView0: UIView!
+    @IBOutlet weak fileprivate var segmentView0Content: UIView!
+    
+    @IBOutlet fileprivate var segmentViews: [UIView]!
+    @IBOutlet fileprivate var segmentViewOpen: [NSLayoutConstraint]!
+    @IBOutlet fileprivate var segmentViewClosed: [NSLayoutConstraint]!
     
 //    private var tableView: UITableView?
     
-    fileprivate var reversedSegmentViews = [UIView]()
-    fileprivate var reversedSegmentViewTops = [NSLayoutConstraint]()
+//    fileprivate var reversedSegmentViews = [UIView]()
+//    fileprivate var reversedSegmentViewTops = [NSLayoutConstraint]()
     
     fileprivate var segmentDuration = TimeInterval( 1.0 ) // NSTimeInterval( 0.3 )
     
@@ -75,45 +77,36 @@ class SegmentedTableViewCell: UITableViewCell {
     deinit {
         
         self.segmentViews = [UIView]()
-        self.segmentViewTops = [NSLayoutConstraint]()
-        
-        self.reversedSegmentViews = self.segmentViews
-        self.reversedSegmentViewTops = self.segmentViewTops
+        self.segmentViewOpen = [NSLayoutConstraint]()
+        self.segmentViewClosed = [NSLayoutConstraint]()
     }
         
     override func awakeFromNib() {
 
         super.awakeFromNib()
         
-        self.segmentViews.sort{ $0.frame.origin.y < $1.frame.origin.y }
-        self.segmentViewTops.sort{ $0.constant < $1.constant }
-        
-        self.reversedSegmentViews = self.segmentViews.reversed()
-        self.reversedSegmentViewTops = self.segmentViewTops.reversed()
+        layoutIfNeeded()
     }
     
     override func prepareForReuse() {
         
         super.prepareForReuse()
         
+        for constraint in segmentViewOpen {
+            
+            constraint.isActive = false
+        }
+        
+        for constraint in segmentViewClosed {
+            
+            constraint.isActive = true
+        }
+        
+        layoutIfNeeded()
+        
         key = ""
     }
-        
-//    @IBAction private func expandTapped( sender: UIButton, withEvent event: UIEvent ) {
-//        
-//        if !SegmentedTableViewCell.animating {
-//
-//            if let tableView = tableView, delegate = tableView.delegate {
-//            
-//                // [[[event touchesForView: button] anyObject] locationInView: self.tableView]]
-//                if let indexPath = tableView.indexPathForRowAtPoint( sender.superview!.convertPoint( sender.center, toView: tableView ) ) {
-//                
-//                    delegate.tableView!( tableView, accessoryButtonTappedForRowWithIndexPath: indexPath )
-//                }
-//            }
-//        }
-//    }
-    
+
     class func animationInProgress() -> Bool {
         
         let result = SegmentedTableViewCell.animating
@@ -132,7 +125,7 @@ class SegmentedTableViewCell: UITableViewCell {
         
         // return 60.0 + 1
         
-        return 101 + 1
+        return 92 + 1
     }
     
     class func keyForIndexPath( _ tableView: UITableView, indexPath: IndexPath, key: String ) {
@@ -216,9 +209,14 @@ class SegmentedTableViewCell: UITableViewCell {
         return height
     }
     
+    func isExpanded( in tableView: UITableView ) -> Bool {
+        
+        return key == SegmentedTableViewCell.openCells[tableView]
+    }
+    
     fileprivate func segmentZeroHeight() -> CGFloat {
         
-        return ceil( ceil( segmentView0.bounds.origin.y ) + ceil( segmentView0.bounds.height ) )
+        return ceil( segmentView0.bounds.height )
     }
     
     fileprivate func totalSegmentHeight() -> CGFloat {
@@ -292,7 +290,7 @@ class SegmentedTableViewCell: UITableViewCell {
     
     func saveIndexPath( _ indexPath: IndexPath, inTableView: UITableView, forKey: String ) {
         
-        GeneralSearchResultSegmentedTableViewCell.keyForIndexPath( inTableView, indexPath: indexPath, key: key )
+        SegmentedTableViewCell.keyForIndexPath( inTableView, indexPath: indexPath, key: key )
     }
     
     func selectedAnimation( _ tableView: UITableView, key: String ) -> Bool {
@@ -308,43 +306,44 @@ class SegmentedTableViewCell: UITableViewCell {
         
         assert( nil != SegmentedTableViewCell.tableCellHeightsByKey[tableView] )
 
+        var cellHeights = SegmentedTableViewCell.tableCellHeightsByKey[tableView]![key]
+        
         if expandCell {
-            
-            let openY = openTop()
 
             if animated {
 
-                openAnimation( segmentDuration, endY: openY ) {
+                openAnimation( segmentDuration ) {
 
                     completion?()
                 }
                 
             } else  {
 
+                openSegments()
                 setSegmementViewAlpha( 1 )
-                moveSegmentViewTops( openY )
             }
             
         } else {
 
-            let closedY = closedTop()
             if animated {
-                closeAnimation( segmentDuration, endY: closedY ) {
+
+                closeAnimation( segmentDuration ) {
 
                      completion?()
                 }
             } else {
 
                 setSegmementViewAlpha( 0 )
-                self.moveSegmentViewTops( closedY )
+                closeSegments()
              }
-        }
+
+            cellHeights =
+                CellHeights(
+                    closed: segmentZeroHeight(),
+                    open: totalSegmentHeight()
+                )
         
-        let cellHeights =
-            CellHeights(
-                closed: segmentZeroHeight(),
-                open: totalSegmentHeight()
-            )
+        }
         
         SegmentedTableViewCell.tableCellHeightsByKey[tableView]![key] = cellHeights
         
@@ -360,108 +359,111 @@ class SegmentedTableViewCell: UITableViewCell {
         }
     }
     
-    fileprivate func moveSegmentViewTops( _ yOffsets: [CGFloat] ) {
+    fileprivate func openSegments() -> Void {
         
-        for (index, segmentViewTop) in segmentViewTops.enumerated() {
+        for constraint in segmentViewOpen {
             
-            segmentViewTop.constant = yOffsets[index]
+            constraint.isActive = true
         }
+        
+        for constraint in segmentViewClosed {
+            
+            constraint.isActive = false
+        }
+        
     }
     
-    fileprivate func openTop() -> [CGFloat] {
+    fileprivate func closeSegments() -> Void {
         
-        var result = [CGFloat]( repeating: 0.0, count: self.segmentViews.count )
+        for constraint in segmentViewOpen {
+            
+            constraint.isActive = false
+        }
+        
+        for constraint in segmentViewClosed {
+            
+            constraint.isActive = true
+        }
+        
+    }
+    
+    fileprivate func openFrames() -> [CGRect] {
+        
+        var result: [CGRect] = []
+        
+        segmentView0.layoutIfNeeded()
         
         var yOffset = ceil( segmentView0.frame.origin.y ) + ceil( segmentView0.frame.height )
-        for (index, view) in segmentViews.enumerated() {
+        for view in segmentViews {
             
-            result[index] = ceil( yOffset )
+            view.layoutIfNeeded()
+
+            var newRect = view.frame
+            newRect.origin.y = ceil( yOffset )
+            result.append( newRect )
             
             yOffset += view.frame.height
         }
-
+        
+        layoutIfNeeded()
+        
         return result
     }
     
-    fileprivate func closedTop() -> [CGFloat] {
-    
-        return segmentViews.map { floor( segmentView0.frame.origin.y + ( segmentView0.frame.height - $0.frame.height ) ) }
+    fileprivate func closedFrames() -> [CGRect] {
+        
+        var result: [CGRect] = []
+        
+        segmentView0.layoutIfNeeded()
+        
+        let segmentView0Bottom = floor( segmentView0.frame.origin.y + segmentView0.frame.height )
+        for view in segmentViews {
+            
+            view.layoutIfNeeded()
+
+            var newRect = view.frame
+            newRect.origin.y = ceil( segmentView0Bottom - newRect.height )
+            result.append( newRect )
+        }
+        
+        layoutIfNeeded()
+        
+        return result
     }
-    
-    fileprivate func openAnimation( _ totalDuration: TimeInterval, endY: [CGFloat], completion: ((Void) -> Void)? ) {
+
+    fileprivate func openAnimation( _ totalDuration: TimeInterval, completion: ((Void) -> Void)? ) {
         
-        let revEndY: [CGFloat] = endY.reversed()
-        
-        animate(
-                reversedSegmentViews,
-                segmentViewTops: reversedSegmentViewTops,
-                totalDuration: totalDuration,
-                endY: revEndY, endAlpha: 1.0
+        animateOpen(
+                totalDuration: totalDuration
             ) {
 
                 completion?()
             }
     }
 
-    fileprivate func closeAnimation( _ totalDuration: TimeInterval, endY: [CGFloat], completion: ((Void) -> Void)? ) {
+    fileprivate func closeAnimation( _ totalDuration: TimeInterval, completion: ((Void) -> Void)? ) {
         
-        animate(
-                segmentViews,
-                segmentViewTops: segmentViewTops,
-                totalDuration: totalDuration,
-                endY: endY, endAlpha: 0.0
+        animateClosed(
+                totalDuration: totalDuration
             ) {
 
                 completion? ()
             }
     }
     
-    fileprivate func moveSegmentFrames( _ segmentViews: [UIView], yArray: [CGFloat] ) -> [CGRect] {
-        
-        var frames = [CGRect]( repeating: CGRect.zero, count: yArray.count )
-
-        for (index,y) in yArray.enumerated() {
-            
-            frames[index] = segmentViews[index].frame
-            frames[index].origin.y = y
-
-        }
-        
-        return frames
-    }
-    
-    fileprivate func animate(
-            _ segmentViews: [UIView],
-            segmentViewTops: [NSLayoutConstraint],
+    fileprivate func animateOpen(
             totalDuration: TimeInterval,
-            endY: [CGFloat], endAlpha: CGFloat,
             completion: ((Void) -> Void)? ) -> Void {
         
-        let segmentViewEndFrames = moveSegmentFrames( segmentViews, yArray: endY )
+        let segmentViews: [UIView] = self.segmentViews.reversed()
+        let segmentViewEndFrames: [CGRect] = openFrames().reversed()
+        let segmentViewOpen: [NSLayoutConstraint] = self.segmentViewOpen.reversed()
+        let segmentViewClosed: [NSLayoutConstraint] = self.segmentViewClosed.reversed()
 
-        var totalHeight = CGFloat( 0.0 )
-        for view in segmentViews {
-            
-            totalHeight += view.frame.height
-            view.isHidden = false
-        }
+        let totalHeight = totalSegmentHeight()
         
+        let endAlpha: CGFloat = 1.0
         setSegmementViewAlpha( 1.0 )
-        
-        let minHeight = self.segmentView0.frame.height
-        var contentFrame = self.contentView.frame
-        var contentSize = contentFrame.size
-        if contentFrame.height > minHeight {
-            
-            contentSize.height = minHeight
-        
-        } else {
-            
-            contentSize.height = totalHeight
-        }
-        
-        contentFrame.size = contentSize
-        let contentView = self.contentView
         
         UIView.animateKeyframes(
             withDuration: totalDuration,
@@ -472,49 +474,98 @@ class SegmentedTableViewCell: UITableViewCell {
                 () -> Void in
                 
                 var frameStart: Double = 0.0
-                for (index, view) in segmentViews.enumerated() {
+                for (segmentIndex, view) in segmentViews.enumerated() {
+
+                    let dyN = view.frame.height
+                    let frameDuration = Double( dyN ) / Double( totalHeight )
+                    
+                    let endFrame: CGRect = segmentViewEndFrames[segmentIndex]
+                    UIView.addKeyframe( withRelativeStartTime: frameStart, relativeDuration: frameDuration ) {
+                        
+                        view.frame = endFrame
+                        segmentViewOpen[segmentIndex].isActive = true
+                        segmentViewClosed[segmentIndex].isActive = false
+                    }
+                
+                    // fade out (or in) the master view top and bottom views
+                    // want the fade out animation to happen near the end of the transition
+                    // and the fade in animation to happen at the start of the transition
+                    let fadeDuration = frameDuration / 4
+                    let fadeStartTime = frameStart
+                    UIView.addKeyframe( withRelativeStartTime: fadeStartTime, relativeDuration: fadeDuration ) {
+                        
+                        () -> Void in
+
+                        view.alpha = endAlpha
+                    }
+
+                    frameStart += frameDuration
+                }
+
+        }) {
+            
+            ( finished ) -> Void in
+            
+            completion?()
+        }
+    }
+
+    fileprivate func animateClosed(
+        totalDuration: TimeInterval,
+        completion: ((Void) -> Void)? ) -> Void {
+        
+        let segmentViews: [UIView] = self.segmentViews.reversed()
+        let segmentViewEndFrames: [CGRect] = openFrames().reversed()
+        let segmentViewOpen: [NSLayoutConstraint] = self.segmentViewOpen
+        let segmentViewClosed:  [NSLayoutConstraint] = self.segmentViewClosed
+        
+        setSegmementViewAlpha( 1.0 )
+        let endAlpha: CGFloat = 0.0
+        
+        let totalHeight = totalSegmentHeight()
+
+        UIView.animateKeyframes(
+            withDuration: totalDuration,
+            delay: 0,
+            options: .beginFromCurrentState,
+            animations: {
+                
+                () -> Void in
+                
+                var frameStart: Double = 0.0
+                for (segmentIndex, view) in segmentViews.enumerated() {
                     
                     let dyN = view.frame.height
                     let frameDuration = Double( dyN ) / Double( totalHeight )
                     
                     UIView.addKeyframe( withRelativeStartTime: frameStart, relativeDuration: frameDuration ) {
                         
-                        view.frame = segmentViewEndFrames[index]
-                        segmentViewTops[index].constant = endY[index]
+                        view.frame = segmentViewEndFrames[segmentIndex]
+                        segmentViewOpen[segmentIndex].isActive = false
+                        segmentViewClosed[segmentIndex].isActive = true
                     }
-                
+                    
                     // fade out (or in) the master view top and bottom views
                     // want the fade out animation to happen near the end of the transition
                     // and the fade in animation to happen at the start of the transition
-                    let fadeDuration = frameDuration / 2
-                    let fadeStartTime = endAlpha != 0.0 ? frameStart : frameStart + fadeDuration
+                    let fadeDuration = frameDuration / 4
+                    let fadeStartTime = ( frameStart + frameDuration ) - fadeDuration
                     UIView.addKeyframe( withRelativeStartTime: fadeStartTime, relativeDuration: fadeDuration ) {
                         
                         () -> Void in
-
-                        self.segmentViews[index].alpha = endAlpha
+                        
+                        self.segmentViews[segmentIndex].alpha = endAlpha
                     }
-
+                    
                     frameStart += frameDuration
                 }
-
-                UIView.addKeyframe( withRelativeStartTime: 0.0, relativeDuration: 100.0 ) {
-                    
-                    contentView.frame = contentFrame
-                }
+                
         }) {
             
             ( finished ) -> Void in
             
-            if contentFrame.height != minHeight {
-                
-                for view in segmentViews {
-                    
-                    view.isHidden = true
-                }
-            }
-            
             completion?()
         }
     }
+
 }

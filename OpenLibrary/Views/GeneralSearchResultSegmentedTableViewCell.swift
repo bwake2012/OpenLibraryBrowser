@@ -82,18 +82,23 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
     
     override func prepareForReuse() {
         
-        super.prepareForReuse()
-        
         titleText.text = ""
+        titleText.sizeToFit()
         subtitleText.text = ""
+        subtitleText.sizeToFit()
         authorName.text = ""
+        authorName.sizeToFit()
         
         workDetail.text = ""
+        workDetail.sizeToFit()
         languageNames.text = ""
+        languageNames.sizeToFit()
         
         firstPublished.text = ""
+        firstPublished.sizeToFit()
         
         eBooksLabel.text = ""
+        eBooksLabel.sizeToFit()
         
         currentImageFile = nil
 
@@ -104,6 +109,8 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
         authorCount = 0
         
         updateButtons( false )
+        
+        super.prepareForReuse()
     }
 
     fileprivate func updateButtons( _ selected: Bool ) {
@@ -177,6 +184,8 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
             let labelText = "Electronic Editions " + ( haveEbooks ? "found" : "not found" )
             eBooksLabel.text = labelText
             updateButtons( isSelected && haveWorkDetail )
+            
+            layoutIfNeeded()
             
             _ = saveCellHeights( tableView, key: key, isExpanded: false )
             saveIndexPath( indexPath, inTableView: tableView, forKey: key )

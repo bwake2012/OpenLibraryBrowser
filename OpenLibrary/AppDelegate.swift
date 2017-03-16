@@ -57,6 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 // NSLog( "Displaying Navigation Controller" )
                 let splitViewController = self.splitViewController
+                splitViewController.preferredDisplayMode = .allVisible
                 
                 if let navController = splitViewController.viewControllers.first as? UINavigationController {
 

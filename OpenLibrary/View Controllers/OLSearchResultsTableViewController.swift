@@ -613,15 +613,18 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
         
         if let cell = tableView.cellForRow( at: indexPath ) as? SegmentedTableViewCell {
         
-            if !(splitViewController?.isCollapsed ?? true) && indexPath != indexPathSavedForTransition {
+            if !cell.isExpanded( in: tableView ) {
                 
-                performSegue( withIdentifier: "displayBlank", sender: self )
+                if !(splitViewController?.isCollapsed ?? true) && indexPath != indexPathSavedForTransition {
+                    
+                    performSegue( withIdentifier: "displayBlank", sender: self )
+                }
+
+                generalSearchCoordinator.didSelectRowAtIndexPath( indexPath )
+
+                expandCell( tableView, segmentedCell: cell, key: cell.key )
             }
 
-            generalSearchCoordinator.didSelectRowAtIndexPath( indexPath )
-
-            expandCell( tableView, segmentedCell: cell, key: cell.key )
-            
             tableView.scrollToRow( at: indexPath, at: .none, animated: true )
 
 //            print( "didSelectRowAtIndexPath \(indexPath.row) \(cell.key)" )
@@ -635,6 +638,7 @@ extension OLSearchResultsTableViewController: UITableViewDelegate {
         SegmentedTableViewCell.setClosed( tableView, indexPath: indexPath )
         if let cell = tableView.cellForRow( at: indexPath ) as? SegmentedTableViewCell {
             
+            cell.setClosed( tableView )
             contractCell( tableView, segmentedCell: cell, key: cell.key )
             
 //            print( "didDeselectRowAtIndexPath \(indexPath.row) \(cell.key)" )

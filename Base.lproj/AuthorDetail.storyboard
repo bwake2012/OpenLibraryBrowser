@@ -43,7 +43,7 @@
                                 <variation key="heightClass=compact" axis="horizontal"/>
                             </stackView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="8zT-S9-MSn">
-                                <rect key="frame" x="141.5" y="265.5" width="37" height="37"/>
+                                <rect key="frame" x="142" y="266" width="37" height="37"/>
                                 <color key="color" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
                         </subviews>
@@ -57,7 +57,7 @@
                             <constraint firstItem="ggG-Qf-Add" firstAttribute="top" secondItem="WMK-h2-Oo1" secondAttribute="bottom" id="z7C-QL-uMs"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="eUW-jw-hwC"/>
+                    <navigationItem key="navigationItem" title="Author" id="eUW-jw-hwC"/>
                     <connections>
                         <outlet property="activityView" destination="8zT-S9-MSn" id="Bb1-KO-9lw"/>
                         <outlet property="containerView" destination="GtZ-lM-FnV" id="ckz-mZ-wQJ"/>
@@ -247,6 +247,11 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="3ed-n2-SXJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

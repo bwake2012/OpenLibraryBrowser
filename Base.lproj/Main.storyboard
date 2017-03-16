@@ -49,13 +49,13 @@
                     <connections>
                         <outlet property="activityView" destination="m4X-Sy-Yyr" id="Zb3-4K-Aqa"/>
                         <outlet property="tableView" destination="hw0-1g-Jjf" id="chP-9l-vgm"/>
-                        <segue destination="gFU-3t-GOM" kind="showDetail" identifier="displayGeneralSearchAuthorDetail" customClass="SegueWithTableViewCellZoom" customModule="OpenLibrary" customModuleProvider="target" action="showViewController:sender:" id="slP-df-BRM"/>
-                        <segue destination="xzb-fe-grp" kind="showDetail" identifier="displayGeneralSearchWorkDetail" customClass="SegueWithTableViewCellZoom" customModule="OpenLibrary" customModuleProvider="target" id="bNH-qu-qcP"/>
+                        <segue destination="gFU-3t-GOM" kind="showDetail" identifier="displayGeneralSearchAuthorDetail" customClass="SegueShowDetail" customModule="OpenLibrary" customModuleProvider="target" action="showViewController:sender:" id="slP-df-BRM"/>
+                        <segue destination="xzb-fe-grp" kind="showDetail" identifier="displayGeneralSearchWorkDetail" customClass="SegueShowDetail" customModule="OpenLibrary" customModuleProvider="target" id="bNH-qu-qcP"/>
                         <segue destination="565-lf-E8F" kind="show" identifier="openBookSearch" customClass="SegueWithWindowShade" customModule="OpenLibrary" customModuleProvider="target" id="94o-EF-7BE"/>
                         <segue destination="Xmm-OC-cfc" kind="show" identifier="openBookSort" customClass="SegueWithWindowShade" customModule="OpenLibrary" customModuleProvider="target" id="a5k-8T-2Gm"/>
-                        <segue destination="9lP-Th-a8R" kind="showDetail" identifier="displayWorkEBooks" customClass="SegueWithTableViewCellZoom" customModule="OpenLibrary" customModuleProvider="target" action="showViewController:sender:" id="usZ-AJ-S00"/>
+                        <segue destination="9lP-Th-a8R" kind="showDetail" identifier="displayWorkEBooks" customClass="SegueShowDetail" customModule="OpenLibrary" customModuleProvider="target" action="showViewController:sender:" id="usZ-AJ-S00"/>
                         <segue destination="rah-9z-s1H" kind="show" identifier="displayGeneralSearchAuthorList" customClass="SegueWithWindowShade" customModule="OpenLibrary" customModuleProvider="target" id="0Jo-u8-wSl"/>
-                        <segue destination="A6z-YD-Ru0" kind="showDetail" identifier="zoomLargeImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" customModuleProvider="target" id="EUe-NQ-BSb"/>
+                        <segue destination="A6z-YD-Ru0" kind="showDetail" identifier="zoomLargeImage" customClass="SegueShowDetail" customModule="OpenLibrary" customModuleProvider="target" id="EUe-NQ-BSb"/>
                         <segue destination="L7Y-QI-d8l" kind="showDetail" identifier="displayBlank" customClass="SegueForSearch" customModule="OpenLibrary" customModuleProvider="target" id="O9W-Qw-PGf"/>
                     </connections>
                 </viewController>
@@ -573,10 +573,10 @@
             </objects>
             <point key="canvasLocation" x="2115" y="994"/>
         </scene>
-        <!--Deluxe Detail Table View Controller-->
+        <!--Detail-->
         <scene sceneID="g1Y-4R-N3x">
             <objects>
-                <tableViewController storyboardIdentifier="authorDeluxeDetailTableView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jwx-Vz-ory" customClass="OLDeluxeDetailTableViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="authorDeluxeDetailTableView" title="Detail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jwx-Vz-ory" customClass="OLDeluxeDetailTableViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="147" sectionHeaderHeight="28" sectionFooterHeight="28" id="fG2-4v-rgU">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -608,10 +608,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p7T-mp-Z6E">
-                                <rect key="frame" x="16" y="20" width="288" height="548"/>
+                                <rect key="frame" x="16" y="64" width="288" height="504"/>
                             </imageView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="s8r-Ab-8re">
-                                <rect key="frame" x="142" y="275.5" width="37" height="37"/>
+                                <rect key="frame" x="142" y="297.5" width="37" height="37"/>
                                 <color key="color" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
                         </subviews>
@@ -633,7 +633,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Lb-GV-7Ci" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1165" y="2831"/>
+            <point key="canvasLocation" x="1234" y="2831"/>
         </scene>
         <!--Download-->
         <scene sceneID="GvV-Xr-xLh">
@@ -789,6 +789,12 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="cJO-aE-CaZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <outlet property="delegate" destination="dnf-0d-Q4L" id="jJc-Nx-FZa"/>
@@ -800,10 +806,10 @@
             </objects>
             <point key="canvasLocation" x="1097" y="1960"/>
         </scene>
-        <!--Deluxe Detail Table View Controller-->
+        <!--Detail-->
         <scene sceneID="khe-cu-Afx">
             <objects>
-                <tableViewController storyboardIdentifier="workDeluxeDetailTableView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zUC-U6-Nsg" customClass="OLDeluxeDetailTableViewController" customModule="OpenLibrary" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="workDeluxeDetailTableView" title="Detail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zUC-U6-Nsg" customClass="OLDeluxeDetailTableViewController" customModule="OpenLibrary" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="S6j-JV-erp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -825,7 +831,7 @@
         <!--Edition Deluxe Detail Table View Controller-->
         <scene sceneID="l3a-bn-RTX">
             <objects>
-                <tableViewController storyboardIdentifier="editionDeluxeDetailTableView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="eGT-aZ-iGV" userLabel="Edition Deluxe Detail Table View Controller" customClass="OLDeluxeDetailTableViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="editionDeluxeDetailTableView" title="Edition Detail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="eGT-aZ-iGV" userLabel="Edition Deluxe Detail Table View Controller" customClass="OLDeluxeDetailTableViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="wKH-yP-0H4">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1014,7 +1020,7 @@ MarkDown text to HTML for display.&lt;/p&gt;
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WB4-4A-5Hw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2605" y="324"/>
+            <point key="canvasLocation" x="3120" y="323"/>
         </scene>
         <!--Authors-->
         <scene sceneID="KuV-xE-lrk">
@@ -1036,7 +1042,7 @@ MarkDown text to HTML for display.&lt;/p&gt;
                                         <rect key="frame" x="0.0" y="28" width="320" height="102"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="UWb-AD-gWk" id="jA9-ZZ-tTv">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="101.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="101"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dxa-1I-Gf0">
@@ -1054,21 +1060,21 @@ MarkDown text to HTML for display.&lt;/p&gt;
                                                             <rect key="frame" x="0.0" y="0.0" width="236" height="53"/>
                                                             <subviews>
                                                                 <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" text="Author Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KSa-Zg-gX1">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="236" height="20.5"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="236" height="21"/>
                                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" text="Birth Date:" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bAa-pw-ZzB">
-                                                                    <rect key="frame" x="0.0" y="20.5" width="236" height="16"/>
+                                                                    <rect key="frame" x="0.0" y="21" width="236" height="16"/>
                                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label userInteractionEnabled="NO" contentMode="TopLeft" verticalCompressionResistancePriority="1000" ambiguous="YES" text="Death Date" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z66-od-tZg" userLabel="Death Date">
-                                                                    <rect key="frame" x="0.0" y="36.5" width="236" height="16"/>
+                                                                    <rect key="frame" x="0.0" y="37" width="236" height="16"/>
                                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1163,7 +1169,8 @@ MarkDown text to HTML for display.&lt;/p&gt;
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="3G7-NY-hHa">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
@@ -1205,6 +1212,11 @@ MarkDown text to HTML for display.&lt;/p&gt;
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ddP-kA-W1a">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1223,7 +1235,8 @@ MarkDown text to HTML for display.&lt;/p&gt;
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="O9W-Qw-PGf"/>
-        <segue reference="Yjz-qW-0Hz"/>
         <segue reference="N1H-Eu-32X"/>
+        <segue reference="Yjz-qW-0Hz"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

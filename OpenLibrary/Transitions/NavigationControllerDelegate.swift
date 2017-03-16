@@ -14,7 +14,7 @@ class NavigationControllerDelegate: NSObject, UINavigationControllerDelegate {
     
     static var delegates = [ UINavigationController: UINavigationControllerDelegate ]()
     
-    var transitionStack = [ZoomTransition]()
+    static var transitionStack = [ZoomTransition?]()
     
     static func addDelegateToNavController( _ navController: UINavigationController ) -> UINavigationControllerDelegate? {
     
@@ -43,50 +43,51 @@ class NavigationControllerDelegate: NSObject, UINavigationControllerDelegate {
     
     // MARK: transition stack maintenance
     
-    func pushZoomTransition( _ zoomTransition: ZoomTransition ) {
+    func pushZoomTransition( _ zoomTransition: ZoomTransition? ) {
         
-        self.transitionStack.append( zoomTransition )
+        NavigationControllerDelegate.transitionStack.append( zoomTransition )
         
 //        print( "\(unsafeAddressOf(self)) Push \(self.transitionStack.count) \(zoomTransition.description)" )
     }
 
-    func popZoomTransition() -> ZoomTransition {
+    func popZoomTransition() -> ZoomTransition? {
         
-        assert( !transitionStackEmpty() )
-        
-        let zoomTransition = self.transitionStack.removeLast()
+        let zoomTransition = NavigationControllerDelegate.transitionStack.removeLast()
         
 //        print( "\(unsafeAddressOf(self)) Pop \(self.transitionStack.count) \(zoomTransition.description)" )
         
         return zoomTransition
     }
     
-    func currentZoomTransition() -> ZoomTransition {
+    func currentZoomTransition() -> ZoomTransition? {
         
-        assert( !transitionStackEmpty() )
+        var transition: ZoomTransition?
         
-        return self.transitionStack.last!
+        if !NavigationControllerDelegate.transitionStack.isEmpty {
+            
+            transition = NavigationControllerDelegate.transitionStack.last!
+        }
+        
+        return transition
     }
     
     func transitionStackEmpty() -> Bool {
         
-        return self.transitionStack.isEmpty
+        return NavigationControllerDelegate.transitionStack.isEmpty
     }
     
     // MARK: UINavigationControllerDelegate
 
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
-        assert( !transitionStackEmpty() )
-        
         let transition = self.currentZoomTransition()
         if .pop == operation {
             
-            transition.operation = operation
+            transition?.operation = operation
             
         } else {
         
-            transition.addTransitionGesturesToView( toVC.view )
+            transition?.addTransitionGesturesToView( toVC.view )
         }
 
 //        print( "\(unsafeAddressOf(self)) operation: \(operation == .Push ? "Push" : "Pop") \(self.transitionStack.count)" )
@@ -96,9 +97,12 @@ class NavigationControllerDelegate: NSObject, UINavigationControllerDelegate {
     
     func navigationController( _ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning ) -> UIViewControllerInteractiveTransitioning? {
         
-        let zoomTransition = currentZoomTransition()
+        if let zoomTransition = currentZoomTransition() {
             
-        return zoomTransition.interactive ? zoomTransition : nil
+            return zoomTransition.interactive ? zoomTransition : nil
+        }
+            
+        return nil
     }
     
 }
