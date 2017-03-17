@@ -111,7 +111,7 @@ class ImageZoomTransition: ZoomTransition {
                 if let imgView = sourceView as? UIImageView {
                     
                     animatingImage = imgView.image
-//                    detailVC.pictureView.image = animatingImage  // placeholder
+                    detailVC.pictureView.image = animatingImage  // placeholder
                 }
             }
             
