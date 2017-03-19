@@ -1,6 +1,6 @@
 //
 //  ImageZoomTransition.swift
-//  MusicBrowse
+//  OpenLibrary Browser
 //
 //  Created by Bob Wakefield on 12/10/15.
 //  Copyright © 2015 Bob Wakefield. All rights reserved.
