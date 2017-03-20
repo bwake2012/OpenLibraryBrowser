@@ -345,13 +345,8 @@
 		C48B8A3E1D47E22C00C29D00 /* OLBookSortViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OLBookSortViewController.swift; sourceTree = "<group>"; };
 		C4973EC21D56A2450062170E /* GeneralSearchResultsDeleteGroupOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralSearchResultsDeleteGroupOperation.swift; sourceTree = "<group>"; };
 		C49787401CB58A3700A0AEB1 /* OLPictureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OLPictureViewController.swift; sourceTree = "<group>"; };
-		C49B63791E22B8BA00A1514B /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Main.storyboard; sourceTree = "<group>"; };
-		C49B637A1E22B8BB00A1514B /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/WorkDetail.storyboard; sourceTree = "<group>"; };
-		C49B637B1E22B8BB00A1514B /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/AuthorDetail.storyboard; sourceTree = "<group>"; };
 		C49B637D1E22B9CD00A1514B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		C49B637F1E22B9E100A1514B /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C49B63811E22BBE800A1514B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/eBooks.storyboard; sourceTree = "<group>"; };
-		C49B63861E22BC2A00A1514B /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/eBooks.storyboard; sourceTree = "<group>"; };
 		C49BDD131CB59DAF00A2EEEF /* PictureViewCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureViewCoordinator.swift; sourceTree = "<group>"; };
 		C49BDD171CB6E6A900A2EEEF /* OLEditionDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OLEditionDetailViewController.swift; sourceTree = "<group>"; };
 		C49BDD191CB6E75E00A2EEEF /* OLQueryCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OLQueryCoordinator.swift; sourceTree = "<group>"; };
@@ -412,12 +407,6 @@
 		C4E35EBF1C7EA3350015D187 /* NetworkObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkObserver.swift; sourceTree = "<group>"; };
 		C4E35EC81C80DE760015D187 /* String+PercentEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+PercentEncoding.swift"; sourceTree = "<group>"; };
 		C4E35ECA1C80E2780015D187 /* SearchResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
-		C4E64A7B1E26B22D00EA5185 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/LaunchScreen.storyboard"; sourceTree = "<group>"; };
-		C4E64A7C1E26B22D00EA5185 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Main.storyboard"; sourceTree = "<group>"; };
-		C4E64A7D1E26B22D00EA5185 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/AuthorDetail.storyboard"; sourceTree = "<group>"; };
-		C4E64A7E1E26B22D00EA5185 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/eBooks.storyboard"; sourceTree = "<group>"; };
-		C4E64A7F1E26B22D00EA5185 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/WorkDetail.storyboard"; sourceTree = "<group>"; };
-		C4E64A801E26B22D00EA5185 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C4E863891C9121A3002C0E6B /* OpenLibraryObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenLibraryObject.swift; sourceTree = "<group>"; };
 		C4E8638B1C974303002C0E6B /* OLWorkDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OLWorkDetail.swift; sourceTree = "<group>"; };
 		C4E8638D1C9763E3002C0E6B /* AuthorWorksTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorWorksTableViewCell.swift; sourceTree = "<group>"; };
@@ -1248,8 +1237,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				C49B637D1E22B9CD00A1514B /* en */,
-				C4E64A801E26B22D00EA5185 /* es-MX */,
-				C49B637F1E22B9E100A1514B /* sv */,
 			);
 			name = Localizable.strings;
 			path = ../.;
@@ -1259,8 +1246,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				C49B63811E22BBE800A1514B /* Base */,
-				C4E64A7E1E26B22D00EA5185 /* es-MX */,
-				C49B63861E22BC2A00A1514B /* sv */,
 			);
 			name = eBooks.storyboard;
 			path = ../.;
@@ -1270,8 +1255,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				C4AA89431CF3986C0082B654 /* Base */,
-				C4E64A7D1E26B22D00EA5185 /* es-MX */,
-				C49B637B1E22B8BB00A1514B /* sv */,
 			);
 			name = AuthorDetail.storyboard;
 			path = ../.;
@@ -1281,8 +1264,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				C4AA89461CF39F110082B654 /* Base */,
-				C4E64A7F1E26B22D00EA5185 /* es-MX */,
-				C49B637A1E22B8BB00A1514B /* sv */,
 			);
 			name = WorkDetail.storyboard;
 			path = ../.;
@@ -1292,8 +1273,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				C4E35E271C7E07950015D187 /* Base */,
-				C4E64A7C1E26B22D00EA5185 /* es-MX */,
-				C49B63791E22B8BA00A1514B /* sv */,
 			);
 			name = Main.storyboard;
 			path = ../.;
@@ -1303,7 +1282,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				C4E35E2C1C7E07950015D187 /* Base */,
-				C4E64A7B1E26B22D00EA5185 /* es-MX */,
 			);
 			name = LaunchScreen.storyboard;
 			path = ../.;
