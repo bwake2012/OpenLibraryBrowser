@@ -374,6 +374,11 @@ class OLSearchResultsTableViewController: UIViewController {
                 
                 let indexPath = IndexPath( row: Foundation.NSNotFound, section: 0 )
                 tableView.scrollToRow( at: indexPath, at: .top, animated: true )
+                
+                if !(splitViewController?.isCollapsed ?? true) {
+                    
+                    performSegue(withIdentifier: "displayBlank", sender: self )
+                }
             }
             savedIndexPath = nil
         }
