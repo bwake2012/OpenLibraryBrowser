@@ -33,7 +33,7 @@ class AuthorEditionsDownloadOperation: GroupOperation {
             should always prefer to use https.
         */
         // ?type=/type/edition&*=&authors=/authors/OL26320A
-        let query = queryText.stringByAddingPercentEncodingForRFC3986()!
+        let query = queryText.encodeForUrl()
         let urlString =
             "https://openlibrary.org/query.json?type=/type/edition&authors=\(query)&*="
         let url = URL( string: urlString )!

@@ -35,7 +35,7 @@ class EditionDetailDownloadOperation: GroupOperation {
         
         assert( queryText.hasPrefix( "/books/" ) )
         
-        let query = queryText.stringByAddingPercentEncodingForRFC3986()!
+        let query = queryText.encodeForUrl()
         let urlString = "https://openlibrary.org\(query).json"
         let url = URL( string: urlString )!
         let task = URLSession.shared.jsonDownloadTaskWithURL( url ) {

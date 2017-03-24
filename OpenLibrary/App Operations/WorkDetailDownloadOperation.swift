@@ -37,7 +37,7 @@ class WorkDetailDownloadOperation: GroupOperation {
             
             query = queryText.substring( from: queryText.characters.index(queryText.startIndex, offsetBy: 7) )
         }
-        query = query.stringByAddingPercentEncodingForRFC3986()!
+        query = query.encodeForUrl()
         let urlString = "https://openlibrary.org/works/\(query).json"
         let url = URL( string: urlString )!
         let task = URLSession.shared.jsonDownloadTaskWithURL( url ) {

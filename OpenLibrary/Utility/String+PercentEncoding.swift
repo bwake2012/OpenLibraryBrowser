@@ -9,12 +9,29 @@
 import Foundation
 
 extension String {
-
-    func stringByAddingPercentEncodingForRFC3986() -> String? {
     
-        let unreserved = "-._~/?"
-        let allowed = NSMutableCharacterSet.alphanumeric()
-        allowed.addCharacters(in: unreserved)
-        return addingPercentEncoding(withAllowedCharacters: allowed as CharacterSet)
+    func encodeForUrl() -> String
+    {
+        if let result = self.addingPercentEncoding( withAllowedCharacters: NSCharacterSet.urlQueryAllowed ) {
+            
+            return result
+        
+        } else {
+            
+            return self
+        }
     }
+    
+    func decodeFromUrl() -> String
+    {
+        if let result = self.removingPercentEncoding {
+            
+            return result
+            
+        } else {
+            
+            return self
+        }
+    }
+    
 }
