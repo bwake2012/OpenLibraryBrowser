@@ -236,17 +236,20 @@ class OLQueryCoordinator: NSObject {
                                     comment: "the search on openlibrary.org returned no results"
                                 )
                     } else {
+                        var foundString = ""
+                        if -1 == numFound {
+                            foundString =
+                                NSLocalizedString(
+                                    "Unknown",
+                                    comment: "the app does not know the number of works/editions/eBooks"
+                                )
+                        }
+                        else {
+                            foundString = String( numFound  )
+                        }
                         footer.footerLabel.text =
                             "\(highWaterMark)" +
-                            NSLocalizedString( " of ", comment: "X of Y" ) +
-                            (
-                                -1 == numFound ?
-                                NSLocalizedString(
-                                        "Unknown",
-                                        comment: "the app does not know the number of works/editions/eBooks"
-                                    ) :
-                                String( numFound )
-                            )
+                            NSLocalizedString( " of ", comment: "X of Y" ) + foundString
                     }
                 }
             }

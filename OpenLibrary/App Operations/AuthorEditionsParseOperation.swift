@@ -106,7 +106,7 @@ class AuthorEditionsParseOperation: PSOperation {
                 self.updateResults?( SearchResults( start: self.offset, numFound: numFound, pageSize: resultSet.count ) )
             } else {
                 
-                print( "\(error?.localizedDescription)" )
+                print( "\(String(describing: error?.localizedDescription))" )
             }
         
             self.finishWithError( error )

@@ -28,7 +28,7 @@ class EditionDetailGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, parentObjectID: NSManagedObjectID?, currentObjectID: NSManagedObjectID?, dataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
+    init( queryText: String, parentObjectID: NSManagedObjectID?, currentObjectID: NSManagedObjectID?, dataStack: OLDataStack, completionHandler: @escaping () -> Void ) {
 
         let cachesFolder = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 

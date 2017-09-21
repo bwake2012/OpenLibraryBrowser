@@ -30,7 +30,7 @@ class AuthorWorksGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryText: String, parentObjectID: NSManagedObjectID?, offset: Int, limit: Int, dataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater, completionHandler: @escaping (Void) -> Void ) {
+    init( queryText: String, parentObjectID: NSManagedObjectID?, offset: Int, limit: Int, dataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater, completionHandler: @escaping () -> Void ) {
 
         let cachesFolder = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 

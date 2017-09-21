@@ -31,7 +31,7 @@ class IAEBookItemListGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( editionKeys: [String], dataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
+    init( editionKeys: [String], dataStack: OLDataStack, completionHandler: @escaping () -> Void ) {
         
         let docFolder = try! FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
     

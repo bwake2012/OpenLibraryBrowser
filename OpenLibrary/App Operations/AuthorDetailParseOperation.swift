@@ -96,7 +96,7 @@ class AuthorDetailParseOperation: PSOperation {
             let error = self.saveContext()
             if nil != error {
                 
-                print( "\(error)" )
+                print( "\(String(describing: error))" )
             }
             self.finishWithError( error )
         }

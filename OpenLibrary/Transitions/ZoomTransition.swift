@@ -141,7 +141,7 @@ extension ZoomTransition: ZoomTransitionGestureTarget {
         }
     }
     
-    func handleEdgePan( _ gr: UIScreenEdgePanGestureRecognizer ) -> Void {
+    @objc func handleEdgePan( _ gr: UIScreenEdgePanGestureRecognizer ) -> Void {
         
         let point = gr.translation( in: gr.view )
         

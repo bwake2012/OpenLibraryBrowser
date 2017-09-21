@@ -27,7 +27,7 @@ class SaveProvisionalObjectsOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( searchResult: OLGeneralSearchResult, dataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
+    init( searchResult: OLGeneralSearchResult, dataStack: OLDataStack, completionHandler: @escaping () -> Void ) {
         
         saveOperation =
             SaveObjectsOperation( objectID: searchResult.objectID, dataStack: dataStack )

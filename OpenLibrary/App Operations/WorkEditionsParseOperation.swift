@@ -137,7 +137,7 @@ class WorkEditionsParseOperation: PSOperation {
                 
             } else {
                 
-                print( "\(error?.localizedDescription)" )
+                print( "\(String(describing: error?.localizedDescription))" )
             }
         
             self.finishWithError( error )

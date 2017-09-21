@@ -22,7 +22,7 @@ class OLReachabilityOperation: GroupOperation {
     
     fileprivate let host: String
 
-    init( host: String, completionHandler: @escaping (Void) -> Void ) {
+    init( host: String, completionHandler: @escaping () -> Void ) {
         
         self.host = host
         

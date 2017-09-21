@@ -32,7 +32,7 @@ class GeneralSearchOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( queryParms: [String: String], sequence: Int, offset: Int, limit: Int, dataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater, completionHandler: @escaping (Void) -> Void ) {
+    init( queryParms: [String: String], sequence: Int, offset: Int, limit: Int, dataStack: OLDataStack, updateResults: @escaping SearchResultsUpdater, completionHandler: @escaping () -> Void ) {
 
         self.dataStack = dataStack
         

@@ -134,7 +134,7 @@ class OLBookSearchViewController: UIViewController {
     
     
     // MARK: Notifications
-    func keyboardDidShow(_ notification: Notification) {
+    @objc func keyboardDidShow(_ notification: Notification) {
 
         if let activeField = self.activeField, let keyboardSize = ((notification as NSNotification).userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             
@@ -150,7 +150,7 @@ class OLBookSearchViewController: UIViewController {
         }
     }
     
-    func keyboardWillBeHidden(_ notification: Notification) {
+    @objc func keyboardWillBeHidden(_ notification: Notification) {
         let contentInsets = UIEdgeInsets.zero
         self.scrollView.contentInset = contentInsets
         self.scrollView.scrollIndicatorInsets = contentInsets

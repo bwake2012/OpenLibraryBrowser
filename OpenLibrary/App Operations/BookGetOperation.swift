@@ -28,7 +28,7 @@ class BookGetOperation: PSOperations.GroupOperation {
                                        invoked on an arbitrary queue.
     */
 
-    init( cacheBookURL: URL, remoteBookURL: URL, completionHandler: @escaping (Void) -> Void ) {
+    init( cacheBookURL: URL, remoteBookURL: URL, completionHandler: @escaping () -> Void ) {
         
         downloadOperation =
             BookDownloadOperation( cacheBookURL: cacheBookURL, remoteBookURL: remoteBookURL )

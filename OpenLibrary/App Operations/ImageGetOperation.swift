@@ -27,7 +27,7 @@ class ImageGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( stringID: String, imageKeyName: String, localURL: URL, size: String, type: String, displayPointSize: CGSize? = nil, completionHandler: @escaping (Void) -> Void ) {
+    init( stringID: String, imageKeyName: String, localURL: URL, size: String, type: String, displayPointSize: CGSize? = nil, completionHandler: @escaping () -> Void ) {
         
         downloadOperation =
             ImageDownloadOperation( stringID: stringID, imageKeyName: imageKeyName, size: size, type: type, imageURL: localURL, displayPointSize: displayPointSize )
@@ -45,7 +45,7 @@ class ImageGetOperation: GroupOperation {
         name = "Get Image"
     }
 
-    convenience init( numberID: Int, imageKeyName: String, localURL: URL, size: String, type: String, displayPointSize: CGSize? = nil, completionHandler: @escaping (Void) -> Void ) {
+    convenience init( numberID: Int, imageKeyName: String, localURL: URL, size: String, type: String, displayPointSize: CGSize? = nil, completionHandler: @escaping () -> Void ) {
 
         self.init( stringID: String( numberID ), imageKeyName: imageKeyName, localURL: localURL, size: size, type: type, displayPointSize: displayPointSize, completionHandler: completionHandler )
     }

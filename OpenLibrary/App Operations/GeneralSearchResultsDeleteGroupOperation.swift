@@ -30,7 +30,7 @@ class GeneralSearchResultsDeleteGroupOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( dataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
+    init( dataStack: OLDataStack, completionHandler: @escaping () -> Void ) {
 
         self.dataStack = dataStack
 

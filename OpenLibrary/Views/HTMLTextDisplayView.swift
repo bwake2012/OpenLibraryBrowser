@@ -52,12 +52,12 @@ class HTMLTextDisplayView: UITextView {
                 let theAttributedString =
                     try NSMutableAttributedString(
                                 data: stringData,
-                                options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
+                                options: [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html],
                                 documentAttributes: nil
                             )
 
                 theAttributedString.enumerateAttribute(
-                    NSFontAttributeName,
+                    NSAttributedStringKey.font,
                     in: NSRange( location: 0, length: theAttributedString.length ),
                     options: NSAttributedString.EnumerationOptions(rawValue: 0)
                 ) {
@@ -65,8 +65,8 @@ class HTMLTextDisplayView: UITextView {
                     
                     let newFont = UIFont.preferredFont( forTextStyle: UIFontTextStyle(rawValue: textStyle) )
                     
-                    theAttributedString.removeAttribute( NSFontAttributeName, range: range )
-                    theAttributedString.addAttribute( NSFontAttributeName, value: newFont, range: range )
+                    theAttributedString.removeAttribute( NSAttributedStringKey.font, range: range )
+                    theAttributedString.addAttribute( NSAttributedStringKey.font, value: newFont, range: range )
                 }
                 self.attributedText = theAttributedString
             

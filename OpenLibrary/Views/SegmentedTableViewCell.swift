@@ -302,7 +302,7 @@ class SegmentedTableViewCell: UITableViewCell {
         return shouldBeOpen
     }
 
-    func selectedAnimation( _ tableView: UITableView, key: String, expandCell: Bool, animated: Bool, completion: ((Void) -> Void)? ) -> Bool {
+    func selectedAnimation( _ tableView: UITableView, key: String, expandCell: Bool, animated: Bool, completion: (() -> Void)? ) -> Bool {
         
         assert( nil != SegmentedTableViewCell.tableCellHeightsByKey[tableView] )
 
@@ -431,7 +431,7 @@ class SegmentedTableViewCell: UITableViewCell {
         return result
     }
 
-    fileprivate func openAnimation( _ totalDuration: TimeInterval, completion: ((Void) -> Void)? ) {
+    fileprivate func openAnimation( _ totalDuration: TimeInterval, completion: (() -> Void)? ) {
         
         animateOpen(
                 totalDuration: totalDuration
@@ -441,7 +441,7 @@ class SegmentedTableViewCell: UITableViewCell {
             }
     }
 
-    fileprivate func closeAnimation( _ totalDuration: TimeInterval, completion: ((Void) -> Void)? ) {
+    fileprivate func closeAnimation( _ totalDuration: TimeInterval, completion: (() -> Void)? ) {
         
         animateClosed(
                 totalDuration: totalDuration
@@ -453,7 +453,7 @@ class SegmentedTableViewCell: UITableViewCell {
     
     fileprivate func animateOpen(
             totalDuration: TimeInterval,
-            completion: ((Void) -> Void)? ) -> Void {
+            completion: (() -> Void)? ) -> Void {
         
         let segmentViews: [UIView] = self.segmentViews.reversed()
         let segmentViewEndFrames: [CGRect] = openFrames().reversed()
@@ -512,7 +512,7 @@ class SegmentedTableViewCell: UITableViewCell {
 
     fileprivate func animateClosed(
         totalDuration: TimeInterval,
-        completion: ((Void) -> Void)? ) -> Void {
+        completion: (() -> Void)? ) -> Void {
         
         let segmentViews: [UIView] = self.segmentViews.reversed()
         let segmentViewEndFrames: [CGRect] = openFrames().reversed()
