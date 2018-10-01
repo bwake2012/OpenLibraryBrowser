@@ -10,7 +10,7 @@
 
 import CoreData
 
-import BNRCoreDataStack
+//import BNRCoreDataStack
 import PSOperations
 
 /// A composite `Operation` to both download and parse the list of language data.

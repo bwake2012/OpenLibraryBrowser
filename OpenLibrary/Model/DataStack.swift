@@ -9,7 +9,7 @@
 import CoreData
 
 import PSOperations
-import BNRCoreDataStack
+//import BNRCoreDataStack
 
 fileprivate let storeName = "OpenLibraryBrowser"
 fileprivate let appGroupID = "group.net.cockleburr.openlibrary"
@@ -159,65 +159,5 @@ class IOS10DataStack: OLDataStack {
                 fatalError( "Unresolved error \(nserror), \(nserror.userInfo)" )
             }
         }
-    }
-}
-
-class IOS09DataStack: OLDataStack {
-
-    var coreDataStack: CoreDataStack?
-    
-    required init( operationQueue: PSOperationQueue, completion: @escaping () -> Void ) {
-        
-        CoreDataStack.constructSQLiteStack( modelName: storeName, at: persistentStoreURL() ) {
-            
-            [weak self] result in
-            
-            guard let strongSelf = self else { return }
-            
-            switch result {
-                
-            case .success(let stack):
-                
-                // NSLog( "BNR persistent store loaded" )
-                strongSelf.coreDataStack = stack
-                
-                stack.privateQueueContext.performAndWait {
-                    stack.privateQueueContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-                }
-                stack.mainQueueContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-                
-                let delay = DispatchTime.now() + .milliseconds( 250 )
-                DispatchQueue.main.asyncAfter( deadline: delay, execute: completion )
-                
-            case .failure( let error ):
-                fatalError( "Error \(error) constructing SQLLite stack \(storeName)" )
-            }
-        }
-    }
-    
-    var mainQueueContext: NSManagedObjectContext {
-        
-        // NSLog( "retrieve BNR main context \(Thread.isMainThread ? "Main" : "Background")" )
-        guard let coreDataStack = self.coreDataStack else {
-            
-            fatalError( "Error: main context - coreDataStack has not been initialized" )
-        }
-        
-        return coreDataStack.mainQueueContext
-    }
-    
-    func newChildContext( name: String ) -> NSManagedObjectContext {
-        
-        // NSLog( "retrieve new BNR child context \(name)" )
-        guard let coreDataStack = self.coreDataStack else {
-            
-            fatalError( "Error: child context - coreDataStack has not been initialized" )
-        }
-
-        return coreDataStack.newChildContext( name: name )
-    }
-
-    func save () -> Void {
-        
     }
 }

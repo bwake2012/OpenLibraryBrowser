@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-import BNRCoreDataStack
+//import BNRCoreDataStack
 import PSOperations
 
 /// An `Operation` to parse works out of a query from OpenLibrary.
@@ -149,7 +149,7 @@ class AuthorWorksParseOperation: PSOperation {
         var error: NSError?
 
         do {
-            try context.saveContextAndWait()
+            try context.save()
         }
         catch let saveError as NSError {
             error = saveError

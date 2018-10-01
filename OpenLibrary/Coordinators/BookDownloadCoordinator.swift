@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 import SafariServices
 
-import BNRCoreDataStack
+//import BNRCoreDataStack
 import PSOperations
 
 let kEBookFileCache = "eBookXMLFileCache"
@@ -41,8 +41,8 @@ class BookDownloadCoordinator: OLQueryCoordinator, NSFetchedResultsControllerDel
 
     
     typealias FetchedEBookFileController    = NSFetchedResultsController< OLEBookFile >
-    typealias FetchedEBookFileChange        = FetchedResultsObjectChange< OLEBookFile >
-    typealias FetchedEBookFileSectionChange = FetchedResultsSectionChange< OLEBookFile >
+//    typealias FetchedEBookFileChange        = FetchedResultsObjectChange< OLEBookFile >
+//    typealias FetchedEBookFileSectionChange = FetchedResultsSectionChange< OLEBookFile >
     
     fileprivate lazy var fetchedEBookFileController: FetchedEBookFileController = {
         

@@ -8,7 +8,7 @@
 
 import CoreData
 
-import BNRCoreDataStack
+//import BNRCoreDataStack
 
 let kEditionsPrefix = "/books/"
 let kEditionType = "/type/edition"

@@ -7,8 +7,9 @@
 //
 
 import CoreData
+import UIKit
 
-import BNRCoreDataStack
+//import BNRCoreDataStack
 
 class OLAuthorSearchResult: OLManagedObject {
     

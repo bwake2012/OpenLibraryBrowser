@@ -10,7 +10,7 @@ import UIKit
 
 import CoreData
 
-import BNRCoreDataStack
+//import BNRCoreDataStack
 
 class OLWorkDetailViewController: UIViewController {
 

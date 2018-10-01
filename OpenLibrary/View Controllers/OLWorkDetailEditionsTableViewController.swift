@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-import BNRCoreDataStack
+//import BNRCoreDataStack
 
 class OLWorkDetailEditionsTableViewController: UIViewController {
 

@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-import BNRCoreDataStack
+//import BNRCoreDataStack
 import PSOperations
 
 class GeneralSearchResultsDeleteOperation: PSOperation {
@@ -36,7 +36,7 @@ class GeneralSearchResultsDeleteOperation: PSOperation {
                         deleteRequest, with: self.deleteContext
                     )
             
-            try deleteContext.saveContextAndWait()
+            try deleteContext.save()
             
         } catch let error as NSError {
             

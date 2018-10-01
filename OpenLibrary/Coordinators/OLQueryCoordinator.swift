@@ -9,14 +9,14 @@
 import Foundation
 import CoreData
 
-import BNRCoreDataStack
-import ReachabilitySwift
+//import BNRCoreDataStack
+import Reachability
 import PSOperations
 import BRYXBanner
 
 class OLQueryCoordinator: NSObject {
 
-    fileprivate static var previousNetStatus: Reachability.NetworkStatus = .reachableViaWiFi
+    fileprivate static var previousNetStatus: Reachability.Connection = .wifi
     fileprivate static var previousDescription: String = ""
     
     fileprivate static var thumbnailCache = NSCache< NSString, CacheData >()
@@ -104,22 +104,22 @@ class OLQueryCoordinator: NSObject {
         
         var isReachable = false
         
-        let newStatus = reachability.currentReachabilityStatus
+        let newStatus = reachability.connection
 
         let oldStatus = OLQueryCoordinator.previousNetStatus
         OLQueryCoordinator.previousNetStatus = newStatus
         
         switch newStatus {
         
-            case .notReachable:
+            case .none:
                 if !keepQuiet && ( tattle || ( newStatus != oldStatus ) ) {
                     showNetworkUnreachableAlert( oldStatus, newStatus: newStatus )
                 }
                 break
-            case .reachableViaWWAN:
+            case .cellular:
                 isReachable = true
                 break
-            case .reachableViaWiFi:
+            case .wifi:
                 isReachable = true
                 break
         }
@@ -128,8 +128,8 @@ class OLQueryCoordinator: NSObject {
     }
 
     func showNetworkUnreachableAlert(
-                _ oldStatus: Reachability.NetworkStatus,
-                newStatus: Reachability.NetworkStatus
+        _ oldStatus: Reachability.Connection,
+        newStatus: Reachability.Connection
             ) {
         
         DispatchQueue.main.async {

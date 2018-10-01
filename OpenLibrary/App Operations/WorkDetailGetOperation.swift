@@ -8,7 +8,7 @@
 
 import CoreData
 
-import BNRCoreDataStack
+// import BNRCoreDataStack
 import PSOperations
 
 /// A composite `Operation` to both download and parse Work search result data.

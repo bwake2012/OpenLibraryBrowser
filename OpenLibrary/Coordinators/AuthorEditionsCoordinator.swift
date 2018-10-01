@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreData
 
-import BNRCoreDataStack
+//import BNRCoreDataStack
 import PSOperations
 
 private let kAuthorEditonsCache = "authorEditionsCache"
@@ -20,8 +20,8 @@ private let kPageSize = 100
 class AuthorEditionsCoordinator: OLQueryCoordinator, NSFetchedResultsControllerDelegate {
     
     typealias FetchedAuthorEditionsController = NSFetchedResultsController< OLEditionDetail >
-    typealias FetchedAuthorEditionChange = FetchedResultsObjectChange< OLEditionDetail >
-    typealias FetchedAuthorEditionSectionChange = FetchedResultsSectionChange< OLEditionDetail >
+//    typealias FetchedAuthorEditionChange = NSFetchedResultsObjectChange< OLEditionDetail >
+//    typealias FetchedAuthorEditionSectionChange = NSFetchedResultsSectionChange< OLEditionDetail >
     
     weak var tableVC: UITableViewController?
     

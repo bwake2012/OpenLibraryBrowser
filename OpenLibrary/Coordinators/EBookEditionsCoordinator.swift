@@ -11,7 +11,7 @@ import UIKit
 import CoreData
 import SafariServices
 
-import BNRCoreDataStack
+//import BNRCoreDataStack
 import PSOperations
 
 // private let kEBookEditionsCache = "eBookEditionsCache"
