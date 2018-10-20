@@ -389,12 +389,15 @@ class OLQueryCoordinator: NSObject {
                     
                 } else {
                     
-                    strongSelf.enqueueImageFetch(
-                            url,
-                            imageID: imageID,
-                            imageType: imageType,
-                            cell: cell
-                        )
+                    DispatchQueue.main.async {
+
+                        strongSelf.enqueueImageFetch(
+                                url,
+                                imageID: imageID,
+                                imageType: imageType,
+                                cell: cell
+                            )
+                    }
                 }
             }
         }
