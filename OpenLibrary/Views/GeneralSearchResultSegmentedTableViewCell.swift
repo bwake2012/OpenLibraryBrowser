@@ -83,22 +83,15 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
     override func prepareForReuse() {
         
         titleText.text = ""
-        titleText.sizeToFit()
         subtitleText.text = ""
-        subtitleText.sizeToFit()
         authorName.text = ""
-        authorName.sizeToFit()
         
         workDetail.text = ""
-        workDetail.sizeToFit()
         languageNames.text = ""
-        languageNames.sizeToFit()
         
         firstPublished.text = ""
-        firstPublished.sizeToFit()
         
         eBooksLabel.text = ""
-        eBooksLabel.sizeToFit()
         
         currentImageFile = nil
 
@@ -155,7 +148,6 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
             authorName.text = r.author_name.joined( separator: ", " )
             
             workDetail.text = "Editions: " + String( r.edition_count )
-            workDetail.sizeToFit()
             languageNames.text = r.language_names.joined( separator: ", " )
             
             firstPublished.text = String( r.first_publish_year )
