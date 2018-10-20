@@ -155,6 +155,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
             authorName.text = r.author_name.joined( separator: ", " )
             
             workDetail.text = "Editions: " + String( r.edition_count )
+            workDetail.sizeToFit()
             languageNames.text = r.language_names.joined( separator: ", " )
             
             firstPublished.text = String( r.first_publish_year )
