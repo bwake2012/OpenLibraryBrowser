@@ -32,14 +32,14 @@ class DeluxeDetailHTMLTableViewCell: DeluxeDetailTableViewCell {
         let newFont = UIFont.preferredFont( forTextStyle: UIFontTextStyle.body )
         
         attributedText.enumerateAttribute(
-            NSFontAttributeName,
+            NSAttributedStringKey.font,
             in: NSRange( location: 0, length: attributedText.length ),
             options: NSAttributedString.EnumerationOptions(rawValue: 0)
         ) {
             (value, range, stop) -> Void in
             
-            attributedText.removeAttribute( NSFontAttributeName, range: range )
-            attributedText.addAttribute( NSFontAttributeName, value: newFont, range: range )
+            attributedText.removeAttribute( NSAttributedStringKey.font, range: range )
+            attributedText.addAttribute( NSAttributedStringKey.font, value: newFont, range: range )
         }
 
         htmlView.attributedText = attributedText
@@ -61,7 +61,7 @@ class DeluxeDetailHTMLTableViewCell: DeluxeDetailTableViewCell {
                     try NSMutableAttributedString(
                         data: stringData,
                         options: [
-                            NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType
+                            NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html
                         ],
                         documentAttributes: nil
                 )

@@ -8,7 +8,7 @@
 
 import CoreData
 
-import BNRCoreDataStack
+//import BNRCoreDataStack
 import Down
 
 typealias ObjectResultClosure = ( _ objectID: NSManagedObjectID ) -> Void

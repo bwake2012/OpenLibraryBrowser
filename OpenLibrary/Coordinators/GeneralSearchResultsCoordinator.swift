@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreData
 
-import BNRCoreDataStack
+//import BNRCoreDataStack
 import PSOperations
 
 private let kGeneralSearchCache = "GeneralSearch"

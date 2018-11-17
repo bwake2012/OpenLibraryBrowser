@@ -83,22 +83,15 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
     override func prepareForReuse() {
         
         titleText.text = ""
-        titleText.sizeToFit()
         subtitleText.text = ""
-        subtitleText.sizeToFit()
         authorName.text = ""
-        authorName.sizeToFit()
         
         workDetail.text = ""
-        workDetail.sizeToFit()
         languageNames.text = ""
-        languageNames.sizeToFit()
         
         firstPublished.text = ""
-        firstPublished.sizeToFit()
         
         eBooksLabel.text = ""
-        eBooksLabel.sizeToFit()
         
         currentImageFile = nil
 

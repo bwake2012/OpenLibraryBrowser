@@ -1,0 +1,15 @@
+
+/* Class = "UILabel"; text = "Utg.va undertitel"; ObjectID = "5gf-HY-Czb"; */
+"5gf-HY-Czb.text" = "Edition Subtitle";
+
+/* Class = "UILabel"; text = " "; ObjectID = "85c-bq-NUk"; */
+"85c-bq-NUk.text" = " ";
+
+/* Class = "UILabel"; text = " "; ObjectID = "VNg-qS-tdy"; */
+"VNg-qS-tdy.text" = " ";
+
+/* Class = "UIViewController"; title = "F÷rfattare"; ObjectID = "cMf-c7-rTV"; */
+"cMf-c7-rTV.title" = "F÷rfattare";
+
+/* Class = "UILabel"; text = "Utg.va titel"; ObjectID = "lGV-OP-7g9"; */
+"lGV-OP-7g9.text" = "Utg.va titel";

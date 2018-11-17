@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -13,10 +15,6 @@
         <scene sceneID="KY0-jO-V5V">
             <objects>
                 <viewController storyboardIdentifier="WorkDetail" title="Work" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="CsL-qH-Mpk" customClass="OLWorkDetailViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="iIS-Mq-bMH"/>
-                        <viewControllerLayoutGuide type="bottom" id="oyS-Hd-MJ5"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" verticalHuggingPriority="750" id="sv2-JV-oVl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -47,13 +45,14 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="ixk-HT-12z" firstAttribute="bottom" secondItem="oyS-Hd-MJ5" secondAttribute="top" id="Iye-Xw-cxZ"/>
-                            <constraint firstItem="ixk-HT-12z" firstAttribute="leading" secondItem="sv2-JV-oVl" secondAttribute="leading" id="JS1-Hn-2EO"/>
-                            <constraint firstAttribute="trailing" secondItem="ixk-HT-12z" secondAttribute="trailing" id="Vp8-Hi-ZiC"/>
-                            <constraint firstItem="uN5-a9-Cwg" firstAttribute="centerX" secondItem="sv2-JV-oVl" secondAttribute="centerX" id="Yhu-dW-WMw"/>
+                            <constraint firstItem="ixk-HT-12z" firstAttribute="bottom" secondItem="e2l-CW-RFY" secondAttribute="bottom" id="Iye-Xw-cxZ"/>
+                            <constraint firstItem="ixk-HT-12z" firstAttribute="leading" secondItem="e2l-CW-RFY" secondAttribute="leading" id="JS1-Hn-2EO"/>
+                            <constraint firstItem="e2l-CW-RFY" firstAttribute="trailing" secondItem="ixk-HT-12z" secondAttribute="trailing" id="Vp8-Hi-ZiC"/>
+                            <constraint firstItem="uN5-a9-Cwg" firstAttribute="centerX" secondItem="e2l-CW-RFY" secondAttribute="centerX" id="Yhu-dW-WMw"/>
                             <constraint firstItem="uN5-a9-Cwg" firstAttribute="centerY" secondItem="sv2-JV-oVl" secondAttribute="centerY" id="aSW-Jh-9YJ"/>
-                            <constraint firstItem="ixk-HT-12z" firstAttribute="top" secondItem="iIS-Mq-bMH" secondAttribute="bottom" id="oYe-mn-nTo"/>
+                            <constraint firstItem="ixk-HT-12z" firstAttribute="top" secondItem="e2l-CW-RFY" secondAttribute="top" id="oYe-mn-nTo"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="e2l-CW-RFY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Work" id="MtV-Go-58t"/>
                     <connections>
@@ -108,11 +107,11 @@
                                 <rect key="frame" x="0.0" y="28" width="320" height="102"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" verticalHuggingPriority="260" tableViewCell="yeP-tF-kLr" id="hGs-dQ-WQ7">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="101"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="101.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" translatesAutoresizingMaskIntoConstraints="NO" id="GZj-Wc-MzS" userLabel="WorkEditionCover">
-                                            <rect key="frame" x="8" y="8" width="60" height="84"/>
+                                            <rect key="frame" x="16" y="11" width="60" height="84"/>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
@@ -121,31 +120,31 @@
                                             </constraints>
                                         </imageView>
                                         <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="2Jq-gd-rqS">
-                                            <rect key="frame" x="76" y="8" width="236" height="84"/>
+                                            <rect key="frame" x="84" y="11" width="220" height="84"/>
                                             <subviews>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="260" verticalCompressionResistancePriority="760" text=" Title" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TfL-nA-0i1">
-                                                    <rect key="frame" x="0.0" y="0.0" width="236" height="20.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="220" height="20.5"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="260" verticalCompressionResistancePriority="760" text=" Subtitle" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W5t-0C-FXW">
-                                                    <rect key="frame" x="0.0" y="20.5" width="236" height="18"/>
+                                                    <rect key="frame" x="0.0" y="20.5" width="220" height="18"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edition Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VdD-Y9-DUh" userLabel="Edition Name">
-                                                    <rect key="frame" x="0.0" y="38.5" width="236" height="18"/>
+                                                    <rect key="frame" x="0.0" y="38.5" width="220" height="18"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="760" text="Date Published" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2g0-tJ-LdK">
-                                                    <rect key="frame" x="0.0" y="56.5" width="236" height="27.5"/>
+                                                    <rect key="frame" x="0.0" y="56.5" width="220" height="27.5"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -204,7 +203,7 @@
                 <navigationController storyboardIdentifier="WorkDetailNav" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" hidesBarsOnSwipe="YES" id="hRD-G1-SMr" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="tHJ-1z-S8X">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

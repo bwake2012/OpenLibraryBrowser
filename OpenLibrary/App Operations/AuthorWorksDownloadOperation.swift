@@ -32,7 +32,7 @@ class AuthorWorksDownloadOperation: GroupOperation {
             or when the services you use offer secure communication options, you
             should always prefer to use https.
         */
-        let query = queryText.stringByAddingPercentEncodingForRFC3986()!
+        let query = queryText.encodeForUrl()
         let urlString = "https://openlibrary.org\(query)/works.json?offset=\(offset)&limit=\(limit)"
         let url = URL( string: urlString )!
         let task = URLSession.shared.jsonDownloadTaskWithURL( url ) {

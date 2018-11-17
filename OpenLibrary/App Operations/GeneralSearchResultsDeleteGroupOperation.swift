@@ -8,7 +8,7 @@
 
 import CoreData
 
-import BNRCoreDataStack
+// import BNRCoreDataStack
 import PSOperations
 
 /// A composite `Operation` to both download and parse General search result data.
@@ -30,7 +30,7 @@ class GeneralSearchResultsDeleteGroupOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( dataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
+    init( dataStack: OLDataStack, completionHandler: @escaping () -> Void ) {
 
         self.dataStack = dataStack
 

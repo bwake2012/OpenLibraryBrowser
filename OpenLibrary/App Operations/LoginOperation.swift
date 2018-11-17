@@ -15,7 +15,7 @@ class LoginOperation: PSOperations.GroupOperation {
     
     let postOperation: LoginPostOperation
     
-    init( completionHandler: @escaping (Void) -> Void ) {
+    init( completionHandler: @escaping () -> Void ) {
         
         postOperation = LoginPostOperation()
         let finishOperation = PSBlockOperation { completionHandler() }

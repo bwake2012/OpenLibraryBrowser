@@ -192,7 +192,7 @@ class OLHeaderView: UIView {
         label.backgroundColor = self.contentView.backgroundColor
         label.isOpaque = true
         label.lineBreakMode = .byWordWrapping
-        label.setContentCompressionResistancePriority( 1000, for: .vertical )
+        label.setContentCompressionResistancePriority( UILayoutPriority(rawValue: 1000), for: .vertical )
         label.numberOfLines = 0
 
         button.backgroundColor = UIColor.clear
@@ -241,7 +241,7 @@ class OLHeaderView: UIView {
     // MARK: Utility
     func makeAttributedString( string: String, style: UIFontTextStyle ) -> NSAttributedString {
 
-        let attributes = [NSFontAttributeName: UIFont.preferredFont( forTextStyle: style )]
+        let attributes = [NSAttributedStringKey.font: UIFont.preferredFont( forTextStyle: style )]
         
         let attributedString = NSMutableAttributedString( string: string, attributes: attributes )
         

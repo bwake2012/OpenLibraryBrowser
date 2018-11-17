@@ -40,7 +40,10 @@ class GeneralSearchResultsDownloadOperation: GroupOperation {
             queryString += "&" + parm.0 + "=" + value
         }
         let urlString = "https://openlibrary.org/search.json?offset=\(offset)&limit=\(limit)"
-        let url = URL( string: urlString + queryString )!
+
+        let encodedQueryString = queryString.encodeForUrl()
+        
+        let url = URL( string: urlString + encodedQueryString )!
         let task = URLSession.shared.jsonDownloadTaskWithURL( url ) {
             
             url, response, error in

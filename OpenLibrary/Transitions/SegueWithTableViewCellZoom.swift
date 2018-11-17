@@ -29,7 +29,7 @@ class SegueWithTableViewCellZoom: UIStoryboardSegue {
         
         let sourceRectView = source.transitionSourceRectCellView()
         if nil == sourceRectView {
-            print( "error in transition: \(self.identifier)" )
+            print( "error in transition: \(String(describing: self.identifier))" )
             assert( nil != sourceRectView )
         }
 

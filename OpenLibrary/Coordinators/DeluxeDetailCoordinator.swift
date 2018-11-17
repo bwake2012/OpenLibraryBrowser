@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 import SafariServices
 
-import BNRCoreDataStack
+//import BNRCoreDataStack
 import PSOperations
 
 // let kAuthorDeluxeDetailCache = "authorDeluxeDetail"
