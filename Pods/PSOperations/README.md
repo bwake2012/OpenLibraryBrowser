@@ -10,7 +10,7 @@ This is an adaptation of the sample code provided in the [Advanced NSOperations]
 
 ## Support
 
- - Swift 3.x
+ - Swift 4.x
  - iOS 8.0
  - tvOS 9.0
  - watchOS (undefined deployment target)
@@ -18,7 +18,7 @@ This is an adaptation of the sample code provided in the [Advanced NSOperations]
  - Extension friendly
  - Tests only run against iOS 9 (latest) and tvOS 9 (latest)
 
-### Swift 3
+### Swift 3+
 Because Swift 3 removes the `NS` prefix on several Foundation types we've added a few typealiases for convenience. We investigated renaming the few classes that conflict but ran into radar://28917706 where frameworks will fallback to Foundation types if the framework doesn't contain the given type i.e. `UIKit.Data` is valid and really is `Foundation.Data`. If we were to rename `Operation` to `PSOperation` usuages of `PSOperations.Operation` would end up using `Foundation.Operation` and potentially break your code. 
 
 Here are the typealiases:
@@ -49,7 +49,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 
 target 'TargetName' do
-pod 'PSOperations', '~> 3.0'
+pod 'PSOperations', '~> 4.0'
 end
 ```
 
@@ -62,17 +62,27 @@ $ pod install
 **Alternative configurations:**  
 Core functionality, _excluding_ capabilities:
 ```ruby
-pod 'PSOperations/Core', '~> 3.0'
+pod 'PSOperations/Core', '~> 4.0'
 ```
 
 Core functionality, including only the Passbook capability:
 ```ruby
-pod 'PSOperations/Passbook', '~> 3.0'
+pod 'PSOperations/Passbook', '~> 4.0'
 ```
 
 Core functionality, including only the Health capability:
 ```ruby
-pod 'PSOperations/Health', '~> 3.0'
+pod 'PSOperations/Health', '~> 4.0'
+```
+
+Core functionality, including only the Calendar capability:
+```ruby
+pod 'PSOperations/Calendar', '~> 4.0'
+```
+
+Core functionality, including only the Location capability and operation:
+```ruby
+pod 'PSOperations/Location', '~> 4.0'
 ```
 
 ### Carthage
@@ -91,7 +101,7 @@ To integrate PSOperations into your Xcode project using Carthage, specify it in 
 github "pluralsight/PSOperations"
 ```
 
-Run `carthage` to build the framework and drag the built `PSOperations.framework` into your Xcode project. Optionally you can add `PSOperationsHealth.framework` and `PSOperationsPassbook.framework`
+Run `carthage` to build the framework and drag the built `PSOperations.framework` into your Xcode project. Optionally you can add `PSOperationsHealth.framework`, `PSOperationsPassbook.framework`, `PSOperationsCalendar.framework`  and `PSOperationsLocation.framework`
 
 ## Getting started
 
@@ -100,14 +110,16 @@ Don't forget to import!
 import PSOperations
 ```
 
-If you are using the HealthCapability or PassbookCapability you'll need to import them separately:
+If you are using the HealthCapability, PassbookCapability, CalendarCapability, LocationCapability or LocationOperation you'll need to import them separately:
 
 ```
 import PSOperationsHealth
 import PSOperationsPassbook
+import PSOperationsCalendar
+import PSOperationsLocation
 ```
 
-These features need to be in a separate framework otherwise they may cause App Store review rejection for importing `HealthKit` or `PassKit` but not actually using them.
+These features need to be in a separate framework otherwise they may cause App Store review rejection for importing `HealthKit`, `PassKit`, `EventKit` or `CoreLocation` but not actually using them.
 
 #### Create a Queue
 The OperationQueue is the heartbeat and is a subclass of NSOperationQueue:
