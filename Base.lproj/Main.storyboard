@@ -53,7 +53,7 @@
                         <segue destination="Xmm-OC-cfc" kind="show" identifier="openBookSort" customClass="SegueWithWindowShade" customModule="OpenLibrary" customModuleProvider="target" id="a5k-8T-2Gm"/>
                         <segue destination="9lP-Th-a8R" kind="showDetail" identifier="displayWorkEBooks" customClass="SegueShowDetail" customModule="OpenLibrary" customModuleProvider="target" id="usZ-AJ-S00"/>
                         <segue destination="rah-9z-s1H" kind="show" identifier="displayGeneralSearchAuthorList" customClass="SegueWithWindowShade" customModule="OpenLibrary" customModuleProvider="target" id="0Jo-u8-wSl"/>
-                        <segue destination="A6z-YD-Ru0" kind="showDetail" identifier="zoomLargeImage" customClass="SegueShowDetail" customModule="OpenLibrary" customModuleProvider="target" id="EUe-NQ-BSb"/>
+                        <segue destination="A6z-YD-Ru0" kind="showDetail" identifier="zoomLargeImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" customModuleProvider="target" id="EUe-NQ-BSb"/>
                         <segue destination="L7Y-QI-d8l" kind="showDetail" identifier="displayBlank" customClass="SegueForSearch" customModule="OpenLibrary" customModuleProvider="target" id="O9W-Qw-PGf"/>
                     </connections>
                 </viewController>
