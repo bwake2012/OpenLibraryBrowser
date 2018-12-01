@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     fileprivate var reachabilityOperation: OLReachabilityOperation?
     fileprivate var generalSearchResultsCoordinator: GeneralSearchResultsCoordinator?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         // NSLog( "Redisplaying Launch Screen" )
         

@@ -100,12 +100,12 @@ class OLBookSearchViewController: UIViewController {
         
         displaySearchKeys( searchKeys )
         
-        NotificationCenter.default.addObserver(self, selector: #selector(OLBookSearchViewController.keyboardDidShow(_:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(OLBookSearchViewController.keyboardDidShow(_:)), name: UIResponder.keyboardDidShowNotification, object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(OLBookSearchViewController.keyboardWillBeHidden(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(OLBookSearchViewController.keyboardWillBeHidden(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         // what's our version?
-        aboutButton.setTitle( Bundle.getAppVersionString() ?? "Version Not Found!", for: UIControlState() )
+        aboutButton.setTitle( Bundle.getAppVersionString() ?? "Version Not Found!", for: UIControl.State() )
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -136,7 +136,7 @@ class OLBookSearchViewController: UIViewController {
     // MARK: Notifications
     @objc func keyboardDidShow(_ notification: Notification) {
 
-        if let activeField = self.activeField, let keyboardSize = ((notification as NSNotification).userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+        if let activeField = self.activeField, let keyboardSize = ((notification as NSNotification).userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             
             let contentInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize.height, right: 0.0)
             self.scrollView.contentInset = contentInsets

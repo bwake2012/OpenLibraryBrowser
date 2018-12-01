@@ -135,7 +135,7 @@ class OLSearchResultsTableViewController: UIViewController {
         
         // Dynamic sizing for the header view
         if let footerView = tableView.tableFooterView {
-            let height = footerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+            let height = footerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
             var footerFrame = footerView.frame
             
             // If we don't have this check, viewDidLayoutSubviews() will get

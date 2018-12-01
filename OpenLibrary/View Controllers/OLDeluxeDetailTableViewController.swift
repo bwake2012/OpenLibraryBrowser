@@ -22,7 +22,7 @@ class OLDeluxeDetailTableViewController: UITableViewController {
         
         // Do any additional setup after loading the view, typically from a nib.
         self.tableView.estimatedRowHeight = 68.0
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.tableFooterView = UIView(frame: .zero)
 
         DeluxeDetailHeadingTableViewCell.registerCell( tableView )

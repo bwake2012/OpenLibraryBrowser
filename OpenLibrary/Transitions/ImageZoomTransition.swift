@@ -10,7 +10,7 @@ import UIKit
 
 class ImageZoomTransition: ZoomTransition {
 
-    var transitionAnimationOptions = UIViewKeyframeAnimationOptions.calculationModeCubic
+    var transitionAnimationOptions = UIView.KeyframeAnimationOptions.calculationModeCubic
     
     // MARK: Overrides
     override func animateTransition( using transitionContext: UIViewControllerContextTransitioning ) -> Void {
@@ -139,7 +139,7 @@ class ImageZoomTransition: ZoomTransition {
 
             containerView.addSubview( animatingImageView )
             animatingImageView.frame = zoomFromViewRect
-            let endingContentMode: UIViewContentMode = .scaleAspectFit
+            let endingContentMode: UIView.ContentMode = .scaleAspectFit
             
             UIView.animateKeyframes(
                     withDuration: self.transitionDuration,

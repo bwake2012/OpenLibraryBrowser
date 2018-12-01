@@ -14,14 +14,14 @@ class HTMLFooterTextDisplayView: HTMLTextDisplayView {
         
         super.init( frame: frame, textContainer: textContainer )
         
-        displayHTML( self.text, textStyle: UIFontTextStyle.footnote.rawValue )
+        displayHTML( self.text, textStyle: UIFont.TextStyle.footnote.rawValue )
     }
     
     required init?(coder aDecoder: NSCoder) {
         
         super.init( coder: aDecoder )
         
-        displayHTML( self.text, textStyle: UIFontTextStyle.footnote.rawValue )
+        displayHTML( self.text, textStyle: UIFont.TextStyle.footnote.rawValue )
     }
     
 }
@@ -42,7 +42,7 @@ class HTMLTextDisplayView: UITextView {
         displayHTML( self.text )
     }
     
-    func displayHTML( _ htmlText: String, textStyle: String = UIFontTextStyle.body.rawValue ) {
+    func displayHTML( _ htmlText: String, textStyle: String = UIFont.TextStyle.body.rawValue ) {
         
         assert( Thread.isMainThread )
         
@@ -57,16 +57,16 @@ class HTMLTextDisplayView: UITextView {
                             )
 
                 theAttributedString.enumerateAttribute(
-                    NSAttributedStringKey.font,
+                    NSAttributedString.Key.font,
                     in: NSRange( location: 0, length: theAttributedString.length ),
                     options: NSAttributedString.EnumerationOptions(rawValue: 0)
                 ) {
                     (value, range, stop) -> Void in
                     
-                    let newFont = UIFont.preferredFont( forTextStyle: UIFontTextStyle(rawValue: textStyle) )
+                    let newFont = UIFont.preferredFont( forTextStyle: UIFont.TextStyle(rawValue: textStyle) )
                     
-                    theAttributedString.removeAttribute( NSAttributedStringKey.font, range: range )
-                    theAttributedString.addAttribute( NSAttributedStringKey.font, value: newFont, range: range )
+                    theAttributedString.removeAttribute( NSAttributedString.Key.font, range: range )
+                    theAttributedString.addAttribute( NSAttributedString.Key.font, value: newFont, range: range )
                 }
                 self.attributedText = theAttributedString
             

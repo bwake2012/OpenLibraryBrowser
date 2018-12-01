@@ -78,8 +78,8 @@ class OLBookSortViewController: UIViewController {
         
         for ( index, sortField ) in sortFields.enumerated() {
             
-            sortButtons[index].setImage( sortField.image(), for: UIControlState() )
-            sortLabels[index].setTitle( sortField.label, for: UIControlState() )
+            sortButtons[index].setImage( sortField.image(), for: UIControl.State() )
+            sortLabels[index].setTitle( sortField.label, for: UIControl.State() )
         }
     }
     
@@ -101,7 +101,7 @@ class OLBookSortViewController: UIViewController {
 
         for ( index, button ) in sortButtons.enumerated() {
             
-            button.setImage( sortFields[index].image(), for: UIControlState() )
+            button.setImage( sortFields[index].image(), for: UIControl.State() )
         }
     }
 }

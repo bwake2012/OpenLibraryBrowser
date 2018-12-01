@@ -29,7 +29,7 @@ class OLWorkDetailEditionsTableViewController: UIViewController {
         assert( nil != queryCoordinator )
         
         self.tableView.estimatedRowHeight = 68.0
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         
         self.tableView.tableFooterView = OLTableViewHeaderFooterView.createFromNib()
 
@@ -47,7 +47,7 @@ class OLWorkDetailEditionsTableViewController: UIViewController {
         
         // Dynamic sizing for the header view
         if let footerView = tableView.tableFooterView {
-            let height = footerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+            let height = footerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
             var footerFrame = footerView.frame
             
             // If we don't have this check, viewDidLayoutSubviews() will get
