@@ -110,9 +110,9 @@ class OLCountryLookup {
         
         if var name = countryLookup[code] {
             
-            if 3 == code.characters.count {
+            if 3 == code.count {
                 
-                if let lastChar = code.characters.last {
+                if let lastChar = code.last {
 
                     var countryName: String?
                     switch String( lastChar ) {

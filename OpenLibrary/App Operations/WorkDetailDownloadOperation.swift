@@ -35,7 +35,7 @@ class WorkDetailDownloadOperation: GroupOperation {
         var query = queryText
         if queryText.hasPrefix( "/works/" ) {
             
-            query = queryText.substring( from: queryText.characters.index(queryText.startIndex, offsetBy: 7) )
+            query = queryText.substring( from: queryText.index(queryText.startIndex, offsetBy: 7) )
         }
         query = query.encodeForUrl()
         let urlString = "https://openlibrary.org/works/\(query).json"

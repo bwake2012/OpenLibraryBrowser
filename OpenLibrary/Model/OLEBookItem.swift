@@ -166,7 +166,7 @@ extension OLEBookItem {
                             
                             let last = url.lastPathComponent
                             
-                            let parts = last.characters.split( separator: "-" ).map( String.init )
+                            let parts = last.split( separator: "-" )
                             
                             if let id = Int64( parts[0] ) {
                                 cover_id = id

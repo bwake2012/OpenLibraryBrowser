@@ -152,8 +152,8 @@ class OLQueryCoordinator: NSObject {
                     (alertAction) in
                     
                         // THIS IS WHERE THE MAGIC HAPPENS!!!!
-                        if let appSettings = NSURL(string: UIApplicationOpenSettingsURLString) {
-                            UIApplication.shared.openURL(appSettings as URL)
+                        if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
+                            UIApplication.shared.open(appSettings)
                         }
                     }
             alertController.addAction( settingsAction )
