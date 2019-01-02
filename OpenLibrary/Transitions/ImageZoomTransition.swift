@@ -164,6 +164,9 @@ class ImageZoomTransition: ZoomTransition {
                             transitionContext.completeTransition( true )
                             toView.alpha = 1;
                         }
+                        if .push == self.operation {
+                            detailVC.pictureView.image = animatingImage
+                        }
                         animatingImageView.removeFromSuperview()
                     }
                 )
