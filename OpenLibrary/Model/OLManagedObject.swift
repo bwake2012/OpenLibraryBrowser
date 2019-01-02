@@ -177,7 +177,7 @@ class OLManagedObject: NSManagedObject {
     
     func cachedAuthor( _ authorKey: String ) -> String? {
         
-        if let name = OLManagedObject.authorCache.object( forKey: authorKey as NSString ) as? String {
+        if let name = OLManagedObject.authorCache.object( forKey: authorKey as NSString ) as String? {
             
             return name
             
