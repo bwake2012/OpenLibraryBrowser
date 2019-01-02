@@ -93,12 +93,14 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
                 var scheme = ""
                 if hostPlusPath.hasPrefix( "http://" ) {
                     
-                    hostPlusPath = hostPlusPath.substring( from: hostPlusPath.characters.index(hostPlusPath.startIndex, offsetBy: 7) )
+                    let index = hostPlusPath.index(hostPlusPath.startIndex, offsetBy: 7)
+                    hostPlusPath = String(hostPlusPath[index...])
                     scheme = "http"
                     
                 } else if hostPlusPath.hasPrefix( "https://" ) {
                     
-                    hostPlusPath = hostPlusPath.substring( from: hostPlusPath.characters.index(hostPlusPath.startIndex, offsetBy: 8) )
+                    let index = hostPlusPath.index(hostPlusPath.startIndex, offsetBy: 8)
+                    hostPlusPath = String(hostPlusPath[index...])
                     scheme = "https"
                     
                 } else {
@@ -110,12 +112,12 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
                     
                     var host: String?
                     var path = ""
-                    for index in hostPlusPath.characters.indices {
+                    for index in hostPlusPath.indices {
                         
                         if "/" == hostPlusPath[index] {
                             
-                            host = hostPlusPath.substring( to: index )
-                            path = hostPlusPath.substring( from: index )
+                            host = String(hostPlusPath[..<index])
+                            path = String(hostPlusPath[index...])
                             break
                         }
                     }
