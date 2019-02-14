@@ -173,7 +173,6 @@
 		C4DAD80B1DBA842600A1FBBE /* OLWorkDetail+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DAD80A1DBA842600A1FBBE /* OLWorkDetail+CoreDataProperties.swift */; };
 		C4E35E231C7E07950015D187 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E35E221C7E07950015D187 /* AppDelegate.swift */; };
 		C4E35E281C7E07950015D187 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4E35E261C7E07950015D187 /* Main.storyboard */; };
-		C4E35E2A1C7E07950015D187 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4E35E291C7E07950015D187 /* Assets.xcassets */; };
 		C4E35E2D1C7E07950015D187 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4E35E2B1C7E07950015D187 /* LaunchScreen.storyboard */; };
 		C4E35E381C7E07950015D187 /* OpenLibraryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E35E371C7E07950015D187 /* OpenLibraryTests.swift */; };
 		C4E35E431C7E07950015D187 /* OpenLibraryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E35E421C7E07950015D187 /* OpenLibraryUITests.swift */; };
@@ -205,6 +204,7 @@
 		C4F00C571CD93128002D7E14 /* DeluxeDetailBodyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F00C561CD93128002D7E14 /* DeluxeDetailBodyTableViewCell.swift */; };
 		C4F00C591CD96D4E002D7E14 /* OLDeluxeDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F00C581CD96D4E002D7E14 /* OLDeluxeDetailCoordinator.swift */; };
 		C4F82C9F1DC95AA600669BEA /* DataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F82C9E1DC95AA600669BEA /* DataStack.swift */; };
+		C4F9CC2B21DD54C7008B9A10 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4F9CC2A21DD54C7008B9A10 /* Assets.xcassets */; };
 		C4FB0AEF1E5A1AD60060A122 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FB0AEE1E5A1AD60060A122 /* SplitViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -395,7 +395,6 @@
 		C4E35E1F1C7E07950015D187 /* OpenLibrary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenLibrary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4E35E221C7E07950015D187 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C4E35E271C7E07950015D187 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		C4E35E291C7E07950015D187 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C4E35E2C1C7E07950015D187 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C4E35E2E1C7E07950015D187 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4E35E331C7E07950015D187 /* OpenLibraryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenLibraryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -432,6 +431,7 @@
 		C4F00C561CD93128002D7E14 /* DeluxeDetailBodyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeluxeDetailBodyTableViewCell.swift; sourceTree = "<group>"; };
 		C4F00C581CD96D4E002D7E14 /* OLDeluxeDetailCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OLDeluxeDetailCoordinator.swift; sourceTree = "<group>"; };
 		C4F82C9E1DC95AA600669BEA /* DataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStack.swift; sourceTree = "<group>"; };
+		C4F9CC2A21DD54C7008B9A10 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C4FB0AEE1E5A1AD60060A122 /* SplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
 		CF1397E0D0A09330686834E7 /* Pods-OpenLibrary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenLibrary.release.xcconfig"; path = "Pods/Target Support Files/Pods-OpenLibrary/Pods-OpenLibrary.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -569,7 +569,6 @@
 				C4E35EA71C7E44450015D187 /* View Controllers */,
 				C4E35EA81C7E4C840015D187 /* Views */,
 				C4E35E221C7E07950015D187 /* AppDelegate.swift */,
-				C4E35E291C7E07950015D187 /* Assets.xcassets */,
 				C4AA89421CF3986C0082B654 /* AuthorDetail.storyboard */,
 				C4E35E2E1C7E07950015D187 /* Info.plist */,
 				C4E35E2B1C7E07950015D187 /* LaunchScreen.storyboard */,
@@ -577,6 +576,7 @@
 				C4E35E261C7E07950015D187 /* Main.storyboard */,
 				C4AA89451CF39F110082B654 /* WorkDetail.storyboard */,
 				C49B63801E22BBE800A1514B /* eBooks.storyboard */,
+				C4F9CC2A21DD54C7008B9A10 /* Assets.xcassets */,
 			);
 			path = OpenLibrary;
 			sourceTree = "<group>";
@@ -808,7 +808,7 @@
 				C4E35E1C1C7E07950015D187 /* Frameworks */,
 				C4E35E1D1C7E07950015D187 /* Resources */,
 				C48B8A401D4D1D3A00C29D00 /* ShellScript */,
-				5938A6F2206B2857EA6685D0 /* [CP] Embed Pods Frameworks */,
+				AB67549D076914BEF129D11A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -868,7 +868,7 @@
 					C4E35E1E1C7E07950015D187 = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = 8G7W6WCEM9;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1000;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 0;
@@ -883,12 +883,12 @@
 					};
 					C4E35E321C7E07950015D187 = {
 						CreatedOnToolsVersion = 7.2.1;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1000;
 						TestTargetID = C4E35E1E1C7E07950015D187;
 					};
 					C4E35E3D1C7E07950015D187 = {
 						CreatedOnToolsVersion = 7.2.1;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1000;
 						TestTargetID = C4E35E1E1C7E07950015D187;
 					};
 				};
@@ -922,6 +922,7 @@
 			files = (
 				C4CBCC4D1DB7C81E00BA2F4C /* countries.json in Resources */,
 				C4A4F96F1D1D6CF200B7C9FD /* Graphics.xcassets in Resources */,
+				C4F9CC2B21DD54C7008B9A10 /* Assets.xcassets in Resources */,
 				C488D6201D09ED130025B61D /* DeluxeDetailHTMLTableViewCell.xib in Resources */,
 				C4E35E2D1C7E07950015D187 /* LaunchScreen.storyboard in Resources */,
 				C46E1D6B1DE9512B001119C0 /* OLHeaderView.xib in Resources */,
@@ -930,7 +931,6 @@
 				C4AB17121CDB83B800D6DF05 /* DeluxeDetailBodyTableViewCell.xib in Resources */,
 				C4AB170D1CDAF3C400D6DF05 /* DeluxeDetailBlockTableViewCell.xib in Resources */,
 				C4AB170B1CDAF1A000D6DF05 /* DeluxeDetailInlineTableViewCell.xib in Resources */,
-				C4E35E2A1C7E07950015D187 /* Assets.xcassets in Resources */,
 				C4EF72F51D46818E0056D8E4 /* GeneralSearchResultSegmentedTableViewCell.xib in Resources */,
 				C4AB17171CDB86B200D6DF05 /* DeluxeDetailLinkTableViewCell.xib in Resources */,
 				C49B637C1E22B9CD00A1514B /* Localizable.strings in Resources */,
@@ -962,30 +962,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5938A6F2206B2857EA6685D0 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-OpenLibrary/Pods-OpenLibrary-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/BRYXBanner/BRYXBanner.framework",
-				"${BUILT_PRODUCTS_DIR}/Down/Down.framework",
-				"${BUILT_PRODUCTS_DIR}/PSOperations/PSOperations.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BRYXBanner.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Down.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PSOperations.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OpenLibrary/Pods-OpenLibrary-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		9FCB31B0F793BDA323D2E194 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1002,6 +978,34 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AB67549D076914BEF129D11A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-OpenLibrary/Pods-OpenLibrary-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BRYXBanner/BRYXBanner.framework",
+				"${BUILT_PRODUCTS_DIR}/Down/Down.framework",
+				"${BUILT_PRODUCTS_DIR}/PSOperations/PSOperations.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BRYXBanner.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Down.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PSOperations.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OpenLibrary/Pods-OpenLibrary-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C48B8A401D4D1D3A00C29D00 /* ShellScript */ = {
@@ -1415,8 +1419,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.cockleburr.OpenLibraryBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1436,8 +1439,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=*]" = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -1449,8 +1451,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.cockleburr.OpenLibraryTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenLibrary.app/OpenLibrary";
 			};
 			name = Debug;
@@ -1463,8 +1464,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.cockleburr.OpenLibraryTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenLibrary.app/OpenLibrary";
 			};
 			name = Release;
@@ -1476,8 +1476,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.cockleburr.OpenLibraryUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = OpenLibrary;
 				USES_XCTRUNNER = YES;
 			};
@@ -1490,8 +1489,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.cockleburr.OpenLibraryUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = OpenLibrary;
 				USES_XCTRUNNER = YES;
 			};

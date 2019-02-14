@@ -160,7 +160,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
 
             if r.hasImage {
                 
-                zoomCover.setImage( nil, for: UIControlState() )
+                zoomCover.setImage( nil, for: UIControl.State() )
                 zoomCover.setImage( nil, for: .disabled )
 
                 let url = data?.localURL( "S" )
@@ -170,7 +170,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
             
                 currentImageFile = "thumbnail-book"
                 let thumbNail = UIImage( named: currentImageFile! )
-                zoomCover.setImage( thumbNail, for: UIControlState() )
+                zoomCover.setImage( thumbNail, for: UIControl.State() )
                 zoomCover.setImage( thumbNail, for: .disabled )
             }
 
@@ -192,7 +192,7 @@ class GeneralSearchResultSegmentedTableViewCell: SegmentedTableViewCell, OLCell 
         let newImageFile = localURL.lastPathComponent
         guard nil == currentImageFile || newImageFile == currentImageFile else { return true }
         
-        zoomCover.setImage( image, for: UIControlState() )
+        zoomCover.setImage( image, for: UIControl.State() )
         zoomCover.setImage( image, for: .disabled )
         currentImageFile = newImageFile
         

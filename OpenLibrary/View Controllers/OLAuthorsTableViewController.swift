@@ -31,7 +31,7 @@ class OLAuthorsTableViewController: UIViewController {
         navigationController?.navigationBar.isTranslucent = false
         
         self.tableView.estimatedRowHeight = 102.0
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         
         self.tableView.tableFooterView = OLTableViewHeaderFooterView.createFromNib()
 

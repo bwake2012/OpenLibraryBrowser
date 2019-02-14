@@ -90,9 +90,9 @@ class HTMLPageOperation: PSOperation {
             let string: String = theAttributedString.string
             theAttributedString = NSMutableAttributedString( string: string )
             
-            let newFont = UIFont.preferredFont( forTextStyle: UIFontTextStyle.body )
+            let newFont = UIFont.preferredFont( forTextStyle: UIFont.TextStyle.body )
             let range = NSRange( location: 0, length: theAttributedString.length )
-            theAttributedString.addAttribute( NSAttributedStringKey.font, value: newFont, range: range )
+            theAttributedString.addAttribute( NSAttributedString.Key.font, value: newFont, range: range )
             
             htmlPageController.htmlString = theAttributedString
             

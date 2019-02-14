@@ -60,7 +60,7 @@ class SearchDismissalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             delay: 0.0,
             usingSpringWithDamping: damping,
             initialSpringVelocity: velocity,
-            options: UIViewAnimationOptions.curveLinear,
+            options: UIView.AnimationOptions.curveLinear,
             animations: {
                 () -> Void in
                 fromView.frame = CGRect(x: fromView.frame.width, y: fromView.frame.origin.y, width: fromView.frame.width, height: fromView.frame.height);
@@ -72,7 +72,7 @@ class SearchDismissalAnimator: NSObject, UIViewControllerAnimatedTransitioning {
                         delay: 0.0,
                         usingSpringWithDamping: self.damping,
                         initialSpringVelocity: self.velocity,
-                        options: UIViewAnimationOptions.curveLinear,
+                        options: UIView.AnimationOptions.curveLinear,
                         animations: {
                             () -> Void in
                             toView!.transform = CGAffineTransform.identity

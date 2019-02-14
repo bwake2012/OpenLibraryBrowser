@@ -177,7 +177,7 @@ class OLManagedObject: NSManagedObject {
     
     func cachedAuthor( _ authorKey: String ) -> String? {
         
-        if let name = OLManagedObject.authorCache.object( forKey: authorKey as NSString ) as? String {
+        if let name = OLManagedObject.authorCache.object( forKey: authorKey as NSString ) as String? {
             
             return name
             
@@ -329,7 +329,7 @@ class OLManagedObject: NSManagedObject {
         var attributedString: NSAttributedString?
             
         do {
-            attributedString = try down.toAttributedString( DownOptions.validateUTF8 )
+            attributedString = try down.toAttributedString( DownOptions([.default, .validateUTF8, .safe]))
         }
         catch {}
         
