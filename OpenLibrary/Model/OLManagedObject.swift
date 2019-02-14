@@ -329,7 +329,7 @@ class OLManagedObject: NSManagedObject {
         var attributedString: NSAttributedString?
             
         do {
-            attributedString = try down.toAttributedString( DownOptions.validateUTF8 )
+            attributedString = try down.toAttributedString( DownOptions([.default, .validateUTF8, .safe]))
         }
         catch {}
         
