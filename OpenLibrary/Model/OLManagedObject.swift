@@ -9,7 +9,7 @@
 import CoreData
 
 //import BNRCoreDataStack
-import Down
+import MarkdownKit
 
 typealias ObjectResultClosure = ( _ objectID: NSManagedObjectID ) -> Void
 
@@ -324,16 +324,9 @@ class OLManagedObject: NSManagedObject {
     
     func convertMarkdownToAttributedString( markdown: String ) -> NSAttributedString {
         
-        let down = Down( markdownString: markdown )
+        let attributedString = MarkdownParser().parse(markdown)
         
-        var attributedString: NSAttributedString?
-            
-        do {
-            attributedString = try down.toAttributedString( DownOptions([.default, .validateUTF8, .safe]))
-        }
-        catch {}
-        
-        return attributedString ?? NSAttributedString( string: "" )
+        return attributedString
     }
     
     func localURL( _ imageID:Int, size: String ) -> URL {
