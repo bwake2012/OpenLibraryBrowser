@@ -158,7 +158,7 @@ class WindowShadeTransition: ZoomTransition {
             
             masterContentOffset = mv.contentOffset
         }
-        
+
         // Take a snapshot of the detail view
         // use renderInContext: instead of the new iOS7 snapshot API as that
         // only works for views that are currently visible in the view hierarchy
@@ -169,7 +169,7 @@ class WindowShadeTransition: ZoomTransition {
         // only works for views that are currently visible in the view hierarchy
         let masterSnapshot = masterView!.dt_takeSnapshot( 0, yOffset: masterContentOffset.y )
         
-        let topBarsHeight = masterVC.topLayoutGuide.length
+        let topBarsHeight = masterVC.view.safeAreaLayoutGuide.layoutFrame.minY
         let topBarsFrame =
                 CGRect(
                         origin: masterFrame.origin,
