@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-import BNRCoreDataStack
+//import BNRCoreDataStack
 import PSOperations
 
 class PictureViewCoordinator: OLQueryCoordinator {

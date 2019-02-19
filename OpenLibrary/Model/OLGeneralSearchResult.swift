@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-import BNRCoreDataStack
+//import BNRCoreDataStack
 
 class OLGeneralSearchResult: OLManagedObject {
 

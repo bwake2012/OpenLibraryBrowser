@@ -10,7 +10,7 @@ import UIKit
 
 import CoreData
 
-import BNRCoreDataStack
+//import BNRCoreDataStack
 
 class OLWorkDetailViewController: UIViewController {
 
@@ -215,11 +215,11 @@ class OLWorkDetailViewController: UIViewController {
 
 }
 
-extension OLWorkDetailViewController: TransitionSourceImage {
+extension OLWorkDetailViewController: TransitionImage {
     
-    func transitionSourceRectImageView() -> UIImageView? {
+    var transitionRectImageView: UIImageView? {
         
-        return headerView.transitionSourceRectImageView()
+        return headerView?.transitionRectImageView
     }
 }
 

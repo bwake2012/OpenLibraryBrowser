@@ -54,7 +54,7 @@ class AlertOperation: PSOperation {
         addCondition(MutuallyExclusive<UIViewController>())
     }
     
-    func addAction(_ title: String, style: UIAlertActionStyle = .default, handler: @escaping (AlertOperation) -> Void = { _ in }) {
+    func addAction(_ title: String, style: UIAlertAction.Style = .default, handler: @escaping (AlertOperation) -> Void = { _ in }) {
         let action = UIAlertAction(title: title, style: style) { [weak self] _ in
             if let strongSelf = self {
                 handler(strongSelf)

@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-import BNRCoreDataStack
+// import BNRCoreDataStack
 import PSOperations
 
 @UIApplicationMain
@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     fileprivate var reachabilityOperation: OLReachabilityOperation?
     fileprivate var generalSearchResultsCoordinator: GeneralSearchResultsCoordinator?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         // NSLog( "Redisplaying Launch Screen" )
         
@@ -68,18 +68,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        if #available(iOS 10.0, *) {
-            
-            // NSLog( "iOS 10 Core Data Stack" )
-            self.dataStack =
-                IOS10DataStack( operationQueue: operationQueue, completion: launchUserInterface )
-
-        } else {
-            
-            // NSLog( "Big Nerd Ranch Core Data Stack" )
-            self.dataStack =
-                IOS09DataStack( operationQueue: operationQueue, completion: launchUserInterface )
-        }
+        // NSLog( "iOS 10 Core Data Stack" )
+        self.dataStack =
+            IOS10DataStack( operationQueue: operationQueue, completion: launchUserInterface )
 
         return true
     }

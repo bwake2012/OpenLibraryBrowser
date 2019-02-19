@@ -67,7 +67,7 @@ class HTMLPageOperation: PSOperation {
             var theAttributedString = NSMutableAttributedString()
             do {
                 
-                let htmlOptions = [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType]
+                let htmlOptions = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html]
                 if let data = data {
                 
                     try theAttributedString.read( from: data, options: htmlOptions, documentAttributes: nil )
@@ -90,9 +90,9 @@ class HTMLPageOperation: PSOperation {
             let string: String = theAttributedString.string
             theAttributedString = NSMutableAttributedString( string: string )
             
-            let newFont = UIFont.preferredFont( forTextStyle: UIFontTextStyle.body )
+            let newFont = UIFont.preferredFont( forTextStyle: UIFont.TextStyle.body )
             let range = NSRange( location: 0, length: theAttributedString.length )
-            theAttributedString.addAttribute( NSFontAttributeName, value: newFont, range: range )
+            theAttributedString.addAttribute( NSAttributedString.Key.font, value: newFont, range: range )
             
             htmlPageController.htmlString = theAttributedString
             

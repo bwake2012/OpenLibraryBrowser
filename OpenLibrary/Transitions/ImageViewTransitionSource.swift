@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol TransitionSourceImage {
+protocol TransitionImage {
     
-    func transitionSourceRectImageView() -> UIImageView?
+    var transitionRectImageView: UIImageView? { get }
 }
 
-protocol TransitionSourceCell {
+protocol TransitionCell {
     
-    func transitionSourceRectCellView() -> UITableViewCell?
+    func transitionRectCellView() -> UITableViewCell?
 }
 
 

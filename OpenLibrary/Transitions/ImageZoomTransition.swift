@@ -10,20 +10,20 @@ import UIKit
 
 class ImageZoomTransition: ZoomTransition {
 
-    var transitionAnimationOptions = UIViewKeyframeAnimationOptions.calculationModeCubic
+    var transitionAnimationOptions = UIView.KeyframeAnimationOptions.calculationModeCubic
     
     // MARK: Overrides
     override func animateTransition( using transitionContext: UIViewControllerContextTransitioning ) -> Void {
         
         guard let fromVC = transitionContext.viewController( forKey: UITransitionContextViewControllerKey.from ) else {
             
-            print( "transitionContext to VC is missing!" )
+            assert( false, "transitionContext to VC is missing!" )
             transitionContext.completeTransition( true )
             return
         }
         guard let toVC = transitionContext.viewController( forKey: UITransitionContextViewControllerKey.to ) else {
             
-            print( "transitionContext from VC is missing!" )
+            assert( false, "transitionContext from VC is missing!" )
             transitionContext.completeTransition( true )
             return
         }
@@ -31,24 +31,24 @@ class ImageZoomTransition: ZoomTransition {
         let containerView = transitionContext.containerView
 
         guard let sourceView = self.sourceView else {
-            print( "source view not set" )
+            assert( false, "source view not set" )
             transitionContext.completeTransition( true )
             return
         }
         
-        var dvc: OLPictureViewController? = nil
+        var pictureVC: OLPictureViewController? = nil
         
         if .push == self.operation {
             
-            dvc = viewControllerForTransition( viewController: toVC )
+            pictureVC = viewControllerForTransition( viewController: toVC )
 
         } else {
             
-            dvc = viewControllerForTransition( viewController: fromVC )
+            pictureVC = viewControllerForTransition( viewController: fromVC )
         }
         
-        guard let detailVC = dvc else {
-            print( "neither sourceVC nor destinationVC is an OLPictureViewController" )
+        guard let detailVC = pictureVC else {
+            assert( false, "neither sourceVC nor destinationVC is an OLPictureViewController" )
             transitionContext.completeTransition( true )
             return
         }
@@ -75,33 +75,37 @@ class ImageZoomTransition: ZoomTransition {
             
             if .push == self.operation {
                 
-                zoomFromViewRect = containerView.convert( sourceView.frame, from: sourceView.superview )
-                
+                zoomFromViewRect = containerView.convert( sourceView.bounds, from: sourceView )
             }
             
             if .pop == self.operation {
                 
-                zoomToViewRect = containerView.convert( sourceView.frame, from: sourceView.superview )
+                zoomToViewRect = containerView.convert( sourceView.bounds, from: sourceView )
             }
             
-            // if we're pushing, the frame of the large size UIImageView is wildly wrong. We have to calculate it.
+            // If we're pushing, the frame of the large size UIImageView is wildly wrong.
+            // We have to calculate it.
+            var layoutMargins = detailVC.view.directionalLayoutMargins
+            // .push destination view has not been laid out yet
             if .push == self.operation {
-            
-                var layoutMargins = toView.layoutMargins
+                
+                // have to calculate the top and bottom margins
                 layoutMargins.top += UIApplication.shared.statusBarFrame.height
                 layoutMargins.top += detailVC.navigationController?.navigationBar.frame.height ?? 0
-                fullscreenPictureRect =
-                    CGRect(
-                        x: toFinalFrame.origin.x + layoutMargins.left,
-                        y: toFinalFrame.origin.y + layoutMargins.top,
-                        width: toFinalFrame.width - (layoutMargins.left + layoutMargins.right ),
-                        height: toFinalFrame.height - ( layoutMargins.top + layoutMargins.bottom )
-                    )
-
-                zoomToViewRect = fullscreenPictureRect
+                layoutMargins.bottom += fromVC.view.safeAreaInsets.bottom
+                
+                // the source view leading and trailing margins arethe same
+                layoutMargins.leading  = toView.directionalLayoutMargins.leading
+                layoutMargins.trailing = toView.directionalLayoutMargins.trailing
             }
-            var zoomRect = fullscreenPictureRect
-            
+            fullscreenPictureRect =
+                CGRect(
+                    x: toFinalFrame.origin.x + layoutMargins.leading,
+                    y: toFinalFrame.origin.y + layoutMargins.top,
+                    width: toFinalFrame.width - (layoutMargins.leading + layoutMargins.trailing ),
+                    height: toFinalFrame.height - ( layoutMargins.top + layoutMargins.bottom )
+                )
+
             var animatingImage: UIImage? = nil
             if nil != detailVC.pictureView {
                 
@@ -111,7 +115,6 @@ class ImageZoomTransition: ZoomTransition {
                 if let imgView = sourceView as? UIImageView {
                     
                     animatingImage = imgView.image
-                    detailVC.pictureView.image = animatingImage  // placeholder
                 }
             }
             
@@ -121,13 +124,13 @@ class ImageZoomTransition: ZoomTransition {
                 
                 animatingImageView.image = animatingImage
  
-                zoomRect = animatingImage.aspectFitRect( zoomRect )
+                fullscreenPictureRect = animatingImage.aspectFitRect( fullscreenPictureRect )
             }
 
             if .push == self.operation {
-                zoomToViewRect = zoomRect
+                zoomToViewRect = fullscreenPictureRect
             } else {
-                zoomFromViewRect = zoomRect
+                zoomFromViewRect = fullscreenPictureRect
             }
             
 //                print( "from:\(zoomFromViewRect) to:\(zoomToViewRect)" )
@@ -140,7 +143,7 @@ class ImageZoomTransition: ZoomTransition {
 
             containerView.addSubview( animatingImageView )
             animatingImageView.frame = zoomFromViewRect
-            let endingContentMode: UIViewContentMode = .scaleAspectFit
+            let endingContentMode: UIView.ContentMode = .scaleAspectFit
             
             UIView.animateKeyframes(
                     withDuration: self.transitionDuration,
@@ -164,6 +167,9 @@ class ImageZoomTransition: ZoomTransition {
                             fromView.removeFromSuperview()
                             transitionContext.completeTransition( true )
                             toView.alpha = 1;
+                        }
+                        if .push == self.operation {
+                            detailVC.pictureView.image = animatingImage
                         }
                         animatingImageView.removeFromSuperview()
                     }

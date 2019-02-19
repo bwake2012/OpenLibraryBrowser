@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-import BNRCoreDataStack
+//import BNRCoreDataStack
 import PSOperations
 
 /// An `Operation` to parse earthquakes out of a downloaded feed from the USGS.
@@ -96,7 +96,7 @@ class AuthorDetailParseOperation: PSOperation {
             let error = self.saveContext()
             if nil != error {
                 
-                print( "\(error)" )
+                print( "\(String(describing: error))" )
             }
             self.finishWithError( error )
         }
@@ -115,7 +115,7 @@ class AuthorDetailParseOperation: PSOperation {
         var error: NSError?
 
         do {
-            try context.saveContextAndWait()
+            try context.save()
         }
         catch let saveError as NSError {
             error = saveError

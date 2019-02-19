@@ -10,7 +10,7 @@
 
 import CoreData
 
-import BNRCoreDataStack
+//import BNRCoreDataStack
 import PSOperations
 
 /// A composite `Operation` to both download and parse work editions data.
@@ -33,7 +33,7 @@ class WorkEditionEbooksGetOperation: GroupOperation {
                                        parsing are complete. This handler will be
                                        invoked on an arbitrary queue.
     */
-    init( workKey: String, dataStack: OLDataStack, completionHandler: @escaping (Void) -> Void ) {
+    init( workKey: String, dataStack: OLDataStack, completionHandler: @escaping () -> Void ) {
 
         assert( !workKey.isEmpty )
         

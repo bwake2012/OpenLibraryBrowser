@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-import BNRCoreDataStack
+//import BNRCoreDataStack
 import PSOperations
 
 /// An `Operation` to parse Editions out of a query from OpenLibrary.
@@ -106,7 +106,7 @@ class AuthorEditionsParseOperation: PSOperation {
                 self.updateResults?( SearchResults( start: self.offset, numFound: numFound, pageSize: resultSet.count ) )
             } else {
                 
-                print( "\(error?.localizedDescription)" )
+                print( "\(String(describing: error?.localizedDescription))" )
             }
         
             self.finishWithError( error )
@@ -126,7 +126,7 @@ class AuthorEditionsParseOperation: PSOperation {
         var error: NSError?
 
         do {
-            try context.saveContextAndWait()
+            try context.save()
         }
         catch let saveError as NSError {
             error = saveError

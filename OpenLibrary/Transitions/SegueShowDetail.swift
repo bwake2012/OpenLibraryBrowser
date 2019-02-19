@@ -50,17 +50,17 @@ class SegueShowDetail: UIStoryboardSegue {
     fileprivate func chooseTransition( navController: UINavigationController, sourceVC: UIViewController ) -> ZoomTransition? {
         
         var transition: ZoomTransition?
-        if let sourceVC = sourceVC as? TransitionSourceCell {
+        if let sourceVC = sourceVC as? TransitionCell {
             
-            let sourceRectView = sourceVC.transitionSourceRectCellView()
+            let sourceRectView = sourceVC.transitionRectCellView()
             
             assert( nil != sourceRectView )
             
             transition = TableviewCellZoomTransition( navigationController: navController, operation: .push, sourceRectView: sourceRectView )
             
-        } else if let sourceVC = sourceVC as? TransitionSourceImage {
+        } else if let sourceVC = sourceVC as? TransitionImage {
             
-            let sourceRectView = sourceVC.transitionSourceRectImageView()
+            let sourceRectView = sourceVC.transitionRectImageView
             
             assert( nil != sourceRectView )
             

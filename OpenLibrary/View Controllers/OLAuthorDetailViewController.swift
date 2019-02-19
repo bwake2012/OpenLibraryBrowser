@@ -10,7 +10,7 @@ import UIKit
 
 import CoreData
 
-import BNRCoreDataStack
+// import BNRCoreDataStack
 
 class OLAuthorDetailViewController: UIViewController {
 
@@ -139,9 +139,9 @@ class OLAuthorDetailViewController: UIViewController {
 
 }
 
-extension OLAuthorDetailViewController: TransitionSourceImage {
+extension OLAuthorDetailViewController: TransitionImage {
     
-    func transitionSourceRectImageView() -> UIImageView? {
+    var transitionRectImageView: UIImageView? {
         
         return headerView.imageView
     }

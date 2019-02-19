@@ -12,7 +12,7 @@ class SegueWithImageZoom: UIStoryboardSegue {
     
     override func perform() {
         
-        guard let source = self.source as? TransitionSourceImage else {
+        guard let source = self.source as? TransitionImage else {
             
             fatalError( "Source VC does not support TransitionSourceImage protocol" )
         }
@@ -27,7 +27,7 @@ class SegueWithImageZoom: UIStoryboardSegue {
             fatalError( "source VC navigation controller has no NavigationControllerDelegate" )
         }
         
-        let sourceRectView = source.transitionSourceRectImageView()
+        let sourceRectView = source.transitionRectImageView
         
         ncd.pushZoomTransition( ImageZoomTransition( navigationController: navController, operation: .push, sourceRectView: sourceRectView ) )
         

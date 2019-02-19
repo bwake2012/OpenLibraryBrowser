@@ -8,8 +8,8 @@
 
 import CoreData
 
-import BNRCoreDataStack
-import Down
+//import BNRCoreDataStack
+import MarkdownKit
 
 typealias ObjectResultClosure = ( _ objectID: NSManagedObjectID ) -> Void
 
@@ -177,7 +177,7 @@ class OLManagedObject: NSManagedObject {
     
     func cachedAuthor( _ authorKey: String ) -> String? {
         
-        if let name = OLManagedObject.authorCache.object( forKey: authorKey as NSString ) as? String {
+        if let name = OLManagedObject.authorCache.object( forKey: authorKey as NSString ) as String? {
             
             return name
             
@@ -324,16 +324,9 @@ class OLManagedObject: NSManagedObject {
     
     func convertMarkdownToAttributedString( markdown: String ) -> NSAttributedString {
         
-        let down = Down( markdownString: markdown )
+        let attributedString = MarkdownParser().parse(markdown)
         
-        var attributedString: NSAttributedString?
-            
-        do {
-            attributedString = try down.toAttributedString( DownOptions.ValidateUTF8 )
-        }
-        catch {}
-        
-        return attributedString ?? NSAttributedString( string: "" )
+        return attributedString
     }
     
     func localURL( _ imageID:Int, size: String ) -> URL {

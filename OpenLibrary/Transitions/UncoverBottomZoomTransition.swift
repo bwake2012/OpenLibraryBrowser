@@ -201,7 +201,7 @@ class UncoverBottomZoomTransition: ZoomTransition {
         UIView.animateKeyframes(
             withDuration: totalDuration,
             delay: 0,
-            options: UIViewKeyframeAnimationOptions(),
+            options: UIView.KeyframeAnimationOptions(),
             animations: { () -> Void in
                 
                 // move the master view top and bottom views (and their

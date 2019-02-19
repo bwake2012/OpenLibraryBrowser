@@ -22,7 +22,7 @@ class OLDeluxeDetailTableViewController: UITableViewController {
         
         // Do any additional setup after loading the view, typically from a nib.
         self.tableView.estimatedRowHeight = 68.0
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.tableFooterView = UIView(frame: .zero)
 
         DeluxeDetailHeadingTableViewCell.registerCell( tableView )
@@ -128,9 +128,9 @@ class OLDeluxeDetailTableViewController: UITableViewController {
     }
 }
 
-extension OLDeluxeDetailTableViewController: TransitionSourceImage {
+extension OLDeluxeDetailTableViewController: TransitionImage {
     
-    func transitionSourceRectImageView() -> UIImageView? {
+    var transitionRectImageView: UIImageView? {
         
         guard let indexPath = tableView.indexPathForSelectedRow else { return nil }
         
@@ -140,9 +140,9 @@ extension OLDeluxeDetailTableViewController: TransitionSourceImage {
     }
 }
 
-extension OLDeluxeDetailTableViewController: TransitionSourceCell {
+extension OLDeluxeDetailTableViewController: TransitionCell {
     
-    func transitionSourceRectCellView() -> UITableViewCell? {
+    func transitionRectCellView() -> UITableViewCell? {
         
         var sourceRectView: UITableViewCell?
         

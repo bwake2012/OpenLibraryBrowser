@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreData
 
-import BNRCoreDataStack
+//import BNRCoreDataStack
 import PSOperations
 
 private let kGeneralSearchCache = "GeneralSearch"
@@ -256,7 +256,7 @@ class GeneralSearchResultsCoordinator: OLQueryCoordinator, OLDataSource {
             if numberOfSections() > 0 {
                 
                 let top = IndexPath( row: Foundation.NSNotFound, section: 0 );
-                tableVC?.tableView.scrollToRow( at: top, at: UITableViewScrollPosition.top, animated: true );
+                tableVC?.tableView.scrollToRow( at: top, at: UITableView.ScrollPosition.top, animated: true );
             }
         
             self.sequence += 1

@@ -18,7 +18,7 @@ private struct SummaryLine {
     weak var label: UILabel!
     weak var button: UIButton!
     var segueName: String
-    var textStyle: UIFontTextStyle
+    var textStyle: UIFont.TextStyle
 }
 
 fileprivate let standardSpacing: CGFloat = 8.0
@@ -169,7 +169,7 @@ class OLHeaderView: UIView {
         summaryLines = []
     }
     
-    func insertSummaryLine( index: Int, text: String, style: UIFontTextStyle, segueName: String ) {
+    func insertSummaryLine( index: Int, text: String, style: UIFont.TextStyle, segueName: String ) {
         
         assert( index >= 0 && index <= summaryLines.count )
         assert( index >= 0 && index <= summaryStack.arrangedSubviews.count )
@@ -192,7 +192,7 @@ class OLHeaderView: UIView {
         label.backgroundColor = self.contentView.backgroundColor
         label.isOpaque = true
         label.lineBreakMode = .byWordWrapping
-        label.setContentCompressionResistancePriority( 1000, for: .vertical )
+        label.setContentCompressionResistancePriority( UILayoutPriority(rawValue: 1000), for: .vertical )
         label.numberOfLines = 0
 
         button.backgroundColor = UIColor.clear
@@ -210,12 +210,12 @@ class OLHeaderView: UIView {
         NSLayoutConstraint( item: button, attribute: .bottom, relatedBy: .equal, toItem: label, attribute: .bottom, multiplier: 1.0, constant: 0.0 ).isActive = true
     }
     
-    func addSummaryLine( text: String, style: UIFontTextStyle, segueName: String ) {
+    func addSummaryLine( text: String, style: UIFont.TextStyle, segueName: String ) {
         
         insertSummaryLine(index: summaryLines.count, text: text, style: style, segueName: segueName )
     }
 
-    func setSummaryLine( index: Int, text: String, style: UIFontTextStyle, segueName: String ) {
+    func setSummaryLine( index: Int, text: String, style: UIFont.TextStyle, segueName: String ) {
 
         assert( index >= 0 && index <= summaryLines.count )
         assert( index >= 0 && index <= summaryStack.arrangedSubviews.count )
@@ -239,9 +239,9 @@ class OLHeaderView: UIView {
     }
     
     // MARK: Utility
-    func makeAttributedString( string: String, style: UIFontTextStyle ) -> NSAttributedString {
+    func makeAttributedString( string: String, style: UIFont.TextStyle ) -> NSAttributedString {
 
-        let attributes = [NSFontAttributeName: UIFont.preferredFont( forTextStyle: style )]
+        let attributes = [NSAttributedString.Key.font: UIFont.preferredFont( forTextStyle: style )]
         
         let attributedString = NSMutableAttributedString( string: string, attributes: attributes )
         
@@ -249,9 +249,9 @@ class OLHeaderView: UIView {
     }
 }
 
-extension OLHeaderView: TransitionSourceImage {
+extension OLHeaderView: TransitionImage {
     
-    func transitionSourceRectImageView() -> UIImageView? {
+    var transitionRectImageView: UIImageView? {
         
         return imageView
     }

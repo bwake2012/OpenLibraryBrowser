@@ -8,7 +8,7 @@
 
 import CoreData
 
-import BNRCoreDataStack
+// import BNRCoreDataStack
 
 let kAuthorsPrefix = "/authors/"
 let kAuthorType    = "/type/author"

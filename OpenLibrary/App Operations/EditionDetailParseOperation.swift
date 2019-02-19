@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-import BNRCoreDataStack
+//import BNRCoreDataStack
 import PSOperations
 
 
@@ -103,7 +103,7 @@ class EditionDetailParseOperation: PSOperation {
         var error: NSError?
 
         do {
-            try context.saveContextAndWait()
+            try context.save()
         }
         catch let saveError as NSError {
             error = saveError

@@ -50,7 +50,7 @@ class SearchPresentationAnimator: NSObject, UIViewControllerAnimatedTransitionin
                     delay: 0,
                     usingSpringWithDamping: damping,
                     initialSpringVelocity: velocity,
-                    options: UIViewAnimationOptions.curveLinear,
+                    options: UIView.AnimationOptions.curveLinear,
                     animations: {
                             () -> Void in
                             fromView!.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
@@ -63,7 +63,7 @@ class SearchPresentationAnimator: NSObject, UIViewControllerAnimatedTransitionin
                                 delay: 0,
                                 usingSpringWithDamping: self.damping,
                                 initialSpringVelocity: self.velocity,
-                                options: UIViewAnimationOptions.curveLinear,
+                                options: UIView.AnimationOptions.curveLinear,
                                 animations: {
                                     () -> Void in
                                     toView.frame = CGRect(x: 0, y: 0, width: toView.frame.width, height: toView.frame.height)

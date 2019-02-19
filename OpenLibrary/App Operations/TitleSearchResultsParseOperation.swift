@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-import BNRCoreDataStack
+//import BNRCoreDataStack
 import PSOperations
 
 let kTitlesPrefix = "/Titles/"
@@ -131,7 +131,7 @@ class TitleSearchResultsParseOperation: PSOperation {
         var error: NSError?
 
         do {
-            try context.saveContextAndWait()
+            try context.save()
         }
         catch let saveError as NSError {
             error = saveError

@@ -51,7 +51,7 @@ protocol ZoomTransitionGestureTarget {
 class ZoomTransition: UIPercentDrivenInteractiveTransition, UIViewControllerAnimatedTransitioning {
 
     var sourceView: UIView?
-    var operation: UINavigationControllerOperation
+    var operation: UINavigationController.Operation
     var transitionDuration = TimeInterval( 0.3 )
     
     var parent: UINavigationController
@@ -64,7 +64,7 @@ class ZoomTransition: UIPercentDrivenInteractiveTransition, UIViewControllerAnim
     
     init(
         navigationController: UINavigationController,
-        operation: UINavigationControllerOperation,
+        operation: UINavigationController.Operation,
         sourceRectView: UIView? ) {
         
         self.parent = navigationController
@@ -141,7 +141,7 @@ extension ZoomTransition: ZoomTransitionGestureTarget {
         }
     }
     
-    func handleEdgePan( _ gr: UIScreenEdgePanGestureRecognizer ) -> Void {
+    @objc func handleEdgePan( _ gr: UIScreenEdgePanGestureRecognizer ) -> Void {
         
         let point = gr.translation( in: gr.view )
         
