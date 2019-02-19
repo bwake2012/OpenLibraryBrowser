@@ -106,9 +106,9 @@ class OLWorkDetailEditionsTableViewController: UIViewController {
     }
 }
 
-extension OLWorkDetailEditionsTableViewController: TransitionSourceCell {
+extension OLWorkDetailEditionsTableViewController: TransitionCell {
     
-    func transitionSourceRectCellView() -> UITableViewCell? {
+    func transitionRectCellView() -> UITableViewCell? {
         
         var sourceRectView: UITableViewCell?
         

@@ -101,9 +101,9 @@ class OLAuthorDetailWorksTableViewController: UIViewController {
     }
 }
 
-extension OLAuthorDetailWorksTableViewController: TransitionSourceCell {
+extension OLAuthorDetailWorksTableViewController: TransitionCell {
     
-    func transitionSourceRectCellView() -> UITableViewCell? {
+    func transitionRectCellView() -> UITableViewCell? {
         
         var sourceRectView: UITableViewCell?
         

@@ -249,9 +249,9 @@ class OLHeaderView: UIView {
     }
 }
 
-extension OLHeaderView: TransitionSourceImage {
+extension OLHeaderView: TransitionImage {
     
-    func transitionSourceRectImageView() -> UIImageView? {
+    var transitionRectImageView: UIImageView? {
         
         return imageView
     }

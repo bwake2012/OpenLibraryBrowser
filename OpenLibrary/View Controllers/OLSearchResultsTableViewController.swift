@@ -496,9 +496,9 @@ class OLSearchResultsTableViewController: UIViewController {
     }
 }
 
-extension OLSearchResultsTableViewController: TransitionSourceImage {
+extension OLSearchResultsTableViewController: TransitionImage {
     
-    func transitionSourceRectImageView() -> UIImageView? {
+    var transitionRectImageView: UIImageView? {
         
         if let indexPath = indexPathSavedForTransition {
             
@@ -519,9 +519,9 @@ extension OLSearchResultsTableViewController: TransitionSourceImage {
     }
 }
 
-extension OLSearchResultsTableViewController: TransitionSourceCell {
+extension OLSearchResultsTableViewController: TransitionCell {
     
-    func transitionSourceRectCellView() -> UITableViewCell? {
+    func transitionRectCellView() -> UITableViewCell? {
         
         var sourceRectView: UITableViewCell?
         

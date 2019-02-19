@@ -128,9 +128,9 @@ class OLDeluxeDetailTableViewController: UITableViewController {
     }
 }
 
-extension OLDeluxeDetailTableViewController: TransitionSourceImage {
+extension OLDeluxeDetailTableViewController: TransitionImage {
     
-    func transitionSourceRectImageView() -> UIImageView? {
+    var transitionRectImageView: UIImageView? {
         
         guard let indexPath = tableView.indexPathForSelectedRow else { return nil }
         
@@ -140,9 +140,9 @@ extension OLDeluxeDetailTableViewController: TransitionSourceImage {
     }
 }
 
-extension OLDeluxeDetailTableViewController: TransitionSourceCell {
+extension OLDeluxeDetailTableViewController: TransitionCell {
     
-    func transitionSourceRectCellView() -> UITableViewCell? {
+    func transitionRectCellView() -> UITableViewCell? {
         
         var sourceRectView: UITableViewCell?
         

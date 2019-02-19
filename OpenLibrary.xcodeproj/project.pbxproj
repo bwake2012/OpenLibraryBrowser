@@ -525,13 +525,6 @@
 			path = Coordinators;
 			sourceTree = "<group>";
 		};
-		C488D6181D09A0FD0025B61D /* Markingbird */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Markingbird;
-			sourceTree = "<group>";
-		};
 		C4E35E161C7E07950015D187 = {
 			isa = PBXGroup;
 			children = (
@@ -561,7 +554,6 @@
 				C4E35EA41C7E1F1C0015D187 /* App Operations */,
 				C4677E9D1C9CD7020070CDFD /* Coordinators */,
 				C444C4F31CBF16A100CFD0E1 /* Graphics */,
-				C488D6181D09A0FD0025B61D /* Markingbird */,
 				C4E35E9E1C7E0C730015D187 /* Model */,
 				C42DBE4B1CBD67B10048788E /* Transitions */,
 				C4E35EC71C80DE3E0015D187 /* Utility */,

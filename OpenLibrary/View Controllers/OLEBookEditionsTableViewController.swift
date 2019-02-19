@@ -89,9 +89,9 @@ class OLEBookEditionsTableViewController: UIViewController {
 //    }
 }
 
-extension OLEBookEditionsTableViewController: TransitionSourceCell {
+extension OLEBookEditionsTableViewController: TransitionCell {
     
-    func transitionSourceRectCellView() -> UITableViewCell? {
+    func transitionRectCellView() -> UITableViewCell? {
         
         var sourceRectView: UITableViewCell?
         

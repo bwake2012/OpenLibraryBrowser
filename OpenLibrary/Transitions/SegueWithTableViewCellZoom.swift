@@ -12,7 +12,7 @@ class SegueWithTableViewCellZoom: UIStoryboardSegue {
 
     override func perform() {
         
-        guard let source = self.source as? TransitionSourceCell else {
+        guard let source = self.source as? TransitionCell else {
             
             fatalError( "Source VC does not support TransitionSourceCell protocol" )
         }
@@ -27,7 +27,7 @@ class SegueWithTableViewCellZoom: UIStoryboardSegue {
             fatalError( "source VC navigation controller has no NavigationControllerDelegate" )
         }
         
-        let sourceRectView = source.transitionSourceRectCellView()
+        let sourceRectView = source.transitionRectCellView()
         if nil == sourceRectView {
             print( "error in transition: \(String(describing: self.identifier))" )
             assert( nil != sourceRectView )
