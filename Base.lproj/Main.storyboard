@@ -562,25 +562,39 @@
             </objects>
             <point key="canvasLocation" x="2482" y="992"/>
         </scene>
-        <!--Detail-->
-        <scene sceneID="g1Y-4R-N3x">
+        <!--Author Deluxe Detail-->
+        <scene sceneID="6ZH-9X-fjI">
             <objects>
-                <tableViewController storyboardIdentifier="authorDeluxeDetailTableView" title="Detail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jwx-Vz-ory" customClass="OLDeluxeDetailTableViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="147" sectionHeaderHeight="28" sectionFooterHeight="28" id="fG2-4v-rgU">
+                <viewController storyboardIdentifier="authorDeluxeDetailTableView" title="Author Deluxe Detail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Zkd-8Y-7Vs" customClass="OLDeluxeDetailTableViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="E04-4Z-C5p">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <connections>
-                            <outlet property="dataSource" destination="jwx-Vz-ory" id="8Vi-oV-s6D"/>
-                            <outlet property="delegate" destination="jwx-Vz-ory" id="ZOh-Sl-9Nq"/>
-                        </connections>
-                    </tableView>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="YDb-HR-fYA">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Zkd-8Y-7Vs" id="9dd-Sw-EEJ"/>
+                                    <outlet property="delegate" destination="Zkd-8Y-7Vs" id="TYX-ov-AhK"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="YDb-HR-fYA" firstAttribute="leading" secondItem="QZV-fq-NBn" secondAttribute="leading" id="Edj-dW-lDP"/>
+                            <constraint firstItem="YDb-HR-fYA" firstAttribute="top" secondItem="QZV-fq-NBn" secondAttribute="top" id="KSJ-Ft-52F"/>
+                            <constraint firstItem="YDb-HR-fYA" firstAttribute="bottom" secondItem="QZV-fq-NBn" secondAttribute="bottom" id="nY7-HQ-lbA"/>
+                            <constraint firstItem="QZV-fq-NBn" firstAttribute="trailing" secondItem="YDb-HR-fYA" secondAttribute="trailing" id="sbs-CQ-aaf"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="QZV-fq-NBn"/>
+                    </view>
                     <connections>
-                        <segue destination="RJ5-x8-uas" kind="show" identifier="zoomLargeImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" id="MSI-XC-TWv"/>
-                        <segue destination="QNA-1N-1O1" kind="show" identifier="DeluxeDetailBookDownloadTableViewCell" customClass="SegueWithWindowShade" customModule="OpenLibrary" customModuleProvider="target" id="DGw-06-isa"/>
+                        <outlet property="tableView" destination="YDb-HR-fYA" id="kVY-Oz-NdW"/>
+                        <segue destination="RJ5-x8-uas" kind="show" identifier="zoomLargeImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" customModuleProvider="target" id="MQK-lk-3dg"/>
+                        <segue destination="QNA-1N-1O1" kind="show" identifier="DeluxeDetailBookDownloadTableViewCell" customClass="SegueWithWindowShade" customModule="OpenLibrary" customModuleProvider="target" id="k6c-ol-jGc"/>
                     </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="inl-a4-CKZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="leU-kZ-nXf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2114" y="2831"/>
         </scene>
@@ -619,7 +633,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Lb-GV-7Ci" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1234" y="2831"/>
+            <point key="canvasLocation" x="1207" y="2831"/>
         </scene>
         <!--Download-->
         <scene sceneID="GvV-Xr-xLh">
@@ -789,49 +803,41 @@
             </objects>
             <point key="canvasLocation" x="1097" y="1960"/>
         </scene>
-        <!--Detail-->
-        <scene sceneID="khe-cu-Afx">
+        <!--Edition Deluxe Detail-->
+        <scene sceneID="Bvw-Rb-sRJ">
             <objects>
-                <tableViewController storyboardIdentifier="workDeluxeDetailTableView" title="Detail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zUC-U6-Nsg" customClass="OLDeluxeDetailTableViewController" customModule="OpenLibrary" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="S6j-JV-erp">
+                <viewController storyboardIdentifier="editionDeluxeDetailTableView" title="Edition Deluxe Detail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="w8v-7g-U3O" customClass="OLDeluxeDetailTableViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sB1-CS-qDs">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <connections>
-                            <outlet property="dataSource" destination="zUC-U6-Nsg" id="orn-iY-iLk"/>
-                            <outlet property="delegate" destination="zUC-U6-Nsg" id="Q8w-4h-pcV"/>
-                        </connections>
-                    </tableView>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="a8Y-P2-Dgk">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="w8v-7g-U3O" id="kTf-ds-X6a"/>
+                                    <outlet property="delegate" destination="w8v-7g-U3O" id="6qu-NM-uwx"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="a8Y-P2-Dgk" firstAttribute="leading" secondItem="GgW-3A-F5O" secondAttribute="leading" id="5rb-3T-ln8"/>
+                            <constraint firstItem="a8Y-P2-Dgk" firstAttribute="bottom" secondItem="GgW-3A-F5O" secondAttribute="bottom" id="ZbP-aM-g0s"/>
+                            <constraint firstItem="GgW-3A-F5O" firstAttribute="trailing" secondItem="a8Y-P2-Dgk" secondAttribute="trailing" id="usB-7v-YYc"/>
+                            <constraint firstItem="a8Y-P2-Dgk" firstAttribute="top" secondItem="GgW-3A-F5O" secondAttribute="top" id="v8F-Rq-Ce1"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="GgW-3A-F5O"/>
+                    </view>
                     <connections>
-                        <segue destination="RJ5-x8-uas" kind="show" identifier="zoomLargeImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" id="GFh-zh-PVi"/>
-                        <segue destination="QNA-1N-1O1" kind="show" identifier="DeluxeDetailBookDownloadTableViewCell" customClass="SegueWithWindowShade" customModule="OpenLibrary" customModuleProvider="target" id="3XC-3S-Rbd"/>
+                        <outlet property="tableView" destination="a8Y-P2-Dgk" id="Ht3-qz-UBm"/>
+                        <segue destination="RJ5-x8-uas" kind="show" identifier="zoomLargeImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" customModuleProvider="target" id="bDz-2R-dJI"/>
+                        <segue destination="QNA-1N-1O1" kind="show" identifier="DeluxeDetailBookDownloadTableViewCell" customClass="SegueWithWindowShade" customModule="OpenLibrary" customModuleProvider="target" id="DxB-33-vu1"/>
                     </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="atG-cR-bKE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dew-16-JTf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2115" y="1677"/>
-        </scene>
-        <!--Edition Deluxe Detail Table View Controller-->
-        <scene sceneID="l3a-bn-RTX">
-            <objects>
-                <tableViewController storyboardIdentifier="editionDeluxeDetailTableView" title="Edition Detail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="eGT-aZ-iGV" userLabel="Edition Deluxe Detail Table View Controller" customClass="OLDeluxeDetailTableViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="wKH-yP-0H4">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <connections>
-                            <outlet property="dataSource" destination="eGT-aZ-iGV" id="JvX-ZH-NMu"/>
-                            <outlet property="delegate" destination="eGT-aZ-iGV" id="Lys-jJ-CO2"/>
-                        </connections>
-                    </tableView>
-                    <connections>
-                        <segue destination="RJ5-x8-uas" kind="show" identifier="zoomLargeImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" id="Yjz-qW-0Hz"/>
-                        <segue destination="QNA-1N-1O1" kind="show" identifier="DeluxeDetailBookDownloadTableViewCell" customClass="SegueWithWindowShade" customModule="OpenLibrary" customModuleProvider="target" id="N1H-Eu-32X"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ZNf-9T-ziR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2890" y="2086"/>
+            <point key="canvasLocation" x="2901" y="2101"/>
         </scene>
         <!--AuthorDetailNav-->
         <scene sceneID="dkQ-Pm-QpD">
@@ -850,6 +856,42 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U4e-GR-Zd8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1682.8125" y="1465.1408450704225"/>
+        </scene>
+        <!--Work Deluxe Detail-->
+        <scene sceneID="5NJ-jF-pAI">
+            <objects>
+                <viewController storyboardIdentifier="workDeluxeDetailTableView" title="Work Deluxe Detail" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zBd-Mn-NWf" customClass="OLDeluxeDetailTableViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7cR-32-J1Q">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ms4-vW-aQb">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="zBd-Mn-NWf" id="KyA-Su-FmQ"/>
+                                    <outlet property="delegate" destination="zBd-Mn-NWf" id="jbi-IC-bpR"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Ms4-vW-aQb" firstAttribute="leading" secondItem="beI-vY-4KC" secondAttribute="leading" id="Eds-hC-t7I"/>
+                            <constraint firstItem="beI-vY-4KC" firstAttribute="trailing" secondItem="Ms4-vW-aQb" secondAttribute="trailing" id="XVq-dY-Teg"/>
+                            <constraint firstItem="Ms4-vW-aQb" firstAttribute="bottom" secondItem="beI-vY-4KC" secondAttribute="bottom" id="cv5-Fw-svh"/>
+                            <constraint firstItem="Ms4-vW-aQb" firstAttribute="top" secondItem="beI-vY-4KC" secondAttribute="top" id="hwo-X7-Lqt"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="beI-vY-4KC"/>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="Ms4-vW-aQb" id="5to-Tq-EBQ"/>
+                        <segue destination="QNA-1N-1O1" kind="show" identifier="DeluxeDetailBookDownloadTableViewCell" customClass="SegueWithWindowShade" customModule="OpenLibrary" customModuleProvider="target" id="zS3-Ub-NH2"/>
+                        <segue destination="RJ5-x8-uas" kind="show" identifier="zoomLargeImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" customModuleProvider="target" id="gLI-1a-oY7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SfF-k7-17S" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2133" y="1707"/>
         </scene>
         <!--Blank View Controller-->
         <scene sceneID="GUx-Ak-A0c">
@@ -1209,8 +1251,8 @@ MarkDown text to HTML for display.&lt;/p&gt;
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="DI5-3C-klp"/>
-        <segue reference="N1H-Eu-32X"/>
-        <segue reference="Yjz-qW-0Hz"/>
+        <segue reference="k6c-ol-jGc"/>
+        <segue reference="MQK-lk-3dg"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

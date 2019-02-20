@@ -95,8 +95,8 @@ class ImageZoomTransition: ZoomTransition {
                 layoutMargins.bottom += fromVC.view.safeAreaInsets.bottom
                 
                 // the source view leading and trailing margins arethe same
-                layoutMargins.leading  = toView.directionalLayoutMargins.leading
-                layoutMargins.trailing = toView.directionalLayoutMargins.trailing
+                layoutMargins.leading  = OLPictureViewController.leftMargin
+                layoutMargins.trailing = OLPictureViewController.rightMargin
             }
             fullscreenPictureRect =
                 CGRect(

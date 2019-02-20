@@ -150,73 +150,75 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
     func displayToTableViewCell( _ tableView: UITableView, indexPath: IndexPath ) -> UITableViewCell {
         
         var cell: UITableViewCell?
-        if let object = objectAtIndexPath( indexPath ) {
+        guard let object = objectAtIndexPath( indexPath ) else {
             
-//            print( "display section:\(indexPath.section) row:\(indexPath.row) \(object.type.rawValue)" )
+            fatalError("Detail Object not found for: \(indexPath)")
+        }
             
-            switch object.type {
-            case .unknown:
-                assert( false )
-                break
+//        print( "display section:\(indexPath.section) row:\(indexPath.row) \(object.type.rawValue)" )
+        
+        switch object.type {
+        case .unknown:
+            assert( false )
+            break
+            
+        case .heading,
+             .subheading,
+             .body,
+             .inline,
+             .block,
+             .link,
+             .html:
+            if let headerCell = tableView.dequeueReusableCell( withIdentifier: object.type.reuseIdentifier ) as? DeluxeDetailTableViewCell {
                 
-            case .heading,
-                 .subheading,
-                 .body,
-                 .inline,
-                 .block,
-                 .link,
-                 .html:
-                if let headerCell = tableView.dequeueReusableCell( withIdentifier: object.type.reuseIdentifier ) as? DeluxeDetailTableViewCell {
-                    
-                    headerCell.configure( object )
-                    cell = headerCell
-                }
-                break
+                headerCell.configure( object )
+                cell = headerCell
+            }
+            break
+            
+        case .imageAuthor, .imageBook:
+            if let imageCell = tableView.dequeueReusableCell( withIdentifier: object.type.reuseIdentifier ) as? DeluxeDetailImageTableViewCell {
                 
-            case .imageAuthor, .imageBook:
-                if let imageCell = tableView.dequeueReusableCell( withIdentifier: object.type.reuseIdentifier ) as? DeluxeDetailImageTableViewCell {
-                    
-                    if let url = URL( string: object.value ) {
-                        if !imageCell.displayFromURL( url ) {
+                if let url = URL( string: object.value ) {
+                    if !imageCell.displayFromURL( url ) {
+                        
+                        if nil == imageGetOperation {
                             
-                            if nil == imageGetOperation {
-                                
-                                let imageType = .imageAuthor == object.type ? "a" : "b"
-                                
-                                imageGetOperation =
-                                    ImageGetOperation( stringID: object.caption, imageKeyName: "ID", localURL: url, size: "M", type: imageType ) {
+                            let imageType = .imageAuthor == object.type ? "a" : "b"
+                            
+                            imageGetOperation =
+                                ImageGetOperation( stringID: object.caption, imageKeyName: "ID", localURL: url, size: "M", type: imageType ) {
+                                    
+                                    [weak self] in
+                                    
+                                    DispatchQueue.main.async {
                                         
-                                        [weak self] in
+                                        guard let strongSelf = self else { return }
+                                        guard let vc = strongSelf.deluxeDetailVC else { return }
                                         
-                                        DispatchQueue.main.async {
-                                            
-                                            guard let strongSelf = self else { return }
-                                            guard let vc = strongSelf.deluxeDetailVC else { return }
-                                            
-                                            vc.tableView.reloadRows(
-                                                at: [indexPath], with: .automatic
-                                            )
-                                        }
-                                        
-                                        self?.imageGetOperation = nil
-                                }
-                                
-                                imageGetOperation!.userInitiated = true
-                                operationQueue.addOperation( imageGetOperation! )
+                                        vc.tableView?.reloadRows(
+                                            at: [indexPath], with: .automatic
+                                        )
+                                    }
+                                    
+                                    self?.imageGetOperation = nil
                             }
+                            
+                            imageGetOperation!.userInitiated = true
+                            operationQueue.addOperation( imageGetOperation! )
                         }
                     }
-                    cell = imageCell
                 }
-            case .downloadBook, .borrowBook, .buyBook:
-                if let headerCell = tableView.dequeueReusableCell( withIdentifier: object.type.reuseIdentifier ) as? DeluxeDetailTableViewCell {
-                    
-                    headerCell.configure( object )
-                    cell = headerCell
-                }
-                break
-                
+                cell = imageCell
             }
+        case .downloadBook, .borrowBook, .buyBook:
+            if let headerCell = tableView.dequeueReusableCell( withIdentifier: object.type.reuseIdentifier ) as? DeluxeDetailTableViewCell {
+                
+                headerCell.configure( object )
+                cell = headerCell
+            }
+            break
+            
         }
         
         return cell!
@@ -235,7 +237,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
         
         guard let deluxeVC = deluxeDetailVC else { return }
         
-        guard let indexPath = deluxeVC.tableView.indexPathForSelectedRow else { return }
+        guard let indexPath = deluxeVC.tableView?.indexPathForSelectedRow else { return }
         
         guard let object = objectAtIndexPath( indexPath ) else { return }
         
@@ -256,7 +258,7 @@ class DeluxeDetailCoordinator: OLQueryCoordinator, OLDeluxeDetailCoordinator {
         
         guard let deluxeVC = deluxeDetailVC else { return }
         
-        guard let indexPath = deluxeVC.tableView.indexPathForSelectedRow else { return }
+        guard let indexPath = deluxeVC.tableView?.indexPathForSelectedRow else { return }
         
         guard let object = objectAtIndexPath( indexPath ) else { return }
         
