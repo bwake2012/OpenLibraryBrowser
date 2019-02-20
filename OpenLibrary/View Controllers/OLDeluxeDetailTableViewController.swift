@@ -8,8 +8,8 @@
 
 import UIKit
 
-class OLDeluxeDetailTableViewController: UITableViewController {
-
+class OLDeluxeDetailTableViewController: OLTableViewController {
+    
     var queryCoordinator: OLDeluxeDetailCoordinator?
     var indexPathSavedForTransition: IndexPath?
         
@@ -20,10 +20,14 @@ class OLDeluxeDetailTableViewController: UITableViewController {
 
         super.viewDidLoad()
         
+        print("Loaded: \(self.restorationIdentifier ?? "Unknown Storyboard ID")")
+        
+        guard let tableView = self.tableView else { return }
+        
         // Do any additional setup after loading the view, typically from a nib.
-        self.tableView.estimatedRowHeight = 68.0
-        self.tableView.rowHeight = UITableView.automaticDimension
-        self.tableView.tableFooterView = UIView(frame: .zero)
+        tableView.estimatedRowHeight = 68.0
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.tableFooterView = UIView(frame: .zero)
 
         DeluxeDetailHeadingTableViewCell.registerCell( tableView )
         DeluxeDetailSubheadingTableViewCell.registerCell( tableView )
@@ -34,7 +38,6 @@ class OLDeluxeDetailTableViewController: UITableViewController {
         DeluxeDetailLinkTableViewCell.registerCell( tableView )
         DeluxeDetailHTMLTableViewCell.registerCell( tableView )
         DeluxeDetailBookDownloadTableViewCell.registerCell( tableView )
-        
     }
         
     override func didReceiveMemoryWarning() {
@@ -77,9 +80,17 @@ class OLDeluxeDetailTableViewController: UITableViewController {
         }
     }
 
+    @IBAction func dismiss(_ segue: UIStoryboardSegue) {
+        
+        
+    }
+}
+
+extension OLDeluxeDetailTableViewController: UITableViewDataSource {
+    
     // MARK: UITableViewDataSource
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var cell: UITableViewCell?
         if let queryCoordinator = queryCoordinator {
@@ -90,7 +101,7 @@ class OLDeluxeDetailTableViewController: UITableViewController {
         return cell!
     }
     
-    override func numberOfSections( in tableView: UITableView ) -> Int {
+    func numberOfSections( in tableView: UITableView ) -> Int {
     
         var count = 0
     
@@ -102,7 +113,7 @@ class OLDeluxeDetailTableViewController: UITableViewController {
         return count
     }
     
-    override func tableView( _ tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
+    func tableView( _ tableView: UITableView, numberOfRowsInSection section: Int ) -> Int {
         
         var rows = 0
         if let queryCoordinator = queryCoordinator {
@@ -112,8 +123,11 @@ class OLDeluxeDetailTableViewController: UITableViewController {
         
         return rows
     }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+}
+
+extension OLDeluxeDetailTableViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if let queryCoordinator = queryCoordinator {
             
@@ -122,19 +136,15 @@ class OLDeluxeDetailTableViewController: UITableViewController {
         }
     }
     
-    @IBAction func dismiss(_ segue: UIStoryboardSegue) {
-        
-
-    }
 }
 
 extension OLDeluxeDetailTableViewController: TransitionImage {
     
     var transitionRectImageView: UIImageView? {
         
-        guard let indexPath = tableView.indexPathForSelectedRow else { return nil }
+        guard let indexPath = tableView?.indexPathForSelectedRow else { return nil }
         
-        guard let imageCell = tableView.cellForRow( at: indexPath ) as? DeluxeDetailImageTableViewCell else { return nil }
+        guard let imageCell = tableView?.cellForRow( at: indexPath ) as? DeluxeDetailImageTableViewCell else { return nil }
 
         return imageCell.deluxeImage
     }
@@ -149,7 +159,7 @@ extension OLDeluxeDetailTableViewController: TransitionCell {
         assert( nil != indexPathSavedForTransition )
         if let indexPath = indexPathSavedForTransition {
             
-            sourceRectView = tableView.cellForRow( at: indexPath )
+            sourceRectView = tableView?.cellForRow( at: indexPath )
             indexPathSavedForTransition = nil
         }
         assert( nil != sourceRectView )
