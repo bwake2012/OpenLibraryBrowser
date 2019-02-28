@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8Ap-pz-4ly">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NJ0-nM-swT">
     <device id="retina6_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -47,14 +47,13 @@
                     <connections>
                         <outlet property="activityView" destination="m4X-Sy-Yyr" id="Zb3-4K-Aqa"/>
                         <outlet property="tableView" destination="hw0-1g-Jjf" id="chP-9l-vgm"/>
-                        <segue destination="gFU-3t-GOM" kind="showDetail" identifier="displayGeneralSearchAuthorDetail" customClass="SegueShowDetail" customModule="OpenLibrary" customModuleProvider="target" id="slP-df-BRM"/>
-                        <segue destination="xzb-fe-grp" kind="showDetail" identifier="displayGeneralSearchWorkDetail" customClass="SegueShowDetail" customModule="OpenLibrary" customModuleProvider="target" id="bNH-qu-qcP"/>
+                        <segue destination="gFU-3t-GOM" kind="show" identifier="displayGeneralSearchAuthorDetail" customClass="SegueWithTableViewCellZoom" customModule="OpenLibrary" customModuleProvider="target" id="slP-df-BRM"/>
+                        <segue destination="xzb-fe-grp" kind="show" identifier="displayGeneralSearchWorkDetail" customClass="SegueWithTableViewCellZoom" customModule="OpenLibrary" customModuleProvider="target" id="bNH-qu-qcP"/>
                         <segue destination="565-lf-E8F" kind="show" identifier="openBookSearch" customClass="SegueWithWindowShade" customModule="OpenLibrary" customModuleProvider="target" id="94o-EF-7BE"/>
                         <segue destination="Xmm-OC-cfc" kind="show" identifier="openBookSort" customClass="SegueWithWindowShade" customModule="OpenLibrary" customModuleProvider="target" id="a5k-8T-2Gm"/>
-                        <segue destination="9lP-Th-a8R" kind="showDetail" identifier="displayWorkEBooks" customClass="SegueShowDetail" customModule="OpenLibrary" customModuleProvider="target" id="usZ-AJ-S00"/>
+                        <segue destination="9lP-Th-a8R" kind="show" identifier="displayWorkEBooks" customClass="SegueWithTableViewCellZoom" customModule="OpenLibrary" customModuleProvider="target" id="usZ-AJ-S00"/>
                         <segue destination="rah-9z-s1H" kind="show" identifier="displayGeneralSearchAuthorList" customClass="SegueWithWindowShade" customModule="OpenLibrary" customModuleProvider="target" id="0Jo-u8-wSl"/>
-                        <segue destination="A6z-YD-Ru0" kind="showDetail" identifier="zoomLargeImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" customModuleProvider="target" id="EUe-NQ-BSb"/>
-                        <segue destination="L7Y-QI-d8l" kind="showDetail" identifier="displayBlank" customClass="SegueForSearch" customModule="OpenLibrary" customModuleProvider="target" id="O9W-Qw-PGf"/>
+                        <segue destination="RJ5-x8-uas" kind="show" identifier="zoomLargeImage" customClass="SegueWithImageZoom" customModule="OpenLibrary" customModuleProvider="target" id="Q2S-eh-3DU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fay-d8-U61" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -287,7 +286,7 @@
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                         <state key="normal" title="OpenLibrary Browser v1.0(109)"/>
                                                         <connections>
-                                                            <segue destination="K2s-7v-hMb" kind="presentation" identifier="aboutOpenLibraryBrowser" customClass="SegueWithWindowShade" customModule="OpenLibrary" modalPresentationStyle="fullScreen" id="hd5-vP-dnO"/>
+                                                            <segue destination="K2s-7v-hMb" kind="show" identifier="aboutOpenLibraryBrowser" customClass="SegueWithWindowShade" customModule="OpenLibrary" id="hd5-vP-dnO"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -778,31 +777,6 @@
             </objects>
             <point key="canvasLocation" x="4548" y="1839"/>
         </scene>
-        <!--Image Zoom Navigation Controller-->
-        <scene sceneID="86U-Ze-SUb">
-            <objects>
-                <navigationController modalTransitionStyle="crossDissolve" hidesBarsOnSwipe="YES" id="A6z-YD-Ru0" userLabel="Image Zoom Navigation Controller" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="79o-PL-uuF"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="cJO-aE-CaZ">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="barTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <connections>
-                        <outlet property="delegate" destination="dnf-0d-Q4L" id="jJc-Nx-FZa"/>
-                        <segue destination="RJ5-x8-uas" kind="relationship" relationship="rootViewController" id="MsK-Mb-BFi"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jG3-ZJ-lkQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <customObject id="dnf-0d-Q4L" customClass="NavigationControllerDelegate" customModule="OpenLibrary" customModuleProvider="target"/>
-            </objects>
-            <point key="canvasLocation" x="1097" y="1960"/>
-        </scene>
         <!--Edition Deluxe Detail-->
         <scene sceneID="Bvw-Rb-sRJ">
             <objects>
@@ -839,18 +813,18 @@
             </objects>
             <point key="canvasLocation" x="2901" y="2101"/>
         </scene>
-        <!--AuthorDetailNav-->
+        <!--AuthorDetail-->
         <scene sceneID="dkQ-Pm-QpD">
             <objects>
-                <viewControllerPlaceholder storyboardIdentifier="AuthorDetailNav" storyboardName="AuthorDetail" referencedIdentifier="AuthorDetailNav" id="gFU-3t-GOM" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardIdentifier="AuthorDetail" storyboardName="AuthorDetail" referencedIdentifier="AuthorDetail" id="gFU-3t-GOM" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="din-9s-GtI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1859" y="1220"/>
         </scene>
-        <!--WorkDetailNav-->
+        <!--WorkDetail-->
         <scene sceneID="ab5-i2-xHU">
             <objects>
-                <viewControllerPlaceholder storyboardIdentifier="WorkDetailNav" storyboardName="WorkDetail" referencedIdentifier="WorkDetailNav" id="xzb-fe-grp" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardIdentifier="WorkDetail" storyboardName="WorkDetail" referencedIdentifier="WorkDetail" id="xzb-fe-grp" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="UEl-5x-AnU"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U4e-GR-Zd8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -893,22 +867,6 @@
             </objects>
             <point key="canvasLocation" x="2133" y="1707"/>
         </scene>
-        <!--Blank View Controller-->
-        <scene sceneID="GUx-Ak-A0c">
-            <objects>
-                <viewController id="SWq-Ga-tge" userLabel="Blank View Controller" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Y55-NK-JSt">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <viewLayoutGuide key="safeArea" id="q2a-KR-ibo"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="XE0-JA-TVK"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="oFo-a3-ibx" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="300" y="1960"/>
-        </scene>
         <!--Open Library-->
         <scene sceneID="smY-AI-xbE">
             <objects>
@@ -918,17 +876,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aknowlegements:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rb5-iV-6cX">
-                                <rect key="frame" x="20" y="109.66666666666667" width="143.66666666666666" height="20.666666666666671"/>
+                                <rect key="frame" x="20" y="153.66666666666666" width="143.66666666666666" height="20.666666666666657"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Nr2-cT-ZlN" userLabel="Aknowlegement Contents">
-                                <rect key="frame" x="20" y="138.33333333333331" width="374" height="682.66666666666674"/>
+                                <rect key="frame" x="20" y="182.33333333333331" width="374" height="589.66666666666674"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AW5-PW-naU">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="682.66666666666663"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="589.66666666666663"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hz7-Y5-Crb" userLabel="Content">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="742"/>
@@ -984,7 +942,7 @@ MarkDown text to HTML for display.&lt;/p&gt;
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hCA-q2-UsH">
-                                <rect key="frame" x="20" y="829" width="374" height="33"/>
+                                <rect key="frame" x="20" y="780" width="374" height="33"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <state key="normal" title="Done"/>
                                 <connections>
@@ -995,14 +953,14 @@ MarkDown text to HTML for display.&lt;/p&gt;
                                 <rect key="frame" x="197" y="438" width="20" height="20"/>
                             </activityIndicatorView>
                             <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OpenLibrary Browser" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N8Y-Hl-mZn">
-                                <rect key="frame" x="0.0" y="51.999999999999993" width="414" height="31.666666666666664"/>
+                                <rect key="frame" x="0.0" y="96" width="414" height="31.666666666666671"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="An iOS client for the database at openlibrary.org." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7eU-nC-dMn">
-                                <rect key="frame" x="20" y="83.666666666666671" width="374" height="18"/>
+                                <rect key="frame" x="20" y="127.66666666666669" width="374" height="18"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1162,21 +1120,6 @@ MarkDown text to HTML for display.&lt;/p&gt;
             </objects>
             <point key="canvasLocation" x="2114" y="-365"/>
         </scene>
-        <!--Split View Controller-->
-        <scene sceneID="fS2-GP-d00">
-            <objects>
-                <splitViewController storyboardIdentifier="rootSplitViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8Ap-pz-4ly" customClass="SplitViewController" customModule="OpenLibrary" customModuleProvider="target" sceneMemberID="viewController">
-                    <connections>
-                        <outlet property="delegate" destination="Hb9-pd-dS4" id="bJq-7X-1XJ"/>
-                        <segue destination="NJ0-nM-swT" kind="relationship" relationship="masterViewController" id="aNU-db-Woc"/>
-                        <segue destination="L7Y-QI-d8l" kind="relationship" relationship="detailViewController" id="DI5-3C-klp"/>
-                    </connections>
-                </splitViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8f1-1J-vkw" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <customObject id="Hb9-pd-dS4" customClass="SplitViewControllerDelegate" customModule="OpenLibrary" customModuleProvider="target"/>
-            </objects>
-            <point key="canvasLocation" x="-731" y="993"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="YWK-eT-OB5">
             <objects>
@@ -1204,10 +1147,10 @@ MarkDown text to HTML for display.&lt;/p&gt;
             </objects>
             <point key="canvasLocation" x="300" y="994"/>
         </scene>
-        <!--workDetailEBooksNav-->
+        <!--workDetailEBooks-->
         <scene sceneID="OOT-ay-3El">
             <objects>
-                <viewControllerPlaceholder storyboardIdentifier="eBooks" storyboardName="eBooks" referencedIdentifier="workDetailEBooksNav" id="9lP-Th-a8R" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardIdentifier="eBooks" storyboardName="eBooks" referencedIdentifier="workDetailEBooks" id="9lP-Th-a8R" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1UI-Ot-9cU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1860" y="1090"/>
@@ -1220,38 +1163,12 @@ MarkDown text to HTML for display.&lt;/p&gt;
             </objects>
             <point key="canvasLocation" x="3548" y="956"/>
         </scene>
-        <!--Blank Navigation Controller-->
-        <scene sceneID="lZA-4j-Wjm">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" hidesBarsOnSwipe="YES" id="L7Y-QI-d8l" userLabel="Blank Navigation Controller" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ddP-kA-W1a">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="barTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <outlet property="delegate" destination="rxu-4b-g82" id="CNJ-Xe-DPX"/>
-                        <segue destination="SWq-Ga-tge" kind="relationship" relationship="rootViewController" id="Ee0-Dc-pbM"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GDh-C7-dCZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <customObject id="rxu-4b-g82" customClass="NavigationControllerDelegate" customModule="OpenLibrary" customModuleProvider="target"/>
-            </objects>
-            <point key="canvasLocation" x="-686" y="1960"/>
-        </scene>
     </scenes>
     <resources>
         <image name="rsw-notsorted-28x26" width="28" height="26"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="DI5-3C-klp"/>
-        <segue reference="k6c-ol-jGc"/>
+        <segue reference="zS3-Ub-NH2"/>
         <segue reference="MQK-lk-3dg"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

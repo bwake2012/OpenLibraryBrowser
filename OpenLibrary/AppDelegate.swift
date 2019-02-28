@@ -27,8 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     fileprivate lazy var mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
     
-    fileprivate lazy var splitViewController: UISplitViewController = {
-        return self.mainStoryboard.instantiateViewController( withIdentifier: "rootSplitViewController" ) as! UISplitViewController
+    fileprivate lazy var rootNavigationViewController: UINavigationController = {
+        return self.mainStoryboard.instantiateViewController( withIdentifier: "rootNavigationController" ) as! UINavigationController
     }()
     
     fileprivate let operationQueue = PSOperationQueue()
@@ -56,15 +56,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DispatchQueue.main.asyncAfter( deadline: delay ) {
                 
                 // NSLog( "Displaying Navigation Controller" )
-                let splitViewController = self.splitViewController
-                splitViewController.preferredDisplayMode = .allVisible
-                
-                if let navController = splitViewController.viewControllers.first as? UINavigationController {
+                let rootNavigationViewController = self.rootNavigationViewController
 
-                    navController.navigationBar.barStyle = .black
-                }
+                rootNavigationViewController.navigationBar.barStyle = .black
                 
-                self.window?.rootViewController = splitViewController
+                self.window?.rootViewController = rootNavigationViewController
             }
         }
         
