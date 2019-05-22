@@ -10,7 +10,7 @@ import UIKit
 
 class OLTableViewController: UIViewController {
     
-    var tableView: UITableView?
+    @IBOutlet var tableView: UITableView?
 
     override func viewDidLoad() {
         super.viewDidLoad()

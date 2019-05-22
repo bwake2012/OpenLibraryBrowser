@@ -12,6 +12,9 @@ import CoreData
 //import BNRCoreDataStack
 
 class OLPictureViewController: UIViewController {
+    
+    static let leftMargin: CGFloat = 16
+    static let rightMargin: CGFloat = 16
 
     @IBOutlet weak var pictureView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -36,7 +39,7 @@ class OLPictureViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear( animated )
-        
+
         assert( nil != queryCoordinator )
         
         queryCoordinator?.updateUI()
