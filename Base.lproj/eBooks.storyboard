@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -123,14 +123,14 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="D44-rC-BBH">
                                 <rect key="frame" x="0.0" y="88" width="375" height="690"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" verticalHuggingPriority="750" ambiguous="YES" restorationIdentifier="OLHeaderView" translatesAutoresizingMaskIntoConstraints="NO" id="crf-cB-pWP" userLabel="Header View" customClass="OLHeaderView" customModule="OpenLibrary" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" verticalHuggingPriority="750" restorationIdentifier="OLHeaderView" translatesAutoresizingMaskIntoConstraints="NO" id="crf-cB-pWP" userLabel="Header View" customClass="OLHeaderView" customModule="OpenLibrary" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="144"/>
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="image" keyPath="image" value="961-book-32"/>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <containerView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k3K-Yk-1Gr">
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k3K-Yk-1Gr">
                                         <rect key="frame" x="0.0" y="144" width="375" height="546"/>
                                         <connections>
                                             <segue destination="VxJ-Az-auT" kind="embed" identifier="embedWorkEBooks" id="IRL-XF-p2T"/>
@@ -194,31 +194,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n6w-0z-fKj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4040" y="904.94752623688169"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="T7S-MV-F5M">
-            <objects>
-                <navigationController storyboardIdentifier="workDetailEBooksNav" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" hidesBarsOnSwipe="YES" id="GUI-sz-cul" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="vxA-S8-hF9">
-                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="barTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <outlet property="delegate" destination="Lj7-Ol-pcV" id="KLd-VU-Nfd"/>
-                        <segue destination="WVd-O9-5v6" kind="relationship" relationship="rootViewController" id="ETc-f4-mbz"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8sF-CI-Q4T" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <customObject id="Lj7-Ol-pcV" customClass="NavigationControllerDelegate" customModule="OpenLibrary" customModuleProvider="target"/>
-            </objects>
-            <point key="canvasLocation" x="2320.8000000000002" y="993.55322338830592"/>
         </scene>
     </scenes>
     <resources>
