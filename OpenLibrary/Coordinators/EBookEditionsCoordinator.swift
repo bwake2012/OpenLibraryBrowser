@@ -404,6 +404,9 @@ extension EBookEditionsCoordinator: NSFetchedResultsControllerDelegate {
             
         case .update:
             updatedRowIndexPaths.append( indexPath! )
+
+        @unknown default:
+            fatalError("Unexpected NSFetchedResultsChangeType)")
         }
     }
     

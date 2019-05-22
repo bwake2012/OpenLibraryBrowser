@@ -647,6 +647,9 @@ extension GeneralSearchResultsCoordinator: NSFetchedResultsControllerDelegate {
             
         case .update:
             updatedRowIndexPaths.append( indexPath! )
+
+        @unknown default:
+            fatalError("Unexpected NSFetchedResultsChangeType")
         }
     }
     
