@@ -194,6 +194,7 @@ class OLHeaderView: UIView {
         label.lineBreakMode = .byWordWrapping
         label.setContentCompressionResistancePriority( UILayoutPriority(rawValue: 1000), for: .vertical )
         label.numberOfLines = 0
+        label.adjustsFontForContentSizeCategory = true
 
         button.backgroundColor = UIColor.clear
         button.translatesAutoresizingMaskIntoConstraints = false

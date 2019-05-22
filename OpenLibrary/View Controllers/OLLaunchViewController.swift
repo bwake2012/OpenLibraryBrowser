@@ -12,19 +12,12 @@ class OLLaunchViewController: UIViewController {
     
     var enableClose: Bool = false
     
-    fileprivate lazy var mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-    
-    fileprivate lazy var navController: UINavigationController = {
-        return self.mainStoryboard.instantiateViewController(withIdentifier: "rootNavigationController")
-            as! UINavigationController
-    }()
-    
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var copyright: UIButton!
 
     @IBAction func copyrightButtonTapped( _ sender: UIButton ) {
-        
-        dismiss( animated: true, completion: nil )
+
+        dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
