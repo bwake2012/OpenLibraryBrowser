@@ -24,7 +24,7 @@ class OLLaunchViewController: UIViewController {
 
     @IBAction func copyrightButtonTapped( _ sender: UIButton ) {
         
-        dismiss( animated: true, completion: nil )
+        presentingViewController?.dismiss( animated: true, completion: nil )
     }
     
     override func viewDidLoad() {

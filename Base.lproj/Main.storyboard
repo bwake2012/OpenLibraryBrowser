@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NJ0-nM-swT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NJ0-nM-swT">
     <device id="retina6_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -286,7 +286,7 @@
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                         <state key="normal" title="OpenLibrary Browser v1.0(109)"/>
                                                         <connections>
-                                                            <segue destination="K2s-7v-hMb" kind="show" identifier="aboutOpenLibraryBrowser" customClass="SegueWithWindowShade" customModule="OpenLibrary" id="hd5-vP-dnO"/>
+                                                            <segue destination="K2s-7v-hMb" kind="presentation" identifier="aboutOpenLibraryBrowser" customClass="SegueWithWindowShade" customModule="OpenLibrary" id="hd5-vP-dnO"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -876,17 +876,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aknowlegements:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rb5-iV-6cX">
-                                <rect key="frame" x="20" y="153.66666666666666" width="143.66666666666666" height="20.666666666666657"/>
+                                <rect key="frame" x="20" y="109.66666666666667" width="143.66666666666666" height="20.666666666666671"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Nr2-cT-ZlN" userLabel="Aknowlegement Contents">
-                                <rect key="frame" x="20" y="182.33333333333331" width="374" height="589.66666666666674"/>
+                                <rect key="frame" x="20" y="138.33333333333331" width="374" height="682.66666666666674"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AW5-PW-naU">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="589.66666666666663"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="682.66666666666663"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hz7-Y5-Crb" userLabel="Content">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="742"/>
@@ -942,7 +942,7 @@ MarkDown text to HTML for display.&lt;/p&gt;
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hCA-q2-UsH">
-                                <rect key="frame" x="20" y="780" width="374" height="33"/>
+                                <rect key="frame" x="20" y="829" width="374" height="33"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <state key="normal" title="Done"/>
                                 <connections>
@@ -953,14 +953,14 @@ MarkDown text to HTML for display.&lt;/p&gt;
                                 <rect key="frame" x="197" y="438" width="20" height="20"/>
                             </activityIndicatorView>
                             <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OpenLibrary Browser" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N8Y-Hl-mZn">
-                                <rect key="frame" x="0.0" y="96" width="414" height="31.666666666666671"/>
+                                <rect key="frame" x="0.0" y="51.999999999999993" width="414" height="31.666666666666664"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="An iOS client for the database at openlibrary.org." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7eU-nC-dMn">
-                                <rect key="frame" x="20" y="127.66666666666669" width="374" height="18"/>
+                                <rect key="frame" x="20" y="83.666666666666671" width="374" height="18"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -975,7 +975,7 @@ MarkDown text to HTML for display.&lt;/p&gt;
                             <constraint firstItem="N8Y-Hl-mZn" firstAttribute="top" secondItem="xF4-rt-MAB" secondAttribute="top" constant="8" id="FVY-hd-Sec"/>
                             <constraint firstItem="hCA-q2-UsH" firstAttribute="leading" secondItem="el7-qg-pbV" secondAttribute="leadingMargin" id="Fep-Mq-AOf"/>
                             <constraint firstItem="Nr2-cT-ZlN" firstAttribute="trailing" secondItem="el7-qg-pbV" secondAttribute="trailingMargin" id="KJ8-BI-ozP"/>
-                            <constraint firstItem="xF4-rt-MAB" firstAttribute="bottom" secondItem="hCA-q2-UsH" secondAttribute="bottom" constant="8" symbolic="YES" id="NUE-zb-PqM"/>
+                            <constraint firstItem="xF4-rt-MAB" firstAttribute="bottom" secondItem="hCA-q2-UsH" secondAttribute="bottom" symbolic="YES" id="NUE-zb-PqM"/>
                             <constraint firstItem="Nr2-cT-ZlN" firstAttribute="leading" secondItem="el7-qg-pbV" secondAttribute="leadingMargin" id="OTA-9W-6qY"/>
                             <constraint firstItem="rb5-iV-6cX" firstAttribute="top" secondItem="7eU-nC-dMn" secondAttribute="bottom" constant="8" id="RM4-so-QOq"/>
                             <constraint firstItem="hCA-q2-UsH" firstAttribute="top" secondItem="Nr2-cT-ZlN" secondAttribute="bottom" constant="8" symbolic="YES" id="WZz-16-HJQ"/>
