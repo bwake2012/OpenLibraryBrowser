@@ -13,34 +13,13 @@ import PSOperations
 class AlertOperation: PSOperation {
     // MARK: Properties
 
-    fileprivate lazy var alertController = UIAlertController( title: nil, message: nil, preferredStyle: .alert )
-    fileprivate let presentationContext: UIViewController?
-    
-    var title: String? {
-        get {
-            return alertController.title
-        }
+    var title: String?
+    var message: String?
 
-        set {
-            alertController.title = newValue
-            name = newValue
-        }
-    }
-    
-    var message: String? {
-        get {
-            return alertController.message
-        }
-        
-        set {
-            alertController.message = newValue
-        }
-    }
-    
+    fileprivate var actions: [UIAlertAction] = []
     // MARK: Initialization
     
     init(presentationContext: UIViewController? = nil) {
-        self.presentationContext = presentationContext ?? UIApplication.topViewController()
 
         super.init()
         
@@ -55,32 +34,54 @@ class AlertOperation: PSOperation {
     }
     
     func addAction(_ title: String, style: UIAlertAction.Style = .default, handler: @escaping (AlertOperation) -> Void = { _ in }) {
-        let action = UIAlertAction(title: title, style: style) { [weak self] _ in
-            if let strongSelf = self {
-                handler(strongSelf)
-            }
 
-            self?.finish()
+        let action = UIAlertAction(title: title, style: style) { [weak self] _ in
+
+            guard let self = self else { return }
+
+            handler(self)
+
+            self.finish()
         }
         
-        alertController.addAction(action)
+        self.actions.append(action)
     }
     
     override func execute() {
-        guard let presentationContext = presentationContext else {
+
+        guard let presentationContext = UIApplication.topViewController()
+        else {
+
             finish()
 
             return
         }
 
-        DispatchQueue.main.async {
-            if self.alertController.actions.isEmpty {
+        DispatchQueue.main.async { [weak self] in
+
+            guard let self = self else { return }
+
+            if self.actions.isEmpty {
                 self.addAction("OK")
+            }
+
+            let alertController =
+                UIAlertController(
+                        title: self.title,
+                        message: self.message,
+                        preferredStyle: .alert
+                    )
+
+            for action in self.actions {
+
+                alertController.addAction(action)
             }
             
             presentationContext.present(
-                    self.alertController, animated: true, completion: self.presentationComplete
-                )
+                alertController,
+                animated: true,
+                completion: self.presentationComplete
+            )
         }
     }
     
