@@ -10,14 +10,6 @@ import UIKit
 
 extension UIView {
     
-    class var nameOfClass: String {
-        return NSStringFromClass(self).components(separatedBy: ".").last!
-    }
-    
-    var nameOfClass: String {
-        return NSStringFromClass(type(of: self)).components( separatedBy: "." ).last!
-    }
-    
     fileprivate class func registerCell( _ tableView: UITableView, className: String ) {
         
         let nib = UINib( nibName: className, bundle: nil )
@@ -36,7 +28,4 @@ extension UIView {
         
         return view
     }
-
 }
-
-
