@@ -296,6 +296,9 @@ class AuthorEditionsCoordinator: OLQueryCoordinator, NSFetchedResultsControllerD
             
         case .update:
             updatedRowIndexPaths.append( indexPath! )
+
+        @unknown default:
+            break
         }
     }
     
