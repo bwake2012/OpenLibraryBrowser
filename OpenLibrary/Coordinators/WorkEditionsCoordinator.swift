@@ -425,6 +425,9 @@ extension WorkEditionsCoordinator: NSFetchedResultsControllerDelegate {
             
         case .update:
             updatedRowIndexPaths.append( indexPath! )
+
+        @unknown default:
+            break
         }
     }
     
