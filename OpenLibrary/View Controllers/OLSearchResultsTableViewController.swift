@@ -44,10 +44,13 @@ class OLSearchResultsTableViewController: UIViewController {
     @IBOutlet fileprivate var activityView: UIActivityIndicatorView!
     
     deinit {
-        
-        SegmentedTableViewCell.emptyCellHeights( tableView )
-        
-        generalSearchCoordinator.saveState()
+
+        if let tableView = self.tableView {
+
+            SegmentedTableViewCell.emptyCellHeights( tableView )
+            
+            generalSearchCoordinator.saveState()
+        }
     }
     
     // MARK: UIViewController
