@@ -23,6 +23,7 @@ public struct Photos: CapabilityType {
             case .denied: completion(.denied)
             case .restricted: completion(.notAvailable)
             case .notDetermined: completion(.notDetermined)
+            case .limited: completion(.limited)
         }
     }
     
@@ -33,6 +34,7 @@ public struct Photos: CapabilityType {
                 case .denied: completion(.denied)
                 case .restricted: completion(.notAvailable)
                 case .notDetermined: completion(.notDetermined)
+                case .limited: completion(.limited)
             }
         }
     }
