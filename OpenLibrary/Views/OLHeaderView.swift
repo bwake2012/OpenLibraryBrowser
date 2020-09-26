@@ -121,7 +121,9 @@ class OLHeaderView: UIView {
     }
     
     func xibSetup() {
-        contentView = loadViewFromNib()
+
+        let contentView = loadViewFromNib()
+        self.contentView = contentView
         
         // Adding custom subview on top of our view (over any custom drawing > see note below)
         addSubview(contentView)
