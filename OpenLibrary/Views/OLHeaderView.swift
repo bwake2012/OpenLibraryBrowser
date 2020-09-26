@@ -188,8 +188,8 @@ class OLHeaderView: UIView {
         
         summaryStack.insertArrangedSubview( label, at: index )
         label.attributedText = makeAttributedString( string: text, style: style )
-        label.textColor = segueName.isEmpty ? UIColor.darkText : self.tintColor
-        label.backgroundColor = self.contentView.backgroundColor
+        label.textColor = segueName.isEmpty ? UIColor(named: "defaultText") : self.tintColor
+        label.backgroundColor = summaryStack.backgroundColor
         label.isOpaque = true
         label.lineBreakMode = .byWordWrapping
         label.setContentCompressionResistancePriority( UILayoutPriority(rawValue: 1000), for: .vertical )
