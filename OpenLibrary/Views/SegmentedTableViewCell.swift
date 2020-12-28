@@ -157,14 +157,18 @@ class SegmentedTableViewCell: UITableViewCell {
         return height
     }
     
-    class func emptyCellHeights( _ tableView: UITableView ) -> Void {
+    class func emptyCellHeights( _ tableView: UITableView? ) -> Void {
+
+        guard let tableView = tableView else { return }
         
         SegmentedTableViewCell.tableCellHeightsByKey[tableView] = [:]
         SegmentedTableViewCell.tableCellKeysByIndexPath[tableView] = [:]
     }
     
-    class func emptyIndexPathToKeyLookup( _ tableView: UITableView ) -> Void {
+    class func emptyIndexPathToKeyLookup( _ tableView: UITableView? ) -> Void {
         
+        guard let tableView = tableView else { return }
+
         SegmentedTableViewCell.tableCellKeysByIndexPath[tableView] = [:]
     }
     

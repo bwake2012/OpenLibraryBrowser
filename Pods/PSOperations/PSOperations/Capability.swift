@@ -14,6 +14,7 @@ public enum CapabilityErrorCode: Int {
     case notDetermined
     case notAvailable
     case denied
+    case limited
 }
 
 public enum CapabilityStatus {
@@ -31,6 +32,9 @@ public enum CapabilityStatus {
     
     /// There was an error requesting the status of the capability
     case error(NSError)
+
+    /// The capability has been limited
+    case limited
 }
 
 public protocol CapabilityType {
@@ -126,6 +130,7 @@ private extension CapabilityStatus {
             case .denied: return NSError(capabilityErrorCode: .denied)
             case .notAvailable: return NSError(capabilityErrorCode: .notAvailable)
             case .error(let e): return e
+            case .limited: return NSError(capabilityErrorCode: .limited)
         }
     }
 }
