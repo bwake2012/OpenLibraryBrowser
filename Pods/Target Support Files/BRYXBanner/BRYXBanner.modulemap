@@ -1,4 +1,4 @@
-framework module BRYXBanner {
+module BRYXBanner {
   umbrella header "BRYXBanner-umbrella.h"
 
   export *

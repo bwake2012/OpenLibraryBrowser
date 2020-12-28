@@ -1,4 +1,4 @@
-framework module Pods_OpenLibrary {
+module Pods_OpenLibrary {
   umbrella header "Pods-OpenLibrary-umbrella.h"
 
   export *

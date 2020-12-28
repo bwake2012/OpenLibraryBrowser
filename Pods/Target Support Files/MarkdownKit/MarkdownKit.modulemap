@@ -1,4 +1,4 @@
-framework module MarkdownKit {
+module MarkdownKit {
   umbrella header "MarkdownKit-umbrella.h"
 
   export *

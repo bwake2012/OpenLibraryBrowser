@@ -140,6 +140,8 @@ class OLHeaderView: UIView {
         NSLayoutConstraint( item: contentView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: 0.0 ).isActive = true
         
         NSLayoutConstraint( item: contentView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: 0.0 ).isActive = true
+
+        self.contentView = contentView
     }
     
     func loadViewFromNib() -> UIView {

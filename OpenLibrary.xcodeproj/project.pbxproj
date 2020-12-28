@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		66CF87CF60812291B5A483C3 /* Pods_OpenLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6418131330C094E20927EACA /* Pods_OpenLibrary.framework */; };
+		1137B04DA2E06B31D12A4F97 /* libPods-OpenLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB94FCE399CA1B5197328B5C /* libPods-OpenLibrary.a */; };
 		C402AA601D9194D30030E35F /* OpenLibraryBrowser.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C402AA5E1D9194D30030E35F /* OpenLibraryBrowser.xcdatamodeld */; };
 		C406E7561D8C75C9008E2379 /* NSBundle+AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C406E7551D8C75C9008E2379 /* NSBundle+AppVersion.swift */; };
 		C40A28631D71121A001ABC20 /* EditionDetailDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40A28601D711219001ABC20 /* EditionDetailDownloadOperation.swift */; };
@@ -20,6 +20,7 @@
 		C40E97F81CC7D1540013A3F5 /* GeneralSearchResultsDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40E97F41CC7D1540013A3F5 /* GeneralSearchResultsDownloadOperation.swift */; };
 		C40E97F91CC7D1540013A3F5 /* GeneralSearchResultsDeleteOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40E97F51CC7D1540013A3F5 /* GeneralSearchResultsDeleteOperation.swift */; };
 		C40E97FA1CC7D1540013A3F5 /* GeneralSearchOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40E97F61CC7D1540013A3F5 /* GeneralSearchOperation.swift */; };
+		C4107DF122A002EF00C149F3 /* NSObject+nameOfClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4107DF022A002EF00C149F3 /* NSObject+nameOfClass.swift */; };
 		C41082141CB9E13B00319B83 /* OLTitleSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41082131CB9E13B00319B83 /* OLTitleSearchResult.swift */; };
 		C410821B1CBA961500319B83 /* TitleSearchResultsDownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41082171CBA961500319B83 /* TitleSearchResultsDownloadOperation.swift */; };
 		C410821C1CBA961500319B83 /* TitleSearchResultsParseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41082181CBA961500319B83 /* TitleSearchResultsParseOperation.swift */; };
@@ -226,8 +227,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6418131330C094E20927EACA /* Pods_OpenLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BBDA9D0BB53DFD704107AAA /* Pods-OpenLibrary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenLibrary.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OpenLibrary/Pods-OpenLibrary.debug.xcconfig"; sourceTree = "<group>"; };
+		BB94FCE399CA1B5197328B5C /* libPods-OpenLibrary.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OpenLibrary.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C402AA5F1D9194D30030E35F /* OpenLibraryBrowser.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OpenLibraryBrowser.xcdatamodel; sourceTree = "<group>"; };
 		C406E7551D8C75C9008E2379 /* NSBundle+AppVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSBundle+AppVersion.swift"; sourceTree = "<group>"; };
 		C40A28601D711219001ABC20 /* EditionDetailDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditionDetailDownloadOperation.swift; sourceTree = "<group>"; };
@@ -240,6 +241,7 @@
 		C40E97F41CC7D1540013A3F5 /* GeneralSearchResultsDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralSearchResultsDownloadOperation.swift; sourceTree = "<group>"; };
 		C40E97F51CC7D1540013A3F5 /* GeneralSearchResultsDeleteOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralSearchResultsDeleteOperation.swift; sourceTree = "<group>"; };
 		C40E97F61CC7D1540013A3F5 /* GeneralSearchOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralSearchOperation.swift; sourceTree = "<group>"; };
+		C4107DF022A002EF00C149F3 /* NSObject+nameOfClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+nameOfClass.swift"; sourceTree = "<group>"; };
 		C41082131CB9E13B00319B83 /* OLTitleSearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OLTitleSearchResult.swift; sourceTree = "<group>"; };
 		C41082151CBA961500319B83 /* TitleSearchOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleSearchOperation.swift; sourceTree = "<group>"; };
 		C41082171CBA961500319B83 /* TitleSearchResultsDownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleSearchResultsDownloadOperation.swift; sourceTree = "<group>"; };
@@ -442,7 +444,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66CF87CF60812291B5A483C3 /* Pods_OpenLibrary.framework in Frameworks */,
+				1137B04DA2E06B31D12A4F97 /* libPods-OpenLibrary.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -778,6 +780,7 @@
 				C434CC281D9595AC009540E3 /* UIImage+paddedImage.swift */,
 				C4677E9E1C9CE35A0070CDFD /* UIImageView+DisplayFromURL.swift */,
 				C4A4AA012183FA4F00F9C23F /* UIView+nearestCommonSuperview.swift */,
+				C4107DF022A002EF00C149F3 /* NSObject+nameOfClass.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -785,7 +788,7 @@
 		C7DA60421F430B39967E1D87 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6418131330C094E20927EACA /* Pods_OpenLibrary.framework */,
+				BB94FCE399CA1B5197328B5C /* libPods-OpenLibrary.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -802,7 +805,6 @@
 				C4E35E1C1C7E07950015D187 /* Frameworks */,
 				C4E35E1D1C7E07950015D187 /* Resources */,
 				C48B8A401D4D1D3A00C29D00 /* ShellScript */,
-				AB67549D076914BEF129D11A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -975,34 +977,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AB67549D076914BEF129D11A /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-OpenLibrary/Pods-OpenLibrary-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/BRYXBanner/BRYXBanner.framework",
-				"${BUILT_PRODUCTS_DIR}/MarkdownKit/MarkdownKit.framework",
-				"${BUILT_PRODUCTS_DIR}/PSOperations/PSOperations.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BRYXBanner.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarkdownKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PSOperations.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-OpenLibrary/Pods-OpenLibrary-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		C48B8A401D4D1D3A00C29D00 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1169,6 +1143,7 @@
 				C415E2EC1DB16D0300E1350B /* AuthorsTableViewCell.swift in Sources */,
 				C4AB16E41CDA801100D6DF05 /* DeluxeDetailTableViewCell.swift in Sources */,
 				C42DBE6F1CBD68740048788E /* ZoomTransition.swift in Sources */,
+				C4107DF122A002EF00C149F3 /* NSObject+nameOfClass.swift in Sources */,
 				C4A4AA022183FA4F00F9C23F /* UIView+nearestCommonSuperview.swift in Sources */,
 				C45E820A1CE42CC900307BAC /* IAEBookInfoGetOperation.swift in Sources */,
 				C422A4A31CD1328100A6B4A7 /* UncoverBottomZoomTransition.swift in Sources */,

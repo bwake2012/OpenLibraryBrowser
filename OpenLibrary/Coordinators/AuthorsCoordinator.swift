@@ -246,6 +246,9 @@ extension AuthorsCoordinator: NSFetchedResultsControllerDelegate {
             
         case .update:
             updatedRowIndexPaths.append( indexPath! )
+
+        @unknown default:
+            break
         }
     }
     
