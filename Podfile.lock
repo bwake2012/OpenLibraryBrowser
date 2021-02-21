@@ -1,0 +1,28 @@
+PODS:
+  - BRYXBanner (0.8.4)
+  - MarkdownKit (1.6)
+  - PSOperations/Core (4.2.0)
+  - ReachabilitySwift (4.3.1)
+
+DEPENDENCIES:
+  - BRYXBanner (~> 0.8)
+  - MarkdownKit
+  - PSOperations/Core (~> 4.2)
+  - ReachabilitySwift (~> 4.3)
+
+SPEC REPOS:
+  trunk:
+    - BRYXBanner
+    - MarkdownKit
+    - PSOperations
+    - ReachabilitySwift
+
+SPEC CHECKSUMS:
+  BRYXBanner: 4fbd266f96ce000e4c6cc9a0558c446bd88d9801
+  MarkdownKit: 6aa4aee263c7efae3de570cded0767f85c38fc78
+  PSOperations: c61e49d2b456b82986174bca82fd7b4716dce372
+  ReachabilitySwift: 4032e2f59586e11e3b0ebe15b167abdd587a388b
+
+PODFILE CHECKSUM: 122b4da31ed08e3068fe3460bf1fcc355ac4477c
+
+COCOAPODS: 1.10.0

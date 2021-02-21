@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_0" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17502"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,11 +14,12 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="209"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EBY-HK-hBA" id="F18-x3-RBU">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="208"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="209"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" translatesAutoresizingMaskIntoConstraints="NO" id="hWR-GX-g7U" customClass="AspectRatioImageView" customModule="OpenLibrary" customModuleProvider="target">
-                        <rect key="frame" x="8" y="8" width="192" height="192"/>
+                        <rect key="frame" x="16" y="11" width="192" height="192"/>
+
                         <color key="tintColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="192" id="4yC-xN-qzP"/>
@@ -27,10 +27,12 @@
                         </constraints>
                     </imageView>
                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="IV9-di-edx">
-                        <rect key="frame" x="86" y="85" width="37" height="37"/>
-                        <color key="color" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <rect key="frame" x="93.5" y="88.5" width="37" height="37"/>
+
+                        <color key="color" systemColor="systemBlueColor"/>
                     </activityIndicatorView>
                 </subviews>
+
                 <constraints>
                     <constraint firstItem="hWR-GX-g7U" firstAttribute="top" secondItem="F18-x3-RBU" secondAttribute="topMargin" id="KiA-gd-1NF"/>
                     <constraint firstItem="IV9-di-edx" firstAttribute="centerY" secondItem="hWR-GX-g7U" secondAttribute="centerY" id="YMG-MY-06O"/>
@@ -39,7 +41,7 @@
                     <constraint firstAttribute="bottomMargin" secondItem="hWR-GX-g7U" secondAttribute="bottom" priority="990" id="peL-Oq-GOv"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+
             <connections>
                 <outlet property="activityIndicator" destination="IV9-di-edx" id="9GD-JQ-Ob2"/>
                 <outlet property="deluxeImage" destination="hWR-GX-g7U" id="71R-3c-69h"/>
@@ -47,4 +49,12 @@
             <point key="canvasLocation" x="191" y="307.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

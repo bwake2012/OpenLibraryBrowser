@@ -28,20 +28,13 @@ class DeluxeDetailHTMLTableViewCell: DeluxeDetailTableViewCell {
             
             attributedText = convertHTMLText( htmlValue: data.value )
         }
-        
-        let newFont = UIFont.preferredFont( forTextStyle: UIFont.TextStyle.body )
-        
-        attributedText.enumerateAttribute(
-            NSAttributedString.Key.font,
-            in: NSRange( location: 0, length: attributedText.length ),
-            options: NSAttributedString.EnumerationOptions(rawValue: 0)
-        ) {
-            (value, range, stop) -> Void in
-            
-            attributedText.removeAttribute( NSAttributedString.Key.font, range: range )
-            attributedText.addAttribute( NSAttributedString.Key.font, value: newFont, range: range )
-        }
 
+        attributedText = adjustFont(text: attributedText, to: .body)
+
+        if let textColor = UIColor(named: "defaultText") {
+            attributedText = adjustColor(text: attributedText, to: textColor)
+        }
+        
         htmlView.attributedText = attributedText
 
         setNeedsLayout()
@@ -77,5 +70,44 @@ class DeluxeDetailHTMLTableViewCell: DeluxeDetailTableViewCell {
 
         return theAttributedString
     }
+
+    func adjustFont(text: NSAttributedString, to style: UIFont.TextStyle) -> NSMutableAttributedString {
+
+        let newFont = UIFont.preferredFont( forTextStyle: style )
+
+        let attributedText = NSMutableAttributedString( attributedString: text )
+
+        attributedText.enumerateAttribute(
+            NSAttributedString.Key.font,
+            in: NSRange( location: 0, length: attributedText.length ),
+            options: NSAttributedString.EnumerationOptions(rawValue: 0)
+        ) {
+            (value, range, stop) -> Void in
+
+            attributedText.removeAttribute( NSAttributedString.Key.font, range: range )
+            attributedText.addAttribute( NSAttributedString.Key.font, value: newFont, range: range )
+        }
+
+        return attributedText
+    }
+
+    func adjustColor(text: NSAttributedString, to newColor: UIColor) -> NSMutableAttributedString {
+
+        let attributedText = NSMutableAttributedString( attributedString: text )
+
+        attributedText.enumerateAttribute(
+            NSAttributedString.Key.foregroundColor,
+            in: NSRange( location: 0, length: attributedText.length ),
+            options: NSAttributedString.EnumerationOptions(rawValue: 0)
+        ) {
+            (value, range, stop) -> Void in
+
+            attributedText.removeAttribute( NSAttributedString.Key.foregroundColor, range: range )
+            attributedText.addAttribute( NSAttributedString.Key.foregroundColor, value: newColor, range: range )
+        }
+
+        return attributedText
+    }
+
 }
 

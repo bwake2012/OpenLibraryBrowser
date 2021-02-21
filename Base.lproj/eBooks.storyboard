@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina5_9" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,19 +18,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nia-aN-MjF">
-                                <rect key="frame" x="0.0" y="44" width="375" height="468"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="502"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="EbookEditionTableViewCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="EbookEditionTableViewCell" rowHeight="101" id="YYo-Za-IsZ" customClass="EbookEditionTableViewCell" customModule="OpenLibrary">
                                         <rect key="frame" x="0.0" y="28" width="375" height="101"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YYo-Za-IsZ" id="h4q-bs-TUQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="100.66666666666667"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="101"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="760" translatesAutoresizingMaskIntoConstraints="NO" id="WNJ-dU-1y0" userLabel="WorkEditionCover">
-                                                    <rect key="frame" x="15" y="11" width="60" height="84"/>
-                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <rect key="frame" x="16" y="11" width="60" height="84"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <color key="tintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="84" id="O1l-S0-quc"/>
@@ -39,37 +38,37 @@
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="d0i-Q2-w2J">
-                                                    <rect key="frame" x="83" y="11" width="277" height="79"/>
+                                                    <rect key="frame" x="84" y="11" width="275" height="79"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" text=" Title" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oud-ZT-Tod">
-                                                            <rect key="frame" x="0.0" y="0.0" width="277" height="20.333333333333332"/>
-                                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="275" height="20.333333333333332"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" text=" Subtitle" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="94D-nn-H2C">
-                                                            <rect key="frame" x="0.0" y="20.333333333333332" width="277" height="17.999999999999996"/>
-                                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <rect key="frame" x="0.0" y="20.333333333333332" width="275" height="17.999999999999996"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" text="Author Name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="37q-q8-Dny">
-                                                            <rect key="frame" x="0.0" y="38.333333333333336" width="277" height="18"/>
+                                                            <rect key="frame" x="0.0" y="38.333333333333336" width="275" height="18"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="eBook Status" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7E8-RR-p1T" userLabel="eBook Status">
-                                                            <rect key="frame" x="0.0" y="56.333333333333321" width="277" height="22.666666666666664"/>
+                                                            <rect key="frame" x="0.0" y="56.333333333333321" width="275" height="22.666666666666664"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 </stackView>
                                             </subviews>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstItem="WNJ-dU-1y0" firstAttribute="leading" secondItem="h4q-bs-TUQ" secondAttribute="leadingMargin" id="lns-WE-PEP"/>
                                                 <constraint firstItem="d0i-Q2-w2J" firstAttribute="top" secondItem="h4q-bs-TUQ" secondAttribute="topMargin" id="oEr-8U-31h"/>
@@ -79,6 +78,7 @@
                                                 <constraint firstAttribute="bottomMargin" secondItem="d0i-Q2-w2J" secondAttribute="bottom" id="zMo-97-H1J"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <connections>
                                             <outlet property="authorName" destination="37q-q8-Dny" id="geE-eR-Naa"/>
                                             <outlet property="cellImage" destination="WNJ-dU-1y0" id="emw-UW-ldB"/>
@@ -94,14 +94,14 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="463-YU-7Qm"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="nia-aN-MjF" firstAttribute="top" secondItem="463-YU-7Qm" secondAttribute="top" id="8rg-wI-Rmw"/>
                             <constraint firstItem="463-YU-7Qm" firstAttribute="trailing" secondItem="nia-aN-MjF" secondAttribute="trailing" id="UG2-WU-jEz"/>
                             <constraint firstItem="463-YU-7Qm" firstAttribute="bottom" secondItem="nia-aN-MjF" secondAttribute="bottom" id="aaC-QA-8fm"/>
                             <constraint firstItem="nia-aN-MjF" firstAttribute="leading" secondItem="463-YU-7Qm" secondAttribute="leading" id="cj3-Fe-n2G"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="463-YU-7Qm"/>
                     </view>
                     <connections>
                         <outlet property="tableView" destination="nia-aN-MjF" id="xvB-oB-k2j"/>
@@ -123,14 +123,14 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="D44-rC-BBH">
                                 <rect key="frame" x="0.0" y="88" width="375" height="690"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" verticalHuggingPriority="750" restorationIdentifier="OLHeaderView" translatesAutoresizingMaskIntoConstraints="NO" id="crf-cB-pWP" userLabel="Header View" customClass="OLHeaderView" customModule="OpenLibrary" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" ambiguous="YES" restorationIdentifier="OLHeaderView" translatesAutoresizingMaskIntoConstraints="NO" id="crf-cB-pWP" userLabel="Header View" customClass="OLHeaderView" customModule="OpenLibrary" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="144"/>
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="image" keyPath="image" value="961-book-32"/>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k3K-Yk-1Gr">
+                                    <containerView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k3K-Yk-1Gr">
                                         <rect key="frame" x="0.0" y="144" width="375" height="546"/>
                                         <connections>
                                             <segue destination="VxJ-Az-auT" kind="embed" identifier="embedWorkEBooks" id="IRL-XF-p2T"/>
@@ -143,6 +143,7 @@
                                 <rect key="frame" x="169" y="387.66666666666669" width="37" height="37"/>
                             </activityIndicatorView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="y9j-hW-hkk"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="NI8-mo-MUe" firstAttribute="centerX" secondItem="y9j-hW-hkk" secondAttribute="centerX" id="0i2-mr-LdO"/>
@@ -152,7 +153,6 @@
                             <constraint firstItem="D44-rC-BBH" firstAttribute="top" secondItem="y9j-hW-hkk" secondAttribute="top" id="Nmy-o6-aqz"/>
                             <constraint firstItem="y9j-hW-hkk" firstAttribute="trailing" secondItem="D44-rC-BBH" secondAttribute="trailing" id="soA-pl-C2I"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="y9j-hW-hkk"/>
                     </view>
                     <navigationItem key="navigationItem" title="eBooks" id="eQ9-q5-e9p"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO">
@@ -171,10 +171,10 @@
             </objects>
             <point key="canvasLocation" x="3260" y="993.55322338830592"/>
         </scene>
-        <!--UIViewController-QNA-1N-1O1-->
+        <!--OLBookDownloadViewController-->
         <scene sceneID="mgI-88-LLM">
             <objects>
-                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="UIViewController-QNA-1N-1O1" id="4TK-DC-Htd" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="OLBookDownloadViewController" id="4TK-DC-Htd" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w8h-GB-4H5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3086" y="1640"/>
@@ -198,5 +198,8 @@
     </scenes>
     <resources>
         <image name="961-book-32" width="20" height="28"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

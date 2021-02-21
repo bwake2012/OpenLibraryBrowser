@@ -26,10 +26,17 @@ func nukeObsoleteStore() -> Void {
         guard let storeFolderURL = FileManager().urls( for: .documentDirectory, in: .userDomainMask ).first else {
             return
         }
+
         let versionURL = storeFolderURL.appendingPathComponent( storeName ).appendingPathExtension( "version" )
-        let previousVersion = NSKeyedUnarchiver.unarchiveObject( withFile: versionURL.path ) as? String
-        
-        if nil == previousVersion || currentVersion != previousVersion {
+        guard
+            let data = try? Data(contentsOf: versionURL),
+            let version = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSString.self, from: data)
+        else {
+            return
+        }
+
+        let previousVersion = version as String
+        if currentVersion != previousVersion {
             
             NSLog( "Nuking previous data store" )
             
@@ -67,9 +74,10 @@ func nukeObsoleteStore() -> Void {
                 NSLog( "Error \(error) removing \(oldArchiveURL)" )
             }
             
-            let path = versionURL.path
-            
-            NSKeyedArchiver.archiveRootObject( currentVersion, toFile: path )
+            if let data = try? NSKeyedArchiver.archivedData(withRootObject: currentVersion, requiringSecureCoding: true) {
+
+                try? data.write(to: versionURL)
+            }
         }
     }
 }

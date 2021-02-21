@@ -68,6 +68,8 @@ class HTMLTextDisplayView: UITextView {
                     theAttributedString.removeAttribute( NSAttributedString.Key.font, range: range )
                     theAttributedString.addAttribute( NSAttributedString.Key.font, value: newFont, range: range )
                 }
+
+                theAttributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(named: "defaultText"), range: NSRange(location: 0, length: theAttributedString.length))
                 self.attributedText = theAttributedString
             
                 setNeedsLayout()
