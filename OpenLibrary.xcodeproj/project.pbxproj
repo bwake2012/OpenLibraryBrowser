@@ -207,6 +207,7 @@
 		C4F82C9F1DC95AA600669BEA /* DataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F82C9E1DC95AA600669BEA /* DataStack.swift */; };
 		C4F9CC2B21DD54C7008B9A10 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4F9CC2A21DD54C7008B9A10 /* Assets.xcassets */; };
 		C4FB0AEF1E5A1AD60060A122 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FB0AEE1E5A1AD60060A122 /* SplitViewController.swift */; };
+		C4FDBF9F25E2DC6800BD0CD0 /* NetworkActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4FDBF9E25E2DC6800BD0CD0 /* NetworkActivityIndicator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -436,6 +437,7 @@
 		C4F82C9E1DC95AA600669BEA /* DataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStack.swift; sourceTree = "<group>"; };
 		C4F9CC2A21DD54C7008B9A10 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C4FB0AEE1E5A1AD60060A122 /* SplitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
+		C4FDBF9E25E2DC6800BD0CD0 /* NetworkActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkActivityIndicator.swift; sourceTree = "<group>"; };
 		CF1397E0D0A09330686834E7 /* Pods-OpenLibrary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenLibrary.release.xcconfig"; path = "Pods/Target Support Files/Pods-OpenLibrary/Pods-OpenLibrary.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -718,6 +720,7 @@
 				C4EF99D41CA3707900BEF2D3 /* OLWorkDetailViewController.swift */,
 				C4FB0AEE1E5A1AD60060A122 /* SplitViewController.swift */,
 				C4B0F8761E42D12500421EDC /* SplitViewControllerDelegate.swift */,
+				C4FDBF9E25E2DC6800BD0CD0 /* NetworkActivityIndicator.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -1032,6 +1035,7 @@
 				C4E35ECB1C80E2780015D187 /* SearchResults.swift in Sources */,
 				C40A28641D71121A001ABC20 /* EditionDetailGetOperation.swift in Sources */,
 				C45AA3B51D3BFB0000817901 /* OLReachabilityDownloadOperation.swift in Sources */,
+				C4FDBF9F25E2DC6800BD0CD0 /* NetworkActivityIndicator.swift in Sources */,
 				C47DAAC11E15A5130028FE8F /* OLTableViewController.swift in Sources */,
 				C410821E1CBAB26000319B83 /* TitleSearchResultTableViewCell.swift in Sources */,
 				C430E9CE1CD41687007E15AD /* DeluxeDetailLinkTableViewCell.swift in Sources */,
@@ -1386,7 +1390,7 @@
 				INFOPLIST_FILE = OpenLibrary/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.21;
+				MARKETING_VERSION = 1.22;
 				PRODUCT_BUNDLE_IDENTIFIER = net.cockleburr.OpenLibraryBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1407,7 +1411,7 @@
 				INFOPLIST_FILE = OpenLibrary/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.21;
+				MARKETING_VERSION = 1.22;
 				PRODUCT_BUNDLE_IDENTIFIER = net.cockleburr.OpenLibraryBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

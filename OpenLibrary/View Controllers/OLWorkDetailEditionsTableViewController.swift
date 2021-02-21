@@ -84,7 +84,7 @@ class OLWorkDetailEditionsTableViewController: UIViewController {
     // MARK: Query in Progress
     func coordinatorIsBusy() -> Void {
         
-        if let parentVC = parent as? OLWorkDetailViewController {
+        if let parentVC = parent as? NetworkActivityIndicator {
 
             parentVC.coordinatorIsBusy()
         }
@@ -92,7 +92,7 @@ class OLWorkDetailEditionsTableViewController: UIViewController {
     
     func coordinatorIsNoLongerBusy() -> Void {
         
-        if let parentVC = parent as? OLWorkDetailViewController {
+        if let parentVC = parent as? NetworkActivityIndicator {
             
             parentVC.coordinatorIsNoLongerBusy()
         }

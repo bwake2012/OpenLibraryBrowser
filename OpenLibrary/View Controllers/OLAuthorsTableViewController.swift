@@ -10,15 +10,14 @@ import UIKit
 
 typealias SaveAuthorKey = ( _ authorKey: String ) -> Void
 
-class OLAuthorsTableViewController: UIViewController {
+class OLAuthorsTableViewController: UIViewController, NetworkActivityIndicator {
 
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var activityView: UIActivityIndicatorView!
     
     var saveAuthorKey: SaveAuthorKey?
 
     var queryCoordinator: AuthorsCoordinator?
-    var busyCount = 0
     
     override func viewDidLoad() {
 
@@ -44,27 +43,6 @@ class OLAuthorsTableViewController: UIViewController {
         
         navigationController?.setNavigationBarHidden( false, animated: animated )
     }
-    
-    // MARK: Query in Progress
-    func coordinatorIsBusy() -> Void {
-        
-        if 0 == busyCount {
-            
-            activityIndicator.startAnimating()
-        }
-        
-        busyCount += 1
-    }
-    
-    func coordinatorIsNoLongerBusy() -> Void {
-        
-        busyCount -= 1
-        if 0 == busyCount {
-            
-            activityIndicator.stopAnimating()
-        }
-    }
-    
 }
 
 extension OLAuthorsTableViewController: UIScrollViewDelegate {

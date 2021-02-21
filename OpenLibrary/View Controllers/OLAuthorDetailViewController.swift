@@ -12,7 +12,7 @@ import CoreData
 
 // import BNRCoreDataStack
 
-class OLAuthorDetailViewController: UIViewController {
+class OLAuthorDetailViewController: UIViewController, NetworkActivityIndicator {
 
     @IBOutlet weak var headerView: OLHeaderView!
     @IBOutlet weak var containerView: UIView!
@@ -122,21 +122,6 @@ class OLAuthorDetailViewController: UIViewController {
         }
         
     }
-    
-    // MARK: query in progress
-    
-    func coordinatorIsBusy() -> Void {
-        
-        activityView?.startAnimating()
-    }
-    
-    func coordinatorIsNoLongerBusy() -> Void {
-        
-        activityView?.stopAnimating()
-    }
-    
-    // MARK: Utility
-
 }
 
 extension OLAuthorDetailViewController: TransitionImage {

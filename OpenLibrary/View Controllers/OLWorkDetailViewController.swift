@@ -12,7 +12,7 @@ import CoreData
 
 //import BNRCoreDataStack
 
-class OLWorkDetailViewController: UIViewController {
+class OLWorkDetailViewController: UIViewController, NetworkActivityIndicator {
 
     @IBOutlet weak var headerView: OLHeaderView!
 
@@ -119,20 +119,6 @@ class OLWorkDetailViewController: UIViewController {
     }
     
     // MARK: Utility
-
-    // MARK: query in progress
-    
-    func coordinatorIsBusy() -> Void {
-        
-        activityView?.startAnimating()
-    }
-    
-    func coordinatorIsNoLongerBusy() -> Void {
-        
-        activityView?.stopAnimating()
-    }
-    
-    
     func displayImage( _ localURL: URL ) -> Bool {
         
         assert( Thread.isMainThread )
